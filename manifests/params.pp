@@ -14,8 +14,8 @@ class icinga2::params {
   ##############################
 
   #Whether to manage the package repositories
-  $manage_repos => 'true'
-  
+  $manage_repos = 'true'
+
   ##############################
   # Icinga 2 server package parameters
 
