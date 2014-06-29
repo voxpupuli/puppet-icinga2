@@ -25,3 +25,21 @@ class icinga2::server::install inherits icinga2::server {
   Class['icinga2::server::install']
   
 }
+
+class icinga2::server::install::repos inherits icinga2::server {
+
+  include icinga2::params
+
+}
+
+class icinga2::server::install::packages inherits icinga2::server {
+
+  include icinga2::params
+
+}
+
+class icinga2::server::install::execs inherits icinga2::server {
+
+  include icinga2::params
+
+}
