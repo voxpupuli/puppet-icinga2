@@ -67,7 +67,12 @@ class icinga2::server::install::repos inherits icinga2::server {
 class icinga2::server::install::packages inherits icinga2::server {
 
   include icinga2::params
-
+  
+  #Install the icinga2 pacakge
+  package {$icinga2_server_package:
+    ensure   => installed,
+    provider => $package_provider,
+  }
 }
 
 class icinga2::server::install::execs inherits icinga2::server {
