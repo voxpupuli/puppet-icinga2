@@ -15,12 +15,12 @@ class icinga2::params {
 
   #Whether to manage the package repositories
   $manage_repos = 'true'
-
+  $server_db_type = 'pgsql'
+  
   ##############################
   # Icinga 2 server package parameters
 
-  $server_db_type = 'pgsql'
-
+  #Pick the right package and package provider parameters based on the OS:
   case $operatingsystem {
     #Red Hat/CentOS systems:
     'RedHat', 'CentOS': {
