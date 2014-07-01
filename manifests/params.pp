@@ -43,19 +43,7 @@ class icinga2::params {
       #Icinga 2 server package
       $icinga2_server_package = 'icinga2'
       
-      #Set some package repo variables based on the Ubuntu release:
-      case $operatingsystemrelease {
-        #For Ubuntu 12.04 Precise Pangolin: http://releases.ubuntu.com/12.04/
-        '12.04': {
-          
-        }
-        #For Ubuntu 14.04 Trusty Tahr: http://releases.ubuntu.com/14.04/
-        '14.04': {
-          
-        }
-        #Fail if we are on any other Ubuntu release:
-        default: { fail("${operatingsystem} ${operatingsystemrelease} is not a supported Ubuntu release!") }
-      }
+      
     }
     
     #Fail if we're on any other OS:
