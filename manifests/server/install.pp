@@ -98,4 +98,17 @@ class icinga2::server::install::execs inherits icinga2::server {
 
   include icinga2::params
 
+  case $icinga::params::server_db_type {
+    #Schema loading for MySQL:
+    'mysql': {
+
+    }
+    #Schema loading for Postgres:
+    'pgsql': {
+     
+    }
+  
+    default: { fail("${icinga2::params::server_db_type} is not supported!") }
+  }
+
 }
