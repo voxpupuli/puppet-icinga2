@@ -98,17 +98,23 @@ class icinga2::server::install::execs inherits icinga2::server {
 
   include icinga2::params
 
-  case $icinga::params::server_db_type {
+  case $server_db_type {
     #Schema loading for MySQL:
     'mysql': {
 
     }
     #Schema loading for Postgres:
     'pgsql': {
-     
+      exec { 'postgres_schema_load':
+        user    => 'root',
+        path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
+        command => "su postgres -c 'psql -d ${db_name} < /usr/share/icinga2-ido-pgsql/schema/pgsql.sql'; touch /etc/icinga2/postgres_schema_loaded.txt",
+        creates => "/etc/icinga2/postgres_schema_loaded.txt",
+        require => Class['icinga2::server::install::packages'],
+      }
     }
   
-    default: { fail("${icinga2::params::server_db_type} is not supported!") }
+    default: { fail("${server_db_type} is not supported!") }
   }
 
 }
