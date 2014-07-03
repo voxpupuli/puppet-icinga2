@@ -45,8 +45,8 @@ class icinga2::params {
       
       #Pick set the right path where we can find the DB schema
       case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/doc/icinga2-ido-mysql-2.0.0/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/doc/icinga2-ido-pgsql-2.0.0/schema/pgsql.sql' }
+        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
+        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
       }
     }
     
