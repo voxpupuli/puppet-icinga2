@@ -108,8 +108,17 @@ class icinga2::server::install::execs inherits icinga2::server {
         creates => "/etc/icinga2/mysql_schema_loaded.txt",
         require => Class['icinga2::server::install::packages'],
       }
-    }
+      
+      exec { 'mysql_module_enable':
+        user    => 'root',
+        path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
+        command => "/usr/sbin/icinga2-enable-feature ido-mysql; touch /etc/icinga2/mysql_module_loaded.txt",
+        creates => "/etc/icinga2/mysql_module_loaded.txt",
+        require => Exec['mysql_schema_load'],
+      }    
     
+    }
+
     #Schema loading for Postgres:
     'pgsql': {
       exec { 'postgres_schema_load':
