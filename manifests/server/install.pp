@@ -98,9 +98,10 @@ class icinga2::server::install::execs inherits icinga2::server {
 
   include icinga2::server
 
+  #Configure database schemas and IDO modules
   case $server_db_type {
-    #Schema loading for MySQL:
     'mysql': {
+      #Load the MySQL DB schema:
       exec { 'mysql_schema_load':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
@@ -108,7 +109,7 @@ class icinga2::server::install::execs inherits icinga2::server {
         creates => "/etc/icinga2/mysql_schema_loaded.txt",
         require => Class['icinga2::server::install::packages'],
       }
-      
+      #Enable the MySQL IDO module:
       exec { 'mysql_module_enable':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
@@ -119,8 +120,8 @@ class icinga2::server::install::execs inherits icinga2::server {
     
     }
 
-    #Schema loading for Postgres:
     'pgsql': {
+      #Load the Postgres DB schema:
       exec { 'postgres_schema_load':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
@@ -128,7 +129,7 @@ class icinga2::server::install::execs inherits icinga2::server {
         creates => "/etc/icinga2/postgres_schema_loaded.txt",
         require => Class['icinga2::server::install::packages'],
       }
-    
+      #Enable the Postgres IDO module:
       exec { 'postgres_module_enable':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
