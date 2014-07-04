@@ -17,6 +17,12 @@ class icinga2::params {
   $manage_repos = 'true'
   $server_db_type = 'pgsql'
   
+  #Database paramters
+  $db_name = 'icinga2_data'
+  $db_user = 'icinga2'
+  $db_password = 'password'
+  $db_host = 'localhost'
+  
   ##############################
   # Icinga 2 server package parameters
 
@@ -28,12 +34,6 @@ class icinga2::params {
       $package_provider = 'yum'
       #Icinga 2 server package
       $icinga2_server_package = 'icinga2'
-      
-      #Pick set the right path where we can find the DB schema
-      case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/doc/icinga2-ido-mysql-2.0.0/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/doc/icinga2-ido-pgsql-2.0.0/schema/pgsql.sql' }
-      }
     }
     
     #Debian/Ubuntu systems: 
@@ -42,12 +42,6 @@ class icinga2::params {
       $package_provider = 'apt'
       #Icinga 2 server package
       $icinga2_server_package = 'icinga2'
-      
-      #Pick set the right path where we can find the DB schema
-      case $server_db_type {
-        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
-        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
-      }
     }
     
     #Fail if we're on any other OS:

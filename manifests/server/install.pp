@@ -13,7 +13,7 @@
 
 class icinga2::server::install inherits icinga2::server {
   
-  include icinga2::params
+  include icinga2::server
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the 
   #class left is applied before the class on the right and that it also refreshes the 
   #class on the right.
@@ -28,7 +28,7 @@ class icinga2::server::install inherits icinga2::server {
 
 class icinga2::server::install::repos inherits icinga2::server {
 
-  include icinga2::params
+  include icinga2::server
 
   case $operatingsystem {
     #Red Hat/CentOS systems:
@@ -67,7 +67,7 @@ class icinga2::server::install::repos inherits icinga2::server {
 #Install packages for Icinga 2:
 class icinga2::server::install::packages inherits icinga2::server {
 
-  include icinga2::params
+  include icinga2::server
   
   #Install the Icinga 2 package
   package {$icinga2_server_package:
@@ -76,7 +76,7 @@ class icinga2::server::install::packages inherits icinga2::server {
   }
 
   #Pick the right DB lib package name based on the database type the user selected:
-  case $icinga2::server::server_db_type {
+  case $server_db_type {
     #MySQL:
     'mysql': { $icinga2_server_db_connector_package = 'icinga2-ido-mysql'}
     #Postgres:
@@ -96,19 +96,31 @@ class icinga2::server::install::packages inherits icinga2::server {
 #This class contains exec resources
 class icinga2::server::install::execs inherits icinga2::server {
 
-  include icinga2::params
+  include icinga2::server
 
-  case $icinga::params::server_db_type {
+  case $server_db_type {
     #Schema loading for MySQL:
     'mysql': {
-
+      exec { 'mysql_schema_load':
+        user    => 'root',
+        path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
+        command => "mysql -u ${db_user} -p${db_password} ${db_name} < ${server_db_schema_path}; touch /etc/icinga2/mysql_schema_loaded.txt",
+        creates => "/etc/icinga2/mysql_schema_loaded.txt",
+        require => Class['icinga2::server::install::packages'],
+      }
     }
     #Schema loading for Postgres:
     'pgsql': {
-     
+      exec { 'postgres_schema_load':
+        user    => 'root',
+        path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
+        command => "su postgres -c 'psql -d ${db_name} < ${server_db_schema_path}'; touch /etc/icinga2/postgres_schema_loaded.txt",
+        creates => "/etc/icinga2/postgres_schema_loaded.txt",
+        require => Class['icinga2::server::install::packages'],
+      }
     }
   
-    default: { fail("${icinga2::params::server_db_type} is not supported!") }
+    default: { fail("${server_db_type} is not supported!") }
   }
 
 }
