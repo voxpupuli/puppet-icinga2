@@ -70,6 +70,9 @@ class icinga2::params {
   }
 
   ##############################
+  # Icinga 2 server config parameters
+
+  ##############################
   # Icinga 2 client parameters
   ##############################
   
