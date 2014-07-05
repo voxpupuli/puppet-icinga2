@@ -15,10 +15,6 @@ class icinga2::params {
 
   #This section has parameters that are used by both the client and server subclasses
 
-  ##############################
-  # Icinga 2 server parameters
-  ##############################
-  
   ##################
   # Icinga 2 common package parameters
   case $operatingsystem {
@@ -37,6 +33,10 @@ class icinga2::params {
     #Fail if we're on any other OS:
     default: { fail("${operatingsystem} is not supported!") }
   }
+
+  ##############################
+  # Icinga 2 server parameters
+  ##############################
 
   #Whether to manage the package repositories
   $manage_repos = 'true'
