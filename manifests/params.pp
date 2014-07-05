@@ -13,19 +13,16 @@ class icinga2::params {
   # Icinga 2 server parameters
   ##############################
 
-  ##############################
-  # Icinga 2 server package parameters
-  
   #Whether to manage the package repositories
   $manage_repos = 'true'
   $server_db_type = 'pgsql'
-  
+
   #Database paramters
   $db_name = 'icinga2_data'
   $db_user = 'icinga2'
   $db_password = 'password'
   $db_host = 'localhost'
-  
+
   ##############################
   # Icinga 2 server package parameters
 
