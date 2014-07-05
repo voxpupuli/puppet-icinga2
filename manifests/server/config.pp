@@ -89,4 +89,286 @@ class icinga2::server::config inherits icinga2::server {
     mode    => $etc_icinga2_zonesd_mode,
   }
 
+  #File and directory resources for the object directories that can be used to hold different
+  #types of configuration objects
+  
+  #Directory resource for /etc/icinga2/objects/:
+  file { '/etc/icinga2/objects/':
+    path    => '/etc/icinga2/objects/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_owner,
+    group   => $etc_icinga2_obejcts_group,
+    mode    => $etc_icinga2_obejcts_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/hosts/:
+  file { '/etc/icinga2/objects/hosts/':
+    path    => '/etc/icinga2/objects/hosts/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/hostgroups/:
+  file { '/etc/icinga2/objects/hostgroups/':
+    path    => '/etc/icinga2/objects/hostgroups/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/services/:
+  file { '/etc/icinga2/objects/services/':
+    path    => '/etc/icinga2/objects/services/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/servicegroups/:
+  file { '/etc/icinga2/objects/servicegroups/':
+    path    => '/etc/icinga2/objects/servicegroups/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/users/:
+  file { '/etc/icinga2/objects/users/':
+    path    => '/etc/icinga2/objects/users/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/usergroups/:
+  file { '/etc/icinga2/objects/usergroups/':
+    path    => '/etc/icinga2/objects/usergroups/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/checkcommands/:
+  file { '/etc/icinga2/objects/checkcommands/':
+    path    => '/etc/icinga2/objects/checkcommands/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/notificationcommands/:
+  file { '/etc/icinga2/objects/notificationcommands/':
+    path    => '/etc/icinga2/objects/notificationcommands/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/eventcommands/:
+  file { '/etc/icinga2/objects/eventcommands/':
+    path    => '/etc/icinga2/objects/eventcommands/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/notifications/:
+  file { '/etc/icinga2/objects/notifications/':
+    path    => '/etc/icinga2/objects/notifications/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/timeperiods/:
+  file { '/etc/icinga2/objects/timeperiods/':
+    path    => '/etc/icinga2/objects/timeperiods/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/scheduleddowntimes/:
+  file { '/etc/icinga2/objects/scheduleddowntimes/':
+    path    => '/etc/icinga2/objects/scheduleddowntimes/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/dependencies/:
+  file { '/etc/icinga2/objects/dependencies/':
+    path    => '/etc/icinga2/objects/dependencies/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/perfdatawriters/:
+  file { '/etc/icinga2/objects/perfdatawriters/':
+    path    => '/etc/icinga2/objects/perfdatawriters/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/graphitewriters/:
+  file { '/etc/icinga2/objects/graphitewriters/':
+    path    => '/etc/icinga2/objects/graphitewriters/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/idomysqlconnections/:
+  file { '/etc/icinga2/objects/idomysqlconnections/':
+    path    => '/etc/icinga2/objects/idomysqlconnections/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/idopgsqlconnections/:
+  file { '/etc/icinga2/objects/idopgsqlconnections/':
+    path    => '/etc/icinga2/objects/idopgsqlconnections/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/livestatuslisteners/:
+  file { '/etc/icinga2/objects/livestatuslisteners/':
+    path    => '/etc/icinga2/objects/livestatuslisteners/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/statusdatawriters/:
+  file { '/etc/icinga2/objects/statusdatawriters/':
+    path    => '/etc/icinga2/objects/statusdatawriters/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/externalcommandlisteners/:
+  file { '/etc/icinga2/objects/externalcommandlisteners/':
+    path    => '/etc/icinga2/objects/externalcommandlisteners/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/compatloggers/:
+  file { '/etc/icinga2/objects/compatloggers/':
+    path    => '/etc/icinga2/objects/compatloggers/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/checkresultreaders/:
+  file { '/etc/icinga2/objects/checkresultreaders/':
+    path    => '/etc/icinga2/objects/checkresultreaders/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/checkercomponents/:
+  file { '/etc/icinga2/objects/checkercomponents/':
+    path    => '/etc/icinga2/objects/checkercomponents/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/notificationcomponents/:
+  file { '/etc/icinga2/objects/notificationcomponents/':
+    path    => '/etc/icinga2/objects/notificationcomponents/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/fileloggers/:
+  file { '/etc/icinga2/objects/fileloggers/':
+    path    => '/etc/icinga2/objects/fileloggers/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/syslogloggers/:
+  file { '/etc/icinga2/objects/syslogloggers/':
+    path    => '/etc/icinga2/objects/syslogloggers/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/icingastatuswriters/:
+  file { '/etc/icinga2/objects/icingastatuswriters/':
+    path    => '/etc/icinga2/objects/icingastatuswriters/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/apilisteners/:
+  file { '/etc/icinga2/objects/apilisteners/':
+    path    => '/etc/icinga2/objects/apilisteners/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/endpoints/:
+  file { '/etc/icinga2/objects/endpoints/':
+    path    => '/etc/icinga2/objects/endpoints/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/zones/:
+  file { '/etc/icinga2/objects/zones/':
+    path    => '/etc/icinga2/objects/zones/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
 }
