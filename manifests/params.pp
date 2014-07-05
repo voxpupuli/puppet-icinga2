@@ -107,6 +107,14 @@ class icinga2::params {
       $etc_icinga2_zonesd_owner = 'icinga'
       $etc_icinga2_zonesd_group = 'icinga'
       $etc_icinga2_zonesd_mode  = '750'
+      #Settings for /etc/icinga2/objects/:
+      $etc_icinga2_obejcts_owner = 'icinga'
+      $etc_icinga2_obejcts_group = 'icinga'
+      $etc_icinga2_obejcts_mode  = '750'
+      #Settings for subdirectories of /etc/icinga2/objects/:
+      $etc_icinga2_obejcts_sub_dir_owner = 'icinga'
+      $etc_icinga2_obejcts_sub_dir_group = 'icinga'
+      $etc_icinga2_obejcts_sub_dir_mode  = '750'
     }
     
     #Debian/Ubuntu systems: 
@@ -147,6 +155,14 @@ class icinga2::params {
           $etc_icinga2_zonesd_owner = 'root'
           $etc_icinga2_zonesd_group = 'root'
           $etc_icinga2_zonesd_mode  = '755'
+          #Settings for /etc/icinga2/objects/:
+          $etc_icinga2_obejcts_owner = 'root'
+          $etc_icinga2_obejcts_group = 'root'
+          $etc_icinga2_obejcts_mode  = '755'
+          #Settings for subdirectories of /etc/icinga2/objects/:
+          $etc_icinga2_obejcts_sub_dir_owner = 'root'
+          $etc_icinga2_obejcts_sub_dir_group = 'root'
+          $etc_icinga2_obejcts_sub_dir_mode  = '755'
         }
         #Ubuntu 14.04 Trusty Tahr:
         '14.04': {
@@ -182,6 +198,14 @@ class icinga2::params {
           $etc_icinga2_zonesd_owner = 'root'
           $etc_icinga2_zonesd_group = 'root'
           $etc_icinga2_zonesd_mode  = '755'
+          #Settings for /etc/icinga2/objects/:
+          $etc_icinga2_obejcts_owner = 'root'
+          $etc_icinga2_obejcts_group = 'root'
+          $etc_icinga2_obejcts_mode  = '755'
+          #Settings for subdirectories of /etc/icinga2/objects/:
+          $etc_icinga2_obejcts_sub_dir_owner = 'root'
+          $etc_icinga2_obejcts_sub_dir_group = 'root'
+          $etc_icinga2_obejcts_sub_dir_mode  = '755'
         }
 
       }
