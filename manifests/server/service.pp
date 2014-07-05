@@ -13,6 +13,6 @@
 
 class icinga2::server::service inherits icinga2::server {
   
-  include icinga2::params
+  include icinga2::server
   
 }
