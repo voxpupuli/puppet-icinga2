@@ -15,7 +15,7 @@ class icinga2::server::config inherits icinga2::server {
   
   include icinga2::params
   
-  #Directory resource for /etc/icinga2/
+  #Directory resource for /etc/icinga2/:
   file { '/etc/icinga2/':
     path    => '/etc/icinga2/',
     ensure  => directory,
@@ -33,6 +33,15 @@ class icinga2::server::config inherits icinga2::server {
     group   => $etc_icinga2_icinga2_conf_group,
     mode    => $etc_icinga2_icinga2_conf_mode,
     content => template('icinga2/icinga2.conf.erb'),
+  }
+
+  #Directory resource for /etc/icinga2/conf.d/:
+  file { '/etc/icinga2/conf.d/':
+    path    => '/etc/icinga2/conf.d/',
+    ensure  => directory,
+    owner   => $etc_icinga2_confd_owner,
+    group   => $etc_icinga2_confd_group,
+    mode    => $etc_icinga2_confd_mode,
   }
   
 }
