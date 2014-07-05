@@ -194,6 +194,21 @@ class icinga2::params {
   ##################
   # Icinga 2 server service settings 
 
+  case $operatingsystem {
+    #Icinga 2 server daemon names for Red Had/CentOS systems:
+    'RedHat', 'CentOS': {
+      $icinga2_server_service_name = 'icinga2'
+    }
+    
+    #Icinga 2 server daemon names for Debian/Ubuntu systems:
+    /^(Debian|Ubuntu)$/: {
+      $icinga2_server_service_name = 'icinga2'
+    }
+    
+    #Fail if we're on any other OS:
+    default: { fail("${operatingsystem} is not supported!") }
+  }
+
   ##############################
   # Icinga 2 client parameters
   ##############################
