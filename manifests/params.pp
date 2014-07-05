@@ -107,6 +107,32 @@ class icinga2::params {
   }
 
   ##################
+  # Icinga 2 client package parameters
+  case $operatingsystem {
+    #Red Hat/CentOS systems:
+    'RedHat', 'CentOS': {
+      #Pick the right list of client packages:
+      $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+    } 
+    #Debian/Ubuntu systems: 
+    /^(Debian|Ubuntu)$/: {      
+      
+      case $operatingsystemrelease {
+        #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
+        '12.04': {
+          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra"]
+        }
+        #...but 14.04 does:
+        '14.04': {
+          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib"]
+        }
+      }
+    }
+    #Fail if we're on any other OS:
+    default: { fail("${operatingsystem} is not supported!") }
+  }
+
+  ##################
   # Icinga 2 client service parameters
   case $operatingsystem {
     #Daemon names for Red Had/CentOS systems:
