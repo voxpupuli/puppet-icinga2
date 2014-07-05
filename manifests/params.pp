@@ -72,5 +72,38 @@ class icinga2::params {
   ##############################
   # Icinga 2 client parameters
   ##############################
+  
+  ##################
+  # Icinga 2 client settings 
+  $nrpe_listen_port        = '5666'
+  $nrpe_log_facility       = 'daemon'
+  $nrpe_debug_level        = '0'
+  #in seconds:
+  $nrpe_command_timeout    = '60'
+  #in seconds:
+  $nrpe_connection_timeout = '300'
+  #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array 
+  $nrpe_allowed_hosts      = ['127.0.0.1',]
+   
+  case $operatingsystem {
+    #File and template variable names for Red Had/CentOS systems:
+    'RedHat', 'CentOS': {
+      $nrpe_config_basedir = "/etc/nagios"
+      $nrpe_plugin_liddir  = "/usr/lib64/nagios/plugins"
+      $nrpe_pid_file_path  = "/var/run/nrpe/nrpe.pid"
+      $nrpe_user           = "nrpe"
+      $nrpe_group          = "nrpe"
+    }
+    #File and template variable names for Debian/Ubuntu systems:
+    /^(Debian|Ubuntu)$/: {
+      $nrpe_config_basedir  = "/etc/nagios"
+      $nrpe_plugin_liddir   = "/usr/lib/nagios/plugins"
+      $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
+      $nrpe_user            = "nagios"
+      $nrpe_group           = "nagios"
+    }
+    #Fail if we're on any other OS:
+    default: { fail("${operatingsystem} is not supported!") }
+  }
 
 }
