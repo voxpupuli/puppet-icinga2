@@ -43,5 +43,14 @@ class icinga2::server::config inherits icinga2::server {
     group   => $etc_icinga2_confd_group,
     mode    => $etc_icinga2_confd_mode,
   }
-  
+
+  #Directory resource for /etc/icinga2/features-available/
+  file { '/etc/icinga2/features-available/':
+    path    => '/etc/icinga2/features-available/',
+    ensure  => directory,
+    owner   => $etc_icinga2_features_available_owner,
+    group   => $etc_icinga2_features_available_group,
+    mode    => $etc_icinga2_features_available_mode,
+  }
+
 }
