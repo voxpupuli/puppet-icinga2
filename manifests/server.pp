@@ -50,8 +50,8 @@ class icinga2::server (
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the 
   #class left is applied before the class on the right and that it also refreshes the 
   #class on the right.
-  class {'icinga2::server::install':} #~>
-  #class {'icinga2::server::config':} ~>
+  class {'icinga2::server::install':} ~>
+  class {'icinga2::server::config':} #~>
   #class {'icinga2::server::service':}
   
 }
