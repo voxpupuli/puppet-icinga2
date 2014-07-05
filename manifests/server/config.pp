@@ -71,4 +71,13 @@ class icinga2::server::config inherits icinga2::server {
     mode    => $etc_icinga2_pki_mode,
   }
 
+  #Directory resource for /etc/icinga2/scripts/:
+  file { '/etc/icinga2/scripts/':
+    path    => '/etc/icinga2/scripts/',
+    ensure  => directory,
+    owner   => $etc_icinga2_scripts_owner,
+    group   => $etc_icinga2_scripts_group,
+    mode    => $etc_icinga2_scripts_mode,
+  }
+
 }
