@@ -114,9 +114,9 @@ class icinga2::params {
       #Pick the right list of client packages:
       $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     } 
+    
     #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {      
-      
+    /^(Debian|Ubuntu)$/: {
       case $operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
@@ -128,6 +128,7 @@ class icinga2::params {
         }
       }
     }
+    
     #Fail if we're on any other OS:
     default: { fail("${operatingsystem} is not supported!") }
   }
@@ -139,10 +140,12 @@ class icinga2::params {
     'RedHat', 'CentOS': {
       $nrpe_daemon_name = 'nrpe'
     }
+    
     #Daemon names for Debian/Ubuntu systems:
     /^(Debian|Ubuntu)$/: {
       $nrpe_daemon_name     = 'nagios-nrpe-server'
     }
+    
     #Fail if we're on any other OS:
     default: { fail("${operatingsystem} is not supported!") }
   }
