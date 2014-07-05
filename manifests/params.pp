@@ -69,4 +69,8 @@ class icinga2::params {
     default: { fail("${operatingsystem} is not supported!") }
   }
 
+  ##############################
+  # Icinga 2 client parameters
+  ##############################
+
 }
