@@ -95,6 +95,14 @@ class icinga2::params {
       $etc_icinga2_features_enabled_owner = 'icinga'
       $etc_icinga2_features_enabled_group = 'icinga'
       $etc_icinga2_features_enabled_mode  = '750'
+      #Settings for /etc/icinga2/pki/:
+      $etc_icinga2_pki_owner = 'icinga'
+      $etc_icinga2_pki_group = 'icinga'
+      $etc_icinga2_pki_mode  = '750'
+      #Settings for /etc/icinga2/scripts/:
+      $etc_icinga2_scripts_owner = 'icinga'
+      $etc_icinga2_scripts_group = 'icinga'
+      $etc_icinga2_scripts_mode  = '750'
       #Settings for /etc/icinga2/zones.d/:
       $etc_icinga2_zonesd_owner = 'icinga'
       $etc_icinga2_zonesd_group = 'icinga'
@@ -127,6 +135,14 @@ class icinga2::params {
           $etc_icinga2_features_enabled_owner = 'root'
           $etc_icinga2_features_enabled_group = 'root'
           $etc_icinga2_features_enabled_mode  = '755'
+          #Settings for /etc/icinga2/pki/:
+          $etc_icinga2_pki_owner = 'root'
+          $etc_icinga2_pki_group = 'root'
+          $etc_icinga2_pki_mode  = '755'
+          #Settings for /etc/icinga2/scripts/:
+          $etc_icinga2_scripts_owner = 'root'
+          $etc_icinga2_scripts_group = 'root'
+          $etc_icinga2_scripts_mode  = '755'
           #Settings for /etc/icinga2/zones.d/:
           $etc_icinga2_zonesd_owner = 'root'
           $etc_icinga2_zonesd_group = 'root'
@@ -154,6 +170,14 @@ class icinga2::params {
           $etc_icinga2_features_enabled_owner = 'root'
           $etc_icinga2_features_enabled_group = 'root'
           $etc_icinga2_features_enabled_mode  = '755'
+          #Settings for /etc/icinga2/pki/:
+          $etc_icinga2_pki_owner = 'root'
+          $etc_icinga2_pki_group = 'root'
+          $etc_icinga2_pki_mode  = '755'
+          #Settings for /etc/icinga2/scripts/:
+          $etc_icinga2_scripts_owner = 'root'
+          $etc_icinga2_scripts_group = 'root'
+          $etc_icinga2_scripts_mode  = '755'
           #Settings for /etc/icinga2/zones.d/:
           $etc_icinga2_zonesd_owner = 'root'
           $etc_icinga2_zonesd_group = 'root'
