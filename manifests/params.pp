@@ -72,6 +72,101 @@ class icinga2::params {
   ##############################
   # Icinga 2 server config parameters
 
+  case $operatingsystem {
+    #Red Hat/CentOS systems:
+    'RedHat', 'CentOS': {
+      #Settings for /etc/icinga2/:
+      $etc_icinga2_owner = 'icinga'
+      $etc_icinga2_group = 'icinga'
+      $etc_icinga2_mode  = '750'
+      #Settings for /etc/icinga2/icinga2.conf:
+      $etc_icinga2_icinga2_conf_owner = 'icinga'
+      $etc_icinga2_icinga2_conf_group = 'icinga'
+      $etc_icinga2_icinga2_conf_mode  = '640'
+      #Settings for /etc/icinga2/conf.d/
+      $etc_icinga2_confd_owner = 'icinga'
+      $etc_icinga2_confd_group = 'icinga'
+      $etc_icinga2_confd_mode  = '750'
+      #Settings for /etc/icinga2/features-available/:
+      $etc_icinga2_features_available_owner = 'icinga'
+      $etc_icinga2_features_available_group = 'icinga'
+      $etc_icinga2_features_available_mode  = '750'
+      #Settings for /etc/icinga2/features-enabled/:
+      $etc_icinga2_features_enabled_owner = 'icinga'
+      $etc_icinga2_features_enabled_group = 'icinga'
+      $etc_icinga2_features_enabled_mode  = '750'
+      #Settings for /etc/icinga2/zones.d/:
+      $etc_icinga2_zonesd_owner = 'icinga'
+      $etc_icinga2_zonesd_group = 'icinga'
+      $etc_icinga2_zonesd_mode  = '750'
+    }
+    
+    #Debian/Ubuntu systems: 
+    /^(Debian|Ubuntu)$/: {
+
+      case $operatingsystemrelease {
+        #Ubuntu 12.04 Precise Pangolin:
+        '12.04': {
+          #Settings for /etc/icinga2/:
+          $etc_icinga2_owner = 'root'
+          $etc_icinga2_group = 'root'
+          $etc_icinga2_mode  = '755'
+          #Settings for /etc/icinga2/icinga2.conf:
+          $etc_icinga2_icinga2_conf_owner = 'root'
+          $etc_icinga2_icinga2_conf_group = 'root'
+          $etc_icinga2_icinga2_conf_mode  = '644'
+          #Settings for /etc/icinga2/conf.d/
+          $etc_icinga2_confd_owner = 'root'
+          $etc_icinga2_confd_group = 'root'
+          $etc_icinga2_confd_mode  = '755'
+          #Settings for /etc/icinga2/features-available/:
+          $etc_icinga2_features_available_owner = 'root'
+          $etc_icinga2_features_available_group = 'root'
+          $etc_icinga2_features_available_mode  = '755'
+          #Settings for /etc/icinga2/features-enabled/:
+          $etc_icinga2_features_enabled_owner = 'root'
+          $etc_icinga2_features_enabled_group = 'root'
+          $etc_icinga2_features_enabled_mode  = '755'
+          #Settings for /etc/icinga2/zones.d/:
+          $etc_icinga2_zonesd_owner = 'root'
+          $etc_icinga2_zonesd_group = 'root'
+          $etc_icinga2_zonesd_mode  = '755'
+        }
+        #Ubuntu 14.04 Trusty Tahr:
+        '14.04': {
+          #Settings for /etc/icinga2/:
+          $etc_icinga2_owner = 'root'
+          $etc_icinga2_group = 'root'
+          $etc_icinga2_mode  = '755'
+          #Settings for /etc/icinga2/icinga2.conf:
+          $etc_icinga2_icinga2_conf_owner = 'root'
+          $etc_icinga2_icinga2_conf_group = 'root'
+          $etc_icinga2_icinga2_conf_mode  = '644'
+          #Settings for /etc/icinga2/conf.d/
+          $etc_icinga2_confd_owner = 'root'
+          $etc_icinga2_confd_group = 'root'
+          $etc_icinga2_confd_mode  = '755'
+          #Settings for /etc/icinga2/features-available:
+          $etc_icinga2_features_available_owner = 'root'
+          $etc_icinga2_features_available_group = 'root'
+          $etc_icinga2_features_available_mode  = '755'
+          #Settings for /etc/icinga2/features-enabled:
+          $etc_icinga2_features_enabled_owner = 'root'
+          $etc_icinga2_features_enabled_group = 'root'
+          $etc_icinga2_features_enabled_mode  = '755'
+          #Settings for /etc/icinga2/zones.d/:
+          $etc_icinga2_zonesd_owner = 'root'
+          $etc_icinga2_zonesd_group = 'root'
+          $etc_icinga2_zonesd_mode  = '755'
+        }
+
+      }
+    }
+    
+    #Fail if we're on any other OS:
+    default: { fail("${operatingsystem} is not supported!") }
+  }
+
   ##############################
   # Icinga 2 client parameters
   ##############################
