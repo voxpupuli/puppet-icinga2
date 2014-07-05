@@ -61,5 +61,14 @@ class icinga2::server::config inherits icinga2::server {
     group   => $etc_icinga2_features_enabled_group,
     mode    => $etc_icinga2_features_enabled_mode,
   }
+  
+  #Directory resource for /etc/icinga2/pki/:
+  file { '/etc/icinga2/pki/':
+    path    => '/etc/icinga2/pki/',
+    ensure  => directory,
+    owner   => $etc_icinga2_pki_owner,
+    group   => $etc_icinga2_pki_group,
+    mode    => $etc_icinga2_pki_mode,
+  }
 
 }
