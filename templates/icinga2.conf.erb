@@ -55,3 +55,8 @@ include "features-enabled/*.conf"
  * directory. Each of these files must have the file extension ".conf".
  */
 include_recursive "conf.d"
+
+/**
+ * Include all .conf files in the objects/ directory too:
+ */
+include_recursive "objects"
