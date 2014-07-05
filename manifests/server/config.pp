@@ -80,4 +80,13 @@ class icinga2::server::config inherits icinga2::server {
     mode    => $etc_icinga2_scripts_mode,
   }
 
+  #Directory resource for /etc/icinga2/zones.d/:
+  file { '/etc/icinga2/zones.d/':
+    path    => '/etc/icinga2/zones.d/',
+    ensure  => directory,
+    owner   => $etc_icinga2_zonesd_owner,
+    group   => $etc_icinga2_zonesd_group,
+    mode    => $etc_icinga2_zonesd_mode,
+  }
+
 }
