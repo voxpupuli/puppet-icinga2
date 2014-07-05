@@ -106,4 +106,19 @@ class icinga2::params {
     default: { fail("${operatingsystem} is not supported!") }
   }
 
+  ##################
+  # Icinga 2 client service parameters
+  case $operatingsystem {
+    #Daemon names for Red Had/CentOS systems:
+    'RedHat', 'CentOS': {
+      $nrpe_daemon_name = 'nrpe'
+    }
+    #Daemon names for Debian/Ubuntu systems:
+    /^(Debian|Ubuntu)$/: {
+      $nrpe_daemon_name     = 'nagios-nrpe-server'
+    }
+    #Fail if we're on any other OS:
+    default: { fail("${operatingsystem} is not supported!") }
+  }
+
 }
