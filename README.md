@@ -11,7 +11,38 @@ Coming soon...
 
 ####Server requirements
 
-Coming soon...
+Icinga 2 requires either a [MySQL](http://www.mysql.com/) or a [Postgres](http://www.postgresql.org/) database.
+
+Currently, this module does not set up any databases. You'll have to create one before installing Icinga 2 via the module.
+
+After setting up either a MySQL or Postgres database, specify the type of database with the `server_db_type` parameter (default is `pgsql` for Postgres):
+
+<pre>
+  #Install Icinga 2:
+  class { 'icinga2::server': 
+    server_db_type => 'pgsql',
+	...
+	...
+  }
+</pre>
+
+Database connection parameters can be specified by the `db_host`, `db_port`, `db_name`, `db_user` and `db_password` parameters:
+
+<pre>
+  #Install Icinga 2:
+  class { 'icinga2::server': 
+    server_db_type => 'pgsql',
+	db_host => 'localhost'
+	db_port => '5432'
+	db_name => 'icinga2_data'
+	db_user => 'icinga2'
+	db_password => 'password'
+  }
+</pre>
+
+When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
+
+**Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
 
 ###Usage
 
