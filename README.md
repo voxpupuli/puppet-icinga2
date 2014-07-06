@@ -7,7 +7,9 @@ The module has only been tested on CentOS 6.5 and Ubuntu 12.04 and 14.04. Red Ha
 
 ###Requirements
 
-Coming soon...
+For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
+
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
 
 ####Server requirements
 
