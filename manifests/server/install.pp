@@ -75,6 +75,12 @@ class icinga2::server::install::packages inherits icinga2::server {
     provider => $package_provider,
   }
 
+  #Install the Nagios plugins packages:
+  package {$icinga2_server_plugin_packages:
+    ensure   => installed,
+    provider => $package_provider,
+  }
+
   #Pick the right DB lib package name based on the database type the user selected:
   case $server_db_type {
     #MySQL:
