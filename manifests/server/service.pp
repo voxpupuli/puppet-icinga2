@@ -13,6 +13,12 @@
 
 class icinga2::server::service inherits icinga2::server {
   
-  include icinga2::params
+  include icinga2::server
+
+  #Service resource for the Icinga 2 daemon:
+  service {$icinga2::params::icinga2_server_service_name:
+    ensure    => running,
+    subscribe => Class['icinga2::server::config'],
+  }
   
 }
