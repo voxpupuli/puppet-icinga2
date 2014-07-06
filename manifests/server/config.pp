@@ -371,4 +371,36 @@ class icinga2::server::config inherits icinga2::server {
     mode    => $etc_icinga2_obejcts_sub_dir_mode,
   }
 
+  #Directory resource for /etc/icinga2/objects/applys/
+  #The files in this folder will be objects like 
+  #'apply something blah to Host...'
+  #See the following link for more info:
+  # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#apply
+  file { '/etc/icinga2/objects/applys/':
+    path    => '/etc/icinga2/objects/applys/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+  #Directory resource for /etc/icinga2/objects/templates/:
+  file { '/etc/icinga2/objects/templates/':
+    path    => '/etc/icinga2/objects/templates/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
+
+  #Directory resource for /etc/icinga2/objects/constants/:
+  file { '/etc/icinga2/objects/constants/':
+    path    => '/etc/icinga2/objects/constants/',
+    ensure  => directory,
+    owner   => $etc_icinga2_obejcts_sub_dir_owner,
+    group   => $etc_icinga2_obejcts_sub_dir_group,
+    mode    => $etc_icinga2_obejcts_sub_dir_mode,
+  }
+
 }
