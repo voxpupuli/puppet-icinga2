@@ -48,4 +48,10 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 
 ###Usage
 
+####Server usage
+
+Coming soon...
+
+####Client usage
+
 Coming soon...
