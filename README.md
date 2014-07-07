@@ -50,7 +50,21 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 
 ####Server usage
 
-Coming soon...
+To install Icinga 2 with a Postgres database, first set up the database.
+
+Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify 
+
+<pre>
+  #Install Icinga 2:
+  class { 'icinga2::server': 
+    server_db_type => 'pgsql',
+	db_host => 'localhost'
+	db_port => '5432'
+	db_name => 'icinga2_data'
+	db_user => 'icinga2'
+	db_password => 'password'
+  }
+</pre> 
 
 ####Client usage
 
