@@ -80,4 +80,10 @@ class { 'icinga2::server':
 
 ####Client usage
 
-Coming soon...
+To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
+
+<pre>
+class { 'icinga2::client':
+  nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+}
+</pre>
