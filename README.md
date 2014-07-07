@@ -51,15 +51,15 @@ To install Icinga 2 with a Postgres database, first set up the database.
 Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify 
 
 <pre>
-  #Install Icinga 2:
-  class { 'icinga2::server': 
-    server_db_type => 'pgsql',
-	db_host => 'localhost'
-	db_port => '5432'
-	db_name => 'icinga2_data'
-	db_user => 'icinga2'
-	db_password => 'password'
-  }
+#Install Icinga 2:
+class { 'icinga2::server': 
+  server_db_type => 'pgsql',
+  db_host => 'localhost'
+  db_port => '5432'
+  db_name => 'icinga2_data'
+  db_user => 'icinga2'
+  db_password => 'password',
+}
 </pre>
 
 When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
@@ -67,15 +67,15 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 **Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
 
 <pre>
-  #Install Icinga 2:
-  class { 'icinga2::server': 
-    server_db_type => 'pgsql',
-	db_host => 'localhost'
-	db_port => '5432'
-	db_name => 'icinga2_data'
-	db_user => 'icinga2'
-	db_password => hiera('icinga_db_password_key_here')
-  }
+#Install Icinga 2:
+class { 'icinga2::server': 
+  server_db_type => 'pgsql',
+  db_host => 'localhost'
+  db_port => '5432'
+  db_name => 'icinga2_data'
+  db_user => 'icinga2'
+  db_password => hiera('icinga_db_password_key_here'),
+}
 </pre>
 
 ####Client usage
