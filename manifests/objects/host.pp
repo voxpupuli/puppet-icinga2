@@ -15,13 +15,16 @@ define icinga2::objects::host (
   $template_to_import = 'generic-host',
   $target_dir = '/etc/icinga2/conf.d',
   $target_file_name = "${fqdn}.conf",
+  $target_file_owner = 'root',
+  $target_file_group = 'root',
+  $target_file_mode = '644'
 ) {
 
   file {"${target_dir}/${target_file_name}":
     ensure => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '644',
+    owner   => $target_file_owner,
+    group   => $target_file_group,
+    mode    => $target_file_mode,
     content => template('icinga2/object_host.conf.erb'),
     notify => Service['icinga2'],
   }
