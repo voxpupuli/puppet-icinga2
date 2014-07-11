@@ -8,11 +8,13 @@
 #
 
 define icinga2::objects::host (
-  $ipv4_address = $ipaddress_eth0,
-  $ipv6_address = $ipaddress_eth0,
   $object_hostname = $name,
   $display_name = $fqdn,
+  $ipv4_address = $ipaddress_eth0,
+  $ipv6_address = $ipaddress_eth0,
   $template_to_import = 'generic-host',
+  $groups = [],
+  $vars = {},
   $target_dir = '/etc/icinga2/conf.d',
   $target_file_name = "${fqdn}.conf",
   $target_file_owner = 'root',
