@@ -7,7 +7,7 @@
  * A host definition. You can create your own configuration files
  * in the conf.d directory (e.g. one per host). By default all *.conf
  * files in this directory are included.
- * 
+ *
  */
 
 //Parameters to include:
@@ -47,5 +47,8 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @ipv4_address -%>
   address = "<%= @ipv4_address -%>"
+  <%- end -%>
+  <%- if @groups.length != 0 -%>
+  groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
 }
