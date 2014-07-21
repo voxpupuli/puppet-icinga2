@@ -21,6 +21,7 @@ class icinga2::server (
   $package_provider = $icinga2::params::package_provider,
   $icinga2_server_package = $icinga2::params::icinga2_server_package,
   #$server_db_schema_path = $icinga2::params::server_db_schema_path
+  $server_install_nagios_plugins = $icinga2::params::server_install_nagios_plugins,
 ) inherits icinga2::params {
 
   #Pick set the right path where we can find the DB schema based on the OS...
