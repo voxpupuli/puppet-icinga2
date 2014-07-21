@@ -1,4 +1,4 @@
-# Define icinga2::client::command
+# Define icinga2::nrpe::command
 #
 # This defined type creates NRPE command definitions on machines running NRPE.
 #
@@ -9,7 +9,7 @@
 # * $nrpe_plugin_args = The arguments to pass to the plugin. This may be optional, 
 #                       depending on the plugin and whether it expects any arguments or parameters
 
-define icinga2::client::command (
+define icinga2::nrpe::command (
   $command_name       = $name,
   $nrpe_plugin_liddir = $icinga2::params::nrpe_plugin_liddir,
   $nrpe_plugin_name   = undef,

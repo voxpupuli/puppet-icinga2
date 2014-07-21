@@ -1,10 +1,10 @@
-# Class: icinga2::client
+# Class: icinga2::nrpe
 #
 # This subclass manages Icinga client components. This class is just the entry point for Puppet to get at the
-# icinga2::client:: subclasses.
+# icinga2::nrpe:: subclasses.
 #
 
-class icinga2::client (
+class icinga2::nrpe (
 
   $nrpe_listen_port        = $icinga2::params::nrpe_listen_port,
   $nrpe_debug_level        = $icinga2::params::nrpe_debug_level,
@@ -18,7 +18,7 @@ class icinga2::client (
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the 
   #class left is applied before the class on the right and that it also refreshes the 
   #class on the right.
-  class {'icinga2::client::install':} ~>
-  class {'icinga2::client::config':} ~>
-  class {'icinga2::client::service':}
+  class {'icinga2::nrpe::install':} ~>
+  class {'icinga2::nrpe::config':} ~>
+  class {'icinga2::nrpe::service':}
 }

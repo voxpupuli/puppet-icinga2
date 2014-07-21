@@ -82,7 +82,7 @@ class { 'icinga2::server':
 }
 </pre>
 
-**Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::client` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
+**Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
 <pre>
 #Install Icinga 2:
@@ -93,7 +93,7 @@ class { 'icinga2::server':
  }
 </pre>
 
-This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::client` class will already be installing them and will prevent a resulting duplicate resource error.
+This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
 
 ####Client usage
@@ -116,4 +116,4 @@ class { 'icinga2::server':
  }
 </pre>
 
-This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::client` class will already be installing them and will prevent a resulting duplicate resource error.
+This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.

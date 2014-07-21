@@ -1,11 +1,11 @@
-# Class: icinga2::client::config
+# Class: icinga2::nrpe::config
 #
 # This subclass configures Icinga clients.
 #
 
-class icinga2::client::config inherits icinga2::client {
+class icinga2::nrpe::config inherits icinga2::nrpe {
   
-  include icinga2::client
+  include icinga2::nrpe
   
   #config resources here
  
