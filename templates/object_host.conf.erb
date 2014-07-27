@@ -11,7 +11,6 @@
  */
 
 //Parameters to include:
-// * check_interval
 // * retry_interval
 // * enable_notifications
 // * enable_active_checks
@@ -60,6 +59,7 @@ object Host "<%= @object_hostname %>" {
   <%- if @check_period -%>
   check_period = "<%= @check_period -%>"
   <%- end -%>
-
-
+  <%- if @check_interval -%>
+  check_interval = "<%= @check_interval -%>"
+  <%- end -%>
 }
