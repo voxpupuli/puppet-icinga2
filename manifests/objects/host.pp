@@ -7,7 +7,7 @@
 # See the inline comments.
 #
 
-define icinga2::objects::host (
+define icinga2::object::host (
   $object_hostname = $name,
   $display_name = $fqdn,
   $ipv4_address = $ipaddress_eth0,

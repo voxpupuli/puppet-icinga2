@@ -6,7 +6,7 @@
 # See the inline comments.
 #
 
-define icinga2::objects::hostgroup (
+define icinga2::object::hostgroup (
   $object_hostgroup_name = $name,
   $display_name = $name,
   $template_to_import = undef,
