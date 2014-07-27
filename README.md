@@ -122,6 +122,8 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
 
+#####Exported resources
+
 Like the built-in Nagios types, they can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
 
 Nodes that are being monitored can have the `@@` virtual resources applied to them:
