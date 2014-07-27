@@ -120,4 +120,6 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 ####Object type usage
 
+#####`icinga2::object::host`
+
 Coming soon...
