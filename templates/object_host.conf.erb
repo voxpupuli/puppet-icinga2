@@ -53,15 +53,15 @@ object Host "<%= @object_hostname %>" {
   check_command = "<%= @check_command -%>"
   <%- end -%>
   <%- if @max_check_attempts -%>
-  max_check_attempts = "<%= @max_check_attempts -%>"
+  max_check_attempts = <%= @max_check_attempts -%>
   <%- end -%>
   <%- if @check_period -%>
-  check_period = "<%= @check_period -%>"
+  check_period = <%= @check_period -%>
   <%- end -%>
   <%- if @check_interval -%>
-  check_interval = "<%= @check_interval -%>"
+  check_interval = <%= @check_interval -%>
   <%- end -%>
   <%- if @retry_interval -%>
-  retry_interval = "<%= @retry_interval -%>"
+  retry_interval = <%= @retry_interval -%>
   <%- end -%>
 }
