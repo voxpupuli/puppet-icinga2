@@ -32,9 +32,9 @@ define icinga2::object::host (
   $volatile = undef,
   $notes = undef,
   $notes_url = undef,
+  $action_url = undef,
 
   # Parameters that still need to be included:
-  # action_url
   # icon_image
   # icon_image_alt
   $target_dir = '/etc/icinga2/conf.d',
