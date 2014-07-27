@@ -10,32 +10,6 @@
  *
  */
 
-//Parameters to include:
-// * displayname
-// * address
-// * address6
-// * groups
-// * vars
-// * check_command
-// * max_check_attempts
-// * check_period
-// * check_interval
-// * retry_interval
-// * enable_notifications
-// * enable_active_checks
-// * enable_passive_checks
-// * enable_event_handler
-// * enable_flap_detection
-// * enable_perfdata
-// * event_command
-// * flapping_threshold
-// * volatile
-// * notes
-// * notes_url
-// * action_url
-// * icon_image
-// * icon_image_alt
-
 object Host "<%= @object_hostname %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
@@ -48,7 +22,72 @@ object Host "<%= @object_hostname %>" {
   <%- if @ipv4_address -%>
   address = "<%= @ipv4_address -%>"
   <%- end -%>
+  <%- if @ipv6_address -%>
+  address6 = "<%= @ipv6_address -%>"
+  <%- end -%>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
+  <%- end -%>
+  <%- if @vars.empty? != true  -%>
+  <%- @vars.each_pair do |key, value| -%>
+  vars.<%= key %> = "<%= value %>"
+  <%- end -%>
+  <%- end -%>
+  <%- if @check_command -%>
+  check_command = "<%= @check_command -%>"
+  <%- end -%>
+  <%- if @max_check_attempts -%>
+  max_check_attempts = <%= @max_check_attempts -%>
+  <%- end -%>
+  <%- if @check_period -%>
+  check_period = <%= @check_period -%>
+  <%- end -%>
+  <%- if @check_interval -%>
+  check_interval = <%= @check_interval -%>
+  <%- end -%>
+  <%- if @retry_interval -%>
+  retry_interval = <%= @retry_interval -%>
+  <%- end -%>
+  <%- if @enable_notifications -%>
+  enable_notifications = <%= @enable_notifications -%>
+  <%- end -%>
+  <%- if @enable_active_checks -%>
+  enable_active_checks = <%= @enable_active_checks -%>
+  <%- end -%>
+  <%- if @enable_passive_checks -%>
+  enable_passive_checks = <%= @enable_passive_checks -%>
+  <%- end -%>
+  <%- if @enable_event_handler -%>
+  enable_event_handler = <%= @enable_event_handler -%>
+  <%- end -%>
+  <%- if @enable_flap_detection -%>
+  enable_flap_detection = <%= @enable_flap_detection -%>
+  <%- end -%>
+  <%- if @enable_perfdata -%>
+  enable_perfdata = <%= @enable_perfdata -%>
+  <%- end -%>
+  <%- if @event_command -%>
+  event_command = "<%= @event_command -%>"
+  <%- end -%>
+  <%- if @flapping_threshold -%>
+  flapping_threshold = "<%= @flapping_threshold -%>"
+  <%- end -%>
+  <%- if @volatile -%>
+  volatile = "<%= @volatile -%>"
+  <%- end -%>
+  <%- if @notes -%>
+  notes = "<%= @notes -%>"
+  <%- end -%>
+  <%- if @notes_url -%>
+  notes_url = "<%= @notes_url -%>"
+  <%- end -%>
+  <%- if @action_url -%>
+  action_url = "<%= @action_url -%>"
+  <%- end -%>
+  <%- if @icon_image -%>
+  icon_image = "<%= @icon_image -%>"
+  <%- end -%>
+  <%- if @icon_image_alt -%>
+  icon_image_alt = "<%= @icon_image_alt -%>"
   <%- end -%>
 }
