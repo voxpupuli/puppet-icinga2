@@ -31,9 +31,9 @@ define icinga2::object::host (
   $flapping_threshold = undef,
   $volatile = undef,
   $notes = undef,
+  $notes_url = undef,
 
   # Parameters that still need to be included:
-  # notes_url
   # action_url
   # icon_image
   # icon_image_alt

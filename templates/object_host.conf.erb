@@ -11,7 +11,6 @@
  */
 
 //Parameters to include:
-// * notes_url
 // * action_url
 // * icon_image
 // * icon_image_alt
@@ -83,5 +82,8 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @notes -%>
   notes = "<%= @notes -%>"
+  <%- end -%>
+  <%- if @notes_url -%>
+  notes_url = "<%= @notes_url -%>"
   <%- end -%>
 }
