@@ -16,9 +16,9 @@ define icinga2::object::host (
   $groups = [],
   $vars = {},
   $check_command = undef,
+  $max_check_attempts = undef,
 
   # Parameters that still need to be included:
-  # max_check_attempts
   # check_period
   # check_interval
   # retry_interval
