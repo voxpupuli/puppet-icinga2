@@ -19,9 +19,9 @@ define icinga2::object::host (
   $max_check_attempts = undef,
   $check_period = undef,
   $check_interval = undef,
+  $retry_interval = undef,
 
   # Parameters that still need to be included:
-  # retry_interval
   # enable_notifications
   # enable_active_checks
   # enable_passive_checks
