@@ -22,9 +22,9 @@ define icinga2::object::host (
   $retry_interval = undef,
   $enable_notifications = undef,
   $enable_active_checks = undef,
+  $enable_passive_checks = undef,
 
   # Parameters that still need to be included:
-  # enable_passive_checks
   # enable_event_handler
   # enable_flap_detection
   # enable_perfdata
