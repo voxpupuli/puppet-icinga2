@@ -117,3 +117,7 @@ class { 'icinga2::server':
 </pre>
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+
+####Object type usage
+
+Coming soon...
