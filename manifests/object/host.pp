@@ -17,9 +17,9 @@ define icinga2::object::host (
   $vars = {},
   $check_command = undef,
   $max_check_attempts = undef,
+  $check_period = undef,
 
   # Parameters that still need to be included:
-  # check_period
   # check_interval
   # retry_interval
   # enable_notifications

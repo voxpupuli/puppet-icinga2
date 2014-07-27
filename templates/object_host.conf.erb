@@ -11,7 +11,6 @@
  */
 
 //Parameters to include:
-// * check_period
 // * check_interval
 // * retry_interval
 // * enable_notifications
@@ -58,4 +57,9 @@ object Host "<%= @object_hostname %>" {
   <%- if @max_check_attempts -%>
   max_check_attempts = "<%= @max_check_attempts -%>"
   <%- end -%>
+  <%- if @check_period -%>
+  check_period = "<%= @check_period -%>"
+  <%- end -%>
+
+
 }
