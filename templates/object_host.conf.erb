@@ -12,7 +12,6 @@
 
 //Parameters to include:
 // * groups
-// * vars
 // * check_command
 // * max_check_attempts
 // * check_period
@@ -50,5 +49,10 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
+  <%- end -%>
+  <%- if @vars.empty? != true  -%>
+  <%- @vars.each_pair do |key, value| -%>
+  vars.<%= key %> = "<%= value %>"
+  <%- end -%>
   <%- end -%>
 }
