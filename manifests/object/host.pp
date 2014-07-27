@@ -30,9 +30,9 @@ define icinga2::object::host (
   #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
   $flapping_threshold = undef,
   $volatile = undef,
+  $notes = undef,
 
   # Parameters that still need to be included:
-  # notes
   # notes_url
   # action_url
   # icon_image
