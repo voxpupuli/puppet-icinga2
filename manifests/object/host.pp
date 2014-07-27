@@ -34,9 +34,7 @@ define icinga2::object::host (
   $notes_url = undef,
   $action_url = undef,
   $icon_image = undef,
-
-  # Parameters that still need to be included:
-  # icon_image_alt
+  $icon_image_alt = undef,
   $target_dir = '/etc/icinga2/conf.d',
   $target_file_name = "${fqdn}.conf",
   $target_file_owner = 'root',
