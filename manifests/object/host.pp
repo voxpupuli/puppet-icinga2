@@ -15,9 +15,9 @@ define icinga2::object::host (
   $template_to_import = 'generic-host',
   $groups = [],
   $vars = {},
+  $check_command = undef,
 
   # Parameters that still need to be included:
-  # check_command
   # max_check_attempts
   # check_period
   # check_interval
