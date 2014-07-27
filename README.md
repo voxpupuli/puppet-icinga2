@@ -122,4 +122,14 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 #####`icinga2::object::host`
 
-Coming soon...
+**Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't set as the value for `address6` in the rendered host definition.
+
+If you would like to use an IPv6 address, make sure to set the `ipv6_address` parameter to the `ipaddress_ethX` fact that will give you the right IPv6 address for the machine:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv6_address => $::ipaddress_eth1,
+....
+}
+</pre>
