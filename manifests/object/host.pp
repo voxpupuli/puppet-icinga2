@@ -23,9 +23,9 @@ define icinga2::object::host (
   $enable_notifications = undef,
   $enable_active_checks = undef,
   $enable_passive_checks = undef,
+  $enable_event_handler = undef,
 
   # Parameters that still need to be included:
-  # enable_event_handler
   # enable_flap_detection
   # enable_perfdata
   # event_command
