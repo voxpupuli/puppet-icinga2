@@ -7,7 +7,7 @@ The module has only been tested on [CentOS 6.5](http://www.centos.org/download/)
 
 Currently, this module does not install or configure any web UIs for Icinga 2. This module also does not install or configure a mail transfer agent (MTA) to send outgoing alert emails.
 
-While NRPE is required for Icinga 2 to check non-network-reachble things on client machines (CPU, load average, etc.), this module itself doesn't have any dependencies between the server component (the `icinga2::server` class) and client component (the `icinga2::client` class). Either one can be used independently of the other.
+While NRPE is required for Icinga 2 to check non-network-reachble things on client machines (CPU, load average, etc.), this module itself doesn't have any dependencies between the server component (the `icinga2::server` class) and client component (the `icinga2::nrpe` class). Either one can be used independently of the other.
 
 ###Requirements
 
@@ -82,12 +82,112 @@ class { 'icinga2::server':
 }
 </pre>
 
+**Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
+
+<pre>
+#Install Icinga 2:
+class { 'icinga2::server': 
+  ...
+  server_install_nagios_plugins => false,
+  ...
+ }
+</pre>
+
+This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+
+
 ####Client usage
 
 To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
 
 <pre>
-class { 'icinga2::client':
+class { 'icinga2::nrpe':
   nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+}
+</pre>
+
+**Note:** If you would like to install NRPE on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
+
+<pre>
+#Install Icinga 2:
+class { 'icinga2::server': 
+  server_db_type => 'pgsql',
+  server_install_nagios_plugins => false,
+ }
+</pre>
+
+This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+
+####Object type usage
+
+This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
+
+#####Exported resources
+
+Like the built-in Nagios types, they can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
+
+Nodes that are being monitored can have the `@@` virtual resources applied to them:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv4_address => $::ipaddress_eth0,
+  groups => ['linux_servers', 'mysql_servers'],
+  vars => {
+    os              => 'linux',
+    virtual_machine => 'true',
+    distro          => $::operatingsystem,
+  },
+  target_dir => '/etc/icinga2/objects/hosts',
+  target_file_name => "${fqdn}.conf"
+}
+</pre>
+
+Then, on your Icinga 2 server, you can collect the exported virtual resources (notice the camel casing in the class name):
+
+<pre>
+#Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
+Icinga2::Object::Host <<| |>> { }
+</pre>
+
+Unlike the built-in Nagios types, the file owner, group and mode of the automatically generated files can be controlled via the `target_file_owner`, `target_file_group` and `target_file_mode` parameters:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv4_address => $::ipaddress_eth0,
+  groups => ['linux_servers', 'mysql_servers'],
+  vars => {
+    os              => 'linux',
+    virtual_machine => 'true',
+    distro          => $::operatingsystem,
+  },
+  target_dir => '/etc/icinga2/objects/hosts',
+  target_file_name => "${fqdn}.conf"
+  target_file_owner = 'root',
+  target_file_group = 'root',
+  target_file_mode = '644'
+}
+</pre>
+
+#####`undef` and default object values
+
+Most of the object parameters *in the Puppet module* are set to **undef**. 
+
+This means that they will not be added to the rendered object definition files.
+
+**However**, this doesn't mean that the values are not set. Icinga 2 itself has default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values. 
+
+#####`icinga2::object::host`
+
+**Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't set as the value for `address6` in the rendered host definition.
+
+If you would like to use an IPv6 address, make sure to set the `ipv6_address` parameter to the `ipaddress_ethX` fact that will give you the right IPv6 address for the machine:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv6_address => $::ipaddress_eth1,
+....
 }
 </pre>

@@ -1,4 +1,4 @@
-# Define icinga2::client::plugin
+# Define icinga2::nrpe::plugin
 #
 # This defined type distributes .
 #
@@ -14,7 +14,7 @@
 #                  for more info on what formats of URLs you can use to specify which files
 #                  you want to distribute.
 
-define icinga2::client::plugin (
+define icinga2::nrpe::plugin (
   $plugin_name        = $name,
   $nrpe_plugin_liddir = $icinga2::params::nrpe_plugin_liddir,
   $source_file        = undef,
