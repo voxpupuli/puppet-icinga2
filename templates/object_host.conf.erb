@@ -11,8 +11,6 @@
  */
 
 //Parameters to include:
-// * flapping_threshold
-// * volatile
 // * notes
 // * notes_url
 // * action_url
@@ -80,5 +78,8 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @flapping_threshold -%>
   flapping_threshold = "<%= @flapping_threshold -%>"
+  <%- end -%>
+  <%- if @volatile -%>
+  volatile = "<%= @volatile -%>"
   <%- end -%>
 }
