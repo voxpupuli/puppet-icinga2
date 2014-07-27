@@ -170,6 +170,14 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
 }
 </pre>
 
+#####`undef` and default object values
+
+Most of the object parameters *in the Puppet module* are set to **undef**. 
+
+This means that they will not be added to the rendered object definition files.
+
+**However**, this doesn't mean that the values are not set. Icinga 2 itself has default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values. 
+
 #####`icinga2::object::host`
 
 **Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't set as the value for `address6` in the rendered host definition.
