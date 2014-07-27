@@ -53,9 +53,9 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- end -%>
   <%- if @check_command -%>
-  check_command = "<%= @max_check_attempts -%>"
+  check_command = "<%= @check_command -%>"
   <%- end -%>
-  <%- if @check_command -%>
+  <%- if @max_check_attempts -%>
   max_check_attempts = "<%= @max_check_attempts -%>"
   <%- end -%>
 }
