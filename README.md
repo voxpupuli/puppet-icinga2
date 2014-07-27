@@ -120,6 +120,54 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 ####Object type usage
 
+This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
+
+Like the built-in Nagios types, they can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
+
+Nodes that are being monitored can have the `@@` virtual resources applied to them:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv4_address => $::ipaddress_eth0,
+  groups => ['linux_servers', 'mysql_servers'],
+  vars => {
+    os              => 'linux',
+    virtual_machine => 'true',
+    distro          => $::operatingsystem,
+  },
+  target_dir => '/etc/icinga2/objects/hosts',
+  target_file_name => "${fqdn}.conf"
+}
+</pre>
+
+Then, on your Icinga 2 server, you can collect the exported virtual resources (notice the camel casing in the class name):
+
+<pre>
+#Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
+Icinga2::Object::Host <<| |>> { }
+</pre>
+
+Unlike the built-in Nagios types, the file owner, group and mode of the automatically generated files can be controlled via the `target_file_owner`, `target_file_group` and `target_file_mode` parameters:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv4_address => $::ipaddress_eth0,
+  groups => ['linux_servers', 'mysql_servers'],
+  vars => {
+    os              => 'linux',
+    virtual_machine => 'true',
+    distro          => $::operatingsystem,
+  },
+  target_dir => '/etc/icinga2/objects/hosts',
+  target_file_name => "${fqdn}.conf"
+  target_file_owner = 'root',
+  target_file_group = 'root',
+  target_file_mode = '644'
+}
+</pre>
+
 #####`icinga2::object::host`
 
 **Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't set as the value for `address6` in the rendered host definition.
