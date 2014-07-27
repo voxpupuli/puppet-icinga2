@@ -11,7 +11,6 @@
  */
 
 //Parameters to include:
-// * address6
 // * groups
 // * vars
 // * check_command
@@ -45,6 +44,9 @@ object Host "<%= @object_hostname %>" {
   <%- end -%>
   <%- if @ipv4_address -%>
   address = "<%= @ipv4_address -%>"
+  <%- end -%>
+  <%- if @ipv6_address -%>
+  address6 = "<%= @ipv6_address -%>"
   <%- end -%>
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
