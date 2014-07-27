@@ -26,9 +26,9 @@ define icinga2::object::host (
   $enable_event_handler = undef,
   $enable_flap_detection = undef,
   $enable_perfdata = undef,
+  $event_command = undef,
 
   # Parameters that still need to be included:
-  # event_command
   # flapping_threshold
   # volatile
   # notes
