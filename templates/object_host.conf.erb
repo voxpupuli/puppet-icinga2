@@ -78,4 +78,7 @@ object Host "<%= @object_hostname %>" {
   <%- if @event_command -%>
   event_command = "<%= @event_command -%>"
   <%- end -%>
+  <%- if @flapping_threshold -%>
+  flapping_threshold = "<%= @flapping_threshold -%>"
+  <%- end -%>
 }

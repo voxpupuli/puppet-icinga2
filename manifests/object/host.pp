@@ -27,9 +27,10 @@ define icinga2::object::host (
   $enable_flap_detection = undef,
   $enable_perfdata = undef,
   $event_command = undef,
+  #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
+  $flapping_threshold = undef,
 
   # Parameters that still need to be included:
-  # flapping_threshold
   # volatile
   # notes
   # notes_url
