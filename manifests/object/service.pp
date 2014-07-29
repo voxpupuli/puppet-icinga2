@@ -15,7 +15,6 @@ define icinga2::object::service (
   $display_name = $name,
   $host_name = $fqdn,    
   #Parameters to add:
-  # * name
   # * groups
   # * vars
   # * check_command
