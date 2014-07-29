@@ -30,8 +30,8 @@ define icinga2::object::service (
   $event_command = undef,
   #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
   $flapping_threshold = undef,
+  $volatile = undef,
   #Parameters to add:
-  # * volatile
   # * notes
   # * notes_url
   # * action_url

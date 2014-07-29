@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * volatile
 // * notes
 // * notes_url
 // * action_url
@@ -76,5 +75,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @flapping_threshold -%>
   flapping_threshold = "<%= @flapping_threshold -%>"
+  <%- end -%>
+  <%- if @volatile -%>
+  volatile = "<%= @volatile -%>"
   <%- end -%>
 }
