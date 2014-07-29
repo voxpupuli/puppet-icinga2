@@ -19,8 +19,8 @@ define icinga2::object::service (
   $check_command = undef,
   $max_check_attempts = undef,
   $check_period = undef,
+  $check_interval = undef,
   #Parameters to add:
-  # * check_interval
   # * retry_interval
   # * enable_notifications
   # * enable_active_checks
