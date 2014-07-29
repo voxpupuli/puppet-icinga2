@@ -10,9 +10,6 @@
  *
  */
 
-// Parameters to add:
-// * icon_image_alt
-
 object Service "<%= @object_servicename %>" { 
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
@@ -86,5 +83,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @icon_image -%>
   icon_image = "<%= @icon_image -%>"
+  <%- end -%>
+  <%- if @icon_image_alt -%>
+  icon_image_alt = "<%= @icon_image_alt -%>"
   <%- end -%>
 }
