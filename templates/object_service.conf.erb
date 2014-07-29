@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * groups
 // * vars
 // * check_command
 // * max_check_attempts
@@ -44,5 +43,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @host_name -%>
   host_name = "<%= @host_name -%>"
+  <%- end -%>
+  <%- if @groups.length != 0 -%>
+  groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
 }
