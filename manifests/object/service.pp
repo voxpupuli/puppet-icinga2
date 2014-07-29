@@ -32,8 +32,8 @@ define icinga2::object::service (
   $flapping_threshold = undef,
   $volatile = undef,
   $notes = undef,
+  $notes_url = undef,
   #Parameters to add:
-  # * notes_url
   # * action_url
   # * icon_image
   # * icon_image_alt  
