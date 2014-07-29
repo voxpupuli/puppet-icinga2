@@ -10,7 +10,7 @@
 #
 
 define icinga2::object::service (
-
+  $object_servicename = $name,
   #Parameters to add:
   # * display_name
   # * host_name
@@ -35,10 +35,7 @@ define icinga2::object::service (
   # * notes_url
   # * action_url
   # * icon_image
-  # * icon_image_alt
-  
-  
-  
+  # * icon_image_alt  
   $target_dir        = '/etc/icinga2/conf.d',
   $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
