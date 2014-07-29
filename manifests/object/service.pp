@@ -9,7 +9,13 @@
 # See the inline comments.
 #
 
-define icinga2::object::service () {
+define icinga2::object::service (
+  $target_dir        = '/etc/icinga2/conf.d',
+  $target_file_name  = "${name}.conf",
+  $target_file_owner = 'root',
+  $target_file_group = 'root',
+  $target_file_mode  = '644'
+) {
 
   file {"${target_dir}/${target_file_name}":
     ensure => file,
