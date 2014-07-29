@@ -34,8 +34,8 @@ define icinga2::object::service (
   $notes = undef,
   $notes_url = undef,
   $action_url = undef,
+  $icon_image = undef,
   #Parameters to add:
-  # * icon_image
   # * icon_image_alt  
   $target_dir        = '/etc/icinga2/conf.d',
   $target_file_name  = "${name}.conf",
