@@ -162,11 +162,11 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
     virtual_machine => 'true',
     distro          => $::operatingsystem,
   },
-  target_dir => '/etc/icinga2/objects/hosts',
-  target_file_name => "${fqdn}.conf"
+  target_dir        => '/etc/icinga2/objects/hosts',
+  target_file_name  => "${fqdn}.conf"
   target_file_owner => 'root',
   target_file_group => 'root',
-  target_file_mode => '644'
+  target_file_mode  => '644'
 }
 </pre>
 
