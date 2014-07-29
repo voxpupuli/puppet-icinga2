@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * enable_event_handler
 // * enable_flap_detection
 // * enable_perfdata
 // * event_command
@@ -66,5 +65,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @enable_passive_checks -%>
   enable_passive_checks = <%= @enable_passive_checks -%>
+  <%- end -%>
+  <%- if @enable_event_handler -%>
+  enable_event_handler = <%= @enable_event_handler -%>
   <%- end -%>
 }
