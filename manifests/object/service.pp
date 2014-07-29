@@ -14,9 +14,9 @@ define icinga2::object::service (
   $template_to_import = 'generic-service',
   $display_name = $name,
   $host_name = $fqdn,
-  $groups = [],    
+  $groups = [],
+  $vars = {},
   #Parameters to add:
-  # * vars
   # * check_command
   # * max_check_attempts
   # * check_period
