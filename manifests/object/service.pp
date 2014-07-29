@@ -17,8 +17,8 @@ define icinga2::object::service (
   $groups = [],
   $vars = {},
   $check_command = undef,
+  $max_check_attempts = undef,
   #Parameters to add:
-  # * max_check_attempts
   # * check_period
   # * check_interval
   # * retry_interval
