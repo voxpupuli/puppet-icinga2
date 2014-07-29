@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * event_command
 // * flapping_threshold
 // * volatile
 // * notes
@@ -72,5 +71,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @enable_perfdata -%>
   enable_perfdata = <%= @enable_perfdata -%>
+  <%- end -%>
+  <%- if @event_command -%>
+  event_command = "<%= @event_command -%>"
   <%- end -%>
 }

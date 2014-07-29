@@ -27,8 +27,8 @@ define icinga2::object::service (
   $enable_event_handler = undef,
   $enable_flap_detection = undef,
   $enable_perfdata = undef,
+  $event_command = undef,
   #Parameters to add:
-  # * event_command
   # * flapping_threshold
   # * volatile
   # * notes
