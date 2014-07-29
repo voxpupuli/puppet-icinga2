@@ -33,8 +33,8 @@ define icinga2::object::service (
   $volatile = undef,
   $notes = undef,
   $notes_url = undef,
+  $action_url = undef,
   #Parameters to add:
-  # * action_url
   # * icon_image
   # * icon_image_alt  
   $target_dir        = '/etc/icinga2/conf.d',
