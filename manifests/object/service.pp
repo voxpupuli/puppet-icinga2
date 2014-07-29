@@ -16,8 +16,8 @@ define icinga2::object::service (
   $host_name = $fqdn,
   $groups = [],
   $vars = {},
+  $check_command = undef,
   #Parameters to add:
-  # * check_command
   # * max_check_attempts
   # * check_period
   # * check_interval
