@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * display_name
 // * host_name
 // * name
 // * groups
@@ -41,5 +40,8 @@ object Service "<%= @object_servicename %>" {
   <%- if @template_to_import -%>
   <%#- Otherwise, include the parameter: -%>  
   import "<%= @template_to_import -%>"
+  <%- end -%>
+  <%- if @display_name -%>
+  display_name = "<%= @display_name -%>"
   <%- end -%>
 }
