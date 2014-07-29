@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * enable_notifications
 // * enable_active_checks
 // * enable_passive_checks
 // * enable_event_handler
@@ -60,5 +59,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @retry_interval -%>
   retry_interval = <%= @retry_interval -%>
+  <%- end -%>
+  <%- if @enable_notifications -%>
+  enable_notifications = <%= @enable_notifications -%>
   <%- end -%>
 }
