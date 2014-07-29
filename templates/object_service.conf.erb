@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * enable_perfdata
 // * event_command
 // * flapping_threshold
 // * volatile
@@ -70,5 +69,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @enable_flap_detection -%>
   enable_flap_detection = <%= @enable_flap_detection -%>
+  <%- end -%>
+  <%- if @enable_perfdata -%>
+  enable_perfdata = <%= @enable_perfdata -%>
   <%- end -%>
 }
