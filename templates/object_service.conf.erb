@@ -36,4 +36,10 @@
 // * icon_image
 // * icon_image_alt
 
-object Service "<%= @object_servicename %>" { }
+object Service "<%= @object_servicename %>" { 
+  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
+  <%- if @template_to_import -%>
+  <%#- Otherwise, include the parameter: -%>  
+  import "<%= @template_to_import -%>"
+  <%- end -%>
+}

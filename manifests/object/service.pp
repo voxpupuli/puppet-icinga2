@@ -11,6 +11,7 @@
 
 define icinga2::object::service (
   $object_servicename = $name,
+  $template_to_import = 'generic-service',  
   #Parameters to add:
   # * display_name
   # * host_name
