@@ -12,9 +12,9 @@
 define icinga2::object::service (
   $object_servicename = $name,
   $template_to_import = 'generic-service',
-  $display_name = $name,    
+  $display_name = $name,
+  $host_name = $fqdn,    
   #Parameters to add:
-  # * host_name
   # * name
   # * groups
   # * vars

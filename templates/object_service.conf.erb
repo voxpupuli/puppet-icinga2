@@ -11,7 +11,6 @@
  */
 
 // Parameters to add:
-// * host_name
 // * name
 // * groups
 // * vars
@@ -43,5 +42,8 @@ object Service "<%= @object_servicename %>" {
   <%- end -%>
   <%- if @display_name -%>
   display_name = "<%= @display_name -%>"
+  <%- end -%>
+  <%- if @host_name -%>
+  host_name = "<%= @host_name -%>"
   <%- end -%>
 }
