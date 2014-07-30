@@ -19,7 +19,8 @@ define icinga2::object::hostgroup (
   $target_file_owner = 'root',
   $target_file_group = 'root',
   $target_file_mode = '644',
-  $assign_where = undef
+  $assign_where = undef,
+  $ignore_where = undef
 ) {
 
   file {"${target_dir}/${target_file_name}":
