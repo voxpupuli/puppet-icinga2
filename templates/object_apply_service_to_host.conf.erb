@@ -31,13 +31,13 @@ apply Service "<%= @object_servicename %>" to Host {
   <%- if @groups.length != 0 -%>
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
+  <%- if @check_command -%>
+  check_command = "<%= @check_command -%>"
+  <%- end -%>
   <%- if @vars.empty? != true  -%>
   <%- @vars.each_pair do |key, value| -%>
   vars.<%= key %> = "<%= value %>"
   <%- end -%>
-  <%- end -%>
-  <%- if @check_command -%>
-  check_command = "<%= @check_command -%>"
   <%- end -%>
   <%- if @max_check_attempts -%>
   max_check_attempts = <%= @max_check_attempts -%>
