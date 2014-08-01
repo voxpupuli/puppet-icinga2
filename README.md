@@ -191,3 +191,35 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ....
 }
 </pre>
+
+#####`icinga2::object::apply_service_to_host`
+
+The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
+
+<pre>
+#Create an apply that checks the number of zombie processes:
+icinga2::object::apply_service_to_host { 'check_zombie_procs':
+  display_name => 'Zombie procs',
+  check_command => 'nrpe',
+  vars => {
+    nrpe_command => 'check_zombie_procs',
+  },
+  assign_where => '"linux_servers" in host.groups',
+  ignore_where => 'host.name == "localhost"',
+  target_dir => '/etc/icinga2/objects/applys'
+}
+</pre>
+
+This defined type has the same available parameters that the `icinga2::object::service` defined type does.
+
+The `assign_where` and `ignore_where` parameter values are meant to be provided as strings. Since Icinga 2 requires that string literals be double-quoted, the whole string in your Puppet site manifests will have to be single-quoted (leaving the double quotes intact inside):
+
+<pre>
+assign_where => '"linux_servers" in host.groups',
+</pre>
+
+If you would like to use Puppet or Facter variables in an `assign_where` or `ignore_where` parameter's value, you'll first need to double-quote the whole value for [Puppet's variable interpolation](http://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#double-quoted-strings) to work. Then, you'll need to escape the double quotes that surround the Icinga 2 string literals inside:
+
+<pre>
+assign_where => "\"linux_servers\" in host.${facter_variable}"",
+</pre>
