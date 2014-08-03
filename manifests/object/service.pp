@@ -1,20 +1,19 @@
-# == Defined type: icinga2::object::host
-#  
-#  This is a defined type for Icinga 2 host objects.
+# == Defined type: icinga2::object::service
+#
+# This is a defined type for Icinga 2 service objects.
 # See the following Icinga 2 doc page for more info:
-# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-host
+# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-service
 #
 # === Parameters
 #
 # See the inline comments.
 #
 
-define icinga2::object::host (
-  $object_hostname = $name,
-  $display_name = $fqdn,
-  $ipv4_address = $ipaddress_eth0,
-  $ipv6_address = undef,
-  $template_to_import = 'generic-host',
+define icinga2::object::service (
+  $object_servicename = $name,
+  $template_to_import = 'generic-service',
+  $display_name = $name,
+  $host_name = $fqdn,
   $groups = [],
   $vars = {},
   $check_command = undef,
@@ -37,11 +36,11 @@ define icinga2::object::host (
   $action_url = undef,
   $icon_image = undef,
   $icon_image_alt = undef,
-  $target_dir = '/etc/icinga2/conf.d',
-  $target_file_name = "${fqdn}.conf",
+  $target_dir        = '/etc/icinga2/conf.d',
+  $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
-  $target_file_mode = '644'
+  $target_file_mode  = '644'
 ) {
 
   file {"${target_dir}/${target_file_name}":
@@ -49,7 +48,7 @@ define icinga2::object::host (
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    content => template('icinga2/object_host.conf.erb'),
+    content => template('icinga2/object_service.conf.erb'),
     notify => Service['icinga2'],
   }
 

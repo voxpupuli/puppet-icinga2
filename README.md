@@ -162,11 +162,11 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
     virtual_machine => 'true',
     distro          => $::operatingsystem,
   },
-  target_dir => '/etc/icinga2/objects/hosts',
-  target_file_name => "${fqdn}.conf"
-  target_file_owner = 'root',
-  target_file_group = 'root',
-  target_file_mode = '644'
+  target_dir        => '/etc/icinga2/objects/hosts',
+  target_file_name  => "${fqdn}.conf"
+  target_file_owner => 'root',
+  target_file_group => 'root',
+  target_file_mode  => '644'
 }
 </pre>
 
@@ -176,11 +176,11 @@ Most of the object parameters *in the Puppet module* are set to **undef**.
 
 This means that they will not be added to the rendered object definition files.
 
-**However**, this doesn't mean that the values are not set. Icinga 2 itself has default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values. 
+**However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values. 
 
 #####`icinga2::object::host`
 
-**Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't set as the value for `address6` in the rendered host definition.
+**Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't unintentionally set as the value for `address6` in the rendered host object definition.
 
 If you would like to use an IPv6 address, make sure to set the `ipv6_address` parameter to the `ipaddress_ethX` fact that will give you the right IPv6 address for the machine:
 
@@ -190,4 +190,36 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
   ipv6_address => $::ipaddress_eth1,
 ....
 }
+</pre>
+
+#####`icinga2::object::apply_service_to_host`
+
+The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
+
+<pre>
+#Create an apply that checks the number of zombie processes:
+icinga2::object::apply_service_to_host { 'check_zombie_procs':
+  display_name => 'Zombie procs',
+  check_command => 'nrpe',
+  vars => {
+    nrpe_command => 'check_zombie_procs',
+  },
+  assign_where => '"linux_servers" in host.groups',
+  ignore_where => 'host.name == "localhost"',
+  target_dir => '/etc/icinga2/objects/applys'
+}
+</pre>
+
+This defined type has the same available parameters that the `icinga2::object::service` defined type does.
+
+The `assign_where` and `ignore_where` parameter values are meant to be provided as strings. Since Icinga 2 requires that string literals be double-quoted, the whole string in your Puppet site manifests will have to be single-quoted (leaving the double quotes intact inside):
+
+<pre>
+assign_where => '"linux_servers" in host.groups',
+</pre>
+
+If you would like to use Puppet or Facter variables in an `assign_where` or `ignore_where` parameter's value, you'll first need to double-quote the whole value for [Puppet's variable interpolation](http://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#double-quoted-strings) to work. Then, you'll need to escape the double quotes that surround the Icinga 2 string literals inside:
+
+<pre>
+assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>

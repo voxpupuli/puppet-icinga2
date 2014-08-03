@@ -1,0 +1,38 @@
+{
+  "name": "puppet-icinga2",
+  "version": "0.4",
+  "author": "Nick Chappell",
+  "summary": "Icinga 2 Puppet module",
+  "license": "Apache 2.0",
+  "source": "git://github.com/nickchappell/puppet-icinga2.git",
+  "project_page": "https://github.com/nickchappell/puppet-icinga2",
+  "issues_url": "https://github.com/nickchappell/puppet-icinga2/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "description": "A module for installing and configuring the Icinga 2 monitoring system",
+  "dependencies": [
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">= 1.5.0"
+    }
+  ]
+}
