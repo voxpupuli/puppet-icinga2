@@ -11,7 +11,6 @@
  */
 
 //Parameters to add:
-// display_name
 // email
 // pager
 // vars
@@ -26,5 +25,8 @@ object User "<%= @object_username %>" {
   <%- if @template_to_import -%>
   <%#- Otherwise, include the parameter: -%>
   import "<%= @template_to_import -%>"
+  <%- end -%>
+  <%- if @display_name -%>
+  display_name "<%= @display_name -%>"
   <%- end -%>
 }
