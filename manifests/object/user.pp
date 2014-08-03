@@ -10,6 +10,7 @@
 #
 
 define icinga2::object::user (
+  $object_username = $name,
   #Parameters to add:
   # display_name
   # email
