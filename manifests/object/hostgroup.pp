@@ -1,5 +1,8 @@
 # == Defined type: icinga2::object::hostgroup
 #
+# This is a defined type for Icinga 2 hostgroup objects.
+# See the following Icinga 2 doc page for more info:
+# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-hostgroup
 #
 # === Parameters
 #
@@ -16,7 +19,8 @@ define icinga2::object::hostgroup (
   $target_file_owner = 'root',
   $target_file_group = 'root',
   $target_file_mode = '644',
-  $assign_where = undef
+  $assign_where = undef,
+  $ignore_where = undef
 ) {
 
   file {"${target_dir}/${target_file_name}":
