@@ -11,7 +11,6 @@
  */
 
 //Parameters to add:
-// period
 // types
 // states
 
@@ -40,5 +39,8 @@ object User "<%= @object_username %>" {
   <%- end -%>
   <%- if @enable_notifications -%>
   enable_notifications = <%= @enable_notifications -%>
+  <%- end -%>
+  <%- if @period -%>
+  period "<%= @period -%>"
   <%- end -%>
 }

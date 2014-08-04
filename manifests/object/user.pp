@@ -17,8 +17,8 @@ define icinga2::object::user (
   $vars = {},
   $groups = [],
   $enable_notifications = undef,
+  $period = undef,
   #Parameters to add:
-  # period
   # types
   # states
   $target_dir = '/etc/icinga2/conf.d',
