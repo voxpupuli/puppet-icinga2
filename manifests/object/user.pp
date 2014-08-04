@@ -13,8 +13,8 @@ define icinga2::object::user (
   $object_username = $name,
   $display_name = $name,
   $email = undef,
+  $pager = undef,
   #Parameters to add:
-  # pager
   # vars
   # groups
   # enable_notifications
