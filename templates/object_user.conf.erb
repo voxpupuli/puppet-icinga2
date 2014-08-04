@@ -11,7 +11,6 @@
  */
 
 //Parameters to add:
-// vars
 // groups
 // enable_notifications
 // period
@@ -32,5 +31,10 @@ object User "<%= @object_username %>" {
   <%- end -%>
   <%- if @pager -%>
   pager "<%= @pager -%>"
+  <%- end -%>
+  <%- if @vars.empty? != true  -%>
+  <%- @vars.each_pair do |key, value| -%>
+  vars.<%= key %> = "<%= value %>"
+  <%- end -%>
   <%- end -%>
 }

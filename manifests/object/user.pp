@@ -14,8 +14,8 @@ define icinga2::object::user (
   $display_name = $name,
   $email = undef,
   $pager = undef,
+  $vars = {},
   #Parameters to add:
-  # vars
   # groups
   # enable_notifications
   # period
