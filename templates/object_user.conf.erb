@@ -11,7 +11,6 @@
  */
 
 //Parameters to add:
-// email
 // pager
 // vars
 // groups
@@ -28,5 +27,8 @@ object User "<%= @object_username %>" {
   <%- end -%>
   <%- if @display_name -%>
   display_name "<%= @display_name -%>"
+  <%- end -%>
+  <%- if @email -%>
+  email "<%= @email -%>"
   <%- end -%>
 }

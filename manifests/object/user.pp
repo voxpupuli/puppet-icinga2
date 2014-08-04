@@ -12,8 +12,8 @@
 define icinga2::object::user (
   $object_username = $name,
   $display_name = $name,
+  $email = undef,
   #Parameters to add:
-  # email
   # pager
   # vars
   # groups
