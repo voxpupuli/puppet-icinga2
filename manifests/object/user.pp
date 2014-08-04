@@ -18,8 +18,8 @@ define icinga2::object::user (
   $groups = [],
   $enable_notifications = undef,
   $period = undef,
+  $types = [],
   #Parameters to add:
-  # types
   # states
   $target_dir = '/etc/icinga2/conf.d',
   $target_file_name = "${fqdn}.conf",

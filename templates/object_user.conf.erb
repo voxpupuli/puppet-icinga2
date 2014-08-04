@@ -11,7 +11,6 @@
  */
 
 //Parameters to add:
-// types
 // states
 
 object User "<%= @object_username %>" {
@@ -42,5 +41,8 @@ object User "<%= @object_username %>" {
   <%- end -%>
   <%- if @period -%>
   period "<%= @period -%>"
+  <%- end -%>
+  <%- if @types.length != 0 -%>
+  types = [ <%- @types.each do |type| -%> <%= type %>, <%- end -%>]
   <%- end -%>
 }
