@@ -19,8 +19,7 @@ define icinga2::object::user (
   $enable_notifications = undef,
   $period = undef,
   $types = [],
-  #Parameters to add:
-  # states
+  $states = [],
   $target_dir = '/etc/icinga2/conf.d',
   $target_file_name = "${fqdn}.conf",
   $target_file_owner = 'root',

@@ -10,9 +10,6 @@
  *
  */
 
-//Parameters to add:
-// states
-
 object User "<%= @object_username %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @template_to_import -%>
@@ -44,5 +41,8 @@ object User "<%= @object_username %>" {
   <%- end -%>
   <%- if @types.length != 0 -%>
   types = [ <%- @types.each do |type| -%> <%= type %>, <%- end -%>]
+  <%- end -%>
+  <%- if @states.length != 0 -%>
+  states = [ <%- @states.each do |state| -%> <%= state %>, <%- end -%>]
   <%- end -%>
 }
