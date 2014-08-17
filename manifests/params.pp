@@ -76,7 +76,7 @@ class icinga2::params {
           $icinga2_server_package = 'icinga2'
           $icinga2_server_plugin_packages = [ "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
         }
-    }
+      }
     }
     
     #Fail if we're on any other OS:
@@ -302,7 +302,7 @@ class icinga2::params {
         }
         #...but 14.04 does:
         '14.04': {
-          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib"]
+          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
         }
       }
     }
