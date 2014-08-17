@@ -1,12 +1,12 @@
 {
   "name": "puppet-icinga2",
   "version": "0.4",
-  "author": "Nick Chappell",
+  "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet module",
-  "license": "Apache 2.0",
-  "source": "git://github.com/nickchappell/puppet-icinga2.git",
-  "project_page": "https://github.com/nickchappell/puppet-icinga2",
-  "issues_url": "https://github.com/nickchappell/puppet-icinga2/issues",
+  "license": "GPLv2",
+  "source": "git://github.com/icinga/puppet-icinga2",
+  "project_page": "https://github.com/icinga/puppet-icinga2",
+  "issues_url": "https://dev.icinga.org/projects/icinga-tools",
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
