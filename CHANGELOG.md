@@ -1,6 +1,10 @@
 #Changelog
 - - -
 
+###v0.5 (August 17th, 2014)
+
+* Added a defined type for the `User` Icinga 2 object type
+
 ###v0.4 (August 2nd, 2014)
 
 * Added object definitions for service objects and apply objects that
