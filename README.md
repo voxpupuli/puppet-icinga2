@@ -9,13 +9,13 @@ Currently, this module does not install or configure any web UIs for Icinga 2. T
 
 While NRPE is required for Icinga 2 to check non-network-reachble things on client machines (CPU, load average, etc.), this module itself doesn't have any dependencies between the server component (the `icinga2::server` class) and client component (the `icinga2::nrpe` class). Either one can be used independently of the other.
 
-###Requirements
+##Requirements
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
 On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
 
-####Server requirements
+###Server requirements
 
 Icinga 2 requires either a [MySQL](http://www.mysql.com/) or a [Postgres](http://www.postgresql.org/) database.
 
@@ -46,9 +46,9 @@ To configure Icinga with the password you set up for the Postgres Icinga user, u
   }
 </pre>
 
-###Usage
+##Usage
 
-####Server usage
+###Server usage
 
 To install Icinga 2 with a Postgres database, first set up the database.
 
@@ -95,8 +95,7 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
-
-####Client usage
+###Client usage
 
 To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
 
@@ -118,11 +117,11 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
-####Object type usage
+###Object type usage
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
 
-#####Exported resources
+####Exported resources
 
 Like the built-in Nagios types, they can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
 
@@ -170,7 +169,7 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
 }
 </pre>
 
-#####`undef` and default object values
+####`undef` and default object values
 
 Most of the object parameters *in the Puppet module* are set to **undef**. 
 
@@ -178,7 +177,7 @@ This means that they will not be added to the rendered object definition files.
 
 **However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values. 
 
-#####`icinga2::object::host`
+####`icinga2::object::host`
 
 **Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't unintentionally set as the value for `address6` in the rendered host object definition.
 
@@ -192,7 +191,7 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 }
 </pre>
 
-#####`icinga2::object::apply_service_to_host`
+####`icinga2::object::apply_service_to_host`
 
 The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
 
