@@ -24,6 +24,8 @@ class icinga2::server (
   $server_install_nagios_plugins = $icinga2::params::server_install_nagios_plugins,
 ) inherits icinga2::params {
 
+  validate_bool($manage_repos)
+
   #Pick set the right path where we can find the DB schema based on the OS...
   case $operatingsystem {
     'RedHat', 'CentOS': {      
