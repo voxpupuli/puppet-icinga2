@@ -13,6 +13,8 @@ While NRPE is required for Icinga 2 to check non-network-reachble things on clie
 
 ## Requirements
 
+This module requires the [Puppet Labs stdlib module](https://github.com/puppetlabs/puppetlabs-stdlib).
+
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
 On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
