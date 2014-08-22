@@ -47,7 +47,7 @@ class icinga2::server::install::repos inherits icinga2::server {
 
       #Debian/Ubuntu systems:
       /^(Debian|Ubuntu)$/: {
-        #Add the Icinga 2 snapshots apt repo for Ubuntu Saucy Salamander:
+        #Add the Icinga 2 release apt repo for Ubuntu systems:
         apt::source { "icinga2_ubuntu_${::lsbdistcodename}_release_apt":
           location          => 'http://packages.icinga.org/ubuntu',
           release           => "icinga-${::lsbdistcodename}",
