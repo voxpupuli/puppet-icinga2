@@ -37,7 +37,7 @@ object User "<%= @object_username %>" {
   enable_notifications = <%= @enable_notifications -%>
   <%- end -%>
   <%- if @period -%>
-  period "<%= @period -%>"
+  period = "<%= @period -%>"
   <%- end -%>
   <%- if @types.length != 0 -%>
   types = [ <%- @types.each do |type| -%> <%= type %>, <%- end -%>]
