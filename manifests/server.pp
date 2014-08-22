@@ -17,7 +17,8 @@ class icinga2::server (
   $db_name = $icinga2::params::db_name,
   $db_user = $icinga2::params::db_user,
   $db_password = $icinga2::params::db_password,
-  $db_host = $icinga2::params::db_host,
+  $db_host = $icinga2::params::db_host,  
+  $db_port = $icinga2::params::db_port,
   $package_provider = $icinga2::params::package_provider,
   $icinga2_server_package = $icinga2::params::icinga2_server_package,
   #$server_db_schema_path = $icinga2::params::server_db_schema_path
