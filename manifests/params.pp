@@ -39,7 +39,7 @@ class icinga2::params {
   ##############################
 
   #Whether to manage the package repositories
-  $manage_repos = 'true'
+  $manage_repos = true
   $server_db_type = 'pgsql'
 
   #Database paramters
