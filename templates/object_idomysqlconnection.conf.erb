@@ -15,7 +15,7 @@
 
 library "db_ido_mysql"
 
-object IdoMysqlConnection "<%= @object_name %>" {
+object IdoMysqlConnection "mysql-ido" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @host -%>
   <%#- Otherwise, include the parameter: -%>
@@ -42,7 +42,7 @@ object IdoMysqlConnection "<%= @object_name %>" {
   <%- if @instance_description -%>
   instance_description = "<%= @instance_description -%>"
   <%- end -%>
-  
+
   <%- if @cleanup.empty? != true -%>
   cleanup = {
     <%- @cleanup.each_pair do |key, value| -%>
@@ -50,7 +50,7 @@ object IdoMysqlConnection "<%= @object_name %>" {
     <%- end -%>
   }
   <%- end -%>
-  
+
   <%- if @categories.length != 0 -%>
   categories = <%= @categories.map {|category| "#{category}"}.join(' | ') %>
   <%- end -%>
