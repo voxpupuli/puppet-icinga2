@@ -27,8 +27,6 @@ Currently, this module does not set up any databases. You'll have to create one 
 
 If you would like to set up your own database, either of the Puppet Labs [MySQL](https://github.com/puppetlabs/puppetlabs-mysql) or [Postgres](https://github.com/puppetlabs/puppetlabs-postgresql) modules can be used. 
 
-Database connection parameters can be specified by the `db_host`, `db_port`, `db_name`, `db_user` and `db_password` parameters.
-
 The example below shows the [Puppet Labs Postgres module](https://github.com/puppetlabs/puppetlabs-postgresql) being used to install Postgres and create a database and database user for Icinga 2:
 
 <pre>
@@ -47,7 +45,7 @@ To configure Icinga with the password you set up for the Postgres Icinga user, u
 <pre>
   class { 'icinga2::server':
     server_db_password => hiera('icinga_db_password_key_here')
-  }
+    }
 </pre>
 
 ## Usage
