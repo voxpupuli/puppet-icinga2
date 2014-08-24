@@ -1,18 +1,18 @@
-# == Defined type: icinga2::object::idomysqlconnection
+# == Defined type: icinga2::object::idopgsqlconnection
 #  
-# This is a defined type for Icinga 2 IDO MySQL connection objects.
+# This is a defined type for Icinga 2 IDO Postgres connection objects.
 # See the following Icinga 2 doc page for more info:
-# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection
+# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection
 #
 # === Parameters
 #
 # See the inline comments.
 #
 
-define icinga2::object::idomysqlconnection (
+define icinga2::object::idopgsqlconnection (
   $object_name          = $name,
-  $host                 = 'localhost',
-  $port                 = 3306,
+  $host                 = '127.0.0.1',
+  $port                 = 5432,
   $user                 = 'icinga',
   $password             = 'icinga',
   $database             = 'icinga',
@@ -50,7 +50,7 @@ define icinga2::object::idomysqlconnection (
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    content => template('icinga2/object_idomysqlconnection.conf.erb'),
+    content => template('icinga2/object_idopgsqlconnection.conf.erb'),
     notify  => Service['icinga2'],
   }
 

@@ -27,8 +27,6 @@ Currently, this module does not set up any databases. You'll have to create one 
 
 If you would like to set up your own database, either of the Puppet Labs [MySQL](https://github.com/puppetlabs/puppetlabs-mysql) or [Postgres](https://github.com/puppetlabs/puppetlabs-postgresql) modules can be used. 
 
-Database connection parameters can be specified by the `db_host`, `db_port`, `db_name`, `db_user` and `db_password` parameters.
-
 The example below shows the [Puppet Labs Postgres module](https://github.com/puppetlabs/puppetlabs-postgresql) being used to install Postgres and create a database and database user for Icinga 2:
 
 <pre>
@@ -42,19 +40,11 @@ The example below shows the [Puppet Labs Postgres module](https://github.com/pup
 
 For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
 
-To configure Icinga with the password you set up for the Postgres Icinga user, use the `server_db_password` parameter (shown here with a Hiera lookup):
-
-<pre>
-  class { 'icinga2::server':
-    server_db_password => hiera('icinga_db_password_key_here')
-  }
-</pre>
-
 ## Usage
 
 ###Server usage
 
-To install Icinga 2 with a Postgres database, first set up the database.
+To install Icinga 2, first set up a MySQL or Postgres database.
 
 Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify 
 
@@ -85,6 +75,27 @@ class { 'icinga2::server':
   db_password => hiera('icinga_db_password_key_here'),
 }
 </pre>
+
+You'll also need to add an IDO connection object that has the same database settings and credentials as what you entered for your `icinga2::server` class.
+
+You can do this by applying either the `icinga2::object::idomysqlconnection` or `icinga2::object::idopgsqlconnection` class to your Icinga 2 server, depending on which database you're using.
+
+An example `icinga2::object::idopgsqlconnection` class is below:
+
+<pre>
+icinga2::object::idopgsqlconnection { 'postgres_connection':
+   target_dir => '/etc/icinga2/features-enabled',
+   target_file_name => 'ido-pgsql.conf',
+   host             => '127.0.0.1',
+   port             => 5432,
+   user             => 'icinga2',
+   password         => 'password',
+   database         => 'icinga2_data',
+   categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+}
+</pre>
+
+In a future version, the module will automatically create the IDO connection objects.
 
 **Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
@@ -226,6 +237,73 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 <pre>
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
+
+####`icinga2::object::idomysqlconnection`
+
+This defined type creates an **IdoMySqlConnection** objects.
+
+Though you can create the file anywhere and with any name via the `target_dir` and `target_file_name` parameters, you should set the `target_dir` parameter to `/etc/icinga2/features-enabled`, as that's where Icinga 2 will look for DB connection objects by default.
+
+Example usage:
+
+<pre>
+icinga2::object::idomysqlconnection { 'mysql_connection':
+   target_dir       => '/etc/icinga2/features-enabled',
+   target_file_name => 'ido-mysql.conf',
+   host             => '127.0.0.1',
+   port             => 3306,
+   user             => 'icinga2',
+   password         => 'password',
+   database         => 'icinga2_data',
+   categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+}
+</pre>
+
+Some parameters require specific data types to be given:
+
+* `port`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
+* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdomysqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection)
+* `categories`: needs to be given as an [array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays) with [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings) as the elements; default values are set to the default values shown in the [Data Categories section of the IdomysqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection)
+
+All other parameters are given as [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings).
+
+This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
+
+See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####`icinga2::object::idopgsqlconnection`
+
+This defined type creates an **IdoPgSqlConnection** objects.
+
+Though you can create the file anywhere and with any name via the `target_dir` and `target_file_name` parameters, you should set the `target_dir` parameter to `/etc/icinga2/features-enabled`, as that's where Icinga 2 will look for DB connection objects by default.
+
+Example usage:
+
+<pre>
+icinga2::object::idopgsqlconnection { 'postgres_connection':
+   target_dir => '/etc/icinga2/features-enabled',
+   target_file_name => 'ido-pgsql.conf',
+   host             => '127.0.0.1',
+   port             => 5432,
+   user             => 'icinga2',
+   password         => 'password',
+   database         => 'icinga2_data',
+
+   categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+}
+</pre>
+
+Some parameters require specific data types to be given:
+
+* `port`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
+* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdopgsqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection)
+* `categories`: needs to be given as an [array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays) with [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings) as the elements; default values are set to the default values shown in the [Data Categories section of the IdopgsqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection)
+
+All other parameters are given as [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings).
+
+This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
+
+See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ## Documentation
 
