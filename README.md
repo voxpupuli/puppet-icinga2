@@ -86,7 +86,7 @@ class { 'icinga2::server':
 }
 </pre>
 
-You'll also need to add an IDO connection object that has the same database settings and credentials as what you entered for your `icinga2::server` class. 
+You'll also need to add an IDO connection object that has the same database settings and credentials as what you entered for your `icinga2::server` class.
 
 You can do this by applying either the `icinga2::object::idomysqlconnection` or `icinga2::object::idopgsqlconnection` class to your Icinga 2 server, depending on which database you're using.
 
@@ -101,7 +101,6 @@ icinga2::object::idopgsqlconnection { 'postgres_connection':
    user             => 'icinga2',
    password         => 'password',
    database         => 'icinga2_data',
-
    categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 }
 </pre>
