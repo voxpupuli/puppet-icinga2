@@ -54,7 +54,7 @@ To configure Icinga with the password you set up for the Postgres Icinga user, u
 
 ###Server usage
 
-To install Icinga 2 with a Postgres database, first set up the database.
+To install Icinga 2, first set up a MySQL or Postgres database.
 
 Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify 
 
