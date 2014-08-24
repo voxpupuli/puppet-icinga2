@@ -86,6 +86,28 @@ class { 'icinga2::server':
 }
 </pre>
 
+You'll also need to add an IDO connection object that has the same database settings and credentials as what you entered for your `icinga2::server` class. 
+
+You can do this by applying either the `icinga2::object::idomysqlconnection` or `icinga2::object::idopgsqlconnection` class to your Icinga 2 server, depending on which database you're using.
+
+An example `icinga2::object::idopgsqlconnection` class is below:
+
+<pre>
+icinga2::object::idopgsqlconnection { 'postgres_connection':
+   target_dir => '/etc/icinga2/features-enabled',
+   target_file_name => 'ido-pgsql.conf',
+   host             => '127.0.0.1',
+   port             => 5432,
+   user             => 'icinga2',
+   password         => 'password',
+   database         => 'icinga2_data',
+
+   categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+}
+</pre>
+
+In a future version, the module will automatically create the IDO connection objects.
+
 **Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
 <pre>
