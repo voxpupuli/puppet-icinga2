@@ -40,14 +40,6 @@ The example below shows the [Puppet Labs Postgres module](https://github.com/pup
 
 For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
 
-To configure Icinga with the password you set up for the Postgres Icinga user, use the `server_db_password` parameter (shown here with a Hiera lookup):
-
-<pre>
-  class { 'icinga2::server':
-    server_db_password => hiera('icinga_db_password_key_here')
-    }
-</pre>
-
 ## Usage
 
 ###Server usage
