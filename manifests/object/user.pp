@@ -14,6 +14,7 @@ define icinga2::object::user (
   $display_name = $name,
   $email = undef,
   $pager = undef,
+  $enable_notifications = 'true',
   $vars = {},
   $groups = [],
   $enable_notifications = undef,
