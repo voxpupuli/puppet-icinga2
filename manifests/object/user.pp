@@ -22,7 +22,7 @@ define icinga2::object::user (
   $types = [],
   $states = [],
   $target_dir = '/etc/icinga2/conf.d',
-  $target_file_name = "${fqdn}.conf",
+  $target_file_name = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
   $target_file_mode = '644'
