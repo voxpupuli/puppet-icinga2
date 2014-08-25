@@ -206,6 +206,18 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 }
 </pre>
 
+####`icinga2::object::usergroup`
+
+You can use this defined type to create user groups. Example:
+
+<pre>
+#Create an admins user group:
+icinga2::object::hostgroup { 'admins':
+  display_name => 'admins',
+  target_dir => '/etc/icinga2/objects/usergroups',
+}
+</pre>
+
 ####`icinga2::object::apply_service_to_host`
 
 The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
