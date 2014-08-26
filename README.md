@@ -110,7 +110,7 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
-###Client usage
+###NRPE usage
 
 To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
 
