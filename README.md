@@ -216,6 +216,7 @@ Example:
 Notes on specific parameters:
 
 * `groups`: must be specified as a [Puppet array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays), even if there's only one element
+* `vars`: must be specified as a [Puppet hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes), with the Icinga 2 variable as the **key** and the variable's value as the **value**
 
 **Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't unintentionally set as the value for `address6` in the rendered host object definition.
 
