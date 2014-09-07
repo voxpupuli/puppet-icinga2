@@ -16,6 +16,12 @@ define icinga2::nrpe::command (
   $nrpe_plugin_args   = undef,
 ) {
 
+  #Do some validation of the class' parameters:
+  validate_string($command_name)
+  validate_string($nrpe_plugin_liddir)
+  validate_string($nrpe_plugin_name)
+  validate_string($nrpe_plugin_args)
+
   file { "/etc/nagios/nrpe.d/${command_name}.cfg":
     owner   => 'root',
     group   => 'root',
@@ -24,6 +30,5 @@ define icinga2::nrpe::command (
     require => Package[$icinga2::params::icinga2_client_packages],
     notify  => Service[$icinga2::params::nrpe_daemon_name]
   }
-  
-  
+
 }
