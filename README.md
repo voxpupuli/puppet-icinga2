@@ -317,6 +317,21 @@ This defined type supports all of the parameters that **IdoMySqlConnection** obj
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####`icinga2::object::servicegroup`
+
+This defined type creates an **ServiceGroup** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::servicegroup { 'web_services':
+  display_name => 'web services',
+  target_dir => '/etc/icinga2/objects/servicegroups',
+}
+</pre>
+
+See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ## Documentation
 
 The latest documentation is also available on https://docs.icinga.org
