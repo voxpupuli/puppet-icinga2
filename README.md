@@ -213,6 +213,10 @@ Example:
 }
 </pre>
 
+Notes on specific parameters:
+
+* `groups`: must be specified as a [Puppet array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays), even if there's only one element
+
 **Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't unintentionally set as the value for `address6` in the rendered host object definition.
 
 If you would like to use an IPv6 address, make sure to set the `ipv6_address` parameter to the `ipaddress_ethX` fact that will give you the right IPv6 address for the machine:
