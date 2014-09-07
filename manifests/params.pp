@@ -50,7 +50,7 @@ class icinga2::params {
   $db_port        = '5432'
 
  #Whether to install the plugin packages when the icinga2::server class is applied:
- $server_install_nagios_plugins = 'true'
+ $server_install_nagios_plugins = true
 
   ##############################
   # Icinga 2 server package parameters
