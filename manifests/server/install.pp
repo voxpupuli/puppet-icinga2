@@ -47,16 +47,10 @@ class icinga2::server::install::repos inherits icinga2::server {
 
       #Ubuntu systems:
       'Ubuntu': {
-        #Add the Icinga 2 release apt repo for Ubuntu systems:
-        apt::source { "icinga2_ubuntu_${::lsbdistcodename}_release_apt":
-          location          => 'http://packages.icinga.org/ubuntu',
-          release           => "icinga-${::lsbdistcodename}",
-          repos             => 'main',
-          required_packages => 'debian-keyring debian-archive-keyring',
-          key               => '34410682',
-          key_source        => 'http://packages.icinga.org/icinga.key',
-          include_src       => true
-        }
+        #Include the apt module's base class so we can...
+        include apt
+        #...use the apt module to add the Icinga 2 PPA from launchpad.net:
+        apt::ppa { 'ppa:formorer/icinga': }
       }
 
       #Fail if we're on any other OS:
