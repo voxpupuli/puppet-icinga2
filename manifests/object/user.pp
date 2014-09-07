@@ -27,6 +27,20 @@ define icinga2::object::user (
   $target_file_mode = '644'
 ) {
 
+  #Do some validation of the class' parameters:
+  validate_string($object_username)
+  validate_string($display_name)
+  validate_string($host_name)  
+  validate_array($groups)
+  validate_hash($vars)
+  validate_array($types)
+  validate_array($states)
+  validate_string($target_dir)
+  validate_string($target_file_name)
+  validate_string($target_file_owner)
+  validate_string($target_file_group)
+  validate_string($target_file_mode)
+
   file {"${target_dir}/${target_file_name}":
     ensure => file,
     owner   => $target_file_owner,
