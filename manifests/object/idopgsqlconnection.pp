@@ -45,6 +45,23 @@ define icinga2::object::idopgsqlconnection (
   $target_file_mode     = '644'
 ) {
 
+  #Do some validation of the class' parameters:
+  validate_string($object_name)
+  validate_string($template_to_import)
+  validate_string($host)
+  validate_string($user)  
+  validate_string($password)  
+  validate_string($database)  
+  validate_string($table_prefix)
+  validate_string($instance_name)  
+  validate_hash($cleanup)
+  validate_array($categories)
+  validate_string($target_dir)
+  validate_string($target_file_name)
+  validate_string($target_file_owner)
+  validate_string($target_file_group)
+  validate_string($target_file_mode)
+
   file {"${target_dir}/${target_file_name}":
     ensure  => file,
     owner   => $target_file_owner,
