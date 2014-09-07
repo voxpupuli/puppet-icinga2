@@ -23,6 +23,17 @@ define icinga2::object::hostgroup (
   $ignore_where = undef
 ) {
 
+  #Do some validation of the class' parameters:
+  validate_string($object_hostgroup_name)
+  validate_string($template_to_import)
+  validate_string($display_name) 
+  validate_array($groups)
+  validate_string($target_dir)
+  validate_string($target_file_name)
+  validate_string($target_file_owner)
+  validate_string($target_file_group)
+  validate_string($target_file_mode)
+
   file {"${target_dir}/${target_file_name}":
     ensure => file,
     owner   => $target_file_owner,
