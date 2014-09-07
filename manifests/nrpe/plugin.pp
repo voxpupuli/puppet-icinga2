@@ -20,6 +20,10 @@ define icinga2::nrpe::plugin (
   $source_file        = undef,
 ) {
 
+  #Do some validation of the class' parameters:
+  validate_string($name)
+  validate_string($nrpe_plugin_liddir)
+
   file { "${nrpe_plugin_liddir}/${plugin_name}":
     owner   => 'root',
     group   => 'root',
