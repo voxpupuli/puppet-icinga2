@@ -14,7 +14,11 @@ class icinga2::nrpe (
   $nrpe_allowed_hosts      = $icinga2::params::nrpe_allowed_hosts
 
 ) inherits icinga2::params {
-  
+
+  #Do some validation of the parameters that are passed in:
+  validate_string($nrpe_log_facility)
+  validate_array($nrpe_allowed_hosts)
+
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the 
   #class left is applied before the class on the right and that it also refreshes the 
   #class on the right.
