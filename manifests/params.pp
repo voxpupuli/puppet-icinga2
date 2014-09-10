@@ -17,7 +17,7 @@ class icinga2::params {
 
   ##################
   # Icinga 2 common package parameters
-  case $operatingsystem {
+  case $::operatingsystem {
     #Red Hat/CentOS systems:
     'RedHat', 'CentOS': {      
       #Pick the right package provider:
@@ -31,7 +31,7 @@ class icinga2::params {
     }
     
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##############################
@@ -56,7 +56,7 @@ class icinga2::params {
   # Icinga 2 server package parameters
 
   #Pick the right package parameters based on the OS:
-  case $operatingsystem {
+  case $::operatingsystem {
     #Red Hat/CentOS systems:
     'RedHat', 'CentOS': {
       #Icinga 2 server package
@@ -66,7 +66,7 @@ class icinga2::params {
     
     #Debian/Ubuntu systems: 
     /^(Debian|Ubuntu)$/: {
-      case $operatingsystemrelease {
+      case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           $icinga2_server_package = 'icinga2'
@@ -81,13 +81,13 @@ class icinga2::params {
     }
     
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##############################
   # Icinga 2 server config parameters
 
-  case $operatingsystem {
+  case $::operatingsystem {
     #Red Hat/CentOS systems:
     'RedHat', 'CentOS': {
       #Settings for /etc/icinga2/:
@@ -135,7 +135,7 @@ class icinga2::params {
     #Debian/Ubuntu systems: 
     /^(Debian|Ubuntu)$/: {
 
-      case $operatingsystemrelease {
+      case $::operatingsystemrelease {
         #Ubuntu 12.04 Precise Pangolin:
         '12.04': {
           #Settings for /etc/icinga2/:
@@ -227,13 +227,13 @@ class icinga2::params {
     }
     
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##################
   # Icinga 2 server service settings 
 
-  case $operatingsystem {
+  case $::operatingsystem {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
     'RedHat', 'CentOS': {
       $icinga2_server_service_name = 'icinga2'
@@ -245,7 +245,7 @@ class icinga2::params {
     }
     
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##############################
@@ -264,7 +264,7 @@ class icinga2::params {
   #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array 
   $nrpe_allowed_hosts      = ['127.0.0.1',]
    
-  case $operatingsystem {
+  case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
     'RedHat', 'CentOS': {
       $nrpe_config_basedir = "/etc/nagios"
@@ -282,12 +282,12 @@ class icinga2::params {
       $nrpe_group           = "nagios"
     }
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##################
   # Icinga 2 client package parameters
-  case $operatingsystem {
+  case $::operatingsystem {
     #Red Hat/CentOS systems:
     'RedHat', 'CentOS': {
       #Pick the right list of client packages:
@@ -296,7 +296,7 @@ class icinga2::params {
     
     #Debian/Ubuntu systems: 
     /^(Debian|Ubuntu)$/: {
-      case $operatingsystemrelease {
+      case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
@@ -309,12 +309,12 @@ class icinga2::params {
     }
     
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
   ##################
   # Icinga 2 client service parameters
-  case $operatingsystem {
+  case $::operatingsystem {
     #Daemon names for Red Had/CentOS systems:
     'RedHat', 'CentOS': {
       $nrpe_daemon_name = 'nrpe'
@@ -326,7 +326,7 @@ class icinga2::params {
     }
     
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
 }

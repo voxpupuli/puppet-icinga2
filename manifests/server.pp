@@ -38,7 +38,7 @@ class icinga2::server (
   validate_bool($server_install_nagios_plugins)
 
   #Pick set the right path where we can find the DB schema based on the OS...
-  case $operatingsystem {
+  case $::operatingsystem {
     'RedHat', 'CentOS': {
       #...and database that the user picks
       case $server_db_type {
@@ -57,7 +57,7 @@ class icinga2::server (
     }
 
     #Fail if we're on any other OS:
-    default: { fail("${operatingsystem} is not supported!") }
+    default: { fail("${::operatingsystem} is not supported!") }
   }
 
 
