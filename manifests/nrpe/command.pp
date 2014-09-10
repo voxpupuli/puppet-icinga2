@@ -4,21 +4,21 @@
 #
 # Parameters:
 # * $command_name = What NRPE will know the command as; this defaults to the title of the resource
-# * $nrpe_plugin_liddir = The directory where the NRPE plugins themselves live
+# * $nrpe_plugin_libdir = The directory where the NRPE plugins themselves live
 # * $nrpe_plugin_name = The name of the plugin the command will run
 # * $nrpe_plugin_args = The arguments to pass to the plugin. This may be optional, 
 #                       depending on the plugin and whether it expects any arguments or parameters
 
 define icinga2::nrpe::command (
   $command_name       = $name,
-  $nrpe_plugin_liddir = $icinga2::params::nrpe_plugin_liddir,
+  $nrpe_plugin_libdir = $icinga2::params::nrpe_plugin_libdir,
   $nrpe_plugin_name   = undef,
   $nrpe_plugin_args   = undef,
 ) {
 
   #Do some validation of the class' parameters:
   validate_string($command_name)
-  validate_string($nrpe_plugin_liddir)
+  validate_string($nrpe_plugin_libdir)
   validate_string($nrpe_plugin_name)
   validate_string($nrpe_plugin_args)
 
