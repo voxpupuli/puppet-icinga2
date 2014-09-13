@@ -48,7 +48,7 @@ class icinga2::server (
     }
 
     #Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       #Pick set the right path where we can find the DB schema
       case $server_db_type {
         'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }

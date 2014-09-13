@@ -25,7 +25,7 @@ class icinga2::params {
     } 
     
     #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       #Pick the right package provider:
       $package_provider = 'apt'
     }
@@ -65,7 +65,7 @@ class icinga2::params {
     }
     
     #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
@@ -133,7 +133,7 @@ class icinga2::params {
     }
     
     #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
 
       case $::operatingsystemrelease {
         #Ubuntu 12.04 Precise Pangolin:
@@ -240,7 +240,7 @@ class icinga2::params {
     }
     
     #Icinga 2 server daemon names for Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       $icinga2_server_service_name = 'icinga2'
     }
     
@@ -274,7 +274,7 @@ class icinga2::params {
       $nrpe_group          = "nrpe"
     }
     #File and template variable names for Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       $nrpe_config_basedir  = "/etc/nagios"
       $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
       $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
@@ -295,7 +295,7 @@ class icinga2::params {
     } 
     
     #Debian/Ubuntu systems: 
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
@@ -321,7 +321,7 @@ class icinga2::params {
     }
     
     #Daemon names for Debian/Ubuntu systems:
-    /^(Debian|Ubuntu)$/: {
+    'Ubuntu': {
       $nrpe_daemon_name     = 'nagios-nrpe-server'
     }
     
