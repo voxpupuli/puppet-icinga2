@@ -19,7 +19,7 @@ class icinga2::params {
   # Icinga 2 common package parameters
   case $::operatingsystem {
     #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {      
+    'CentOS': {      
       #Pick the right package provider:
       $package_provider = 'yum'
     } 
@@ -58,7 +58,7 @@ class icinga2::params {
   #Pick the right package parameters based on the OS:
   case $::operatingsystem {
     #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {
+    'CentOS': {
       #Icinga 2 server package
       $icinga2_server_package = 'icinga2'
       $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
@@ -89,7 +89,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {
+    'CentOS': {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
       $etc_icinga2_group = 'icinga'
@@ -235,7 +235,7 @@ class icinga2::params {
 
   case $::operatingsystem {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
-    'RedHat', 'CentOS': {
+    'CentOS': {
       $icinga2_server_service_name = 'icinga2'
     }
     
@@ -266,7 +266,7 @@ class icinga2::params {
    
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
-    'RedHat', 'CentOS': {
+    'CentOS': {
       $nrpe_config_basedir = "/etc/nagios"
       $nrpe_plugin_libdir  = "/usr/lib64/nagios/plugins"
       $nrpe_pid_file_path  = "/var/run/nrpe/nrpe.pid"
@@ -289,7 +289,7 @@ class icinga2::params {
   # Icinga 2 client package parameters
   case $::operatingsystem {
     #Red Hat/CentOS systems:
-    'RedHat', 'CentOS': {
+    'CentOS': {
       #Pick the right list of client packages:
       $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     } 
@@ -316,7 +316,7 @@ class icinga2::params {
   # Icinga 2 client service parameters
   case $::operatingsystem {
     #Daemon names for Red Had/CentOS systems:
-    'RedHat', 'CentOS': {
+    'CentOS': {
       $nrpe_daemon_name = 'nrpe'
     }
     

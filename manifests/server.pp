@@ -39,7 +39,7 @@ class icinga2::server (
 
   #Pick set the right path where we can find the DB schema based on the OS...
   case $::operatingsystem {
-    'RedHat', 'CentOS': {
+    'CentOS': {
       #...and database that the user picks
       case $server_db_type {
         'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
