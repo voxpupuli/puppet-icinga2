@@ -32,8 +32,9 @@ class icinga2::nrpe::install::packages inherits icinga2::nrpe {
   include icinga2::nrpe
   #Install the packages we specified in the ::params class:
   package {$icinga2::params::icinga2_client_packages:
-    ensure   => installed,
-    provider => $icinga2::params::package_provider,
+    ensure          => installed,
+    provider        => $icinga2::params::package_provider,
+    install_options => $client_plugin_package_install_options,
   }
 
 }

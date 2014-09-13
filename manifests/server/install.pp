@@ -76,6 +76,7 @@ class icinga2::server::install::packages inherits icinga2::server {
     package {$icinga2_server_plugin_packages:
       ensure   => installed,
       provider => $package_provider,
+      install_options => $server_plugin_package_install_options,
     }
   }
 
