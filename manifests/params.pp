@@ -24,7 +24,7 @@ class icinga2::params {
       $package_provider = 'yum'
     } 
     
-    #Debian/Ubuntu systems: 
+    #Ubuntu systems: 
     'Ubuntu': {
       #Pick the right package provider:
       $package_provider = 'apt'
@@ -64,7 +64,7 @@ class icinga2::params {
       $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     }
     
-    #Debian/Ubuntu systems: 
+    #Ubuntu systems: 
     'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
@@ -136,7 +136,7 @@ class icinga2::params {
       $etc_icinga2_obejcts_sub_dir_mode  = '750'
     }
     
-    #Debian/Ubuntu systems: 
+    #Ubuntu systems: 
     'Ubuntu': {
 
       case $::operatingsystemrelease {
@@ -243,7 +243,7 @@ class icinga2::params {
       $icinga2_server_service_name = 'icinga2'
     }
     
-    #Icinga 2 server daemon names for Debian/Ubuntu systems:
+    #Icinga 2 server daemon names for Ubuntu systems:
     'Ubuntu': {
       $icinga2_server_service_name = 'icinga2'
     }
@@ -277,7 +277,7 @@ class icinga2::params {
       $nrpe_user           = "nrpe"
       $nrpe_group          = "nrpe"
     }
-    #File and template variable names for Debian/Ubuntu systems:
+    #File and template variable names for Ubuntu systems:
     'Ubuntu': {
       $nrpe_config_basedir  = "/etc/nagios"
       $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
@@ -298,7 +298,7 @@ class icinga2::params {
       $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
     } 
     
-    #Debian/Ubuntu systems: 
+    #Ubuntu systems: 
     'Ubuntu': {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
@@ -328,7 +328,7 @@ class icinga2::params {
       $nrpe_daemon_name = 'nrpe'
     }
     
-    #Daemon names for Debian/Ubuntu systems:
+    #Daemon names for Ubuntu systems:
     'Ubuntu': {
       $nrpe_daemon_name     = 'nagios-nrpe-server'
     }

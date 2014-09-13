@@ -47,7 +47,7 @@ class icinga2::server (
       }
     }
 
-    #Debian/Ubuntu systems:
+    #Ubuntu systems:
     'Ubuntu': {
       #Pick set the right path where we can find the DB schema
       case $server_db_type {
