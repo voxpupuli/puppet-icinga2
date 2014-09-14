@@ -43,7 +43,7 @@ define icinga2::object::apply_service_to_host (
   $target_file_group = 'root',
   $target_file_mode  = '644'
 ) {
-  
+
   #Do some validation of the class' parameters:
   validate_string($object_servicename)
   validate_string($template_to_import)

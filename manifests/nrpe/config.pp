@@ -4,11 +4,11 @@
 #
 
 class icinga2::nrpe::config inherits icinga2::nrpe {
-  
+
   include icinga2::nrpe
-  
+
   #config resources here
- 
+
   #The NRPE configuration base directory:
   file { $nrpe_config_basedir:
     ensure  => directory,
@@ -17,7 +17,7 @@ class icinga2::nrpe::config inherits icinga2::nrpe {
     mode    => '755',
     require   => Package[$icinga2::params::icinga2_client_packages],
   }
-  
+
   #The folder that will hold our command definition files:
   file { '/etc/nagios/nrpe.d':
     ensure  => directory,

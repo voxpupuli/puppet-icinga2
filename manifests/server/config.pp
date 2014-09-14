@@ -7,14 +7,14 @@
 # Coming soon...
 #
 # === Examples
-# 
+#
 # Coming soon...
-# 
+#
 
 class icinga2::server::config inherits icinga2::server {
-  
+
   include icinga2::params
-  
+
   #Directory resource for /etc/icinga2/:
   file { '/etc/icinga2/':
     path    => '/etc/icinga2/',
@@ -61,7 +61,7 @@ class icinga2::server::config inherits icinga2::server {
     group   => $etc_icinga2_features_enabled_group,
     mode    => $etc_icinga2_features_enabled_mode,
   }
-  
+
   #Directory resource for /etc/icinga2/pki/:
   file { '/etc/icinga2/pki/':
     path    => '/etc/icinga2/pki/',
@@ -91,7 +91,7 @@ class icinga2::server::config inherits icinga2::server {
 
   #File and directory resources for the object directories that can be used to hold different
   #types of configuration objects
-  
+
   #Directory resource for /etc/icinga2/objects/:
   file { '/etc/icinga2/objects/':
     path    => '/etc/icinga2/objects/',
@@ -372,7 +372,7 @@ class icinga2::server::config inherits icinga2::server {
   }
 
   #Directory resource for /etc/icinga2/objects/applys/
-  #The files in this folder will be objects like 
+  #The files in this folder will be objects like
   #'apply something blah to Host...'
   #See the following link for more info:
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#apply

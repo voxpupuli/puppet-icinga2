@@ -4,7 +4,7 @@
 #
 
 class icinga2::nrpe::install inherits icinga2::nrpe {
-  
+
   include icinga2::nrpe
   #Apply our subclasses in the right order. Use the squiggly arrows (~>) to ensure that the 
   #class left is applied before the class on the right and that it also refreshes the 
@@ -18,7 +18,7 @@ class icinga2::nrpe::install inherits icinga2::nrpe {
 #Package repositories
 ##################
 class icinga2::nrpe::install::repos inherits icinga2::nrpe {
-  
+
   include icinga2::nrpe
   #repository resources here
 

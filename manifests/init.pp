@@ -7,12 +7,12 @@
 # Coming soon...
 #
 # === Examples
-# 
+#
 # Coming soon...
-# 
+#
 
 #Our base class.
 
 class icinga2 {
-  
+
 }

@@ -7,23 +7,23 @@
 # Coming soon...
 #
 # === Examples
-# 
+#
 # Coming soon...
-# 
+#
 
 class icinga2::server::install inherits icinga2::server {
-  
+
   include icinga2::server
   #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the 
   #class left is applied before the class on the right and that it also refreshes the 
   #class on the right.
   #
   #Here, we're setting up the package repos first, then installing the packages:
-  class{'icinga2::server::install::repos':} ~> 
-  class{'icinga2::server::install::packages':} ~> 
-  class{'icinga2::server::install::execs':} -> 
+  class{'icinga2::server::install::repos':} ~>
+  class{'icinga2::server::install::packages':} ~>
+  class{'icinga2::server::install::execs':} ->
   Class['icinga2::server::install']
-  
+
 }
 
 class icinga2::server::install::repos inherits icinga2::server {
@@ -64,7 +64,7 @@ class icinga2::server::install::repos inherits icinga2::server {
 class icinga2::server::install::packages inherits icinga2::server {
 
   include icinga2::server
-  
+
   #Install the Icinga 2 package
   package {$icinga2_server_package:
     ensure   => installed,
@@ -142,7 +142,7 @@ class icinga2::server::install::execs inherits icinga2::server {
         require => Exec['postgres_schema_load'],
       }
     }
-    
+
     default: { fail("${server_db_type} is not supported!") }
   }
 }

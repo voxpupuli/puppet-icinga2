@@ -3,7 +3,7 @@
 
 ## Overview
 
-This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/). It can also install and configure [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) on client systems that are being monitored by an Icinga 2 server. 
+This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/). It can also install and configure [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) on client systems that are being monitored by an Icinga 2 server.
 
 The module has only been tested on [CentOS 6.5](http://www.centos.org/download/) and Ubuntu [12.04](http://releases.ubuntu.com/12.04/) and [14.04](http://releases.ubuntu.com/14.04/). Red Hat and other EL derivatives, like Fedora, should work, but have not been tested.
 
@@ -46,7 +46,7 @@ For production use, you'll probably want to get the database password via a [Hie
 
 To install Icinga 2, first set up a MySQL or Postgres database.
 
-Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify 
+Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify
 
 <pre>
 #Install Icinga 2:
@@ -66,7 +66,7 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 
 <pre>
 #Install Icinga 2:
-class { 'icinga2::server': 
+class { 'icinga2::server':
   server_db_type => 'pgsql',
   db_host => 'localhost'
   db_port => '5432'
@@ -101,7 +101,7 @@ In a future version, the module will automatically create the IDO connection obj
 
 <pre>
 #Install Icinga 2:
-class { 'icinga2::server': 
+class { 'icinga2::server':
   ...
   server_install_nagios_plugins => false,
   ...
@@ -186,11 +186,11 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
 
 ####`undef` and default object values
 
-Most of the object parameters *in the Puppet module* are set to **undef**. 
+Most of the object parameters *in the Puppet module* are set to **undef**.
 
 This means that they will not be added to the rendered object definition files.
 
-**However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values. 
+**However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values.
 
 ####`icinga2::object::host`
 

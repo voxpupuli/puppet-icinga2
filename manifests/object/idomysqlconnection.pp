@@ -1,5 +1,5 @@
 # == Defined type: icinga2::object::idomysqlconnection
-#  
+#
 # This is a defined type for Icinga 2 IDO MySQL connection objects.
 # See the following Icinga 2 doc page for more info:
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection
@@ -35,7 +35,6 @@ define icinga2::object::idomysqlconnection (
     statehistory_age               => 0,
     servicechecks_age              => 0,
     systemcommands_age             => 0
-    
   },
   $categories           = [],
   $target_dir           = '/etc/icinga2/conf.d',
@@ -49,11 +48,11 @@ define icinga2::object::idomysqlconnection (
   validate_string($object_name)
   validate_string($template_to_import)
   validate_string($host)
-  validate_string($user)  
-  validate_string($password)  
-  validate_string($database)  
+  validate_string($user)
+  validate_string($password)
+  validate_string($database)
   validate_string($table_prefix)
-  validate_string($instance_name)  
+  validate_string($instance_name)
   validate_hash($cleanup)
   validate_array($categories)
   validate_string($target_dir)

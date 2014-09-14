@@ -47,7 +47,7 @@ define icinga2::object::service (
   validate_string($object_servicename)
   validate_string($template_to_import)
   validate_string($display_name)
-  validate_string($host_name)  
+  validate_string($host_name)
   validate_array($groups)
   validate_hash($vars)
   validate_string($target_dir)

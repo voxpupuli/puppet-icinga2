@@ -26,7 +26,7 @@ define icinga2::object::servicegroup (
   #Do some validation of the class' parameters:
   validate_string($object_servicegroup_name)
   validate_string($template_to_import)
-  validate_string($display_name) 
+  validate_string($display_name)
   validate_array($groups)
   validate_string($target_dir)
   validate_string($target_file_name)

@@ -1,5 +1,5 @@
 # == Defined type: icinga2::object::host
-#  
+#
 #  This is a defined type for Icinga 2 host objects.
 # See the following Icinga 2 doc page for more info:
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-host
@@ -48,7 +48,7 @@ define icinga2::object::host (
   validate_string($object_hostname)
   validate_string($template_to_import)
   validate_string($display_name)
-  validate_string($ipv4_address)  
+  validate_string($ipv4_address)
   validate_array($groups)
   validate_hash($vars)
   validate_string($target_dir)

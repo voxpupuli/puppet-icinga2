@@ -7,12 +7,12 @@
 # Coming soon...
 #
 # === Examples
-# 
+#
 # Coming soon...
-# 
+#
 
 class icinga2::server::service inherits icinga2::server {
-  
+
   include icinga2::server
 
   #Service resource for the Icinga 2 daemon:
@@ -20,5 +20,5 @@ class icinga2::server::service inherits icinga2::server {
     ensure    => running,
     subscribe => Class['icinga2::server::config'],
   }
-  
+
 }

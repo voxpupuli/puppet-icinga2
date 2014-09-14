@@ -1,5 +1,5 @@
 # == Defined type: icinga2::object::user
-#  
+#
 #  This is a defined type for Icinga 2 user objects.
 # See the following Icinga 2 doc page for more info:
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-user
@@ -30,7 +30,7 @@ define icinga2::object::user (
   #Do some validation of the class' parameters:
   validate_string($object_username)
   validate_string($display_name)
-  validate_string($host_name)  
+  validate_string($host_name)
   validate_array($groups)
   validate_hash($vars)
   validate_array($types)
