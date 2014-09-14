@@ -59,9 +59,20 @@ class icinga2::params {
   case $::operatingsystem {
     #CentOS systems:
     'CentOS': {
-      #Icinga 2 server package
-      $icinga2_server_package = 'icinga2'
-      $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+      case $::operatingsystemmajrelease {
+        '6': {
+          #Icinga 2 server package
+          $icinga2_server_package = 'icinga2'
+          $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+        }
+        '7': {
+          #Icinga 2 server package
+          $icinga2_server_package = 'icinga2'
+          $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+        }
+        #Fail if we're on any other CentOS release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
+      }
     }
 
     #Ubuntu systems:
@@ -81,6 +92,8 @@ class icinga2::params {
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
         }
+        #Fail if we're on any other Ubuntu release:
+        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
       }
     }
 
@@ -226,6 +239,8 @@ class icinga2::params {
           $etc_icinga2_obejcts_sub_dir_group = 'root'
           $etc_icinga2_obejcts_sub_dir_mode  = '755'
         }
+        #Fail if we're on any other Ubuntu release:
+        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
 
       }
     }
@@ -240,12 +255,30 @@ class icinga2::params {
   case $::operatingsystem {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
     'CentOS': {
-      $icinga2_server_service_name = 'icinga2'
+      case $::operatingsystemmajrelease {
+        '6': {
+          $icinga2_server_service_name = 'icinga2'
+        }
+        '7': {
+          $icinga2_server_service_name = 'icinga2'
+        }
+        #Fail if we're on any other CentOS release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release!") }
+      }
     }
 
     #Icinga 2 server daemon names for Ubuntu systems:
     'Ubuntu': {
-      $icinga2_server_service_name = 'icinga2'
+      case $::operatingsystemmajrelease {
+        '12.04': {
+          $icinga2_server_service_name = 'icinga2'
+        }
+        '14.04': {
+          $icinga2_server_service_name = 'icinga2'
+        }
+        #Fail if we're on any other Ubuntu release:
+        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
+      }
     }
 
     #Fail if we're on any other OS:
@@ -294,8 +327,19 @@ class icinga2::params {
   case $::operatingsystem {
     #CentOS systems:
     'CentOS': {
-      #Pick the right list of client packages:
-      $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+      case $::operatingsystemmajrelease {
+        '6': {
+          #Pick the right list of client packages:
+          $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+        }
+        '7': {
+          #Pick the right list of client packages:
+          $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+        }
+        #Fail if we're on any other CentOS release:
+        default: { fail("${::operatingsystemrelease} is not a supported CentOS release version!") }
+      }
+
     }
 
     #Ubuntu systems:
@@ -313,6 +357,8 @@ class icinga2::params {
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $client_plugin_package_install_options = '--no-install-recommends'
         }
+        #Fail if we're on any other Ubuntu release:
+        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
       }
     }
 
