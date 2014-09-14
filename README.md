@@ -13,6 +13,10 @@ While NRPE is required for Icinga 2 to check non-network-reachble things on clie
 
 ## Requirements
 
+This module should be used with Puppet 3.6 or later. It may work with earlier versions of Puppet 3 but it has not been tested.
+
+This module requires Facter 2.2 or later, specifically because it usess the `operatingsystemmajrrelease` fact.
+
 This module requires the [Puppet Labs stdlib module](https://github.com/puppetlabs/puppetlabs-stdlib).
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
