@@ -6,6 +6,7 @@
 * Added a defined type for `ServiceGroup` objects
 * Bug #[7189](https://dev.icinga.org/issues/7189): Fixed `liddir` typo in some manifests
 * Bug #[7190](https://dev.icinga.org/issues/7190): Fully qualify uses of the `operatingsystem` Facter fact
+* Added CentOS 7 support
 
 ###v0.5 (August 17th, 2014)
 
