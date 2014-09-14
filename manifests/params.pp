@@ -93,7 +93,7 @@ class icinga2::params {
           $server_plugin_package_install_options = '--no-install-recommends'
         }
         #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
+        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
       }
     }
 
@@ -240,7 +240,7 @@ class icinga2::params {
           $etc_icinga2_obejcts_sub_dir_mode  = '755'
         }
         #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
+        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
 
       }
     }
@@ -277,7 +277,7 @@ class icinga2::params {
           $icinga2_server_service_name = 'icinga2'
         }
         #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
+        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
       }
     }
 
@@ -337,7 +337,7 @@ class icinga2::params {
           $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
         }
         #Fail if we're on any other CentOS release:
-        default: { fail("${::operatingsystemrelease} is not a supported CentOS release version!") }
+        default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release version!") }
       }
 
     }
@@ -358,7 +358,7 @@ class icinga2::params {
           $client_plugin_package_install_options = '--no-install-recommends'
         }
         #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemrelease} is not a supported Ubuntu release version!") }
+        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
       }
     }
 
