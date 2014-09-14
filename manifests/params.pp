@@ -18,7 +18,7 @@ class icinga2::params {
   ##################
   # Icinga 2 common package parameters
   case $::operatingsystem {
-    #Red Hat/CentOS systems:
+    #CentOS systems:
     'CentOS': {      
       #Pick the right package provider:
       $package_provider = 'yum'
@@ -57,7 +57,7 @@ class icinga2::params {
 
   #Pick the right package parameters based on the OS:
   case $::operatingsystem {
-    #Red Hat/CentOS systems:
+    #CentOS systems:
     'CentOS': {
       #Icinga 2 server package
       $icinga2_server_package = 'icinga2'
@@ -92,7 +92,7 @@ class icinga2::params {
   # Icinga 2 server config parameters
 
   case $::operatingsystem {
-    #Red Hat/CentOS systems:
+    #CentOS systems:
     'CentOS': {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
@@ -292,7 +292,7 @@ class icinga2::params {
   ##################
   # Icinga 2 client package parameters
   case $::operatingsystem {
-    #Red Hat/CentOS systems:
+    #CentOS systems:
     'CentOS': {
       #Pick the right list of client packages:
       $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]

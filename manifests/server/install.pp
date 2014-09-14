@@ -32,7 +32,7 @@ class icinga2::server::install::repos inherits icinga2::server {
 
   if $manage_repos == true {
     case $::operatingsystem {
-      #Red Hat/CentOS systems:
+      #CentOS systems:
       'CentOS': {
 
         #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
