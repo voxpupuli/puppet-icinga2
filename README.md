@@ -370,6 +370,23 @@ icinga2::object::servicegroup { 'web_services':
 
 See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####`icinga2::object::sysloglogger`
+
+This defined type creates **SyslogLogger** objects.
+
+`severity` can be set to **debug**, **notice**, **information**, **warning** or **critical**. 
+
+Example usage:
+
+<pre>
+icinga2::object::sysloglogger { 'syslog-warning':
+  severity => 'warning',
+  target_dir => '/etc/icinga2/features-enabled',
+}
+</pre>
+
+See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
+
 ## Documentation
 
 The latest documentation is also available on https://docs.icinga.org
