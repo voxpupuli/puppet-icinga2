@@ -80,6 +80,15 @@ class icinga2::server::install::packages inherits icinga2::server {
     }
   }
 
+  if $install_mail_utils_package == true {
+    #Install the package that has the 'mail' binary in it so we can send notifications:
+    package {$icinga2_server_mail_package:
+      ensure   => installed,
+      provider => $package_provider,
+      install_options => $server_plugin_package_install_options,
+    }
+  }
+
   #Pick the right DB lib package name based on the database type the user selected:
   case $server_db_type {
     #MySQL:
