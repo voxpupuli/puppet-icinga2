@@ -30,6 +30,12 @@ class icinga2::params {
       $package_provider = 'apt'
     }
 
+    #Debian systems:
+    'Debian': {
+      #Pick the right package provider:
+      $package_provider = 'apt'
+    }
+
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
@@ -102,6 +108,22 @@ class icinga2::params {
       }
     }
 
+    #Debian systems:
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        #Only tested on Debian7
+        '7': {
+          $icinga2_server_package = 'icinga2'
+          $icinga2_server_plugin_packages = ["nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
+          $icinga2_server_mail_package = 'mailutils'
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $server_plugin_package_install_options = '--no-install-recommends'
+        }
+        #Fail if we're on any other Debian release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Debian release version!") }
+      }
+    }
+
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
@@ -154,100 +176,49 @@ class icinga2::params {
       $etc_icinga2_obejcts_sub_dir_mode  = '750'
     }
 
-    #Ubuntu systems:
-    'Ubuntu': {
+    #Ubuntu and Debian systems:
+    /(Ubuntu|Debian)/: {
 
-      case $::operatingsystemrelease {
-        #Ubuntu 12.04 Precise Pangolin:
-        '12.04': {
-          #Settings for /etc/icinga2/:
-          $etc_icinga2_owner = 'root'
-          $etc_icinga2_group = 'root'
-          $etc_icinga2_mode  = '755'
-          #Settings for /etc/icinga2/icinga2.conf:
-          $etc_icinga2_icinga2_conf_owner = 'root'
-          $etc_icinga2_icinga2_conf_group = 'root'
-          $etc_icinga2_icinga2_conf_mode  = '644'
-          #Settings for /etc/icinga2/conf.d/
-          $etc_icinga2_confd_owner = 'root'
-          $etc_icinga2_confd_group = 'root'
-          $etc_icinga2_confd_mode  = '755'
-          #Settings for /etc/icinga2/features-available/:
-          $etc_icinga2_features_available_owner = 'root'
-          $etc_icinga2_features_available_group = 'root'
-          $etc_icinga2_features_available_mode  = '755'
-          #Settings for /etc/icinga2/features-enabled/:
-          $etc_icinga2_features_enabled_owner = 'root'
-          $etc_icinga2_features_enabled_group = 'root'
-          $etc_icinga2_features_enabled_mode  = '755'
-          #Settings for /etc/icinga2/pki/:
-          $etc_icinga2_pki_owner = 'root'
-          $etc_icinga2_pki_group = 'root'
-          $etc_icinga2_pki_mode  = '755'
-          #Settings for /etc/icinga2/scripts/:
-          $etc_icinga2_scripts_owner = 'root'
-          $etc_icinga2_scripts_group = 'root'
-          $etc_icinga2_scripts_mode  = '755'
-          #Settings for /etc/icinga2/zones.d/:
-          $etc_icinga2_zonesd_owner = 'root'
-          $etc_icinga2_zonesd_group = 'root'
-          $etc_icinga2_zonesd_mode  = '755'
-          #Settings for /etc/icinga2/objects/:
-          $etc_icinga2_obejcts_owner = 'root'
-          $etc_icinga2_obejcts_group = 'root'
-          $etc_icinga2_obejcts_mode  = '755'
-          #Settings for subdirectories of /etc/icinga2/objects/:
-          $etc_icinga2_obejcts_sub_dir_owner = 'root'
-          $etc_icinga2_obejcts_sub_dir_group = 'root'
-          $etc_icinga2_obejcts_sub_dir_mode  = '755'
-        }
-        #Ubuntu 14.04 Trusty Tahr:
-        '14.04': {
-          #Settings for /etc/icinga2/:
-          $etc_icinga2_owner = 'root'
-          $etc_icinga2_group = 'root'
-          $etc_icinga2_mode  = '755'
-          #Settings for /etc/icinga2/icinga2.conf:
-          $etc_icinga2_icinga2_conf_owner = 'root'
-          $etc_icinga2_icinga2_conf_group = 'root'
-          $etc_icinga2_icinga2_conf_mode  = '644'
-          #Settings for /etc/icinga2/conf.d/
-          $etc_icinga2_confd_owner = 'root'
-          $etc_icinga2_confd_group = 'root'
-          $etc_icinga2_confd_mode  = '755'
-          #Settings for /etc/icinga2/features-available:
-          $etc_icinga2_features_available_owner = 'root'
-          $etc_icinga2_features_available_group = 'root'
-          $etc_icinga2_features_available_mode  = '755'
-          #Settings for /etc/icinga2/features-enabled:
-          $etc_icinga2_features_enabled_owner = 'root'
-          $etc_icinga2_features_enabled_group = 'root'
-          $etc_icinga2_features_enabled_mode  = '755'
-          #Settings for /etc/icinga2/pki/:
-          $etc_icinga2_pki_owner = 'root'
-          $etc_icinga2_pki_group = 'root'
-          $etc_icinga2_pki_mode  = '755'
-          #Settings for /etc/icinga2/scripts/:
-          $etc_icinga2_scripts_owner = 'root'
-          $etc_icinga2_scripts_group = 'root'
-          $etc_icinga2_scripts_mode  = '755'
-          #Settings for /etc/icinga2/zones.d/:
-          $etc_icinga2_zonesd_owner = 'root'
-          $etc_icinga2_zonesd_group = 'root'
-          $etc_icinga2_zonesd_mode  = '755'
-          #Settings for /etc/icinga2/objects/:
-          $etc_icinga2_obejcts_owner = 'root'
-          $etc_icinga2_obejcts_group = 'root'
-          $etc_icinga2_obejcts_mode  = '755'
-          #Settings for subdirectories of /etc/icinga2/objects/:
-          $etc_icinga2_obejcts_sub_dir_owner = 'root'
-          $etc_icinga2_obejcts_sub_dir_group = 'root'
-          $etc_icinga2_obejcts_sub_dir_mode  = '755'
-        }
-        #Fail if we're on any other Ubuntu release:
-        default: { fail("${::operatingsystemmajrelease} is not a supported Ubuntu release version!") }
-
-      }
+      #Settings for /etc/icinga2/:
+      $etc_icinga2_owner = 'root'
+      $etc_icinga2_group = 'root'
+      $etc_icinga2_mode  = '755'
+      #Settings for /etc/icinga2/icinga2.conf:
+      $etc_icinga2_icinga2_conf_owner = 'root'
+      $etc_icinga2_icinga2_conf_group = 'root'
+      $etc_icinga2_icinga2_conf_mode  = '644'
+      #Settings for /etc/icinga2/conf.d/
+      $etc_icinga2_confd_owner = 'root'
+      $etc_icinga2_confd_group = 'root'
+      $etc_icinga2_confd_mode  = '755'
+      #Settings for /etc/icinga2/features-available/:
+      $etc_icinga2_features_available_owner = 'root'
+      $etc_icinga2_features_available_group = 'root'
+      $etc_icinga2_features_available_mode  = '755'
+      #Settings for /etc/icinga2/features-enabled/:
+      $etc_icinga2_features_enabled_owner = 'root'
+      $etc_icinga2_features_enabled_group = 'root'
+      $etc_icinga2_features_enabled_mode  = '755'
+      #Settings for /etc/icinga2/pki/:
+      $etc_icinga2_pki_owner = 'root'
+      $etc_icinga2_pki_group = 'root'
+      $etc_icinga2_pki_mode  = '755'
+      #Settings for /etc/icinga2/scripts/:
+      $etc_icinga2_scripts_owner = 'root'
+      $etc_icinga2_scripts_group = 'root'
+      $etc_icinga2_scripts_mode  = '755'
+      #Settings for /etc/icinga2/zones.d/:
+      $etc_icinga2_zonesd_owner = 'root'
+      $etc_icinga2_zonesd_group = 'root'
+      $etc_icinga2_zonesd_mode  = '755'
+      #Settings for /etc/icinga2/objects/:
+      $etc_icinga2_obejcts_owner = 'root'
+      $etc_icinga2_obejcts_group = 'root'
+      $etc_icinga2_obejcts_mode  = '755'
+      #Settings for subdirectories of /etc/icinga2/objects/:
+      $etc_icinga2_obejcts_sub_dir_owner = 'root'
+      $etc_icinga2_obejcts_sub_dir_group = 'root'
+      $etc_icinga2_obejcts_sub_dir_mode  = '755'
     }
 
     #Fail if we're on any other OS:
@@ -286,6 +257,17 @@ class icinga2::params {
       }
     }
 
+    #Icinga 2 server daemon names for Debian systems:
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        '7': {
+          $icinga2_server_service_name = 'icinga2'
+        }
+        #Fail if we're on any other Debian release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Debian release version!") }
+      }
+    }
+
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
@@ -317,6 +299,14 @@ class icinga2::params {
     }
     #File and template variable names for Ubuntu systems:
     'Ubuntu': {
+      $nrpe_config_basedir  = "/etc/nagios"
+      $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
+      $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
+      $nrpe_user            = "nagios"
+      $nrpe_group           = "nagios"
+    }
+    #File and template variable names for Ubuntu systems:
+    'Debian': {
       $nrpe_config_basedir  = "/etc/nagios"
       $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
       $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
@@ -367,6 +357,19 @@ class icinga2::params {
       }
     }
 
+    #Debian systems:
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        '7': {
+          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
+          #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
+          $client_plugin_package_install_options = '--no-install-recommends'
+        }
+        #Fail if we're on any other Debian release:
+        default: { fail("${::operatingsystemmajrelease} is not a supported Debian release version!") }
+      }
+    }
+
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
@@ -381,6 +384,11 @@ class icinga2::params {
 
     #Daemon names for Ubuntu systems:
     'Ubuntu': {
+      $nrpe_daemon_name     = 'nagios-nrpe-server'
+    }
+
+    #Daemon names for Debian systems:
+    'Debian': {
       $nrpe_daemon_name     = 'nagios-nrpe-server'
     }
 

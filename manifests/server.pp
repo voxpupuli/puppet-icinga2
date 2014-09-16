@@ -56,6 +56,15 @@ class icinga2::server (
       }
     }
 
+    #Debian systems:
+    'Debian': {
+      #Pick set the right path where we can find the DB schema
+      case $server_db_type {
+        'mysql': { $server_db_schema_path = '/usr/share/icinga2-ido-mysql/schema/mysql.sql' }
+        'pgsql': { $server_db_schema_path = '/usr/share/icinga2-ido-pgsql/schema/pgsql.sql' }
+      }
+    }
+
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }

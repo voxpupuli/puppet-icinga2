@@ -53,6 +53,12 @@ class icinga2::server::install::repos inherits icinga2::server {
         apt::ppa { 'ppa:formorer/icinga': }
       }
 
+      #Debian systems:
+      'Debian': {
+        #On Debian (7) icinga2 packags are on backports
+        include apt::backports
+      }
+
       #Fail if we're on any other OS:
       default: { fail("${::operatingsystem} is not supported!") }
     }

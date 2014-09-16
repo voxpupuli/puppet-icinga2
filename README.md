@@ -5,7 +5,7 @@
 
 This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/). It can also install and configure [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) on client systems that are being monitored by an Icinga 2 server.
 
-The module has only been tested on [CentOS 6.5](http://wiki.centos.org/Download), [CentOS 7](http://www.centos.org/download/), and Ubuntu [12.04](http://releases.ubuntu.com/12.04/) and [14.04](http://releases.ubuntu.com/14.04/). Red Hat and other EL derivatives, like Fedora, should work, but have not been tested.
+The module has only been tested on [CentOS 6.5](http://wiki.centos.org/Download), [CentOS 7](http://www.centos.org/download/), Debian [7](https://www.debian.org/releases/wheezy/) and Ubuntu [12.04](http://releases.ubuntu.com/12.04/) and [14.04](http://releases.ubuntu.com/14.04/). Red Hat and other EL derivatives, like Fedora, should work, but have not been tested.
 
 Currently, this module does not install or configure any web UIs for Icinga 2. This module also does not install or configure a mail transfer agent (MTA) to send outgoing alert emails.
 
