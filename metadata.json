@@ -17,7 +17,7 @@
     },
     {
       "operatingsystem": "Debian",
-      "operatingsystemrelease": [
+      "operatingsystemmajrelease": [
         "7",
       ]
     },
