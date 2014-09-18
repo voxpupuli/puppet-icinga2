@@ -7,6 +7,7 @@
 * Bug #[7189](https://dev.icinga.org/issues/7189): Fixed `liddir` typo in some manifests
 * Bug #[7190](https://dev.icinga.org/issues/7190): Fully qualify uses of the `operatingsystem` Facter fact
 * Added CentOS 7 support
+* Feature #[7264](https://dev.icinga.org/issues/7264): Added Debian 7 support
 
 ###v0.5 (August 17th, 2014)
 
