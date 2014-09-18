@@ -393,6 +393,14 @@ See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chap
 
 The latest documentation is also available on https://docs.icinga.org
 
+## Contributing
+
+To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch. 
+
+If your changes require any discussion, create an account on [https://www.icinga.org/register/](https://www.icinga.org/register/). Once you have an account, log onto [dev.icinga.org](https://dev.icinga.org/). Create an issue under the **Icinga Tools** project and add it to the **Puppet** category.
+
+If applicable for the changes you're making, add documentation to the `README.md` file.
+
 ## Support
 
 Check the project website at http://www.icinga.org for status updates and
