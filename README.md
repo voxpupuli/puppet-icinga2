@@ -389,6 +389,32 @@ icinga2::object::sysloglogger { 'syslog-warning':
 
 See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
 
+####`icinga2::conf`
+
+This defined type creates custom files in the icinga2/ conf.d directory.
+
+The content of the file can be managed with two alternative parameters
+
+`template` is erb tmplate to use for the content (ie: site/icinga2/baseservices.conf.erb)
+`source` is the file server source url for a static file (ie: puppet:///modules/site/icinga2/baseservices.conf)
+
+To dynamically manage the variables of your template use the parameter:
+`options_hash` it can be feed by an hash of data that is accessible in the template (<%= @options_hash['groups'] %>
+
+Example usage:
+
+<pre>
+icinga2::conf { 'baseservices':
+  template     => 'site/icinga2/baseservices.conf.erb',
+  options_hash => {
+    enable_notifications => true,
+    check_interval       => '5',
+    groups               => [ 'all-servers' , 'linux-servers' ],
+  }
+}
+</pre>
+
+
 ## Documentation
 
 The latest documentation is also available on https://docs.icinga.org
