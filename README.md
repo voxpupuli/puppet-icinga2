@@ -391,15 +391,16 @@ See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chap
 
 ####`icinga2::conf`
 
-This defined type creates custom files in the icinga2/ conf.d directory.
+This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
 
-The content of the file can be managed with two alternative parameters
+The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
 
-`template` is erb tmplate to use for the content (ie: site/icinga2/baseservices.conf.erb)
-`source` is the file server source url for a static file (ie: puppet:///modules/site/icinga2/baseservices.conf)
+The content of the file can be managed with two parameters: 
 
-To dynamically manage the variables of your template use the parameter:
-`options_hash` it can be feed by an hash of data that is accessible in the template (<%= @options_hash['groups'] %>
+* `template` is an ERB tmplate to use for the content (ie. `site/icinga2/baseservices.conf.erb`)
+* `source` is the file server source URL for a static file (ie. `puppet:///modules/site/icinga2/baseservices.conf`)
+
+To dynamically manage the variables of your template, use the `options_hash` parameter. It can be given a hash of data that is accessible in the template.
 
 Example usage:
 
@@ -413,7 +414,6 @@ icinga2::conf { 'baseservices':
   }
 }
 </pre>
-
 
 ## Documentation
 
