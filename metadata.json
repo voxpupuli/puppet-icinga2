@@ -10,7 +10,7 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
+      "operatingsystemmajrelease": [
         "6",
         "7"
       ]
@@ -23,7 +23,7 @@
     },
     {
       "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
+      "operatingsystemmajrelease": [
         "12.04",
         "14.04"
       ]
