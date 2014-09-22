@@ -112,6 +112,8 @@ class { 'icinga2::server':
 
 When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
 
+If you want to use [Debmon repository](http://debmon.org/packages) for Debian 7, you have to set `use_debmon` to true when you call `icinga2::server` class.
+
 **Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
 
 <pre>

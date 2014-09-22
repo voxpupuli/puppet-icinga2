@@ -13,6 +13,7 @@
 
 class icinga2::server (
   $manage_repos = $icinga2::params::manage_repos,
+  $use_debmon = $icinga2::params::use_debmon,
   $server_db_type = $icinga2::params::server_db_type,
   $db_name = $icinga2::params::db_name,
   $db_user = $icinga2::params::db_user,
@@ -27,6 +28,7 @@ class icinga2::server (
 
   #Do some validation of parameters so we know we have the right data types:
   validate_bool($manage_repos)
+  validate_bool($use_debmon)
   validate_string($server_db_type)
   validate_string($db_name)
   validate_string($db_user)

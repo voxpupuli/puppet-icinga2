@@ -46,6 +46,7 @@ class icinga2::params {
 
   #Whether to manage the package repositories
   $manage_repos = true
+  $use_debmon = false
   $server_db_type = 'pgsql'
   $install_mail_utils_package = false
 
