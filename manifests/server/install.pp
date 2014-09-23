@@ -55,7 +55,7 @@ class icinga2::server::install::repos inherits icinga2::server {
 
       #Debian systems:
       'Debian': {
-        #On Debian (7) icinga2 packags are on backports
+        #On Debian (7) icinga2 packages are on backports
         include apt::backports
       }
 
