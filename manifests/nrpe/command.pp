@@ -25,7 +25,7 @@ define icinga2::nrpe::command (
   file { "/etc/nagios/nrpe.d/${command_name}.cfg":
     owner   => 'root',
     group   => 'root',
-    mode    => '644',
+    mode    => '0644',
     content => template('icinga2/nrpe_command.cfg.erb'),
     require => Package[$icinga2::params::icinga2_client_packages],
     notify  => Service[$icinga2::params::nrpe_daemon_name]
