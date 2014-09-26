@@ -24,7 +24,7 @@ define icinga2::object::user (
   $target_file_name = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
-  $target_file_mode = '644'
+  $target_file_mode = '0644'
 ) {
 
   #Do some validation of the class' parameters:
