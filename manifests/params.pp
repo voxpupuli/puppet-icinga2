@@ -56,8 +56,8 @@ class icinga2::params {
   $db_host = 'localhost'
   $db_port        = '5432'
 
- #Whether to install the plugin packages when the icinga2::server class is applied:
- $server_install_nagios_plugins = true
+  #Whether to install the plugin packages when the icinga2::server class is applied:
+  $server_install_nagios_plugins = true
 
   ##############################
   # Icinga 2 server package parameters
@@ -70,13 +70,13 @@ class icinga2::params {
         '6': {
           #Icinga 2 server package
           $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
           $icinga2_server_mail_package = 'mailx'
         }
         '7': {
           #Icinga 2 server package
           $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ["nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
           $icinga2_server_mail_package = 'mailx'
         }
         #Fail if we're on any other CentOS release:
@@ -90,7 +90,7 @@ class icinga2::params {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
           $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ["nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
+          $icinga2_server_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-extra', 'nagios-nrpe-plugin']
           $icinga2_server_mail_package = 'mailutils'
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
@@ -98,7 +98,7 @@ class icinga2::params {
         #...but 14.04 does:
         '14.04': {
           $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = [ "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
+          $icinga2_server_plugin_packages = [ 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-common', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-extra', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
           $icinga2_server_mail_package = 'mailutils'
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
@@ -114,7 +114,7 @@ class icinga2::params {
         #Only tested on Debian7
         '7': {
           $icinga2_server_package = 'icinga2'
-          $icinga2_server_plugin_packages = ["nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
+          $icinga2_server_plugin_packages = ['nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
           $icinga2_server_mail_package = 'mailutils'
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $server_plugin_package_install_options = '--no-install-recommends'
@@ -137,43 +137,43 @@ class icinga2::params {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'icinga'
       $etc_icinga2_group = 'icinga'
-      $etc_icinga2_mode  = '750'
+      $etc_icinga2_mode  = '0750'
       #Settings for /etc/icinga2/icinga2.conf:
       $etc_icinga2_icinga2_conf_owner = 'icinga'
       $etc_icinga2_icinga2_conf_group = 'icinga'
-      $etc_icinga2_icinga2_conf_mode  = '640'
+      $etc_icinga2_icinga2_conf_mode  = '0640'
       #Settings for /etc/icinga2/conf.d/
       $etc_icinga2_confd_owner = 'icinga'
       $etc_icinga2_confd_group = 'icinga'
-      $etc_icinga2_confd_mode  = '750'
+      $etc_icinga2_confd_mode  = '0750'
       #Settings for /etc/icinga2/features-available/:
       $etc_icinga2_features_available_owner = 'icinga'
       $etc_icinga2_features_available_group = 'icinga'
-      $etc_icinga2_features_available_mode  = '750'
+      $etc_icinga2_features_available_mode  = '0750'
       #Settings for /etc/icinga2/features-enabled/:
       $etc_icinga2_features_enabled_owner = 'icinga'
       $etc_icinga2_features_enabled_group = 'icinga'
-      $etc_icinga2_features_enabled_mode  = '750'
+      $etc_icinga2_features_enabled_mode  = '0750'
       #Settings for /etc/icinga2/pki/:
       $etc_icinga2_pki_owner = 'icinga'
       $etc_icinga2_pki_group = 'icinga'
-      $etc_icinga2_pki_mode  = '750'
+      $etc_icinga2_pki_mode  = '0750'
       #Settings for /etc/icinga2/scripts/:
       $etc_icinga2_scripts_owner = 'icinga'
       $etc_icinga2_scripts_group = 'icinga'
-      $etc_icinga2_scripts_mode  = '750'
+      $etc_icinga2_scripts_mode  = '0750'
       #Settings for /etc/icinga2/zones.d/:
       $etc_icinga2_zonesd_owner = 'icinga'
       $etc_icinga2_zonesd_group = 'icinga'
-      $etc_icinga2_zonesd_mode  = '750'
+      $etc_icinga2_zonesd_mode  = '0750'
       #Settings for /etc/icinga2/objects/:
       $etc_icinga2_obejcts_owner = 'icinga'
       $etc_icinga2_obejcts_group = 'icinga'
-      $etc_icinga2_obejcts_mode  = '750'
+      $etc_icinga2_obejcts_mode  = '0750'
       #Settings for subdirectories of /etc/icinga2/objects/:
       $etc_icinga2_obejcts_sub_dir_owner = 'icinga'
       $etc_icinga2_obejcts_sub_dir_group = 'icinga'
-      $etc_icinga2_obejcts_sub_dir_mode  = '750'
+      $etc_icinga2_obejcts_sub_dir_mode  = '0750'
     }
 
     #Ubuntu and Debian systems:
@@ -182,43 +182,43 @@ class icinga2::params {
       #Settings for /etc/icinga2/:
       $etc_icinga2_owner = 'root'
       $etc_icinga2_group = 'root'
-      $etc_icinga2_mode  = '755'
+      $etc_icinga2_mode  = '0755'
       #Settings for /etc/icinga2/icinga2.conf:
       $etc_icinga2_icinga2_conf_owner = 'root'
       $etc_icinga2_icinga2_conf_group = 'root'
-      $etc_icinga2_icinga2_conf_mode  = '644'
+      $etc_icinga2_icinga2_conf_mode  = '0644'
       #Settings for /etc/icinga2/conf.d/
       $etc_icinga2_confd_owner = 'root'
       $etc_icinga2_confd_group = 'root'
-      $etc_icinga2_confd_mode  = '755'
+      $etc_icinga2_confd_mode  = '0755'
       #Settings for /etc/icinga2/features-available/:
       $etc_icinga2_features_available_owner = 'root'
       $etc_icinga2_features_available_group = 'root'
-      $etc_icinga2_features_available_mode  = '755'
+      $etc_icinga2_features_available_mode  = '0755'
       #Settings for /etc/icinga2/features-enabled/:
       $etc_icinga2_features_enabled_owner = 'root'
       $etc_icinga2_features_enabled_group = 'root'
-      $etc_icinga2_features_enabled_mode  = '755'
+      $etc_icinga2_features_enabled_mode  = '0755'
       #Settings for /etc/icinga2/pki/:
       $etc_icinga2_pki_owner = 'root'
       $etc_icinga2_pki_group = 'root'
-      $etc_icinga2_pki_mode  = '755'
+      $etc_icinga2_pki_mode  = '0755'
       #Settings for /etc/icinga2/scripts/:
       $etc_icinga2_scripts_owner = 'root'
       $etc_icinga2_scripts_group = 'root'
-      $etc_icinga2_scripts_mode  = '755'
+      $etc_icinga2_scripts_mode  = '0755'
       #Settings for /etc/icinga2/zones.d/:
       $etc_icinga2_zonesd_owner = 'root'
       $etc_icinga2_zonesd_group = 'root'
-      $etc_icinga2_zonesd_mode  = '755'
+      $etc_icinga2_zonesd_mode  = '0755'
       #Settings for /etc/icinga2/objects/:
       $etc_icinga2_obejcts_owner = 'root'
       $etc_icinga2_obejcts_group = 'root'
-      $etc_icinga2_obejcts_mode  = '755'
+      $etc_icinga2_obejcts_mode  = '0755'
       #Settings for subdirectories of /etc/icinga2/objects/:
       $etc_icinga2_obejcts_sub_dir_owner = 'root'
       $etc_icinga2_obejcts_sub_dir_group = 'root'
-      $etc_icinga2_obejcts_sub_dir_mode  = '755'
+      $etc_icinga2_obejcts_sub_dir_mode  = '0755'
     }
 
     #Fail if we're on any other OS:
@@ -291,27 +291,27 @@ class icinga2::params {
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
     'CentOS': {
-      $nrpe_config_basedir = "/etc/nagios"
-      $nrpe_plugin_libdir  = "/usr/lib64/nagios/plugins"
-      $nrpe_pid_file_path  = "/var/run/nrpe/nrpe.pid"
-      $nrpe_user           = "nrpe"
-      $nrpe_group          = "nrpe"
+      $nrpe_config_basedir = '/etc/nagios'
+      $nrpe_plugin_libdir  = '/usr/lib64/nagios/plugins'
+      $nrpe_pid_file_path  = '/var/run/nrpe/nrpe.pid'
+      $nrpe_user           = 'nrpe'
+      $nrpe_group          = 'nrpe'
     }
     #File and template variable names for Ubuntu systems:
     'Ubuntu': {
-      $nrpe_config_basedir  = "/etc/nagios"
-      $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
-      $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
-      $nrpe_user            = "nagios"
-      $nrpe_group           = "nagios"
+      $nrpe_config_basedir  = '/etc/nagios'
+      $nrpe_plugin_libdir   = '/usr/lib/nagios/plugins'
+      $nrpe_pid_file_path   = '/var/run/nagios/nrpe.pid'
+      $nrpe_user            = 'nagios'
+      $nrpe_group           = 'nagios'
     }
     #File and template variable names for Ubuntu systems:
     'Debian': {
-      $nrpe_config_basedir  = "/etc/nagios"
-      $nrpe_plugin_libdir   = "/usr/lib/nagios/plugins"
-      $nrpe_pid_file_path   = "/var/run/nagios/nrpe.pid"
-      $nrpe_user            = "nagios"
-      $nrpe_group           = "nagios"
+      $nrpe_config_basedir  = '/etc/nagios'
+      $nrpe_plugin_libdir   = '/usr/lib/nagios/plugins'
+      $nrpe_pid_file_path   = '/var/run/nagios/nrpe.pid'
+      $nrpe_user            = 'nagios'
+      $nrpe_group           = 'nagios'
     }
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
@@ -325,11 +325,11 @@ class icinga2::params {
       case $::operatingsystemmajrelease {
         '6': {
           #Pick the right list of client packages:
-          $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+          $icinga2_client_packages = ['nrpe', 'nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
         }
         '7': {
           #Pick the right list of client packages:
-          $icinga2_client_packages = ["nrpe", "nagios-plugins-nrpe", "nagios-plugins-all", "nagios-plugins-openmanage", "nagios-plugins-check-updates"]
+          $icinga2_client_packages = ['nrpe', 'nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
         }
         #Fail if we're on any other CentOS release:
         default: { fail("${::operatingsystemmajrelease} is not a supported CentOS release version!") }
@@ -342,13 +342,13 @@ class icinga2::params {
       case $::operatingsystemrelease {
         #Ubuntu 12.04 doesn't have nagios-plugins-common or nagios-plugins-contrib packages available...
         '12.04': {
-          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-nrpe-plugin"]
+          $icinga2_client_packages = ['nagios-nrpe-server', 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-extra', 'nagios-nrpe-plugin']
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $client_plugin_package_install_options = '--no-install-recommends'
         }
         #...but 14.04 does:
         '14.04': {
-          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-common", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-extra", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
+          $icinga2_client_packages = ['nagios-nrpe-server', 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-common', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-extra', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $client_plugin_package_install_options = '--no-install-recommends'
         }
@@ -361,7 +361,7 @@ class icinga2::params {
     'Debian': {
       case $::operatingsystemmajrelease {
         '7': {
-          $icinga2_client_packages = ["nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard", "nagios-snmp-plugins", "nagios-plugins-contrib", "nagios-nrpe-plugin"]
+          $icinga2_client_packages = ['nagios-nrpe-server', 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard', 'nagios-snmp-plugins', 'nagios-plugins-contrib', 'nagios-nrpe-plugin']
           #Specify '--no-install-recommends' so we don't inadvertently get Nagios 3 installed; it comes as a recommended package with most of the plugin packages:
           $client_plugin_package_install_options = '--no-install-recommends'
         }
