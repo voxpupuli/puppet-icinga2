@@ -28,7 +28,7 @@ define icinga2::conf (
   $target_file_owner = 'root',
   $target_file_group = 'root',
   $target_file_mode  = '644'
- ) {
+  ) {
 
   validate_string($target_dir)
   validate_string($target_file_name)
