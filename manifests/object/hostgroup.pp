@@ -26,7 +26,7 @@ define icinga2::object::hostgroup (
   #Do some validation of the class' parameters:
   validate_string($object_hostgroup_name)
   validate_string($template_to_import)
-  validate_string($display_name) 
+  validate_string($display_name)
   validate_array($groups)
   validate_string($target_dir)
   validate_string($target_file_name)
@@ -35,12 +35,12 @@ define icinga2::object::hostgroup (
   validate_string($target_file_mode)
 
   file {"${target_dir}/${target_file_name}":
-    ensure => file,
+    ensure  => file,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
     content => template('icinga2/object_hostgroup.conf.erb'),
-    notify => Service['icinga2'],
+    notify  => Service['icinga2'],
   }
 
 }
