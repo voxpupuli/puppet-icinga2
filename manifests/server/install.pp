@@ -14,8 +14,8 @@
 class icinga2::server::install inherits icinga2::server {
 
   include icinga2::server
-  #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the 
-  #class left is applied before the class on the right and that it also refreshes the 
+  #Apply our classes in the right order. Use the squiggly arrows (~>) to ensure that the
+  #class left is applied before the class on the right and that it also refreshes the
   #class on the right.
   #
   #Here, we're setting up the package repos first, then installing the packages:
@@ -127,15 +127,15 @@ class icinga2::server::install::execs inherits icinga2::server {
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
         command => "mysql -u ${db_user} -p${db_password} ${db_name} < ${server_db_schema_path} && touch /etc/icinga2/mysql_schema_loaded.txt",
-        creates => "/etc/icinga2/mysql_schema_loaded.txt",
+        creates => '/etc/icinga2/mysql_schema_loaded.txt',
         require => Class['icinga2::server::install::packages'],
       }
       #Enable the MySQL IDO module:
       exec { 'mysql_module_enable':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
-        command => "/usr/sbin/icinga2-enable-feature ido-mysql && touch /etc/icinga2/mysql_module_loaded.txt",
-        creates => "/etc/icinga2/mysql_module_loaded.txt",
+        command => '/usr/sbin/icinga2-enable-feature ido-mysql && touch /etc/icinga2/mysql_module_loaded.txt',
+        creates => '/etc/icinga2/mysql_module_loaded.txt',
         require => Exec['mysql_schema_load'],
       }
     }
@@ -146,15 +146,15 @@ class icinga2::server::install::execs inherits icinga2::server {
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
         command => "su - postgres -c 'export PGPASSWORD='${db_password}' && psql -U ${db_user} -h localhost -d ${db_name} < ${server_db_schema_path}' && export PGPASSWORD='' && touch /etc/icinga2/postgres_schema_loaded.txt",
-        creates => "/etc/icinga2/postgres_schema_loaded.txt",
+        creates => '/etc/icinga2/postgres_schema_loaded.txt',
         require => Class['icinga2::server::install::packages'],
       }
       #Enable the Postgres IDO module:
       exec { 'postgres_module_enable':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
-        command => "/usr/sbin/icinga2-enable-feature ido-pgsql && touch /etc/icinga2/postgres_module_loaded.txt",
-        creates => "/etc/icinga2/postgres_module_loaded.txt",
+        command => '/usr/sbin/icinga2-enable-feature ido-pgsql && touch /etc/icinga2/postgres_module_loaded.txt',
+        creates => '/etc/icinga2/postgres_module_loaded.txt',
         require => Exec['postgres_schema_load'],
       }
     }
