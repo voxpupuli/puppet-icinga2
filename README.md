@@ -9,7 +9,7 @@ The module has only been tested on [CentOS 6.5](http://wiki.centos.org/Download)
 
 Currently, this module does not install or configure any web UIs for Icinga 2. This module also does not install or configure a mail transfer agent (MTA) to send outgoing alert emails.
 
-While NRPE is required for Icinga 2 to check non-network-reachble things on client machines (CPU, load average, etc.), this module itself doesn't have any dependencies between the server component (the `icinga2::server` class) and client component (the `icinga2::nrpe` class). Either one can be used independently of the other.
+While NRPE is required for Icinga 2 to check non-network-reachable things on client machines (CPU, load average, etc.), this module itself doesn't have any dependencies between the server component (the `icinga2::server` class) and client component (the `icinga2::nrpe` class). Either one can be used independently of the other.
 
 ## Requirements
 
