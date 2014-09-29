@@ -233,6 +233,7 @@ Object types:
 * [icinga2::object::hostgroup](id:object_hostgroup)
 * [icinga2::ojbect::idomysqlconnection](id:object_idomysqlconnection)
 * [icinga2::ojbect::idopgsqlconnection](id:object_idopgsqlconnection)
+* [icinga2::ojbect::service](id:object_service)
 * [icinga2::ojbect::user](id:object_user)
 * [icinga2::ojbect::usergroup](id:object_usergroup)
 
@@ -376,6 +377,10 @@ All other parameters are given as [single-quoted strings](https://docs.puppetlab
 This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::service`](id:object_service)
+
+Coming soon...
 
 ####[`icinga2::object::user`](id:object_user)
 
