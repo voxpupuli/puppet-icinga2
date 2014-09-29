@@ -62,7 +62,83 @@ For production use, you'll probably want to get the database password via a [Hie
 [Usage](id:usage)
 -----
 
-Coming soon...
+###Server usage
+
+To install Icinga 2, first set up a MySQL or Postgres database.
+
+Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify
+
+<pre>
+#Install Icinga 2:
+class { 'icinga2::server': 
+  server_db_type => 'pgsql',
+  db_host => 'localhost'
+  db_port => '5432'
+  db_name => 'icinga2_data'
+  db_user => 'icinga2'
+  db_password => 'password',
+}
+</pre>
+
+When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
+
+**Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
+
+<pre>
+#Install Icinga 2:
+class { 'icinga2::server':
+  server_db_type => 'pgsql',
+  db_host => 'localhost'
+  db_port => '5432'
+  db_name => 'icinga2_data'
+  db_user => 'icinga2'
+  db_password => hiera('icinga_db_password_key_here'),
+}
+</pre>
+
+You'll also need to add an IDO connection object that has the same database settings and credentials as what you entered for your `icinga2::server` class.
+
+You can do this by applying either the `icinga2::object::idomysqlconnection` or `icinga2::object::idopgsqlconnection` class to your Icinga 2 server, depending on which database you're using.
+
+An example `icinga2::object::idopgsqlconnection` class is below:
+
+<pre>
+icinga2::object::idopgsqlconnection { 'postgres_connection':
+   target_dir => '/etc/icinga2/features-enabled',
+   target_file_name => 'ido-pgsql.conf',
+   host             => '127.0.0.1',
+   port             => 5432,
+   user             => 'icinga2',
+   password         => 'password',
+   database         => 'icinga2_data',
+   categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+}
+</pre>
+
+In a future version, the module will automatically create the IDO connection objects.
+
+**Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
+
+<pre>
+#Install Icinga 2:
+class { 'icinga2::server':
+  ...
+  server_install_nagios_plugins => false,
+  ...
+ }
+</pre>
+
+This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+
+If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out notifications, set the `install_mail_utils_package` parameter to **true**:
+
+<pre>
+  class { 'icinga2::server': 
+    ...
+    install_mail_utils_package => true,
+    ...
+  }
+</pre>
 
 [Reference](id:reference)
 ---------
