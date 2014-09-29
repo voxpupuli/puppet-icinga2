@@ -459,6 +459,11 @@ If your changes require any discussion, create an account on [https://www.icinga
 
 If applicable for the changes you're making, add documentation to the `README.md` file.
 
+###Support
+
+Check the project website at http://www.icinga.org for status updates and
+https://support.icinga.org if you want to contact us.
+
 [Contributors](id:contributors)
 ------------
 
