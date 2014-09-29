@@ -341,7 +341,7 @@ This defined type supports all of the parameters that **IdoMySqlConnection** obj
 
 See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
-####`icinga2::object::idopgsqlconnection`
+####[`icinga2::object::idopgsqlconnection`](id:object_idopgsqlconnection)
 
 This defined type creates an **IdoPgSqlConnection** objects.
 
