@@ -234,6 +234,7 @@ Object types:
 * [icinga2::ojbect::idomysqlconnection](id:object_idomysqlconnection)
 * [icinga2::ojbect::idopgsqlconnection](id:object_idopgsqlconnection)
 * [icinga2::ojbect::service](id:object_service)
+* [icinga2::ojbect::servicegroup](id:object_servicegroup)
 * [icinga2::ojbect::user](id:object_user)
 * [icinga2::ojbect::usergroup](id:object_usergroup)
 
@@ -381,6 +382,21 @@ See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga
 ####[`icinga2::object::service`](id:object_service)
 
 Coming soon...
+
+####[`icinga2::object::servicegroup`](id:object_servicegroup)
+
+This defined type creates an **ServiceGroup** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::servicegroup { 'web_services':
+  display_name => 'web services',
+  target_dir => '/etc/icinga2/objects/servicegroups',
+}
+</pre>
+
+See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::user`](id:object_user)
 
