@@ -66,7 +66,31 @@ For production use, you'll probably want to get the database password via a [Hie
 
 ###General Usage
 
-Coming soon...
+####`icinga2::conf`
+
+This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
+
+The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
+
+The content of the file can be managed with two parameters: 
+
+* `template` is an ERB tmplate to use for the content (ie. `site/icinga2/baseservices.conf.erb`)
+* `source` is the file server source URL for a static file (ie. `puppet:///modules/site/icinga2/baseservices.conf`)
+
+To dynamically manage the variables of your template, use the `options_hash` parameter. It can be given a hash of data that is accessible in the template.
+
+Example usage:
+
+<pre>
+icinga2::conf { 'baseservices':
+  template     => 'site/icinga2/baseservices.conf.erb',
+  options_hash => {
+    enable_notifications => true,
+    check_interval       => '5',
+    groups               => [ 'all-servers' , 'linux-servers' ],
+  }
+}
+</pre>
 
 ###Server usage
 
