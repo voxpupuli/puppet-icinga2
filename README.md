@@ -16,7 +16,7 @@ Table of Contents
 [Overview](id:overview)
 --------
 
-Coming soon...
+This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/). It can also install and configure [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) on client systems that are being monitored by an Icinga 2 server.
 
 [Module Description](id:module-description)
 -------------------
