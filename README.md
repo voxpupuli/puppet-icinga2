@@ -140,6 +140,29 @@ If you would like to install packages to make a `mail` command binary available 
   }
 </pre>
 
+###NRPE usage
+
+To install NRPE and allow the local machine and Icinga 2 servers (or Icinga 1 or plain old Nagios servers) with various IP addresess to connect:
+
+<pre>
+class { 'icinga2::nrpe':
+  nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+}
+</pre>
+
+**Note:** If you would like to install NRPE on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
+
+<pre>
+#Install Icinga 2:
+class { 'icinga2::server': 
+  server_db_type => 'pgsql',
+  server_install_nagios_plugins => false,
+ }
+</pre>
+
+This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+
+
 [Reference](id:reference)
 ---------
 
