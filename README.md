@@ -8,6 +8,8 @@ Table of Contents
 2. [Module Description - What does the module do?](#module-description)
 3. [Setup - The basics of getting started with the Icinga 2 module](#setup)
 4. [Usage - How to use the module for various tasks](#usage)
+    * [Object type usage](#object_type_usage)
+    * [Objects](#objects)
 5. [Reference - The classes and defined types available in this module](#reference)
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Development - Guide for contributing to the module](#development)
@@ -162,7 +164,7 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
-###Object type usage
+###[Object type usage](id:object_type_usage)
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
 
@@ -222,7 +224,7 @@ This means that they will not be added to the rendered object definition files.
 
 **However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values.
 
-###Objects
+####[Objects](id:objects)
 
 Coming soon...
 
