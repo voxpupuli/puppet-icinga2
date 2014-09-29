@@ -64,6 +64,10 @@ For production use, you'll probably want to get the database password via a [Hie
 [Usage](id:usage)
 -----
 
+###General Usage
+
+Coming soon...
+
 ###Server usage
 
 To install Icinga 2, first set up a MySQL or Postgres database.
