@@ -234,6 +234,7 @@ Object types:
 * [icinga2::ojbect::idomysqlconnection](id:object_idomysqlconnection)
 * [icinga2::ojbect::idopgsqlconnection](id:object_idopgsqlconnection)
 * [icinga2::ojbect::user](id:object_user)
+* [icinga2::ojbect::usergroup](id:object_usergroup)
 
 ####`icinga2::object::apply_service_to_host`
 
@@ -379,6 +380,18 @@ See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga
 ####[`icinga2::object::user`](id:object_user)
 
 Coming soon...
+
+####[`icinga2::object::usergroup`](id:object_usergroup)
+
+You can use this defined type to create user groups. Example:
+
+<pre>
+#Create an admins user group:
+icinga2::object::hostgroup { 'admins':
+  display_name => 'admins',
+  target_dir => '/etc/icinga2/objects/usergroups',
+}
+</pre>
 
 [Reference](id:reference)
 ---------
