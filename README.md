@@ -168,7 +168,7 @@ This module includes several defined types that can be used to automatically gen
 
 ####Exported resources
 
-Like the built-in Nagios types, they can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
+Like the built-in Nagios types, the Icinga 2 objects in this module can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
 
 Nodes that are being monitored can have the `@@` virtual resources applied to them:
 
