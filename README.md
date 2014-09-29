@@ -259,13 +259,13 @@ Object types:
 * [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
 * [icinga2::object::host](id:object_host)
 * [icinga2::object::hostgroup](id:object_hostgroup)
-* [icinga2::ojbect::idomysqlconnection](id:object_idomysqlconnection)
-* [icinga2::ojbect::idopgsqlconnection](id:object_idopgsqlconnection)
-* [icinga2::ojbect::service](id:object_service)
-* [icinga2::ojbect::servicegroup](id:object_servicegroup)
-* [icinga2::ojbect::syslogger](id:object_syslogger)
-* [icinga2::ojbect::user](id:object_user)
-* [icinga2::ojbect::usergroup](id:object_usergroup)
+* [icinga2::object::idomysqlconnection](id:object_idomysqlconnection)
+* [icinga2::object::idopgsqlconnection](id:object_idopgsqlconnection)
+* [icinga2::object::service](id:object_service)
+* [icinga2::object::servicegroup](id:object_servicegroup)
+* [icinga2::object::syslogger](id:object_syslogger)
+* [icinga2::object::user](id:object_user)
+* [icinga2::object::usergroup](id:object_usergroup)
 
 ####`icinga2::object::apply_service_to_host`
 
