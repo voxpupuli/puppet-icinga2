@@ -231,6 +231,7 @@ Object types:
 * [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
 * [icinga2::object::host](id:object_host)
 * [icinga2::object::hostgroup](id:object_hostgroup)
+* [icinga2::ojbect::idomysqlconnection](id:object_idomysqlconnection)
 
 ####`icinga2::object::apply_service_to_host`
 
@@ -305,6 +306,39 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
 Coming soon...
+
+####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
+
+This defined type creates an **IdoMySqlConnection** objects.
+
+Though you can create the file anywhere and with any name via the `target_dir` and `target_file_name` parameters, you should set the `target_dir` parameter to `/etc/icinga2/features-enabled`, as that's where Icinga 2 will look for DB connection objects by default.
+
+Example usage:
+
+<pre>
+icinga2::object::idomysqlconnection { 'mysql_connection':
+   target_dir       => '/etc/icinga2/features-enabled',
+   target_file_name => 'ido-mysql.conf',
+   host             => '127.0.0.1',
+   port             => 3306,
+   user             => 'icinga2',
+   password         => 'password',
+   database         => 'icinga2_data',
+   categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+}
+</pre>
+
+Some parameters require specific data types to be given:
+
+* `port`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
+* `cleanup`: If changed from the default value, needs to be given as a [hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes) with the keys being the cleanup item names and the maximum age as a number (not a quoted string); default values are set to the default values shown in the [Cleanup Items section of the IdomysqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection)
+* `categories`: needs to be given as an [array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays) with [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings) as the elements; default values are set to the default values shown in the [Data Categories section of the IdomysqlConnection object documentation](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection)
+
+All other parameters are given as [single-quoted strings](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#single-quoted-strings).
+
+This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
+
+See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 [Reference](id:reference)
 ---------
