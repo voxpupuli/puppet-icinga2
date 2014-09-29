@@ -226,7 +226,47 @@ This means that they will not be added to the rendered object definition files.
 
 ####[Objects](id:objects)
 
-Coming soon...
+Object types:
+
+* [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
+
+####[`icinga2::object::host`](id:object_host)
+
+This defined type creates host objects.
+
+Example:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv4_address => $::ipaddress_eth1,
+  groups => ["linux_servers", 'mysql_servers', 'postgres_servers', 'clients', 'smtp_servers', 'ssh_servers', 'http_servers', 'imap_servers'],
+  vars => {
+    os              => 'linux',
+    virtual_machine => 'true',
+    distro          => $::operatingsystem,
+  },
+  target_dir => '/etc/icinga2/objects/hosts',
+  target_file_name => "${fqdn}.conf"
+}
+</pre>
+
+Notes on specific parameters:
+
+* `groups`: must be specified as a [Puppet array](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#arrays), even if there's only one element
+* `vars`: must be specified as a [Puppet hash](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#hashes), with the Icinga 2 variable as the **key** and the variable's value as the **value**
+
+**Note:** The `ipv6_address` parameter is set to **undef** by default. This is because `facter` can return either IPv4 or IPv6 addresses for the `ipaddress_ethX` facts. The default value for the `ipv6_address` parameter is set to **undef** and not `ipaddress_eth0` so that an IPv4 address isn't unintentionally set as the value for `address6` in the rendered host object definition.
+
+If you would like to use an IPv6 address, make sure to set the `ipv6_address` parameter to the `ipaddress_ethX` fact that will give you the right IPv6 address for the machine:
+
+<pre>
+@@icinga2::object::host { $::fqdn:
+  display_name => $::fqdn,
+  ipv6_address => $::ipaddress_eth1,
+....
+}
+</pre>
 
 [Reference](id:reference)
 ---------
