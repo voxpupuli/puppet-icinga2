@@ -13,27 +13,27 @@ Table of Contents
 7. [Development - Guide for contributing to the module](#development)
 8. [Contributors - List of module contributors](#contributors)
 
-Overview
+[Overview](id:overview)
 --------
 
 Coming soon...
 
-Module Description
+[Module Description](id:module-description)
 -------------------
 
 Coming soon...
 
-Setup
+[Setup](id:setup)
 -----
 
 Coming soon...
 
-Usage
+[Usage](id:usage)
 -----
 
 Coming soon...
 
-Reference
+[Reference](id:reference)
 ---------
 
 Classes:
@@ -44,17 +44,17 @@ Defined types:
 
 Coming soon...
 
-Limitations
+[Limitations](id:limitations)
 ------------
 
 Coming soon...
 
-Development
+[Development](id:contributors)
 ------------
 
 Coming soon...
 
-Contributors
+[Contributors](id:contributors)
 ------------
 
 Coming soon...
