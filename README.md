@@ -235,6 +235,7 @@ Object types:
 * [icinga2::ojbect::idopgsqlconnection](id:object_idopgsqlconnection)
 * [icinga2::ojbect::service](id:object_service)
 * [icinga2::ojbect::servicegroup](id:object_servicegroup)
+* [icinga2::ojbect::syslogger](id:object_syslogger)
 * [icinga2::ojbect::user](id:object_user)
 * [icinga2::ojbect::usergroup](id:object_usergroup)
 
@@ -397,6 +398,23 @@ icinga2::object::servicegroup { 'web_services':
 </pre>
 
 See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::sysloglogger`](id:object_syslogger)
+
+This defined type creates **SyslogLogger** objects.
+
+`severity` can be set to **debug**, **notice**, **information**, **warning** or **critical**. 
+
+Example usage:
+
+<pre>
+icinga2::object::sysloglogger { 'syslog-warning':
+  severity => 'warning',
+  target_dir => '/etc/icinga2/features-enabled',
+}
+</pre>
+
+See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
 
 ####[`icinga2::object::user`](id:object_user)
 
