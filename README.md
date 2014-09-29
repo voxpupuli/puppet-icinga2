@@ -230,6 +230,7 @@ Object types:
 
 * [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
 * [icinga2::object::host](id:object_host)
+* [icinga2::object::hostgroup](id:object_hostgroup)
 
 ####`icinga2::object::apply_service_to_host`
 
@@ -300,6 +301,10 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ....
 }
 </pre>
+
+####[`icinga2::object::hostgroup`](id:object_hostgroup)
+
+Coming soon...
 
 [Reference](id:reference)
 ---------
