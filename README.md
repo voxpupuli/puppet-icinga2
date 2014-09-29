@@ -26,7 +26,17 @@ Coming soon...
 [Setup](id:setup)
 -----
 
-Coming soon...
+This module should be used with Puppet 3.6 or later. It may work with earlier versions of Puppet 3 but it has not been tested.
+
+This module requires Facter 2.2 or later, specifically because it uses the `operatingsystemmajrelease` fact.
+
+This module requires the [Puppet Labs stdlib module](https://github.com/puppetlabs/puppetlabs-stdlib).
+
+For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
+
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
+
+If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 
 [Usage](id:usage)
 -----
