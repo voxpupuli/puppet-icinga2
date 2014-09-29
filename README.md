@@ -38,6 +38,27 @@ On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL 
 
 If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 
+###Server requirements
+
+Icinga 2 requires either a [MySQL](http://www.mysql.com/) or a [Postgres](http://www.postgresql.org/) database.
+
+Currently, this module does not set up any databases. You'll have to create one before installing Icinga 2 via the module.
+
+If you would like to set up your own database, either of the Puppet Labs [MySQL](https://github.com/puppetlabs/puppetlabs-mysql) or [Postgres](https://github.com/puppetlabs/puppetlabs-postgresql) modules can be used. 
+
+The example below shows the [Puppet Labs Postgres module](https://github.com/puppetlabs/puppetlabs-postgresql) being used to install Postgres and create a database and database user for Icinga 2:
+
+<pre>
+  class { 'postgresql::server': }
+
+  postgresql::server::db { 'icinga2_data':
+    user     => 'icinga2',
+    password => postgresql_password('icinga2', 'password'),
+  }
+</pre>
+
+For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
+
 [Usage](id:usage)
 -----
 
