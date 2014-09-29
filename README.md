@@ -1,17 +1,32 @@
-#puppet-icinga2
-- - -
+puppet-icinga2
+==========
 
-## Overview
+Table of Contents
+-----------------
+
+1. [Overview - What is the Icinga 2 module?](#overview)
+2. [Module Description - What does the module do?](#module-description)
+3. [Setup - The basics of getting started with the Icinga 2 module](#setup)
+4. [Usage - How to use the module for various tasks](#usage)
+    * [Object type usage](#object_type_usage)
+    * [Objects](#objects)
+5. [Reference - The classes and defined types available in this module](#reference)
+6. [Limitations - OS compatibility, etc.](#limitations)
+7. [Development - Guide for contributing to the module](#development)
+8. [Contributors - List of module contributors](#contributors)
+
+[Overview](id:overview)
+--------
 
 This module installs and configures the [Icinga 2 monitoring system](https://www.icinga.org/icinga2/). It can also install and configure [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) on client systems that are being monitored by an Icinga 2 server.
 
-The module has only been tested on [CentOS 6.5](http://wiki.centos.org/Download), [CentOS 7](http://www.centos.org/download/), Debian [7](https://www.debian.org/releases/wheezy/) and Ubuntu [12.04](http://releases.ubuntu.com/12.04/) and [14.04](http://releases.ubuntu.com/14.04/). Red Hat and other EL derivatives, like Fedora, should work, but have not been tested.
+[Module Description](id:module-description)
+-------------------
 
-Currently, this module does not install or configure any web UIs for Icinga 2. This module also does not install or configure a mail transfer agent (MTA) to send outgoing alert emails.
+Coming soon...
 
-While NRPE is required for Icinga 2 to check non-network-reachable things on client machines (CPU, load average, etc.), this module itself doesn't have any dependencies between the server component (the `icinga2::server` class) and client component (the `icinga2::nrpe` class). Either one can be used independently of the other.
-
-## Requirements
+[Setup](id:setup)
+-----
 
 This module should be used with Puppet 3.6 or later. It may work with earlier versions of Puppet 3 but it has not been tested.
 
@@ -46,7 +61,8 @@ The example below shows the [Puppet Labs Postgres module](https://github.com/pup
 
 For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
 
-## Usage
+[Usage](id:usage)
+-----
 
 ###Server usage
 
@@ -124,7 +140,7 @@ If you would like to install packages to make a `mail` command binary available 
     install_mail_utils_package => true,
     ...
   }
-</pre> 
+</pre>
 
 ###NRPE usage
 
@@ -148,13 +164,13 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
-###Object type usage
+###[Object type usage](id:object_type_usage)
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
 
 ####Exported resources
 
-Like the built-in Nagios types, they can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
+Like the built-in Nagios types, the Icinga 2 objects in this module can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
 
 Nodes that are being monitored can have the `@@` virtual resources applied to them:
 
@@ -208,7 +224,54 @@ This means that they will not be added to the rendered object definition files.
 
 **However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values.
 
-####`icinga2::object::host`
+####[Objects](id:objects)
+
+Object types:
+
+* [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
+* [icinga2::object::host](id:object_host)
+* [icinga2::object::hostgroup](id:object_hostgroup)
+* [icinga2::ojbect::idomysqlconnection](id:object_idomysqlconnection)
+* [icinga2::ojbect::idopgsqlconnection](id:object_idopgsqlconnection)
+* [icinga2::ojbect::service](id:object_service)
+* [icinga2::ojbect::servicegroup](id:object_servicegroup)
+* [icinga2::ojbect::syslogger](id:object_syslogger)
+* [icinga2::ojbect::user](id:object_user)
+* [icinga2::ojbect::usergroup](id:object_usergroup)
+
+####`icinga2::object::apply_service_to_host`
+
+The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
+
+<pre>
+#Create an apply that checks the number of zombie processes:
+icinga2::object::apply_service_to_host { 'check_zombie_procs':
+  display_name => 'Zombie procs',
+  check_command => 'nrpe',
+  vars => {
+    nrpe_command => 'check_zombie_procs',
+  },
+  assign_where => '"linux_servers" in host.groups',
+  ignore_where => 'host.name == "localhost"',
+  target_dir => '/etc/icinga2/objects/applys'
+}
+</pre>
+
+This defined type has the same available parameters that the `icinga2::object::service` defined type does.
+
+The `assign_where` and `ignore_where` parameter values are meant to be provided as strings. Since Icinga 2 requires that string literals be double-quoted, the whole string in your Puppet site manifests will have to be single-quoted (leaving the double quotes intact inside):
+
+<pre>
+assign_where => '"linux_servers" in host.groups',
+</pre>
+
+If you would like to use Puppet or Facter variables in an `assign_where` or `ignore_where` parameter's value, you'll first need to double-quote the whole value for [Puppet's variable interpolation](http://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#double-quoted-strings) to work. Then, you'll need to escape the double quotes that surround the Icinga 2 string literals inside:
+
+<pre>
+assign_where => "\"linux_servers\" in host.${facter_variable}"",
+</pre>
+
+####[`icinga2::object::host`](id:object_host)
 
 This defined type creates host objects.
 
@@ -246,51 +309,11 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 }
 </pre>
 
-####`icinga2::object::usergroup`
+####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
-You can use this defined type to create user groups. Example:
+Coming soon...
 
-<pre>
-#Create an admins user group:
-icinga2::object::hostgroup { 'admins':
-  display_name => 'admins',
-  target_dir => '/etc/icinga2/objects/usergroups',
-}
-</pre>
-
-####`icinga2::object::apply_service_to_host`
-
-The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
-
-<pre>
-#Create an apply that checks the number of zombie processes:
-icinga2::object::apply_service_to_host { 'check_zombie_procs':
-  display_name => 'Zombie procs',
-  check_command => 'nrpe',
-  vars => {
-    nrpe_command => 'check_zombie_procs',
-  },
-  assign_where => '"linux_servers" in host.groups',
-  ignore_where => 'host.name == "localhost"',
-  target_dir => '/etc/icinga2/objects/applys'
-}
-</pre>
-
-This defined type has the same available parameters that the `icinga2::object::service` defined type does.
-
-The `assign_where` and `ignore_where` parameter values are meant to be provided as strings. Since Icinga 2 requires that string literals be double-quoted, the whole string in your Puppet site manifests will have to be single-quoted (leaving the double quotes intact inside):
-
-<pre>
-assign_where => '"linux_servers" in host.groups',
-</pre>
-
-If you would like to use Puppet or Facter variables in an `assign_where` or `ignore_where` parameter's value, you'll first need to double-quote the whole value for [Puppet's variable interpolation](http://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#double-quoted-strings) to work. Then, you'll need to escape the double quotes that surround the Icinga 2 string literals inside:
-
-<pre>
-assign_where => "\"linux_servers\" in host.${facter_variable}"",
-</pre>
-
-####`icinga2::object::idomysqlconnection`
+####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
 This defined type creates an **IdoMySqlConnection** objects.
 
@@ -323,7 +346,7 @@ This defined type supports all of the parameters that **IdoMySqlConnection** obj
 
 See [IdoMySqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idomysqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
-####`icinga2::object::idopgsqlconnection`
+####[`icinga2::object::idopgsqlconnection`](id:object_idopgsqlconnection)
 
 This defined type creates an **IdoPgSqlConnection** objects.
 
@@ -357,7 +380,11 @@ This defined type supports all of the parameters that **IdoMySqlConnection** obj
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
-####`icinga2::object::servicegroup`
+####[`icinga2::object::service`](id:object_service)
+
+Coming soon...
+
+####[`icinga2::object::servicegroup`](id:object_servicegroup)
 
 This defined type creates an **ServiceGroup** objects.
 
@@ -372,7 +399,7 @@ icinga2::object::servicegroup { 'web_services':
 
 See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
-####`icinga2::object::sysloglogger`
+####[`icinga2::object::sysloglogger`](id:object_syslogger)
 
 This defined type creates **SyslogLogger** objects.
 
@@ -389,45 +416,55 @@ icinga2::object::sysloglogger { 'syslog-warning':
 
 See [SyslogLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
 
-####`icinga2::conf`
+####[`icinga2::object::user`](id:object_user)
 
-This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
+Coming soon...
 
-The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
+####[`icinga2::object::usergroup`](id:object_usergroup)
 
-The content of the file can be managed with two parameters: 
-
-* `template` is an ERB tmplate to use for the content (ie. `site/icinga2/baseservices.conf.erb`)
-* `source` is the file server source URL for a static file (ie. `puppet:///modules/site/icinga2/baseservices.conf`)
-
-To dynamically manage the variables of your template, use the `options_hash` parameter. It can be given a hash of data that is accessible in the template.
-
-Example usage:
+You can use this defined type to create user groups. Example:
 
 <pre>
-icinga2::conf { 'baseservices':
-  template     => 'site/icinga2/baseservices.conf.erb',
-  options_hash => {
-    enable_notifications => true,
-    check_interval       => '5',
-    groups               => [ 'all-servers' , 'linux-servers' ],
-  }
+#Create an admins user group:
+icinga2::object::hostgroup { 'admins':
+  display_name => 'admins',
+  target_dir => '/etc/icinga2/objects/usergroups',
 }
 </pre>
 
-## Documentation
+[Reference](id:reference)
+---------
 
-The latest documentation is also available on https://docs.icinga.org
+Classes:
 
-## Contributing
+Coming soon...
 
-To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch. 
+Defined types:
+
+Coming soon...
+
+[Limitations](id:limitations)
+------------
+
+Coming soon...
+
+[Development](id:contributors)
+------------
+
+###Contributing
+
+To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the master branch. 
 
 If your changes require any discussion, create an account on [https://www.icinga.org/register/](https://www.icinga.org/register/). Once you have an account, log onto [dev.icinga.org](https://dev.icinga.org/). Create an issue under the **Icinga Tools** project and add it to the **Puppet** category.
 
 If applicable for the changes you're making, add documentation to the `README.md` file.
 
-## Support
+###Support
 
 Check the project website at http://www.icinga.org for status updates and
 https://support.icinga.org if you want to contact us.
+
+[Contributors](id:contributors)
+------------
+
+Coming soon...
