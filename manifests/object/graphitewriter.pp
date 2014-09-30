@@ -17,7 +17,7 @@ define icinga2::object::graphitewriter (
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    content => template('icinga2/object_graphitewrite.conf.erb'),
+    content => template('icinga2/object_graphitewriter.conf.erb'),
     notify  => Service['icinga2'],
   }
 }
