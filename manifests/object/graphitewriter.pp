@@ -13,7 +13,7 @@ define icinga2::object::graphitewriter (
   validate_string($host)
 
   file {"${target_dir}/${target_file_name}":
-    ensure => file
+    ensure => file,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
