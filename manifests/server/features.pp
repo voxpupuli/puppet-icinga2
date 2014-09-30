@@ -1,12 +1,12 @@
 # Enable Features for Icinga 2
 class icinga2::server::features (
-  $features = ['checker', 'notification', 'maillog'],
+  $enabled_features = ['checker', 'notification', 'maillog'],
 ) {
 
   # Do some checking
-  validate_array($features)
+  validate_array($enabled_features)
 
   # Pass the features arry to the define to loop though
-  icinga::server::feature::enable { $features: }
+  icinga::server::feature::enables { $enabled_features: }
 
 }
