@@ -13,11 +13,11 @@ define icinga2::object::graphitewriter (
   validate_string($host)
 
   file {"${target_dir}/${target_file_name}":
-    ensure => file,
+    ensure => file
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    content => template('icinga2/object_graphitewriter.conf.erb'),
+    content => template('icinga2/object_graphitewrite.conf.erb'),
     notify  => Service['icinga2'],
   }
 }
