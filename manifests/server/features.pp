@@ -7,6 +7,6 @@ class icinga2::server::features (
   validate_array($enabled_features)
 
   # Pass the features arry to the define to loop though
-  icinga::server::feature::enables { $enabled_features: }
+  icinga::server::features::enable { $enabled_features: }
 
 }
