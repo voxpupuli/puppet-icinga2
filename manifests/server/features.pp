@@ -1,6 +1,6 @@
 # Enable Features for Icinga 2
-class icinga2::server::feature (
-  $features = [],
+class icinga2::server::features (
+  $features = ['checker', 'notification', 'maillog'],
 ) {
 
   # Do some checking
