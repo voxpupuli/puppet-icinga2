@@ -1,6 +1,6 @@
 # Enable Features for Icinga 2
 class icinga2::server::features (
-  $enabled_features = ['checker', 'notification'],
+  $enabled_features = $icinga2::params::server_enabled_features,
 ) {
 
   # Do some checking
