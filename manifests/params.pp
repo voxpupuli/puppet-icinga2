@@ -287,7 +287,7 @@ class icinga2::params {
   $nrpe_connection_timeout = '300'
   #Note: because we use .join in the nrpe.cfg.erb template, this value *must* be an array
   $nrpe_allowed_hosts      = ['127.0.0.1',]
-  #Dtermines whether or not the NRPE daemon will allow clients to specify arguments to commands that are executed
+  #Determines whether or not the NRPE daemon will allow clients to specify arguments to commands that are executed
   # *** ENABLING THIS OPTION IS A SECURITY RISK! ***
   # Defaults to NOT allow command arguments
   $allow_command_argument_processing = '0'
