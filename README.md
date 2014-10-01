@@ -180,6 +180,18 @@ class { 'icinga2::nrpe':
 }
 </pre>
 
+By default the NRPE daemon will not allow clients to specify arguments to the commands that are executed.  To enable NRPE to allow client argument processing you can call the icinga2::nrpe class with the **allow_command_argument_processing** parameter.
+
+Valid parameter values are: 0=do not allow arguments, 1=allow command arguments
+
+**WARNING! - ENABLING THIS OPTION IS A SECURITY RISK!**
+
+````
+class { 'icinga2::nrpe':
+  allow_command_argument_processing => 1,
+}
+````
+
 **Note:** If you would like to install NRPE on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
 <pre>
