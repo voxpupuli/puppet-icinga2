@@ -62,6 +62,7 @@ class icinga2::params {
 
   #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
   $server_enabled_features = ['checker','notification']
+  $server_disabled_features = []
 
   ##############################
   # Icinga 2 server package parameters
