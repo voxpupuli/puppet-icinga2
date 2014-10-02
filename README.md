@@ -472,6 +472,23 @@ icinga2::object::hostgroup { 'admins':
 }
 </pre>
 
+####[`icinga2::object::graphitewriter`](id:object_graphitewriter)
+
+This defined type creates an **GraphiteWriter** object
+
+Though you can create the file anywhere and with any name via the target_dir and target_file_name parameters, you should set the target_dir parameter to /etc/icinga2/features-enabled, as that's where Icinga 2 will look for graphitewriter connection objects by default.
+
+Example Usage:
+
+````
+icinga2::object::graphitewriter { 'graphite_relay':
+  target_dir       => '/etc/icinga2/features-enabled',
+  target_file_name => 'graphite.conf',
+  graphite_host    => '127.0.0.1',
+  graphite_port    => 2003,
+}
+````
+
 [Reference](id:reference)
 ---------
 
