@@ -4,7 +4,7 @@ define icinga2::server::feature::enable () {
     user    => 'root',
     path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
     command => "/usr/sbin/icinga2-enable-feature ${name}",
-    unless  => "[ -f /etc/icinga2/features-enabled/${name}.conf ]",
+    unless  => "[ ! -f /etc/icinga2/features-available/${name}.conf ] || [ -f /etc/icinga2/features-enabled/${name}.conf ]",
     require => Class['icinga2::server::install::packages'],
   }
 }
