@@ -298,7 +298,7 @@ class icinga2::params {
     'CentOS': {
       $nrpe_config_basedir = '/etc/nagios'
       $nrpe_plugin_libdir  = '/usr/lib64/nagios/plugins'
-      $checkplugin_libdir   = '/usr/lib/nagios/plugins'
+      $checkplugin_libdir  = '/usr/lib64/nagios/plugins'
       $nrpe_pid_file_path  = '/var/run/nrpe/nrpe.pid'
       $nrpe_user           = 'nrpe'
       $nrpe_group          = 'nrpe'
