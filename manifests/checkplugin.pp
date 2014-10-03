@@ -9,7 +9,7 @@ define icinga2::checkplugin (
   $checkplugin_target_file_owner  = 'root',
   $checkplugin_target_file_group  = 'root',
   $checkplugin_target_file_mode   = '0755',
-  $checkplugin_source_file        = undef,
+  $checkplugin_template           = undef,
 ) {
 
   #Do some validation of the class' parameters:
@@ -24,7 +24,7 @@ define icinga2::checkplugin (
     owner   => $checkplugin_target_file_owner,
     group   => $checkplugin_target_file_group,
     mode    => $checkplugin_target_file_mode,
-    source  => $checkplugin_source_file,
+    content => template("icinga2/${checkplugin_template}"),
     require => Package[$icinga2::params::icinga2_client_packages],
   }
 
