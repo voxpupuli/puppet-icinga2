@@ -160,7 +160,7 @@ class { 'icinga2::server':
  }
 </pre>
 
-This will stop the `icinga2::server` class from trying to install the plugins pacakges, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+This will stop the `icinga2::server` class from trying to install the plugins packages, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
 If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out notifications, set the `install_mail_utils_package` parameter to **true**:
 
@@ -171,6 +171,18 @@ If you would like to install packages to make a `mail` command binary available 
     ...
   }
 </pre>
+
+If you would like you manage enabled and disabled features for Icinga 2 you can set the `server_enabled_features` and `server_enabled_features` parameters to an array of features.
+
+**Note: If a feature is listed in both the enabled and disabled features arrays, the feature will be disabled**
+
+````
+class { 'icinga2::server':
+  ...
+  server_enabled_features  => ['checker','notification'],
+  server_disabled_features => ['graphite','livestatus'],
+}
+````
 
 ###NRPE usage
 

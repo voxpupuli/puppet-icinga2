@@ -24,6 +24,8 @@ class icinga2::server (
   $icinga2_server_package = $icinga2::params::icinga2_server_package,
   $server_install_nagios_plugins = $icinga2::params::server_install_nagios_plugins,
   $install_mail_utils_package = $icinga2::params::install_mail_utils_package,
+  $server_enabled_features = $icinga2::params::server_enabled_features,
+  $server_disabled_features = $icinga2::params::server_disabled_features,
 ) inherits icinga2::params {
 
   #Do some validation of parameters so we know we have the right data types:
@@ -80,6 +82,10 @@ class icinga2::server (
   #class on the right.
   class {'icinga2::server::install':} ~>
   class {'icinga2::server::config':} ~>
+  class {'icinga2::server::features':
+    enabled_features  => $server_enabled_features,
+    disabled_features => $server_disabled_features,
+  } ~>
   class {'icinga2::server::service':}
 
 }

@@ -60,6 +60,10 @@ class icinga2::params {
   #Whether to install the plugin packages when the icinga2::server class is applied:
   $server_install_nagios_plugins = true
 
+  #What Icinga 2 features should be enabled when icinga2::server::features class is applied:
+  $server_enabled_features = ['checker','notification']
+  $server_disabled_features = []
+
   ##############################
   # Icinga 2 server package parameters
 
