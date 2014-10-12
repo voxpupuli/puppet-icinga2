@@ -8,6 +8,13 @@
 * Bug #[7190](https://dev.icinga.org/issues/7190): Fully qualify uses of the `operatingsystem` Facter fact
 * Added CentOS 7 support
 * Feature #[7264](https://dev.icinga.org/issues/7264): Added Debian 7 support
+* Feature: Added the ability to use the Debmon repository on Debian 7 systems: [PR-17](https://github.com/Icinga/puppet-icinga2/pull/17)
+* Feature: Added the ability to make NRPE accept command arguments; turned off by default for obvious security reasons: [PR-22](https://github.com/Icinga/puppet-icinga2/pull/22)
+* Feature: Added the ability to enable/disable Icinga 2 components via parameters: [PR-23](https://github.com/Icinga/puppet-icinga2/pull/23) 
+* Feature: Added a `GraphiteWriter` object defined type: [PR-24](https://github.com/Icinga/puppet-icinga2/pull/24)
+* Feature: Added the ability to upload or create custom check plugins on an Icinga 2 server (as opposed to just for NRPE clients): [PR-27](https://github.com/Icinga/puppet-icinga2/pull/27)
+* Bug #[7308](https://dev.icinga.org/issues/7308): Allow multiple `assign_where` and `ignore_where` conditions
+* 
 
 ###v0.5 (August 17th, 2014)
 
