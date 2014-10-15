@@ -22,15 +22,14 @@ object Dependency "<%= @object_name %>" {
   <%- end -%>
   <%- if @disable_checks -%>
   disable_checks = <%= @disable_checks -%>
-  <%- end -%> 
+  <%- end -%>
   <%- if @disable_notifications -%>
   disable_notifications = <%= @disable_notifications -%>
-  <%- end -%> 
+  <%- end -%>
   <%- if @period -%>
   period = "<%= @period -%>"
   <%- end -%>
   <%- if @states.length != 0 -%>
   states = [ <%- @states.each do |state| -%> <%= state %>, <%- end -%>]
   <%- end -%>
-  
 }

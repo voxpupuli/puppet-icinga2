@@ -26,10 +26,10 @@ apply Dependency "<%= @object_name %>" to "<%= @object_type %>"{
   <%- end -%>
   <%- if @disable_checks -%>
   disable_checks = <%= @disable_checks -%>
-  <%- end -%> 
+  <%- end -%>
   <%- if @disable_notifications -%>
   disable_notifications = <%= @disable_notifications -%>
-  <%- end -%> 
+  <%- end -%>
   <%- if @period -%>
   period = "<%= @period -%>"
   <%- end -%>
@@ -37,9 +37,9 @@ apply Dependency "<%= @object_name %>" to "<%= @object_type %>"{
   states = [ <%- @states.each do |state| -%> <%= state %>, <%- end -%>]
   <%- end -%>
   <%- if @assign_where -%>
-  assign where <%= @assign_where -%> 
+  assign where <%= @assign_where -%>
   <%- end -%>
   <%- if @ignore_where -%>
-  ignore where <%= @ignore_where -%> 
+  ignore where <%= @ignore_where -%>
   <%- end -%>
 }
