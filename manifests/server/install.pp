@@ -67,7 +67,7 @@ class icinga2::server::install::repos inherits icinga2::server {
             release     => "debmon-${lsbdistcodename}",
             repos       => 'main',
             key_source  => 'http://debmon.org/debmon/repo.key',
-            key         => 'BC7D020A',
+            key         => '29D662D2',
             include_src => false,
             # backports repo use 200
             pin         => '300'
