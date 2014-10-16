@@ -325,6 +325,60 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
 
+####`icinga2::object::checkcommand`
+
+The `checkcommand` defined type can create `checkcommand` objects.
+
+<pre>
+#Create the http check command:
+icinga2::object::checkcommand { 'check_http':
+  command => ['"/check_http"'],
+  arguments     => {'"-H"'             => '"$http_vhost$"',
+    '"-I"'          => '"$http_address$"',
+    '"-u"'          => '"$http_uri$"',
+    '"-p"'          => '"$http_port$"',
+    '"-S"'          => {
+      'set_if' => '"$http_ssl$"'
+    },
+    '"--sni"'       => {
+      'set_if' => '"$http_sni$"'
+    },
+    '"-a"'          => {
+      'value'       => '"$http_auth_pair$"',
+      'description' => '"Username:password on sites with basic authentication"'
+    },
+    '"--no-body"'   => {
+      'set_if' => '"$http_ignore_body$"'
+    },
+    '"-r"' => '"$http_expect_body_regex$"',
+    '"-w"' => '"$http_warn_time$"',
+    '"-c"' => '"$http_critical_time$"',
+    '"-e"' => '"$http_expect$"'
+  },
+  vars => {
+    'vars.http_address' => '"$address$"',
+    'vars.http_ssl'     => 'false',
+    'vars.http_sni'     => 'false'
+  }
+}
+
+</pre>
+
+This vailible parameters are:
+
+* `template_to_import`: .
+* `command`: .
+* `cmd_path`: .
+* `arguments`: .
+* `env`: .
+* `vars`: .
+* `timeout`: .
+* `target_dir`: .
+* `target_file_name`: .
+* `target_file_owner`: .
+* `target_file_group`: .
+* `target_file_mode`: .
+
 ####[`icinga2::object::host`](id:object_host)
 
 This defined type creates host objects.
