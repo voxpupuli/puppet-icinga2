@@ -19,7 +19,7 @@ define icinga2::object::checkcommand (
   $env               = undef,
   $vars              = {},
   $timeout           = undef,
-  $target_dir        = '/etc/icinga2/conf.d',
+  $target_dir        = '/etc/icinga2/objects/checkcommands',
   $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
