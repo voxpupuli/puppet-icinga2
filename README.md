@@ -283,6 +283,7 @@ This means that they will not be added to the rendered object definition files.
 Object types:
 
 * [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
+* [icinga2::object::checkcommand](#object_checkcommand)
 * [icinga2::object::host](id:object_host)
 * [icinga2::object::hostgroup](id:object_hostgroup)
 * [icinga2::object::idomysqlconnection](id:object_idomysqlconnection)
@@ -325,7 +326,7 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
 
-####`icinga2::object::checkcommand`
+####[`icinga2::object::checkcommand`](id:object_checkcommand)
 
 The `checkcommand` defined type can create `checkcommand` objects.
 
