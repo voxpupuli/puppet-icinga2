@@ -329,8 +329,10 @@ assign_where => "\"linux_servers\" in host.${facter_variable}"",
 
 The `checkcommand` defined type can create `checkcommand` objects.
 
+Example:
+
 <pre>
-#Create the http check command:
+#Create an HTTP check command:
 icinga2::object::checkcommand { 'check_http':
   command => ['"/check_http"'],
   arguments     => {'"-H"'             => '"$http_vhost$"',
@@ -361,23 +363,22 @@ icinga2::object::checkcommand { 'check_http':
     'vars.http_sni'     => 'false'
   }
 }
-
 </pre>
 
-This vailible parameters are:
+Available parameters are:
 
-* `template_to_import`: .
-* `command`: .
-* `cmd_path`: .
-* `arguments`: .
-* `env`: .
-* `vars`: .
-* `timeout`: .
-* `target_dir`: .
-* `target_file_name`: .
-* `target_file_owner`: .
-* `target_file_group`: .
-* `target_file_mode`: .
+* `template_to_import`
+* `command`
+* `cmd_path`
+* `arguments`
+* `env`
+* `vars`
+* `timeout`
+* `target_dir`
+* `target_file_name`
+* `target_file_owner`
+* `target_file_group`
+* `target_file_mode`
 
 ####[`icinga2::object::host`](id:object_host)
 
