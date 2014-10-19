@@ -149,7 +149,9 @@ icinga2::object::idopgsqlconnection { 'postgres_connection':
 
 In a future version, the module will automatically create the IDO connection objects.
 
-**Note:** If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
+**NRPE and Nagios plugin packages**
+
+If you will be installing NRPE or the Nagios plugins packages with the `icinga2::nrpe` class on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
 <pre>
 #Install Icinga 2:
