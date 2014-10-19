@@ -164,6 +164,8 @@ class { 'icinga2::server':
 
 This will stop the `icinga2::server` class from trying to install the plugins packages, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
 
+**`mail` binaries**
+
 If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out notifications, set the `install_mail_utils_package` parameter to **true**:
 
 <pre>
