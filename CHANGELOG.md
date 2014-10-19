@@ -15,6 +15,7 @@
 * Feature: Added the ability to upload or create custom check plugins on an Icinga 2 server (as opposed to just for NRPE clients): [PR-27](https://github.com/Icinga/puppet-icinga2/pull/27)
 * Bug [#7308](https://dev.icinga.org/issues/7308): Allow multiple `assign_where` and `ignore_where` conditions
 * Feature: [PR-28](https://github.com/Icinga/puppet-icinga2/pull/28) and issue [#7219](https://dev.icinga.org/issues/7219): Added Dependecy and Apply Dependency objects
+* Feature: [PR-29](https://github.com/Icinga/puppet-icinga2/pull/29) and issue [#7213](https://dev.icinga.org/issues/7213): Added a CheckCommand object defined type
 
 ###v0.5 (August 17th, 2014)
 
