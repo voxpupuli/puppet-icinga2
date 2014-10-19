@@ -112,8 +112,6 @@ class { 'icinga2::server':
 
 When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
 
-If you want to use [Debmon repository](http://debmon.org/packages) for Debian 7, you have to set `use_debmon_repo` to true when you call `icinga2::server` class.
-
 **Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
 
 <pre>
@@ -148,6 +146,23 @@ icinga2::object::idopgsqlconnection { 'postgres_connection':
 </pre>
 
 In a future version, the module will automatically create the IDO connection objects.
+
+**Using the Debmon repository on Debian systems**
+
+If you would like to use the [Debmon repository](http://debmon.org/packages) for Debian 7 systems, set `use_debmon_repo` to true when you call the `icinga2::server` class:
+
+<pre>
+class { 'icinga2::server':
+  server_db_type => 'pgsql',
+  # default to false
+  use_debmon => true,
+  db_host => 'localhost'
+  db_port => '5432'
+  db_name => 'icinga2_data'
+  db_user => 'icinga2'
+  db_password => 'password',
+}
+</pre>
 
 **NRPE and Nagios plugin packages**
 
