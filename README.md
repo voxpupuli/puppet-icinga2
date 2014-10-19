@@ -294,7 +294,7 @@ Object types:
 * [icinga2::object::user](id:object_user)
 * [icinga2::object::usergroup](id:object_usergroup)
 
-####`icinga2::object::apply_service_to_host`
+####[`icinga2::object::apply_service_to_host`](id:object_apply_service_to_host)
 
 The `apply_service_to_host` defined type can create `apply` objects to apply services to hosts:
 
