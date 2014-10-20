@@ -334,6 +334,7 @@ Object types:
 * [icinga2::object::hostgroup](id:object_hostgroup)
 * [icinga2::object::idomysqlconnection](id:object_idomysqlconnection)
 * [icinga2::object::idopgsqlconnection](id:object_idopgsqlconnection)
+* [icinga2::object::notificationcommand](id:object_notificationcommand)
 * [icinga2::object::service](id:object_service)
 * [icinga2::object::servicegroup](id:object_servicegroup)
 * [icinga2::object::syslogger](id:object_syslogger)
@@ -535,6 +536,35 @@ All other parameters are given as [single-quoted strings](https://docs.puppetlab
 This defined type supports all of the parameters that **IdoMySqlConnection** objects have available.
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####`icinga2::object::notificationcommand`
+
+The `notificationcommand` defined type can create `notificationcommand` objects.
+
+<pre>
+#Create the mail notification command:
+icinga2::object::notificationcommand { 'mail-service-notification':
+  command   => ['"/icinga2/scripts/mail-notification.sh"'],
+  cmd_path  => 'SysconfDir',
+  env       => {
+    'NOTIFICATIONTYPE'  => '"$notification.type$"',
+    'SERVICEDESC' => '"$service.name$"',
+    'HOSTALIAS' => '"$host.display_name$"',
+    'HOSTADDRESS' => '"$address$"',
+    'SERVICESTATE' => '"$service.state$"',
+    'LONGDATETIME' => '"$icinga.long_date_time$"',
+    'SERVICEOUTPUT' => '"$service.output$"',
+    'NOTIFICATIONAUTHORNAME' => '"$notification.author$"',
+    'NOTIFICATIONCOMMENT' => '"$notification.comment$"',
+    'HOSTDISPLAYNAME' => '"$host.display_name$"',
+    'SERVICEDISPLAYNAME' => '"$service.display_name$"',
+    'USEREMAIL' => '"$user.email$"'
+  }
+}
+
+</pre>
+
+This oobject use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::service`](id:object_service)
 
