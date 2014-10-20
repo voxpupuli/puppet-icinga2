@@ -330,6 +330,7 @@ Object types:
 
 * [icinga2::object::apply_service_to_host](#object_apply_service_to_host)
 * [icinga2::object::checkcommand](#object_checkcommand)
+* [icinga2::object::eventcommand](id:object_eventcommand)
 * [icinga2::object::host](id:object_host)
 * [icinga2::object::hostgroup](id:object_hostgroup)
 * [icinga2::object::idomysqlconnection](id:object_idomysqlconnection)
@@ -427,6 +428,20 @@ Available parameters are:
 * `target_file_owner`
 * `target_file_group`
 * `target_file_mode`
+
+####`icinga2::object::eventcommand`
+
+The `eventcommand` defined type can create `eventcommand` objects.
+
+<pre>
+#Create the http restart command:
+icinga2::object::eventcommand { 'restart-httpd-event':
+  command => '"/opt/bin/restart-httpd.sh"'
+}
+
+</pre>
+
+This object use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::host`](id:object_host)
 
