@@ -15,11 +15,11 @@ define icinga2::object::eventcommand (
 /*  $methods           = undef, */ /* Need to get more details about this attribute */
   $command           = undef,
   $cmd_path          = 'PluginDir',
-  $arguments         = {},
+  $arguments         = undef,
   $env               = undef,
-  $vars              = {},
+  $vars              = undef,
   $timeout           = undef,
-  $target_dir        = '/etc/icinga2/conf.d',
+  $target_dir        = '/etc/icinga2/objects/eventcommands',
   $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
@@ -31,10 +31,15 @@ define icinga2::object::eventcommand (
   validate_string($template_to_import)
   validate_array($command)
   validate_string($cmd_path)
+  if $arguments {
+    validate_hash($arguments)
+  }
   if $env {
     validate_hash($env)
   }
-  validate_hash($vars)
+  if $vars {
+    validate_hash($vars)
+  }
   if $timeout {
     validate_re($timeout, '^\d+$')
   }

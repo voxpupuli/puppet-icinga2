@@ -54,7 +54,7 @@ object EventCommand "<%= @object_eventcommandname %>" {
 
   <%- if @env -%>
   env = {
-  <%- @vars.each_pair do |key,value| -%>
+  <%- @env.each_pair do |key,value| -%>
     <%= key %> = <%= value %>
   <%- end -%>
   }
