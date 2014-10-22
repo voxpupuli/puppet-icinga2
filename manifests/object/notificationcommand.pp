@@ -11,15 +11,15 @@
 
 define icinga2::object::notificationcommand (
   $object_notificationcommandname = $name,
-  $template_to_import = 'plugin-check-command',
+  $template_to_import = 'plugin-notification-command',
 /*  $methods           = undef, */ /* Need to get more details about this attribute */
   $command           = undef,
   $cmd_path          = 'PluginDir',
-  $arguments         = {},
+  $arguments         = undef,
   $env               = undef,
-  $vars              = {},
+  $vars              = undef,
   $timeout           = undef,
-  $target_dir        = '/etc/icinga2/conf.d',
+  $target_dir        = '/etc/icinga2/objects/notificationcommands',
   $target_file_name  = "${name}.conf",
   $target_file_owner = 'root',
   $target_file_group = 'root',
@@ -31,6 +31,9 @@ define icinga2::object::notificationcommand (
   validate_string($template_to_import)
   validate_array($command)
   validate_string($cmd_path)
+  if $arguments {
+    validate_hash($arguments)
+  }
   if $env {
     validate_hash($env)
   }
