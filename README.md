@@ -436,7 +436,7 @@ The `eventcommand` defined type can create `eventcommand` objects.
 <pre>
 #Create the http restart command:
 icinga2::object::eventcommand { 'restart-httpd-event':
-  command => '"/opt/bin/restart-httpd.sh"'
+  command => [ '"/opt/bin/restart-httpd.sh"' ]
 }
 
 </pre>
