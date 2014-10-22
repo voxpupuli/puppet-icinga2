@@ -37,7 +37,9 @@ define icinga2::object::notificationcommand (
   if $env {
     validate_hash($env)
   }
-  validate_hash($vars)
+  if $vars {
+    validate_hash($vars)
+  }
   if $timeout {
     validate_re($timeout, '^\d+$')
   }
