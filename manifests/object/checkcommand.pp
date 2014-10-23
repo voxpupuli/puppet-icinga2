@@ -11,19 +11,21 @@
 
 define icinga2::object::checkcommand (
   $object_checkcommandname = $name,
-  $template_to_import = 'plugin-check-command',
-/*  $methods           = undef, */ /* Need to get more details about this attribute */
-  $command           = undef,
-  $cmd_path          = 'PluginDir',
-  $arguments         = {},
-  $env               = undef,
-  $vars              = {},
-  $timeout           = undef,
-  $target_dir        = '/etc/icinga2/objects/checkcommands',
-  $target_file_name  = "${name}.conf",
-  $target_file_owner = 'root',
-  $target_file_group = 'root',
-  $target_file_mode  = '0644'
+  $template_to_import           = 'plugin-check-command',
+/*  $methods                    = undef, */ /* Need to get more details about this attribute */
+  $command                      = undef,
+  $cmd_path                     = 'PluginDir',
+  $arguments                    = {},
+  $env                          = undef,
+  $vars                         = {},
+  $timeout                      = undef,
+  $target_dir                   = '/etc/icinga2/objects/checkcommands',
+  $checkcommand_template_module = 'icinga2',
+  $checkcommand_template        = 'object_checkcommand.conf.erb',
+  $target_file_name             = "${name}.conf",
+  $target_file_owner            = 'root',
+  $target_file_group            = 'root',
+  $target_file_mode             = '0644'
 ) {
 
   #Do some validation of the class' parameters:
@@ -50,7 +52,7 @@ define icinga2::object::checkcommand (
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
-    content => template('icinga2/object_checkcommand.conf.erb'),
+    content => template("${checkcommand_template_module}/${checkcommand_template}"),
     notify  => Service['icinga2'],
   }
 
