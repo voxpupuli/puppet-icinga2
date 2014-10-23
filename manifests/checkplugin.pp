@@ -10,6 +10,7 @@ define icinga2::checkplugin (
   $checkplugin_target_file_group        = 'root',
   $checkplugin_target_file_mode         = '0755',
   $checkplugin_file_distribution_method = 'content',
+  $checkplugin_template_module          = 'icinga2',
   $checkplugin_template                 = undef,
   $checkplugin_source_file              = undef,
 ) {
@@ -27,7 +28,7 @@ define icinga2::checkplugin (
       owner   => $checkplugin_target_file_owner,
       group   => $checkplugin_target_file_group,
       mode    => $checkplugin_target_file_mode,
-      content => template("icinga2/${checkplugin_template}"),
+      content => template("${checkplugin_template_module}/${checkplugin_template}"),
       require => Package[$icinga2::params::icinga2_client_packages],
     }
   }
