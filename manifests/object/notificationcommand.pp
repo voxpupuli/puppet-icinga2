@@ -15,9 +15,9 @@ define icinga2::object::notificationcommand (
 /*  $methods           = undef, */ /* Need to get more details about this attribute */
   $command           = undef,
   $cmd_path          = 'PluginDir',
-  $arguments         = undef,
-  $env               = undef,
-  $vars              = undef,
+  $arguments         = {},
+  $env               = {},
+  $vars              = {},
   $timeout           = undef,
   $target_dir        = '/etc/icinga2/objects/notificationcommands',
   $target_file_name  = "${name}.conf",
@@ -31,15 +31,9 @@ define icinga2::object::notificationcommand (
   validate_string($template_to_import)
   validate_array($command)
   validate_string($cmd_path)
-  if $arguments {
-    validate_hash($arguments)
-  }
-  if $env {
-    validate_hash($env)
-  }
-  if $vars {
-    validate_hash($vars)
-  }
+  validate_hash($arguments)
+  validate_hash($env)
+  validate_hash($vars)
   if $timeout {
     validate_re($timeout, '^\d+$')
   }

@@ -15,14 +15,14 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
 
   <%- if @template_to_import -%>
   import "<%= @template_to_import -%>"
-
   <%- end -%>
   <%- if @command -%>
+
   command = [ <% if @cmd_path -%><%= @cmd_path -%> + <% end -%><% @command.each_with_index do |cmd, i| %><%= cmd -%><%= ', ' if i < (@command.size - 1) %><% end %> ]
   <%- end -%>
   <%#- Need to add support to argument value as hash (recursivity) -%>
+  <%- if @arguments.empty? != true -%>
 
-  <%- if @arguments -%>
   arguments = {
   <%- @arguments.each_with_index do |(key,value), i| -%>
     <%= key %> = <% if value.class == String %><%= value %>
@@ -35,8 +35,8 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- end -%>
   }
   <%- end -%>
+  <%- if @vars.empty? != true -%>
 
-  <%- if @vars -%>
   <%- @vars.each_pair do |key,value| -%>
   <%= key %> = <% if value.class == String %><%= value %>
   <%- else -%>{
@@ -47,12 +47,12 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
     <%- end -%>
   <%- end -%>
   <%- end -%>
-
   <%- if @timeout -%>
+
   timeout = <%= @timeout %>
   <%- end -%>
+  <%- if @env.empty? != true -%>
 
-  <%- if @env -%>
   env = {
   <%- @env.each_pair do |key,value| -%>
     <%= key %> = <%= value %>
