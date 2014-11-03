@@ -335,6 +335,7 @@ Object types:
 * [icinga2::object::hostgroup](id:object_hostgroup)
 * [icinga2::object::idomysqlconnection](id:object_idomysqlconnection)
 * [icinga2::object::idopgsqlconnection](id:object_idopgsqlconnection)
+* [icinga2::object::notification](id:object_notification)
 * [icinga2::object::notificationcommand](id:object_notificationcommand)
 * [icinga2::object::service](id:object_service)
 * [icinga2::object::servicegroup](id:object_servicegroup)
@@ -552,6 +553,52 @@ This defined type supports all of the parameters that **IdoMySqlConnection** obj
 
 See [IdoPgSqlConnection](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-idopgsqlconnection) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####`icinga2::object::notification`
+
+The `notification` defined type can create `notification` objects.
+
+<pre>
+#Defining Create the mail notification command:
+icinga2::object::notification { 'localhost-ping-notification':
+
+  host_name = "localhost"
+
+  service_name = "ping4"
+
+  command = "mail-service-notification"
+
+  types = [ Problem, Recovery ]
+  }
+}
+
+</pre>
+
+Available parameters are:
+
+* `host_name`: Required.
+* `service_name`: Optional.
+* `vars`: Optional.
+* `users`: Optional.
+* `user_groups`: Optional.
+* `times`: Optional.
+* `command`: Required.
+* `interval`: Optional.
+* `period`: Optional.
+* `types`: Optional.
+* `states`: Optional.
+* `target_file_name`: Optional.
+* `target_file_owner`: Optional.
+* `target_file_group`: Optional.
+* `target_file_mode`: Optional.
+
+Notes on specific parameters:
+
+* `vars`: needs to be a dictionary
+* `users`,`user_groups`,`types`,`states`: should be an array, see [Notification](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notification) for list of valid state and type filters
+* `times`: needs to be a dictionary with `begin` and `end` attributes
+* `interval`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
+
+
 ####`icinga2::object::notificationcommand`
 
 The `notificationcommand` defined type can create `notificationcommand` objects.
@@ -579,7 +626,7 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 
 </pre>
 
-This oobject use the same parameter defined to `checkcommand`.
+This object use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::service`](id:object_service)
 
