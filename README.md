@@ -337,6 +337,7 @@ Object types:
 * [icinga2::object::idopgsqlconnection](id:object_idopgsqlconnection)
 * [icinga2::object::notification](id:object_notification)
 * [icinga2::object::notificationcommand](id:object_notificationcommand)
+* [icinga2::object::scheduleddowntime](id:object_scheduleddowntime)
 * [icinga2::object::service](id:object_service)
 * [icinga2::object::servicegroup](id:object_servicegroup)
 * [icinga2::object::syslogger](id:object_syslogger)
@@ -622,6 +623,26 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
+
+####[`icinga2::object::sicheduleddownload`](id:object_scheduleddownload)
+
+This defined type creates **ScheduledDowntime** objects
+
+Example usage:
+
+<pre>
+icinga2::object::scheduleddowntime {'some-downtime':
+  host_name    => 'localhost',
+  service_name => 'ping4',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
+
+
 
 ####[`icinga2::object::service`](id:object_service)
 
