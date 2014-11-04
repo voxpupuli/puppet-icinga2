@@ -13,7 +13,7 @@ define icinga2::object::timeperiod (
   $object_timeperiod_name        = $name,
   $timeperiod_template_to_import = 'legacy-timeperiod',
   $timeperiod_display_name       = undef,
-  $timeperiod_methods                       = undef,
+  $timeperiod_methods            = undef,
   $timeperiod_ranges             = {},
   $timeperiod_target_dir         = '/etc/icinga2/objects/timeperiods',
   $timeperiod_target_file_name   = "${name}.conf",

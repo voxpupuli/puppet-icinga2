@@ -11,9 +11,16 @@
 */
 
 object TimePeriod "<%= @object_timeperiod_name %>" {
-  import "legacy-timeperiod"
+  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
+  <%#- Otherwise, include the parameter: -%>
+  <%- if @timeperiod_template_to_import -%>
+  import "<%= @timeperiod_template_to_import -%>"
+  <%- end -%>
 
   display_name = "<%= @timeperiod_display_name %>"
+  <%- if @timeperiod_methods_update -%>
+  methods.update = "<%= @timeperiod_methods_update -%>"
+  <%- end -%>
   <%- if @timeperiod_ranges.empty? != true -%>
   ranges = {
   <%- @timeperiod_ranges.each_pair do |key,value| -%>
