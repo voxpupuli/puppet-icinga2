@@ -11,12 +11,12 @@
 */
 
 object TimePeriod "<%= @object_timeperiod_name %>" {
-  import "legacy-timepriod"
+  import "legacy-timeperiod"
 
   display_name = "<%= @timeperiod_display_name %>"
   <%- if @timeperiod_ranges.empty? != true -%>
   ranges = {
-  <%- @timeperiod_ranges.each_pair do |key,value| -%>>
+  <%- @timeperiod_ranges.each_pair do |key,value| -%>
     "<%= key %>" = "<%= value %>"
   <%- end -%>
   }
