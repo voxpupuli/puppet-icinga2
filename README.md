@@ -340,6 +340,7 @@ Object types:
 * [icinga2::object::service](id:object_service)
 * [icinga2::object::servicegroup](id:object_servicegroup)
 * [icinga2::object::syslogger](id:object_syslogger)
+* [icinga2::object::timepriod](id:object_timeperiod)
 * [icinga2::object::user](id:object_user)
 * [icinga2::object::usergroup](id:object_usergroup)
 
@@ -673,6 +674,28 @@ icinga2::object::hostgroup { 'admins':
   target_dir => '/etc/icinga2/objects/usergroups',
 }
 </pre>
+
+####[`icinga2::object::timeperiod`](id:object_timeperiod)
+
+This defined type creates **TimePeriod** objects
+
+Example usage:
+
+````
+icinga2::object::timeperiod { 'bra-office-hrs':
+  display_name => 'Brazilian WorkTime Hours',
+  ranges       => {
+    'monday'    => '12:00-21:00',
+    'tuesday'   => '12:00-21:00',
+    'wednesday' => '12:00-21:00',
+    'thursday'  => '12:00-21:00',
+    'friday'    => '12:00-21:00'
+  }
+}
+````
+
+See [TimePeriod](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-timeperiod) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-timeperiod) for more info.
+
 
 ####[`icinga2::object::graphitewriter`](id:object_graphitewriter)
 
