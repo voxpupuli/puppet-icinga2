@@ -10,19 +10,25 @@
 #
 
 define icinga2::object::timeperiod (
-  $object_timeperiod_name       = $name,
-  $timeperiod_display_name      = undef,
-  $timeperiod_ranges            = {},
-  $timeperiod_target_dir        = '/etc/icinga2/objects/timeperiods',
-  $timeperiod_target_file_name  = "${name}.conf",
-  $timeperiod_target_file_owner = 'root',
-  $timeperiod_target_file_group = 'root',
-  $timeperiod_target_file_mode  = '0644',
+  $object_timeperiod_name        = $name,
+  $timeperiod_template_to_import = 'legacy-timeperiod',
+  $timeperiod_display_name       = undef,
+  $timeperiod_methods                       = undef,
+  $timeperiod_ranges             = {},
+  $timeperiod_target_dir         = '/etc/icinga2/objects/timeperiods',
+  $timeperiod_target_file_name   = "${name}.conf",
+  $timeperiod_target_file_owner  = 'root',
+  $timeperiod_target_file_group  = 'root',
+  $timeperiod_target_file_mode   = '0644',
 ) {
 
   # Do some validation of the class' parameters:
   validate_string($object_timeperiod_name)
+  validate_string($timeperiod_template_to_import)
   validate_string($timeperiod_display_name)
+  if $timeperiod_methods {
+    validate_string($timeperiod_methods)
+  }
   validate_hash($timeperiod_ranges)
   validate_string($timeperiod_target_dir)
   validate_string($timeperiod_target_file_name)
@@ -38,5 +44,4 @@ define icinga2::object::timeperiod (
     content => template('icinga2/object_timeperiod.conf.erb'),
     notify  => Service['icinga2'],
   }
-  
 }
