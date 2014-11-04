@@ -340,7 +340,7 @@ Object types:
 * [icinga2::object::service](id:object_service)
 * [icinga2::object::servicegroup](id:object_servicegroup)
 * [icinga2::object::syslogger](id:object_syslogger)
-* [icinga2::object::timepriod](#object_timeperiod)
+* [icinga2::object::timeperiod](#object_timeperiod)
 * [icinga2::object::user](id:object_user)
 * [icinga2::object::usergroup](id:object_usergroup)
 
