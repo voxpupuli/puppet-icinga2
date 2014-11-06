@@ -70,7 +70,7 @@ For production use, you'll probably want to get the database password via a [Hie
 
 This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
 
-The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
+The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types.
 
 The content of the file can be managed with two parameters:
 
@@ -224,6 +224,14 @@ class { 'icinga2::nrpe':
   allow_command_argument_processing => 1,
 }
 ````
+
+If you'd like to purge NRPE config files that are not managed by Puppet you can set $nrpe_purge_unmanaged to true.
+
+```
+class { 'icinga2::nrpe':
+  nrpe_purge_unmanaged => true,
+}
+```
 
 **Note:** If you would like to install NRPE on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
@@ -646,7 +654,7 @@ See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chap
 
 This defined type creates **SyslogLogger** objects.
 
-`severity` can be set to **debug**, **notice**, **information**, **warning** or **critical**. 
+`severity` can be set to **debug**, **notice**, **information**, **warning** or **critical**.
 
 Example usage:
 
@@ -735,7 +743,7 @@ Coming soon...
 
 ###Contributing
 
-To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the master branch. 
+To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the master branch.
 
 If your changes require any discussion, create an account on [https://www.icinga.org/register/](https://www.icinga.org/register/). Once you have an account, log onto [dev.icinga.org](https://dev.icinga.org/). Create an issue under the **Icinga Tools** project and add it to the **Puppet** category.
 
