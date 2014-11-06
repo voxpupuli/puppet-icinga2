@@ -297,6 +297,9 @@ class icinga2::params {
   # Defaults to NOT allow command arguments
   $allow_command_argument_processing = '0'
 
+  # Whether or not to purge nrpe config files NOT managed by Puppet.
+  $nrpe_purge_unmanaged = false
+
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
     'CentOS': {
