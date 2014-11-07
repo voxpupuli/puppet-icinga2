@@ -160,7 +160,7 @@ class icinga2::server::install::execs inherits icinga2::server {
       exec { 'postgres_schema_load':
         user    => 'root',
         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
-        command => "su - postgres -c 'export PGPASSWORD=''${db_password}'' && psql -U ${db_user} -h localhost -d ${db_name} < ${server_db_schema_path}' && export PGPASSWORD='' && touch /etc/icinga2/postgres_schema_loaded.txt",
+        command => "su - postgres -c 'export PGPASSWORD='\''${db_password}'\'' && psql -U ${db_user} -h localhost -d ${db_name} < ${server_db_schema_path}' && export PGPASSWORD='' && touch /etc/icinga2/postgres_schema_loaded.txt",
         creates => '/etc/icinga2/postgres_schema_loaded.txt',
         require => Class['icinga2::server::install::packages'],
       }
