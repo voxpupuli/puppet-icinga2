@@ -338,6 +338,10 @@ class icinga2::params {
     #CentOS systems:
     'CentOS': {
       case $::operatingsystemmajrelease {
+        '5': {
+          #Pick the right list of client packages:
+          $icinga2_client_packages = ['nrpe', 'nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+        }
         '6': {
           #Pick the right list of client packages:
           $icinga2_client_packages = ['nrpe', 'nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
