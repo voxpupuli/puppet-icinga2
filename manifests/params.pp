@@ -72,6 +72,12 @@ class icinga2::params {
     #CentOS systems:
     'CentOS': {
       case $::operatingsystemmajrelease {
+        '5': {
+          #Icinga 2 server package
+          $icinga2_server_package = 'icinga2'
+          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+          $icinga2_server_mail_package = 'mailx'
+        }
         '6': {
           #Icinga 2 server package
           $icinga2_server_package = 'icinga2'
