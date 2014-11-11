@@ -684,7 +684,7 @@ Example usage:
 ````
 icinga2::object::timeperiod { 'bra-office-hrs':
   timeperiod_display_name => 'Brazilian WorkTime Hours',
-  timeperiod_ranges       => {
+  ranges       => {
     'monday'    => '12:00-21:00',
     'tuesday'   => '12:00-21:00',
     'wednesday' => '12:00-21:00',
