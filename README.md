@@ -560,17 +560,11 @@ The `notification` defined type can create `notification` objects.
 <pre>
 #Defining Create the mail notification command:
 icinga2::object::notification { 'localhost-ping-notification':
-
-  host_name = "localhost"
-
-  service_name = "ping4"
-
-  command = "mail-service-notification"
-
-  types = [ Problem, Recovery ]
-  }
+  host_name    => 'localhost',
+  service_name => 'ping4',
+  command      => 'mail-service-notification',
+  types        => [ 'Problem', 'Recovery' ]
 }
-
 </pre>
 
 Available parameters are:
@@ -593,9 +587,9 @@ Available parameters are:
 
 Notes on specific parameters:
 
-* `vars`: needs to be a dictionary
+* `vars`: needs to be a hash
 * `users`,`user_groups`,`types`,`states`: should be an array, see [Notification](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notification) for list of valid state and type filters
-* `times`: needs to be a dictionary with `begin` and `end` attributes
+* `times`: needs to be a hash with `begin` and `end` attributes
 * `interval`: needs to be a [number](https://docs.puppetlabs.com/puppet/latest/reference/lang_datatypes.html#numbers), not a quoted string
 
 

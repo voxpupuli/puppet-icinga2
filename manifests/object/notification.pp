@@ -11,22 +11,22 @@
 
 define icinga2::object::notification (
   $object_notificationname = $name,
-  $command           = undef,
-  $host_name         = undef,
-  $service_name         = undef,
-  $vars              = {},
-  $users             = [],
-  $user_groups       = [],
-  $times             = {},
-  $interval          = undef,
-  $period            = undef,
-  $types             = [],
-  $states            = [],
-  $target_dir        = '/etc/icinga2/objects/notifications',
-  $target_file_name  = "${name}.conf",
-  $target_file_owner = 'root',
-  $target_file_group = 'root',
-  $target_file_mode  = '0644'
+  $command                 = undef,
+  $host_name               = undef,
+  $service_name            = undef,
+  $vars                    = {},
+  $users                   = [],
+  $user_groups             = [],
+  $times                   = {},
+  $interval                = undef,
+  $period                  = undef,
+  $types                   = [],
+  $states                  = [],
+  $target_dir              = '/etc/icinga2/objects/notifications',
+  $target_file_name        = "${name}.conf",
+  $target_file_owner       = 'root',
+  $target_file_group       = 'root',
+  $target_file_mode        = '0644'
 ) {
 
   #Do some validation of the class' parameters:
