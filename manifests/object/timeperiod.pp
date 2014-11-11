@@ -34,7 +34,7 @@ define icinga2::object::timeperiod (
   validate_string($target_file_name)
   validate_string($target_file_owner)
   validate_string($target_file_group)
-  validate_re($timeperiod_target_file_mode, '^\d{4}$')
+  validate_re($target_file_mode, '^\d{4}$')
 
   file {"${timeperiod_target_dir}/${timeperiod_target_file_name}":
     ensure  => file,
