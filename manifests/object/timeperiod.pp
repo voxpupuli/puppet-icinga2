@@ -10,26 +10,26 @@
 #
 
 define icinga2::object::timeperiod (
-  $object_timeperiod_name        = $name,
+  $object_name                   = $name,
   $timeperiod_template_to_import = 'legacy-timeperiod',
   $timeperiod_display_name       = undef,
-  $timeperiod_methods            = undef,
-  $timeperiod_ranges             = {},
+  $methods                       = undef,
+  $ranges                        = {},
   $timeperiod_target_dir         = '/etc/icinga2/objects/timeperiods',
   $timeperiod_target_file_name   = "${name}.conf",
-  $target_file_owner  = 'root',
-  $target_file_group  = 'root',
-  $target_file_mode   = '0644',
+  $target_file_owner             = 'root',
+  $target_file_group             = 'root',
+  $target_file_mode              = '0644',
 ) {
 
   # Do some validation of the class' parameters:
-  validate_string($object_timeperiod_name)
+  validate_string($object_name)
   validate_string($timeperiod_template_to_import)
   validate_string($timeperiod_display_name)
-  if $timeperiod_methods {
-    validate_string($timeperiod_methods)
+  if $methods {
+    validate_string($methods)
   }
-  validate_hash($timeperiod_ranges)
+  validate_hash($ranges)
   validate_string($timeperiod_target_dir)
   validate_string($target_file_name)
   validate_string($target_file_owner)
