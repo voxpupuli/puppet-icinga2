@@ -36,7 +36,7 @@ This module requires the [Puppet Labs stdlib module](https://github.com/puppetla
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
-On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. You can also use the [icinga2::nrpe class](#nrpe-usage) to set up NRPE on CentOS 5. It is discouraged to set up Icinga2 Server on this old of a distribution. You are encouraged to use at least CentOS 6 or higher.
 
 If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 
