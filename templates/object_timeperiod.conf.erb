@@ -10,7 +10,7 @@
 *
 */
 
-object TimePeriod "<%= @object_timeperiod_name %>" {
+object TimePeriod "<%= @object_name %>" {
   <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%#- Otherwise, include the parameter: -%>
   <%- if @timeperiod_template_to_import -%>
@@ -18,12 +18,12 @@ object TimePeriod "<%= @object_timeperiod_name %>" {
   <%- end -%>
 
   display_name = "<%= @timeperiod_display_name %>"
-  <%- if @timeperiod_methods_update -%>
-  methods.update = "<%= @timeperiod_methods_update -%>"
+  <%- if @methods_update -%>
+  methods.update = "<%= @methods_update -%>"
   <%- end -%>
-  <%- if @timeperiod_ranges.empty? != true -%>
+  <%- if @ranges.empty? != true -%>
   ranges = {
-  <%- @timeperiod_ranges.each_pair do |key,value| -%>
+  <%- @ranges.each_pair do |key,value| -%>
     "<%= key %>" = "<%= value %>"
   <%- end -%>
   }
