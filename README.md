@@ -624,7 +624,7 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 
 This object use the same parameter defined to `checkcommand`.
 
-####[`icinga2::object::scheduleddownload`](id:object_scheduleddownload)
+####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
 
 This defined type creates **ScheduledDowntime** objects
 
