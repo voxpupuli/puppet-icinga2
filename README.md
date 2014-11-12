@@ -102,10 +102,10 @@ Once the database is set up, use the `icinga2::server` class with the database c
 #Install Icinga 2:
 class { 'icinga2::server':
   server_db_type => 'pgsql',
-  db_host => 'localhost'
-  db_port => '5432'
-  db_name => 'icinga2_data'
-  db_user => 'icinga2'
+  db_host => 'localhost',
+  db_port => '5432',
+  db_name => 'icinga2_data',
+  db_user => 'icinga2',
   db_password => 'password',
 }
 </pre>
