@@ -644,6 +644,26 @@ icinga2::object::scheduleddowntime {'some-downtime':
 
 
 
+####[`icinga2::object::scheduleddownload`](id:object_scheduleddownload)
+
+This defined type creates **ScheduledDowntime** objects
+
+Example usage:
+
+<pre>
+icinga2::object::scheduleddowntime {'some-downtime':
+  host_name    => 'localhost',
+  service_name => 'ping4',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
+
+
+
 ####[`icinga2::object::service`](id:object_service)
 
 Coming soon...
