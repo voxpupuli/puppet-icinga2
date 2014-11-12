@@ -61,6 +61,22 @@ The example below shows the [Puppet Labs Postgres module](https://github.com/pup
 
 For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
 
+####Note For CentOS 5
+If you are attempting to install Icinga2 server on CentOS 5 (discouraged) and would like to use PostgreSQL, you must provide a non-EOL'd version of it. If you are installing PostgreSQL for the first time, you can tell the module to manage the pgsql YUM repository like so:
+
+<pre>
+  class { 'postgresql::globals':
+    manage_package_repo => true,
+    version             => '9.3',
+  }->
+  class { 'postgresql::server': }
+</pre>
+
+CentOS 5 provides PostgreSQL 9.1 by default, which was end-of-life'd in 2010. Without having the module manage the repo, it will gladly install this crippled version for you which isn't what you want.
+
+**You will still need to declare a database for Icinga2 to access.**
+
+
 [Usage](id:usage)
 -----
 
