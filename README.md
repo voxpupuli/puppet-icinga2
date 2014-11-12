@@ -642,8 +642,6 @@ icinga2::object::scheduleddowntime {'some-downtime':
 }
 </pre>
 
-
-
 ####[`icinga2::object::service`](id:object_service)
 
 Coming soon...
