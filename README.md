@@ -118,10 +118,10 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 #Install Icinga 2:
 class { 'icinga2::server':
   server_db_type => 'pgsql',
-  db_host => 'localhost'
-  db_port => '5432'
-  db_name => 'icinga2_data'
-  db_user => 'icinga2'
+  db_host => 'localhost',
+  db_port => '5432',
+  db_name => 'icinga2_data',
+  db_user => 'icinga2',
   db_password => hiera('icinga_db_password_key_here'),
 }
 </pre>
