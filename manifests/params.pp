@@ -243,6 +243,9 @@ class icinga2::params {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
     'CentOS': {
       case $::operatingsystemmajrelease {
+        '5': {
+          $icinga2_server_service_name = 'icinga2'
+        }
         '6': {
           $icinga2_server_service_name = 'icinga2'
         }
