@@ -18,6 +18,11 @@
 * Feature: [PR-29](https://github.com/Icinga/puppet-icinga2/pull/29) and issue [#7213](https://dev.icinga.org/issues/7213): Added a CheckCommand object defined type
 * Feature: [PR-32](https://github.com/Icinga/puppet-icinga2/pull/32): Added a NotificationCommand object.
 * Feature: [PR-33](https://github.com/Icinga/puppet-icinga2/pull/33): Added an EventCommand object.
+* Feature: [PR-35](https://github.com/Icinga/puppet-icinga2/pull/35): Added the ability to use a static file or custom ERB template for check command objects
+* Feature: [PR-36](https://github.com/Icinga/puppet-icinga2/pull/36) and [dev.icinga.org issue #7216](https://dev.icinga.org/issues/7216): Added a [Notification](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notification) object defined type.
+* Feature: [PR-37](https://github.com/Icinga/puppet-icinga2/pull/37) and [dev.icinga.org issue #7217](https://dev.icinga.org/issues/7217): Added a [TimePeriod](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-timeperiod) object defined type.
+* Fix: [PR-42](https://github.com/Icinga/puppet-icinga2/pull/42): Fixed anchor links in the README.
+
 
 ###v0.5 (August 17th, 2014)
 
