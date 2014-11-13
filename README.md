@@ -339,6 +339,7 @@ Object types:
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
+* [icinga2::object::statusdatawriter](#icinga2objectstatusdatawriter)
 * [icinga2::object::syslogger](#icinga2objectsyslogger)
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
@@ -641,6 +642,22 @@ icinga2::object::servicegroup { 'web_services':
 </pre>
 
 See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-servicegroup) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::statusdatawriter`](id:object_statusdatawriter)
+
+This defined type creates **StatusDataWriter** objects.
+
+Example usage:
+
+<pre>
+icinga2::object::statusdatawriter { 'status':
+    status_path     => '/var/cache/icinga2/status.dat',
+    objects_path    => '/var/cache/icinga2/objects.path',
+    update_interval => 30s
+}
+</pre>
+
+See [StatusDataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-statusdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-sysloglogger) for more info.
 
 ####[`icinga2::object::sysloglogger`](id:object_syslogger)
 
