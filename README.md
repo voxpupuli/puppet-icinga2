@@ -355,6 +355,7 @@ This means that they will not be added to the rendered object definition files.
 Object types:
 
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
+* [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::host](#icinga2objecthost)
@@ -401,6 +402,24 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 <pre>
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
+
+####[`icinga2::object::applynotificationtohost`](id:object_apply_notification_to_host)
+
+The `apply_notification_to_host` defined type can create `apply` objects to apply notifications to hosts:
+
+This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
+
+Create an apply that will send notifications to PagerDuty
+````
+icinga2::object::apply_notification_to_host { 'pagerduty-host':
+  assign_where => 'host.vars.enable_pagerduty == "true"',
+  command      => 'notify-host-by-pagerduty',
+  users        => [ 'pagerduty' ],
+  states       => [ 'Up', 'Down' ],
+  types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+  period       => '24x7',
+}
+````
 
 ####[`icinga2::object::checkcommand`](id:object_checkcommand)
 
