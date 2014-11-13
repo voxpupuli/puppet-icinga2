@@ -669,14 +669,14 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 
 This object use the same parameter defined to `checkcommand`.
 
-####[`icinga2::object::prefdatawriter`](id:object_prefdatawriter)
+####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
 This dfined type creates a **PerfdataWriter** object
 
 Example usage:
 
 <pre>
-icinga2::object::prefdatawriter { 'pnp':
+icinga2::object::perfdatawriter { 'pnp':
   host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
   service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
   host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
@@ -685,7 +685,7 @@ icinga2::object::prefdatawriter { 'pnp':
 }
 </pre>
 
-See [PrefdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-prefdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-perfdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::service`](id:object_service)
 
