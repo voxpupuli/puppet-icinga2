@@ -409,8 +409,8 @@ The `apply_notification_to_host` defined type can create `apply` objects to appl
 
 This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
 
-Create an apply that will send notifications to PagerDuty
 ````
+#Create an apply that will send notifications to PagerDuty
 icinga2::object::apply_notification_to_host { 'pagerduty-host':
   assign_where => 'host.vars.enable_pagerduty == "true"',
   command      => 'notify-host-by-pagerduty',
