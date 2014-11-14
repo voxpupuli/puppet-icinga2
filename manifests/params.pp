@@ -72,6 +72,12 @@ class icinga2::params {
     #CentOS systems:
     'CentOS': {
       case $::operatingsystemmajrelease {
+        '5': {
+          #Icinga 2 server package
+          $icinga2_server_package = 'icinga2'
+          $icinga2_server_plugin_packages = ['nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+          $icinga2_server_mail_package = 'mailx'
+        }
         '6': {
           #Icinga 2 server package
           $icinga2_server_package = 'icinga2'
@@ -237,6 +243,9 @@ class icinga2::params {
     #Icinga 2 server daemon names for Red Had/CentOS systems:
     'CentOS': {
       case $::operatingsystemmajrelease {
+        '5': {
+          $icinga2_server_service_name = 'icinga2'
+        }
         '6': {
           $icinga2_server_service_name = 'icinga2'
         }
@@ -297,6 +306,9 @@ class icinga2::params {
   # Defaults to NOT allow command arguments
   $allow_command_argument_processing = '0'
 
+  # Whether or not to purge nrpe config files NOT managed by Puppet.
+  $nrpe_purge_unmanaged = false
+
   case $::operatingsystem {
     #File and template variable names for Red Had/CentOS systems:
     'CentOS': {
@@ -335,6 +347,10 @@ class icinga2::params {
     #CentOS systems:
     'CentOS': {
       case $::operatingsystemmajrelease {
+        '5': {
+          #Pick the right list of client packages:
+          $icinga2_client_packages = ['nrpe', 'nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
+        }
         '6': {
           #Pick the right list of client packages:
           $icinga2_client_packages = ['nrpe', 'nagios-plugins-nrpe', 'nagios-plugins-all', 'nagios-plugins-openmanage', 'nagios-plugins-check-updates']
