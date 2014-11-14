@@ -421,7 +421,7 @@ icinga2::object::apply_notification_to_host { 'pagerduty-host':
   states       => [ 'Up', 'Down' ],
   types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
   period       => '24x7',
-
+}
 ````
 
 ####[`icinga2::object::applynotificationtoservice`](id:object_apply_notification_to_service)
