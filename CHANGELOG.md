@@ -24,6 +24,7 @@
 * Fix: [PR-42](https://github.com/Icinga/puppet-icinga2/pull/42): Fixed anchor links in the README.
 * Feature: [PR-39](https://github.com/Icinga/puppet-icinga2/pull/39) and [dev.icinga.org issue #7673](https://dev.icinga.org/issues/7673): Added the ability to purge non-Puppet managed NRPE config files.
 * Feature: [PR-41](https://github.com/Icinga/puppet-icinga2/pull/41) and [dev.icinga.org issue #7674](https://dev.icinga.org/issues/7674): Added CentOS 5 server and NRPE client support.
+* Fix: [PR-40](https://github.com/Icinga/puppet-icinga2/pull/40) and [dev.icinga.org issue #7675](https://dev.icinga.org/issues/7675): Escape single quotes around the `PGPASSWORD` environment variable so that single quotes can be used in the Postgres password
 
 ###v0.5 (August 17th, 2014)
 
