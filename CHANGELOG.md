@@ -25,6 +25,10 @@
 * Feature: [PR-39](https://github.com/Icinga/puppet-icinga2/pull/39) and [dev.icinga.org issue #7673](https://dev.icinga.org/issues/7673): Added the ability to purge non-Puppet managed NRPE config files.
 * Feature: [PR-41](https://github.com/Icinga/puppet-icinga2/pull/41) and [dev.icinga.org issue #7674](https://dev.icinga.org/issues/7674): Added CentOS 5 server and NRPE client support.
 * Fix: [PR-40](https://github.com/Icinga/puppet-icinga2/pull/40) and [dev.icinga.org issue #7675](https://dev.icinga.org/issues/7675): Escape single quotes around the `PGPASSWORD` environment variable so that single quotes can be used in the Postgres password
+* Fix: [PR-42](https://github.com/Icinga/puppet-icinga2/pull/42): Fix anchor links in the README
+* Feature: [PR-43](https://github.com/Icinga/puppet-icinga2/pull/43) and [dev.icinga.org issue #7676](https://dev.icinga.org/issues/7676): Created an object to apply notifications to hosts
+* Feature: [PR-45](https://github.com/Icinga/puppet-icinga2/pull/45) and [dev.icinga.org issue #7220](https://dev.icinga.org/issues/7220): Created an object defined type for PerfDataWriter objects
+* Feature: [PR-46](https://github.com/Icinga/puppet-icinga2/pull/46) and [dev.icinga.org issue #7222](https://dev.icinga.org/issues/7222): Created an object defined type for LivestatusListener objects
 
 ###v0.5 (August 17th, 2014)
 
