@@ -356,6 +356,7 @@ Object types:
 
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
+* [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::host](#icinga2objecthost)
@@ -418,6 +419,23 @@ icinga2::object::apply_notification_to_host { 'pagerduty-host':
   command      => 'notify-host-by-pagerduty',
   users        => [ 'pagerduty' ],
   states       => [ 'Up', 'Down' ],
+  types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+  period       => '24x7',
+
+````
+
+####[`icinga2::object::applynotificationtoservice`](id:object_apply_notification_to_service)
+
+The `apply_notification_to_service` defined type can create `apply` objects to apply notifications to service:
+
+This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
+
+````
+icinga2::object::apply_notification_to_service { 'pagerduty-service':
+  assign_where => 'service.vars.enable_pagerduty == "true"',
+  command      => 'notify-service-by-pagerduty',
+  users        => [ 'pagerduty' ],
+  states       => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
   types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
   period       => '24x7',
 }
