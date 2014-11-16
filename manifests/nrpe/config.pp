@@ -24,6 +24,18 @@ class icinga2::nrpe::config inherits icinga2::nrpe {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    purge   => $nrpe_purge_unmanaged,
+    recurse => true,
+    require => Package[$icinga2::params::icinga2_client_packages],
+  }
+
+  file { '/etc/nrpe.d':
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    purge   => $nrpe_purge_unmanaged,
+    recurse => true,
     require => Package[$icinga2::params::icinga2_client_packages],
   }
 

@@ -13,6 +13,7 @@ class icinga2::nrpe (
   $nrpe_connection_timeout                = $icinga2::params::nrpe_connection_timeout,
   $nrpe_allowed_hosts                     = $icinga2::params::nrpe_allowed_hosts,
   $nrpe_allow_command_argument_processing = $icinga2::params::allow_command_argument_processing,
+  $nrpe_purge_unmanaged                   = $icinga2::params::nrpe_purge_unmanaged,
 
 ) inherits icinga2::params {
 

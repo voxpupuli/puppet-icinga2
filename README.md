@@ -36,7 +36,7 @@ This module requires the [Puppet Labs stdlib module](https://github.com/puppetla
 
 For Ubuntu systems, this module requires the [Puppet Labs apt module](https://github.com/puppetlabs/puppetlabs-apt).
 
-On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required.
+On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. You can also use the [icinga2::nrpe class](#nrpe-usage) to set up NRPE on CentOS 5. It is discouraged to set up Icinga2 Server on this old of a distribution. You are encouraged to use at least CentOS 6 or higher.
 
 If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 
@@ -61,6 +61,24 @@ The example below shows the [Puppet Labs Postgres module](https://github.com/pup
 
 For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text.
 
+####Note For CentOS 5
+You must be running CentOS 5.11 and _no later_ in order to satisfy dependencies.
+
+If you are attempting to install Icinga2 server on CentOS 5 (discouraged) and would like to use PostgreSQL, you must provide a non-EOL'd version of it. If you are installing PostgreSQL for the first time, you can tell the module to manage the pgsql YUM repository like so:
+
+<pre>
+  class { 'postgresql::globals':
+    manage_package_repo => true,
+    version             => '9.3',
+  }->
+  class { 'postgresql::server': }
+</pre>
+
+CentOS 5 provides PostgreSQL 9.1 by default, which was end-of-life'd in 2010. Without having the module manage the repo, it will gladly install this crippled version for you which isn't what you want.
+
+**You will still need to declare a database for Icinga2 to access.**
+
+
 [Usage](id:usage)
 -----
 
@@ -70,7 +88,7 @@ For production use, you'll probably want to get the database password via a [Hie
 
 This defined type creates custom files in the `/etc/icinga2/conf.d` directory.
 
-The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types. 
+The `icinga2::conf` type has `target_dir`, `target_file_name`, `target_file_owner`, `target_file_group` and `target_file_mode` parameters just like the `icinga2::object` types.
 
 The content of the file can be managed with two parameters:
 
@@ -102,10 +120,10 @@ Once the database is set up, use the `icinga2::server` class with the database c
 #Install Icinga 2:
 class { 'icinga2::server':
   server_db_type => 'pgsql',
-  db_host => 'localhost'
-  db_port => '5432'
-  db_name => 'icinga2_data'
-  db_user => 'icinga2'
+  db_host => 'localhost',
+  db_port => '5432',
+  db_name => 'icinga2_data',
+  db_user => 'icinga2',
   db_password => 'password',
 }
 </pre>
@@ -118,10 +136,10 @@ When the `server_db_type` parameter is set, the right IDO database connection pa
 #Install Icinga 2:
 class { 'icinga2::server':
   server_db_type => 'pgsql',
-  db_host => 'localhost'
-  db_port => '5432'
-  db_name => 'icinga2_data'
-  db_user => 'icinga2'
+  db_host => 'localhost',
+  db_port => '5432',
+  db_name => 'icinga2_data',
+  db_user => 'icinga2',
   db_password => hiera('icinga_db_password_key_here'),
 }
 </pre>
@@ -224,6 +242,14 @@ class { 'icinga2::nrpe':
   allow_command_argument_processing => 1,
 }
 ````
+
+If you'd like to purge NRPE config files that are not managed by Puppet you can set $nrpe_purge_unmanaged to true.
+
+```
+class { 'icinga2::nrpe':
+  nrpe_purge_unmanaged => true,
+}
+```
 
 **Note:** If you would like to install NRPE on a node that also has the `icinga2::server` class applied, be sure to set the `$server_install_nagios_plugins` parameter in your call to `icinga2::server` to `false`:
 
@@ -329,6 +355,7 @@ This means that they will not be added to the rendered object definition files.
 Object types:
 
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
+* [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
@@ -338,6 +365,7 @@ Object types:
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
+* [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
 * [icinga2::object::syslogger](#icinga2objectsyslogger)
@@ -376,6 +404,24 @@ If you would like to use Puppet or Facter variables in an `assign_where` or `ign
 <pre>
 assign_where => "\"linux_servers\" in host.${facter_variable}"",
 </pre>
+
+####[`icinga2::object::applynotificationtohost`](id:object_apply_notification_to_host)
+
+The `apply_notification_to_host` defined type can create `apply` objects to apply notifications to hosts:
+
+This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
+
+````
+#Create an apply that will send notifications to PagerDuty
+icinga2::object::apply_notification_to_host { 'pagerduty-host':
+  assign_where => 'host.vars.enable_pagerduty == "true"',
+  command      => 'notify-host-by-pagerduty',
+  users        => [ 'pagerduty' ],
+  states       => [ 'Up', 'Down' ],
+  types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+  period       => '24x7',
+}
+````
 
 ####[`icinga2::object::checkcommand`](id:object_checkcommand)
 
@@ -636,6 +682,24 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 
 This object use the same parameter defined to `checkcommand`.
 
+####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
+
+This dfined type creates a **PerfdataWriter** object
+
+Example usage:
+
+<pre>
+icinga2::object::perfdatawriter { 'pnp':
+  host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
+  service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
+  host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
+  service_format_template => 'DATATYPE::SERVICEPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tSERVICEDESC::$service.name$\tSERVICEPERFDATA::$service.perfdata$\tSERVICECHECKCOMMAND::$service.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$\tSERVICESTATE::$service.state$\tSERVICESTATETYPE::$service.state_type$',
+  rotation_interval       => '15s'
+}
+</pre>
+
+See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-perfdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
 ####[`icinga2::object::service`](id:object_service)
 
 Coming soon...
@@ -659,7 +723,7 @@ See [ServiceGroup](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chap
 
 This defined type creates **SyslogLogger** objects.
 
-`severity` can be set to **debug**, **notice**, **information**, **warning** or **critical**. 
+`severity` can be set to **debug**, **notice**, **information**, **warning** or **critical**.
 
 Example usage:
 
@@ -748,7 +812,7 @@ Coming soon...
 
 ###Contributing
 
-To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the master branch. 
+To submit a pull request via Github, fork [Icinga/puppet-icinga2](https://github.com/Icinga/puppet-icinga2) and make your changes in a feature branch off of the master branch.
 
 If your changes require any discussion, create an account on [https://www.icinga.org/register/](https://www.icinga.org/register/). Once you have an account, log onto [dev.icinga.org](https://dev.icinga.org/). Create an issue under the **Icinga Tools** project and add it to the **Puppet** category.
 
