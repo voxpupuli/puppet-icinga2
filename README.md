@@ -356,6 +356,7 @@ Object types:
 
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
+* [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
@@ -366,6 +367,7 @@ Object types:
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
+* [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
 * [icinga2::object::syslogger](#icinga2objectsyslogger)
@@ -418,6 +420,23 @@ icinga2::object::apply_notification_to_host { 'pagerduty-host':
   command      => 'notify-host-by-pagerduty',
   users        => [ 'pagerduty' ],
   states       => [ 'Up', 'Down' ],
+  types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+  period       => '24x7',
+}
+````
+
+####[`icinga2::object::applynotificationtoservice`](id:object_apply_notification_to_service)
+
+The `apply_notification_to_service` defined type can create `apply` objects to apply notifications to service:
+
+This defined type has the same available attributes that the `icinga2::object::notification` defined type does. With the addition of assign_where and ignore_where
+
+````
+icinga2::object::apply_notification_to_service { 'pagerduty-service':
+  assign_where => 'service.vars.enable_pagerduty == "true"',
+  command      => 'notify-service-by-pagerduty',
+  users        => [ 'pagerduty' ],
+  states       => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
   types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
   period       => '24x7',
 }
@@ -684,8 +703,7 @@ This object use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
-This dfined type creates a **PerfdataWriter** object
-
+This defined type creates a **PerfdataWriter** object
 Example usage:
 
 <pre>
@@ -699,6 +717,22 @@ icinga2::object::perfdatawriter { 'pnp':
 </pre>
 
 See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-perfdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
+
+This defined type creates **ScheduledDowntime** objects
+
+<pre>
+icinga2::object::scheduleddowntime {'some-downtime':
+  host_name    => 'localhost',
+  service_name => 'ping4',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
 
 ####[`icinga2::object::service`](id:object_service)
 
