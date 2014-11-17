@@ -10,19 +10,19 @@
 #
 
 define icinga2::object::externalcommandlistener (
-  $ensure                              = 'file',
-  $object_externalcommandlisternername = $name,
-  $command_path                        = undef,
-  $target_dir                          = '/etc/icinga2/objects/externalcommandlisteners',
-  $target_file_name                    = "${name}.conf",
-  $target_file_owner                   = 'root',
-  $target_file_group                   = 'root',
-  $target_file_mode                    = '0644'
+  $ensure                             = 'file',
+  $object_externalcommandlistenername = $name,
+  $command_path                       = undef,
+  $target_dir                         = '/etc/icinga2/objects/externalcommandlisteners',
+  $target_file_name                   = "${name}.conf",
+  $target_file_owner                  = 'root',
+  $target_file_group                  = 'root',
+  $target_file_mode                   = '0644'
 ) {
 
   #Do some validation of the class' parameters:
-  if $object_externalcommandlisternername {
-    validate_string($object_externalcommandlisternername)
+  if $object_externalcommandlistenername {
+    validate_string($object_externalcommandlistenername)
   }
   if $command_path {
     validate_string($command_path)
