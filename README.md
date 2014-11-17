@@ -365,6 +365,7 @@ Object types:
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
+* [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
 * [icinga2::object::servicegroup](#icinga2objectservicegroup)
 * [icinga2::object::syslogger](#icinga2objectsyslogger)
@@ -671,8 +672,7 @@ This object use the same parameter defined to `checkcommand`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
-This dfined type creates a **PerfdataWriter** object
-
+This defined type creates a **PerfdataWriter** object
 Example usage:
 
 <pre>
@@ -686,6 +686,22 @@ icinga2::object::perfdatawriter { 'pnp':
 </pre>
 
 See [PerfdataWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-perfdatawriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::scheduleddowntime`](id:object_scheduleddowntime)
+
+This defined type creates **ScheduledDowntime** objects
+
+<pre>
+icinga2::object::scheduleddowntime {'some-downtime':
+  host_name    => 'localhost',
+  service_name => 'ping4',
+  author       => 'icingaadmin',
+  comment      => 'Some comment',
+  fixed        => false,
+  duration     => '30m',
+  ranges       => { 'sunday' => '02:00-03:00' }
+}
+</pre>
 
 ####[`icinga2::object::service`](id:object_service)
 
