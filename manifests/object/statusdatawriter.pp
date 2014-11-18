@@ -13,7 +13,7 @@ define icinga2::object::statusdatawriter (
   $ensure                      = 'file',
   $object_statusdatawritername = $name,
   $status_path                 = undef,
-  $object_path                 = undef,
+  $objects_path                = undef,
   $update_interval             = undef,
   $target_dir                  = '/etc/icinga2/objects/statusdatawriters',
   $target_file_name            = "${name}.conf",
@@ -29,8 +29,8 @@ define icinga2::object::statusdatawriter (
   if $status_path {
     validate_string($status_path)
   }
-  if $object_path {
-    validate_string($object_path)
+  if $objects_path {
+    validate_string($objects_path)
   }
   if $update_interval {
     validate_string($update_interval)
