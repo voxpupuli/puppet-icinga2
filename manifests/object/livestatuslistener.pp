@@ -11,7 +11,7 @@
 
 define icinga2::object::livestatuslistener (
   $ensure                         = 'file',
-  $object_livestatuslisternername = $name,
+  $object_livestatuslistenername = $name,
   $socket_type                    = undef,
   $bind_host                      = undef,
   $bind_port                      = undef,
@@ -25,8 +25,8 @@ define icinga2::object::livestatuslistener (
 ) {
 
   #Do some validation of the class' parameters:
-  if $object_livestatuslisternername {
-    validate_string($object_livestatuslisternername)
+  if $object_livestatuslistenername {
+    validate_string($object_livestatuslistenername)
   }
   if $socket_type {
     validate_string($socket_type)
