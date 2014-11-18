@@ -25,7 +25,7 @@ define icinga2::object::service (
   $enable_active_checks = undef,
   $enable_passive_checks = undef,
   $enable_event_handler = undef,
-  $enable_flap_detection = undef,
+  $enable_flapping = undef,
   $enable_perfdata = undef,
   $event_command = undef,
   #flapping_threshold is defined as a percentage, eg. 10%, 50%, etc.
