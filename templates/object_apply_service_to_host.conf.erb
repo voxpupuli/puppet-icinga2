@@ -63,8 +63,8 @@ apply Service "<%= @object_servicename %>" to Host {
   <%- if @enable_event_handler -%>
   enable_event_handler = <%= @enable_event_handler -%>
   <%- end -%>
-  <%- if @enable_flap_detection -%>
-  enable_flap_detection = <%= @enable_flap_detection -%>
+  <%- if @enable_flapping -%>
+  enable_flapping = <%= @enable_flapping -%>
   <%- end -%>
   <%- if @enable_perfdata -%>
   enable_perfdata = <%= @enable_perfdata -%>
