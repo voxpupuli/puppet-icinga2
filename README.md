@@ -359,6 +359,7 @@ Object types:
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
+* [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
@@ -509,6 +510,18 @@ icinga2::object::eventcommand { 'restart-httpd-event':
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
+
+####`icinga2::object::externalcommandlistener`
+
+The `externalcommandlistener` defined type can create `ExternalCommandListener` objects.
+
+<pre>
+icinga2::object::externalcommandlistener { 'external':
+  command_path => '/var/run/icinga2/cmd/icinga2.cmd'
+}
+</pre>
+
+See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
