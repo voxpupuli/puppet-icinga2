@@ -33,6 +33,7 @@
 * Feature: [PR-48](https://github.com/Icinga/puppet-icinga2/pull/48) and [dev.icinga.org issue #7222](https://dev.icinga.org/issues/7222): Added a defined type for LiveStatusListener objects
 * Feature: [PR-49](https://github.com/Icinga/puppet-icinga2/pull/49) and [dev.icinga.org issue #7223](https://dev.icinga.org/issues/7223): Added a defined type for StatusDataWriter objects
 * Feature: [PR-50](https://github.com/Icinga/puppet-icinga2/pull/50) and [dev.icinga.org issue #7224](https://dev.icinga.org/issues/7224): Added a defined type for ExternalCommandListener objects
+* Fix: [dev.icinga.org issue #7715](https://dev.icinga.org/issues/7715): Allow trailing whitespace after some parameters so that the parameters following it don't get squashed onto the same line.
 
 ###v0.5 (August 17th, 2014)
 
