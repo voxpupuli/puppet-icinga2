@@ -34,34 +34,34 @@ object Service "<%= @object_servicename %>" {
   check_command = "<%= @check_command -%>"
   <%- end -%>
   <%- if @max_check_attempts -%>
-  max_check_attempts = <%= @max_check_attempts -%>
+  max_check_attempts = <%= @max_check_attempts %>
   <%- end -%>
   <%- if @check_period -%>
-  check_period = <%= @check_period -%>
+  check_period = <%= @check_period %>
   <%- end -%>
   <%- if @check_interval -%>
-  check_interval = <%= @check_interval -%>
+  check_interval = <%= @check_interval %>
   <%- end -%>
   <%- if @retry_interval -%>
-  retry_interval = <%= @retry_interval -%>
+  retry_interval = <%= @retry_interval %>
   <%- end -%>
   <%- if @enable_notifications -%>
-  enable_notifications = <%= @enable_notifications -%>
+  enable_notifications = <%= @enable_notifications %>
   <%- end -%>
   <%- if @enable_active_checks -%>
-  enable_active_checks = <%= @enable_active_checks -%>
+  enable_active_checks = <%= @enable_active_checks %>
   <%- end -%>
   <%- if @enable_passive_checks -%>
-  enable_passive_checks = <%= @enable_passive_checks -%>
+  enable_passive_checks = <%= @enable_passive_checks %>
   <%- end -%>
   <%- if @enable_event_handler -%>
-  enable_event_handler = <%= @enable_event_handler -%>
+  enable_event_handler = <%= @enable_event_handler %>
   <%- end -%>
   <%- if @enable_flapping -%>
-  enable_flapping = <%= @enable_flapping -%>
+  enable_flapping = <%= @enable_flapping %>
   <%- end -%>
   <%- if @enable_perfdata -%>
-  enable_perfdata = <%= @enable_perfdata -%>
+  enable_perfdata = <%= @enable_perfdata %>
   <%- end -%>
   <%- if @event_command -%>
   event_command = "<%= @event_command -%>"

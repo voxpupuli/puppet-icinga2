@@ -21,10 +21,10 @@ object Dependency "<%= @object_name %>" {
   child_service_name = "<%= @child_service_name -%>"
   <%- end -%>
   <%- if @disable_checks -%>
-  disable_checks = <%= @disable_checks -%>
+  disable_checks = <%= @disable_checks %>
   <%- end -%>
   <%- if @disable_notifications -%>
-  disable_notifications = <%= @disable_notifications -%>
+  disable_notifications = <%= @disable_notifications %>
   <%- end -%>
   <%- if @period -%>
   period = "<%= @period -%>"

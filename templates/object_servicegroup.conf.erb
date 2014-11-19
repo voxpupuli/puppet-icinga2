@@ -23,9 +23,9 @@ object ServiceGroup "<%= @object_servicegroup_name %>" {
   groups = [ <%- @groups.each do |group| -%> "<%= group %>", <%- end -%>]
   <%- end -%>
   <%- if @assign_where -%>
-  assign where <%= @assign_where -%>
+  assign where <%= @assign_where %>
   <%- end -%>
   <%- if @ignore_where -%>
-  ignore where <%= @ignore_where -%>
+  ignore where <%= @ignore_where %>
   <%- end -%>
 }

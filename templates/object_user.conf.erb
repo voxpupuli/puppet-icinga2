@@ -26,7 +26,7 @@ object User "<%= @object_username %>" {
   pager = "<%= @pager -%>"
   <%- end -%>
   <%- if @enable_notifications -%>
-  enable_notifications = <%= @enable_notifications -%>
+  enable_notifications = <%= @enable_notifications %>
   <%- end %>
   <%- if @vars.empty? != true  -%>
   <%- @vars.each_pair do |key, value| -%>
