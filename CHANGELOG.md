@@ -26,9 +26,13 @@
 * Feature: [PR-41](https://github.com/Icinga/puppet-icinga2/pull/41) and [dev.icinga.org issue #7674](https://dev.icinga.org/issues/7674): Added CentOS 5 server and NRPE client support.
 * Fix: [PR-40](https://github.com/Icinga/puppet-icinga2/pull/40) and [dev.icinga.org issue #7675](https://dev.icinga.org/issues/7675): Escape single quotes around the `PGPASSWORD` environment variable so that single quotes can be used in the Postgres password
 * Fix: [PR-42](https://github.com/Icinga/puppet-icinga2/pull/42): Fix anchor links in the README
-* Feature: [PR-43](https://github.com/Icinga/puppet-icinga2/pull/43) and [dev.icinga.org issue #7676](https://dev.icinga.org/issues/7676): Created an object to apply notifications to hosts
-* Feature: [PR-45](https://github.com/Icinga/puppet-icinga2/pull/45) and [dev.icinga.org issue #7220](https://dev.icinga.org/issues/7220): Created an object defined type for PerfDataWriter objects
-* Feature: [PR-46](https://github.com/Icinga/puppet-icinga2/pull/46) and [dev.icinga.org issue #7222](https://dev.icinga.org/issues/7222): Created an object defined type for LivestatusListener objects
+* Feature: [PR-43](https://github.com/Icinga/puppet-icinga2/pull/43) and [dev.icinga.org issue #7676](https://dev.icinga.org/issues/7676): Added a defined type that can create objects that apply notifications to hosts
+* Feature: [PR-44](https://github.com/Icinga/puppet-icinga2/pull/44) and [dev.icinga.org issue #7677](https://dev.icinga.org/issues/7677): Added a defined type that can create objects that apply notifications to services
+* Feature: [PR-45](https://github.com/Icinga/puppet-icinga2/pull/45) and [dev.icinga.org issue #7220](https://dev.icinga.org/issues/7220): Added a defined type for PerfDataWriter objects
+* Feature: [PR-47](https://github.com/Icinga/puppet-icinga2/pull/47) and [dev.icinga.org issue #7220](https://dev.icinga.org/issues/7220): Added a defined type for PerfDataWriter objects
+* Feature: [PR-48](https://github.com/Icinga/puppet-icinga2/pull/48) and [dev.icinga.org issue #7222](https://dev.icinga.org/issues/7222): Added a defined type for LiveStatusListener objects
+* Feature: [PR-49](https://github.com/Icinga/puppet-icinga2/pull/49) and [dev.icinga.org issue #7223](https://dev.icinga.org/issues/7223): Added a defined type for StatusDataWriter objects
+* Feature: [PR-50](https://github.com/Icinga/puppet-icinga2/pull/50) and [dev.icinga.org issue #7224](https://dev.icinga.org/issues/7224): Added a defined type for ExternalCommandListener objects
 
 ###v0.5 (August 17th, 2014)
 
