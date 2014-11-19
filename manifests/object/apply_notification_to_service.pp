@@ -27,6 +27,7 @@ define icinga2::object::apply_notification_to_service (
   $states                  = [],
   $target_dir              = '/etc/icinga2/objects/applys',
   $target_file_name        = "${name}.conf",
+  $target_file_ensure      = file,
   $target_file_owner       = 'root',
   $target_file_group       = 'root',
   $target_file_mode        = '0644'
@@ -56,7 +57,7 @@ define icinga2::object::apply_notification_to_service (
   validate_re($target_file_mode, '^\d{4}$')
 
   file { "${target_dir}/${target_file_name}":
-    ensure  => file,
+    ensure  => $target_file_ensure,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,

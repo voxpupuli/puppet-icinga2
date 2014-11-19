@@ -15,6 +15,7 @@ define icinga2::object::externalcommandlistener (
   $command_path                       = undef,
   $target_dir                         = '/etc/icinga2/objects/externalcommandlisteners',
   $target_file_name                   = "${name}.conf",
+  $target_file_ensure                 = file,
   $target_file_owner                  = 'root',
   $target_file_group                  = 'root',
   $target_file_mode                   = '0644'
@@ -35,7 +36,7 @@ define icinga2::object::externalcommandlistener (
 
 
   file {"${target_dir}/${target_file_name}":
-    ensure  => $ensure,
+    ensure  => $target_file_ensure,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,
