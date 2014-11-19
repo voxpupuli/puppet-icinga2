@@ -16,6 +16,7 @@ define icinga2::object::graphitewriter (
   #since the Graphite writer feature is one that has to be explicitly enabled.
   $target_dir           = '/etc/icinga2/features-available',
   $target_file_name     = "${name}.conf",
+  $target_file_ensure   = file,
   $target_file_owner    = 'root',
   $target_file_group    = 'root',
   $target_file_mode     = '0644'
@@ -25,7 +26,7 @@ define icinga2::object::graphitewriter (
   validate_string($host)
 
   file {"${target_dir}/${target_file_name}":
-    ensure => file,
+    ensure  => $target_file_ensure,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,

@@ -10,7 +10,6 @@
 #
 
 define icinga2::object::livestatuslistener (
-  $ensure                         = 'file',
   $object_livestatuslistenername = $name,
   $socket_type                    = undef,
   $bind_host                      = undef,
@@ -19,6 +18,7 @@ define icinga2::object::livestatuslistener (
   $compat_log_path                = undef,
   $target_dir                     = '/etc/icinga2/objects/livestatuslisteners',
   $target_file_name               = "${name}.conf",
+  $target_file_ensure             = file,
   $target_file_owner              = 'root',
   $target_file_group              = 'root',
   $target_file_mode               = '0644'
@@ -51,7 +51,7 @@ define icinga2::object::livestatuslistener (
 
 
   file {"${target_dir}/${target_file_name}":
-    ensure  => $ensure,
+    ensure  => $target_file_ensure,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,

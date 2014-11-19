@@ -13,17 +13,18 @@ define icinga2::object::eventcommand (
   $object_eventcommandname = $name,
   $template_to_import = 'plugin-event-command',
 /*  $methods           = undef, */ /* Need to get more details about this attribute */
-  $command           = undef,
-  $cmd_path          = 'PluginDir',
-  $arguments         = {},
-  $env               = {},
-  $vars              = {},
-  $timeout           = undef,
-  $target_dir        = '/etc/icinga2/objects/eventcommands',
-  $target_file_name  = "${name}.conf",
-  $target_file_owner = 'root',
-  $target_file_group = 'root',
-  $target_file_mode  = '0644'
+  $command            = undef,
+  $cmd_path           = 'PluginDir',
+  $arguments          = {},
+  $env                = {},
+  $vars               = {},
+  $timeout            = undef,
+  $target_dir         = '/etc/icinga2/objects/eventcommands',
+  $target_file_name   = "${name}.conf",
+  $target_file_ensure = file,
+  $target_file_owner  = 'root',
+  $target_file_group  = 'root',
+  $target_file_mode   = '0644'
 ) {
 
   #Do some validation of the class' parameters:
@@ -45,7 +46,7 @@ define icinga2::object::eventcommand (
 
 
   file {"${target_dir}/${target_file_name}":
-    ensure  => file,
+    ensure  => $target_file_ensure,
     owner   => $target_file_owner,
     group   => $target_file_group,
     mode    => $target_file_mode,

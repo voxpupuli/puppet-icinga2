@@ -25,6 +25,7 @@ define icinga2::object::checkcommand (
   $checkcommand_source_file              = undef,
   $checkcommand_file_distribution_method = 'content',
   $target_file_name                      = "${name}.conf",
+  $target_file_ensure                    = file,
   $target_file_owner                     = 'root',
   $target_file_group                     = 'root',
   $target_file_mode                      = '0644',
@@ -53,7 +54,7 @@ define icinga2::object::checkcommand (
 
   if $checkcommand_file_distribution_method == 'content' {
     file {"${target_dir}/${target_file_name}":
-      ensure  => file,
+      ensure  => $target_file_ensure,
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
@@ -63,7 +64,7 @@ define icinga2::object::checkcommand (
   }
   elsif $checkcommand_file_distribution_method == 'source' {
     file {"${target_dir}/${target_file_name}":
-      ensure => file,
+      ensure  => $target_file_ensure,
       owner  => $target_file_owner,
       group  => $target_file_group,
       mode   => $target_file_mode,
