@@ -114,7 +114,7 @@ icinga2::conf { 'baseservices':
 
 To install Icinga 2, first set up a MySQL or Postgres database.
 
-Once the database is set up, use the `icinga2::server` class with the database connection parameters to specify
+Once the database is set up, use the `icinga2::server` class with the `db_` database connection parameters:
 
 <pre>
 #Install Icinga 2:
