@@ -128,7 +128,7 @@ class { 'icinga2::server':
 }
 </pre>
 
-When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the schema is loaded.
+When the `server_db_type` parameter is set, the right IDO database connection packages are automatically installed and the database schema is loaded.
 
 **Note:** For production use, you'll probably want to get the database password via a [Hiera lookup](http://docs.puppetlabs.com/hiera/1/puppet.html) so the password isn't sitting in your site manifests in plain text:
 
