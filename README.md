@@ -271,7 +271,7 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 ### Check Plugins
 
-Agents installed on nodes (such as NRPE ) that Icinga is performing Active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
+Agents installed on nodes (such as NRPE) that Icinga is performing active checks against often require additional or custom check plugins. In order to deploy these check pluings on a node you can call the checkplugin defined resource.
 
 The checkplugin defined resource can distribute files via both content (templates) and source (files).  By default the checkpluin resource will assume your distribution method is content (template) and that your template resides in the icinga2 module
 
