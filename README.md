@@ -211,7 +211,7 @@ If you would like to install packages to make a `mail` command binary available 
 
 If you would like you manage enabled and disabled features for Icinga 2 you can set the `server_enabled_features` and `server_enabled_features` parameters to an array of features.
 
-**Note: If a feature is listed in both the enabled and disabled features arrays, the feature will be disabled**
+**Note:** If a feature is listed in both the `server_enabled_features` and `server_disabled_features` arrays, the feature will be **disabled**.
 
 ````
 class { 'icinga2::server':
