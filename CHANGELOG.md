@@ -1,7 +1,7 @@
 #Changelog
 - - -
 
-###v0.5.1 (unreleased)
+###v0.6.0 (November 19th, 2014)
 
 * Added a defined type for `ServiceGroup` objects
 * Bug [#7189](https://dev.icinga.org/issues/7189): Fixed `liddir` typo in some manifests
