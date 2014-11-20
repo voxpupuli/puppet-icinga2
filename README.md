@@ -199,7 +199,7 @@ This will stop the `icinga2::server` class from trying to install the plugins pa
 
 **`mail` binaries**
 
-If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out notifications, set the `install_mail_utils_package` parameter to **true**:
+If you would like to install packages to make a `mail` command binary available so that Icinga 2 can send out email notifications, set the `install_mail_utils_package` parameter to **true**:
 
 <pre>
   class { 'icinga2::server':
