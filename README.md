@@ -195,7 +195,7 @@ class { 'icinga2::server':
  }
 </pre>
 
-This will stop the `icinga2::server` class from trying to install the plugins packages, since the `icinga2::nrpe` class will already be installing them and will prevent a resulting duplicate resource error.
+This will stop the `icinga2::server` class from trying to install the plugins packages and will prevent a duplicate resource error, since the `icinga2::nrpe` class will already be installing the plugin packages.
 
 **`mail` binaries**
 
