@@ -328,7 +328,7 @@ Then, on your Icinga 2 server, you can collect the exported virtual resources (n
 Icinga2::Object::Host <<| |>> { }
 </pre>
 
-Unlike the built-in Nagios types, the file owner, group and mode of the automatically generated files can be controlled via the `target_file_owner`, `target_file_group` and `target_file_mode` parameters:
+Unlike the built-in Nagios types, the file `ensure` status, owner, group and mode of the automatically generated files can be controlled via the `target_file_ensure` `target_file_owner`, `target_file_group` and `target_file_mode` parameters:
 
 <pre>
 @@icinga2::object::host { $::fqdn:
@@ -336,15 +336,16 @@ Unlike the built-in Nagios types, the file owner, group and mode of the automati
   ipv4_address => $::ipaddress_eth0,
   groups => ['linux_servers', 'mysql_servers'],
   vars => {
-    os              => 'linux',
-    virtual_machine => 'true',
-    distro          => $::operatingsystem,
+    os               => 'linux',
+    virtual_machine  => 'true',
+    distro           => $::operatingsystem,
   },
-  target_dir        => '/etc/icinga2/objects/hosts',
-  target_file_name  => "${fqdn}.conf"
-  target_file_owner => 'root',
-  target_file_group => 'root',
-  target_file_mode  => '0644'
+  target_dir         => '/etc/icinga2/objects/hosts',
+  target_file_name   => "${fqdn}.conf"
+  target_file_ensure =>
+  target_file_owner  => 'root',
+  target_file_group  => 'root',
+  target_file_mode   => '0644'
 }
 </pre>
 
