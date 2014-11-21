@@ -365,6 +365,7 @@ Object types:
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
+* [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
@@ -505,6 +506,20 @@ Available parameters are:
 * `target_file_owner`
 * `target_file_group`
 * `target_file_mode`
+
+####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
+
+The `checkresultreader` defined type can create `checkresultreader` objects.
+
+Example:
+
+<pre>
+icinga2::object::checkresultreader {'reader':
+  spool_dir => '/data/check-results'
+}
+</pre>
+
+See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::eventcommand`
 
