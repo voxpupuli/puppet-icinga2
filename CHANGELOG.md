@@ -27,7 +27,6 @@
 * Feature: [PR-35](https://github.com/Icinga/puppet-icinga2/pull/35): Added the ability to use a static file or custom ERB template for check command objects
 * Feature: [PR-36](https://github.com/Icinga/puppet-icinga2/pull/36) and [dev.icinga.org issue #7216](https://dev.icinga.org/issues/7216): Added a [Notification](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notification) object defined type.
 * Feature: [PR-37](https://github.com/Icinga/puppet-icinga2/pull/37) and [dev.icinga.org issue #7217](https://dev.icinga.org/issues/7217): Added a [TimePeriod](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-timeperiod) object defined type.
-* Fix: [PR-42](https://github.com/Icinga/puppet-icinga2/pull/42): Fixed anchor links in the README.
 * Feature: [PR-39](https://github.com/Icinga/puppet-icinga2/pull/39) and [dev.icinga.org issue #7673](https://dev.icinga.org/issues/7673): Added the ability to purge non-Puppet managed NRPE config files.
 * Feature: [PR-41](https://github.com/Icinga/puppet-icinga2/pull/41) and [dev.icinga.org issue #7674](https://dev.icinga.org/issues/7674): Added CentOS 5 server and NRPE client support.
 * Fix: [PR-40](https://github.com/Icinga/puppet-icinga2/pull/40) and [dev.icinga.org issue #7675](https://dev.icinga.org/issues/7675): Escape single quotes around the `PGPASSWORD` environment variable so that single quotes can be used in the Postgres password
