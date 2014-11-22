@@ -310,6 +310,12 @@ The default file owner and group are controlled by the `target_file_owner` and `
 
 The default file mode is controlled by the `target_file_mode` parameter. It defaults to `0644`.
 
+####Purging unmanaged object files
+
+The `purge_unmanaged_object_files` parameter of the `icinga2::server` class controls whether object files in `/etc/icinga2/objects` that are not managed by Puppet get purged. It defaults to `false`.
+
+**Note:** This will purge unmanaged subdirectories as well as unmanaged files!
+
 ####Exported resources
 
 Like the built-in Nagios types, the Icinga 2 objects in this module can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
