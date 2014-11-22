@@ -235,6 +235,9 @@ class icinga2::params {
     #Fail if we're on any other OS:
     default: { fail("${::operatingsystem} is not supported!") }
   }
+  
+  #Whether to purge object files or directories in /etc/icinga2/objects that aren't managed by Puppet
+  $purge_unmanaged_object_files = false
 
   ##################
   # Icinga 2 server service settings

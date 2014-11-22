@@ -15,6 +15,18 @@ class icinga2::server::config inherits icinga2::server {
 
   include icinga2::params
 
+  if $purge_unmanaged_object_files == true {
+    $recurse_objects = true
+    $purge_objects = true
+    $force_purge = true
+  }
+  else {
+    $recurse_objects = false
+    $purge_objects = false
+    $force_purge = true
+  }
+  
+
   #Directory resource for /etc/icinga2/:
   file { '/etc/icinga2/':
     ensure  => directory,
@@ -99,6 +111,9 @@ class icinga2::server::config inherits icinga2::server {
     owner   => $etc_icinga2_obejcts_owner,
     group   => $etc_icinga2_obejcts_group,
     mode    => $etc_icinga2_obejcts_mode,
+    recurse => $recurse_objects,
+    purge   => $purge_objects,
+    force   => $force_purge
   }
 
   #Directory resource for /etc/icinga2/objects/hosts/:

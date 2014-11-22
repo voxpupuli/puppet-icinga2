@@ -300,6 +300,22 @@ icinga2::checkplugin { 'check_diskstats':
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
 
+####Default object file locations, owner, group and mode
+
+The default file location for each object type is controlled by the `target_file_dir` parameter. For each object type, it defaults to a subdirectory under `/etc/icinga2/objects`.
+
+The default locations are under `/etc/icinga2/objects` and not `/etc/icinga2/conf.d/` so that user-defined objects can be kept completely separate from the objects included with Icinga 2. However, you can change the `target_file_dir` parameter to `/etc/icinga2/conf.d` if needed.
+
+The default file owner and group are controlled by the `target_file_owner` and `target_file_group` parameters. Both default to `root`.
+
+The default file mode is controlled by the `target_file_mode` parameter. It defaults to `0644`.
+
+####Purging unmanaged object files
+
+The `purge_unmanaged_object_files` parameter of the `icinga2::server` class controls whether object files in `/etc/icinga2/objects` that are not managed by Puppet get purged. It defaults to `false`.
+
+**Note:** This will purge unmanaged subdirectories as well as unmanaged files!
+
 ####Exported resources
 
 Like the built-in Nagios types, the Icinga 2 objects in this module can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
