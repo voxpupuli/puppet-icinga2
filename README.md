@@ -365,6 +365,7 @@ Object types:
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
+* [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
@@ -505,6 +506,20 @@ Available parameters are:
 * `target_file_owner`
 * `target_file_group`
 * `target_file_mode`
+
+####`icinga2::object::compatlogger`
+
+The `compatlogger` defined type can create `compatlogger` objects.
+
+<pre>
+icinga2::object::compatlogger { 'daily-log':
+  log_dir         => '/var/log/icinga2/compat',
+  rotation_method => 'DAILY'
+}
+</pre>
+
+Both patameters as optionals. The parameter `rotation_method` can one of `HOURLY`, `DAILY`, `WEEKLY` or `MONTHY`.
+See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::eventcommand`
 
