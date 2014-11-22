@@ -4,7 +4,7 @@
 ###v0.6.1 (unreleased)
 
 * Feature: [PR-54](https://github.com/Icinga/puppet-icinga2/pull/54) and [dev.icinga.org issue #7225](https://dev.icinga.org/issues/7225): Added a CompatLogger object defined type.
-
+* Feature: [PR-55](https://github.com/Icinga/puppet-icinga2/pull/55) and [dev.icinga.org issue #7226](https://dev.icinga.org/issues/7226): Added a CheckResultReader object defined type.
 
 ###v0.6.0 (November 19th, 2014)
 
