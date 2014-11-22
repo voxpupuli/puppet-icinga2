@@ -12,7 +12,7 @@
 define icinga2::object::sysloglogger (
   $object_name = $name,
   $severity = 'warning',
-  $target_dir = '/etc/icinga2/conf.d',
+  $target_dir = '/etc/icinga2/objects',
   $target_file_name = "${name}.conf",
   $target_file_ensure = file,
   $target_file_owner = 'root',

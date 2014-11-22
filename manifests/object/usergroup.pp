@@ -14,7 +14,7 @@ define icinga2::object::usergroup (
   $display_name = $name,
   $template_to_import = undef,
   $groups = [],
-  $target_dir = '/etc/icinga2/conf.d',
+  $target_dir = '/etc/icinga2/objects',
   $target_file_name = "${name}.conf",
   $target_file_ensure = file,
   $target_file_owner = 'root',
