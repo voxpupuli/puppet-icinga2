@@ -387,6 +387,7 @@ Object types:
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
+* [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
@@ -619,6 +620,20 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
 Coming soon...
+
+####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
+
+This defined type creates an **IcingaStatusWriter** objects.
+
+Example usage:
+<pre>
+icinga2::object::icingastatuswriter { 'status':
+   status_path       => '/cache/icinga2/status.json',
+   update_interval   => '15s',
+}
+</pre>
+
+See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
