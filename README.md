@@ -568,7 +568,7 @@ icinga2::object::checkresultreader {'reader':
 
 See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
-####`[icinga2::object::endpoint]`(id:object_endpoint)
+####`[icinga2::object::endpoint]`(id:icinga2objectendpoint)
 
 The `endpoint` defined type can create `endpoint` objects.
 
