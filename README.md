@@ -401,6 +401,7 @@ Object types:
 * [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
+* [icinga2::object::filelogger](#icinga2objectfilelogger)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
 * [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
@@ -607,6 +608,21 @@ icinga2::object::externalcommandlistener { 'external':
 </pre>
 
 See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::filelogger`](id:object_filelogger)
+
+This defined type creates file logger objects.
+
+Example:
+
+<pre>
+icinga2::object::filelogger { 'debug-file':
+  severity => 'debug',
+  path     => '/var/log/icinga2/debug.log',
+}
+</pre>
+
+See [FileLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-filelogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
