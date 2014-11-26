@@ -398,6 +398,7 @@ Object types:
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
+* [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
@@ -566,6 +567,19 @@ icinga2::object::checkresultreader {'reader':
 </pre>
 
 See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####`[icinga2::object::endpoint]`(id:object_endpoint)
+
+The `endpoint` defined type can create `endpoint` objects.
+
+<pre>
+icinga2::object::endpoint { 'icinga2b':
+  host => '192.168.5.46',
+  port => 5665
+}
+</pre>
+
+See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::eventcommand`
 
