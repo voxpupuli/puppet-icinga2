@@ -13,7 +13,7 @@ define icinga2::object::icingastatuswriter (
   $ensure                    = 'file',
   $object_name               = $name,
   $status_path               = undef,
-  $update_internal           = undef,
+  $update_interval           = undef,
   $target_dir                = '/etc/icinga2/objects/icingastatuswriters',
   $target_file_name          = "${name}.conf",
   $target_file_owner         = 'root',
@@ -24,8 +24,8 @@ define icinga2::object::icingastatuswriter (
   if $status_path {
     validate_string($status_path)
   }
-  if $update_internal {
-    validate_string($update_internal)
+  if $update_interval {
+    validate_string($update_interval)
   }
   validate_string($target_dir)
   validate_string($target_file_name)
