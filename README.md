@@ -373,6 +373,21 @@ This means that they will not be added to the rendered object definition files.
 
 **However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values.
 
+####Notifying the Icinga 2 service
+
+By default, each object defined type will automatically notify and restart the Icinga 2 service. However, if you're using the module to just generate object files and not using it to manage the service, you'll likely get compilation errors about the `icinga2` service not being in the catalog.
+
+Each object defined type has a boolean parameter, `refresh_icinga2_service`, that controls whether the object file will notify the service. To **not** notify the service, set it to `false`:
+
+<pre>
+icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+  parent_host_name => 'icinga2mail.local',
+  target_file_owner => vagrant,
+  assign_where => 'match("^usermail*", host.name)',
+  refresh_icinga2_service => false,
+}
+</pre>
+
 ####[Objects](id:objects)
 
 Object types:

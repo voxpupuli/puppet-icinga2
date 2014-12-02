@@ -29,6 +29,7 @@ define icinga2::object::checkcommand (
   $target_file_owner                     = 'root',
   $target_file_group                     = 'root',
   $target_file_mode                      = '0644',
+  $refresh_icinga2_service = true
 ) {
 
   #Do some validation of the class' parameters:
@@ -50,31 +51,65 @@ define icinga2::object::checkcommand (
   validate_string($target_file_owner)
   validate_string($target_file_group)
   validate_re($target_file_mode, '^\d{4}$')
+  validate_bool($refresh_icinga2_service)
 
 
-  if $checkcommand_file_distribution_method == 'content' {
-    file {"${target_dir}/${target_file_name}":
-      ensure  => $target_file_ensure,
-      owner   => $target_file_owner,
-      group   => $target_file_group,
-      mode    => $target_file_mode,
-      content => template("${checkcommand_template_module}/${checkcommand_template}"),
-      notify  => Service['icinga2'],
+  #If the refresh_icinga2_service parameter is set to true...
+  if $refresh_icinga2_service == true {
+    if $checkcommand_file_distribution_method == 'content' {
+      file {"${target_dir}/${target_file_name}":
+        ensure  => $target_file_ensure,
+        owner   => $target_file_owner,
+        group   => $target_file_group,
+        mode    => $target_file_mode,
+        content => template("${checkcommand_template_module}/${checkcommand_template}"),
+        notify  => Service['icinga2'],
+      }
+    }
+    elsif $checkcommand_file_distribution_method == 'source' {
+      file {"${target_dir}/${target_file_name}":
+        ensure  => $target_file_ensure,
+        owner  => $target_file_owner,
+        group  => $target_file_group,
+        mode   => $target_file_mode,
+        source => $checkcommand_source_file,
+        notify => Service['icinga2'],
+      }
+    }
+    else {
+      notify {'Missing/Incorrect File Distribution Method':
+        message => 'The parameter checkcommand_file_distribution_method is missing or incorrect. Please set content or source',
+      }
     }
   }
-  elsif $checkcommand_file_distribution_method == 'source' {
-    file {"${target_dir}/${target_file_name}":
-      ensure  => $target_file_ensure,
-      owner  => $target_file_owner,
-      group  => $target_file_group,
-      mode   => $target_file_mode,
-      source => $checkcommand_source_file,
-      notify => Service['icinga2'],
-    }
-  }
+
+  #...otherwise, use the same file resource but without a notify => parameter: 
   else {
-    notify {'Missing/Incorrect File Distribution Method':
-      message => 'The parameter checkcommand_file_distribution_method is missing or incorrect. Please set content or source',
+  
+    if $checkcommand_file_distribution_method == 'content' {
+      file {"${target_dir}/${target_file_name}":
+        ensure  => $target_file_ensure,
+        owner   => $target_file_owner,
+        group   => $target_file_group,
+        mode    => $target_file_mode,
+        content => template("${checkcommand_template_module}/${checkcommand_template}"),
+      }
     }
+    elsif $checkcommand_file_distribution_method == 'source' {
+      file {"${target_dir}/${target_file_name}":
+        ensure  => $target_file_ensure,
+        owner  => $target_file_owner,
+        group  => $target_file_group,
+        mode   => $target_file_mode,
+        source => $checkcommand_source_file,
+      }
+    }
+    else {
+      notify {'Missing/Incorrect File Distribution Method':
+        message => 'The parameter checkcommand_file_distribution_method is missing or incorrect. Please set content or source',
+      }
+    }
+  
   }
+
 }
