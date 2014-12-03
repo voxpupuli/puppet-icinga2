@@ -1,24 +1,19 @@
-# == Defined type: icinga2::object::scheduleddowntime
+# == Defined type: icinga2::object::checkresultreader
 #
-#  This is a defined type for Icinga 2 ScheduledDowntime objects.
+# This is a defined type for Icinga 2 apply objects that create Check Result Reader
 # See the following Icinga 2 doc page for more info:
-# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-scheduleddowntime
+# http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader
 #
 # === Parameters
 #
 # See the inline comments.
 #
 
-define icinga2::object::scheduleddowntime (
-  $object_scheduleddowntimename = $name,
-  $host_name                    = undef,
-  $service_name                 = undef,
-  $author                       = undef,
-  $comment                      = undef,
-  $fixed                        = true,
-  $duration                     = undef,
-  $ranges                       = {},
-  $target_dir                   = '/etc/icinga2/objects/scheduleddowntimes',
+define icinga2::object::checkresultreader (
+  $ensure                       = 'file',
+  $object_checkresultreadername = $name,
+  $spool_dir                    = undef,
+  $target_dir                   = '/etc/icinga2/objects/checkresultreaders',
   $target_file_name             = "${name}.conf",
   $target_file_ensure           = file,
   $target_file_owner            = 'root',
@@ -27,22 +22,18 @@ define icinga2::object::scheduleddowntime (
   $refresh_icinga2_service = true
 ) {
 
-  #Do some validation of the define's parameters:
-  validate_string($object_scheduleddowntimename)
-  validate_string($host_name)
-  if $service_name {
-    validate_string($service_name)
+  #Do some validation of the class' parameters:
+  if $object_checkresultreadername {
+    validate_string($object_checkresultreadername)
   }
-  validate_string($author)
-  validate_string($comment)
-  validate_bool($fixed)
-  validate_string($duration)
-  validate_hash($ranges)
+  if $spool_dir {
+    validate_string($spool_dir)
+  }
   validate_string($target_dir)
   validate_string($target_file_name)
   validate_string($target_file_owner)
   validate_string($target_file_group)
-  validate_string($target_file_mode)
+  validate_re($target_file_mode, '^\d{4}$')
   validate_bool($refresh_icinga2_service)
 
   #If the refresh_icinga2_service parameter is set to true...
@@ -53,7 +44,7 @@ define icinga2::object::scheduleddowntime (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_scheduleddowntime.conf.erb'),
+      content => template('icinga2/object_checkresultreader.conf.erb'),
       #...notify the Icinga 2 daemon so it can restart and pick up changes made to this config file...
       notify  => Service['icinga2'],
     }
@@ -67,7 +58,7 @@ define icinga2::object::scheduleddowntime (
       owner   => $target_file_owner,
       group   => $target_file_group,
       mode    => $target_file_mode,
-      content => template('icinga2/object_scheduleddowntime.conf.erb'),
+      content => template('icinga2/object_checkresultreader.conf.erb'),
     }
   
   }

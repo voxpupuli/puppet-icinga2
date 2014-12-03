@@ -300,6 +300,22 @@ icinga2::checkplugin { 'check_diskstats':
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
 
+####Default object file locations, owner, group and mode
+
+The default file location for each object type is controlled by the `target_file_dir` parameter. For each object type, it defaults to a subdirectory under `/etc/icinga2/objects`.
+
+The default locations are under `/etc/icinga2/objects` and not `/etc/icinga2/conf.d/` so that user-defined objects can be kept completely separate from the objects included with Icinga 2. However, you can change the `target_file_dir` parameter to `/etc/icinga2/conf.d` if needed.
+
+The default file owner and group are controlled by the `target_file_owner` and `target_file_group` parameters. Both default to `root`.
+
+The default file mode is controlled by the `target_file_mode` parameter. It defaults to `0644`.
+
+####Purging unmanaged object files
+
+The `purge_unmanaged_object_files` parameter of the `icinga2::server` class controls whether object files in `/etc/icinga2/objects` that are not managed by Puppet get purged. It defaults to `false`.
+
+**Note:** This will purge unmanaged subdirectories as well as unmanaged files!
+
 ####Exported resources
 
 Like the built-in Nagios types, the Icinga 2 objects in this module can be exported to PuppetDB as virtual resources and collected on your Icinga 2 server.
@@ -357,6 +373,21 @@ This means that they will not be added to the rendered object definition files.
 
 **However**, this doesn't mean that the values are undefined in Icinga 2. Icinga 2 itself has built-in default values for many object parameters and falls back to them if one isn't present in an object definition. See the docs for individual object types in [Configuring Icinga 2](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc#!/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2) for more info about which object parameters have what default values.
 
+####Notifying the Icinga 2 service
+
+By default, each object defined type will automatically notify and restart the Icinga 2 service. However, if you're using the module to just generate object files and not using it to manage the service, you'll likely get compilation errors about the `icinga2` service not being in the catalog.
+
+Each object defined type has a boolean parameter, `refresh_icinga2_service`, that controls whether the object file will notify the service. To **not** notify the service, set it to `false`:
+
+<pre>
+icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+  parent_host_name => 'icinga2mail.local',
+  target_file_owner => vagrant,
+  assign_where => 'match("^usermail*", host.name)',
+  refresh_icinga2_service => false,
+}
+</pre>
+
 ####[Objects](id:objects)
 
 Object types:
@@ -365,6 +396,8 @@ Object types:
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
+* [icinga2::object::compatlogger](#icinga2objectcompatlogger)
+* [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
 * [icinga2::object::host](#icinga2objecthost)
@@ -505,6 +538,34 @@ Available parameters are:
 * `target_file_owner`
 * `target_file_group`
 * `target_file_mode`
+
+####`icinga2::object::compatlogger`
+
+The `compatlogger` defined type can create `compatlogger` objects.
+
+<pre>
+icinga2::object::compatlogger { 'daily-log':
+  log_dir         => '/var/log/icinga2/compat',
+  rotation_method => 'DAILY'
+}
+</pre>
+
+Both patameters as optionals. The parameter `rotation_method` can one of `HOURLY`, `DAILY`, `WEEKLY` or `MONTHY`.
+See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
+
+The `checkresultreader` defined type can create `checkresultreader` objects.
+
+Example:
+
+<pre>
+icinga2::object::checkresultreader {'reader':
+  spool_dir => '/data/check-results'
+}
+</pre>
+
+See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::eventcommand`
 
