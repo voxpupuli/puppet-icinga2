@@ -44,7 +44,7 @@ define icinga2::object::apply_notification_to_service (
   validate_array($user_groups)
   validate_hash($times)
   if $interval {
-    validate_re($interval, '^\d$')
+    validate_string($interval)
   }
   if $period {
     validate_string($period)
