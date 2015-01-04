@@ -1,6 +1,10 @@
 #Changelog
 - - -
 
+###v0.6.2 (unreleased)
+
+* Feature: [PR-58](https://github.com/Icinga/puppet-icinga2/pull/58) and [dev.icinga.org issue #8156](https://dev.icinga.org/issues/8156): Added the ability to use hashes directly in host `vars` parameters (instead of rendering hashes into a series of `vars.` lines in the rendered object file).
+
 ###v0.6.1 (December 2nd, 2014)
 
 * Feature: [PR-54](https://github.com/Icinga/puppet-icinga2/pull/54) and [dev.icinga.org issue #7225](https://dev.icinga.org/issues/7225): Added a CompatLogger object defined type.
