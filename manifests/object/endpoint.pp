@@ -15,7 +15,7 @@ define icinga2::object::endpoint (
   $host                      = undef,
   $port                      = undef,
   $log_duration              = undef,
-  $target_dir                = '/etc/icinga2/object/endpoints',
+  $target_dir                = '/etc/icinga2/objects/endpoints',
   $target_file_name          = "${name}.conf",
   $target_file_owner         = 'root',
   $target_file_group         = 'root',
