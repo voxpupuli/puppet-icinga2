@@ -23,6 +23,14 @@
       ]
     },
     {
+      "operatingsystem": "RedHat",
+      "operatingsystemmajrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
       "operatingsystem": "Ubuntu",
       "operatingsystemmajrelease": [
         "12.04",
