@@ -7,6 +7,7 @@
 * Feature: [PR-63](https://github.com/Icinga/puppet-icinga2/pull/63) and [dev.icinga.org issue #7232](https://dev.icinga.org/issues/7232): Added an Endpoint object defined type.
 * Feature: [PR-62](https://github.com/Icinga/puppet-icinga2/pull/62) and [dev.icinga.org issue #7230](https://dev.icinga.org/issues/7230): Added an IcingaStatusWriter object defined type.
 * Feature: [PR-61](https://github.com/Icinga/puppet-icinga2/pull/61) and [dev.icinga.org issue #7229](https://dev.icinga.org/issues/7229): Added a FileLogger object defined type.
+* Feature: [PR-70](https://github.com/Icinga/puppet-icinga2/pull/70) and [dev.icinga.org issue #8153](https://dev.icinga.org/issues/8153): Change validation of interval parameters.
 
 ###v0.6.1 (December 2nd, 2014)
 
