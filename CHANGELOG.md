@@ -8,6 +8,7 @@
 * Feature: [PR-62](https://github.com/Icinga/puppet-icinga2/pull/62) and [dev.icinga.org issue #7230](https://dev.icinga.org/issues/7230): Added an IcingaStatusWriter object defined type.
 * Feature: [PR-61](https://github.com/Icinga/puppet-icinga2/pull/61) and [dev.icinga.org issue #7229](https://dev.icinga.org/issues/7229): Added a FileLogger object defined type.
 * Feature: [PR-70](https://github.com/Icinga/puppet-icinga2/pull/70) and [dev.icinga.org issue #8153](https://dev.icinga.org/issues/8153): Change validation of interval parameters.
+* Feature: [PR-68](https://github.com/Icinga/puppet-icinga2/pull/68) and [dev.icinga.org issue #7346](https://dev.icinga.org/issues/7346): Added OS support for Red Hat.
 
 ###v0.6.1 (December 2nd, 2014)
 
