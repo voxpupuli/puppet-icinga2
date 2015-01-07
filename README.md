@@ -392,6 +392,7 @@ icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
 
 Object types:
 
+* [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
@@ -419,6 +420,22 @@ Object types:
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
 * [icinga2::object::usergroup](#icinga2objectusergroup)
+
+####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
+
+The `apilistener` defined type can create `ApiLister` objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
+
+<pre>
+#Create an API listener object:
+icinga2::object::apilistener { 'master-api':
+  bind_host => $ipaddress_eth1,
+  accept_commands => true,
+}
+</pre>
+
+The `accept_config` and `accept_commands` parameters default to **false**.
+
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener)
 
 ####[`icinga2::object::apply_service_to_host`](id:object_apply_service_to_host)
 
