@@ -173,7 +173,7 @@ If you would like to use the [Debmon repository](http://debmon.org/packages) for
 class { 'icinga2::server':
   server_db_type => 'pgsql',
   # default to false
-  use_debmon => true,
+  use_debmon_repo => true,
   db_host => 'localhost'
   db_port => '5432'
   db_name => 'icinga2_data'
