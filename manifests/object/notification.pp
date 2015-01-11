@@ -51,17 +51,15 @@ define icinga2::object::notification (
     validate_string($period)
   }
   validate_array($types)
-/** Array concatenation not available,
-  if $types - ['DowntimeStart','DowntimeEnd','DowntimeRemoved','Custom','Acknowledgement','Problem','Recovery','FlappingStart','FlappingEnd'] != [] {
-    fail ('You are using unavailable notification type filter.')
-  }
-*/
+  #Array concatenation not available,
+  #if $types - ['DowntimeStart','DowntimeEnd','DowntimeRemoved','Custom','Acknowledgement','Problem','Recovery','FlappingStart','FlappingEnd'] != [] {
+  #  fail ('You are using unavailable notification type filter.')
+  #}
   validate_array($states)
-/** Array concatenation not available,
-  if $states - ['OK','Warning','Critical','Unknown','Up','Down'] != [] {
-    fail ('You are using unavailable state type filter.')
-  }
-*/
+  #Array concatenation not available,
+  #if $states - ['OK','Warning','Critical','Unknown','Up','Down'] != [] {
+  #  fail ('You are using unavailable state type filter.')
+  #}
   validate_string($target_dir)
   validate_string($target_file_name)
   validate_string($target_file_owner)
