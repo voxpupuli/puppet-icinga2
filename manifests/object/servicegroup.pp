@@ -16,7 +16,7 @@ define icinga2::object::servicegroup (
   $groups = [],
   $target_dir = '/etc/icinga2/objects',
   $target_file_name = "${name}.conf",
-   $target_file_ensure = file,
+  $target_file_ensure = file,
   $target_file_owner = 'root',
   $target_file_group = 'root',
   $target_file_mode = '0644',
