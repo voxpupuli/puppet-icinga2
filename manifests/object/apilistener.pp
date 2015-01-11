@@ -22,6 +22,7 @@ define icinga2::object::apilistener (
   $accept_commands         = false,  
   $target_dir              = '/etc/icinga2/objects/apilisteners',
   $target_file_name        = "${name}.conf",
+  $target_file_ensure      = file,
   $target_file_owner       = 'root',
   $target_file_group       = 'root',
   $target_file_mode        = '0644',
