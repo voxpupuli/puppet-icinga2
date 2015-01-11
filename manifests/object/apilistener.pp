@@ -19,7 +19,7 @@ define icinga2::object::apilistener (
   $bind_host               = '0.0.0.0',
   $bind_port               = 5665,
   $accept_config           = false,
-  $accept_commands         = false,  
+  $accept_commands         = false,
   $target_dir              = '/etc/icinga2/objects/apilisteners',
   $target_file_name        = "${name}.conf",
   $target_file_ensure      = file,
