@@ -6,7 +6,7 @@
   "license": "GPLv2",
   "source": "git://github.com/icinga/puppet-icinga2",
   "project_page": "https://github.com/icinga/puppet-icinga2",
-  "issues_url": "https://dev.icinga.org/projects/icinga-tools",
+  "issues_url": "https://dev.icinga.org/projects/puppet-icinga2",
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
