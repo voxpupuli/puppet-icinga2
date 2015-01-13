@@ -23,7 +23,7 @@ object TimePeriod "<%= @object_name %>" {
   <%- end -%>
   <%- if @ranges.empty? != true -%>
   ranges = {
-  <%- @ranges.each_pair do |key,value| -%>
+  <%- @ranges.sort_by {|key, value| key}.each do |key, value| -%>
     "<%= key %>" = "<%= value %>"
   <%- end -%>
   }

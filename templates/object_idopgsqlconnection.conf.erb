@@ -45,7 +45,7 @@ object IdoPgsqlConnection "pgsql-ido" {
 
   <%- if @cleanup.empty? != true -%>
   cleanup = {
-    <%- @cleanup.each_pair do |key, value| -%>
+    <%- @cleanup.sort_by {|key, value| key}.each do |key, value| -%>
     <%= key %> = <%= value %>
     <%- end -%>
   }
