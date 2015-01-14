@@ -11,7 +11,8 @@
 * Feature: [PR-68](https://github.com/Icinga/puppet-icinga2/pull/68) and [dev.icinga.org issue #7346](https://dev.icinga.org/issues/7346): Added OS support for Red Hat.
 * Feature: [dev.icinga.org issue #7231](https://dev.icinga.org/issues/7231): Added an `ApiListener` object defined type.
 * Feature: [PR-76](https://github.com/Icinga/puppet-icinga2/pull/76) and [dev.icinga.org issue #8154](https://dev.icinga.org/issues/8154): Ensure ordering of hashes in ERB templates
-
+* Bug: [PR-75](https://github.com/Icinga/puppet-icinga2/pull/75): Use `$ipaddress` as the default fact for IP addresses in `icinga2::object::host` definitions; `$ipaddress_eth0` won't work on systems with systemd that use consistent network device naming.
+* Bug: [PR-74](https://github.com/Icinga/puppet-icinga2/pull/74): Remove the empty `icinga2` and `icinga2::obect` classes.
 
 ###v0.6.1 (December 2nd, 2014)
 
