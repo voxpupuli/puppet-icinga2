@@ -29,10 +29,10 @@ apply Notification "<%= @object_notificationname %>" to Service {
   command = "<%= @command %>"
   <%- end -%>
   <%- if @vars.empty? != true -%>
-  <%- @vars.each_pair do |key,value| -%>
+  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
   <%= key %> = <% if value.class == String %><%= value %>
   <%- else -%>{
-    <%- value.each_pair do |k,v| -%>
+    <%- value.sort_by {|k, v| k}.each do |k, v| -%>
     <%= k %> = <%= v %>
     <%- end -%>
   }
@@ -47,7 +47,7 @@ apply Notification "<%= @object_notificationname %>" to Service {
   <%- end -%>
   <%- if @times.empty? != true -%>
   times = {
-  <%- @times.each_pair do |key,value| -%>
+  <%- @times.sort_by {|key, value| key}.each do |key, value| -%>
     <%= key %> = "<%= value %>"
   <%- end -%>
   }
