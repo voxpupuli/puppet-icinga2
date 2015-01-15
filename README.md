@@ -296,6 +296,23 @@ icinga2::checkplugin { 'check_diskstats':
 }
 ````
 
+Example 3: Distribute check plugin in a manifest
+```
+icinga2::checkplugin { 'check_diskstats':
+  checkplugin_file_distribution_method => 'inline'
+  checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /'
+}
+```
+
+Example 4: Distribute check plugin stored in Hiera(-yaml)
+```
+---
+icinga2::checkplugin:
+  check_diskstats:
+    checkplugin_file_distribution_method: 'inline'
+    checkplugin_source_inline:            'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /'
+```
+
 ###[Object type usage](id:object_type_usage)
 
 This module includes several defined types that can be used to automatically generate Icinga 2 format object definitions. They function in a similar way to [the built-in Nagios types that are included in Puppet](http://docs.puppetlabs.com/guides/exported_resources.html#exported-resources-with-nagios).
