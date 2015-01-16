@@ -299,8 +299,8 @@ icinga2::checkplugin { 'check_diskstats':
 Example 3: Distribute check plugin in a manifest
 ```
 icinga2::checkplugin { 'check_diskstats':
-  checkplugin_file_distribution_method => 'inline'
-  checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /'
+  checkplugin_file_distribution_method => 'inline',
+  checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /',
 }
 ```
 
