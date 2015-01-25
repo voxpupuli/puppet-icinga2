@@ -424,6 +424,7 @@ Object types:
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
+* [icinga2::object::checkercomponent](#icinga2objectcheckercomponent)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
 * [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
@@ -599,6 +600,27 @@ icinga2::object::compatlogger { 'daily-log':
 
 Both patameters as optionals. The parameter `rotation_method` can one of `HOURLY`, `DAILY`, `WEEKLY` or `MONTHY`.
 See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::checkercomponent`](id:object_checkercomponent)
+
+The `checkercomponent` defined type can create `checkercomponent` objects.
+
+Example:
+
+<pre>
+icinga2::object::checkercomponent {'checker':}
+</pre>
+
+This object support the following parameters:
+* `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file.
+* `object_name` - Optional. Used to define file name. default value is 'checker'
+* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/conf.d'
+* `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'. 
+* `target_file_owner` - Optional. File Owner. Default value is 'root'.
+* `target_file_group` - Optional. File Group. Default value is 'root'.
+* `target_file_mode` - Optional. File Mode. Default value is '0644'.
+
+See [CheckerComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkercomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object.
 
 ####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
 
