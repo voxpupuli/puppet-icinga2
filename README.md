@@ -888,7 +888,7 @@ This object support the following parameters:
 * `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file. 
 * `object_name` - Optional. Used to define file name. default value is 'checker'
 * `enable_ha` - Optional. Enable the high availability functionality. Only valid in a cluster setup. Default value is true.  
-* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/features-avalable' 
+* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/features-available' 
 * `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'.  
 * `target_file_owner` - Optional. File Owner. Default value is 'root'. 
 * `target_file_group` - Optional. File Group. Default value is 'root'. 

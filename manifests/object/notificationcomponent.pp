@@ -13,7 +13,7 @@ define icinga2::object::notificationcomponent (
   $ensure                    = 'file',
   $object_name               = $name,
   $enable_ha                 = undef,
-  $target_dir                = '/etc/icinga2/features-avalable',
+  $target_dir                = '/etc/icinga2/features-available',
   $target_file_name          = "${name}.conf",
   $target_file_owner         = 'root',
   $target_file_group         = 'root',
