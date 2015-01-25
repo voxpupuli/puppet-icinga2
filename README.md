@@ -437,6 +437,7 @@ Object types:
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
+* [icinga2::object::notificationcomponent](#icinga2objectnotificationcomponent)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
@@ -872,6 +873,30 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
+
+####[`icinga2::object::notificationcomponent`](id:object_notificationcomponent) 
+ 
+The `notificationcomponent` defined type can create `notificationcomponent` objects. 
+ 
+Example: 
+ 
+<pre> 
+icinga2::object::notificationcomponent {'notification':} 
+</pre> 
+ 
+This object support the following parameters: 
+* `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file. 
+* `object_name` - Optional. Used to define file name. default value is 'checker'
+* `enable_ha` - Optional. Enable the high availability functionality. Only valid in a cluster setup. Default value is true.  
+* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/features-avalable' 
+* `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'.  
+* `target_file_owner` - Optional. File Owner. Default value is 'root'. 
+* `target_file_group` - Optional. File Group. Default value is 'root'. 
+* `target_file_mode` - Optional. File Mode. Default value is '0644'. 
+ 
+See [NotificationComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notificationcomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object. 
+
+Should be enable/disable using `icinga2::server::features::enable` or `icinga2::server::features::disable`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 
