@@ -17,6 +17,14 @@
       ]
     },
     {
+      "operatingsystem": "RedHat",
+      "operatingsystemmajrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
       "operatingsystem": "Debian",
       "operatingsystemmajrelease": [
         "7"

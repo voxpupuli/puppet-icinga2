@@ -32,9 +32,8 @@ class icinga2::server::install::repos inherits icinga2::server {
 
   if $manage_repos == true {
     case $::operatingsystem {
-      #CentOS systems:
+      #CentOS or RedHat systems:
       'CentOS', 'RedHat': {
-
         #Add the official Icinga Yum repository: http://packages.icinga.org/epel/
         yumrepo { 'icinga2_yum_repo':
           baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
@@ -45,8 +44,8 @@ class icinga2::server::install::repos inherits icinga2::server {
         }
       }
 
-      #Ubuntu systems:
-      'Ubuntu': {
+     #Ubuntu systems:
+     'Ubuntu': {
         #Include the apt module's base class so we can...
         include apt
         #...use the apt module to add the Icinga 2 PPA from launchpad.net:
