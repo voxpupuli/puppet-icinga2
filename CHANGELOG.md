@@ -15,8 +15,7 @@
 * Bug: [PR-74](https://github.com/Icinga/puppet-icinga2/pull/74): Remove the empty `icinga2` and `icinga2::obect` classes.
 * Feature: [PR-77](https://github.com/Icinga/puppet-icinga2/pull/77/) and [dev.icinga.org issue #8239](https://dev.icinga.org/issues/8239): Added the ability to specify the contents of check plugins inline.
 * Bug: [PR-81](https://github.com/Icinga/puppet-icinga2/pull/81): Fixed typo in the ERB template for `Notification` objects.
-
-
+* Feature: [PR-83](https://github.com/Icinga/puppet-icinga2/pull/83): Added Red Hat support.
 
 ###v0.6.1 (December 2nd, 2014)
 
