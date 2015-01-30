@@ -12,7 +12,7 @@
 define icinga2::object::eventcommand (
   $object_eventcommandname = $name,
   $template_to_import = 'plugin-event-command',
-/*  $methods           = undef, */ /* Need to get more details about this attribute */
+  #$methods           = undef Need to get more details about this attribute
   $command            = undef,
   $cmd_path           = 'PluginDir',
   $arguments          = {},

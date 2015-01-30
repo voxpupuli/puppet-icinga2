@@ -35,7 +35,7 @@ apply Service "<%= @object_servicename %>" to Host {
   check_command = "<%= @check_command -%>"
   <%- end -%>
   <%- if @vars.empty? != true  -%>
-  <%- @vars.each_pair do |key, value| -%>
+  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
   vars.<%= key %> = "<%= value %>"
   <%- end -%>
   <%- end -%>
@@ -43,7 +43,7 @@ apply Service "<%= @object_servicename %>" to Host {
   max_check_attempts = <%= @max_check_attempts %>
   <%- end -%>
   <%- if @check_period -%>
-  check_period = <%= @check_period %>
+  check_period = "<%= @check_period %>"
   <%- end -%>
   <%- if @check_interval -%>
   check_interval = <%= @check_interval %>

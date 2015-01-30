@@ -12,7 +12,7 @@
 define icinga2::object::host (
   $object_hostname = $name,
   $display_name = $fqdn,
-  $ipv4_address = $ipaddress_eth0,
+  $ipv4_address = $ipaddress,
   $ipv6_address = undef,
   $template_to_import = 'generic-host',
   $groups = [],

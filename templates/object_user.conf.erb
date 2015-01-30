@@ -29,7 +29,7 @@ object User "<%= @object_username %>" {
   enable_notifications = <%= @enable_notifications %>
   <%- end %>
   <%- if @vars.empty? != true  -%>
-  <%- @vars.each_pair do |key, value| -%>
+  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
   vars.<%= key %> = "<%= value %>"
   <%- end -%>
   <%- end -%>

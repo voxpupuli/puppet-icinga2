@@ -13,6 +13,7 @@ define icinga2::checkplugin (
   $checkplugin_template_module          = 'icinga2',
   $checkplugin_template                 = undef,
   $checkplugin_source_file              = undef,
+  $checkplugin_source_inline            = undef,
 ) {
 
   #Do some validation of the class' parameters:
@@ -29,7 +30,6 @@ define icinga2::checkplugin (
       group   => $checkplugin_target_file_group,
       mode    => $checkplugin_target_file_mode,
       content => template("${checkplugin_template_module}/${checkplugin_template}"),
-      require => Package[$icinga2::params::icinga2_client_packages],
     }
   }
   elsif $checkplugin_file_distribution_method == 'source' {
@@ -38,7 +38,14 @@ define icinga2::checkplugin (
       group   => $checkplugin_target_file_group,
       mode    => $checkplugin_target_file_mode,
       source  => $checkplugin_source_file,
-      require => Package[$icinga2::params::icinga2_client_packages],
+    }
+  }
+  elsif $checkplugin_file_distribution_method == 'inline' {
+    file { "${checkplugin_libdir}/${checkplugin_name}":
+      owner   => $checkplugin_target_file_owner,
+      group   => $checkplugin_target_file_group,
+      mode    => $checkplugin_target_file_mode,
+      content => $checkplugin_source_inline,
     }
   }
   else {

@@ -12,7 +12,7 @@
 define icinga2::object::notificationcommand (
   $object_notificationcommandname = $name,
   $template_to_import = 'plugin-notification-command',
-/*  $methods           = undef, */ /* Need to get more details about this attribute */
+  #$methods           = undef, Need to get more details about this attribute
   $command            = undef,
   $cmd_path           = 'PluginDir',
   $arguments          = {},

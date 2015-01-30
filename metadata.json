@@ -1,12 +1,12 @@
 {
   "name": "puppet-icinga2",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet module",
   "license": "GPLv2",
   "source": "git://github.com/icinga/puppet-icinga2",
   "project_page": "https://github.com/icinga/puppet-icinga2",
-  "issues_url": "https://dev.icinga.org/projects/icinga-tools",
+  "issues_url": "https://dev.icinga.org/projects/puppet-icinga2",
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
@@ -17,8 +17,24 @@
       ]
     },
     {
+      "operatingsystem": "RedHat",
+      "operatingsystemmajrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
       "operatingsystem": "Debian",
       "operatingsystemmajrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemmajrelease": [
+        "5",
+        "6",
         "7"
       ]
     },

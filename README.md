@@ -38,6 +38,15 @@ For Ubuntu systems, this module requires the [Puppet Labs apt module](https://gi
 
 On EL-based systems (CentOS, Red Hat Enterprise Linux, Fedora, etc.), the [EPEL package repository](https://fedoraproject.org/wiki/EPEL) is required. You can also use the [icinga2::nrpe class](#nrpe-usage) to set up NRPE on CentOS 5. It is discouraged to set up Icinga2 Server on this old of a distribution. You are encouraged to use at least CentOS 6 or higher.
 
+####Note for RedHat
+
+If you are using RedHat Satellite server, set
+<pre>
+   $manage_repos = false
+</pre>
+
+in `icinga2::server` class and make sure, you have a channel set up with the contents of the icinga2 repository and the needed packages from EPEL. If you leave it at true, the EPEL repository will be used directly.
+
 If you would like to use the `icinga2::object` defined types as [exported resources](https://docs.puppetlabs.com/guides/exported_resources.html), you'll need to have your Puppet master set up with PuppetDB. See the Puppet Labs documentation for more info: [Docs: PuppetDB](https://docs.puppetlabs.com/puppetdb/)
 
 ###Server requirements
@@ -173,7 +182,7 @@ If you would like to use the [Debmon repository](http://debmon.org/packages) for
 class { 'icinga2::server':
   server_db_type => 'pgsql',
   # default to false
-  use_debmon => true,
+  use_debmon_repo => true,
   db_host => 'localhost'
   db_port => '5432'
   db_name => 'icinga2_data'
@@ -211,7 +220,7 @@ If you would like to install packages to make a `mail` command binary available 
 
 **Enabling and disabling Icinga 2 features**
 
-To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_enabled_features` parameters.
+To manage the features that are enabled or disabled on an Icinga 2 server, you can specify them with the `server_enabled_features` and `server_disabled_features` parameters.
 
 The parameters should be given as arrays of single-quoted strings.  
 
@@ -295,6 +304,23 @@ icinga2::checkplugin { 'check_diskstats':
   checkplugin_source_file              => 'puppet:///modules/checkplugins/check_diskstats',
 }
 ````
+
+Example 3: Distribute check plugin in a manifest
+```
+icinga2::checkplugin { 'check_diskstats':
+  checkplugin_file_distribution_method => 'inline',
+  checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /',
+}
+```
+
+Example 4: Distribute check plugin stored in Hiera(-yaml)
+```
+---
+icinga2::checkplugin:
+  check_diskstats:
+    checkplugin_file_distribution_method: 'inline'
+    checkplugin_source_inline:            'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /'
+```
 
 ###[Object type usage](id:object_type_usage)
 
@@ -392,21 +418,27 @@ icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
 
 Object types:
 
+* [icinga2::object::apilistener](#icinga2objectapilistener)
 * [icinga2::object::applyservicetohost](#icinga2objectapplyservicetohost)
 * [icinga2::object::applynotificationtohost](#icinga2objectapplynotificationtohost)
 * [icinga2::object::applynotificationtoservice](#icinga2objectapplynotificationtoservice)
 * [icinga2::object::checkcommand](#icinga2objectcheckcommand)
 * [icinga2::object::compatlogger](#icinga2objectcompatlogger)
+* [icinga2::object::checkercomponent](#icinga2objectcheckercomponent)
 * [icinga2::object::checkresultreader](#icinga2objectcheckresultreader)
+* [icinga2::object::endpoint](#icinga2objectendpoint)
 * [icinga2::object::eventcommand](#icinga2objecteventcommand)
 * [icinga2::object::externalcommandlistener](#icinga2objectexternalcommandlistener)
+* [icinga2::object::filelogger](#icinga2objectfilelogger)
 * [icinga2::object::host](#icinga2objecthost)
 * [icinga2::object::hostgroup](#icinga2objecthostgroup)
+* [icinga2::object::icingastatuswriter](#icinga2objecticingastatuswriter)
 * [icinga2::object::idomysqlconnection](#icinga2objectidomysqlconnection)
 * [icinga2::object::idopgsqlconnection](#icinga2objectidopgsqlconnection)
 * [icinga2::object::livestatuslistener](#icinga2objectlivestatuslistener)
 * [icinga2::object::notification](#icinga2objectnotification)
 * [icinga2::object::notificationcommand](#icinga2objectnotificationcommand)
+* [icinga2::object::notificationcomponent](#icinga2objectnotificationcomponent)
 * [icinga2::object::perfdatawriter](#icinga2objectperfdatawriter)
 * [icinga2::object::scheduleddowntime](#icinga2objectscheduleddowntime)
 * [icinga2::object::service](#icinga2objectservice)
@@ -416,6 +448,22 @@ Object types:
 * [icinga2::object::timeperiod](#icinga2objecttimeperiod)
 * [icinga2::object::user](#icinga2objectuser)
 * [icinga2::object::usergroup](#icinga2objectusergroup)
+
+####[`icinga2::object::apilistener`](id:icinga2objectapilistener)
+
+The `apilistener` defined type can create `ApiLister` objects that set the bind address and port for Icinga 2's API listener, as well as the locations of the machine's Icinga 2 cert, key and Icinga 2 CA key:
+
+<pre>
+#Create an API listener object:
+icinga2::object::apilistener { 'master-api':
+  bind_host => $ipaddress_eth1,
+  accept_commands => true,
+}
+</pre>
+
+The `accept_config` and `accept_commands` parameters default to **false**.
+
+See the Icinga 2 documention for more info: [http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-apilistener)
 
 ####[`icinga2::object::apply_service_to_host`](id:object_apply_service_to_host)
 
@@ -553,6 +601,27 @@ icinga2::object::compatlogger { 'daily-log':
 Both patameters as optionals. The parameter `rotation_method` can one of `HOURLY`, `DAILY`, `WEEKLY` or `MONTHY`.
 See [CompatLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-compatlogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
+####[`icinga2::object::checkercomponent`](id:object_checkercomponent)
+
+The `checkercomponent` defined type can create `checkercomponent` objects.
+
+Example:
+
+<pre>
+icinga2::object::checkercomponent {'checker':}
+</pre>
+
+This object support the following parameters:
+* `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file.
+* `object_name` - Optional. Used to define file name. default value is 'checker'
+* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/conf.d'
+* `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'. 
+* `target_file_owner` - Optional. File Owner. Default value is 'root'.
+* `target_file_group` - Optional. File Group. Default value is 'root'.
+* `target_file_mode` - Optional. File Mode. Default value is '0644'.
+
+See [CheckerComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkercomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object.
+
 ####[`icinga2::object::checkresultreader`](id:object_checkresultreader)
 
 The `checkresultreader` defined type can create `checkresultreader` objects.
@@ -566,6 +635,19 @@ icinga2::object::checkresultreader {'reader':
 </pre>
 
 See [CheckResultReader](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-checkresultreader) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::endpoint`](id:object_endpoint)
+
+The `endpoint` defined type can create `endpoint` objects.
+
+<pre>
+icinga2::object::endpoint { 'icinga2b':
+  host => '192.168.5.46',
+  port => 5665
+}
+</pre>
+
+See [EndPoint](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-endpoint) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####`icinga2::object::eventcommand`
 
@@ -592,6 +674,21 @@ icinga2::object::externalcommandlistener { 'external':
 </pre>
 
 See [ExternalCommandListener](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-externalcommandlistener) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
+
+####[`icinga2::object::filelogger`](id:object_filelogger)
+
+This defined type creates file logger objects.
+
+Example:
+
+<pre>
+icinga2::object::filelogger { 'debug-file':
+  severity => 'debug',
+  path     => '/var/log/icinga2/debug.log',
+}
+</pre>
+
+See [FileLogger](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-filelogger) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for a full list of parameters.
 
 ####[`icinga2::object::host`](id:object_host)
 
@@ -634,6 +731,20 @@ If you would like to use an IPv6 address, make sure to set the `ipv6_address` pa
 ####[`icinga2::object::hostgroup`](id:object_hostgroup)
 
 Coming soon...
+
+####[`icinga2::object::icingastatuswriter`](id:object_icingastatuswriter)
+
+This defined type creates an **IcingaStatusWriter** objects.
+
+Example usage:
+<pre>
+icinga2::object::icingastatuswriter { 'status':
+   status_path       => '/cache/icinga2/status.json',
+   update_interval   => '15s',
+}
+</pre>
+
+See [IcingaStatusWriter](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-icingastatuswriter) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about the object.
 
 ####[`icinga2::object::idomysqlconnection`](id:object_idomysqlconnection)
 
@@ -784,6 +895,30 @@ icinga2::object::notificationcommand { 'mail-service-notification':
 </pre>
 
 This object use the same parameter defined to `checkcommand`.
+
+####[`icinga2::object::notificationcomponent`](id:object_notificationcomponent) 
+ 
+The `notificationcomponent` defined type can create `notificationcomponent` objects. 
+ 
+Example: 
+ 
+<pre> 
+icinga2::object::notificationcomponent {'notification':} 
+</pre> 
+ 
+This object support the following parameters: 
+* `ensure` - Optional parameter used to remove or create the file, Default value is 'file'. Use 'absent' to remove the file. 
+* `object_name` - Optional. Used to define file name. default value is 'checker'
+* `enable_ha` - Optional. Enable the high availability functionality. Only valid in a cluster setup. Default value is true.  
+* `target_dir`  - Optional. Define where the conf fil will be created. Default value is '/etc/icinga2/features-available' 
+* `target_file_name` - Optional. Define the file name. Default value is '${object_name}.conf'.  
+* `target_file_owner` - Optional. File Owner. Default value is 'root'. 
+* `target_file_group` - Optional. File Group. Default value is 'root'. 
+* `target_file_mode` - Optional. File Mode. Default value is '0644'. 
+ 
+See [NotificationComponent](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/configuring-icinga2#objecttype-notificationcomponent) on [docs.icinga.org](http://docs.icinga.org/icinga2/latest/doc/module/icinga2/toc) for more details about this object. 
+
+Should be enable/disable using `icinga2::server::features::enable` or `icinga2::server::features::disable`.
 
 ####[`icinga2::object::perfdatawriter`](id:object_perfdatawriter)
 

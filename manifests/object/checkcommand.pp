@@ -12,7 +12,7 @@
 define icinga2::object::checkcommand (
   $object_checkcommandname = $name,
   $template_to_import                    = 'plugin-check-command',
-/*  $methods                             = undef, */ /* Need to get more details about this attribute */
+  #$methods                             = undef, Need to get more details about this attribute
   $command                               = undef,
   $cmd_path                              = 'PluginDir',
   $arguments                             = {},

@@ -27,7 +27,7 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- @arguments.each_with_index do |(key,value), i| -%>
     <%= key %> = <% if value.class == String %><%= value %>
     <%- else -%>{
-      <%- value.each_pair do |k,v| -%>
+      <%- value.sort_by {|k, v| k}.each do |k, v| -%>
       <%= k %> = <%= v %>
       <%- end -%>
     }
@@ -37,10 +37,10 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- end -%>
   <%- if @vars.empty? != true -%>
 
-  <%- @vars.each_pair do |key,value| -%>
+  <%- @vars.sort_by {|key, value| key}.each do |key, value| -%>
   <%= key %> = <% if value.class == String %><%= value %>
   <%- else -%>{
-    <%- value.each_pair do |k,v| -%>
+    <%- value.sort_by {|k, v| k}.each do |k, v| -%>
     <%= k %> = <%= v %>
     <%- end -%>
   }
@@ -54,7 +54,7 @@ object NotificationCommand "<%= @object_notificationcommandname %>" {
   <%- if @env.empty? != true -%>
 
   env = {
-  <%- @env.each_pair do |key,value| -%>
+  <%- @env.sort_by {|key, value| key}.each do |key, value| -%>
     <%= key %> = <%= value %>
   <%- end -%>
   }

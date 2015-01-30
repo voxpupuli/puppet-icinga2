@@ -1,6 +1,26 @@
 #Changelog
 - - -
 
+###v0.6.2 (January 29th, 2015)
+
+* Feature: [PR-58](https://github.com/Icinga/puppet-icinga2/pull/58) and [dev.icinga.org issue #8156](https://dev.icinga.org/issues/8156): Added the ability to use hashes directly in host `vars` parameters (instead of rendering hashes into a series of `vars.` lines in the rendered object file).
+* Feature: [PR-63](https://github.com/Icinga/puppet-icinga2/pull/63) and [dev.icinga.org issue #7232](https://dev.icinga.org/issues/7232): Added an Endpoint object defined type.
+* Feature: [PR-62](https://github.com/Icinga/puppet-icinga2/pull/62) and [dev.icinga.org issue #7230](https://dev.icinga.org/issues/7230): Added an IcingaStatusWriter object defined type.
+* Feature: [PR-61](https://github.com/Icinga/puppet-icinga2/pull/61) and [dev.icinga.org issue #7229](https://dev.icinga.org/issues/7229): Added a FileLogger object defined type.
+* Feature: [PR-70](https://github.com/Icinga/puppet-icinga2/pull/70) and [dev.icinga.org issue #8153](https://dev.icinga.org/issues/8153): Change validation of interval parameters.
+* Feature: [PR-68](https://github.com/Icinga/puppet-icinga2/pull/68) and [dev.icinga.org issue #7346](https://dev.icinga.org/issues/7346): Added OS support for Red Hat.
+* Feature: [dev.icinga.org issue #7231](https://dev.icinga.org/issues/7231): Added an `ApiListener` object defined type.
+* Feature: [PR-76](https://github.com/Icinga/puppet-icinga2/pull/76) and [dev.icinga.org issue #8154](https://dev.icinga.org/issues/8154): Ensure ordering of hashes in ERB templates
+* Bug: [PR-75](https://github.com/Icinga/puppet-icinga2/pull/75): Use `$ipaddress` as the default fact for IP addresses in `icinga2::object::host` definitions; `$ipaddress_eth0` won't work on systems with systemd that use consistent network device naming.
+* Bug: [PR-74](https://github.com/Icinga/puppet-icinga2/pull/74): Remove the empty `icinga2` and `icinga2::obect` classes.
+* Feature: [PR-77](https://github.com/Icinga/puppet-icinga2/pull/77/) and [dev.icinga.org issue #8239](https://dev.icinga.org/issues/8239): Added the ability to specify the contents of check plugins inline.
+* Bug: [PR-81](https://github.com/Icinga/puppet-icinga2/pull/81): Fixed typo in the ERB template for `Notification` objects.
+* Feature: [PR-83](https://github.com/Icinga/puppet-icinga2/pull/83): Added Red Hat support.
+* Feature: [PR-60](https://github.com/Icinga/puppet-icinga2/pull/60) and [dev.icinga.org issue #7228](https://dev.icinga.org/issues/7228): Added a NotificationComponent object defined type.
+* Feature: [PR-59](https://github.com/Icinga/puppet-icinga2/pull/59) and [dev.icinga.org issue #7227](https://dev.icinga.org/issues/7227): Added a CheckerComponent object defined type.
+* Bug: [PR-88](https://github.com/Icinga/puppet-icinga2/pull/88): Fix unquoted string in the ERB template for apply objects that apply services to hosts.
+* Feature: [PR-85](https://github.com/Icinga/puppet-icinga2/pull/85): Improve notifications of the NRPE daemon when config files or command definition files are changed.
+
 ###v0.6.1 (December 2nd, 2014)
 
 * Feature: [PR-54](https://github.com/Icinga/puppet-icinga2/pull/54) and [dev.icinga.org issue #7225](https://dev.icinga.org/issues/7225): Added a CompatLogger object defined type.
