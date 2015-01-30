@@ -1,7 +1,7 @@
 #Changelog
 - - -
 
-###v0.6.2 (unreleased)
+###v0.6.2 (January 29th, 2015)
 
 * Feature: [PR-58](https://github.com/Icinga/puppet-icinga2/pull/58) and [dev.icinga.org issue #8156](https://dev.icinga.org/issues/8156): Added the ability to use hashes directly in host `vars` parameters (instead of rendering hashes into a series of `vars.` lines in the rendered object file).
 * Feature: [PR-63](https://github.com/Icinga/puppet-icinga2/pull/63) and [dev.icinga.org issue #7232](https://dev.icinga.org/issues/7232): Added an Endpoint object defined type.
@@ -18,6 +18,8 @@
 * Feature: [PR-83](https://github.com/Icinga/puppet-icinga2/pull/83): Added Red Hat support.
 * Feature: [PR-60](https://github.com/Icinga/puppet-icinga2/pull/60) and [dev.icinga.org issue #7228](https://dev.icinga.org/issues/7228): Added a NotificationComponent object defined type.
 * Feature: [PR-59](https://github.com/Icinga/puppet-icinga2/pull/59) and [dev.icinga.org issue #7227](https://dev.icinga.org/issues/7227): Added a CheckerComponent object defined type.
+* Bug: [PR-88](https://github.com/Icinga/puppet-icinga2/pull/88): Fix unquoted string in the ERB template for apply objects that apply services to hosts.
+* Feature: [PR-85](https://github.com/Icinga/puppet-icinga2/pull/85): Improve notifications of the NRPE daemon when config files or command definition files are changed.
 
 ###v0.6.1 (December 2nd, 2014)
 
