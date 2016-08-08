@@ -1,0 +1,58 @@
+{
+  "name": "puppet-icinga2",
+  "version": "0.1.0",
+  "author": "Icinga Development Team",
+  "summary": "Icinga 2 Puppet Module",
+  "license": "Apache 2.0",
+  "source": "git://github.com/icinga/puppet-icinga2",
+  "project_page": "https://github.com/icinga/puppet-icinga2",
+  "issues_url": "https://github.com/icinga/puppet-icinga2/issues",
+  "requirements": [
+    { "name": "puppet", "version_requirement": "3.x" }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.5.0" },
+    { "name": "puppetlabs/concat", "version_requirement": ">= 1.2.0" },
+    { "name": "puppetlabs/apt", "version_requirement": ">= 1.7.0" }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04",
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "Windows"
+    }
+  ]
+}
