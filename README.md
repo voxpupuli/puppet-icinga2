@@ -1,4 +1,6 @@
-# icinga2
+# Icinga2 Puppet Module
+![Icina Logo](images/icinga_logo.png)
+
 
 #### Table of Contents
 
@@ -6,74 +8,85 @@
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with icinga2](#setup)
     * [What icinga2 affects](#what-icinga2-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with icinga2](#beginning-with-icinga2)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+    * [Public Classes](#public-classes)
+    * [Public defined types](#public-defined-types)
+    * [Private defined types](#private-defined-types)
+6. [Limitations - OS compatibility, etc.](#limitations)
+7. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Icinga2 is a widely used open source monitoring software. This Puppet module helps installing and managing configuration
+of Icinga2 on multiple operating sytems. 
+
+>> This Module is a rewrite of [puppet-icinga2] and will replace it in the future.
 
 ## Module Description
-
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This module installs and configures Icinga2 on your Linux or Windows hosts. By default it will use packages provided by
+your distributions repository, respectively chocolatey on Windows. The module can be enabled to use [packages.icinga.org]
+as primary repository, which will give you the ability to install the latest Icinga2 release. All features and objects
+available in Icinga2 can be enabled and configured with this module.
 
 ## Setup
 
-### What icinga2 affects
+### What the Icinga2 Puppet module affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-### Beginning with icinga2
-
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+* Packages Installation
+* Service 
+* Objects Configuration
+* Feature Configuration
+* Apply Rules
+* MySQL/PostgreSQL Database Schema Import 
+* Repository Management 
+* Certification Authority
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+### Public Classes
+
+### Public defined types
+
+### Private defined types
 
 ## Limitations
+This module has been tested on:
 
-This is where you list OS compatibility, version compatibility, etc.
+* Debian 7, 8
+* Ubuntu 14.04, 16.04
+* CentOS/RHEL 6, 7
+* Windows Server 2012
+
+Other operating systems or versions may work but have not been tested.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+### Contributing
+When contributing several steps such as pull requests and proper testing implementations are required.
+Find a detailed step by step guide in [CONTRIBUTING.md].
 
-## Release Notes/Contributors/Etc **Optional**
+### Testing
+Testing is essential in our workflow to ensure a good quality. We use RSpec as well as Serverspec to test all components
+of this module. For a detailed description see [TESTING.md].
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+## Release Notes
+When releasing new versions we refer to [SemVer 1.0.0] for version numbers. All steps required when creating a new
+release are described in [RELEASE.md]
+
+See also [CHANGELOG.md]
+
+## Authors
+[AUTHORS.md] is generated on each release.
+
+[puppet-icinga2]: https://github.com/icinga/puppet-icinga2
+[packages.icinga.org]: https://packages.icinga.org
+[SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
+[CONTRIBUTING.md]: CONTRIBUTING.md
+[TESTING.md]: TESTING.md
+[RELEASE.md]: RELEASE.md
+[CHANGELOG.md]: CHANGELOG.md
+[AUTHORS.md]: AUTHORS.md
