@@ -4,11 +4,13 @@
 nodes = {
   'i2rhel7puppet4' => {
     :box => 'centos-7.2-x64-virtualbox',
-    :url => 'http://boxes.netways.org/vagrant/centos/centos-7.2-x64-virtualbox.box'
+    :url => 'http://boxes.netways.org/vagrant/centos/centos-7.2-x64-virtualbox.box',
+    :md5 => '30fe8faeaf5e67d1dfcdeb8631e757e7'
   },
   'i2rhel6puppet4' => {
     :box => 'centos-6.7-x64-virtualbox',
-    :url => 'http://boxes.netways.org/vagrant/centos/centos-6.7-x64-virtualbox.box'
+    :url => 'http://boxes.netways.org/vagrant/centos/centos-6.7-x64-virtualbox.box',
+    :md5 => 'ef0c3e7a9d798a911a908c77dd816e94'
   },
 }
 
@@ -22,6 +24,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node_config.vm.box = options[:box]
       node_config.vm.hostname = "#{name}.localdomain"
       node_config.vm.box_url = options[:url]
+      node_config.vm.box_download_checksum = :md5
+      node_config.vm.box_download_checksum_type = 'md5'
       node_config.vm.network :private_network, :adapter => 2, ip: options[:ip] if options[:ip]
 
       if options[:forwarded]
