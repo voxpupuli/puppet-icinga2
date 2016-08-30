@@ -1,0 +1,8 @@
+forge "http://forge.puppetlabs.com"
+
+mod 'puppetlabs/stdlib', '4.5.0'
+mod 'puppetlabs/concat', '1.2.0'
+mod 'puppetlabs/apt', '1.7.0'
+mod 'icinga2',
+  :git    => 'git@git.icinga.org:puppet-icinga2-rewrite.git',
+  :branch => 'master'
