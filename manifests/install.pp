@@ -12,6 +12,8 @@ class icinga2::install inherits icinga2::params {
     fail("icinga2::install is a private class of the module icinga2, you're not permitted to use it.")
   }
 
+  if $::osfamily == 'windows' { Package { provider => chocolatey, } }
+
   package { $package:
     ensure => installed,
   }

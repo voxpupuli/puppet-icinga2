@@ -16,6 +16,8 @@ class icinga2::params {
     }
     'debian': {
     }
+    'windows': {
+    }
     default: {
       fail("Your plattform ${::osfamily} is not supported, yet.")
     }

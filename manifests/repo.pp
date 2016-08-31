@@ -59,6 +59,9 @@ class icinga2::repo inherits icinga2::params {
           }
         }
       }
+      'windows': {
+        warning("The Icinga Project doesn't offer chocolaty packages at the moment.")
+      }
       default: {
         fail('Your plattform is not supported to manage a repository.')
       }
