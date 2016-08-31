@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'plattforms'
 
 describe('icinga2', :type => :class) do
 
@@ -11,100 +12,98 @@ describe('icinga2', :type => :class) do
     end
   end
 
-  let(:facts) { {:osfamily => 'RedHat', :operatingsystem => 'redhat', :operatingsystemmajrelease => '7'} }
-
-  context 'with all default parameters' do
+  context 'with all default parameters on RedHat 6' do
+    let(:facts) { IcingaPuppet.plattforms['RedHat 6'] }
     it do
       should contain_package('icinga2').with({'ensure' => 'installed'})
       should contain_service('icinga2').with({
         'ensure' => 'running',
         'enable' => true,
       })
-    end
-  end
-
-  # all plattform independent tests will be done on a redhat system
-  context 'with ensure => running, enable => true' do
-    let(:params) { {:ensure => 'running', :enable => true} }
-    it do
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-    end
-  end
-
-  context 'with ensure => stopped, enable => false' do
-    let(:params) { {:ensure => 'stopped', :enable => false} }
-    it do
-      should contain_service('icinga2').with({
-        'ensure' => 'stopped',
-        'enable' => false,
-      })
-    end
-  end
-
-  context 'with ensure => foo (not valid)' do
-    let(:params) { {:ensure => 'foo'} }
-    it do
-      expect {
-        should contain_service('icinga2')
-      }.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'running' and 'stopped'./)
-    end
-  end
-
-  context 'with enable => foo (not valid boolean)' do
-    let(:params) { {:enable => 'foo'} }
-    it do
-      expect {
-        should contain_service('icinga2')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
-  end
-
-  context 'with manage_service => false' do
-    let(:params) { {:manage_service => false} }
-    it do
-      should_not contain_service('icinga2')
-    end
-  end
-
-  # redhat based tests
-  context 'with all default parameters effect on RedHat' do
-    it do
       should_not contain_yumrepo('icinga-stable-release')
     end
   end
 
-  context 'with manage_repo => true on RedHat' do
-    let(:params) { {:manage_repo => true} }
+  context 'with all default parameters on RedHat 7' do
+    let(:facts) { IcingaPuppet.plattforms['RedHat 7'] }
     it do
-      should contain_yumrepo('icinga-stable-release')
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
+      should_not contain_yumrepo('icinga-stable-release')
     end
   end
 
-  # debian based tests
-  context 'with all default parameters effect on Debian, Ubuntu' do
-    let(:facts) { {:osfamily => 'Debian'} }
+  context 'with all default parameters on Centos 6' do
+    let(:facts) { IcingaPuppet.plattforms['Centos 6'] }
     it do
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
+      should_not contain_yumrepo('icinga-stable-release')
+    end
+  end
+
+  context 'with all default parameters on Centos 7' do
+    let(:facts) { IcingaPuppet.plattforms['Centos 7'] }
+    it do
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
+      should_not contain_yumrepo('icinga-stable-release')
+    end
+  end
+
+  context 'with all default parameters on Debian wheezy' do
+    let(:facts) { IcingaPuppet.plattforms['Debian wheezy'] }
+    it do
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
       should_not contain_apt__source('icinga-stable-release')
     end
   end
 
-  context 'with manage_repo => true on Debian' do
-    let(:facts) { {:osfamily => 'Debian', :lsbdistid => 'Debian', :operatingsystem => 'Debian'} }
-    let(:params) { {:manage_repo => true} }
+  context 'with all default parameters on Debian jessie' do
+    let(:facts) { IcingaPuppet.plattforms['Debian jessie'] }
     it do
-      should contain_apt__source('icinga-stable-release')
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
+      should_not contain_apt__source('icinga-stable-release')
     end
   end
 
-  # ubuntu based tests
-  context 'with manage_repo => true on Ubuntu' do
-    let(:facts) { {:osfamily => 'Debian', :lsbdistid => 'Ubuntu', :operatingsystem => 'Ubuntu'} }
-    let(:params) { {:manage_repo => true} }
+  context 'with all default parameters on Ubuntu trusty' do
+    let(:facts) { IcingaPuppet.plattforms['Ubuntu trusty'] }
     it do
-      should contain_apt__source('icinga-stable-release')
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
+      should_not contain_apt__source('icinga-stable-release')
+    end
+  end
+
+  context 'with all default parameters on Windows 2012 R2' do
+    let(:facts) { IcingaPuppet.plattforms['Windows 2012 R2'] }
+    it do
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
     end
   end
 
