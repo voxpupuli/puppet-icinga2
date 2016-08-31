@@ -12,6 +12,11 @@ nodes = {
     :url => 'http://boxes.netways.org/vagrant/centos/centos-6.7-x64-virtualbox.box',
     :md5 => 'ef0c3e7a9d798a911a908c77dd816e94'
   },
+  'i2debian8puppet4' => {
+    :box => 'debian-8.5-amd64-virtualbox',
+    :url => 'http://boxes.netways.org/vagrant/debian/debian-8.5-amd64-virtualbox.box',
+    :md5 => '4562c14ba044a2a163836bfec3767e63'
+  },
 }
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
