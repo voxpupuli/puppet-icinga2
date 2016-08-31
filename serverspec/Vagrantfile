@@ -23,8 +23,8 @@ nodes = {
     :md5 => '4562c14ba044a2a163836bfec3767e63'
   },
   'i2ubuntu14puppet4' => {
-    :box => 'ubuntu-14.04-x64-virtualbox',
-    :url => 'http://boxes.netways.org/vagrant/ubuntu/ubuntu-14.04-x64-virtualbox.box',
+    :box => 'ubuntu-14.04.4-x64-virtualbox',
+    :url => 'http://boxes.netways.org/vagrant/ubuntu/ubuntu-14.04.4-x64-virtualbox.box',
     :md5 => '2280f5471cb63cc1c01e78880185fe02'
   },
 }
@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node_config.vm.box = options[:box]
       node_config.vm.hostname = "#{name}.localdomain"
       node_config.vm.box_url = options[:url]
-      node_config.vm.box_download_checksum = :md5
+      node_config.vm.box_download_checksum = options[:md5]
       node_config.vm.box_download_checksum_type = 'md5'
       node_config.vm.network :private_network, :adapter => 2, ip: options[:ip] if options[:ip]
 
