@@ -24,6 +24,17 @@ class icinga2::repo inherits icinga2::params {
           gpgkey   => 'http://packages.icinga.org/icinga.key',
         }
       }
+      'debian': {
+        include apt, apt::backports
+        apt::source { 'icinga-stable-release':
+          location    => 'http://packages.icinga.org/debian',
+          release     => "icinga-${::lsbdistcodename}",
+          repos       => 'main',
+          key_source  => 'http://packages.icinga.org/icinga.key',
+          key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
+          include_src => false,
+        }
+      }
       default: {
         fail('Your plattform is not supported to manage a repository.')
       }

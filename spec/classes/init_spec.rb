@@ -11,7 +11,7 @@ describe('icinga2', :type => :class) do
     end
   end
 
-  let(:facts) { {:osfamily => 'RedHat'} }
+  let(:facts) { {:osfamily => 'RedHat', :operatingsystemmajrelease => '7'} }
 
   context 'with all default parameters' do
     it do
@@ -72,7 +72,7 @@ describe('icinga2', :type => :class) do
   # redhat based tests
   context 'with all default parameters effect on RedHat' do
     it do
-      should_not contain_yumrepo('icinga-stable-relese')
+      should_not contain_yumrepo('icinga-stable-release')
     end
   end
 
@@ -80,6 +80,22 @@ describe('icinga2', :type => :class) do
     let(:params) { {:manage_repo => true} }
     it do
       should contain_yumrepo('icinga-stable-release')
+    end
+  end
+
+  # debian based tests
+  context 'with all default parameters effect on Debian' do
+    let(:facts) { {:osfamily => 'Debian'} }
+    it do
+      should_not contain_apt__source('icinga-stable-release')
+    end
+  end
+
+  context 'with manage_repo => true on Debian' do
+    let(:facts) { {:osfamily => 'Debian', :lsbdistid => 'Debian' } }
+    let(:params) { {:manage_repo => true} }
+    it do
+      should contain_apt__source('icinga-stable-release')
     end
   end
 

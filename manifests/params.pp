@@ -8,10 +8,13 @@
 #
 class icinga2::params {
 
+  $package = 'icinga2'
+  $service = 'icinga2'
+
   case $::osfamily {
     'redhat': {
-      $package = 'icinga2'
-      $service = 'icinga2'
+    }
+    'debian': {
     }
     default: {
       fail("Your plattform ${::osfamily} is not supported, yet.")

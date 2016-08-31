@@ -1,4 +1,4 @@
 .vagrant
 .idea
-.swp
+*.swp
 modules/
