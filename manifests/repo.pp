@@ -16,23 +16,47 @@ class icinga2::repo inherits icinga2::params {
 
     case $::osfamily {
       'redhat': {
-        yumrepo { 'icinga-stable-release':
-          baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
-          descr    => 'ICINGA (stable release for epel)',
-          enabled  => 1,
-          gpgcheck => 1,
-          gpgkey   => 'http://packages.icinga.org/icinga.key',
+        case $::operatingsystem {
+          'centos', 'redhat': {
+            yumrepo { 'icinga-stable-release':
+              baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
+              descr    => 'ICINGA (stable release for epel)',
+              enabled  => 1,
+              gpgcheck => 1,
+              gpgkey   => 'http://packages.icinga.org/icinga.key',
+            }
+          }
+          default: {
+            fail('Your plattform is not supported to manage a repository.')
+          }
         }
       }
       'debian': {
-        include apt, apt::backports
-        apt::source { 'icinga-stable-release':
-          location    => 'http://packages.icinga.org/debian',
-          release     => "icinga-${::lsbdistcodename}",
-          repos       => 'main',
-          key_source  => 'http://packages.icinga.org/icinga.key',
-          key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
-          include_src => false,
+        case $::operatingsystem {
+          'debian': {
+            include apt, apt::backports
+            apt::source { 'icinga-stable-release':
+              location    => 'http://packages.icinga.org/debian',
+              release     => "icinga-${::lsbdistcodename}",
+              repos       => 'main',
+              key_source  => 'http://packages.icinga.org/icinga.key',
+              key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
+              include_src => false,
+            }
+          }
+          'ubuntu': {
+            apt::source { 'icinga-stable-release':
+              location    => 'http://packages.icinga.org/ubuntu',
+              release     => "icinga-${::lsbdistcodename}",
+              repos       => 'main',
+              key_source  => 'http://packages.icinga.org/icinga.key',
+              key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
+              include_src => false,
+            }
+          }
+          default: {
+            fail('Your plattform is not supported to manage a repository.')
+          }
         }
       }
       default: {

@@ -11,7 +11,7 @@ describe('icinga2', :type => :class) do
     end
   end
 
-  let(:facts) { {:osfamily => 'RedHat', :operatingsystemmajrelease => '7'} }
+  let(:facts) { {:osfamily => 'RedHat', :operatingsystem => 'redhat', :operatingsystemmajrelease => '7'} }
 
   context 'with all default parameters' do
     it do
@@ -84,7 +84,7 @@ describe('icinga2', :type => :class) do
   end
 
   # debian based tests
-  context 'with all default parameters effect on Debian' do
+  context 'with all default parameters effect on Debian, Ubuntu' do
     let(:facts) { {:osfamily => 'Debian'} }
     it do
       should_not contain_apt__source('icinga-stable-release')
@@ -92,7 +92,16 @@ describe('icinga2', :type => :class) do
   end
 
   context 'with manage_repo => true on Debian' do
-    let(:facts) { {:osfamily => 'Debian', :lsbdistid => 'Debian' } }
+    let(:facts) { {:osfamily => 'Debian', :lsbdistid => 'Debian', :operatingsystem => 'Debian'} }
+    let(:params) { {:manage_repo => true} }
+    it do
+      should contain_apt__source('icinga-stable-release')
+    end
+  end
+
+  # ubuntu based tests
+  context 'with manage_repo => true on Ubuntu' do
+    let(:facts) { {:osfamily => 'Debian', :lsbdistid => 'Ubuntu', :operatingsystem => 'Ubuntu'} }
     let(:params) { {:manage_repo => true} }
     it do
       should contain_apt__source('icinga-stable-release')
