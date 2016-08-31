@@ -3,6 +3,9 @@ forge "http://forge.puppetlabs.com"
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/concat', :latest
 mod 'puppetlabs/apt', '1.8.0'
+mod 'puppetlabs/chocolatey', :latest
+mod 'puppetlabs/powershell', :latest
+mod 'badgerious/windows_env', :latest
 mod 'icinga2',
   :git    => 'git@git.icinga.org:puppet-icinga2-rewrite.git',
   :branch => 'master'
