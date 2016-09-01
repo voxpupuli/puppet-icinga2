@@ -18,18 +18,48 @@
 #
 # [*manage_service*]
 #   If set to true the service is managed otherwise the service also
-#   isn't restarted if a config file changed.
+#   isn't restarted if a config file changed. Default to true.
 #
 # === Variables
 #
 # Here you should define a list of variables that this module would require.
 #
-# [*sample_variable*]
 #
 # === Examples
 #
+# Declare icinga2 with all defaults. Keep in mind that you've to
+# manage a repository on your own.
+#
+#  include icinga2
+#
+# If you like to use the Icinga Project repository, enable the manage_repo parameter.
+# Note: On Windows chocolatey is supported only and the Icinga Project doesn't offer a
+# package , so if you enbale mange_repo on Windows you'll get a warning and the
+# parameter is ignored.
+#
 #  class { 'icinga2':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#    manage_repo => true,
+#  }
+#
+# Maybe you don't like to manage the icinga2 service by puppet. You can disable this
+# behavoir by setting manage_service to false. That mean no service refresh will be
+# done even if this was triggered.
+#
+#  class { 'icinga2':
+#    manage_service => false,
+#  }
+#
+# Also at this early state of development you can use it in any way you like.
+# I.e. you can manage every configuration file in puppet by setting the metaparameter
+# tag to icinga2::config::file. A refresh is triggered automatically.
+#
+#  include icinga2
+#  file { '/etc/icinga2/icinga2.conf':
+#    ensure => file,
+#    owner  => icinga,
+#    ...
+#    tag    => 'icinga2::config::file',
+#    ...
 #  }
 #
 # === Authors
