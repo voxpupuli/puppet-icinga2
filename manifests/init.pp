@@ -20,6 +20,10 @@
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed. Default to true.
 #
+# [*constants*]
+#   Hash of constants to set. Defaults are set in the params class. Your settings
+#   will be merged with this defaults.
+#
 # === Variables
 #
 # Here you should define a list of variables that this module would require.
@@ -62,6 +66,19 @@
 #    ...
 #  }
 #
+# To set constants in etc/icinga2/constants.conf use the constants parameter and as
+# value a hash, every key will be set as constant and assigned by it's value. Defaults
+# can be overwritten.
+#
+#  class { 'icinga2':
+#    ...
+#    constants   => {
+#      'key1'             => 'value1',
+#      'key2'             => 'value2',
+#      'PluginContirbDir' => '/usr/local/nagios/plugins',
+#    }
+#  }
+#
 # === Authors
 #
 # Icinga Development Team <info@icinga.org>
@@ -71,6 +88,7 @@ class icinga2(
   $enable         = true,
   $manage_repo    = false,
   $manage_service = true,
+  $constants      = {},
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
@@ -78,6 +96,7 @@ class icinga2(
   validate_bool($enable)
   validate_bool($manage_repo)
   validate_bool($manage_service)
+  validate_hash($constants)
 
   anchor { 'icinga2::begin':
     notify => Class['icinga2::service']
