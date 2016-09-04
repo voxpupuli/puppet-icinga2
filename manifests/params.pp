@@ -42,6 +42,7 @@ class icinga2::params {
         'NodeName'           => $::fqdn,
         'TicketSalt'         => '',
       }
+      $plugins   = [ 'plugins', 'plugins-contrib' ]
 
     } # Linux
 
@@ -56,6 +57,7 @@ class icinga2::params {
         'NodeName'           => $::fqdn,
         'TicketSalt'         => '',
       }
+      $plugins   = [ 'windows-plugins', 'nscp' ]
     } # Windows
 
     default: {

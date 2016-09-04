@@ -18,4 +18,9 @@ class icinga2::install inherits icinga2::params {
     ensure => installed,
   }
 
+  # anchor, i.e. for config directory set by confd parameter
+  file { $conf_dir:
+    ensure  => directory,
+    require => Package[$package]
+  }
 }
