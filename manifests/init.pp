@@ -84,8 +84,8 @@ class icinga2(
   }
   -> class { 'icinga2::repo': }
   -> class { 'icinga2::install': }
-  -> File <| tag == 'icinga2::config::file' |> { notify => Class['icinga2::service'] }
-  -> class { 'icinga2::config': }
+  -> class { 'icinga2::config': notify => Class['icinga2::service'] }
+  -> File <| tag == 'icinga2::config::file' |>
   ~> class { 'icinga2::service': }
   -> anchor { 'icinga2::end':
     subscribe => Class['icinga2::config']
