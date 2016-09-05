@@ -1,5 +1,5 @@
 if ! $(dpkg-query --show puppetlabs-release-pc1 1>/dev/null); then
-  wget wget https://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb 2>/dev/null
+  wget https://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb 2>/dev/null
   dpkg -i puppetlabs-release-pc1-trusty.deb
   rm -f puppetlabs-release-pc1-trusty.deb
 fi

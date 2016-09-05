@@ -20,7 +20,7 @@ nodes = {
   'i2debian7puppet4' => {
     :box => 'debian-7.11-amd64-virtualbox',
     :url => 'http://boxes.netways.org/vagrant/debian/debian-7.11-amd64-virtualbox.box',
-    :md5 => '4562c14ba044a2a163836bfec3767e63'
+    :md5 => '78dc5710545789da74f5b3727a20e453'
   },
   'i2ubuntu14puppet4' => {
     :box => 'ubuntu-14.04.4-x64-virtualbox',

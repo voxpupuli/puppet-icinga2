@@ -42,6 +42,17 @@ available in Icinga2 can be enabled and configured with this module.
 * Repository Management 
 * Certification Authority
 
+### Dependencies
+This module depends on:
+
+* [puppetlabs/stdlib]
+* [puppetlabs/concat]
+
+Depending on your setup following modules may also be required:
+
+* [puppetlabs/apt]
+* [puppetlabs/chocolatey]
+
 ## Usage
 
 
@@ -82,6 +93,10 @@ See also [CHANGELOG.md]
 ## Authors
 [AUTHORS.md] is generated on each release.
 
+[puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
+[puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
+[puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
+[puppetlabs/chocolatey]: https://github.com/puppetlabs/puppetlabs-chocolatey
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
 [packages.icinga.org]: https://packages.icinga.org
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
