@@ -10,6 +10,7 @@ class icinga2::params {
 
   $package = 'icinga2'
   $service = 'icinga2'
+  $plugins   = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
 
   case $::kernel {
 
@@ -42,8 +43,6 @@ class icinga2::params {
         'NodeName'           => $::fqdn,
         'TicketSalt'         => '',
       }
-      $plugins   = [ 'plugins', 'plugins-contrib' ]
-
     } # Linux
 
     'windows': {
@@ -57,7 +56,6 @@ class icinga2::params {
         'NodeName'           => $::fqdn,
         'TicketSalt'         => '',
       }
-      $plugins   = [ 'windows-plugins', 'nscp' ]
     } # Windows
 
     default: {
