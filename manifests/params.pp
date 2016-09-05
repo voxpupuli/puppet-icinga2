@@ -51,6 +51,7 @@ class icinga2::params {
       $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
       $constants = {
         'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
+        'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",
         'ManubulonPluginDir' => "C:/Program Files/ICINGA2/sbin",
         'ZoneName'           => $::fqdn,
         'NodeName'           => $::fqdn,
