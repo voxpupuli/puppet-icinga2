@@ -13,10 +13,13 @@ class icinga2::params {
 
   case $::osfamily {
     'redhat': {
+      $conf_dir = '/etc/icinga2'
     }
     'debian': {
+      $conf_dir = '/etc/icinga2'
     }
     'windows': {
+      $conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
     }
     default: {
       fail("Your plattform ${::osfamily} is not supported, yet.")
