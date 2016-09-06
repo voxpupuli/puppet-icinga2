@@ -1,4 +1,7 @@
 # Contributing
+A roadmap of this project is located at https://dev.icinga.org/projects/puppet-icinga2-rewrite/roadmap. Please consider
+this roadmap when you start contributing to the project.
+
 Before starting your work on this module, you should [fork the project] to your GitHub account. This allows you to
 freely experiment with your changes. When your changes are complete, submit a [pull request]. All pull requests will be
 reviewed and merged if they suit some general guidelines:

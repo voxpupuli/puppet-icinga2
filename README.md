@@ -22,8 +22,7 @@
 Icinga2 is a widely used open source monitoring software. This Puppet module helps installing and managing configuration
 of Icinga2 on multiple operating sytems. 
 
-:warning:
->> :warning: This Module is a rewrite of [puppet-icinga2] and will replace it in the future.
+>> This Module is a rewrite of [puppet-icinga2] and will replace it in the future.
 
 ## Module Description
 This module installs and configures Icinga2 on your Linux or Windows hosts. By default it will use packages provided by
@@ -157,6 +156,8 @@ This module has been tested on:
 Other operating systems or versions may work but have not been tested.
 
 ## Development
+A roadmap of this project is located at https://dev.icinga.org/projects/puppet-icinga2-rewrite/roadmap. Please consider
+this roadmap when you start contributing to the project.
 
 ### Contributing
 When contributing several steps such as pull requests and proper testing implementations are required.
