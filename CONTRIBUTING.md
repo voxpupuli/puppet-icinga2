@@ -20,7 +20,8 @@ Generally a branch name should include a topic such as `bug` or `feature` follow
 if applicable. Branches should have only changes relevant to a specific issue.
 
 ```
-git checkout -b bug/fix-service-template-1235
+git checkout -b bug/service-template-typo-1234
+git checkout -b feature/config-handling-1235
 ```
 
 ## Testing

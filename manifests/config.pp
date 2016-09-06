@@ -1,6 +1,14 @@
 # == Class: icinga2::config
 #
-# Private class to used by this module only.
+# This class exists to manage general configuration files needed by Icinga2 to run.
+#
+# === Parameters
+#
+# This class does not provide any parameters.
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
 #
 # === Authors
 #

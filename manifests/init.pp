@@ -4,54 +4,52 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to stopped declare the service to be stopped. Default to running.
+#   Manages if the service should be stopped or running. Default is running.
 #
 # [*enable*]
-#   Enables (true) or disables (false) the service to start at boot. Default to true.
+#   If set to true the Icinga2 service will start on boot. Default is true.
 #
 # [*manage_repo*]
 #   Manage the corrolated repository from icinga.org on all supported
 #   plattforms. Default to false.
 #
 # [*manage_service*]
-#   If set to true the service is managed otherwise the service also
-#   isn't restarted if a config file changed. Default to true.
+#   When set to true this module will install the packages.icinga.org repository. With this official repo you can get
+#   the latest version of Icinga. When set to false the operating systems default will be used. As the Icinga Project
+#   does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows.
+#   Default is false
 #
-# === Variables
 #
-# Here you should define a list of variables that this module would require.
-#
+# All default parameters are set in the icinga2::params class. To get more technical information have a look into the
+# params.pp manifest.
 #
 # === Examples
 #
-# Declare icinga2 with all defaults. Keep in mind that you've to
-# manage a repository on your own.
+# Declare icinga2 with all defaults. Keep in mind that your operating system may not have Icinga2 in its package
+# repository.
 #
 #  include icinga2
 #
-# If you like to use the Icinga Project repository, enable the manage_repo parameter.
-# Note: On Windows chocolatey is supported only and the Icinga Project doesn't offer a
-# package , so if you enbale mange_repo on Windows you'll get a warning and the
-# parameter is ignored.
+# If you want to use the official Icinga Project repository, enable the manage_repo parameter. Note: On Windows only
+# chocolatey is supported as installation source. The Icinga Project does not offer a chocolatey repository, therefore
+# you will get a warning if you enable this parameter
+# on windows.
 #
 #  class { 'icinga2':
 #    manage_repo => true,
 #  }
 #
-# Maybe you don't like to manage the icinga2 service by puppet. You can disable this
-# behavoir by setting manage_service to false. That mean no service refresh will be
-# done even if this was triggered.
+# If you don't want to manage the Icinga2 service with puppet, you can dissable this behaviour with the manage_service
+# parameter. When set to false no service refreshes will be triggered.
 #
 #  class { 'icinga2':
 #    manage_service => false,
 #  }
 #
-# Also at this early state of development you can use it in any way you like.
-# I.e. you can manage every configuration file in puppet by setting the metaparameter
-# tag to icinga2::config::file. A refresh is triggered automatically.
+# Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case
+# you can use the icinga2::config::file tag on your file ressource. This module collects all file ressource types with
+# this tag and triggers a reload of Icinga2 on a file change.
 #
 #  include icinga2
 #  file { '/etc/icinga2/icinga2.conf':
