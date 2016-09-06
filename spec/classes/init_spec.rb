@@ -21,6 +21,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_yumrepo('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -33,6 +41,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_yumrepo('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -45,6 +61,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_yumrepo('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -57,6 +81,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_yumrepo('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -69,6 +101,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_apt__source('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -81,6 +121,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_apt__source('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -93,6 +141,14 @@ describe('icinga2', :type => :class) do
         'enable' => true,
       })
       should_not contain_apt__source('icinga-stable-release')
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
+      })
     end
   end
 
@@ -103,6 +159,14 @@ describe('icinga2', :type => :class) do
       should contain_service('icinga2').with({
         'ensure' => 'running',
         'enable' => true,
+      })
+      should contain_class('icinga2::feature::checker')
+      should contain_class('icinga2::feature::mainlog')
+      should contain_class('icinga2::feature::notification')
+      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled').with({
+        'ensure'  => 'directory',
+        'purge'   => true,
+        'recurse' => true,
       })
     end
   end

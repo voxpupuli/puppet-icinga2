@@ -20,6 +20,9 @@
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed. Default to true.
 #
+# [*features*]
+#   List of features to activate. Default to [checker, mainlog, notification].
+#
 # === Variables
 #
 # Here you should define a list of variables that this module would require.
@@ -71,7 +74,8 @@ class icinga2(
   $enable         = true,
   $manage_repo    = false,
   $manage_service = true,
-  $features       = [],
+  $features       = $icinga2::params::default_features,
+  $purge_features = true,
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
@@ -79,17 +83,20 @@ class icinga2(
   validate_bool($enable)
   validate_bool($manage_repo)
   validate_bool($manage_service)
+  validate_array($features)
 
   anchor { 'icinga2::begin':
     notify => Class['icinga2::service']
   }
   -> class { 'icinga2::repo': }
   -> class { 'icinga2::install': }
+  -> File <| ensure == 'directory' and tag == 'icinga2::config::file' |>
   -> class { 'icinga2::config': notify => Class['icinga2::service'] }
-  -> File <| tag == 'icinga2::config::file' |>
+  -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
   ~> class { 'icinga2::service': }
   -> anchor { 'icinga2::end':
     subscribe => Class['icinga2::config']
   }
 
+  include prefix($features, 'icinga2::feature::')
 }

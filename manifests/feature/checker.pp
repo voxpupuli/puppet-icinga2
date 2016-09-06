@@ -1,3 +1,18 @@
+# == Class: icinga2::feature::checker
+#
+# This module configures the Icinga2 feature checker.
+#
+# === Parameters
+#
+# Document parameters here.
+#
+# [*ensure*]
+#   Set to present enables the feature checker, absent disabled it. Default to present.
+#
+# === Authors
+#
+# Icinga Development Team <info@icinga.org>
+#
 class icinga2::feature::checker(
   $ensure = present,
 ) inherits icinga2::params {
