@@ -1,0 +1,9 @@
+# Icinga2 Puppet Module CHANGELOG
+
+## v0.1.0
+### Features
+* Feature #12340: Installation
+* Feature #12342: Repo management
+* Feature #12345: Add Support for Debian 7, 8
+* Feature #12347: Add Support for CentOS 6, 7
+* Feature #12348: Add Support for Windows
