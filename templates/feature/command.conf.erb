@@ -1,0 +1,7 @@
+// managed by puppet
+
+library "compat"
+
+object ExternalCommandListener "command" {
+  command_path = "<%= scope['icinga2::feature::command::command_path'] %>"
+}

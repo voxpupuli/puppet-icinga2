@@ -1,0 +1,9 @@
+// managed by puppet
+
+library "compat"
+
+object StatusDataWriter "status" {
+  objects_path = "<%= scope['icinga2::feature::statusdata::objects_path'] %>"
+  status_path = "<%= scope['icinga2::feature::statusdata::status_path'] %>"
+  update_interval = <%= scope['icinga2::feature::statusdata::update_interval'] %>
+}

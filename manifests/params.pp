@@ -13,12 +13,17 @@ class icinga2::params {
 
   case $::osfamily {
     'redhat': {
+      $user     = 'icinga'
+      $group    = 'icinga'
       $conf_dir = '/etc/icinga2'
     }
     'debian': {
+      $user     = 'nagios'
+      $group    = 'nagios'
       $conf_dir = '/etc/icinga2'
     }
     'windows': {
+      $user     = 'SYSTEM'
       $conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
     }
     default: {

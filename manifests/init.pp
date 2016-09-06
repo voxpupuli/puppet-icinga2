@@ -71,6 +71,7 @@ class icinga2(
   $enable         = true,
   $manage_repo    = false,
   $manage_service = true,
+  $features       = [],
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
