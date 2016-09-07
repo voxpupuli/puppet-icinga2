@@ -15,13 +15,15 @@
 #
 # Icinga Development Team <info@icinga.org>
 #
-class icinga2::install inherits icinga2::params {
+class icinga2::install {
 
   if $module_name != $caller_module_name {
     fail("icinga2::install is a private class of the module icinga2, you're not permitted to use it.")
   }
 
   if $::osfamily == 'windows' { Package { provider => chocolatey, } }
+
+  $package = $icinga2::params::package
 
   package { $package:
     ensure => installed,
