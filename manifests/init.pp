@@ -121,7 +121,7 @@ class icinga2(
   $constants      = {},
   $plugins        = $icinga2::params::plugins,
   $confd          = true,
-) inherits icinga2::params {
+) inherits ::icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
     "${ensure} isn't supported. Valid values are 'running' and 'stopped'.")
@@ -145,14 +145,14 @@ class icinga2(
   anchor { '::icinga2::begin':
     notify => Class['::icinga2::service']
   }
-  -> class { 'icinga2::repo': }
-  -> class { 'icinga2::install': }
+  -> class { '::icinga2::repo': }
+  -> class { '::icinga2::install': }
   -> File <| ensure == 'directory' and tag == 'icinga2::config::file' |>
-  -> class { 'icinga2::config': notify => Class['icinga2::service'] }
+  -> class { '::icinga2::config': notify => Class['::icinga2::service'] }
   -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
-  ~> class { 'icinga2::service': }
-  -> anchor { 'icinga2::end':
-    subscribe => Class['icinga2::config']
+  ~> class { '::icinga2::service': }
+  -> anchor { '::icinga2::end':
+    subscribe => Class['::icinga2::config']
   }
 
 }
