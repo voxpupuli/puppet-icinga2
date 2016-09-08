@@ -3,6 +3,7 @@ class IcingaPuppet
     {
       'Debian wheezy' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'Debian',
         :operatingsystem           => 'Debian',
         :lsbdistcodename           => 'wheezy',
@@ -10,6 +11,7 @@ class IcingaPuppet
       },
       'Debian jessie' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'Debian',
         :operatingsystem           => 'Debian',
         :lsbdistcodename           => 'jessie',
@@ -17,6 +19,7 @@ class IcingaPuppet
       },
       'Ubuntu trusty' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'Debian',
         :operatingsystem           => 'Ubuntu',
         :lsbdistcodename           => 'trusty',
@@ -24,30 +27,35 @@ class IcingaPuppet
       },
       'RedHat 6' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'RedHat',
         :operatingsystem           => 'RedHat',
         :operatingsystemmajrelease => '6',
       },
       'RedHat 7' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'RedHat',
         :operatingsystem           => 'RedHat',
         :operatingsystemmajrelease => '7',
       },
       'Centos 6' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'RedHat',
         :operatingsystem           => 'Centos',
         :operatingsystemmajrelease => '6',
       },
       'Centos 7' => {
         :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'RedHat',
         :operatingsystem           => 'Centos',
         :operatingsystemmajrelease => '7',
       },
       'Windows 2012 R2' => {
         :kernel                    => 'Windows',
+        :architecture              => 'x86_64',
         :osfamily                  => 'Windows',
         :operatingsystem           => 'Windows',
         :operatingsystemmajrelease => '2012 R2',
