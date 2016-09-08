@@ -1,0 +1,10 @@
+// managed by puppet
+
+/**
+ * This file defines global constants which can be used in
+ * the other configuration files.
+ */
+
+<% @constants.keys.sort.each do |k| -%>
+const <%= k %> = "<%= @constants[k] %>"
+<% end -%>
