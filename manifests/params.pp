@@ -23,7 +23,10 @@ class icinga2::params {
         'redhat': {
           $user     = 'icinga'
           $owner    = 'icinga'
-          $lib_dir  = '/usr/lib64'
+          $lib_dir  = $::architecture ? {
+            'x86_64' => '/usr/lib64',
+            default  => '/usr/lib',
+          }
         } # RedHat
 
         'debian': {
