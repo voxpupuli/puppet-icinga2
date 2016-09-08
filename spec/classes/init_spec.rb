@@ -96,6 +96,18 @@ describe('icinga2', :type => :class) do
     end
   end
 
+  context 'with all default parameters on Ubuntu xenial' do
+    let(:facts) { IcingaPuppet.plattforms['Ubuntu xenial'] }
+    it do
+      should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true,
+      })
+      should_not contain_apt__source('icinga-stable-release')
+    end
+  end
+
   context 'with all default parameters on Windows 2012 R2' do
     let(:facts) { IcingaPuppet.plattforms['Windows 2012 R2'] }
     it do

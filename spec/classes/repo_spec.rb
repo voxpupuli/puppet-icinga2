@@ -118,8 +118,25 @@ describe('icinga2', :type => :class) do
     end
   end
 
-  context 'with manage_repo => true on Ubuntu' do
+  context 'with manage_repo => true on Ubuntu trusty' do
     let(:facts) { IcingaPuppet.plattforms['Ubuntu trusty'] }
+    let(:params) { {:manage_repo => true} }
+    it do
+      should contain_apt__source('icinga-stable-release')
+    end
+  end
+
+  # Ubuntu xenial
+  context 'with manage_repo => false on Ubuntu xenial' do
+    let(:facts) { IcingaPuppet.plattforms['Ubuntu xenial'] }
+    let(:params) { {:manage_repo => false} }
+    it do
+      should_not contain_apt__source('icinga-stable-release')
+    end
+  end
+
+  context 'with manage_repo => true on Ubuntu xenial' do
+    let(:facts) { IcingaPuppet.plattforms['Ubuntu xenial'] }
     let(:params) { {:manage_repo => true} }
     it do
       should contain_apt__source('icinga-stable-release')

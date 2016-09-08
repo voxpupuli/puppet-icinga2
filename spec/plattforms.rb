@@ -19,6 +19,12 @@ class IcingaPuppet
         :lsbdistcodename           => 'trusty',
         :lsbdistid                 => 'ubuntu',
       },
+      'Ubuntu xenial' => {
+        :osfamily                  => 'Debian',
+        :operatingsystem           => 'Ubuntu',
+        :lsbdistcodename           => 'xenial',
+        :lsbdistid                 => 'ubuntu',
+      },
       'RedHat 6' => {
         :osfamily                  => 'RedHat',
         :operatingsystem           => 'RedHat',
