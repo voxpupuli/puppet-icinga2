@@ -166,10 +166,21 @@ describe('icinga2', :type => :class) do
     end
   end
 
+
   context 'with all default parameters on Ubuntu xenial' do
     let(:facts) { IcingaPuppet.plattforms['Ubuntu xenial'] }
     it do
       should contain_package('icinga2').with({'ensure' => 'installed'})
+      should contain_file('/etc/icinga2/constants.conf')
+        .with_content(/^const PluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
+        .with_content(/^const ManubulonPluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
+        .with_content(/^const PluginContribDir = "\/usr\/lib\/nagios\/plugins"\n/)
+        .with_content(/^const NodeName = ".+"\n/)
+        .with_content(/^const TicketSalt = ""\n/)
+      should contain_file('/etc/icinga2/icinga2.conf')
+        .with_content(/^include <plugins>\n/)
+        .with_content(/^include <plugins-contrib>\n/)
+        .with_content(/^include_recursive "conf.d"\n/)
       should contain_service('icinga2').with({
         'ensure' => 'running',
         'enable' => true,
