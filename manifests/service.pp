@@ -23,10 +23,10 @@ class icinga2::service {
     fail("icinga2::service is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  $ensure         = $icinga2::ensure
-  $enable         = $icinga2::enable
-  $manage_service = $icinga2::manage_service
-  $service        = $icinga2::params::service
+  $ensure         = $::icinga2::ensure
+  $enable         = $::icinga2::enable
+  $manage_service = $::icinga2::manage_service
+  $service        = $::icinga2::params::service
 
   if $manage_service {
     service { $service:

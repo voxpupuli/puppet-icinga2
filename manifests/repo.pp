@@ -17,13 +17,13 @@
 #
 # Icinga Development Team <info@icinga.org>
 #
-class icinga2::repo inherits icinga2::params {
+class icinga2::repo {
 
   if $module_name != $caller_module_name {
     fail("icinga2::repo is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  if $icinga2::manage_repo {
+  if $::icinga2::manage_repo {
 
     case $::osfamily {
       'redhat': {
@@ -78,6 +78,6 @@ class icinga2::repo inherits icinga2::params {
       }
     }
 
-  } # if $icinga::manage_repo
+  } # if $::icinga::manage_repo
 
 }

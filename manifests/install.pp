@@ -23,7 +23,7 @@ class icinga2::install {
 
   if $::osfamily == 'windows' { Package { provider => chocolatey, } }
 
-  $package = $icinga2::params::package
+  $package = $::icinga2::params::package
 
   package { $package:
     ensure => installed,
