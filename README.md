@@ -126,6 +126,19 @@ is `false`
 ##### `manage_service`
 Lets you decide if the Icinga2 daemon should be reloaded when configuration files have changed. Default is `true`
 
+##### `constants`
+Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
+
+##### `plugins`
+A list of the ITL plugins to load. Default is `[ 'plugins', 'plugins-contrib' ]` on Linux systems
+and `[ 'windows-plugins', 'nscp' ]` on Windows.
+
+##### `confd`
+This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
+to `false`. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
+managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is `true`.
+
+
 ### Private Classes
 
 #### Class: `icinga2::repo`

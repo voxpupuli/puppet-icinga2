@@ -21,18 +21,16 @@
 #   isn't restarted if a config file changed. Default to true.
 #
 # [*constants*]
-#   Hash of constants to set. Defaults are set in the params class. Your settings
-#   will be merged with this defaults.
+#   Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 #
 # [*plugins*]
-#   A list of the ITL plugins to load. Default to [ 'plugins', 'plugins-contrib' ]
-#   on Linux systems and [ 'windows-plugins', 'nscp' ] on Windows.
+#   A list of the ITL plugins to load. Default is [ 'plugins', 'plugins-contrib' ] on Linux systems and
+#   [ 'windows-plugins', 'nscp' ] on Windows.
 #
 # [*confd*]
-#   Can be set to true to load the configuration under etc/icinga2/conf.d directory.
-#   To disable this set it to false. It's also possible to assign your own directory.
-#   This directory is relative to etc/icinga2 and must be managed outside of this
-#   module as file resource with tag icinga2::config::file. Default to true.
+#   This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
+#   to false. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
+#   managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is true.
 #
 #
 # All default parameters are set in the icinga2::params class. To get more technical information have a look into the

@@ -19,7 +19,7 @@ class icinga2::params {
 
   $package = 'icinga2'
   $service = 'icinga2'
-  $plugins   = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
+  $plugins = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
 
   case $::kernel {
 
