@@ -1,0 +1,8 @@
+// managed by puppet
+
+library "compat"
+
+object CompatLogger "compatlog" {
+  log_dir = "<%= scope['icinga2::feature::compatlog::log_dir'] %>"
+  rotation_method = "<%= scope['icinga2::feature::compatlog::rotation_method'] %>"
+}
