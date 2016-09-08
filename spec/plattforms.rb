@@ -26,6 +26,8 @@ class IcingaPuppet
         :lsbdistid                 => 'ubuntu',
       },
       'Ubuntu xenial' => {
+        :kernel                    => 'Linux',
+        :architecture              => 'x86_64',
         :osfamily                  => 'Debian',
         :operatingsystem           => 'Ubuntu',
         :lsbdistcodename           => 'xenial',
