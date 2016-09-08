@@ -24,8 +24,7 @@
 #   Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 #
 # [*plugins*]
-#   A list of the ITL plugins to load. Default is [ 'plugins', 'plugins-contrib' ] on Linux systems and
-#   [ 'windows-plugins', 'nscp' ] on Windows.
+#   A list of the ITL plugins to load. Default to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 #
 # [*confd*]
 #   This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
