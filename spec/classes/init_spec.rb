@@ -1,7 +1,120 @@
 require 'spec_helper'
-require 'plattforms'
 
 describe('icinga2', :type => :class) do
+
+  before(:all) do
+    @icinga2_conf = "/etc/icinga2/icinga2.conf"
+    @constants_conf = "/etc/icinga2/constants.conf"
+
+    @windows_icinga2_conf = "C:/ProgramData/icinga2/etc/icinga2/icinga2.conf"
+    @windows_constants_conf = "C:/ProgramData/icinga2/etc/icinga2/constants.conf"
+  end
+
+  on_supported_os.each do |os, facts|
+    let :facts do
+      facts
+    end
+
+    context "#{os} with all default parameters" do
+      it { should contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+
+      it {  should contain_service('icinga2').with({ 
+        'ensure' => 'running', 
+        'enable' => true 
+        })
+      }
+
+      it { is_expected.to contain_file(@constants_conf)
+        .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
+
+      it { is_expected.to contain_file(@constants_conf)
+        .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
+
+      it { is_expected.to contain_file(@constants_conf)
+        .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
+
+      it { is_expected.to contain_file(@constants_conf)
+        .with_content %r{^const NodeName = \".+\"\n} }
+
+      it { is_expected.to contain_file(@constants_conf)
+        .with_content %r{^const ZoneName = \".+\"\n} }
+
+      it { is_expected.to contain_file(@constants_conf)
+        .with_content %r{^const TicketSalt = \"\"\n} }
+
+      it { is_expected.to contain_file(@icinga2_conf)
+        .with_content %r{^// managed by puppet\n} }
+
+      it { is_expected.to contain_file(@icinga2_conf)
+        .with_content %r{^include <plugins>\n} }
+
+      it { is_expected.to contain_file(@icinga2_conf)
+        .with_content %r{^include <plugins-contrib>\n} }
+
+      it { is_expected.to contain_file(@icinga2_conf)
+        .with_content %r{^include_recursive \"conf.d\"\n} }
+
+      case facts[:osfamily]
+      when 'Debian'
+        it { should_not contain_apt__source('icinga-stable-release') } 
+      when 'RedHat'
+        it { should_not contain_yumrepo('icinga-stable-release') }
+      end
+    end
+  end
+
+  context 'Windows 2012 R2 with all default parameters' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+
+    it { should contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+
+    it {  should contain_service('icinga2').with({ 
+      'ensure' => 'running', 
+      'enable' => true 
+      })
+    }
+
+
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^const PluginDir = \"C:/Program Files/ICINGA2/sbin\"\r\n} }
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^const PluginContribDir = \"C:/Program Files/ICINGA2/sbin\"\r\n} }
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^const ManubulonPluginDir = \"C:/Program Files/ICINGA2/sbin\"\r\n} }
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^const NodeName = \".+\"\r\n} }
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^const ZoneName = \".+\"\r\n} }
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^const TicketSalt = \"\"\r\n} }
+
+    it { is_expected.to contain_file(@windows_constants_conf)
+      .with_content %r{^} }
+
+    it { is_expected.to contain_file(@windows_icinga2_conf)
+      .with_content %r{^// managed by puppet\r\n} }
+
+    it { is_expected.to contain_file(@windows_icinga2_conf)
+      .with_content %r{^include <windows-plugins>\r\n} }
+
+    it { is_expected.to contain_file(@windows_icinga2_conf)
+      .with_content %r{^include <nscp>\r\n} }
+
+    it { is_expected.to contain_file(@windows_icinga2_conf)
+      .with_content %r{^include_recursive \"conf.d\"\r\n} }
+  end
 
   context 'on unsupported plattform' do
     let(:facts) { {:osfamily => 'foo'} }
@@ -9,192 +122,6 @@ describe('icinga2', :type => :class) do
       expect {
         should contain_class('icinga')
       }.to raise_error(Puppet::Error, /foo is not supported/)
-    end
-  end
-
-  context 'with all default parameters on RedHat 6' do
-    let(:facts) { IcingaPuppet.plattforms['RedHat 6'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_yumrepo('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on RedHat 7' do
-    let(:facts) { IcingaPuppet.plattforms['RedHat 7'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_yumrepo('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Centos 6' do
-    let(:facts) { IcingaPuppet.plattforms['Centos 6'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_yumrepo('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Centos 7' do
-    let(:facts) { IcingaPuppet.plattforms['Centos 7'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib64\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_yumrepo('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Debian wheezy' do
-    let(:facts) { IcingaPuppet.plattforms['Debian wheezy'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_apt__source('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Debian jessie' do
-    let(:facts) { IcingaPuppet.plattforms['Debian jessie'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_apt__source('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Ubuntu trusty' do
-    let(:facts) { IcingaPuppet.plattforms['Ubuntu trusty'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const ManubulonPluginDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const PluginContribDir = "\/usr\/lib\/nagios\/plugins"\n/)
-        .with_content(/^const NodeName = ".+"\n/)
-        .with_content(/^const TicketSalt = ""\n/)
-      should contain_file('/etc/icinga2/icinga2.conf')
-        .with_content(/^include <plugins>\n/)
-        .with_content(/^include <plugins-contrib>\n/)
-        .with_content(/^include_recursive "conf.d"\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_apt__source('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Ubuntu xenial' do
-    let(:facts) { IcingaPuppet.plattforms['Ubuntu xenial'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
-      should_not contain_apt__source('icinga-stable-release')
-    end
-  end
-
-  context 'with all default parameters on Windows 2012 R2' do
-    let(:facts) { IcingaPuppet.plattforms['Windows 2012 R2'] }
-    it do
-      should contain_package('icinga2').with({'ensure' => 'installed'})
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
-        .with_content(/^const PluginDir = "C:\/Program Files\/ICINGA2\/sbin"\r\n/)
-        .with_content(/^const ManubulonPluginDir = "C:\/Program Files\/ICINGA2\/sbin"\r\n/)
-        .with_content(/^const NodeName = ".+"\r\n/)
-        .with_content(/^const TicketSalt = ""\r\n/)
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
-        .with_content(/^include <windows-plugins>\r\n/)
-        .with_content(/^include <nscp>\r\n/)
-        .with_content(/^include_recursive "conf.d"\r\n/)
-      should contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true,
-      })
     end
   end
 
