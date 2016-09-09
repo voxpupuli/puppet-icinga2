@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe('icinga2', :type => :class) do
 
+  let(:facts) { facts.merge({ :architecture => 'x86_64' }) }
+
   before(:all) do
     @icinga2_conf = "/etc/icinga2/icinga2.conf"
     @constants_conf = "/etc/icinga2/constants.conf"
@@ -24,14 +26,27 @@ describe('icinga2', :type => :class) do
         })
       }
 
-      it { is_expected.to contain_file(@constants_conf)
-        .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
-
-      it { is_expected.to contain_file(@constants_conf)
-        .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
-
-      it { is_expected.to contain_file(@constants_conf)
-        .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
+      case facts[:osfamily]
+      when 'Debian'
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
+  
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
+  
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
+      when 'RedHat'
+        let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+  
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
+  
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+      end
 
       it { is_expected.to contain_file(@constants_conf)
         .with_content %r{^const NodeName = \".+\"\n} }
