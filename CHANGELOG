@@ -1,6 +1,18 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.2.0
+
+### Bugs
+Bug #12656: Inheritance
+
+### Features
+Feature #12341: Config handling
+Feature #12346: Add Support for Ubuntu 14.04, 16.04
+Feature #12657: Unit tests should cover every supported OS/Distro instead of just one
+Feature #12658: Decide whether or not to drop support for Puppet 3.x and below
+
 ## v0.1.0
+
 ### Features
 * Feature #12340: Installation
 * Feature #12342: Repo management
