@@ -1,6 +1,15 @@
 # == Class: icinga2::install
 #
-# Private class to used by this module only.
+# This class handles the installation of the Icinga2 package. On Windows only chocolatey is supported as installation
+# source.
+#
+# === Parameters
+#
+# This class does not provide any parameters.
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
 #
 # === Authors
 #
@@ -29,4 +38,9 @@ class icinga2::install {
     require => Package[$package],
   }
 
+  # anchor, i.e. for config directory set by confd parameter
+  file { $conf_dir:
+    ensure  => directory,
+    require => Package[$package]
+  }
 }
