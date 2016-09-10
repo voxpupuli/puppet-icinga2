@@ -25,8 +25,9 @@ class icinga2::params {
   case $::kernel {
 
     'linux': {
-      $conf_dir = '/etc/icinga2'
-      $log_dir  = '/var/log/icinga2'
+      $conf_dir  = '/etc/icinga2'
+      $log_dir   = '/var/log/icinga2'
+      $spool_dir = '/var/spool/icinga2'
 
       case $::osfamily {
         'redhat': {
@@ -64,6 +65,7 @@ class icinga2::params {
       $owner     = undef
       $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
       $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
+      $spool_dir = 'C:/ProgramData/icinga2/var/spool/icinga2'
       $constants = {
         'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
         'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",

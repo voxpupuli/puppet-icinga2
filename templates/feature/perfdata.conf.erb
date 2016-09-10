@@ -1,0 +1,11 @@
+// managed by puppet
+
+library "perfdata"
+
+object PerfdataWriter "perfdata" {
+  host_perfdata_path = "<%= scope['icinga2::feature::perfdata::host_perfdata_path'] %>"
+  service_perfdata_path = "<%= scope['icinga2::feature::perfdata::service_perfdata_path'] %>"
+  host_temp_path = "<%= scope['icinga2::feature::perfdata::host_temp_path'] %>"
+  service_temp_path = "<%= scope['icinga2::feature::perfdata::service_temp_path'] %>"
+  rotation_interval = <%= scope['icinga2::feature::perfdata::rotation_interval'] %>
+}
