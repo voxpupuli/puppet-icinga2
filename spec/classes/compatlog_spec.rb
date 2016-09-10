@@ -1,81 +1,166 @@
 require 'spec_helper'
-require 'plattforms'
 
 describe('icinga2::feature::compatlog', :type => :class) do
-  # reference plattform for Linux
-  let(:facts) { IcingaPuppet.plattforms['RedHat 7'] }
   let(:pre_condition) { [
     "class { 'icinga2': features => [], }"
   ] }
 
-  context 'with ensure => present on all supported plattforms' do
+  on_supported_os.each do |os, facts|
+    let :facts do
+      facts
+    end
+
+    context "#{os} with ensure => present" do
+      let(:params) { {:ensure => 'present'} }
+
+      it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'present'}) }
+    end
+
+
+    context "#{os} with ensure => absent" do
+      let(:params) { {:ensure => 'absent'} }
+
+      it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'absent'}) }
+    end
+
+
+    context "#{os} with rotation_method => HOURLY" do
+      let(:params) { {:rotation_method => 'HOURLY'} }
+
+      it {
+        is_expected.to contain_file('/etc/icinga2/features-available/compatlog.conf')
+          .with_content(/rotation_method = "HOURLY"/)
+      }
+    end
+
+
+    context "#{os} with rotation_method => foo (not a valid value)" do
+      let(:params) { {:rotation_method => 'foo'} }
+
+      it do
+        expect {
+          is_expected.to contain_icinga2__feature('compatlog')
+        }.to raise_error(Puppet::Error, /"foo" does not match/)
+      end
+    end
+
+
+    context "#{os} with log_dir => /foo/bar" do
+      let(:params) { {:log_dir => '/foo/bar'} }
+
+      it {
+        is_expected.to contain_file('/etc/icinga2/features-available/compatlog.conf')
+          .with_content(/log_dir = "\/foo\/bar"/)
+      }
+    end
+
+
+    context "#{os} with log_dir => foo/bar (not an absolute path)" do
+      let(:params) { {:log_dir => 'foo/bar'} }
+
+      it do
+        expect {
+          is_expected.to contain_icinga2__feature('compatlog')
+        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
+      end
+    end
+  end
+
+
+  context 'Windows 2012 R2 with ensure => present' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:ensure => 'present'} }
-    it do
-      should contain_icinga2__feature('compatlog').with({
-        'ensure' => 'present',
-      })
-    end
+
+    it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'present'}) }
   end
 
-  context 'with enable => absent on  on all supported plattforms' do
+
+  context 'Windows 2012 R2 with ensure => absent' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:ensure => 'absent'} }
-    it do
-      should contain_icinga2__feature('compatlog').with({
-        'ensure' => 'absent',
-      })
-    end
+
+    it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'absent'}) }
   end
 
-  context 'with rotation_method => HOURLY on Linux' do
+
+  context 'Windows 2012 R2 with rotation_method => HOURLY' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:rotation_method => 'HOURLY'} }
-    it do
-      should contain_file('/etc/icinga2/features-available/compatlog.conf')
+
+    it {
+      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/compatlog.conf')
         .with_content(/rotation_method = "HOURLY"/)
-    end
+    }
   end
 
-  context 'with rotation_method => notice on Windows' do
-    let(:facts) { IcingaPuppet.plattforms['Windows 2012 R2'] }
-    let(:params) { {:rotation_method => 'HOURLY'} }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/compatlog.conf')
-        .with_content(/rotation_method = "HOURLY"/)
-    end
-  end
 
-  context 'with rotation_method => foo (not a valid value)' do
+  context 'Windows 2012 R2 with rotation_method => foo (not a valid value)' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:rotation_method => 'foo'} }
+
     it do
       expect {
-        should contain_icinga2__feature('compatlog')
+        is_expected.to contain_icinga2__feature('compatlog')
       }.to raise_error(Puppet::Error, /"foo" does not match/)
     end
   end
 
-  context 'with log_dir => /foo/bar on Linux' do
-    let(:params) { {:log_dir => '/foo/bar'} }
-    it do
-      should contain_file('/etc/icinga2/features-available/compatlog.conf')
-        .with_content(/log_dir = "\/foo\/bar"/)
-    end
+
+  context 'Windows 2012 R2 with path => c:/foo/bar' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:log_dir => 'c:/foo/bar'} }
+
+    it {
+      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/compatlog.conf')
+        .with_content(/log_dir = "c:\/foo\/bar"/)
+    }
   end
 
-  context 'with log_dir => C:/foo/bar on Windows' do
-    let(:facts) { IcingaPuppet.plattforms['Windows 2012 R2'] }
-    let(:params) { {:log_dir => 'C:/foo/bar'} }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/compatlog.conf')
-        .with_content(/log_dir = "C:\/foo\/bar"/)
-    end
-  end
 
-  context 'with log_dir => foo/bar (not a valid value)' do
+  context 'Windows 2012 R2 with path => foo/bar (not an absolute path)' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:log_dir => 'foo/bar'} }
+
     it do
       expect {
-        should contain_icinga2__feature('compatlog')
+        is_expected.to contain_icinga2__feature('compatlog')
       }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
     end
   end
-
 end
