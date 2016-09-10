@@ -3,3 +3,4 @@
 *.swp
 modules/
 spec/fixtures/
+.DS_Store

@@ -27,6 +27,11 @@ nodes = {
     :url => 'http://boxes.netways.org/vagrant/ubuntu/ubuntu-14.04.4-x64-virtualbox.box',
     :md5 => '2280f5471cb63cc1c01e78880185fe02'
   },
+  'i2ubuntu16puppet4' => {
+    :box => 'ubuntu-16.04-amd64-virtualbox.box',
+    :url => 'http://boxes.netways.org/vagrant/ubuntu/ubuntu-16.04-amd64-virtualbox.box',
+    :md5 => '9e0b3ff7ad4c4b5782110c1784c9a051'
+  },
   'i2w2k12r2puppet4' => {
     :box => 'w2k12r2-x64-virtualbox',
     :url => 'http://boxes.netways.org/vagrant/windows/w2k12r2-x64-virtualbox.box',

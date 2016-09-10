@@ -1,18 +1,29 @@
 # == Class: icinga2::repo
 #
-# Private class to used by this module only.
+# This class manages the packages.icinga.org repository based on the operating system. Windows is not supported, as the
+# Icinga Project does not offer a chocolate repository.
+#
+# === Parameters
+#
+# This class does not provide any parameters.
+# To control the behaviour of this class, have a look at the parameters:
+# * icinga2::manage_repo
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
 #
 # === Authors
 #
 # Icinga Development Team <info@icinga.org>
 #
-class icinga2::repo inherits icinga2::params {
+class icinga2::repo {
 
   if $module_name != $caller_module_name {
     fail("icinga2::repo is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  if $icinga2::manage_repo {
+  if $::icinga2::manage_repo {
 
     case $::osfamily {
       'redhat': {
@@ -67,6 +78,6 @@ class icinga2::repo inherits icinga2::params {
       }
     }
 
-  } # if $icinga::manage_repo
+  } # if $::icinga::manage_repo
 
 }

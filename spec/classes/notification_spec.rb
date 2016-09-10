@@ -1,29 +1,54 @@
 require 'spec_helper'
-require 'plattforms'
 
 describe('icinga2::feature::notification', :type => :class) do
-  # reference plattform for Linux
-  let(:facts) { IcingaPuppet.plattforms['RedHat 7'] }
   let(:pre_condition) { [
     "class { 'icinga2': features => [], }"
   ] }
 
-  context 'with ensure => present on all supported plattforms' do
+  on_supported_os.each do |os, facts|
+    let :facts do
+      facts
+    end
+
+    context "#{os} with ensure => present" do
+      let(:params) { {:ensure => 'present'} }
+
+      it { is_expected.to contain_icinga2__feature('notification').with({'ensure' => 'present'}) }
+    end
+
+
+    context "#{os} with ensure => absent" do
+      let(:params) { {:ensure => 'absent'} }
+
+      it { is_expected.to contain_icinga2__feature('notification').with({'ensure' => 'absent'}) }
+    end
+  end
+
+
+  context 'Windows 2012 R2 with ensure => present' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:ensure => 'present'} }
-    it do
-      should contain_icinga2__feature('notification').with({
-        'ensure' => 'present',
-      })
-    end
+
+    it { is_expected.to contain_icinga2__feature('notification').with({'ensure' => 'present'}) }
   end
 
-  context 'with enable => absent on  on all supported plattforms' do
+
+  context 'Windows 2012 R2 with ensure => absent' do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
     let(:params) { {:ensure => 'absent'} }
-    it do
-      should contain_icinga2__feature('notification').with({
-        'ensure' => 'absent',
-      })
-    end
-  end
 
+    it { is_expected.to contain_icinga2__feature('notification').with({'ensure' => 'absent'}) }
+  end
 end
