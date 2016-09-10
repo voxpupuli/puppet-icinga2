@@ -1,0 +1,5 @@
+// managed by puppet
+
+object SyslogLogger "syslog" {
+  severity = "<%= scope['icinga2::feature::syslog::severity'] %>"
+}
