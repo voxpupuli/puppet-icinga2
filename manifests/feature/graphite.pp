@@ -39,7 +39,7 @@ class icinga2::feature::graphite(
   $service_name_template  = 'icinga2.$host.name$.services.$service.name$.$service.check_command$',
   $enable_send_thresholds = false,
   $enable_send_metadata   = false,
-) inherits icinga2::params {
+) {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
