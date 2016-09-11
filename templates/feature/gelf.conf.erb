@@ -1,0 +1,10 @@
+// managed by puppet
+
+library "perfdata"
+
+object GelfWriter "gelf" {
+  host = "<%= scope['icinga2::feature::gelf::host'] %>"
+  port = <%= scope['icinga2::feature::gelf::port'] %>
+  source = "<%= scope['icinga2::feature::gelf::source'] %>"
+  enable_send_perfdata = <%= scope['icinga2::feature::gelf::enable_send_perfdata'] %>
+}
