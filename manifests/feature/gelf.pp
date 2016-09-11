@@ -31,7 +31,7 @@ class icinga2::feature::gelf(
   $port                 = '12201',
   $source               = 'icinga2',
   $enable_send_perfdata = false,
-) inherits icinga2::params {
+) {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
