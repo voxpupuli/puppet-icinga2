@@ -23,7 +23,7 @@
 #
 class icinga2::feature::compatlog(
   $ensure          = present,
-  $log_dir         = "${log_dir}/compat",
+  $log_dir         = "${::icinga2::params::log_dir}/compat",
   $rotation_method = 'DAILY',
 ) inherits icinga2::params {
 
