@@ -24,6 +24,14 @@ describe('icinga2::feature::command', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/command.conf')
+          .with_content(/command_path = "\/var\/run\/icinga2\/cmd\/icinga2.cmd"/) }
+    end
+
+
     context "#{os} with command_path => /foo/bar" do
       let(:params) { {:command_path => '/foo/bar'} }
 
@@ -71,6 +79,21 @@ describe('icinga2::feature::command', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf')
+      .with_content(/command_path = "C:\/ProgramData\/icinga2\/var\/run\/icinga2\/cmd\/icinga2.cmd"/) }
   end
 
 
