@@ -10,6 +10,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,13 +25,23 @@ describe('icinga2::feature::perfdata', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('perfdata').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
+        .with_content(/rotation_interval = 30s/)
+        .with_content(/host_perfdata_path = "\/var\/spool\/icinga2\/perfdata\/host-perfdata"/)
+        .with_content(/service_perfdata_path = "\/var\/spool\/icinga2\/perfdata\/service-perfdata"/)
+        .with_content(/host_temp_path = "\/var\/spool\/icinga2\/tmp\/host-perfdata"/)
+        .with_content(/service_temp_path = "\/var\/spool\/icinga2\/tmp\/service-perfdata"/) }
+    end
+
+
     context "#{os} with rotation_interval => 1m" do
       let(:params) { {:rotation_interval => '1m'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
-          .with_content(/rotation_interval = 1m/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
+        .with_content(/rotation_interval = 1m/) }
     end
 
 
@@ -48,10 +59,8 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with host_perfdata_path => /foo/bar" do
       let(:params) { {:host_perfdata_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
-          .with_content(/host_perfdata_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
+        .with_content(/host_perfdata_path = "\/foo\/bar"/) }
     end
 
 
@@ -69,10 +78,8 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with service_perfdata_path => /foo/bar" do
       let(:params) { {:service_perfdata_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
-          .with_content(/service_perfdata_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
+        .with_content(/service_perfdata_path = "\/foo\/bar"/) }
     end
 
 
@@ -90,10 +97,8 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with host_temp_path => /foo/bar" do
       let(:params) { {:host_temp_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
-          .with_content(/host_temp_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/perfdata.conf')
+        .with_content(/host_temp_path = "\/foo\/bar"/) }
     end
 
 
@@ -155,6 +160,25 @@ describe('icinga2::feature::perfdata', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('perfdata').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('perfdata').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/perfdata.conf')
+      .with_content(/rotation_interval = 30s/)
+      .with_content(/host_perfdata_path = "C:\/ProgramData\/icinga2\/var\/spool\/icinga2\/perfdata\/host-perfdata"/)
+      .with_content(/service_perfdata_path = "C:\/ProgramData\/icinga2\/var\/spool\/icinga2\/perfdata\/service-perfdata"/)
+      .with_content(/host_temp_path = "C:\/ProgramData\/icinga2\/var\/spool\/icinga2\/tmp\/host-perfdata"/)
+      .with_content(/service_temp_path = "C:\/ProgramData\/icinga2\/var\/spool\/icinga2\/tmp\/service-perfdata"/) }
   end
 
 
