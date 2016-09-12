@@ -4,10 +4,8 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature syslog, absent disabled it. Default to present.
+#   Set to present enables the feature syslog, absent disables it. Default is present.
 #
 # [*severity*]
 #   You can choose the log severity between information, notice, warning or debug.

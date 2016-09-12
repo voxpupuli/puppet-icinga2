@@ -95,6 +95,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::opentsdb](#class-icinga2-feature-opentsdb)
     - [Class: icinga2::feature::perfdata](#class-icinga2-feature-perfdata)
     - [Class: icinga2::feature::statusdata](#class-icinga2-feature-statusdata)
+    - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -361,6 +362,28 @@ Absolute path to the object.cache file. Default depends on platform:
 ##### `update_interval`
 Interval in seconds to update both status files. You can also specify it in minutes with the letter m or in seconds
 with s. Default is `30s`
+
+#### Class: `icinga2::feature::syslog`
+Enables or disables the `syslog` feature.
+
+**Parameters of `icinga2::feature::syslog`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `syslog` should be enabled. Default is `present`.
+
+##### `severity`
+Set severity level for logging to syslog. Available options are:
+
+* `information`
+* `notice`
+* `warning`
+* `debug`
+
+Default is `warning`
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `statusdata` should be enabled. Default is `present`.
+
 
 ### Private Classes
 
