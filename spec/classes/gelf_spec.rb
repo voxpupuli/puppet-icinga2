@@ -10,6 +10,7 @@ describe('icinga2::feature::gelf', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,13 +25,21 @@ describe('icinga2::feature::gelf', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('gelf').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/gelf.conf')
+        .with_content(/host = "127.0.0.1"/)
+        .with_content(/port = 12201/)
+        .with_content(/source = "icinga2"/) }
+    end
+
+
     context "#{os} with host => 127.0.0.2" do
       let(:params) { {:host => '127.0.0.2'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/gelf.conf')
-          .with_content(/host = "127.0.0.2"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/gelf.conf')
+        .with_content(/host = "127.0.0.2"/) }
     end
 
 
@@ -147,6 +156,23 @@ describe('icinga2::feature::gelf', :type => :class) do
   end
 
 
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('gelf').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf')
+      .with_content(/host = "127.0.0.1"/)
+      .with_content(/port = 12201/)
+      .with_content(/source = "icinga2"/) }
+  end
+
+
   context "Windows 2012 R2  with host => 127.0.0.2" do
     let(:facts) { {
       :kernel => 'Windows',
@@ -157,10 +183,8 @@ describe('icinga2::feature::gelf', :type => :class) do
     } }
     let(:params) { {:host => '127.0.0.2'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf')
-        .with_content(/host = "127.0.0.2"/)
-    }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf')
+      .with_content(/host = "127.0.0.2"/) }
   end
 
 
