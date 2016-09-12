@@ -4,16 +4,14 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature opentsdb, absent disabled it. Default to present.
+#   Set to present enables the feature opentsdb, absent disables it. Default is present.
 #
 # [*host*]
-#   OpenTSDB host address. Default to '127.0.0.1'.
+#   OpenTSDB host address. Default is '127.0.0.1'.
 #
 # [*port*]
-#   OpenTSDB port. Default to 4242.
+#   OpenTSDB port. Default is 4242.
 #
 # === Authors
 #

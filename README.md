@@ -85,13 +85,14 @@ tag and triggers a reload of Icinga2 on a file change.
 
 - [**Public classes**](#public-classes)
     - [Class: icinga2](#class-icinga2)
-    - [Class: icinga2::feature::checker](#class-icinga2featurechecker)
-    - [Class: icinga2::feature::mainlog](#class-icinga2featuremainlog)
-    - [Class: icinga2::feature::notification](#class-icinga2featurenotification)
-    - [Class: icinga2::feature::command](#class-icinga2featurecommand)
-    - [Class: icinga2::feature::compatlog](#class-icinga2-featurecompat)
-    - [Class: icinga2::feature::graphite](#class-icinga2-featuregraphite)
-    - [Class: icinga2::feature::livestatus](#class-icinga2-featurelivestatus)
+    - [Class: icinga2::feature::checker](#class-icinga2feature-checker)
+    - [Class: icinga2::feature::mainlog](#class-icinga2feature-mainlog)
+    - [Class: icinga2::feature::notification](#class-icinga2feature-notification)
+    - [Class: icinga2::feature::command](#class-icinga2feature-command)
+    - [Class: icinga2::feature::compatlog](#class-icinga2-feature-compat)
+    - [Class: icinga2::feature::graphite](#class-icinga2-feature-graphite)
+    - [Class: icinga2::feature::livestatus](#class-icinga2-feature-livestatus)
+    - [Class: icinga2::feature::opentsdb](#class-icinga2-feature-opentsdb)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -290,6 +291,20 @@ Required for historical table queries. Requires `CompatLogger` feature to be ena
 
 Linux: `var/icinga2/log/icinga2/compat`
 Windows: `C:/ProgramData/icinga2/var/log/icinga2/compat`
+
+#### Class: `icinga2::feature::opentsdb`
+Enables or disables the `opentsdb` feature.
+
+**Parameters of `icinga2::feature::opentsdb`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `opentsdb` should be enabled. Default is `present`.
+
+##### `host`
+OpenTSDB host address. Default is `127.0.0.1`
+
+##### `port`
+OpenTSDB port. Default is `4242`
 
 ### Private Classes
 
