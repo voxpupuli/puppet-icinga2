@@ -19,7 +19,7 @@
 #
 class icinga2::feature::command(
   $ensure       = present,
-  $command_path = "${run_dir}/cmd/icinga2.cmd",
+  $command_path = "${::icinga::params::run_dir}/cmd/icinga2.cmd",
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
