@@ -96,7 +96,8 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::perfdata](#class-icinga2-feature-perfdata)
     - [Class: icinga2::feature::statusdata](#class-icinga2-feature-statusdata)
     - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
-    - [Class::icinga2::feature::debuglog](#class-icinga2-feture-debuglog)
+    - [Class::icinga2::feature::debuglog](#class-icinga2-feature-debuglog)
+    - [Class::icinga2::feature::gelf](#class-icinga2-feature-gelf)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -394,6 +395,26 @@ Either `present` or `absent`. Defines if the feature `debuglog` should be enable
 Absolute path to the log file. Default depends on platform:
 * Linux: `/var/log/icinga2/debug.log`
 * Windows: `C:/ProgramData/icinga2/var/log/icinga2/debug.log`
+
+#### Class: `icinga2::feature::gelf`
+Enables or disables the `gelf` feature.
+
+**Parameters of `icinga2::feature::gelf`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `gelf` should be enabled. Default is `present`.
+
+##### `host`
+GELF receiver host address. Default is `127.0.0.1`
+
+##### `port`
+GELF receiver port. Default is `12201`
+
+##### `source`
+Source name for this instance. Default is `icinga2`
+
+##### `enable_send_perfdata`
+Enable performance data for *CHECK RESULT* events. Default is `false`.
 
 ### Private Classes
 

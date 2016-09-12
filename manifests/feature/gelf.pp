@@ -4,22 +4,20 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature gelf, absent disabled it. Default to present.
+#   Set to present enables the feature gelf, absent disables it. Default is present.
 #
 # [*host*]
-#   GELF receiver host address. Default to '127.0.0.1'.
+#   GELF receiver host address. Default is '127.0.0.1'.
 #
 # [*port*]
-#   GELF receiver port. Default to 12201.
+#   GELF receiver port. Default is 12201.
 #
 # [*source*]
-#   Source name for this instance. Default to icinga2.
+#   Source name for this instance. Default is icinga2.
 #
 # [*enable_send_perfdata*]
-#   Enable performance data for 'CHECK RESULT' events. Default to false.
+#   Enable performance data for 'CHECK RESULT' events. Default is false.
 #
 # === Authors
 #
