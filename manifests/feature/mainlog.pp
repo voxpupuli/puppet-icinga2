@@ -24,7 +24,7 @@
 class icinga2::feature::mainlog(
   $ensure   = present,
   $severity = 'information',
-  $path     = "${log_dir}/icinga2.log",
+  $path     = "${::icinga2::params::log_dir}/icinga2.log",
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
