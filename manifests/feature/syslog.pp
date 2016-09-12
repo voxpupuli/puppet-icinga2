@@ -11,7 +11,7 @@
 #
 # [*severity*]
 #   You can choose the log severity between information, notice, warning or debug.
-#   Default to information.
+#   Default to warning.
 #
 # === Authors
 #

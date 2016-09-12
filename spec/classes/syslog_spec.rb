@@ -10,6 +10,7 @@ describe('icinga2::feature::syslog', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,13 +25,19 @@ describe('icinga2::feature::syslog', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/syslog.conf')
+        .with_content(/severity = "warning"/) }
+    end
+
+
     context "#{os} with severity => notice" do
       let(:params) { {:severity => 'notice'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/syslog.conf')
-          .with_content(/severity = "notice"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/syslog.conf')
+        .with_content(/severity = "notice"/) }
     end
 
 
@@ -71,6 +78,21 @@ describe('icinga2::feature::syslog', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf')
+      .with_content(/severity = "warning"/) }
   end
 
 
