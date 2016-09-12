@@ -29,6 +29,7 @@ class icinga2::params {
       $log_dir   = '/var/log/icinga2'
       $run_dir   = '/var/run/icinga2'
       $spool_dir = '/var/spool/icinga2'
+      $cache_dir = '/var/cache/icinga2'
 
       case $::osfamily {
         'redhat': {
@@ -68,6 +69,7 @@ class icinga2::params {
       $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
       $run_dir   = 'C:/ProgramData/icinga2/var/run/icinga2'
       $spool_dir = 'C:/ProgramData/icinga2/var/spool/icinga2'
+      $cache_dir = 'C:/ProgramData/icinga2/var/cache/icinga2'
       $constants = {
         'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
         'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",
