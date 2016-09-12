@@ -91,6 +91,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::command](#class-icinga2featurecommand)
     - [Class: icinga2::feature::compatlog](#class-icinga2-featurecompat)
     - [Class: icinga2::feature::graphite](#class-icinga2-featuregraphite)
+    - [Class: icinga2::feature::livestatus](#class-icinga2-featurelivestatus)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -260,6 +261,35 @@ Send threholds as metrics. Default is false.
 
 ##### `enable_send_metadata`
 Send metadata as metrics. Default is false.
+
+#### Class: `icinga2::feature::livestatus`
+Enables or disables the `livestatus` feature.
+
+**Parameters of `icinga2::feature::livestatus`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `livestatus` should be enabled. Default is `present`.
+
+##### `socket_type`
+Specifies the socket type. Can be either 'tcp' or 'unix'. Default is 'unix'
+
+##### `bind_host`
+IP address to listen for connections. Only valid when socket_type is `tcp`. Default is `127.0.0.1`
+
+##### `bind_port`
+Port to listen for connections. Only valid when socket_type is `tcp`. Default is `6558`
+
+##### `socket_path`
+Specifies the path to the UNIX socket file. Only valid when socket_type is `unix`. Default depends on platform:
+ 
+* Linux: `/var/run/icinga2/cmd/livestatus`
+* Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/livestatus`
+
+##### `compat_log_path`
+Required for historical table queries. Requires `CompatLogger` feature to be enabled. Default depends platform:
+
+Linux: `var/icinga2/log/icinga2/compat`
+Windows: `C:/ProgramData/icinga2/var/log/icinga2/compat`
 
 ### Private Classes
 

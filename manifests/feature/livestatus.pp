@@ -4,30 +4,30 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature livestatus, absent disabled it. Default to present.
+#   Set to present enables the feature livestatus, absent disables it. Default is present.
 #
 # [*socket_type*]
-#   Specifies the socket type. Can be either 'tcp' or 'unix' Default to 'unix'
+#   Specifies the socket type. Can be either 'tcp' or 'unix'. Default is 'unix'
 #
 # [*bind_host*]
-#   Only valid when socket_type is 'tcp'. Host address to listen on for connections.
-#   Default to "127.0.0.1".
+#   IP address to listen for connections. Only valid when socket_type is 'tcp'.
+#   Default is "127.0.0.1".
 #
 # [*bind_port*]
-#   Only valid when socket_type is 'tcp'. Port to listen on for connections. Default to 6558.
+#   Port to listen for connections. Only valid when socket_type is 'tcp'. Default is 6558.
 #
 # [*socket_path*]
-#   Only valid when socket_type is 'unix'. Specifies the path to the UNIX socket file.
-#   Default depends on plattforms to '/var/run/icinga2/cmd/livestatus' on Linux
-#   and 'C:/ProgramData/icinga2/var/run/icinga2/cmd/livestatus' on Windows.
+#   Specifies the path to the UNIX socket file. Only valid when socket_type is 'unix'.
+#   Default depends on platform:
+#   '/var/run/icinga2/cmd/livestatus' on Linux
+#   'C:/ProgramData/icinga2/var/run/icinga2/cmd/livestatus' on Windows.
 #
 # [*compat_log_path*]
-#   Required for historical table queries. Requires CompatLogger feature enabled.
-#   Default depends plattforms to 'var/icinga2/log/icinga2/compat' on Linux
-#   and 'C:/ProgramData/icinga2/var/log/icinga2/compat' on Windows.
+#   Required for historical table queries. Requires CompatLogger feature to be enabled.
+#   Default depends platform:
+#   'var/icinga2/log/icinga2/compat' on Linux
+#   'C:/ProgramData/icinga2/var/log/icinga2/compat' on Windows.
 #
 # === Authors
 #
