@@ -31,13 +31,13 @@ describe('icinga2::feature', :type => :define) do
         should contain_file('/etc/icinga2/features-available/.foo.conf').with({
           'ensure' => 'file',
         }).with_content(/.foo/)
-          .that_requires('icinga2::install')
+          .that_requires('Class[icinga2::install]')
       }
 
       it {
         should contain_file('/etc/icinga2/features-enabled/.foo.conf').with({
           'ensure' => 'link',
-        }).that_notifies('icinga2::service')
+        }).that_notifies('Class[icinga2::service]')
       }
     end
 
@@ -49,13 +49,13 @@ describe('icinga2::feature', :type => :define) do
         should contain_file('/etc/icinga2/features-available/.foo.conf').with({
           'ensure' => 'file',
         }).with_content(/.foo/)
-          .that_requires('icinga2::install')
+          .that_requires('Class[icinga2::install]')
       }
 
       it {
         should contain_file('/etc/icinga2/features-enabled/.foo.conf').with({
           'ensure' => 'absent',
-        }).that_notifies('icinga2::service')
+        }).that_notifies('Class[icinga2::service]')
       }
     end
   end
@@ -75,14 +75,14 @@ describe('icinga2::feature', :type => :define) do
       should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/.foo.conf').with({
         'ensure' => 'file',
       }).with_content(/.foo/)
-        #.that_requires('icinga2::install')
+       #.that_requires('Class[icinga2::install]')
     }
 
     it {
       should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/.foo.conf').with({
         'ensure' => 'file',
       }).with_content(/include "..\/features-available\/.foo.conf"/)
-        #.that_notifies('icinga2::service')
+        .that_notifies('Class[icinga2::service]')
     }
   end
 
@@ -101,13 +101,13 @@ describe('icinga2::feature', :type => :define) do
       should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/.foo.conf').with({
         'ensure' => 'file',
       }).with_content(/.foo/)
-        #.that_requires('icinga2::install')
+        #.that_requires('Class[icinga2::install]')
     }
 
     it {
       should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/.foo.conf').with({
         'ensure' => 'absent',
-      })#.that_notifies('icinga2::service')
+      }).that_notifies('Class[icinga2::service]')
     }
   end
 end
