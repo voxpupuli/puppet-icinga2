@@ -4,22 +4,22 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature statusdata, absent disabled it. Default to present.
+#   Set to present enables the feature statusdata, absent disables it. Default is present.
 #
 # [*status_path*]
-#   Absolute path to the status.dat file. Default depends on plattform, /var/cache/icinga2/status.dat
-#   on Linux and C:/ProgramData/icinga2/var/cache/icinga2/status.dat on Windows.
+#   Absolute path to the status.dat file. Default depends on platform:
+#   /var/cache/icinga2/status.dat on Linux
+#   C:/ProgramData/icinga2/var/cache/icinga2/status.dat on Windows
 #
 # [*object_path*]
-#   Absolute path to the object.cache file. Default depends on plattform, /var/cache/icinga2/object.cache
-#   on Linux and C:/ProgramData/icinga2/var/cache/icinga2/object.cache on Windows.
+#   Absolute path to the object.cache file. Default depends on platform:
+#   /var/cache/icinga2/object.cache on Linux
+#   C:/ProgramData/icinga2/var/cache/icinga2/object.cache on Windows
 #
 # [*update_interval*]
-#   Interval in seconds to update both status files. You can also specify in minutes with letter m or
-#   in seconds with s at the end of the value.
+#   Interval in seconds to update both status files.
+#   You can also specify it in minutes with the letter m or in seconds with s. Default is '30s'
 #
 # === Authors
 #

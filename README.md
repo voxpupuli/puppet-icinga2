@@ -94,6 +94,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::livestatus](#class-icinga2-feature-livestatus)
     - [Class: icinga2::feature::opentsdb](#class-icinga2-feature-opentsdb)
     - [Class: icinga2::feature::perfdata](#class-icinga2-feature-perfdata)
+    - [Class: icinga2::feature::statusdata](#class-icinga2-feature-statusdata)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -338,6 +339,28 @@ Path to the temporary service file. Defaults depends on platform:
 ##### `rotation_interval`
 Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
 i.e. 1m or 15s. Defaults is 30s.
+
+#### Class: `icinga2::feature::statusdata`
+Enables or disables the `statusdata` feature.
+
+**Parameters of `icinga2::feature::statusdata`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `statusdata` should be enabled. Default is `present`.
+
+##### `status_path`
+Absolute path to the status.dat file. Default depends on platform:
+* Linux: `/var/cache/icinga2/status.dat`
+* Windows: `C:/ProgramData/icinga2/var/cache/icinga2/status.dat`
+
+##### `object_path`
+Absolute path to the object.cache file. Default depends on platform:
+* Linux: `/var/cache/icinga2/object.cache`
+* Windows: `C:/ProgramData/icinga2/var/cache/icinga2/object.cache`
+
+##### `update_interval`
+Interval in seconds to update both status files. You can also specify it in minutes with the letter m or in seconds
+with s. Default is `30s`
 
 ### Private Classes
 
