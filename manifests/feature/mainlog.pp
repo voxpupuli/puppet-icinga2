@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature mainlog, absent disabled it. Default to present.
+#   Set to present enables the feature mainlog, absent disabled it. Default is present.
 #
 # [*severity*]
 #   You can set the log severity to information, notice, warning or debug. Default is information.

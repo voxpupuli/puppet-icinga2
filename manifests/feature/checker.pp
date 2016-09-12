@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature checker, absent disabled it. Default to present.
+#   Set to present enables the feature checker, absent disabled it. Default is present.
 #
 # === Authors
 #

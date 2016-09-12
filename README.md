@@ -89,6 +89,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::mainlog](#class-icinga2featuremainlog)
     - [Class: icinga2::feature::notification](#class-icinga2featurenotification)
     - [Class: icinga2::feature::command](#class-icinga2featurecommand)
+    - [Class: icinga2::feature::compatlog](#class-icinga2-featurecompat)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -202,6 +203,36 @@ Absolute path to the command pipe. Default depends on platform:
  
 * Linux: `/var/run/icinga2/cmd/icinga2.cmd`
 * Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd`
+
+#### Class: `icinga2::feature::compatlog`
+Enables or disables the `compatlog` feature.
+
+**Parameters of `icinga2::feature::compatlog`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `compatlog` should be enabled. Default is `present`.
+
+##### `commandpath`
+Absolute path to the command pipe. Default depends on platform:
+ 
+* Linux: `/var/run/icinga2/cmd/icinga2.cmd`
+* Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd`
+
+##### `log_dir`
+Absolute path to the log directory. Default depends on platform:
+
+* Linux: `/var/log/icinga2/compat`
+* Windows: `C:/ProgramData/icinga2/var/log/icinga2/compat`
+
+##### `rotation_method`
+Sets how often should the log file be rotated. Valid options are:
+
+* `HOURLY`
+* `DAILY`
+* `WEEKLY`
+* `MONTHLY` 
+
+Default is `DAILY`
 
 ### Private Classes
 
