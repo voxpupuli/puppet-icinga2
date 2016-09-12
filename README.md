@@ -90,6 +90,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::notification](#class-icinga2featurenotification)
     - [Class: icinga2::feature::command](#class-icinga2featurecommand)
     - [Class: icinga2::feature::compatlog](#class-icinga2-featurecompat)
+    - [Class: icinga2::feature::graphite](#class-icinga2-featuregraphite)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -233,6 +234,32 @@ Sets how often should the log file be rotated. Valid options are:
 * `MONTHLY` 
 
 Default is `DAILY`
+
+#### Class: `icinga2::feature::graphite`
+Enables or disables the `graphite` feature.
+
+**Parameters of `icinga2::feature::graphite`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `graphite` should be enabled. Default is `present`.
+
+##### `host`
+Graphite Carbon host address. Default is `127.0.0.1`.
+
+##### `port`
+Graphite Carbon port. Default is `2003`.
+
+##### `host_name_template`
+Template for metric path of hosts. Default is `icinga2.$host.name$.host.$host.check_command$`.
+
+##### `service_name_template`
+Template for metric path of services. Default is `icinga2.$host.name$.services.$service.name$.$service.check_command$`.
+
+##### `enable_send_thresholds`
+Send threholds as metrics. Default is false.
+
+##### `enable_send_metadata`
+Send metadata as metrics. Default is false.
 
 ### Private Classes
 

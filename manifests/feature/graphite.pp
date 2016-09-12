@@ -4,28 +4,26 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature graphite, absent disabled it. Default to present.
+#   Set to present enables the feature graphite, absent disabled it. Default is present.
 #
 # [*host*]
-#   Graphite Carbon host address. Default to '127.0.0.1'.
+#   Graphite Carbon host address. Default is '127.0.0.1'.
 #
 # [*port*]
-#   Graphite Carbon port. Default to 2003.
+#   Graphite Carbon port. Default is 2003.
 #
 # [*host_name_template*]
-#   Metric prefix for host name. Default to 'icinga2.$host.name$.host.$host.check_command$'.
+#   Template for metric path of hosts. Default is 'icinga2.$host.name$.host.$host.check_command$'.
 #
 # [*service_name_template*]
-#   Metric prefix for service name. Default to 'icinga2.$host.name$.services.$service.name$.$service.check_command$'.
+#   Template for metric path of services. Default is 'icinga2.$host.name$.services.$service.name$.$service.check_command$'.
 #
 # [*enable_send_thresholds*]
-#   Send additional threshold metrics. Default to false.
+#   Send threholds as metrics. Default is false.
 #
 # [*enable_send_metadata*]
-#   Send additional metadata metrics. Default to false.
+#   Send metadata as metrics. Default is false.
 #
 # === Authors
 #
