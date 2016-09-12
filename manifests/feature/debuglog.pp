@@ -19,7 +19,7 @@
 #
 class icinga2::feature::debuglog(
   $ensure   = present,
-  $path     = "${log_dir}/debug.log",
+  $path     = "${::icinga2::params::log_dir}/debug.log",
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
