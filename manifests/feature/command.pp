@@ -4,14 +4,12 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature command, absent disabled it. Default to present.
+#   Set to present to enable the feature command, absent to disabled it. Default is present.
 #
 # [*command_path*]
-#   Absolute path to the command pipe. Default depends on plattform, /var/run/icinga2/cmd/icinga2.cmd
-#   on Linux and C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd on Windows.
+#   Absolute path to the command pipe. Default depends on platform, /var/run/icinga2/cmd/icinga2.cmd on Linux
+#   and C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd on Windows.
 #
 # === Authors
 #

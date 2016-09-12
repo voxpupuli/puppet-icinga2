@@ -85,15 +85,16 @@ tag and triggers a reload of Icinga2 on a file change.
 
 - [**Public classes**](#public-classes)
     - [Class: icinga2](#class-icinga2)
+    - [Class: icinga2::feature::checker](#class-icinga2featurechecker)
+    - [Class: icinga2::feature::mainlog](#class-icinga2featuremainlog)
+    - [Class: icinga2::feature::notification](#class-icinga2featurenotification)
+    - [Class: icinga2::feature::command](#class-icinga2featurecommand)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
     - [Class: icinga2::config](#class-icinga2config)
     - [Class: icinga2::service](#class-icinga2service)
 - [**Public defined types**](#public-defined-types)
-    - [Defined type: icinga2::feature::checker](#defined-type-icinga2featurechecker)
-    - [Defined type: icinga2::feature::mainlog](#defined-type-icinga2featuremainlog)
-    - [Defined type: icinga2::feature::notification](#defined-type-icinga2featurenotification)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
 
@@ -148,24 +149,7 @@ This is the directory where Icinga2 stores it's object configuration by default.
 to `false`. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
 managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is `true`.
 
-### Private Classes
-
-#### Class: `icinga2::repo`
-Installs the [packages.icinga.org] repository. Depending on your operating system [puppetlabs/apt] or
-[puppetlabs/chocolatey] are required.
-
-#### Class: `icinga2::install`
-Handles the installation of the Icinga2 package.
-
-#### Class: `icinga2::config`
-Installs basic configuration files required to run Icinga2.
-
-#### Class: `icinga2::service`
-Starts/stops and enables/disables the service.
-
-### Public defined types
-
-#### Defined type `icinga2::feature::checker`
+#### Class: `icinga2::feature::checker`
 Enables or disables the `checker` feature. 
 
 **Parameters of `icinga2::feature::checker`:**
@@ -173,7 +157,7 @@ Enables or disables the `checker` feature.
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `checker` should be enabled. Default is `present`.
 
-#### Defined type `icinga2::feature::mainlog`
+#### Class: `icinga2::feature::mainlog`
 Enables or disables the `mainlog` feature.
 
 **Parameters of `icinga2::feature::mainlog`:**
@@ -197,13 +181,44 @@ Absolute path to the logging file. Default depends on platform:
 * Linux: `/var/log/icinga2/icinga2.log`
 * Windows: `C:/ProgramData/icinga2/var/log/icinga2/icinga2.log`
 
-#### Defined type `icinga2::feature::notification`
+#### Class: `icinga2::feature::notification`
 Enables or disables the `notification` feature.
 
 **Parameters of `icinga2::feature::notification`:**
 
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `notification` should be enabled. Default is `present`.
+
+#### Class: `icinga2::feature::command`
+Enables or disables the `command` feature.
+
+**Parameters of `icinga2::feature::command`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `command` should be enabled. Default is `present`.
+
+##### `commandpath`
+Absolute path to the command pipe. Default depends on platform:
+ 
+* Linux: `/var/run/icinga2/cmd/icinga2.cmd`
+* Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd`
+
+### Private Classes
+
+#### Class: `icinga2::repo`
+Installs the [packages.icinga.org] repository. Depending on your operating system [puppetlabs/apt] or
+[puppetlabs/chocolatey] are required.
+
+#### Class: `icinga2::install`
+Handles the installation of the Icinga2 package.
+
+#### Class: `icinga2::config`
+Installs basic configuration files required to run Icinga2.
+
+#### Class: `icinga2::service`
+Starts/stops and enables/disables the service.
+
+### Public defined types
 
 ### Private defined types
 
@@ -247,7 +262,7 @@ release are described in [RELEASE.md]
 See also [CHANGELOG.md]
 
 ## Authors
-[AUTHORS.md] is generated on each release.
+[AUTHORS] is generated on each release.
 
 [Overview]: #overview
 [Module description]: #module-description
@@ -274,5 +289,5 @@ See also [CHANGELOG.md]
 [TESTING.md]: TESTING.md
 [RELEASE.md]: RELEASE.md
 [CHANGELOG.md]: CHANGELOG.md
-[AUTHORS.md]: AUTHORS.md
+[AUTHORS]: AUTHORS
 
