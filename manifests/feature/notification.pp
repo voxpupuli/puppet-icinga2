@@ -4,8 +4,6 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
 #   Set to present enables the feature notification, absent disabled it. Default to present.
 #

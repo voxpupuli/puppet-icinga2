@@ -4,18 +4,15 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
 #   Set to present enables the feature mainlog, absent disabled it. Default to present.
 #
 # [*severity*]
-#   You can choose the log severity between information, notice, warning or debug.
-#   Default to information.
+#   You can set the log severity to information, notice, warning or debug. Default is information.
 #
 # [*path*]
-#   Absolute path to the log file. Default depends on plattform, /var/log/icinga2/icinga2.log
-#   on Linux and C:/ProgramData/icinga2/var/log/icinga2/icinga2.log on Windows.
+#   Absolute path to the log file. Default depends on platform, /var/log/icinga2/icinga2.log on Linux
+#   and C:/ProgramData/icinga2/var/log/icinga2/icinga2.log on Windows.
 #
 # === Authors
 #

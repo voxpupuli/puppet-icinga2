@@ -23,6 +23,9 @@
 # [*features*]
 #   List of features to activate. Default to [checker, mainlog, notification].
 #
+# [*purge_features*]
+#   Define if configuration files for features not managed by Puppet should be purged. Default is true.
+#
 # [*constants*]
 #   Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 #
@@ -131,6 +134,7 @@ class icinga2(
   validate_bool($manage_repo)
   validate_bool($manage_service)
   validate_array($features)
+  validate_bool($purge_features)
   validate_hash($constants)
   validate_array($plugins)
 
