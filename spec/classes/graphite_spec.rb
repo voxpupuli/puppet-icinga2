@@ -10,6 +10,7 @@ describe('icinga2::feature::graphite', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,11 +25,24 @@ describe('icinga2::feature::graphite', :type => :class) do
     end
 
 
-    context "#{os} with host => 127.0.0.1" do
-      let(:params) { {:host => '127.0.0.1'} }
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'present'}) }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
-        .with_content(/host = "127.0.0.1"/) }
+        .with_content(/host = "127.0.0.1"/)
+        .with_content(/port = 2003/)
+        .with_content(/host_name_template = "icinga2.\$host.name\$.host.\$host.check_command\$"/)
+        .with_content(/service_name_template = "icinga2.\$host.name\$.services.\$service.name\$.\$service.check_command\$"/)
+        .with_content(/enable_send_thresholds = false/)
+        .with_content(/enable_send_metadata = false/) }
+    end
+
+
+    context "#{os} with host => 127.0.0.2" do
+      let(:params) { {:host => '127.0.0.2'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+        .with_content(/host = "127.0.0.2"/) }
     end
 
 
@@ -180,6 +194,26 @@ describe('icinga2::feature::graphite', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+      .with_content(/host = "127.0.0.1"/)
+      .with_content(/port = 2003/)
+      .with_content(/host_name_template = "icinga2.\$host.name\$.host.\$host.check_command\$"/)
+      .with_content(/service_name_template = "icinga2.\$host.name\$.services.\$service.name\$.\$service.check_command\$"/)
+      .with_content(/enable_send_thresholds = false/)
+      .with_content(/enable_send_metadata = false/) }
   end
 
 
