@@ -17,14 +17,16 @@
 #
 class icinga2::params {
 
-  $package = 'icinga2'
-  $service = 'icinga2'
-  $plugins = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
+  $package          = 'icinga2'
+  $service          = 'icinga2'
+  $plugins          = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
+  $default_features = [ 'checker', 'mainlog', 'notification' ]
 
   case $::kernel {
 
     'linux': {
-      $conf_dir  = '/etc/icinga2'
+      $conf_dir = '/etc/icinga2'
+      $log_dir  = '/var/log/icinga2'
 
       case $::osfamily {
         'redhat': {
@@ -59,8 +61,9 @@ class icinga2::params {
 
     'windows': {
       $user      = 'SYSTEM'
-      $group     = 'None'
+      $owner     = undef
       $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
+      $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
       $constants = {
         'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
         'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",

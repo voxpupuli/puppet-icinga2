@@ -23,11 +23,19 @@ class icinga2::install {
 
   if $::osfamily == 'windows' { Package { provider => chocolatey, } }
 
-  $package = $::icinga2::params::package
-  $conf_dir = $::icinga2::params::conf_dir
+  $package        = $icinga2::params::package
+  $conf_dir       = $icinga2::params::conf_dir
+  $purge_features = $icinga2::purge_features
 
   package { $package:
     ensure => installed,
+  }
+
+  file { "${conf_dir}/features-enabled":
+    ensure  => directory,
+    purge   => $purge_features,
+    recurse => $purge_features,
+    require => Package[$package],
   }
 
   # anchor, i.e. for config directory set by confd parameter

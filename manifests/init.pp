@@ -20,6 +20,12 @@
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed. Default to true.
 #
+# [*features*]
+#   List of features to activate. Default to [checker, mainlog, notification].
+#
+# [*purge_features*]
+#   Define if configuration files for features not managed by Puppet should be purged. Default is true.
+#
 # [*constants*]
 #   Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 #
@@ -115,6 +121,8 @@ class icinga2(
   $enable         = true,
   $manage_repo    = false,
   $manage_service = true,
+  $features       = $icinga2::params::default_features,
+  $purge_features = true,
   $constants      = {},
   $plugins        = $icinga2::params::plugins,
   $confd          = true,
@@ -125,6 +133,8 @@ class icinga2(
   validate_bool($enable)
   validate_bool($manage_repo)
   validate_bool($manage_service)
+  validate_array($features)
+  validate_bool($purge_features)
   validate_hash($constants)
   validate_array($plugins)
 
@@ -152,4 +162,5 @@ class icinga2(
     subscribe => Class['::icinga2::config']
   }
 
+  include prefix($features, 'icinga2::feature::')
 }

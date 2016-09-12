@@ -10,7 +10,7 @@ describe('icinga2', :type => :class) do
       let(:params) { {:manage_repo => true} }
       case facts[:osfamily]
       when 'Debian'
-        it { should contain_apt__source('icinga-stable-release') } 
+        it { should contain_apt__source('icinga-stable-release') }
       when 'RedHat'
         let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
         it { should contain_yumrepo('icinga-stable-release') }
@@ -22,7 +22,7 @@ describe('icinga2', :type => :class) do
       let(:params) { {:manage_repo => false} }
       case facts[:osfamily]
       when 'Debian'
-        it { should_not contain_apt__source('icinga-stable-release') } 
+        it { should_not contain_apt__source('icinga-stable-release') }
       when 'RedHat'
         let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
         it { should_not contain_yumrepo('icinga-stable-release') }

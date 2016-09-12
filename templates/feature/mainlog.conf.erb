@@ -1,0 +1,6 @@
+// managed by puppet
+
+object FileLogger "main-log" {
+  severity = "<%= scope['icinga2::feature::mainlog::severity'] %>"
+  path = "<%= scope['icinga2::feature::mainlog::path'] %>"
+}

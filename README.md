@@ -90,7 +90,12 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::install](#class-icinga2install)
     - [Class: icinga2::config](#class-icinga2config)
     - [Class: icinga2::service](#class-icinga2service)
-
+- [**Public defined types**](#public-defined-types)
+    - [Defined type: icinga2::feature::checker](#defined-type-icinga2featurechecker)
+    - [Defined type: icinga2::feature::mainlog](#defined-type-icinga2featuremainlog)
+    - [Defined type: icinga2::feature::notification](#defined-type-icinga2featurenotification)
+- [**Private defined types**](#private-defined-types)
+    - [Defined type: icinga2::feature](#defined-type-icinga2feature)
 
 ### Public Classes
 
@@ -126,6 +131,12 @@ is `false`
 ##### `manage_service`
 Lets you decide if the Icinga2 daemon should be reloaded when configuration files have changed. Default is `true`
 
+##### `features`
+A list of features to enable by default. Default is `[checker, mainlog, notification]`
+
+##### `purge_features`
+Define if configuration files for features not managed by Puppet should be purged. Default is true.
+
 ##### `constants`
 Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 
@@ -136,7 +147,6 @@ A list of the ITL plugins to load. Default to `[ 'plugins', 'plugins-contrib', '
 This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
 to `false`. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
 managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is `true`.
-
 
 ### Private Classes
 
@@ -155,7 +165,58 @@ Starts/stops and enables/disables the service.
 
 ### Public defined types
 
+#### Defined type `icinga2::feature::checker`
+Enables or disables the `checker` feature. 
+
+**Parameters of `icinga2::feature::checker`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `checker` should be enabled. Default is `present`.
+
+#### Defined type `icinga2::feature::mainlog`
+Enables or disables the `mainlog` feature.
+
+**Parameters of `icinga2::feature::mainlog`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `mainlog` should be enabled. Default is `present`.
+
+##### `severity`
+Sets the severity of the `mainlog` feature. Can be set to:
+
+* `information`
+* `notice`
+* `warning`
+* `debug`
+
+Default is `information`
+
+##### `path`
+Absolute path to the logging file. Default depends on platform:
+
+* Linux: `/var/log/icinga2/icinga2.log`
+* Windows: `C:/ProgramData/icinga2/var/log/icinga2/icinga2.log`
+
+#### Defined type `icinga2::feature::notification`
+Enables or disables the `notification` feature.
+
+**Parameters of `icinga2::feature::notification`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `notification` should be enabled. Default is `present`.
+
 ### Private defined types
+
+#### Defined type: `icinga2::feature`
+This defined type is used by all feature defined types as basis. It can generally enable or disable features.
+
+**Parameters of `icinga2::feature`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature should be enabled. Default is `present`.
+
+##### `feature`
+Name of the feature. This name is used for the corresponding configuration file.
 
 ## Limitations
 This module has been tested on:

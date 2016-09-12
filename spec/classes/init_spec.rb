@@ -18,11 +18,11 @@ describe('icinga2', :type => :class) do
     end
 
     context "#{os} with all default parameters" do
-      it { should contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+      it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
 
-      it {  should contain_service('icinga2').with({ 
-        'ensure' => 'running', 
-        'enable' => true 
+      it { is_expected.to contain_service('icinga2').with({
+        'ensure' => 'running',
+        'enable' => true
         })
       }
 
@@ -30,20 +30,20 @@ describe('icinga2', :type => :class) do
       when 'Debian'
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
-  
+
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
-  
+
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
       when 'RedHat'
         let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
-  
+
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
-  
+
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
       end
@@ -67,11 +67,26 @@ describe('icinga2', :type => :class) do
         .with_content %r{^include <plugins-contrib>\n} }
 
       it { is_expected.to contain_file(@icinga2_conf)
+        .with_content %r{^include <windows-plugins>\n} }
+
+      it { is_expected.to contain_file(@icinga2_conf)
+        .with_content %r{^include <nscp>\n} }
+
+      it { is_expected.to contain_file(@icinga2_conf)
         .with_content %r{^include_recursive \"conf.d\"\n} }
+
+      it { is_expected.to contain_icinga2__feature('checker')
+        .with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__feature('mainlog')
+        .with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__feature('notification')
+        .with({'ensure' => 'present'}) }
 
       case facts[:osfamily]
       when 'Debian'
-        it { should_not contain_apt__source('icinga-stable-release') } 
+        it { should_not contain_apt__source('icinga-stable-release') }
       when 'RedHat'
         it { should_not contain_yumrepo('icinga-stable-release') }
       end
@@ -87,11 +102,11 @@ describe('icinga2', :type => :class) do
       :operatingsystemmajrelease => '2012 R2'
     } }
 
-    it { should contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+    it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
 
-    it {  should contain_service('icinga2').with({ 
-      'ensure' => 'running', 
-      'enable' => true 
+    it { is_expected.to contain_service('icinga2').with({
+      'ensure' => 'running',
+      'enable' => true
       })
     }
 
@@ -122,6 +137,12 @@ describe('icinga2', :type => :class) do
       .with_content %r{^// managed by puppet\r\n} }
 
     it { is_expected.to contain_file(@windows_icinga2_conf)
+      .with_content %r{^include <plugins>\r\n} }
+
+    it { is_expected.to contain_file(@windows_icinga2_conf)
+      .with_content %r{^include <plugins-contrib>\r\n} }
+
+    it { is_expected.to contain_file(@windows_icinga2_conf)
       .with_content %r{^include <windows-plugins>\r\n} }
 
     it { is_expected.to contain_file(@windows_icinga2_conf)
@@ -129,13 +150,23 @@ describe('icinga2', :type => :class) do
 
     it { is_expected.to contain_file(@windows_icinga2_conf)
       .with_content %r{^include_recursive \"conf.d\"\r\n} }
+
+    it { is_expected.to contain_icinga2__feature('checker')
+      .with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__feature('mainlog')
+      .with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__feature('notification')
+      .with({'ensure' => 'present'}) }
   end
+
 
   context 'on unsupported plattform' do
     let(:facts) { {:osfamily => 'foo'} }
     it do
       expect {
-        should contain_class('icinga')
+        is_expected.to contain_class('icinga')
       }.to raise_error(Puppet::Error, /foo is not supported/)
     end
   end

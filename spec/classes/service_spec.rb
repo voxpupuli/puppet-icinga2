@@ -15,7 +15,7 @@ describe('icinga2', :type => :class) do
         })
       end
     end
-  
+
     context "#{os} with ensure => stopped, enable => false" do
       let(:params) { {:ensure => 'stopped', :enable => false} }
       it do
@@ -25,7 +25,7 @@ describe('icinga2', :type => :class) do
         })
       end
     end
-  
+
     context "#{os} with ensure => foo (not a valid boolean)" do
       let(:params) { {:ensure => 'foo'} }
       it do
@@ -34,7 +34,7 @@ describe('icinga2', :type => :class) do
         }.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'running' and 'stopped'./)
       end
     end
-  
+
     context "#{os} with enable => foo (not a valid boolean)" do
       let(:params) { {:enable => 'foo'} }
       it do
@@ -43,17 +43,17 @@ describe('icinga2', :type => :class) do
         }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
       end
     end
-  
+
     context "#{os} with manage_service => true" do
       let(:params) { {:manage_service => true} }
       it { should contain_service('icinga2') }
     end
-  
+
     context "#{os} with manage_service => false" do
       let(:params) { {:manage_service => false} }
       it { should_not contain_service('icinga2') }
     end
-  
+
     context "#{os} with manage_service => foo (not a valid boolean)" do
       let(:params) { {:manage_service => 'foo'} }
       it do
