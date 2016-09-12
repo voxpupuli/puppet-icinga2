@@ -10,6 +10,7 @@ describe('icinga2::feature::debuglog', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,13 +25,19 @@ describe('icinga2::feature::debuglog', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('debuglog').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/debuglog.conf')
+        .with_content(/path = "\/var\/log\/icinga2\/debug.log"/) }
+    end
+
+
     context "#{os} with path => /foo/bar" do
       let(:params) { {:path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/debuglog.conf')
-          .with_content(/path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/debuglog.conf')
+        .with_content(/path = "\/foo\/bar"/) }
     end
 
 
@@ -71,6 +78,21 @@ describe('icinga2::feature::debuglog', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('debuglog').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('debuglog').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/debuglog.conf')
+      .with_content(/path = "C:\/ProgramData\/icinga2\/var\/log\/icinga2\/debug.log"/) }
   end
 
 
