@@ -62,7 +62,7 @@ class icinga2::params {
 
     'windows': {
       $user      = 'SYSTEM'
-      $group     = undef
+      $owner     = undef
       $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
       $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
       $cache_dir = 'C:/ProgramData/icinga2/var/cache/icinga2'
