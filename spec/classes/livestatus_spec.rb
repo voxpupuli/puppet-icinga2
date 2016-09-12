@@ -10,6 +10,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,13 +25,23 @@ describe('icinga2::feature::livestatus', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
+        .with_content(/socket_type = "unix"/)
+        .with_content(/bind_host = "127.0.0.1"/)
+        .with_content(/bind_port = 6558/)
+        .with_content(/socket_path = "\/var\/run\/icinga2\/cmd\/livestatus"/)
+        .with_content(/compat_log_path = "\/var\/log\/icinga2\/compat"/) }
+    end
+
+
     context "#{os} with socket_type => tcp" do
       let(:params) { {:socket_type => 'tcp'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
-          .with_content(/socket_type = "tcp"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
+        .with_content(/socket_type = "tcp"/) }
     end
 
 
@@ -48,10 +59,8 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with bind_host => 127.0.0.2" do
       let(:params) { {:bind_host => '127.0.0.2'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
-          .with_content(/bind_host = "127.0.0.2"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
+        .with_content(/bind_host = "127.0.0.2"/) }
     end
 
 
@@ -71,7 +80,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
 
       it {
         is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
-          .with_content(/bind_port = "4247"/)
+          .with_content(/bind_port = 4247/)
       }
     end
 
@@ -158,6 +167,25 @@ describe('icinga2::feature::livestatus', :type => :class) do
   end
 
 
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
+      .with_content(/socket_type = "unix"/)
+      .with_content(/bind_host = "127.0.0.1"/)
+      .with_content(/bind_port = 6558/)
+      .with_content(/socket_path = "C:\/ProgramData\/icinga2\/var\/run\/icinga2\/cmd\/livestatus"/)
+      .with_content(/compat_log_path = "C:\/ProgramData\/icinga2\/var\/log\/icinga2\/compat"/) }
+  end
+
+
   context 'Windows 2012 R2 with socket_type => tcp' do
     let(:facts) { {
       :kernel => 'Windows',
@@ -240,7 +268,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
 
     it {
       is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
-        .with_content(/bind_port = "4247"/)
+        .with_content(/bind_port = 4247/)
     }
   end
 

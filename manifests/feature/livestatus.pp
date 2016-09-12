@@ -38,8 +38,8 @@ class icinga2::feature::livestatus(
   $socket_type     = 'unix',
   $bind_host       = '127.0.0.1',
   $bind_port       = '6558',
-  $socket_path     = "${::icinga2::params::run_dir}/icinga2/cmd/livestatus",
-  $compat_log_path = "${::icinga2::params::log_dir}/log/icinga2/compat",
+  $socket_path     = "${::icinga2::params::run_dir}/cmd/livestatus",
+  $compat_log_path = "${::icinga2::params::log_dir}/compat",
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
