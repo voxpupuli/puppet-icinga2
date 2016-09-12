@@ -33,17 +33,32 @@ object InfluxdbWriter "influxdb" {
   flush_threshold = <%= scope['icinga2::feature::influxdb::flush_threshold'] %>
 <% end -%>
 
-  //host_template = {
-  //  measurement = "$host.check_command$"
-  //  tags = {
-  //    hostname = "$host.name$"
-  //  }
-  //}
-  //service_template = {
-  //  measurement = "$service.check_command$"
-  //  tags = {
-  //    hostname = "$host.name$"
-  //    service = "$service.name$"
-  //  }
-  //}
+  host_template = {
+<% scope['icinga2::feature::influxdb::host_template'].keys.sort.each do |k| -%>
+<% if scope['icinga2::feature::influxdb::host_template'][k].is_a?(String) -%>
+    <%= k %> = "<%= scope['icinga2::feature::influxdb::host_template'][k] %>"
+<% elsif scope['icinga2::feature::influxdb::host_template'][k].is_a?(Hash) -%>
+    <%= k %> = {
+<% scope['icinga2::feature::influxdb::host_template'][k].keys.sort.each do |j| -%>
+      <%= j %> = "<%= scope['icinga2::feature::influxdb::host_template'][k][j] %>"
+<% end -%>
+    }
+  <% end -%>
+<% end -%>
+}
+
+  service_template = {
+<% scope['icinga2::feature::influxdb::service_template'].keys.sort.each do |k| -%>
+<% if scope['icinga2::feature::influxdb::service_template'][k].is_a?(String) -%>
+    <%= k %> = "<%= scope['icinga2::feature::influxdb::service_template'][k] %>"
+<% elsif scope['icinga2::feature::influxdb::service_template'][k].is_a?(Hash) -%>
+    <%= k %> = {
+<% scope['icinga2::feature::influxdb::service_template'][k].keys.sort.each do |j| -%>
+      <%= j %> = "<%= scope['icinga2::feature::influxdb::service_template'][k][j] %>"
+<% end -%>
+    }
+  <% end -%>
+<% end -%>
+}
+
 }
