@@ -4,14 +4,13 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*ensure*]
-#   Set to present enables the feature mainlog, absent disabled it. Default to present.
+#   Set to present enables the feature mainlog, absent disables it. Default is present.
 #
 # [*path*]
-#   Absolute path to the log file. Default depends on plattform, /var/log/icinga2/debug.log
-#   on Linux and C:/ProgramData/icinga2/var/log/icinga2/debug.log on Windows.
+#   Absolute path to the log file. Default depends on platform:
+#   /var/log/icinga2/debug.log on Linux
+#   C:/ProgramData/icinga2/var/log/icinga2/debug.log on Windows
 #
 # === Authors
 #

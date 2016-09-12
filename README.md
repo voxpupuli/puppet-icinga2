@@ -96,6 +96,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::perfdata](#class-icinga2-feature-perfdata)
     - [Class: icinga2::feature::statusdata](#class-icinga2-feature-statusdata)
     - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
+    - [Class::icinga2::feature::debuglog](#class-icinga2-feture-debuglog)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -381,9 +382,18 @@ Set severity level for logging to syslog. Available options are:
 
 Default is `warning`
 
-##### `ensure`
-Either `present` or `absent`. Defines if the feature `statusdata` should be enabled. Default is `present`.
+#### Class: `icinga2::feature::debuglog`
+Enables or disables the `debuglog` feature.
 
+**Parameters of `icinga2::feature::debuglog`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `debuglog` should be enabled. Default is `present`.
+
+##### `path`
+Absolute path to the log file. Default depends on platform:
+* Linux: `/var/log/icinga2/debug.log`
+* Windows: `C:/ProgramData/icinga2/var/log/icinga2/debug.log`
 
 ### Private Classes
 
