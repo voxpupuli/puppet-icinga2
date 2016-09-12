@@ -45,10 +45,10 @@
 #
 class icinga2::feature::perfdata(
   $ensure                = present,
-  $host_perfdata_path    = "${spool_dir}/perfdata/host-perfdata",
-  $service_perfdata_path = "${spool_dir}/perfdata/service-perfdata",
-  $host_temp_path        = "${spool_dir}/tmp/host-perfdata",
-  $service_temp_path     = "${spool_dir}/tmp/service-perfdata",
+  $host_perfdata_path    = "${::icinga2::params::spool_dir}/perfdata/host-perfdata",
+  $service_perfdata_path = "${::icinga2::params::spool_dir}/perfdata/service-perfdata",
+  $host_temp_path        = "${::icinga2::params::spool_dir}/tmp/host-perfdata",
+  $service_temp_path     = "${::icinga2::params::spool_dir}/tmp/service-perfdata",
   $rotation_interval     = '30s',
 ) inherits icinga2::params {
 
