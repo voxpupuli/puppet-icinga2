@@ -20,7 +20,7 @@ class icinga2::config {
     fail("icinga2::config is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  $constants = merge($::icinga2::params::constants, $::icinga2::constants)
+  $constants = $::icinga2::_constants
   $conf_dir  = $::icinga2::params::conf_dir
   $plugins   = $::icinga2::plugins
   $confd     = $::icinga2::_confd

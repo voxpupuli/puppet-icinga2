@@ -41,6 +41,14 @@
 # All default parameters are set in the icinga2::params class. To get more technical information have a look into the
 # params.pp manifest.
 #
+# === Variables
+#
+# [*_confd*]
+#   Configuration directory (conf.d).
+#
+# [*_constants*]
+#   Merge parameter constants with defaults from params.
+#
 # === Examples
 #
 # Declare icinga2 with all defaults. Keep in mind that your operating system may not have Icinga2 in its package
@@ -148,6 +156,9 @@ class icinga2(
       fail('confd has to be a boolean or string')
     }
   }
+
+  # merge constants with defaults
+  $_constants = merge($::icinga2::params::constants, $constants)
 
   anchor { '::icinga2::begin':
     notify => Class['::icinga2::service']

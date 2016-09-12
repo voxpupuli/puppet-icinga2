@@ -34,7 +34,7 @@ class icinga2::params {
       case $::osfamily {
         'redhat': {
           $user     = 'icinga'
-          $owner    = 'icinga'
+          $group    = 'icinga'
           $lib_dir  = $::architecture ? {
             'x86_64' => '/usr/lib64',
             default  => '/usr/lib',
@@ -43,7 +43,7 @@ class icinga2::params {
 
         'debian': {
           $user     = 'nagios'
-          $owner    = 'nagios'
+          $group    = 'nagios'
           $lib_dir  = '/usr/lib'
         } # Debian
 
@@ -64,7 +64,7 @@ class icinga2::params {
 
     'windows': {
       $user      = 'SYSTEM'
-      $owner     = undef
+      $group     = undef
       $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
       $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
       $run_dir   = 'C:/ProgramData/icinga2/var/run/icinga2'
