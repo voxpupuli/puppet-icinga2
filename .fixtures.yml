@@ -1,6 +1,16 @@
 fixtures:
+  repositories:
+    stdlib:
+      repo: "git://github.com/puppetlabs/puppetlabs-stdlib"
+      ref: "4.12.0"
+    concat:
+      repo: "git://github.com/puppetlabs/puppetlabs-concat"
+      ref: "1.2.5"
+    apt:
+      repo: "git://github.com/puppetlabs/puppetlabs-apt"
+      ref: "1.8.0"
+    chocolatey:
+      repo: "git://github.com/puppetlabs/puppetlabs-chocolatey"
+      ref: "1.2.6"
   symlinks:
-    stdlib: "#{source_dir}/../stdlib"
-    concat: "#{source_dir}/../concat"
-    apt: "#{source_dir}/../apt"
     icinga2: "#{source_dir}"
