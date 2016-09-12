@@ -93,6 +93,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::graphite](#class-icinga2-feature-graphite)
     - [Class: icinga2::feature::livestatus](#class-icinga2-feature-livestatus)
     - [Class: icinga2::feature::opentsdb](#class-icinga2-feature-opentsdb)
+    - [Class: icinga2::feature::perfdata](#class-icinga2-feature-perfdata)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -305,6 +306,38 @@ OpenTSDB host address. Default is `127.0.0.1`
 
 ##### `port`
 OpenTSDB port. Default is `4242`
+
+#### Class: `icinga2::feature::perfdata`
+Enables or disables the `perfdata` feature.
+
+**Parameters of `icinga2::feature::perfdata`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `perfdata` should be enabled. Default is `present`.
+
+##### `ost_perfdata_path`
+Absolute path to the perfdata file for hosts. Default depends on platform:
+* Linux: `/var/spool/icinga2/host-perfdata`
+* Windows: `C:/ProgramData/icinga2/var/spool/icinga2/host-perfdata`
+
+##### `service_perfdata_path`
+Absolute path to the perfdata file for services. Default depends on platform:
+* Linux: `/var/spool/icinga2/service-perfdata`
+* Windows: `C:/ProgramData/icinga2/var/spool/icinga2/service-perfdata`
+
+###### `host_temp_path`
+Path to the temporary host file. Defaults depends on platform:
+* Linux: `/var/spool/icinga2/tmp/host-perfdata` 
+* Windows: `C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata`
+
+##### `service_temp_path`
+Path to the temporary service file. Defaults depends on platform:
+* Linux: `/var/spool/icinga2/tmp/host-perfdata` 
+* Windows: `C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata`
+
+##### `rotation_interval`
+Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
+i.e. 1m or 15s. Defaults is 30s.
 
 ### Private Classes
 
