@@ -24,13 +24,20 @@ describe('icinga2::feature::compatlog', :type => :class) do
     end
 
 
+    context "#{os} with all defaults" do
+      it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/compatlog.conf')
+          .with_content(/rotation_method = "DAILY"/)
+          .with_content(/log_dir = "\/var\/log\/icinga2\/compat"/) }
+    end
+
+
     context "#{os} with rotation_method => HOURLY" do
       let(:params) { {:rotation_method => 'HOURLY'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/compatlog.conf')
-          .with_content(/rotation_method = "HOURLY"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/compatlog.conf')
+          .with_content(/rotation_method = "HOURLY"/) }
     end
 
 
@@ -92,6 +99,22 @@ describe('icinga2::feature::compatlog', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with all defaults" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('compatlog').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/compatlog.conf')
+      .with_content(/rotation_method = "DAILY"/)
+      .with_content(/log_dir = "C:\/ProgramData\/icinga2\/var\/log\/icinga2\/compat"/) }
   end
 
 

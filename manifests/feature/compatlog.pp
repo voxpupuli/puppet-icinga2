@@ -10,8 +10,8 @@
 #   Set to present enables the feature compatlog, absent disabled it. Default to present.
 #
 # [*slog_dir*]
-#   Absolute path to the log file. Default depends on plattform, /var/log/icinga2/compat/icinga2.log
-#   on Linux and C:/ProgramData/icinga2/var/log/icinga2/compat/icinga2.log on Windows.
+#   Absolute path to the log file. Default depends on plattform, /var/log/icinga2/compat
+#   on Linux and C:/ProgramData/icinga2/var/log/icinga2/compat on Windows.
 #
 # [*rotation_method*]
 #   How often the log file will be rotated, valid options are HOURLY, DAILY, WEEKLY and MONTHLY.
