@@ -27,8 +27,8 @@
 #
 class icinga2::feature::statusdata(
   $ensure          = present,
-  $status_path     = "${cache_dir}/status.dat",
-  $objects_path    = "${cache_dir}/objects.cache",
+  $status_path     = "${::icinga2::params::cache_dir}/status.dat",
+  $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
   $update_interval = '30s',
 ) inherits icinga2::params {
 
