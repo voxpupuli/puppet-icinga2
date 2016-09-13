@@ -8,10 +8,10 @@ object InfluxdbWriter "influxdb" {
 <% if scope.lookupvar('icinga2::feature::influxdb::database') -%>
   database = "<%= scope['icinga2::feature::influxdb::database'] -%>"
 <% end -%>
-<% if scope.lookupvar('icinga2::feature::influxdb::username') -%>
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::influxdb::username')) -%>
   username = "<%= scope['icinga2::feature::influxdb::username'] -%>"
 <% end -%>
-<% if scope.lookupvar('icinga2::feature::influxdb::password') -%>
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::influxdb::password')) -%>
   password = "<%= scope['icinga2::feature::influxdb::password'] -%>"
 <% end -%>
   ssl_enable = <%= scope['icinga2::feature::influxdb::ssl_enable'] %>
