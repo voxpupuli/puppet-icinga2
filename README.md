@@ -98,6 +98,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
     - [Class::icinga2::feature::debuglog](#class-icinga2-feature-debuglog)
     - [Class::icinga2::feature::gelf](#class-icinga2-feature-gelf)
+    - [Class::icinga2::feature::influxdb](#class-icinga2-feature-influxdb)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -415,6 +416,78 @@ Source name for this instance. Default is `icinga2`
 
 ##### `enable_send_perfdata`
 Enable performance data for *CHECK RESULT* events. Default is `false`.
+
+#### Class: `icinga2::feature::influxdb`
+Enables or disables the `influxdb` feature.
+
+**Parameters of `icinga2::feature::influxdb`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `influxdb` should be enabled. Default is `present`.
+
+
+
+##### `host`
+InfluxDB host address. Default is `127.0.0.1`
+
+##### `port`
+InfluxDB HTTP port. Default is `8086`
+
+##### `database`
+InfluxDB database name. Default is `icinga2`
+
+##### `username`
+InfluxDB user name. Default is `undef`
+
+##### `password`
+InfluxDB user password. Default is `undef`
+
+##### `ssl_enable`
+Whether to use a TLS stream. Defaults to `false`
+
+##### `ssl_ca_cert`
+CA certificate to validate the remote host. Default is `undef`
+
+##### `ssl_cert`
+Host certificate to present to the remote host for mutual verification. Default is u`ndef`
+
+##### `ssl_key`
+Host key to accompany the ssl_cert. Default is `undef`
+
+##### `host_template`
+Host template to define the InfluxDB line protocol. The template can be defined as hash:
+
+```
+class { 'icinga2::feature::influxdb':
+  host_template => { measurement => '$host.check_command$', tags => { hostname => '$host.name$' } }
+}
+```
+
+##### `service_template`
+Service template to define the influxDB line protocol. The template can be defined as hash:
+
+```
+class { 'icinga2::feature::influxdb':
+  service_template => { measurement => '$service.check_command$', 
+                        tags => { 
+                          hostname => '$host.name$',
+                          service => '$service.name$'
+                        }
+  }
+}
+```
+
+##### `enable_send_thresholds`
+Whether to send warn, crit, min & max tagged data. Default is `false`
+
+##### `enable_send_metadata`
+Whether to send check metadata e.g. states, execution time, latency etc. Default is `false`
+
+##### `flush_interval`
+How long to buffer data points before transfering to InfluxDB. Default is `10s`
+
+##### `flush_threshold`
+How many data points to buffer before forcing a transfer to InfluxDB. Default is `1024`
 
 ### Private Classes
 

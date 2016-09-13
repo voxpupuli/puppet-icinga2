@@ -1,38 +1,38 @@
-# == Class: icinga2::feature::graphite
+# == Class: icinga2::feature::influxdb
 #
 # This module configures the Icinga2 feature influxdb.
 #
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature graphite, absent disabled it. Default is present.
+#   Set to present enables the feature influxdb, absent disables it. Default is present.
 #
 # [*host*]
-#    InfluxDB host address. Default to 127.0.0.1.
+#    InfluxDB host address. Default is 127.0.0.1.
 #
 # [*port*]
-#    InfluxDB HTTP port. Default to 8086.
+#    InfluxDB HTTP port. Default is 8086.
 #
 # [*database*]
-#    InfluxDB database name. Default to icinga2.
+#    InfluxDB database name. Default is icinga2.
 #
 # [*username*]
-#    InfluxDB user name. Default to none.
+#    InfluxDB user name. Default is undef.
 #
 # [*password*]
-#    InfluxDB user password. Default to none.
+#    InfluxDB user password. Default is undef.
 #
 # [*ssl_enable*]
-#    Whether to use a TLS stream. Default to false.
+#    Whether to use a TLS stream. Defaults to false.
 #
 # [*ssl_ca_cert*]
-#    CA certificate to validate the remote host.
+#    CA certificate to validate the remote host. Default is undef.
 #
 # [*ssl_cert*]
-#    Host certificate to present to the remote host for mutual verification.
+#    Host certificate to present to the remote host for mutual verification. Default is undef.
 #
 # [*ssl_key*]
-#    Host key to accompany the ssl_cert.
+#    Host key to accompany the ssl_cert. Default is undef.
 #
 # [*host_template*]
 #    Host template to define the InfluxDB line protocol.
@@ -41,16 +41,16 @@
 #    Service template to define the influxDB line protocol.
 #
 # [*enable_send_thresholds*]
-#    Whether to send warn, crit, min & max tagged data.
+#    Whether to send warn, crit, min & max tagged data. Default is false.
 #
 # [*enable_send_metadata*]
-#    Whether to send check metadata e.g. states, execution time, latency etc.
+#    Whether to send check metadata e.g. states, execution time, latency etc. Default is false.
 #
 # [*flush_interval*]
-#    How long to buffer data points before transfering to InfluxDB. Default to 10s.
+#    How long to buffer data points before transfering to InfluxDB. Default is 10s.
 #
 # [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to InfluxDB. Default to 1024.
+#    How many data points to buffer before forcing a transfer to InfluxDB. Default is 1024.
 #
 # === Authors
 #
