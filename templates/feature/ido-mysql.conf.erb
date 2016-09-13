@@ -1,0 +1,11 @@
+// managed by puppet
+
+library "db_ido_mysql"
+
+object IdoMysqlConnection "ido-mysql" {
+  host = "<%= scope['icinga2::feature::idomysql::host'] %>"
+  port = <%= scope['icinga2::feature::idomysql::port'] %> 
+  user = "<%= scope['icinga2::feature::idomysql::user'] %>"
+  password = "<%= scope['icinga2::feature::idomysql::password'] %>"
+  database = "<%= scope['icinga2::feature::idomysql::database'] %>"
+}
