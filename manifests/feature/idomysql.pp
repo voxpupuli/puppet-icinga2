@@ -96,14 +96,18 @@ class icinga2::feature::idomysql(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_ip_address($host)
   validate_integer($port)
-  # validate_absolute_string($socket_path)
+  unless ($socket_path == undef){
+    validate_absolute_path($socket_path)
+  }
   validate_string($user)
   validate_string($password)
   validate_string($database)
   validate_bool($enable_ssl)
   validate_string($table_prefix)
   validate_string($instance_name)
-  # validate_string($instance_description)
+  unless ($instance_description == undef){
+    validate_string($instance_description)
+  }
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
   validate_hash($cleanup)

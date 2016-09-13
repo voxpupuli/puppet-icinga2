@@ -3,9 +3,33 @@
 library "db_ido_mysql"
 
 object IdoMysqlConnection "ido-mysql" {
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::idomysql::socket_path')) -%>
+  socket_path = "<%= scope['icinga2::feature::idomysql::socket_path'] %>"
+<% else -%>
   host = "<%= scope['icinga2::feature::idomysql::host'] %>"
-  port = <%= scope['icinga2::feature::idomysql::port'] %> 
+  port = <%= scope['icinga2::feature::idomysql::port'] %>
+<% end -%>
   user = "<%= scope['icinga2::feature::idomysql::user'] %>"
   password = "<%= scope['icinga2::feature::idomysql::password'] %>"
   database = "<%= scope['icinga2::feature::idomysql::database'] %>"
+  enable_ssl = <%= scope['icinga2::feature::idomysql::enable_ssl'] %>
+  table_prefix = "<%= scope['icinga2::feature::idomysql::table_prefix'] %>"
+  instance_name = "<%= scope['icinga2::feature::idomysql::instance_name'] %>"
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::idomysql::instance_description')) -%>
+  instance_description = "<%= scope['icinga2::feature::idomysql::instance_description'] %>"
+<% end -%>
+  enable_ha = <%= scope['icinga2::feature::idomysql::enable_ha'] %>
+  failover_timeout = <%= scope['icinga2::feature::idomysql::failover_timeout'] %>
+<% if ! scope['icinga2::feature::idomysql::cleanup'].empty? -%>
+  cleanup = {
+<% scope['icinga2::feature::idomysql::cleanup'].keys.sort.each do |k, v| -%>
+    <%= k %> = "<%= scope['icinga2::feature::idomysql::cleanup'][k] %>"
+<% end -%>
+  }
+<% end -%>
+<% if ! scope['icinga2::feature::idomysql::categories'].empty? -%>
+  categories = [ <% scope['icinga2::feature::idomysql::categories'].each_with_index do |category, i| -%>
+"<%= category -%>"<%= ',' if i < (scope['icinga2::feature::idomysql::categories'].size - 1) -%>
+<% end -%> ]
+<% end -%>
 }
