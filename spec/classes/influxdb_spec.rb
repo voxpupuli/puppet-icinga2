@@ -153,7 +153,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
                               .with_content(/ssl_enable = false/) }
     end
 
-
     context "#{os} with ssl_enable => foo (not a valid boolean)" do
       let(:params) { {:ssl_enable => 'foo'} }
 
@@ -161,6 +160,82 @@ describe('icinga2::feature::influxdb', :type => :class) do
         expect {
           is_expected.to contain_icinga2__feature('influxdb')
         }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
+      end
+    end
+
+
+    context "#{os} with host_measurement => foo" do
+      let(:params) { {:host_measurement => 'foo'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
+                              .with_content(/host_template = {\n\s+measurement = "foo"/) }
+    end
+
+
+    context "#{os} with host_measurement => 123 (not a valid string)" do
+      let(:params) { {:host_measurement => 123} }
+
+      it do
+        expect {
+          is_expected.to contain_icinga2__feature('influxdb')
+        }.to raise_error(Puppet::Error, /123 is not a string/)
+      end
+    end
+
+
+    context "#{os} with host_tags => { foo => 'bar', bar => 'foo' }" do
+      let(:params) { {:host_tags => { 'foo' => "bar", 'bar' => "foo" } } }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
+                              .with_content(/host_template = {\n\s+measurement = ".*"\n\s+tags = \{\n\s+bar = "foo"\n\s+foo = "bar"\n\s+}\n\s+}/) }
+    end
+
+
+    context "#{os} with host_tags => 'foo' (not a valid hash)" do
+      let(:params) { {:host_tags => 'foo'} }
+
+      it do
+        expect {
+          is_expected.to contain_icinga2__feature('influxdb')
+        }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
+      end
+    end
+
+
+    context "#{os} with service_measurement => bar" do
+      let(:params) { {:service_measurement => 'bar'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
+                              .with_content(/service_template = {\n\s+measurement = "bar"/) }
+    end
+
+
+    context "#{os} with service_measurement => 123 (not a valid string)" do
+      let(:params) { {:service_measurement => 123} }
+
+      it do
+        expect {
+          is_expected.to contain_icinga2__feature('influxdb')
+        }.to raise_error(Puppet::Error, /123 is not a string/)
+      end
+    end
+
+
+    context "#{os} with service_tags => { foo => 'bar', bar => 'foo' }" do
+      let(:params) { {:service_tags => { 'foo' => "bar", 'bar' => "foo" } } }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
+                              .with_content(/service_template = {\n\s+measurement = ".*"\n\s+tags = \{\n\s+bar = "foo"\n\s+foo = "bar"\n\s+}\n\s+}/) }
+    end
+
+
+    context "#{os} with service_tags => 'foo' (not a valid hash)" do
+      let(:params) { {:service_tags => 'foo'} }
+
+      it do
+        expect {
+          is_expected.to contain_icinga2__feature('influxdb')
+        }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
       end
     end
 
@@ -425,6 +500,82 @@ describe('icinga2::feature::influxdb', :type => :class) do
       expect {
         is_expected.to contain_icinga2__feature('influxdb')
       }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
+    end
+  end
+
+
+  context "Windows 2012 R2 with host_measurement => foo" do
+    let(:params) { {:host_measurement => 'foo'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
+                            .with_content(/host_template = {\r\n\s+measurement = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with host_measurement => 123 (not a valid string)" do
+    let(:params) { {:host_measurement => 123} }
+
+    it do
+      expect {
+        is_expected.to contain_icinga2__feature('influxdb')
+      }.to raise_error(Puppet::Error, /123 is not a string/)
+    end
+  end
+
+
+  context "Windows 2012 R2 with host_tags => { foo => 'bar', bar => 'foo' }" do
+    let(:params) { {:host_tags => { 'foo' => "bar", 'bar' => "foo" } } }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
+                            .with_content(/host_template = {\r\n\s+measurement = ".*"\r\n\s+tags = \{\r\n\s+bar = "foo"\r\n\s+foo = "bar"\r\n\s+}\r\n\s+}/) }
+  end
+
+
+  context "Windows 2012 R2 with host_tags => 'foo' (not a valid hash)" do
+    let(:params) { {:host_tags => 'foo'} }
+
+    it do
+      expect {
+        is_expected.to contain_icinga2__feature('influxdb')
+      }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
+    end
+  end
+
+
+  context "Windows 2012 R2 with service_measurement => bar" do
+    let(:params) { {:service_measurement => 'bar'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
+                            .with_content(/service_template = {\r\n\s+measurement = "bar"/) }
+  end
+
+
+  context "Windows 2012 R2 with service_measurement => 123 (not a valid string)" do
+    let(:params) { {:service_measurement => 123} }
+
+    it do
+      expect {
+        is_expected.to contain_icinga2__feature('influxdb')
+      }.to raise_error(Puppet::Error, /123 is not a string/)
+    end
+  end
+
+
+  context "Windows 2012 R2 with service_tags => { foo => 'bar', bar => 'foo' }" do
+    let(:params) { {:service_tags => { 'foo' => "bar", 'bar' => "foo" } } }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
+                            .with_content(/service_template = {\r\n\s+measurement = ".*"\r\n\s+tags = \{\r\n\s+bar = "foo"\r\n\s+foo = "bar"\r\n\s+}\r\n\s+}/) }
+  end
+
+
+  context "Windows 2012 R2 with service_tags => 'foo' (not a valid hash)" do
+    let(:params) { {:service_tags => 'foo'} }
+
+    it do
+      expect {
+        is_expected.to contain_icinga2__feature('influxdb')
+      }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
     end
   end
 

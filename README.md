@@ -425,8 +425,6 @@ Enables or disables the `influxdb` feature.
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `influxdb` should be enabled. Default is `present`.
 
-
-
 ##### `host`
 InfluxDB host address. Default is `127.0.0.1`
 
@@ -454,26 +452,29 @@ Host certificate to present to the remote host for mutual verification. Default 
 ##### `ssl_key`
 Host key to accompany the ssl_cert. Default is `undef`
 
-##### `host_template`
-Host template to define the InfluxDB line protocol. The template can be defined as hash:
+##### `host_measurement`
+The value of this is used for the measurement setting in host_template. Default is  `$host.check_command$`
+
+##### `host_tags`
+Tags defined in this hash will be set in the host_template.
 
 ```
 class { 'icinga2::feature::influxdb':
-  host_template => { measurement => '$host.check_command$', tags => { hostname => '$host.name$' } }
+  host_measurement => '$host.check_command$'
+  host_tags        => { hostname => '$host.name$' }
 }
 ```
 
-##### `service_template`
-Service template to define the influxDB line protocol. The template can be defined as hash:
+##### `service_measurement`
+The value of this is used for the measurement setting in host_template. Default is  `$service.check_command$`
+
+##### `service_tags`
+Tags defined in this hash will be set in the service_template.
 
 ```
 class { 'icinga2::feature::influxdb':
-  service_template => { measurement => '$service.check_command$', 
-                        tags => { 
-                          hostname => '$host.name$',
-                          service => '$service.name$'
-                        }
-  }
+  service_measurement => '$service.check_command$',
+  service_tags        => { hostname => '$host.name$', service => '$service.name$' }
 }
 ```
 

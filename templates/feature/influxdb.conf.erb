@@ -3,26 +3,26 @@
 library "perfdata"
 
 object InfluxdbWriter "influxdb" {
-  host = "<%= scope['icinga2::feature::influxdb::host'] -%>"
+  host = "<%= scope['icinga2::feature::influxdb::host'] %>"
   port = <%= scope['icinga2::feature::influxdb::port'] %>
 <% if scope.lookupvar('icinga2::feature::influxdb::database') -%>
-  database = "<%= scope['icinga2::feature::influxdb::database'] -%>"
+  database = "<%= scope['icinga2::feature::influxdb::database'] %>"
 <% end -%>
 <% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::influxdb::username')) -%>
-  username = "<%= scope['icinga2::feature::influxdb::username'] -%>"
+  username = "<%= scope['icinga2::feature::influxdb::username'] %>"
 <% end -%>
 <% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::influxdb::password')) -%>
-  password = "<%= scope['icinga2::feature::influxdb::password'] -%>"
+  password = "<%= scope['icinga2::feature::influxdb::password'] %>"
 <% end -%>
   ssl_enable = <%= scope['icinga2::feature::influxdb::ssl_enable'] %>
 <% if scope.lookupvar('icinga2::feature::influxdb::ssl_ca_cert') -%>
-  ssl_ca_cert = "<%= scope['icinga2::feature::influxdb::ssl_ca_cert'] -%>"
+  ssl_ca_cert = "<%= scope['icinga2::feature::influxdb::ssl_ca_cert'] %>"
 <% end -%>
 <% if scope.lookupvar('icinga2::feature::influxdb::ssl_cert') -%>
-  ssl_cert = "<%= scope['icinga2::feature::influxdb::ssl_cert'] -%>"
+  ssl_cert = "<%= scope['icinga2::feature::influxdb::ssl_cert'] %>"
 <% end -%>
 <% if scope.lookupvar('icinga2::feature::influxdb::ssl_key') -%>
-  ssl_key = "<%= scope['icinga2::feature::influxdb::ssl_key'] -%>"
+  ssl_key = "<%= scope['icinga2::feature::influxdb::ssl_key'] %>"
 <% end -%>
   enable_send_thresholds = <%= scope['icinga2::feature::influxdb::enable_send_thresholds'] %>
   enable_send_metadata = <%= scope['icinga2::feature::influxdb::enable_send_metadata'] %>
@@ -34,31 +34,21 @@ object InfluxdbWriter "influxdb" {
 <% end -%>
 
   host_template = {
-<% scope['icinga2::feature::influxdb::host_template'].keys.sort.each do |k| -%>
-<% if scope['icinga2::feature::influxdb::host_template'][k].is_a?(String) -%>
-    <%= k %> = "<%= scope['icinga2::feature::influxdb::host_template'][k] %>"
-<% elsif scope['icinga2::feature::influxdb::host_template'][k].is_a?(Hash) -%>
-    <%= k %> = {
-<% scope['icinga2::feature::influxdb::host_template'][k].keys.sort.each do |j| -%>
-      <%= j %> = "<%= scope['icinga2::feature::influxdb::host_template'][k][j] %>"
+    measurement = "<%= scope['icinga2::feature::influxdb::host_measurement'] %>"
+    tags = {
+<% scope['icinga2::feature::influxdb::host_tags'].keys.sort.each do |k, v| -%>
+      <%= k %> = "<%= scope['icinga2::feature::influxdb::host_tags'][k] %>"
 <% end -%>
     }
-  <% end -%>
-<% end -%>
-}
+  }
 
   service_template = {
-<% scope['icinga2::feature::influxdb::service_template'].keys.sort.each do |k| -%>
-<% if scope['icinga2::feature::influxdb::service_template'][k].is_a?(String) -%>
-    <%= k %> = "<%= scope['icinga2::feature::influxdb::service_template'][k] %>"
-<% elsif scope['icinga2::feature::influxdb::service_template'][k].is_a?(Hash) -%>
-    <%= k %> = {
-<% scope['icinga2::feature::influxdb::service_template'][k].keys.sort.each do |j| -%>
-      <%= j %> = "<%= scope['icinga2::feature::influxdb::service_template'][k][j] %>"
+    measurement = "<%= scope['icinga2::feature::influxdb::service_measurement'] %>"
+    tags = {
+<% scope['icinga2::feature::influxdb::service_tags'].keys.sort.each do |k, v| -%>
+      <%= k %> = "<%= scope['icinga2::feature::influxdb::service_tags'][k] %>"
 <% end -%>
     }
-  <% end -%>
-<% end -%>
-}
+  }
 
 }

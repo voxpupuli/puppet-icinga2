@@ -34,11 +34,17 @@
 # [*ssl_key*]
 #    Host key to accompany the ssl_cert. Default is undef.
 #
-# [*host_template*]
-#    Host template to define the InfluxDB line protocol.
+# [*host_measurement*]
+#    The value of this is used for the measurement setting in host_template. Default is  '$host.check_command$'
 #
-# [*service_template*]
-#    Service template to define the influxDB line protocol.
+# [*host_tags*]
+#    Tags defined in this hash will be set in the host_template.
+#
+#  [*service_measurement*]
+#    The value of this is used for the measurement setting in host_template. Default is  '$service.check_command$'
+#
+# [*service_tags*]
+#    Tags defined in this hash will be set in the service_template.
 #
 # [*enable_send_thresholds*]
 #    Whether to send warn, crit, min & max tagged data. Default is false.
@@ -51,6 +57,15 @@
 #
 # [*flush_threshold*]
 #    How many data points to buffer before forcing a transfer to InfluxDB. Default is 1024.
+#
+# === Example
+#
+# class { 'icinga2::feature::influxdb':
+#   host     => "10.10.0.15",
+#   username => "icinga2",
+#   password => "supersecret",
+#   database => "icinga2"
+# }
 #
 # === Authors
 #
@@ -67,8 +82,10 @@ class icinga2::feature::influxdb(
   $ssl_ca_cert            = undef,
   $ssl_cert               = undef,
   $ssl_key                = undef,
-  $host_template          = { measurement => '$host.check_command$', tags => { hostname => '$host.name$' } },
-  $service_template       = { measurement => '$service.check_command$', tags => { hostname => '$host.name$', service => '$service.name$' } },
+  $host_measurement       = '$host.check_command$',
+  $host_tags              = { hostname => '$host.name$' },
+  $service_measurement    = '$service.check_command$',
+  $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
   $enable_send_thresholds = false,
   $enable_send_metadata   = false,
   $flush_interval         = '10s',
@@ -83,8 +100,10 @@ class icinga2::feature::influxdb(
   validate_string($username)
   validate_string($password)
   validate_bool($ssl_enable)
-  validate_hash($host_template)
-  validate_hash($service_template)
+  validate_string($host_measurement)
+  validate_hash($host_tags)
+  validate_string($service_measurement)
+  validate_hash($service_tags)
   validate_bool($enable_send_thresholds)
   validate_bool($enable_send_metadata)
   validate_re($flush_interval, '^\d+[ms]*$')
