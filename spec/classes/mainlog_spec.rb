@@ -10,6 +10,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
       facts
     end
 
+
     context "#{os} with ensure => present" do
       let(:params) { {:ensure => 'present'} }
 
@@ -24,13 +25,20 @@ describe('icinga2::feature::mainlog', :type => :class) do
     end
 
 
+    context "#{os} with ensure => present" do
+      it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/mainlog.conf')
+        .with_content(/severity = "information"/)
+        .with_content(/path = "\/var\/log\/icinga2\/icinga2.log"/) }
+    end
+
+
     context "#{os} with severity => notice" do
       let(:params) { {:severity => 'notice'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/mainlog.conf')
-          .with_content(/severity = "notice"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/mainlog.conf')
+        .with_content(/severity = "notice"/) }
     end
 
 
@@ -48,10 +56,8 @@ describe('icinga2::feature::mainlog', :type => :class) do
     context "#{os} with path => /foo/bar" do
       let(:params) { {:path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/mainlog.conf')
-          .with_content(/path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/mainlog.conf')
+        .with_content(/path = "\/foo\/bar"/) }
     end
 
 
@@ -92,6 +98,22 @@ describe('icinga2::feature::mainlog', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'absent'}) }
+  end
+
+
+  context "Windows 2012 R2 with ensure => present" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/mainlog.conf')
+      .with_content(/severity = "information"/)
+      .with_content(/path = "C:\/ProgramData\/icinga2\/var\/log\/icinga2\/icinga2.log"/) }
   end
 
 
