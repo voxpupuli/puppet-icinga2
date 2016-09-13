@@ -68,6 +68,28 @@ parameter, which will allow the module to add the official [packages.icinga.org]
   }
 ```
 
+### Enable Features
+Each Icinga2 feature can be enabled or disabled by using the according classes. In addition to that, there is a set of
+default features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
+
+The default set of features can be changed by setting the `features` parameter: 
+```
+class { 'icinga2':
+  manage_repo => true,
+  features    => ['checker', 'mainlog', 'command']
+}
+```
+
+To add enable features and change their default settings, use the feature classes:
+```
+class { 'icinga2::feature::graphite':
+  host                   => '10.10.0.15',
+  port                   => 2003,
+  enable_send_thresholds => true,
+  enable_send_metadata   => true
+}
+```
+
 ### Custom configuration files
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
