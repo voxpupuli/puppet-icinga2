@@ -120,6 +120,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
     - [Class::icinga2::feature::debuglog](#class-icinga2-feature-debuglog)
     - [Class::icinga2::feature::gelf](#class-icinga2-feature-gelf)
+    - [Class::icinga2::feature::idomysql](#class-icinga2featureido-mysql)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -437,6 +438,56 @@ Source name for this instance. Default is `icinga2`
 
 ##### `enable_send_perfdata`
 Enable performance data for *CHECK RESULT* events. Default is `false`.
+
+#### Class: `icinga2::feature::idomysql`
+Enables or disables the `gelf` feature.
+
+**Parameters of `icinga2::feature::idomysql`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `ido-mysql` should be enabled. Default is `present`.
+
+##### `host`
+MySQL database host address. Defaults to `127.0.0.1`
+
+##### `port`
+MySQL database port. Defaults to `3306`
+
+##### `socket_path`
+MySQL socket path.
+
+##### `user`
+MySQL database user with read/write permission to the icinga database. Defaults to `icinga`
+
+##### `password`
+MySQL database user's password. Defaults to `icinga`
+
+##### `database`
+MySQL database name. Defaults to `icinga`
+
+##### `enable_ssl`
+Use SSL. Defaults to false. Change to true in case you want to use any of the SSL options.
+
+##### `table_prefix`
+MySQL database table prefix. Defaults to `icinga_`
+
+##### `instance_name`
+Unique identifier for the local Icinga 2 instance. Defaults to `default`
+
+##### `instance_description`
+Description for the Icinga 2 instance.
+
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Defaults to `true`
+
+##### `failover_timeout`
+Set the failover timeout in a HA cluster. Must not be lower than 60s. Defaults to `60s`
+
+##### `cleanup`
+Hash with items for historical table cleanup.
+
+##### `categories`
+Array of information types that should be written to the database.
 
 ### Private Classes
 
