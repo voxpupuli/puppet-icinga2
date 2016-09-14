@@ -90,6 +90,21 @@ class { 'icinga2::feature::graphite':
 }
 ```
 
+### Enable IDO
+The IDO feature can be enabled either in combination with MySQL or PostgreSQL. Depending on your database you need to
+enable the feature `icinga2::feature::idomysql` or `icinga2::feature::idopgsql`. Both features are capable of importing
+the base schema into the database, however this is disabled by default. Updating the database schema to another version
+is currently not supported.
+
+```
+class{ 'icinga2::feature::idomysql':
+  user => "icinga2",
+  password => "icinga2",
+  database => "icinga2",
+  import_schema => true
+}
+```
+
 ### Custom configuration files
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
@@ -488,6 +503,9 @@ Hash with items for historical table cleanup.
 
 ##### `categories`
 Array of information types that should be written to the database.
+
+##### `import_schema`
+Whether to import the MySQL schema or not. Defaults to `false`
 
 ### Private Classes
 

@@ -64,6 +64,8 @@
 # [*categories*]
 #   Array of information types that should be written to the database.
 #
+# [*import_schema*]
+#   Whether to import the MySQL schema or not. Defaults to false.
 #
 # === Authors
 #
@@ -90,6 +92,7 @@ class icinga2::feature::idomysql(
   $failover_timeout       = '60s',
   $cleanup                = {},
   $categories             = [],
+  $import_schema          = false,
 ) {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -112,9 +115,20 @@ class icinga2::feature::idomysql(
   validate_re($failover_timeout, '^\d+[ms]*$')
   validate_hash($cleanup)
   validate_array($categories)
+  validate_bool($import_schema)
 
   package { 'icinga2-ido-mysql':
     ensure => installed,
+  }
+
+  if $import_schema {
+    exec { 'idomysql_import_schema':
+      user    => 'root',
+      path    => $::path,
+      command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '/usr/share/icinga2-ido-mysql/schema/mysql.sql'",
+      unless  => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
+      require => Package['icinga2-ido-mysql'],
+    }
   }
 
   icinga2::feature { 'ido-mysql':

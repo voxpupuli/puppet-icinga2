@@ -239,6 +239,27 @@ describe('icinga2::feature::idomysql', :type => :class) do
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
+
+    context "#{os} with import_schema => true" do
+      let(:params) { {:import_schema => true} }
+
+      it { is_expected.to contain_exec('idomysql_import_schema') }
+    end
+
+
+    context "#{os} with import_schema => false" do
+      let(:params) { {:import_schema => false} }
+
+      it { should_not contain_exec('idomysql_import_schema') }
+    end
+
+
+    context "#{os} with import_schema => foo (not a valid boolean)" do
+      let(:params) { {:import_schema => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
   end
 
 end
@@ -483,6 +504,27 @@ describe('icinga2::feature::idomysql', :type => :class) do
     let(:params) { {:categories => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+  end
+
+
+  context "Windows 2012 R2 with import_schema => true" do
+    let(:params) { {:import_schema => true} }
+
+    it { is_expected.to contain_exec('idomysql_import_schema') }
+  end
+
+
+  context "Windows 2012 R2 with import_schema => false" do
+    let(:params) { {:import_schema => false} }
+
+    it { should_not contain_exec('idomysql_import_schema') }
+  end
+
+
+  context "Windows 2012 R2 with import_schema => foo (not a valid boolean)" do
+    let(:params) { {:import_schema => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 end
