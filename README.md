@@ -453,9 +453,6 @@ PostgreSQL database host address. Defaults to `127.0.0.1`
 ##### `port`
 PostgreSQL database port. Defaults to `3306`
 
-##### `socket_path`
-PostgreSQL socket path.
-
 ##### `user`
 PostgreSQL database user with read/write permission to the icinga database. Defaults to `icinga`
 
