@@ -28,7 +28,7 @@ object IdoMysqlConnection "ido-mysql" {
   }
 <% end -%>
 <% if ! scope['icinga2::feature::idomysql::categories'].empty? -%>
-  categories = [ <% scope['icinga2::feature::idomysql::categories'].each_with_index do |category, i| -%>
+  categories = [ <% scope['icinga2::feature::idomysql::categories'].sort.each_with_index do |category, i| -%>
 "<%= category -%>"<%= ',' if i < (scope['icinga2::feature::idomysql::categories'].size - 1) -%>
 <% end -%> ]
 <% end -%>
