@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature influxdb, absent disables it. Default is present.
+#   Set to present enables the feature ido-mysql, absent disables it. Default is present.
 #
 # [*host*]
 #    MySQL database host address. Defaults to '127.0.0.1'.
