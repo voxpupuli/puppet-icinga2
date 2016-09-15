@@ -25,7 +25,7 @@
 # [*ssl*]
 #    SSL settings will be set depending on this parameter.
 #      puppet: Use puppet certificates
-#      custom: Set custom paths for certificat, key and CA
+#      custom: Set custom paths for certificate, key and CA
 #      false: Disable SSL (default)
 #
 # [*ssl_ca_cert*]
