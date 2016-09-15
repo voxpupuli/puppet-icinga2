@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe('icinga2::feature::api', :type => :class) do
   let(:pre_condition) { [
-    "class { 'icinga2': features => [], }"
+    "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
   ] }
 
   on_supported_os.each do |os, facts|
@@ -31,6 +31,26 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
         .with_content(/accept_config = false/)
         .with_content(/accept_commands = false/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
+    end
+
+
+    context "#{os} with pki => puppet" do
+      let(:params) { {:pki => 'puppet'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
+    end
+
+
+    context "#{os} with pki => foo (not a valid value)" do
+      let(:params) { {:pki => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
     end
 
 
@@ -122,6 +142,40 @@ describe('icinga2::feature::api', :type => :class) do
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
       .with_content(/accept_config = false/)
       .with_content(/accept_commands = false/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt')  }
+  end
+
+
+  context "Windows 2012 R2 with pki => puppet" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:pki => 'puppet'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt')  }
+  end
+
+
+  context "Windows 2012 R2 with pki => foo (not a valid value)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:pki => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
   end
 
 

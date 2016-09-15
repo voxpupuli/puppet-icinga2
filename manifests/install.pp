@@ -40,7 +40,7 @@ class icinga2::install {
   }
 
   # anchor, i.e. for config directory set by confd parameter
-  file { [$conf_diri, $pki_dir]:
+  file { [$conf_dir, $pki_dir]:
     ensure  => directory,
     require => Package[$package]
   }
