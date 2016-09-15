@@ -78,7 +78,7 @@ class icinga2::feature::influxdb(
   $database               = 'icinga2',
   $username               = undef,
   $password               = undef,
-  $ssl_enable             = false,
+  $ssl                    = 'puppet',
   $ssl_ca_cert            = undef,
   $ssl_cert               = undef,
   $ssl_key                = undef,
@@ -92,6 +92,8 @@ class icinga2::feature::influxdb(
   $flush_threshold        = 1024
 ) {
 
+  include ::icinga2::params
+
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_ip_address($host)
@@ -99,7 +101,6 @@ class icinga2::feature::influxdb(
   validate_string($database)
   validate_string($username)
   validate_string($password)
-  validate_bool($ssl_enable)
   validate_string($host_measurement)
   validate_hash($host_tags)
   validate_string($service_measurement)
@@ -108,6 +109,52 @@ class icinga2::feature::influxdb(
   validate_bool($enable_send_metadata)
   validate_re($flush_interval, '^\d+[ms]*$')
   validate_integer($flush_threshold)
+
+  $user      = $::icinga2::params::user
+  $group     = $::icinga2::params::group
+  $node_name = $::icinga2::_constants['NodeName']
+  $ssl_dir   = "${::icinga2::params::lib_dir}/influxdb-ssl"
+
+  File {
+    owner   => $user,
+    group   => $group,
+  }
+
+
+  if $ssl {
+    file { $ssl_dir:
+      ensure => directory,
+    }
+
+    case $ssl {
+      'puppet': {
+        file { "${ssl_dir}/${node_name}.key":
+          ensure => file,
+          mode   => $::kernel ? {
+            'windows' => undef,
+            default   => '0600',
+          },
+          source => $::settings::hostprivkey,
+          tag    => 'icinga2::config::file',
+        }
+
+       file { "${ssl_dir}/${node_name}.crt":
+         ensure => file,
+         source => $::settings::hostcert,
+         tag    => 'icinga2::config::file',
+       }
+
+       file { "${ssl_dir}/ca.crt":
+         ensure => file,
+         source => $::settings::localcacert,
+         tag    => 'icinga2::config::file',
+       }
+      }
+      default: {
+        fail("SSL method ${ssl} is not supported.")
+      }
+    }
+  }
 
   icinga2::feature { 'influxdb':
     ensure => $ensure,
