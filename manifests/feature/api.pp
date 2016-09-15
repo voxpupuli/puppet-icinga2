@@ -24,9 +24,7 @@
 #
 class icinga2::feature::api(
   $ensure          = present,
-  $key             = true,
-  $cert            = true,
-  $cacert          = true,
+  $pki             = 'puppet',
   $accept_config   = false,
   $accept_commands = false,
 ) {
@@ -35,9 +33,8 @@ class icinga2::feature::api(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_bool($key)
-  validate_bool($cert)
-  validate_bool($cacert)
+  validate_re($pki, [ '^puppet$', '^none$' ],
+    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
 
@@ -54,10 +51,10 @@ class icinga2::feature::api(
 
   file { $pki_dir:
     ensure => directory,
+    tag    => 'icinga2::config::file',
   }
 
-  # host private key
-  if $key {
+  if $pki == 'puppet' {
     file { "${pki_dir}/${node_name}.key":
       ensure => file,
       mode   => $::kernel ? {
@@ -67,19 +64,13 @@ class icinga2::feature::api(
       source => $::settings::hostprivkey,
       tag    => 'icinga2::config::file',
     }
-  }
 
-  # host certificate
-  if $cert {
     file { "${pki_dir}/${node_name}.crt":
       ensure => file,
       source => $::settings::hostcert,
       tag    => 'icinga2::config::file',
     }
-  }
 
-  # ca certificat
-  if $cacert {
     file { "${pki_dir}/ca.crt":
       ensure => file,
       source => $::settings::localcacert,
