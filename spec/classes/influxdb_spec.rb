@@ -138,29 +138,80 @@ describe('icinga2::feature::influxdb', :type => :class) do
     end
 
 
-    context "#{os} with ssl_enable => true" do
-      let(:params) { {:ssl_enable => true} }
+    context "#{os} with ssl => false" do
+      let(:params) { {:ssl => false} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
-                              .with_content(/ssl_enable = true/) }
+                              .with_content(/ssl_enable = false/)
+                              .without_content(/ssl_ca_cert =/)
+                              .without_content(/ssl_cert =/)
+                              .without_content(/ssl_key =/)}
     end
 
 
-    context "#{os} with ssl_enable => false" do
-      let(:params) { {:ssl_enable => false} }
-
-      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
-                              .with_content(/ssl_enable = false/) }
-    end
-
-    context "#{os} with ssl_enable => foo (not a valid boolean)" do
-      let(:params) { {:ssl_enable => 'foo'} }
-
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
+    context "#{os} with ssl => puppet" do
+      let(:params) { {:ssl => 'puppet'} }
+      let(:facts) do
+        facts.merge({
+                        :fqdn => 'foo.bar.com',
+                    })
       end
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
+                              .with_content(/ssl_enable = true/)
+                              .with_content(/ssl_ca_cert = "\/etc\/icinga2\/pki\/influxdb\/ca.crt"/)
+                              .with_content(/ssl_cert = "\/etc\/icinga2\/pki\/influxdb\/foo.bar.com.crt"/)
+                              .with_content(/ssl_key = "\/etc\/icinga2\/pki\/influxdb\/foo.bar.com.key"/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/influxdb/ca.crt') }
+      it { is_expected.to contain_file('/etc/icinga2/pki/influxdb/foo.bar.com.crt') }
+      it { is_expected.to contain_file('/etc/icinga2/pki/influxdb/foo.bar.com.key') }
+    end
+
+
+    context "#{os} with ssl => custom" do
+      let(:params) { {:ssl => 'custom', :ssl_ca_cert => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/influxdb.conf')
+                              .with_content(/ssl_enable = true/)
+                              .with_content(/ssl_ca_cert = "\/foo\/ca"/)
+                              .with_content(/ssl_cert = "\/foo\/cert"/)
+                              .with_content(/ssl_key = "\/foo\/key"/)}
+    end
+
+
+    context "#{os} with ssl => custom (without ssl_ca_cert, ssl_cert, ssl_key)" do
+      let(:params) { {:ssl => 'custom'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => custom, ssl_ca_cert => 'foo' (invalid path)" do
+      let(:params) { {:ssl => 'custom', :ssl_ca_cert => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => custom, ssl_cert => 'foo' (invalid path)" do
+      let(:params) { {:ssl => 'custom', :ssl_ca_cert => 'foo', :ssl_cert => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => custom, ssl_key => 'foo' (invalid path)" do
+      let(:params) { {:ssl => 'custom', :ssl_ca_cert => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => foo (not a valid value)" do
+      let(:params) { {:ssl => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
     end
 
 
@@ -346,7 +397,8 @@ describe('icinga2::feature::influxdb', :type => :class) do
     :architecture => 'x86_64',
     :osfamily => 'Windows',
     :operatingsystem => 'Windows',
-    :operatingsystemmajrelease => '2012 R2'
+    :operatingsystemmajrelease => '2012 R2',
+    :fqdn => 'foo.bar.com'
   } }
 
   context 'Windows 2012 R2 with ensure => present' do
@@ -477,30 +529,75 @@ describe('icinga2::feature::influxdb', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with ssl_enable => true" do
-    let(:params) { {:ssl_enable => true} }
+  context "Windows 2012 R2 with ssl => false" do
+    let(:params) { {:ssl => false} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
-                            .with_content(/ssl_enable = true/) }
+                            .with_content(/ssl_enable = false/)
+                            .without_content(/ssl_ca_cert =/)
+                            .without_content(/ssl_cert =/)
+                            .without_content(/ssl_key =/)}
   end
 
 
-  context "Windows 2012 R2 with ssl_enable => false" do
-    let(:params) { {:ssl_enable => false} }
+  context "Windows 2012 R2 with ssl => puppet" do
+    let(:params) { {:ssl => 'puppet'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
-                            .with_content(/ssl_enable = false/) }
+                            .with_content(/ssl_enable = true/)
+                            .with_content(/ssl_ca_cert = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/influxdb\/ca.crt"/)
+                            .with_content(/ssl_cert = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/influxdb\/foo.bar.com.crt"/)
+                            .with_content(/ssl_key = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/influxdb\/foo.bar.com.key"/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/influxdb/ca.crt') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/influxdb/foo.bar.com.crt') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/influxdb/foo.bar.com.key') }
   end
 
 
-  context "Windows 2012 R2 with ssl_enable => foo (not a valid boolean)" do
-    let(:params) { {:ssl_enable => 'foo'} }
+  context "Windows 2012 R2 with ssl => custom" do
+    let(:params) { {:ssl => 'custom', :ssl_ca_cert => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf')
+                            .with_content(/ssl_enable = true/)
+                            .with_content(/ssl_ca_cert = "\/foo\/ca"/)
+                            .with_content(/ssl_cert = "\/foo\/cert"/)
+                            .with_content(/ssl_key = "\/foo\/key"/)}
+  end
+
+
+  context "Windows 2012 R2 with ssl => custom (without ssl_ca_cert, ssl_cert, ssl_key)" do
+    let(:params) { {:ssl => 'custom'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => custom, ssl_ca_cert => 'foo' (invalid path)" do
+    let(:params) { {:ssl => 'custom', :ssl_ca_cert => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => custom, ssl_cert => 'foo' (invalid path)" do
+    let(:params) { {:ssl => 'custom', :ssl_ca_cert => 'foo', :ssl_cert => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => custom, ssl_key => 'foo' (invalid path)" do
+    let(:params) { {:ssl => 'custom', :ssl_ca_cert => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => foo (not a valid value)" do
+    let(:params) { {:ssl => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
   end
 
 
