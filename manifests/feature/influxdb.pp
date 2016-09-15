@@ -128,12 +128,13 @@ class icinga2::feature::influxdb(
     validate_re($ssl, [ '^puppet$', '^custom$' ],
       "${ssl} isn't supported. Valid values are 'puppet' and 'custom'.")
 
-    file { $ssl_dir:
-      ensure => directory,
-    }
-
     case $ssl {
       'puppet': {
+        file { $ssl_dir:
+          ensure => directory,
+          before => Icinga2::Feature['influxdb']
+        }
+
         file { "${ssl_dir}/${node_name}.key":
           ensure => file,
           mode   => $::kernel ? {
