@@ -102,5 +102,6 @@ class icinga2::feature::idopgsql(
 
   icinga2::feature { 'ido-pgsql':
     ensure => $ensure,
+    require => Package['icinga2-ido-pgsql']
   }
 }
