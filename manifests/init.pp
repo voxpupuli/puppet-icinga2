@@ -149,6 +149,9 @@ class icinga2(
     }
   }
 
+  # merge constants with defaults
+  $_constants = merge($::icinga2::params::constants, $constants)
+
   anchor { '::icinga2::begin':
     notify => Class['::icinga2::service']
   }

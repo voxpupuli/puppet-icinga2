@@ -22,17 +22,21 @@
 # [*password*]
 #    InfluxDB user password. Default is undef.
 #
-# [*ssl_enable*]
-#    Whether to use a TLS stream. Defaults to false.
+# [*ssl*]
+#    SSL settings will be set depending on this parameter.
+#      puppet: Use puppet certificates
+#      custom: Set custom paths for certificat, key and CA
+#      false: Disable SSL (default)
 #
 # [*ssl_ca_cert*]
-#    CA certificate to validate the remote host. Default is undef.
+#    CA certificate to validate the remote host. Only valid if ssl is set to 'custom'. Default is undef.
 #
 # [*ssl_cert*]
-#    Host certificate to present to the remote host for mutual verification. Default is undef.
+#    Host certificate to present to the remote host for mutual verification. 
+#    Only valid if ssl is set to 'custom'. Default is undef..
 #
 # [*ssl_key*]
-#    Host key to accompany the ssl_cert. Default is undef.
+#    Host key to accompany the ssl_cert. Only valid if ssl is set to 'custom'. Default is undef.
 #
 # [*host_measurement*]
 #    The value of this is used for the measurement setting in host_template. Default is  '$host.check_command$'
@@ -78,7 +82,7 @@ class icinga2::feature::influxdb(
   $database               = 'icinga2',
   $username               = undef,
   $password               = undef,
-  $ssl                    = 'puppet',
+  $ssl                    = false,
   $ssl_ca_cert            = undef,
   $ssl_cert               = undef,
   $ssl_key                = undef,
@@ -113,15 +117,17 @@ class icinga2::feature::influxdb(
   $user      = $::icinga2::params::user
   $group     = $::icinga2::params::group
   $node_name = $::icinga2::_constants['NodeName']
-  $ssl_dir   = "${::icinga2::params::lib_dir}/influxdb-ssl"
+  $ssl_dir   = "${::icinga2::params::pki_dir}/influxdb"
 
   File {
     owner   => $user,
     group   => $group,
   }
 
-
   if $ssl {
+    validate_re($ssl, [ '^puppet$', '^custom$' ],
+      "${ssl} isn't supported. Valid values are 'puppet' and 'custom'.")
+
     file { $ssl_dir:
       ensure => directory,
     }
@@ -149,6 +155,11 @@ class icinga2::feature::influxdb(
          source => $::settings::localcacert,
          tag    => 'icinga2::config::file',
        }
+      }
+      'custom': {
+        validate_absolute_path($ssl_ca_cert)
+        validate_absolute_path($ssl_cert)
+        validate_absolute_path($ssl_key)
       }
       default: {
         fail("SSL method ${ssl} is not supported.")

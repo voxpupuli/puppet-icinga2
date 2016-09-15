@@ -19,7 +19,13 @@ object InfluxdbWriter "influxdb" {
   ssl_ca_cert = "<%= scope.lookupvar('icinga2::feature::influxdb::ssl_dir') %>/ca.crt"
   ssl_cert = "<%= scope.lookupvar('icinga2::feature::influxdb::ssl_dir') %>/<%= scope.lookupvar('icinga2::feature::influxdb::node_name') %>.crt"
   ssl_key = "<%= scope.lookupvar('icinga2::feature::influxdb::ssl_dir') %>/<%= scope.lookupvar('icinga2::feature::influxdb::node_name') %>.key"
+<% when "custom" -%>
+  ssl_ca_cert = "<%= scope.lookupvar('icinga2::feature::influxdb::ssl_ca_cert') %>"
+  ssl_cert = "<%= scope.lookupvar('icinga2::feature::influxdb::ssl_cert') %>"
+  ssl_key = "<%= scope.lookupvar('icinga2::feature::influxdb::ssl_key') %>"
 <% end -%>
+<% else -%>
+  ssl_enable = false
 <% end -%>
   enable_send_thresholds = <%= scope['icinga2::feature::influxdb::enable_send_thresholds'] %>
   enable_send_metadata = <%= scope['icinga2::feature::influxdb::enable_send_metadata'] %>
