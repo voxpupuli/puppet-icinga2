@@ -53,11 +53,7 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with accept_config => foo (not a valid boolean)" do
       let(:params) { {:accept_config => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('api')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
 
@@ -80,11 +76,7 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with accept_commands => foo (not a valid boolean)" do
       let(:params) { {:accept_commands => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('api')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
   end
 
@@ -173,11 +165,7 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:accept_config => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('api')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 
@@ -221,10 +209,6 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:accept_commands => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('api')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 end

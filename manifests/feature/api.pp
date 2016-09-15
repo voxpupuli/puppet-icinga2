@@ -7,6 +7,25 @@
 # [*ensure*]
 #   Set to present enables the feature api, absent disabled it. Default is present.
 #
+# [*pki*]
+#   Choose the source of certificates and key. Valid parameters are 'puppet' or 'none'.
+#   'puppet' copies key, cert and CAcert from the Puppet ssl directory to the pki directory
+#   /etc/icinga2/pki on Linux or C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   'none' does nothing and you've to manage the files on your own as file resources
+#   or you use ssl_key, ssl_cert, ssl_ca_cert parameters. Default to puppet.
+#
+# [*ssl_key*] NOT IMPLEMENTED
+#   The private key in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
+#   with the suffix '.key'. For use 'pki' must set to 'none'. Default to undef.
+#
+# [*ssl_cert*] NOT IMPLEMENTED
+#   The certificate in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
+#   with the suffix '.crt'. For use 'pki' must set to 'none'. Default to undef.
+#
+# [*ssl_ca_cert*] NOT IMPLEMENTED
+#   The CA root certificate in a base64 encoded string to store in pki directory, file is named to 'ca.crt'.
+#   For use 'pki' must set to 'none'. Default to undef.
+#
 # [*accept_config*]
 #   Accept zone configuration. Default to false.
 #
@@ -15,8 +34,44 @@
 #
 # === Variables
 #
-# [*NodeName*]
+# [*node_name*]
 #   Certname and Keyname based on constant NodeName.
+#
+# === Examples
+#
+# Use the puppet certificates and key copy these files to the 'pki' directory
+# named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName
+# is set to 'hostname'.
+#
+#   include icinga2::feature::api
+#
+# To use your own certificates and key as file resources if the contant NodeName is
+# set to fqdn (default) do:
+#
+#   class { 'icinga2::feature::api':
+#     pki => 'none',
+#   }
+#
+#   File {
+#     owner => 'icnga',
+#     group => 'icinga',
+#   }
+#
+#   file { "/etc/icinga2/pki/${::fqdn}.key":
+#     ensure => file,
+#     tag    => 'icinga2::config::file,
+#     source => "puppet:///modules/profiles/private_keys/${::fqdn}.key",
+#   }
+#   ...
+#
+# If you like to manage the certificates and the key as strings in base64 encoded format:
+#
+#   class { 'icinga2::feature::api':
+#     pki         => 'none',
+#     ssl_ca_cert => '-----BEGIN CERTIFICATE----- ...',
+#     ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
+#     ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
+#   }
 #
 # === Authors
 #
@@ -47,11 +102,6 @@ class icinga2::feature::api(
   File {
     owner   => $user,
     group   => $group,
-  }
-
-  file { $pki_dir:
-    ensure => directory,
-    tag    => 'icinga2::config::file',
   }
 
   if $pki == 'puppet' {
