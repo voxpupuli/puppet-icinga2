@@ -55,11 +55,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with host => foo (not a valid IP address)" do
       let(:params) { {:host => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" is not a valid IP address/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
     end
 
 
@@ -74,11 +70,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
@@ -93,11 +85,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with database => 123 (not a valid string)" do
       let(:params) { {:database => 123} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /123 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
 
@@ -112,11 +100,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with username => 123 (not a valid string)" do
       let(:params) { {:username => 123} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /123 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
     context "#{os} with password => foo" do
@@ -130,11 +114,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with password => 123 (not a valid string)" do
       let(:params) { {:password => 123} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /123 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
 
@@ -226,11 +206,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with host_measurement => 123 (not a valid string)" do
       let(:params) { {:host_measurement => 123} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /123 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
 
@@ -245,11 +221,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with host_tags => 'foo' (not a valid hash)" do
       let(:params) { {:host_tags => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
 
 
@@ -264,11 +236,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with service_measurement => 123 (not a valid string)" do
       let(:params) { {:service_measurement => 123} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /123 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
 
@@ -283,11 +251,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with service_tags => 'foo' (not a valid hash)" do
       let(:params) { {:service_tags => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
 
 
@@ -310,11 +274,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_send_thresholds => foo (not a valid boolean)" do
       let(:params) { {:enable_send_thresholds => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
 
@@ -337,11 +297,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_send_metadata => foo (not a valid boolean)" do
       let(:params) { {:enable_send_metadata => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
     context "#{os} with flush_interval => 50s" do
@@ -355,11 +311,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with flush_interval => foo (not a valid value)" do
       let(:params) { {:flush_interval => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /"foo" does not match/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -374,15 +326,9 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with flush_threshold => foo (not a valid integer)" do
       let(:params) { {:flush_threshold => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('influxdb')
-        }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
-
   end
-
 end
 
 
@@ -445,11 +391,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with host => foo (not a valid IP address)" do
     let(:params) { {:host => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" is not a valid IP address/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
   end
 
 
@@ -464,11 +406,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
@@ -483,11 +421,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with database => 123 (not a valid string)" do
     let(:params) { {:database => 123} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /123 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 
@@ -502,11 +436,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with username => 123 (not a valid string)" do
     let(:params) { {:username => 123} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /123 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 
@@ -521,11 +451,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with password => 123 (not a valid string)" do
     let(:params) { {:password => 123} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /123 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 
@@ -612,11 +538,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with host_measurement => 123 (not a valid string)" do
     let(:params) { {:host_measurement => 123} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /123 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 
@@ -631,11 +553,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with host_tags => 'foo' (not a valid hash)" do
     let(:params) { {:host_tags => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
@@ -650,11 +568,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with service_measurement => 123 (not a valid string)" do
     let(:params) { {:service_measurement => 123} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /123 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 
@@ -669,11 +583,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with service_tags => 'foo' (not a valid hash)" do
     let(:params) { {:service_tags => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" is not a Hash/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
@@ -696,11 +606,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_send_thresholds => foo (not a valid boolean)" do
     let(:params) { {:enable_send_thresholds => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 
@@ -723,11 +629,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_send_metadata => foo (not a valid boolean)" do
     let(:params) { {:enable_send_metadata => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
   context "Windows 2012 R2 with flush_interval => 50s" do
@@ -741,11 +643,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with flush_interval => foo (not a valid value)" do
     let(:params) { {:flush_interval => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /"foo" does not match/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
@@ -760,11 +658,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with flush_threshold => foo (not a valid integer)" do
     let(:params) { {:flush_threshold => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('influxdb')
-      }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
-
 end
