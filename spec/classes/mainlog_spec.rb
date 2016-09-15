@@ -45,11 +45,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
     context "#{os} with severity => foo (not a valid value)" do
       let(:params) { {:severity => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('mainlog')
-        }.to raise_error(Puppet::Error, /"foo" does not match/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -64,11 +60,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
     context "#{os} with path => foo/bar (not an absolute path)" do
       let(:params) { {:path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('mainlog')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
   end
 
@@ -144,11 +136,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
     } }
     let(:params) { {:severity => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('mainlog')
-      }.to raise_error(Puppet::Error, /"foo" does not match/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
@@ -179,10 +167,6 @@ describe('icinga2::feature::mainlog', :type => :class) do
     } }
     let(:params) { {:path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('mainlog')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 end

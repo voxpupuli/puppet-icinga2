@@ -164,11 +164,7 @@ describe('icinga2', :type => :class) do
 
   context 'on unsupported plattform' do
     let(:facts) { {:osfamily => 'foo'} }
-    it do
-      expect {
-        is_expected.to contain_class('icinga')
-      }.to raise_error(Puppet::Error, /foo is not supported/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /foo is not supported/) }
   end
 
 end

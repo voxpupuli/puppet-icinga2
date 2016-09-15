@@ -48,11 +48,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with rotation_interval => foo (not a valid value)" do
       let(:params) { {:rotation_interval => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('perfdata')
-        }.to raise_error(Puppet::Error, /"foo" does not match/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -67,11 +63,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with host_perfdata_path => foo/bar (not an absolute path)" do
       let(:params) { {:host_perfdata_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('perfdata')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
@@ -86,11 +78,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with service_perfdata_path => foo/bar (not an absolute path)" do
       let(:params) { {:service_perfdata_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('perfdata')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
@@ -105,11 +93,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with host_temp_path => foo/bar (not an absolute path)" do
       let(:params) { {:host_temp_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('perfdata')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
@@ -126,11 +110,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with service_temp_path => foo/bar (not an absolute path)" do
       let(:params) { {:service_temp_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('perfdata')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
   end
 
@@ -209,11 +189,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     } }
     let(:params) { {:rotation_interval => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('perfdata')
-      }.to raise_error(Puppet::Error, /"foo" does not match/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
@@ -244,11 +220,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     } }
     let(:params) { {:host_perfdata_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('perfdata')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
@@ -279,11 +251,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     } }
     let(:params) { {:service_perfdata_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('perfdata')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
@@ -314,11 +282,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     } }
     let(:params) { {:host_temp_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('perfdata')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
@@ -349,10 +313,6 @@ describe('icinga2::feature::perfdata', :type => :class) do
     } }
     let(:params) { {:service_temp_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('perfdata')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 end

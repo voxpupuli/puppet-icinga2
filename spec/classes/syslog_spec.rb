@@ -44,11 +44,7 @@ describe('icinga2::feature::syslog', :type => :class) do
     context "#{os} with severity => foo (not a valid value)" do
       let(:params) { {:severity => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('syslog')
-        }.to raise_error(Puppet::Error, /"foo" does not match/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
   end
 
@@ -123,10 +119,6 @@ describe('icinga2::feature::syslog', :type => :class) do
     } }
     let(:params) { {:severity => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('syslog')
-      }.to raise_error(Puppet::Error, /"foo" does not match/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 end

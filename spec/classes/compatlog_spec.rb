@@ -44,11 +44,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
     context "#{os} with rotation_method => foo (not a valid value)" do
       let(:params) { {:rotation_method => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('compatlog')
-        }.to raise_error(Puppet::Error, /"foo" does not match/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -65,11 +61,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
     context "#{os} with log_dir => foo/bar (not an absolute path)" do
       let(:params) { {:log_dir => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('compatlog')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
   end
 
@@ -145,11 +137,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
     } }
     let(:params) { {:rotation_method => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('compatlog')
-      }.to raise_error(Puppet::Error, /"foo" does not match/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
@@ -180,10 +168,6 @@ describe('icinga2::feature::compatlog', :type => :class) do
     } }
     let(:params) { {:log_dir => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('compatlog')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 end

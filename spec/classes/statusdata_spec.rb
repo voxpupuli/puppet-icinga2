@@ -46,11 +46,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with update_interval => foo (not a valid value)" do
       let(:params) { {:update_interval => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('statusdata')
-        }.to raise_error(Puppet::Error, /"foo" does not match/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -65,11 +61,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with status_path => foo/bar (not an absolute path)" do
       let(:params) { {:status_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('statusdata')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
@@ -86,11 +78,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with objects_path => foo/bar (not an absolute path)" do
       let(:params) { {:objects_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('statusdata')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
   end
 
@@ -167,11 +155,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     let(:params) { {:update_interval => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('statusdata')
-      }.to raise_error(Puppet::Error, /"foo" does not match/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
@@ -202,11 +186,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     let(:params) { {:status_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('statusdata')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
@@ -237,10 +217,6 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     let(:params) { {:objects_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('statusdata')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 end

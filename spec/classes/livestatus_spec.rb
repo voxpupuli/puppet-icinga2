@@ -48,11 +48,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_type => foo (not a valid value)" do
       let(:params) { {:socket_type => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('livestatus')
-        }.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./) }
     end
 
 
@@ -67,11 +63,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with bind_host => foo (not a valid IP address)" do
       let(:params) { {:bind_host => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('livestatus')
-        }.to raise_error(Puppet::Error, /"foo" is not a valid IP address/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
     end
 
 
@@ -88,11 +80,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with bind_port => foo (not a valid integer)" do
       let(:params) { {:bind_port => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('livestatus')
-        }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
@@ -109,11 +97,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_path => foo/bar (not an absolute path)" do
       let(:params) { {:socket_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('livestatus')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
@@ -130,11 +114,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with compat_log_path => foo/bar (not an absolute path)" do
       let(:params) { {:compat_log_path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('livestatus')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
   end
 
@@ -213,11 +193,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:socket_type => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('livestatus')
-      }.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./) }
   end
 
 
@@ -248,11 +224,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:bind_host => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('livestatus')
-      }.to raise_error(Puppet::Error, /"foo" is not a valid IP address/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
   end
 
 
@@ -283,11 +255,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:bind_port => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('livestatus')
-      }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
@@ -318,11 +286,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:socket_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('livestatus')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
@@ -353,10 +317,6 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:compat_log_path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('livestatus')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 end

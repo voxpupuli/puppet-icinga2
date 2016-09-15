@@ -44,11 +44,7 @@ describe('icinga2::feature::debuglog', :type => :class) do
     context "#{os} with path => foo/bar (not an absolute path)" do
       let(:params) { {:path => 'foo/bar'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('debuglog')
-        }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
   end
 
@@ -123,10 +119,6 @@ describe('icinga2::feature::debuglog', :type => :class) do
     } }
     let(:params) { {:path => 'foo/bar'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('debuglog')
-      }.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 end

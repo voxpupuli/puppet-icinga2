@@ -49,11 +49,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with host => foo (not a valid IP address)" do
       let(:params) { {:host => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('graphite')
-        }.to raise_error(Puppet::Error, /"foo" is not a valid IP address/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
     end
 
 
@@ -68,11 +64,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('graphite')
-        }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
@@ -87,11 +79,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with host_name_template => 4247 (not a valid string)" do
       let(:params) { {:host_name_template => 4247} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('graphite')
-        }.to raise_error(Puppet::Error, /4247 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -106,11 +94,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with service_name_template => foo (not a valid string)" do
       let(:params) { {:service_name_template => 4247} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('graphite')
-        }.to raise_error(Puppet::Error, /4247 is not a string/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -133,11 +117,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_thresholds => foo (not a valid boolean)" do
       let(:params) { {:enable_send_thresholds => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('graphite')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
 
@@ -160,11 +140,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_metadata => foo (not a valid boolean)" do
       let(:params) { {:enable_send_metadata => 'foo'} }
 
-      it do
-        expect {
-          is_expected.to contain_icinga2__feature('graphite')
-        }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-      end
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
   end
 
@@ -242,11 +218,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:host => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('graphite')
-      }.to raise_error(Puppet::Error, /"foo" is not a valid IP address/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
   end
 
 
@@ -275,11 +247,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:port => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('graphite')
-      }.to raise_error(Puppet::Error, /first argument to be an Integer/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
@@ -308,11 +276,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:host_name_template => 4247} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('graphite')
-      }.to raise_error(Puppet::Error, /4247 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -341,11 +305,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:service_name_template => 4247} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('graphite')
-      }.to raise_error(Puppet::Error, /4247 is not a string/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -389,11 +349,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:enable_send_thresholds => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('graphite')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 
@@ -437,10 +393,6 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:enable_send_metadata => 'foo'} }
 
-    it do
-      expect {
-        is_expected.to contain_icinga2__feature('graphite')
-      }.to raise_error(Puppet::Error, /"foo" is not a boolean/)
-    end
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 end
