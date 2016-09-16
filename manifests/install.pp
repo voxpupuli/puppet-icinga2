@@ -23,16 +23,21 @@ class icinga2::install {
 
   if $::osfamily == 'windows' { Package { provider => chocolatey, } }
 
-  $package        = $icinga2::params::package
-  $conf_dir       = $icinga2::params::conf_dir
-  $pki_dir        = $icinga2::params::pki_dir
-  $purge_features = $icinga2::purge_features
+  $package        = $::icinga2::params::package
+  $conf_dir       = $::icinga2::params::conf_dir
+  $purge_features = $::icinga2::purge_features
+  $pki_dir        = $::icinga2::params::pki_dir
 
   package { $package:
     ensure => installed,
   }
 
-  file { "${conf_dir}/features-enabled":
+  file { $pki_dir:
+    ensure => directory,
+    require => Package[$package],
+  }
+
+  file { "${conf_dir}/features-enabled": 
     ensure  => directory,
     purge   => $purge_features,
     recurse => $purge_features,
