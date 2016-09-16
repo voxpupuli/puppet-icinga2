@@ -62,6 +62,13 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
+    context "#{os} with ssl_key_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:ssl_key_path => 'foo/bar'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    end
+
+
     context "#{os} with ssl_cert_path = /foo/bar" do
       let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
@@ -70,11 +77,25 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
+    context "#{os} with ssl_cert_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:ssl_cert_path => 'foo/bar'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    end
+
+
     context "#{os} with ssl_ca_path = /foo/bar" do
       let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
         .with_content(/ca_path = \/foo\/bar/) }
+    end
+
+
+    context "#{os} with ssl_ca_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:ssl_ca_path => 'foo/bar'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
@@ -200,6 +221,93 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:pki => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_key_path = /foo/bar" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ssl_key_path => '/foo/bar'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+      .with_content(/key_path = \/foo\/bar/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_key_path = foo/bar (not a valid absolute path)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ssl_key_path => 'foo/bar'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_cert_path = /foo/bar" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ssl_cert_path => '/foo/bar'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+      .with_content(/cert_path = \/foo\/bar/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_cert_path = foo/bar (not a valid absolute path)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ssl_cert_path => 'foo/bar'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_ca_path = /foo/bar" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ssl_ca_path => '/foo/bar'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+      .with_content(/ca_path = \/foo\/bar/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_ca_path = foo/bar (not a valid absolute path)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ssl_ca_path => 'foo/bar'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
