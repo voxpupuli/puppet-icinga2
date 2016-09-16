@@ -25,7 +25,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
     end
 
 
-    context "#{os} with ensure => present" do
+    context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'present'}) }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/mainlog.conf')
@@ -93,7 +93,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with ensure => present" do
+  context "Windows 2012 R2 with all defaults" do
     let(:facts) { {
       :kernel => 'Windows',
       :architecture => 'x86_64',
