@@ -1,0 +1,23 @@
+// managed by puppet
+
+library "perfdata"
+
+object InfluxdbWriter "influxdb" {
+  host = "<%= scope['icinga2::feature::influxdb::host'] %>"
+  port = <%= scope['icinga2::feature::influxdb::port'] %>
+  database = "<%= scope['icinga2::feature::influxdb::database'] %>"
+
+  <%- if scope['icinga2::feature::influxdb::username'] %>
+  username = "<%= scope['icinga2::feature::influxdb::username'] %>"
+  <%- end -%>
+  <%- if scope['icinga2::feature::influxdb::password'] %>
+  password = "<%= scope['icinga2::feature::influxdb::password'] %>"
+  <%- end -%>
+
+  host_template = <%= scope['icinga2::feature::influxdb::host_template'] %>
+  service_template = <%= scope['icinga2::feature::influxdb::service_template'] %>
+  enable_send_thresholds = <%= scope['icinga2::feature::influxdb::enable_send_thresholds'] %>
+  enable_send_metadata = <%= scope['icinga2::feature::influxdb::enable_send_metadata'] %>
+  flush_interval = <%= scope['icinga2::feature::influxdb::flush_interval'] %>
+  flush_threshold = <%= scope['icinga2::feature::influxdb::flush_threshold'] %>
+}

@@ -290,6 +290,64 @@ Send threholds as metrics. Default is false.
 ##### `enable_send_metadata`
 Send metadata as metrics. Default is false.
 
+#### Class: `icinga2::feature::influxdb`
+Enables or disables the `influxdb` feature.
+
+**Parameters of `icinga2::feature::influxdb`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `graphite` should be enabled. Default is `present`.
+
+##### `host`
+InfluxDB host address. Default is `127.0.0.1`.
+
+##### `port`
+InfluxDB port. Default is `8086`.
+
+##### `database`
+InfluxDB database to store the metrics in. Default is 'icinga2'.
+
+##### `username`
+InfluxDB username to post the results with. Default it is not defined.
+
+##### `password`
+InfluxDB password to post the results with. Default it is not defined.
+
+##### `host_template`
+Template for metric path of hosts. Default is:
+```
+{
+  measurement = "$host.check_command$"
+  tags = {
+    hostname = "$host.name$"
+  }
+}
+```
+
+##### `service_template`
+Template for metric path of services. Default is:
+```
+{
+  measurement = "$service.check_command$"
+  tags = {
+    hostname = "$host.name$"
+    service  = "$service.name$"
+  }
+}
+```
+
+##### `enable_send_thresholds`
+Send threholds as metrics. Default is false.
+
+##### `enable_send_metadata`
+Send metadata as metrics. Default is false.
+
+##### `flush_interval`
+How often to flush to InfluxDB host. Default is 10.
+
+##### `flush_threshold`
+Threshold at which to flush early before the interval is up. Default is 1024.
+
 #### Class: `icinga2::feature::livestatus`
 Enables or disables the `livestatus` feature.
 
