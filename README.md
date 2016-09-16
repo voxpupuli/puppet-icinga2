@@ -73,7 +73,7 @@ Each Icinga2 feature can be enabled or disabled by using the according classes. 
 default features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
 
 The default set of features can be changed by setting the `features` parameter: 
-```
+``` puppet
 class { 'icinga2':
   manage_repo => true,
   features    => ['checker', 'mainlog', 'command']
@@ -81,7 +81,7 @@ class { 'icinga2':
 ```
 
 To add enable features and change their default settings, use the feature classes:
-```
+``` puppet
 class { 'icinga2::feature::graphite':
   host                   => '10.10.0.15',
   port                   => 2003,
@@ -486,7 +486,7 @@ The value of this is used for the measurement setting in host_template. Default 
 ##### `host_tags`
 Tags defined in this hash will be set in the host_template.
 
-```
+``` puppet
 class { 'icinga2::feature::influxdb':
   host_measurement => '$host.check_command$'
   host_tags        => { hostname => '$host.name$' }
@@ -499,7 +499,7 @@ The value of this is used for the measurement setting in host_template. Default 
 ##### `service_tags`
 Tags defined in this hash will be set in the service_template.
 
-```
+``` puppet
 class { 'icinga2::feature::influxdb':
   service_measurement => '$service.check_command$',
   service_tags        => { hostname => '$host.name$', service => '$service.name$' }
