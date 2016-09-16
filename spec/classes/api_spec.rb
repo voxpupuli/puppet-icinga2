@@ -54,6 +54,30 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
+    context "#{os} with ssl_key_path = /foo/bar" do
+      let(:params) { {:ssl_key_path => '/foo/bar'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+        .with_content(/key_path = \/foo\/bar/) }
+    end
+
+
+    context "#{os} with ssl_cert_path = /foo/bar" do
+      let(:params) { {:ssl_cert_path => '/foo/bar'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+        .with_content(/cert_path = \/foo\/bar/) }
+    end
+
+
+    context "#{os} with ssl_ca_path = /foo/bar" do
+      let(:params) { {:ssl_ca_path => '/foo/bar'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+        .with_content(/ca_path = \/foo\/bar/) }
+    end
+
+
     context "#{os} with accept_config => true" do
       let(:params) { {:accept_config => true} }
 

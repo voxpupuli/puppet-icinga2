@@ -127,7 +127,7 @@ class icinga2::feature::api(
     $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
   if $ssl_ca_path {
     validate_absolute_path($ssl_ca_path)
-    $_ssl_cat_path = $ssl_cat_path }
+    $_ssl_ca_path = $ssl_ca_path }
   else {
     $_ssl_ca_path = "${pki_dir}/ca.crt" }
 
