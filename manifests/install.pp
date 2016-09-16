@@ -32,12 +32,7 @@ class icinga2::install {
     ensure => installed,
   }
 
-  file { $pki_dir:
-    ensure => directory,
-    require => Package[$package],
-  }
-
-  file { "${conf_dir}/features-enabled": 
+  file { "${conf_dir}/features-enabled":
     ensure  => directory,
     purge   => $purge_features,
     recurse => $purge_features,
