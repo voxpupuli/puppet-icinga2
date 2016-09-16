@@ -8,25 +8,28 @@
 #   Set to present enables the feature api, absent disabled it. Default is present.
 #
 # [*pki*]
-#   Choose the source of certificates and key. Valid parameters are 'puppet' or 'none'.
-#   'puppet' copies key, cert and CAcert from the Puppet ssl directory to the pki directory
-#   /etc/icinga2/pki on Linux or C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
-#   'none' does nothing and you've to manage the files on your own as file resources
-#   or you use ssl_key, ssl_cert, ssl_ca parameters. Default to puppet.
+#   Provides multiple sources for the certificate and key. Valid parameters are 'puppet' or 'none'.
+#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
+#   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   'none' does nothing and you either have to manage the files yourself as file resources
+#   or use the ssl_key, ssl_cert, ssl_ca parameters. Default is puppet.
 #
 # [*ssl_key_path*]
-#   Locatation where to store the private key. Default to /etc/icinga2/pki/ on Linux and
-#   C:/ProgramData/icinga2/etc/icinga2/pki/, the name of the file is 'NodeName'.key with
-#   'NodeName' sets to the constant NodeName.
+#   Location of the private key. Default depends on platform:
+#   /etc/icinga2/pki/NodeName.key on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key on Windows
+#   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cert_path*]
-#   Locatation where to store the private key. Default to /etc/icinga2/pki/ on Linux and
-#   C:/ProgramData/icinga2/etc/icinga2/pki/, the name of the file is 'NodeName'.crt with
-#   'NodeName' sets to the constant NodeName.
+#   Location of the certificate. Default depends on platform:
+#   /etc/icinga2/pki/NodeName.crt on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
+#   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_ca_path*]
-#   Locatation where to store the private key. Default to /etc/icinga2/pki/ca.crt on Linux
-#   and C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows.
+#   Location of the CA certificate. Default is:
+#   /etc/icinga2/pki/ca.crt on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
 #
 # [*ssl_key*] NOT IMPLEMENTED
 #   The private key in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
@@ -41,10 +44,10 @@
 #   For use 'pki' must set to 'none'. Default to undef.
 #
 # [*accept_config*]
-#   Accept zone configuration. Default to false.
+#   Accept zone configuration. Default is false.
 #
 # [*accept_commands*]
-#   Accept remote commands. Default to false.
+#   Accept remote commands. Default is false.
 #
 # === Variables
 #

@@ -107,20 +107,21 @@ tag and triggers a reload of Icinga2 on a file change.
 
 - [**Public classes**](#public-classes)
     - [Class: icinga2](#class-icinga2)
-    - [Class: icinga2::feature::checker](#class-icinga2feature-checker)
-    - [Class: icinga2::feature::mainlog](#class-icinga2feature-mainlog)
-    - [Class: icinga2::feature::notification](#class-icinga2feature-notification)
-    - [Class: icinga2::feature::command](#class-icinga2feature-command)
-    - [Class: icinga2::feature::compatlog](#class-icinga2-feature-compat)
-    - [Class: icinga2::feature::graphite](#class-icinga2-feature-graphite)
-    - [Class: icinga2::feature::livestatus](#class-icinga2-feature-livestatus)
-    - [Class: icinga2::feature::opentsdb](#class-icinga2-feature-opentsdb)
-    - [Class: icinga2::feature::perfdata](#class-icinga2-feature-perfdata)
-    - [Class: icinga2::feature::statusdata](#class-icinga2-feature-statusdata)
-    - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
-    - [Class::icinga2::feature::debuglog](#class-icinga2-feature-debuglog)
-    - [Class::icinga2::feature::gelf](#class-icinga2-feature-gelf)
-    - [Class::icinga2::feature::influxdb](#class-icinga2-feature-influxdb)
+    - [Class: icinga2::feature::checker](#class-icinga2featurechecker)
+    - [Class: icinga2::feature::mainlog](#class-icinga2featuremainlog)
+    - [Class: icinga2::feature::notification](#class-icinga2featurenotification)
+    - [Class: icinga2::feature::command](#class-icinga2featurecommand)
+    - [Class: icinga2::feature::compatlog](#class-icinga2featurecompat)
+    - [Class: icinga2::feature::graphite](#class-icinga2featuregraphite)
+    - [Class: icinga2::feature::livestatus](#class-icinga2featurelivestatus)
+    - [Class: icinga2::feature::opentsdb](#class-icinga2featureopentsdb)
+    - [Class: icinga2::feature::perfdata](#class-icinga2featureperfdata)
+    - [Class: icinga2::feature::statusdata](#class-icinga2featurestatusdata)
+    - [Class: icinga2::feature::syslog](#class-icinga2featuresyslog)
+    - [Class::icinga2::feature::debuglog](#class-icinga2featuredebuglog)
+    - [Class::icinga2::feature::gelf](#class-icinga2featuregelf)
+    - [Class::icinga2::feature::influxdb](#class-icinga2featureinfluxdb)
+    - [Class::icinga2::feature::api](#class-icinga2featureapi)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -516,6 +517,54 @@ How long to buffer data points before transfering to InfluxDB. Default is `10s`
 
 ##### `flush_threshold`
 How many data points to buffer before forcing a transfer to InfluxDB. Default is `1024`
+
+
+#### Class: `icinga2::feature::api`
+Enables or disables the `api` feature.
+
+**Parameters of `icinga2::feature::api`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `api` should be enabled. Default is `present`.
+
+##### `pki`
+Provides multiple sources for the certificate and key.
+
+* `puppet` Copies the key, cert and CAcert from the Puppet ssl directory to the Icinga pki directory.
+  * Linux: `/etc/icinga2/pki`
+  * Windows: `C:/ProgramData/icinga2/etc/icinga2/pki`
+* `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
+`ssl_ca` parameters.
+
+Default is `puppet`
+
+##### `ssl_key_path`
+Location of the private key. Default depends on platform:
+
+* Linux `/etc/icinga2/pki/NodeName.key` 
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key`
+
+The Value of `NodeName` comes from the corresponding constant.
+
+##### `ssl_cert_path`
+Location of the certificate. Default depends on platform:
+
+* Linux `/etc/icinga2/pki/NodeName.crt` 
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt`
+
+The Value of `NodeName` comes from the corresponding constant.
+
+##### `ssl_ca_path`
+Location of the CA certificate. Default depends on platform:
+
+* Linux `/etc/icinga2/pki/ca.crt` 
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
+
+##### `accept_config`
+Accept zone configuration. Default is `false`
+
+##### `accept_commands`
+Accept remote commands. Default is `false`
 
 ### Private Classes
 
