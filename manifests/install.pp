@@ -25,6 +25,7 @@ class icinga2::install {
 
   $package        = $icinga2::params::package
   $conf_dir       = $icinga2::params::conf_dir
+  $pki_dir        = $icinga2::params::pki_dir
   $purge_features = $icinga2::purge_features
 
   package { $package:
@@ -39,7 +40,7 @@ class icinga2::install {
   }
 
   # anchor, i.e. for config directory set by confd parameter
-  file { $conf_dir:
+  file { [$conf_dir, $pki_dir]:
     ensure  => directory,
     require => Package[$package]
   }

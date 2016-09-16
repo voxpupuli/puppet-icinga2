@@ -30,11 +30,12 @@ class icinga2::params {
       $run_dir   = '/var/run/icinga2'
       $spool_dir = '/var/spool/icinga2'
       $cache_dir = '/var/cache/icinga2'
+      $pki_dir   = "${conf_dir}/pki"
 
       case $::osfamily {
         'redhat': {
           $user     = 'icinga'
-          $owner    = 'icinga'
+          $group    = 'icinga'
           $lib_dir  = $::architecture ? {
             'x86_64' => '/usr/lib64',
             default  => '/usr/lib',
@@ -43,7 +44,7 @@ class icinga2::params {
 
         'debian': {
           $user     = 'nagios'
-          $owner    = 'nagios'
+          $group    = 'nagios'
           $lib_dir  = '/usr/lib'
         } # Debian
 
@@ -64,12 +65,13 @@ class icinga2::params {
 
     'windows': {
       $user      = 'SYSTEM'
-      $owner     = undef
+      $group     = undef
       $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
       $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
       $run_dir   = 'C:/ProgramData/icinga2/var/run/icinga2'
       $spool_dir = 'C:/ProgramData/icinga2/var/spool/icinga2'
       $cache_dir = 'C:/ProgramData/icinga2/var/cache/icinga2'
+      $pki_dir   = "${conf_dir}/pki"
       $constants = {
         'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
         'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",
