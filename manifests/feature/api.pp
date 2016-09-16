@@ -15,10 +15,18 @@
 #   or you use ssl_key, ssl_cert, ssl_ca parameters. Default to puppet.
 #
 # [*ssl_key_path*]
+#   Locatation where to store the private key. Default to /etc/icinga2/pki/ on Linux and
+#   C:/ProgramData/icinga2/etc/icinga2/pki/, the name of the file is 'NodeName'.key with
+#   'NodeName' sets to the constant NodeName.
 #
 # [*ssl_cert_path*]
+#   Locatation where to store the private key. Default to /etc/icinga2/pki/ on Linux and
+#   C:/ProgramData/icinga2/etc/icinga2/pki/, the name of the file is 'NodeName'.crt with
+#   'NodeName' sets to the constant NodeName.
 #
 # [*ssl_ca_path*]
+#   Locatation where to store the private key. Default to /etc/icinga2/pki/ca.crt on Linux
+#   and C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows.
 #
 # [*ssl_key*] NOT IMPLEMENTED
 #   The private key in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
@@ -44,10 +52,13 @@
 #   Certname and Keyname based on constant NodeName.
 #
 # [*_ssl_key_path*]
+#   Validated path to private key file.
 #
 # [*_ssl_cert_path*]
+#   Validated path to certificate file.
 #
 # [*_ssl_ca_path*]
+#   Validated path to root CA certificate file.
 #
 # === Examples
 #
