@@ -1,9 +1,9 @@
 // managed by puppet
 
 object ApiListener "api" {
-  cert_path = SysconfDir + "/icinga2/pki/" + NodeName + ".crt"
-  key_path = SysconfDir + "/icinga2/pki/" + NodeName + ".key"
-  ca_path = SysconfDir + "/icinga2/pki/ca.crt"
+  cert_path = <%= scope['icinga2::feature::api::_ssl_cert_path'] %>
+  key_path = <%= scope['icinga2::feature::api::_ssl_key_path'] %>
+  ca_path = <%= scope['icinga2::feature::api::_ssl_ca_path'] %>
 
   accept_commands = <%= scope['icinga2::feature::api::accept_commands'] %>
   accept_config = <%= scope['icinga2::feature::api::accept_config'] %>

@@ -12,7 +12,13 @@
 #   'puppet' copies key, cert and CAcert from the Puppet ssl directory to the pki directory
 #   /etc/icinga2/pki on Linux or C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
 #   'none' does nothing and you've to manage the files on your own as file resources
-#   or you use ssl_key, ssl_cert, ssl_ca_cert parameters. Default to puppet.
+#   or you use ssl_key, ssl_cert, ssl_ca parameters. Default to puppet.
+#
+# [*ssl_key_path*]
+#
+# [*ssl_cert_path*]
+#
+# [*ssl_ca_path*]
 #
 # [*ssl_key*] NOT IMPLEMENTED
 #   The private key in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
@@ -22,7 +28,7 @@
 #   The certificate in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
 #   with the suffix '.crt'. For use 'pki' must set to 'none'. Default to undef.
 #
-# [*ssl_ca_cert*] NOT IMPLEMENTED
+# [*ssl_ca*] NOT IMPLEMENTED
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is named to 'ca.crt'.
 #   For use 'pki' must set to 'none'. Default to undef.
 #
@@ -36,6 +42,12 @@
 #
 # [*node_name*]
 #   Certname and Keyname based on constant NodeName.
+#
+# [*_ssl_key_path*]
+#
+# [*_ssl_cert_path*]
+#
+# [*_ssl_ca_path*]
 #
 # === Examples
 #
@@ -80,6 +92,9 @@
 class icinga2::feature::api(
   $ensure          = present,
   $pki             = 'puppet',
+  $ssl_key_path    = undef,
+  $ssl_cert_path   = undef,
+  $ssl_ca_path     = undef,
   $accept_config   = false,
   $accept_commands = false,
 ) {
@@ -99,13 +114,30 @@ class icinga2::feature::api(
   $group     = $::icinga2::params::group
   $node_name = $::icinga2::_constants['NodeName']
 
+  # Set defaults for certificate stuff and/or do validation
+  if $ssl_key_path {
+    validate_absolute_path($ssl_key_path)
+    $_ssl_key_path = $ssl_key_path }
+  else {
+    $_ssl_key_path = "${pki_dir}/${node_name}.key" }
+  if $ssl_cert_path {
+    validate_absolute_path($ssl_cert_path)
+    $_ssl_cert_path = $ssl_cert_path }
+  else {
+    $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
+  if $ssl_ca_path {
+    validate_absolute_path($ssl_ca_path)
+    $_ssl_cat_path = $ssl_cat_path }
+  else {
+    $_ssl_ca_path = "${pki_dir}/ca.crt" }
+
   File {
     owner   => $user,
     group   => $group,
   }
 
   if $pki == 'puppet' {
-    file { "${pki_dir}/${node_name}.key":
+    file { $_ssl_key_path:
       ensure => file,
       mode   => $::kernel ? {
         'windows' => undef,
@@ -115,13 +147,13 @@ class icinga2::feature::api(
       tag    => 'icinga2::config::file',
     }
 
-    file { "${pki_dir}/${node_name}.crt":
+    file { $_ssl_cert_path:
       ensure => file,
       source => $::settings::hostcert,
       tag    => 'icinga2::config::file',
     }
 
-    file { "${pki_dir}/ca.crt":
+    file { $_ssl_ca_path:
       ensure => file,
       source => $::settings::localcacert,
       tag    => 'icinga2::config::file',
