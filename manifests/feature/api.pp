@@ -111,16 +111,11 @@ class icinga2::feature::api(
   $ssl_ca_path     = undef,
   $accept_config   = false,
   $accept_commands = false,
+  $zones           = undef,
+  $endpoints       = undef,
 ) {
 
   include ::icinga2::params
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($pki, [ '^puppet$', '^none$' ],
-    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
-  validate_bool($accept_config)
-  validate_bool($accept_commands)
 
   $conf_dir  = $::icinga2::params::conf_dir
   $pki_dir   = $::icinga2::params::pki_dir
@@ -128,7 +123,20 @@ class icinga2::feature::api(
   $group     = $::icinga2::params::group
   $node_name = $::icinga2::_constants['NodeName']
 
-  # Set defaults for certificate stuff and/or do validation
+  File {
+    owner   => $user,
+    group   => $group,
+  }
+
+  # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_re($pki, [ '^puppet$', '^none$' ],
+    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
+  validate_bool($accept_config)
+  validate_bool($accept_commands)
+
+  # set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
     validate_absolute_path($ssl_key_path)
     $_ssl_key_path = $ssl_key_path }
@@ -145,11 +153,27 @@ class icinga2::feature::api(
   else {
     $_ssl_ca_path = "${pki_dir}/ca.crt" }
 
-  File {
-    owner   => $user,
-    group   => $group,
+  # set defaults for endpoints and do validation
+  if $endpoints {
+    validate_hash($endpoints)
+    $_endpoints = $endpoints }
+  else {
+    $_endpoints = {
+      'NodeName' => {}
+    }
   }
 
+  # set defaults for zones and do validation
+  if $zones {
+    validate_hash($zones)
+    $_zones = $zone }
+  else {
+    $_zones = {
+      'ZoneName' => { endpoints => [ 'NodeName' ] },
+    }
+  }
+
+  # pki selection
   if $pki == 'puppet' {
     file { $_ssl_key_path:
       ensure => file,
@@ -174,8 +198,25 @@ class icinga2::feature::api(
     }
   }
 
+  # create default config file 'zones.conf'
+  ensure_resource('concat', "${conf_dir}/zones.conf", {
+    ensure => present,
+    owner  => $user,
+    group  => $group,
+    tag    => 'icinga2::config::file'
+  })
+
+  concat::fragment { 'header::zones.conf':
+    target  => "${conf_dir}/zones.conf",
+    content => "// managed by puppet\n\n",
+    order   => '00',
+  }
+
+  create_resources('icinga2::object::endpoint', $_endpoints)
+  create_resources('icinga2::object::zone', $_zones)
+
+  # create feature
   icinga2::feature { 'api':
     ensure => $ensure,
   }
-
 }
