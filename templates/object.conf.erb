@@ -1,0 +1,7 @@
+object <%= @object_type %> "<%= @object_name %>" {
+<% @templates.each do |template| -%>
+  import <%= template %>
+<% end -%>
+<% unless @templates.empty? %><%= "\n" %><% end -%>
+<%= scope.function_icinga2_attributes([@attrs]) -%>
+}
