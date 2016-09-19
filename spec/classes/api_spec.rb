@@ -58,7 +58,7 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ssl_key_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/key_path = \/foo\/bar/) }
+        .with_content(/key_path = "\/foo\/bar"/) }
     end
 
 
@@ -73,7 +73,7 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/cert_path = \/foo\/bar/) }
+        .with_content(/cert_path = "\/foo\/bar"/) }
     end
 
 
@@ -88,7 +88,7 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/ca_path = \/foo\/bar/) }
+        .with_content(/ca_path = "\/foo\/bar"/) }
     end
 
 
@@ -235,7 +235,7 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ssl_key_path => '/foo/bar'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/key_path = \/foo\/bar/) }
+      .with_content(/key_path = "\/foo\/bar"/) }
   end
 
 
@@ -264,7 +264,7 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/cert_path = \/foo\/bar/) }
+      .with_content(/cert_path = "\/foo\/bar"/) }
   end
 
 
@@ -293,7 +293,7 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/ca_path = \/foo\/bar/) }
+      .with_content(/ca_path = "\/foo\/bar"/) }
   end
 
 
