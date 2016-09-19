@@ -206,12 +206,6 @@ class icinga2::feature::api(
     tag    => 'icinga2::config::file'
   })
 
-  concat::fragment { 'header::zones.conf':
-    target  => "${conf_dir}/zones.conf",
-    content => "// managed by puppet\n\n",
-    order   => '00',
-  }
-
   create_resources('icinga2::object::endpoint', $_endpoints)
   create_resources('icinga2::object::zone', $_zones)
 
