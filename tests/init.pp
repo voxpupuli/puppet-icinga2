@@ -10,3 +10,12 @@
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
 include icinga2
+
+class { 'icinga2::feature::notification':
+  ensure => absent,
+}
+
+icinga2::object::endpoint { 'NodeName': }
+icinga2::object::zone { 'ZoneName':
+  endpoints => [ 'NodeName' ],
+}

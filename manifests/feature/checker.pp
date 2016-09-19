@@ -1,24 +1,27 @@
-# == Class: icinga2::feature::checker
-#
-# This module configures the Icinga2 feature checker.
-#
-# === Parameters
-#
-# [*ensure*]
-#   Set to present enables the feature checker, absent disabled it. Default is present.
-#
-# === Authors
-#
-# Icinga Development Team <info@icinga.org>
-#
 class icinga2::feature::checker(
   $ensure = present,
 ) {
 
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  include ::icinga2::params
+
+  $conf_dir = $::icinga2::params::conf_dir
+
+  icinga2::object::checkercomponent { 'checker':
+    target => "${conf_dir}/features-available/checker.conf",
+    #    notify => $ensure ? {
+    #  'present' => Class['::icinga2::service'],
+    #  default   => undef,
+    #},
+  }
+
+  concat::fragment { 'icinga2::feature::checker':
+    target  => "${conf_dir}/features-available/checker.conf",
+    content => "library \"checker\"\n\n",
+    order   => '05',
+  }
 
   icinga2::feature { 'checker':
-    ensure => $ensure,
+    ensure      => $ensure,
   }
+
 }

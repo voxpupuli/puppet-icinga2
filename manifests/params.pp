@@ -20,7 +20,8 @@ class icinga2::params {
   $package          = 'icinga2'
   $service          = 'icinga2'
   $plugins          = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
-  $default_features = [ 'checker', 'mainlog', 'notification' ]
+  #  $default_features = [ 'checker', 'mainlog', 'notification' ]
+  $default_features = [ 'checker' ]
 
   case $::kernel {
 

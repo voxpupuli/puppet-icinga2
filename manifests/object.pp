@@ -23,9 +23,9 @@ define icinga2::object(
   validate_hash($attrs)
 
   ensure_resource('concat', $target, {
-    ensure      => present,
-    owner       => $user,
-    group       => $group,
+    ensure => present,
+    owner  => $user,
+    group  => $group,
     tag    => 'icinga2::config::file',
   })
 

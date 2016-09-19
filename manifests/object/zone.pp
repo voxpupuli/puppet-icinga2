@@ -45,5 +45,6 @@ define icinga2::object::zone(
     attrs       => $attrs,
     target      => $_target,
     order       => $order,
+    notify      => Class['::icinga2::service'],
   }
 }
