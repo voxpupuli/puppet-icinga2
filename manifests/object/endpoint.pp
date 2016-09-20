@@ -39,5 +39,6 @@ define icinga2::object::endpoint(
     attrs       => $attrs,
     target      => $_target,
     order       => $order,
+    notify      => Class['::icinga2::service'],
   }
 }
