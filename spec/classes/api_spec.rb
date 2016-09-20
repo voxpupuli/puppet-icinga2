@@ -28,9 +28,13 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+      it { is_expected.to contain_concat('/etc/icinga2/features-available/api.conf') }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_config = false/)
-        .with_content(/accept_commands = false/) }
+        .with_content(/accept_commands = false/)
+        .with_content(/ticket_salt = TicketSalt/) }
 
       it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
       it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
@@ -57,8 +61,9 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with ssl_key_path = /foo/bar" do
       let(:params) { {:ssl_key_path => '/foo/bar'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/key_path = \/foo\/bar/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+        .with_content(/key_path = "\/foo\/bar"/) }
     end
 
 
@@ -72,8 +77,9 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with ssl_cert_path = /foo/bar" do
       let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/cert_path = \/foo\/bar/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+        .with_content(/cert_path = "\/foo\/bar"/) }
     end
 
 
@@ -87,8 +93,9 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with ssl_ca_path = /foo/bar" do
       let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/ca_path = \/foo\/bar/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+        .with_content(/ca_path = "\/foo\/bar"/) }
     end
 
 
@@ -102,7 +109,8 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with accept_config => true" do
       let(:params) { {:accept_config => true} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_config = true/) }
     end
 
@@ -110,7 +118,8 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with accept_config => false" do
       let(:params) { {:accept_config => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_config = false/) }
     end
 
@@ -125,7 +134,8 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with accept_commands => true" do
       let(:params) { {:accept_commands => true} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_commands = true/) }
     end
 
@@ -133,7 +143,8 @@ describe('icinga2::feature::api', :type => :class) do
     context "#{os} with accept_commands => false" do
       let(:params) { {:accept_commands => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_commands = false/) }
     end
 
@@ -184,13 +195,17 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/accept_config = false/)
-      .with_content(/accept_commands = false/) }
+    it { is_expected.to contain_concat('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf') }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key')  }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt')  }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt')  }
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+      .with_content(/accept_config = false/)
+      .with_content(/accept_commands = false/)
+      .with_content(/ticket_salt = TicketSalt/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt') }
   end
 
 
@@ -204,9 +219,9 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:pki => 'puppet'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key')  }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt')  }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt') }
   end
 
 
@@ -234,8 +249,9 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:ssl_key_path => '/foo/bar'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/key_path = \/foo\/bar/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+      .with_content(/key_path = "\/foo\/bar"/) }
   end
 
 
@@ -263,8 +279,9 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/cert_path = \/foo\/bar/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+      .with_content(/cert_path = "\/foo\/bar"/) }
   end
 
 
@@ -292,8 +309,9 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/ca_path = \/foo\/bar/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+      .with_content(/ca_path = "\/foo\/bar"/) }
   end
 
 
@@ -321,7 +339,8 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:accept_config => true} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
       .with_content(/accept_config = true/) }
   end
 
@@ -336,7 +355,8 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:accept_config => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
       .with_content(/accept_config = false/) }
   end
 
@@ -365,7 +385,8 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:accept_commands => true} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
       .with_content(/accept_commands = true/) }
   end
 
@@ -380,7 +401,8 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     let(:params) { {:accept_commands => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
       .with_content(/accept_commands = false/) }
   end
 
