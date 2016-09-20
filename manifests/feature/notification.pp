@@ -24,7 +24,7 @@ class icinga2::feature::notification(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
   # create object
-  icinga2::object { "icinga2::NotificationComponent::notification":
+  icinga2::object { "icinga2::object::NotificationComponent::notification":
     object_name => 'notification',
     object_type => 'NotificationComponent',
     attrs       => {},

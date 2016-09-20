@@ -29,7 +29,7 @@ define icinga2::object(
     tag    => 'icinga2::config::file',
   })
 
-  concat::fragment { "icinga2::${object_type}::${object_name}":
+  concat::fragment { "icinga2::object::${object_type}::${object_name}":
     target  => $target,
     content => template('icinga2/object.conf.erb'),
     order   => $order,

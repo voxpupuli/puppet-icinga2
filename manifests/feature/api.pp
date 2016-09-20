@@ -194,7 +194,7 @@ class icinga2::feature::api(
   create_resources('icinga2::object::zone', $zones)
 
   # create object
-  icinga2::object { "icinga2::ApiListener::api":
+  icinga2::object { "icinga2::object::ApiListener::api":
     object_name => 'api',
     object_type => 'ApiListener',
     attrs       => $attrs,
