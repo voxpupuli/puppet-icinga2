@@ -25,17 +25,10 @@ describe('icinga2::feature', :type => :define) do
 
 
     context "#{os} with ensure => present, feature => foo" do
-      let(:params) { {:ensure => 'present', :feature => '.foo'} }
+      let(:params) { {:ensure => 'present', :feature => 'foo'} }
 
       it {
-        should contain_file('/etc/icinga2/features-available/.foo.conf').with({
-          'ensure' => 'file',
-        }).with_content(/.foo/)
-          .that_requires('Class[icinga2::install]')
-      }
-
-      it {
-        should contain_file('/etc/icinga2/features-enabled/.foo.conf').with({
+        should contain_file('/etc/icinga2/features-enabled/foo.conf').with({
           'ensure' => 'link',
         }).that_notifies('Class[icinga2::service]')
       }
@@ -43,17 +36,10 @@ describe('icinga2::feature', :type => :define) do
 
 
     context "#{os} with ensure => absent, feature => foo" do
-      let(:params) { {:ensure => 'absent', :feature => '.foo'} }
+      let(:params) { {:ensure => 'absent', :feature => 'foo'} }
 
       it {
-        should contain_file('/etc/icinga2/features-available/.foo.conf').with({
-          'ensure' => 'file',
-        }).with_content(/.foo/)
-          .that_requires('Class[icinga2::install]')
-      }
-
-      it {
-        should contain_file('/etc/icinga2/features-enabled/.foo.conf').with({
+        should contain_file('/etc/icinga2/features-enabled/foo.conf').with({
           'ensure' => 'absent',
         }).that_notifies('Class[icinga2::service]')
       }
@@ -69,19 +55,12 @@ describe('icinga2::feature', :type => :define) do
       :operatingsystem => 'Windows',
       :operatingsystemmajrelease => '2012 R2'
     } }
-    let(:params) { {:ensure => 'present', 'feature' => '.foo'} }
+    let(:params) { {:ensure => 'present', 'feature' => 'foo'} }
 
     it {
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/.foo.conf').with({
+      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/foo.conf').with({
         'ensure' => 'file',
-      }).with_content(/.foo/)
-       #.that_requires('Class[icinga2::install]')
-    }
-
-    it {
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/.foo.conf').with({
-        'ensure' => 'file',
-      }).with_content(/include "..\/features-available\/.foo.conf"/)
+      }).with_content(/include "..\/features-available\/foo.conf"/)
         .that_notifies('Class[icinga2::service]')
     }
   end
@@ -95,17 +74,10 @@ describe('icinga2::feature', :type => :define) do
       :operatingsystem => 'Windows',
       :operatingsystemmajrelease => '2012 R2'
     } }
-    let(:params) { {:ensure => 'absent', 'feature' => '.foo'} }
+    let(:params) { {:ensure => 'absent', 'feature' => 'foo'} }
 
     it {
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/.foo.conf').with({
-        'ensure' => 'file',
-      }).with_content(/.foo/)
-        #.that_requires('Class[icinga2::install]')
-    }
-
-    it {
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/.foo.conf').with({
+      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/foo.conf').with({
         'ensure' => 'absent',
       }).that_notifies('Class[icinga2::service]')
     }
