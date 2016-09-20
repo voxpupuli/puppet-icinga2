@@ -136,6 +136,9 @@ class icinga2::feature::api(
     "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
+  validate_string($ticket_salt)
+  validate_hash($endpoints)
+  validate_hash($zones)
 
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {

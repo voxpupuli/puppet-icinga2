@@ -33,7 +33,7 @@ define icinga2::object::endpoint(
   }
 
   # create object
-  icinga2::object { "endpoint::${title}":
+  icinga2::object { "icinga2::object::endpoint::${title}":
     object_name => $endpoint,
     object_type => 'Endpoint',
     attrs       => $attrs,
