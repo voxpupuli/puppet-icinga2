@@ -15,6 +15,10 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -22,13 +26,18 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_concat('/etc/icinga2/features-available/api.conf') }
+      it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+        .that_notifies('Class[icinga2::service]') }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
         .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
@@ -218,6 +227,10 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -232,6 +245,9 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' }) }
   end
 
 
@@ -245,7 +261,9 @@ describe('icinga2::feature::api', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_concat('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf') }
+    it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+      .that_notifies('Class[icinga2::service]') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
       .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
