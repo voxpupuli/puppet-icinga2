@@ -1,0 +1,217 @@
+require 'spec_helper'
+
+describe('icinga2::object::endpoint', :type => :define) do
+  let(:title) { 'bar' }
+  let(:pre_condition) { [
+    "class { 'icinga2': }"
+  ] }
+
+  on_supported_os.each do |os, facts|
+    let :facts do
+      facts
+    end
+
+
+    context "#{os} with all defaults and target => /bar/baz" do
+      let(:params) { {:target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat('/bar/baz') }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/object Endpoint "bar"/) }
+    end
+
+
+    context "#{os} with target => bar/baz (not valid absolute path)" do
+      let(:params) { {:target => 'bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+    end
+
+
+    context "#{os} with order => 4247 (not valid string)" do
+      let(:params) { {:target => '/bar/baz', :order => 4247} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with host => 127.0.0.2" do
+      let(:params) { {:host => '127.0.0.2', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+        .with_content(/host = "127.0.0.2"/) }
+    end
+
+
+    context "#{os} with host => foo (not a valid IP address" do
+      let(:params) { {:host => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+    end
+
+
+    context "#{os} with port => 4247" do
+      let(:params) { {:port => '4247', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+        .with_content(/port = 4247/) }
+    end
+
+
+    context "#{os} with port => foo (not a valid integer)" do
+      let(:params) { {:port => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    end
+
+
+    context "#{os} with log_duration => 1m" do
+      let(:params) { {:log_duration => '1m', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+        .with_content(/log_duration = 1m/) }
+    end
+
+
+    context "#{os} with log_duration => foo (not a valid value)" do
+      let(:params) { {:log_duration => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    end
+  end
+
+
+  context "Windows 2012 R2  with all defaults and target => C:/bar/baz" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat('C:/bar/baz') }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/object Endpoint "bar"/) }
+  end
+
+
+  context "Windows 2012 R2  with target => bar/baz (not valid absolute path)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:target => 'bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2  with order => 4247 (not valid string)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:target => 'C:/bar/baz', :order => 4247} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2  with host => 127.0.0.2" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:host => '127.0.0.2', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+      .with_content(/host = "127.0.0.2"/) }
+  end
+
+
+  context "Windows 2012 R2  with host => foo (not a valid IP address" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:host => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+  end
+
+
+  context "Windows 2012 R2  with port => 4247" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:port => '4247', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+      .with_content(/port = 4247/) }
+  end
+
+
+  context "Windows 2012 R2  with port => foo (not a valid integer)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:port => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+  end
+
+
+  context "Windows 2012 R2  with log_duration => 1m" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:log_duration => '1m', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+      .with_content(/log_duration = 1m/) }
+  end
+
+
+  context "Windows 2012 R2  with log_duration => foo (not a valid value)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:log_duration => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+  end
+end

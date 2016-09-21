@@ -1,3 +1,35 @@
+# == Define: icinga2::object::endpoint
+#
+# Manage Icinga2 endpoint objects.
+#
+# === Parameters
+#
+# [*endpoint*]
+#   Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
+#
+# [*host*]
+#   Optional. The IP address of the remote Icinga 2 instance.
+#
+# [*port*]
+#   The service name/port of the remote Icinga 2 instance. Defaults to 5665.
+#
+# [*log_duration*]
+#   Duration for keeping replay logs on connection loss. Defaults to 1d (86400 seconds).
+#   Attribute is specified in seconds. If log_duration is set to 0, replaying logs is disabled.
+#   You could also specify the value in human readable format like 10m for 10 minutes
+#   or 1h for one hour.
+#
+# [*target*]
+#   Destination config file to store in this object. File will be declared the
+#   first time.
+#
+# [*order*]
+#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#
+# === Authors
+#
+# Icinga Development Team <info@icinga.org>
+#
 define icinga2::object::endpoint(
   $endpoint     = $title,
   $host         = undef,
@@ -13,7 +45,7 @@ define icinga2::object::endpoint(
 
   # validation
   if $endpoint { validate_string($endpoint) }
-  if $host { validate_string($host) }
+  if $host { validate_ip_address($host) }
   if $port { validate_integer($port) }
   if $log_duration { validate_re($log_duration, '^\d+\.?\d*[d|h|m|s]?$') }
 
@@ -33,7 +65,7 @@ define icinga2::object::endpoint(
   }
 
   # create object
-  icinga2::object { "endpoint::${title}":
+  icinga2::object { "icinga2::object::Endpoint::${title}":
     object_name => $endpoint,
     object_type => 'Endpoint',
     attrs       => $attrs,
