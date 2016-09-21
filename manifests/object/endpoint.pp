@@ -13,7 +13,7 @@ define icinga2::object::endpoint(
 
   # validation
   if $endpoint { validate_string($endpoint) }
-  if $host { validate_string($host) }
+  if $host { validate_ip_address($host) }
   if $port { validate_integer($port) }
   if $log_duration { validate_re($log_duration, '^\d+\.?\d*[d|h|m|s]?$') }
 
@@ -33,7 +33,7 @@ define icinga2::object::endpoint(
   }
 
   # create object
-  icinga2::object { "icinga2::object::endpoint::${title}":
+  icinga2::object { "icinga2::object::Endpoint::${title}":
     object_name => $endpoint,
     object_type => 'Endpoint',
     attrs       => $attrs,
