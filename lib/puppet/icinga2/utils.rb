@@ -8,7 +8,7 @@ module Puppet
       def self.attributes(attrs, consts)
 
         def self.types(value)
-          if value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
+          if value.is_a?(Integer) || value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
             result = value
           else
             if $constants.include?(value)
