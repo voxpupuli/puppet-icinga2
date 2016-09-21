@@ -1,3 +1,33 @@
+# == Define: icinga2::object::zone
+#
+# Manage Icinga2 zone objects.
+#
+# === Parameters
+#
+# [*zone*]
+#   Set the Icinga2 name of the zone object. Defaults to title of the define resource.
+#
+# [*endpoints*]
+#   List of endpoints belong to this zone.
+#
+# [*parent*]
+#   Parent zone to this zone.
+#
+# [*global*]
+#   If set to true, a global zone is defined and the parameter endpoints
+#   and parent are ignored. Defaults to false.
+#
+# [*target*]
+#   Destination config file to store in this object. File will be declared the
+#   first time.
+#
+# [*order*]
+#   String to set the position in the target file, sorted alpha numeric.
+#
+# === Authors
+#
+# Icinga Development Team <info@icinga.org>
+#
 define icinga2::object::zone(
   $zone      = $title,
   $endpoints = [],
@@ -26,6 +56,8 @@ define icinga2::object::zone(
   else {
     $_target = "${conf_dir}/zones.conf" }
 
+  validate_string($order)
+
   # compose the attributes
   if $global {
     $attrs = {
@@ -39,7 +71,7 @@ define icinga2::object::zone(
   }
 
   # create object
-  icinga2::object { "zone::${title}":
+  icinga2::object { "icinga2::object::Zone::${title}":
     object_name => $zone,
     object_type => 'Zone',
     attrs       => $attrs,
