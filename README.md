@@ -122,6 +122,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class::icinga2::feature::gelf](#class-icinga2featuregelf)
     - [Class::icinga2::feature::influxdb](#class-icinga2featureinfluxdb)
     - [Class::icinga2::feature::api](#class-icinga2featureapi)
+    - [Class::icinga2::feature::idopgsql](#class-icinga2featureidopgsql)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -565,6 +566,53 @@ Accept zone configuration. Default is `false`
 
 ##### `accept_commands`
 Accept remote commands. Default is `false`
+
+#### Class: `icinga2::feature::pgsql`
+Enables or disables the `pgsql` feature.
+
+**Parameters of `icinga2::feature::pgsql`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `ido-pgsql` should be enabled. Default is `present`.
+
+##### `host`
+PostgreSQL database host address. Defaults to `127.0.0.1`
+
+##### `port`
+PostgreSQL database port. Defaults to `3306`
+
+##### `user`
+PostgreSQL database user with read/write permission to the icinga database. Defaults to `icinga`
+
+##### `password`
+PostgreSQL database user's password. Defaults to `icinga`
+
+##### `database`
+PostgreSQL database name. Defaults to `icinga`
+
+##### `table_prefix`
+PostgreSQL database table prefix. Defaults to `icinga_`
+
+##### `instance_name`
+Unique identifier for the local Icinga 2 instance. Defaults to `default`
+
+##### `instance_description`
+Description for the Icinga 2 instance.
+
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Defaults to `true`
+
+##### `failover_timeout`
+Set the failover timeout in a HA cluster. Must not be lower than 60s. Defaults to `60s`
+
+##### `cleanup`
+Hash with items for historical table cleanup.
+
+##### `categories`
+Array of information types that should be written to the database.
+
+##### `import_schema`
+Whether to import the PostgreSQL schema or not. Defaults to `false`
 
 ### Private Classes
 

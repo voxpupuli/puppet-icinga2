@@ -1,0 +1,30 @@
+// managed by puppet
+
+library "db_ido_pgsql"
+
+object IdoPgsqlConnection "pgsql-ido" {
+  host = "<%= scope['icinga2::feature::idopgsql::host'] %>"
+  port = <%= scope['icinga2::feature::idopgsql::port'] %>
+  user = "<%= scope['icinga2::feature::idopgsql::user'] %>"
+  password = "<%= scope['icinga2::feature::idopgsql::password'] %>"
+  database = "<%= scope['icinga2::feature::idopgsql::database'] %>"
+  table_prefix = "<%= scope['icinga2::feature::idopgsql::table_prefix'] %>"
+  instance_name = "<%= scope['icinga2::feature::idopgsql::instance_name'] %>"
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::idopgsql::instance_description')) -%>
+  instance_description = "<%= scope['icinga2::feature::idopgsql::instance_description'] %>"
+<% end -%>
+  enable_ha = <%= scope['icinga2::feature::idopgsql::enable_ha'] %>
+  failover_timeout = <%= scope['icinga2::feature::idopgsql::failover_timeout'] %>
+<% if ! scope['icinga2::feature::idopgsql::cleanup'].empty? -%>
+  cleanup = {
+<% scope['icinga2::feature::idopgsql::cleanup'].keys.sort.each do |k, v| -%>
+    <%= k %> = "<%= scope['icinga2::feature::idopgsql::cleanup'][k] %>"
+<% end -%>
+  }
+<% end -%>
+<% if ! scope['icinga2::feature::idopgsql::categories'].empty? -%>
+  categories = [ <% scope['icinga2::feature::idopgsql::categories'].sort.each_with_index do |category, i| -%>
+"<%= category -%>"<%= ',' if i < (scope['icinga2::feature::idopgsql::categories'].size - 1) -%>
+<% end -%> ]
+<% end -%>
+}
