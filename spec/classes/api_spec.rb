@@ -35,6 +35,11 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
       it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
       it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
+
+      it { is_expected.to contain_icinga2__object__endpoint('NodeName') }
+
+      it { is_expected.to contain_icinga2__object__zone('ZoneName')
+        .with({ 'endpoints' => [ 'NodeName' ] }) }
     end
 
 
@@ -58,7 +63,7 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ssl_key_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/key_path = \/foo\/bar/) }
+        .with_content(/key_path = "\/foo\/bar"/) }
     end
 
 
@@ -73,7 +78,7 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/cert_path = \/foo\/bar/) }
+        .with_content(/cert_path = "\/foo\/bar"/) }
     end
 
 
@@ -88,7 +93,7 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
-        .with_content(/ca_path = \/foo\/bar/) }
+        .with_content(/ca_path = "\/foo\/bar"/) }
     end
 
 
@@ -142,6 +147,50 @@ describe('icinga2::feature::api', :type => :class) do
       let(:params) { {:accept_commands => 'foo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
+    context "#{os} with ticket_salt => foo" do
+      let(:params) { {:ticket_salt => 'foo'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/api.conf')
+        .with_content(/ticket_salt = "foo"/) }
+    end
+
+
+    context "#{os} with ticket_salt => 4247 (not a valid string)" do
+      let(:params) { {:ticket_salt => 4247} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with endpoints => { foo => {} }" do
+      let(:params) { {:endpoints => { 'foo' => {}} }}
+
+      it { is_expected.to contain_icinga2__object__endpoint('foo') }
+    end
+
+
+    context "#{os} with endpoints => foo (not a valid hash)" do
+      let(:params) { {:endpoints => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    end
+
+
+    context "#{os} with zones => { foo => {endpoints => ['bar']} } }" do
+      let(:params) { {:zones => { 'foo' => {'endpoints' => ['bar']}} }}
+
+      it { is_expected.to contain_icinga2__object__zone('foo')
+        .with({ 'endpoints' => [ 'bar' ] }) }
+    end
+
+
+    context "#{os} with zones => foo (not a valid hash)" do
+      let(:params) { {:zones => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
   end
 
@@ -235,7 +284,7 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ssl_key_path => '/foo/bar'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/key_path = \/foo\/bar/) }
+      .with_content(/key_path = "\/foo\/bar"/) }
   end
 
 
@@ -264,7 +313,7 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/cert_path = \/foo\/bar/) }
+      .with_content(/cert_path = "\/foo\/bar"/) }
   end
 
 
@@ -293,7 +342,7 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:ssl_ca_path => '/foo/bar'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
-      .with_content(/ca_path = \/foo\/bar/) }
+      .with_content(/ca_path = "\/foo\/bar"/) }
   end
 
 
@@ -396,5 +445,91 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:accept_commands => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2  with ticket_salt => foo" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ticket_salt => 'foo'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf')
+      .with_content(/ticket_salt = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2  with ticket_salt => 4247 (not a valid string)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ticket_salt => 4247} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2  with endpoints => { foo => {} }" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:endpoints => { 'foo' => {}} }}
+
+    it { is_expected.to contain_icinga2__object__endpoint('foo') }
+  end
+
+
+  context "Windows 2012 R2  with endpoints => foo (not a valid hash)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:endpoints => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+  end
+
+
+  context "Windows 2012 R2  with zones => { foo => {endpoints => ['bar']} } }" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:zones => { 'foo' => {'endpoints' => ['bar']}} }}
+
+    it { is_expected.to contain_icinga2__object__zone('foo')
+      .with({ 'endpoints' => [ 'bar' ] }) }
+   end
+
+
+  context "Windows 2012 R2  with zones => foo (not a valid hash)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:zones => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 end
