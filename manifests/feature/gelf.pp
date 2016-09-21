@@ -64,7 +64,7 @@ class icinga2::feature::gelf(
     },
   }
 
-  # import library 'notification'
+  # import library 'perfdata'
   concat::fragment { 'icinga2::feature::gelf':
     target  => "${conf_dir}/features-available/gelf.conf",
     content => "library \"perfdata\"\n\n",
