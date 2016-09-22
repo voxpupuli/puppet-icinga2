@@ -96,7 +96,7 @@ enable the feature `icinga2::feature::idomysql` or `icinga2::feature::idopgsql`.
 the base schema into the database, however this is disabled by default. Updating the database schema to another version
 is currently not supported.
 
-```
+``` puppet
 class{ 'icinga2::feature::idomysql':
   user => "icinga2",
   password => "icinga2",
