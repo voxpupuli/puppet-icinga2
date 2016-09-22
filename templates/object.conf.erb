@@ -1,3 +1,4 @@
+
 <% if @template %>template<% else %>object<% end %> <%= @object_type -%>
 <% if scope.lookupvar('icinga2::_constants').include?(@object_name) -%>
  <%= @object_name -%>
@@ -9,4 +10,3 @@
 <% unless @import.empty? %><%= "\n" %><% end -%>
 <%= scope.function_icinga2_attributes([@attrs]) -%>
 }
-
