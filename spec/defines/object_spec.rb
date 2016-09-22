@@ -23,6 +23,22 @@ describe('icinga2::object', :type => :define) do
     end
 
 
+    context "#{os} with ensure => absent" do
+      let(:params) { {:ensure => 'absent', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat('/bar/baz') }
+
+      it { is_expected.not_to contain_concat__fragment('icinga2::object::foo::bar') }
+    end
+
+
+    context "#{os} with ensure => foo (not a valid value)" do
+      let(:params) { {:ensure => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    end
+
+
     context "#{os} with object_type => 4247 (not valid string)" do
       let(:params) { {:object_type => 4247, :target => '/bar/baz', :order => '10'} }
 
@@ -99,6 +115,36 @@ describe('icinga2::object', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
       .with({'target' => 'C:/bar/baz', 'order' => '10'})
       .with_content(/object foo "bar"/) }
+  end
+
+
+  context "Windows 2012 R2 with ensure => absent" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ensure => 'absent', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat('C:/bar/baz') }
+
+    it { is_expected.not_to contain_concat__fragment('icinga2::object::foo::bar') }
+  end
+
+
+  context "Windows 2012 R2 with ensure => foo (not a valid value)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ensure => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
   end
 
 

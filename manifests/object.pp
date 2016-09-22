@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the object, absent disabled it. Defaults to present.
+#
 # [*object_name*]
 #   Set the icinga2 name of the object. Defaults to title of the define resource.
 #
@@ -32,6 +35,7 @@
 # Icinga Development Team <info@icinga.org>
 #
 define icinga2::object(
+  $ensure      = present,
   $object_name = $title,
   $template    = false,
   $import      = [],
@@ -47,9 +51,11 @@ define icinga2::object(
 
   include ::icinga2::params
 
-  $user     = $::icinga2::params::user
-  $group    = $::icinga2::params::group
+  $user  = $::icinga2::params::user
+  $group = $::icinga2::params::group
 
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($object_name)
   validate_bool($template)
   validate_array($import)
@@ -63,11 +69,15 @@ define icinga2::object(
     owner  => $user,
     group  => $group,
     tag    => 'icinga2::config::file',
+    warn   => true,
   })
 
-  concat::fragment { "icinga2::object::${object_type}::${object_name}":
-    target  => $target,
-    content => template('icinga2/object.conf.erb'),
-    order   => $order,
+  if $ensure != 'absent' {
+    concat::fragment { "icinga2::object::${object_type}::${object_name}":
+      target  => $target,
+      content => template('icinga2/object.conf.erb'),
+      order   => $order,
+    }
   }
+
 }

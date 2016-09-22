@@ -23,6 +23,22 @@ describe('icinga2::object::endpoint', :type => :define) do
     end
 
 
+    context "#{os} with ensure => absent" do
+      let(:params) { {:ensure => 'absent', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat('/bar/baz') }
+
+      it { is_expected.not_to contain_concat__fragment('icinga2::object::Endpoint::bar') }
+    end
+
+
+    context "#{os} with ensure => foo (not a valid value)" do
+      let(:params) { {:ensure => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    end
+
+
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz'} }
 
@@ -98,6 +114,36 @@ describe('icinga2::object::endpoint', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
       .with({'target' => 'C:/bar/baz'})
       .with_content(/object Endpoint "bar"/) }
+  end
+
+
+  context "Windows 2012 R2 with ensure => absent" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ensure => 'absent', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat('C:/bar/baz') }
+
+    it { is_expected.not_to contain_concat__fragment('icinga2::object::Endpoint::bar') }
+  end
+
+
+  context "Windows 2012 R2 with ensure => foo (not a valid value)" do
+    let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+    } }
+    let(:params) { {:ensure => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
   end
 
 
