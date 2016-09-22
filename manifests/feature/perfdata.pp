@@ -27,10 +27,10 @@
 #   /var/spool/icinga2/tmp/host-perfdata on Linux
 #   C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata on Windows.
 #
-# [*host_format_template*] NOT IMPLEMENTED
+# [*host_format_template*]
 #   Host Format template for the performance data file. Defaults to a template that's suitable for use with PNP4Nagios.
 #
-# [*service_format_template*] NOT IMPLEMENTED
+# [*service_format_template*]
 #   Service Format template for the performance data file. Defaults to a template that's suitable for use with
 #   PNP4Nagios.
 #
@@ -43,12 +43,14 @@
 # Icinga Development Team <info@icinga.org>
 #
 class icinga2::feature::perfdata(
-  $ensure                = present,
-  $host_perfdata_path    = "${::icinga2::params::spool_dir}/perfdata/host-perfdata",
-  $service_perfdata_path = "${::icinga2::params::spool_dir}/perfdata/service-perfdata",
-  $host_temp_path        = "${::icinga2::params::spool_dir}/tmp/host-perfdata",
-  $service_temp_path     = "${::icinga2::params::spool_dir}/tmp/service-perfdata",
-  $rotation_interval     = '30s',
+  $ensure                  = present,
+  $host_perfdata_path      = "${::icinga2::params::spool_dir}/perfdata/host-perfdata",
+  $service_perfdata_path   = "${::icinga2::params::spool_dir}/perfdata/service-perfdata",
+  $host_temp_path          = "${::icinga2::params::spool_dir}/tmp/host-perfdata",
+  $service_temp_path       = "${::icinga2::params::spool_dir}/tmp/service-perfdata",
+  $host_format_template    = undef,
+  $service_format_template = undef,
+  $rotation_interval       = '30s',
 ) inherits icinga2::params {
 
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -58,6 +60,8 @@ class icinga2::feature::perfdata(
   validate_absolute_path($host_temp_path)
   validate_absolute_path($service_temp_path)
   validate_re($rotation_interval, '^\d+[ms]*$')
+  unless ($host_format_template == undef){ validate_string($host_format_template) }
+  unless ($service_format_template == undef){ validate_string($service_format_template) }
 
   icinga2::feature { 'perfdata':
     ensure => $ensure,

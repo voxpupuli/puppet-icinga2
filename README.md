@@ -360,7 +360,7 @@ Enables or disables the `perfdata` feature.
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `perfdata` should be enabled. Default is `present`.
 
-##### `ost_perfdata_path`
+##### `host_perfdata_path`
 Absolute path to the perfdata file for hosts. Default depends on platform:
 * Linux: `/var/spool/icinga2/host-perfdata`
 * Windows: `C:/ProgramData/icinga2/var/spool/icinga2/host-perfdata`
@@ -380,9 +380,15 @@ Path to the temporary service file. Defaults depends on platform:
 * Linux: `/var/spool/icinga2/tmp/host-perfdata` 
 * Windows: `C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata`
 
+##### `host_format_template`
+Host Format template for the performance data file. Defaults to a template that's suitable for use with PNP4Nagios.
+
+##### `service_format_template`
+Service Format template for the performance data file. Defaults to a template that's suitable for use with PNP4Nagios.
+
 ##### `rotation_interval`
-Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
-i.e. 1m or 15s. Defaults is 30s.
+Rotation interval for the files specified in `{host,service}_perfdata_path`. Can be written in minutes or seconds,
+i.e. `1m` or `15s`. Defaults to `30s`
 
 #### Class: `icinga2::feature::statusdata`
 Enables or disables the `statusdata` feature.

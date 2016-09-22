@@ -7,5 +7,11 @@ object PerfdataWriter "perfdata" {
   service_perfdata_path = "<%= scope['icinga2::feature::perfdata::service_perfdata_path'] %>"
   host_temp_path = "<%= scope['icinga2::feature::perfdata::host_temp_path'] %>"
   service_temp_path = "<%= scope['icinga2::feature::perfdata::service_temp_path'] %>"
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::perfdata::host_format_template')) -%>
+  host_format_template = "<%= scope['icinga2::feature::perfdata::host_format_template'] %>"
+<% end -%>
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::perfdata::service_format_template')) -%>
+  service_format_template = "<%= scope['icinga2::feature::perfdata::service_format_template'] %>"
+<% end -%>
   rotation_interval = <%= scope['icinga2::feature::perfdata::rotation_interval'] %>
 }
