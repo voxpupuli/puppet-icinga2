@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the endpoint object, absent disabled it. Defaults to present.
+#
 # [*endpoint*]
 #   Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
 #
@@ -31,6 +34,7 @@
 # Icinga Development Team <info@icinga.org>
 #
 define icinga2::object::endpoint(
+  $ensure       = present,
   $endpoint     = $title,
   $host         = undef,
   $port         = undef,
@@ -66,6 +70,7 @@ define icinga2::object::endpoint(
 
   # create object
   icinga2::object { "icinga2::object::Endpoint::${title}":
+    ensure      => $ensure,
     object_name => $endpoint,
     object_type => 'Endpoint',
     attrs       => $attrs,
