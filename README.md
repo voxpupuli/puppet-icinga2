@@ -463,7 +463,6 @@ Source name for this instance. Default is `icinga2`
 ##### `enable_send_perfdata`
 Enable performance data for *CHECK RESULT* events. Default is `false`.
 
-<<<<<<< HEAD
 #### Class: `icinga2::feature::influxdb`
 Enables or disables the `influxdb` feature.
 
