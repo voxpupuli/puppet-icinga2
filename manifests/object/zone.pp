@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the endpoint object, absent disabled it. Defaults to present.
+#
 # [*zone*]
 #   Set the Icinga2 name of the zone object. Defaults to title of the define resource.
 #
@@ -29,6 +32,7 @@
 # Icinga Development Team <info@icinga.org>
 #
 define icinga2::object::zone(
+  $ensure    = present,
   $zone      = $title,
   $endpoints = [],
   $parent    = undef,
@@ -42,6 +46,8 @@ define icinga2::object::zone(
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($zone)
   validate_integer($order)
 
@@ -72,6 +78,7 @@ define icinga2::object::zone(
 
   # create object
   icinga2::object { "icinga2::object::Zone::${title}":
+    ensure      => $ensure,
     object_name => $zone,
     object_type => 'Zone',
     attrs       => $attrs,

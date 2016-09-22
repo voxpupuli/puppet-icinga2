@@ -48,6 +48,10 @@ define icinga2::object::endpoint(
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_integer($order)
+
   if $endpoint { validate_string($endpoint) }
   if $host { validate_ip_address($host) }
   if $port { validate_integer($port) }
@@ -58,8 +62,6 @@ define icinga2::object::endpoint(
     $_target = $target }
   else {
     $_target = "${conf_dir}/zones.conf" }
-
-  validate_integer($order)
 
   # compose the attributes
   $attrs = {
