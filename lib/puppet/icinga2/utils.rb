@@ -11,10 +11,10 @@ module Puppet
           if value.is_a?(Integer) || value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
             result = value
           else
-            if $constants.include?(value)
+            if $constants.include?(value) || value =~ /^{{.*}}$/
               result = value
             else
-              result = "\"#{value}\""
+               result = "\"#{value}\""
             end
           end
           return result
@@ -35,7 +35,14 @@ module Puppet
             end
           elsif attrs.is_a?(Array)
             attrs.each do |value|
-              result += "%s, " % [ types(value) ] if value != :undef
+              txt = [ ' ' * indent, recurse(value, indent+2), ' ' * indent ]
+              if value.is_a?(Hash)
+                result += "\n%s{\n%s%s}, " % txt
+              elsif value.is_a?(Array)
+                result += "[%s], " % [ recurse(value, indent+2) ]
+              else
+                result += "%s, " % [ types(value) ] if value != :undef
+              end
             end
           else
             result += "%s\n" % [ types(attrs) ]
