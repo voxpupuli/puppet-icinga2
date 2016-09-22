@@ -135,7 +135,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::feature::syslog](#class-icinga2-feature-syslog)
     - [Class::icinga2::feature::debuglog](#class-icinga2-feature-debuglog)
     - [Class::icinga2::feature::gelf](#class-icinga2-feature-gelf)
-    - [Class::icinga2::feature::idomysql](#class-icinga2featureido-mysql)
+    - [Class::icinga2::feature::idomysql](#class-icinga2featureidomysql)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -480,9 +480,27 @@ MySQL database user's password. Defaults to `icinga`
 ##### `database`
 MySQL database name. Defaults to `icinga`
 
-##### `enable_ssl`
-Use SSL. Defaults to false. Change to true in case you want to use any of the SSL options.
+##### `ssl`
+SSL settings will be set depending on this parameter:
+* `puppet` Use puppet certificates
+* `custom` Set custom paths for certificate, key and CA
+* `false` Disable SSL (default)
 
+##### `ssl_key`
+MySQL SSL client key file path. Only valid if ssl is set to `custom`.
+
+##### `ssl_cert`
+MySQL SSL certificate file path. Only valid if ssl is set to `custom`.
+
+##### `ssl_ca`
+MySQL SSL certificate authority certificate file path. Only valid if ssl is set to `custom`.
+
+##### `ssl_capath`
+MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
+
+##### `ssl_cipher`
+MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
+      
 ##### `table_prefix`
 MySQL database table prefix. Defaults to `icinga_`
 

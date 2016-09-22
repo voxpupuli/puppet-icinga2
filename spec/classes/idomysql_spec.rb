@@ -119,26 +119,114 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with enable_ssl => true" do
-      let(:params) { {:enable_ssl => true} }
+    context "#{os} with ssl => false" do
+      let(:params) { {:ssl => false} }
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                              .with_content(/enable_ssl = true/) }
+                              .with_content(/enable_ssl = false/)
+                              .without_content(/ssl_ca =/)
+                              .without_content(/ssl_cert =/)
+                              .without_content(/ssl_key =/)
+                              .without_content(/ssl_cipher =/)
+                              .without_content(/ssl_capath =/)}
     end
 
 
-    context "#{os} with enable_ssl => false" do
-      let(:params) { {:enable_ssl => false} }
+    context "#{os} with ssl => puppet" do
+      let(:params) { {:ssl => 'puppet'} }
+      let(:facts) do
+        facts.merge({
+                        :fqdn => 'foo.bar.com',
+                    })
+      end
 
       it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                              .with_content(/enable_ssl = false/) }
+                              .with_content(/enable_ssl = true/)
+                              .with_content(/ssl_ca = "\/etc\/icinga2\/pki\/ido-mysql\/ca.crt"/)
+                              .with_content(/ssl_cert = "\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.crt"/)
+                              .with_content(/ssl_key = "\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.key"/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/ca.crt') }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/foo.bar.com.crt') }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/foo.bar.com.key') }
     end
 
 
-    context "#{os} with enable_ssl => foo (not a valid boolean)" do
-      let(:params) { {:enable_ssl => 'foo'} }
+    context "#{os} with ssl => custom" do
+      let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+                              .with_content(/enable_ssl = true/)
+                              .with_content(/ssl_ca = "\/foo\/ca"/)
+                              .with_content(/ssl_cert = "\/foo\/cert"/)
+                              .with_content(/ssl_key = "\/foo\/key"/)}
+    end
+
+
+    context "#{os} with ssl => custom (without ssl_ca, ssl_cert, ssl_key)" do
+      let(:params) { {:ssl => 'custom'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => custom, ssl_ca => 'foo' (invalid path)" do
+      let(:params) { {:ssl => 'custom', :ssl_ca => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => custom, ssl_cert => 'foo' (invalid path)" do
+      let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => custom, ssl_key => 'foo' (invalid path)" do
+      let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    end
+
+
+    context "#{os} with ssl => foo (not a valid value)" do
+      let(:params) { {:ssl => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    end
+
+
+    context "#{os} with ssl_cipher => foo" do
+      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 'foo'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+                              .with_content(/enable_ssl = true/)
+                              .with_content(/ssl_cipher = "foo"/) }
+    end
+
+
+    context "#{os} with ssl_cipher => foo" do
+      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 4247} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with ssl_capath => /foo" do
+      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => '/foo'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+                              .with_content(/enable_ssl = true/)
+                              .with_content(/ssl_capath = "\/foo"/) }
+    end
+
+
+    context "#{os} with ssl_capath => foo" do
+      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
     end
 
 
@@ -274,7 +362,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
       :architecture => 'x86_64',
       :osfamily => 'Windows',
       :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
+      :operatingsystemmajrelease => '2012 R2',
+      :fqdn => 'foo.bar.com'
   } }
 
 
@@ -386,27 +475,133 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with enable_ssl => true" do
-    let(:params) { {:enable_ssl => true} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  context "Windows 2012 R2 with ssl => puppet" do
+    let(:params) { {:ssl => 'puppet'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                            .with_content(/enable_ssl = true/) }
+                            .with_content(/enable_ssl = true/)
+                            .with_content(/ssl_ca = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/ido-mysql\/ca.crt"/)
+                            .with_content(/ssl_cert = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.crt"/)
+                            .with_content(/ssl_key = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.key"/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/ca.crt') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/foo.bar.com.crt') }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/foo.bar.com.key') }
   end
 
 
-  context "Windows 2012 R2 with enable_ssl => false" do
-    let(:params) { {:enable_ssl => false} }
+  context "Windows 2012 R2 with ssl => custom" do
+    let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                            .with_content(/enable_ssl = false/) }
+                            .with_content(/enable_ssl = true/)
+                            .with_content(/ssl_ca = "\/foo\/ca"/)
+                            .with_content(/ssl_cert = "\/foo\/cert"/)
+                            .with_content(/ssl_key = "\/foo\/key"/)}
   end
 
 
-  context "Windows 2012 R2 with enable_ssl => foo (not a valid boolean)" do
-    let(:params) { {:enable_ssl => 'foo'} }
+  context "Windows 2012 R2 with ssl => custom (without ssl_ca, ssl_cert, ssl_key)" do
+    let(:params) { {:ssl => 'custom'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /"" is not an absolute path/) }
   end
+
+
+  context "Windows 2012 R2 with ssl => custom, ssl_ca => 'foo' (invalid path)" do
+    let(:params) { {:ssl => 'custom', :ssl_ca => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => custom, ssl_cert => 'foo' (invalid path)" do
+    let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => custom, ssl_key => 'foo' (invalid path)" do
+    let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl => foo (not a valid value)" do
+    let(:params) { {:ssl => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_cipher => foo" do
+    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 'foo'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+                            .with_content(/enable_ssl = true/)
+                            .with_content(/ssl_cipher = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_cipher => foo" do
+    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 4247} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_capath => /foo" do
+    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => '/foo'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+                            .with_content(/enable_ssl = true/)
+                            .with_content(/ssl_capath = "\/foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with ssl_capath => foo" do
+    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   context "Windows 2012 R2 with table_prefix => foo" do

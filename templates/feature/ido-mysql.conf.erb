@@ -12,7 +12,27 @@ object IdoMysqlConnection "ido-mysql" {
   user = "<%= scope['icinga2::feature::idomysql::user'] %>"
   password = "<%= scope['icinga2::feature::idomysql::password'] %>"
   database = "<%= scope['icinga2::feature::idomysql::database'] %>"
-  enable_ssl = <%= scope['icinga2::feature::idomysql::enable_ssl'] %>
+<% if scope.lookupvar('icinga2::feature::idomysql::ssl') -%>
+  enable_ssl = true
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::idomysql::ssl_capath')) -%>
+  ssl_capath = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_capath') %>"
+<% end -%>
+<% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::idomysql::ssl_cipher')) -%>
+  ssl_cipher = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_cipher') %>"
+<% end -%>
+<% case scope.lookupvar('icinga2::feature::idomysql::ssl')
+  when "puppet" -%>
+  ssl_ca = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_dir') %>/ca.crt"
+  ssl_cert = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_dir') %>/<%= scope.lookupvar('icinga2::feature::idomysql::node_name') %>.crt"
+  ssl_key = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_dir') %>/<%= scope.lookupvar('icinga2::feature::idomysql::node_name') %>.key"
+<% when "custom" -%>
+  ssl_ca = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_ca') %>"
+  ssl_cert = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_cert') %>"
+  ssl_key = "<%= scope.lookupvar('icinga2::feature::idomysql::ssl_key') %>"
+<% end -%>
+<% else -%>
+  enable_ssl = false
+<% end -%>
   table_prefix = "<%= scope['icinga2::feature::idomysql::table_prefix'] %>"
   instance_name = "<%= scope['icinga2::feature::idomysql::instance_name'] %>"
 <% if ! [:undef, nil, ''].include?(scope.lookupvar('icinga2::feature::idomysql::instance_description')) -%>

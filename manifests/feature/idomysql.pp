@@ -25,23 +25,26 @@
 # [*database*]
 #    MySQL database name. Defaults to "icinga".
 #
-# [*enable_ssl*]
-#    Use SSL. Defaults to false. Change to true in case you want to use any of the SSL options.
+# [*ssl*]
+#    SSL settings will be set depending on this parameter.
+#      puppet: Use puppet certificates
+#      custom: Set custom paths for certificate, key and CA
+#      false: Disable SSL (default)
 #
 # [*ssl_key*]
-#    MySQL SSL client key file path.
+#    MySQL SSL client key file path. Only valid if ssl is set to custom.
 #
 # [*ssl_cert*]
-#    MySQL SSL certificate file path.
+#    MySQL SSL certificate file path. Only valid if ssl is set to custom.
 #
 # [*ssl_ca*]
-#    MySQL SSL certificate authority certificate file path.
+#    MySQL SSL certificate authority certificate file path. Only valid if ssl is set to custom.
 #
 # [*ssl_capath*]
-#    MySQL SSL trusted SSL CA certificates in PEM format directory path.
+#    MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
 #
 # [*ssl_cipher*]
-#    MySQL SSL list of allowed ciphers.
+#    MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 #
 # [*table_prefix*]
 #   MySQL database table prefix. Defaults to "icinga_".
@@ -79,7 +82,7 @@ class icinga2::feature::idomysql(
   $user                   = 'icinga',
   $password               = 'icinga',
   $database               = 'icinga',
-  $enable_ssl             = false,
+  $ssl                    = false,
   $ssl_key                = undef,
   $ssl_cert               = undef,
   $ssl_ca                 = undef,
@@ -95,27 +98,80 @@ class icinga2::feature::idomysql(
   $import_schema          = false,
 ) {
 
+  include ::icinga2::params
+
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_ip_address($host)
   validate_integer($port)
-  unless ($socket_path == undef){
-    validate_absolute_path($socket_path)
-  }
+  unless ($socket_path == undef){ validate_absolute_path($socket_path) }
   validate_string($user)
   validate_string($password)
   validate_string($database)
-  validate_bool($enable_ssl)
   validate_string($table_prefix)
   validate_string($instance_name)
-  unless ($instance_description == undef){
-    validate_string($instance_description)
-  }
+  unless ($instance_description == undef){ validate_string($instance_description) }
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
   validate_hash($cleanup)
   validate_array($categories)
   validate_bool($import_schema)
+  unless ($ssl_capath == undef){ validate_absolute_path($ssl_capath) }
+  unless ($ssl_cipher == undef){ validate_string($ssl_cipher) }
+
+  $owner     = $::icinga2::params::user
+  $group     = $::icinga2::params::group
+  $node_name = $::icinga2::_constants['NodeName']
+  $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
+
+  File {
+    owner   => $owner,
+    group   => $group,
+  }
+
+  if $ssl {
+    validate_re($ssl, [ '^puppet$', '^custom$' ],
+      "${ssl} isn't supported. Valid values are 'puppet' and 'custom'.")
+
+    case $ssl {
+      'puppet': {
+        file { $ssl_dir:
+          ensure => directory,
+          before => Icinga2::Feature['ido-mysql']
+        }
+
+        file { "${ssl_dir}/${node_name}.key":
+          ensure => file,
+          mode   => $::kernel ? {
+            'windows' => undef,
+            default   => '0600',
+          },
+          source => $::settings::hostprivkey,
+          tag    => 'icinga2::config::file',
+        }
+
+       file { "${ssl_dir}/${node_name}.crt":
+         ensure => file,
+         source => $::settings::hostcert,
+         tag    => 'icinga2::config::file',
+       }
+
+       file { "${ssl_dir}/ca.crt":
+         ensure => file,
+         source => $::settings::localcacert,
+         tag    => 'icinga2::config::file',
+       }
+      }
+      'custom': {
+        validate_absolute_path($ssl_ca)
+        validate_absolute_path($ssl_cert)
+        validate_absolute_path($ssl_key)
+      }
+      default: {
+        fail("SSL method ${ssl} is not supported.")
+      }
+    }
+  }
 
   package { 'icinga2-ido-mysql':
     ensure => installed,
