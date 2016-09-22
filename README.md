@@ -90,6 +90,21 @@ class { 'icinga2::feature::graphite':
 }
 ```
 
+### Enable IDO
+The IDO feature can be enabled either in combination with MySQL or PostgreSQL. Depending on your database you need to
+enable the feature `icinga2::feature::idomysql` or `icinga2::feature::idopgsql`. Both features are capable of importing
+the base schema into the database, however this is disabled by default. Updating the database schema to another version
+is currently not supported.
+
+```
+class{ 'icinga2::feature::idomysql':
+  user => "icinga2",
+  password => "icinga2",
+  database => "icinga2",
+  import_schema => true
+}
+```
+
 ### Custom configuration files
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
@@ -123,6 +138,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class::icinga2::feature::influxdb](#class-icinga2featureinfluxdb)
     - [Class::icinga2::feature::api](#class-icinga2featureapi)
     - [Class::icinga2::feature::idopgsql](#class-icinga2featureidopgsql)
+    - [Class::icinga2::feature::idomysql](#class-icinga2featureidomysql)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -441,6 +457,7 @@ Source name for this instance. Default is `icinga2`
 ##### `enable_send_perfdata`
 Enable performance data for *CHECK RESULT* events. Default is `false`.
 
+<<<<<<< HEAD
 #### Class: `icinga2::feature::influxdb`
 Enables or disables the `influxdb` feature.
 
@@ -567,10 +584,10 @@ Accept zone configuration. Default is `false`
 ##### `accept_commands`
 Accept remote commands. Default is `false`
 
-#### Class: `icinga2::feature::pgsql`
-Enables or disables the `pgsql` feature.
+#### Class: `icinga2::feature::idopgsql`
+Enables or disables the `ido-pgsql` feature.
 
-**Parameters of `icinga2::feature::pgsql`:**
+**Parameters of `icinga2::feature::idopgsql`:**
 
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `ido-pgsql` should be enabled. Default is `present`.
@@ -593,6 +610,59 @@ PostgreSQL database name. Defaults to `icinga`
 ##### `table_prefix`
 PostgreSQL database table prefix. Defaults to `icinga_`
 
+##### `import_schema`
+Whether to import the PostgreSQL schema or not. Defaults to `false`
+
+#### Class: `icinga2::feature::idomysql`
+Enables or disables the `gelf` feature.
+
+**Parameters of `icinga2::feature::idomysql`:**
+
+##### `ensure`
+Either `present` or `absent`. Defines if the feature `ido-mysql` should be enabled. Default is `present`.
+
+##### `host`
+MySQL database host address. Defaults to `127.0.0.1`
+
+##### `port`
+MySQL database port. Defaults to `3306`
+
+##### `socket_path`
+MySQL socket path.
+
+##### `user`
+MySQL database user with read/write permission to the icinga database. Defaults to `icinga`
+
+##### `password`
+MySQL database user's password. Defaults to `icinga`
+
+##### `database`
+MySQL database name. Defaults to `icinga`
+
+##### `ssl`
+SSL settings will be set depending on this parameter:
+* `puppet` Use puppet certificates
+* `custom` Set custom paths for certificate, key and CA
+* `false` Disable SSL (default)
+
+##### `ssl_key`
+MySQL SSL client key file path. Only valid if ssl is set to `custom`.
+
+##### `ssl_cert`
+MySQL SSL certificate file path. Only valid if ssl is set to `custom`.
+
+##### `ssl_ca`
+MySQL SSL certificate authority certificate file path. Only valid if ssl is set to `custom`.
+
+##### `ssl_capath`
+MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
+
+##### `ssl_cipher`
+MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
+      
+##### `table_prefix`
+MySQL database table prefix. Defaults to `icinga_`
+
 ##### `instance_name`
 Unique identifier for the local Icinga 2 instance. Defaults to `default`
 
@@ -612,7 +682,7 @@ Hash with items for historical table cleanup.
 Array of information types that should be written to the database.
 
 ##### `import_schema`
-Whether to import the PostgreSQL schema or not. Defaults to `false`
+Whether to import the MySQL schema or not. Defaults to `false`
 
 ### Private Classes
 
