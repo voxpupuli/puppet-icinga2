@@ -1,5 +1,20 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.4.0
+
+### Bugs
+Bug #12743: paths in api feature must be quoted
+
+### Features
+Feature #12363: Feature ido-mysql
+Feature #12706: Implement host_format_template and service_format_template for perfdata feature
+Feature #12720: Feature ido-pgsql
+
+## v0.3.1
+
+### Bugs
+Bug #12738: Duplicate declaration File[/etc/icinga2/pki]
+
 ## v0.3.0
 
 ### Bugs
