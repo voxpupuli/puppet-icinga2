@@ -475,19 +475,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   context "Windows 2012 R2 with ssl => puppet" do
     let(:params) { {:ssl => 'puppet'} }
 
@@ -579,29 +566,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   context "Windows 2012 R2 with table_prefix => foo" do
