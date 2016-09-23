@@ -60,8 +60,8 @@ class icinga2::feature::perfdata(
   validate_absolute_path($host_temp_path)
   validate_absolute_path($service_temp_path)
   validate_re($rotation_interval, '^\d+[ms]*$')
-  unless ($host_format_template == undef){ validate_string($host_format_template) }
-  unless ($service_format_template == undef){ validate_string($service_format_template) }
+  if $host_format_template { validate_string($host_format_template) }
+  if $service_format_template { validate_string($service_format_template) }
 
   icinga2::feature { 'perfdata':
     ensure => $ensure,

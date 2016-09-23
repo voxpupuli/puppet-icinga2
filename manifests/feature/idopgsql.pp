@@ -76,9 +76,7 @@ class icinga2::feature::idopgsql(
   validate_string($database)
   validate_string($table_prefix)
   validate_string($instance_name)
-  unless ($instance_description == undef){
-    validate_string($instance_description)
-  }
+  if $instance_description { validate_string($instance_description) }
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
   validate_hash($cleanup)
