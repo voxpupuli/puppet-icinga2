@@ -15,8 +15,8 @@ describe('icinga2', :type => :class) do
       }
       it do
         should contain_file('/etc/icinga2/foo')
-          .that_requires('Class[icinga2::config]')
-          .that_notifies('Class[icinga2::service]')
+        .that_notifies('Class[icinga2::service]')
+        #.that_requires('Class[icinga2::config]')
       end
     end
   

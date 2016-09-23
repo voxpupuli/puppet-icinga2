@@ -533,3 +533,24 @@ describe('icinga2::feature::api', :type => :class) do
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 end
+
+describe('icinga2::feature::api', :type => :class) do
+  let(:pre_condition) { [
+      "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
+  ] }
+
+  let(:facts) { {
+      :kernel => 'Windows',
+      :architecture => 'x86_64',
+      :osfamily => 'Windows',
+      :operatingsystem => 'Windows',
+      :operatingsystemmajrelease => '2012 R2'
+  } }
+
+  context "Windows 2012 R2 with ensure => present" do
+    let(:params) { {:ensure => 'present'} }
+
+    it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
+  end
+
+end
