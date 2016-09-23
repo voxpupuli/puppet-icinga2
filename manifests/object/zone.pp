@@ -21,7 +21,7 @@
 #   and parent are ignored. Defaults to false.
 #
 # [*target*]
-#   Destination config file to store in this object. File will be declared the
+#   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
 # [*order*]

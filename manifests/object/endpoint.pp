@@ -23,7 +23,7 @@
 #   or 1h for one hour.
 #
 # [*target*]
-#   Destination config file to store in this object. File will be declared the
+#   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
 # [*order*]
