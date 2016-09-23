@@ -49,6 +49,17 @@
 # [*accept_commands*]
 #   Accept remote commands. Default is false.
 #
+# [*ticket_salt*]
+#   Salt to use for ticket generation. Defaults to icinga2 constant TicketSalt.
+#
+# [*endpoints*]
+#   Hash to configure endpoint objects. Defaults to { 'NodeName' => {} }.
+#   NodeName is a icnga2 constant.
+#
+# [*zones*]
+#   Hash to configure zone objects. Defaults to { 'ZoneName' => ['NodeName']} }.
+#   ZoneName and NodeName are icinga2 constants.
+#
 # === Variables
 #
 # [*node_name*]
@@ -111,8 +122,9 @@ class icinga2::feature::api(
   $ssl_ca_path     = undef,
   $accept_config   = false,
   $accept_commands = false,
-  $zones           = undef,
-  $endpoints       = undef,
+  $ticket_salt     = 'TicketSalt',
+  $endpoints       = { 'NodeName' => {} },
+  $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
 ) {
 
   include ::icinga2::params
@@ -135,6 +147,9 @@ class icinga2::feature::api(
     "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
+  validate_string($ticket_salt)
+  validate_hash($endpoints)
+  validate_hash($zones)
 
   # set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
@@ -153,27 +168,7 @@ class icinga2::feature::api(
   else {
     $_ssl_ca_path = "${pki_dir}/ca.crt" }
 
-  # set defaults for endpoints and do validation
-  if $endpoints {
-    validate_hash($endpoints)
-    $_endpoints = $endpoints }
-  else {
-    $_endpoints = {
-      'NodeName' => {}
-    }
-  }
-
-  # set defaults for zones and do validation
-  if $zones {
-    validate_hash($zones)
-    $_zones = $zone }
-  else {
-    $_zones = {
-      'ZoneName' => { endpoints => [ 'NodeName' ] },
-    }
-  }
-
-  # pki selection
+  # handle the certificate's stuff
   if $pki == 'puppet' {
     file { $_ssl_key_path:
       ensure => file,
@@ -198,16 +193,9 @@ class icinga2::feature::api(
     }
   }
 
-  # create default config file 'zones.conf'
-  ensure_resource('concat', "${conf_dir}/zones.conf", {
-    ensure => present,
-    owner  => $user,
-    group  => $group,
-    tag    => 'icinga2::config::file'
-  })
-
-  create_resources('icinga2::object::endpoint', $_endpoints)
-  create_resources('icinga2::object::zone', $_zones)
+  # create endpoints and zones
+  create_resources('icinga2::object::endpoint', $endpoints)
+  create_resources('icinga2::object::zone', $zones)
 
   # create feature
   icinga2::feature { 'api':

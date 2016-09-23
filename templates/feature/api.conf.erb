@@ -7,5 +7,5 @@ object ApiListener "api" {
 
   accept_commands = <%= scope['icinga2::feature::api::accept_commands'] %>
   accept_config = <%= scope['icinga2::feature::api::accept_config'] %>
-  ticket_salt = TicketSalt
+  ticket_salt = "<%= scope['icinga2::feature::api::ticket_salt'] %>"
 }
