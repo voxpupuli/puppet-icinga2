@@ -145,8 +145,12 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class: icinga2::config](#class-icinga2config)
     - [Class: icinga2::service](#class-icinga2service)
 - [**Public defined types**](#public-defined-types)
+    - [Defined type: icinga2::object::endpoint](#defined-type-icinga2objectendpoint)
+    - [Defined type: icinga2::object::zone](#defined-type-icinga2objectzone)
+    - [Defined type: icinga2::object::apiuser](#defined-type-icinga2objectapiuser)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
+    - [Defined type: icinga2::object](#defined-type-icinga2object)
 
 ### Public Classes
 
@@ -706,6 +710,95 @@ Starts/stops and enables/disables the service.
 
 ### Public defined types
 
+#### Defined type: `icinga2::object::endpoint`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disabled it. Defaults to present.
+
+##### `endpoint`
+Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
+
+##### `host`
+Optional. The IP address of the remote Icinga 2 instance.
+
+##### `port`
+The service name/port of the remote Icinga 2 instance. Defaults to 5665.
+
+##### `log_duration`
+Duration for keeping replay logs on connection loss. Defaults to `1d` (86400 seconds). Attribute is specified in seconds.
+If `log_duration` is set to `0`, replaying logs is disabled. You could also specify the value in human readable format
+like `10m` for 10 minutes or `1h` for one hour.
+
+##### `target`
+Destination config file to store in this object. File will be declared at the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `10`.
+
+#### Defined type: `icinga2::object::zone`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disabled it. Defaults to `present`
+
+##### `zone`
+Set the name of the zone object. Defaults to the title of the define resource.
+
+##### `endpoints`
+List of endpoints that belong to this zone.
+
+##### `parent`
+Parent zone to this zone.
+
+##### `global`
+If set to `true`, a global zone is defined and the parameter endpoints and parent are ignored. Defaults to `false`.
+
+##### `target`
+Destination config file to store in this object. File will be declared at the first time.
+
+##### `order`
+String to control the position in the target file, sorted alpha numeric.
+
+#### Defined type: `icinga2::object::apiuser`
+
+##### `password`
+Password string.
+
+##### `client_cn`
+Optional. Client Common Name (CN).
+
+##### `permissions`
+Array of permissions. Either as string or dictionary with the keys permission and filter. The latter must be specified
+as function.
+
+##### `target`
+Destination config file to store in this object. File will be declared at the first time.
+
+##### `order`
+String to control the position in the target file, sorted alpha numeric. Defaults to `10`
+
+###### Examples
+
+```
+permissions = [ "*" ]
+```
+
+```
+permissions = [ "objects/query/Host", "objects/query/Service" ]
+```
+
+```
+permissions = [
+   {
+     permission = "objects/query/Host"
+     filter = {{ regex("^Linux", host.vars.os) }}
+   },
+   {
+     permission = "objects/query/Service"
+     filter = {{ regex("^Linux", service.vars.os) }}
+   }
+ ]
+``` 
+
 ### Private defined types
 
 #### Defined type: `icinga2::feature`
@@ -718,6 +811,33 @@ Either `present` or `absent`. Defines if the feature should be enabled. Default 
 
 ##### `feature`
 Name of the feature. This name is used for the corresponding configuration file.
+
+#### Defined type: `icinga2::object`
+This defined type is used by all object defined types as bases. In can generally create Icinga2 objects.
+
+##### `ensure`
+Set to present enables the object, absent disabled it. Defaults to present.
+
+##### `object_name`
+Set the icinga2 name of the object. Defaults to title of the define resource.
+
+##### `template`
+Set to true will define a template otherwise an object. Defaults to false.
+
+##### `import`
+A sorted list of templates to import in this object. Defaults to an empty array.
+
+##### `attrs`
+Hash for the attributes of this object. Keys are the attributes and values are there values. Defaults to an empty Hash.
+
+##### `object_type`
+Icinga2 object type for this object.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric.
 
 ## Limitations
 This module has been tested on:

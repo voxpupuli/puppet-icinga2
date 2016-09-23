@@ -25,7 +25,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric.
+#   String to control the position in the target file, sorted alpha numeric.
 #
 # === Authors
 #
