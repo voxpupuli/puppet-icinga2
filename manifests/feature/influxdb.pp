@@ -5,22 +5,22 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature influxdb, absent disables it. Default is present.
+#   Set to present enables the feature influxdb, absent disables it. Defaults to present.
 #
 # [*host*]
-#    InfluxDB host address. Default is 127.0.0.1.
+#    InfluxDB host address. Defaults to 127.0.0.1.
 #
 # [*port*]
-#    InfluxDB HTTP port. Default is 8086.
+#    InfluxDB HTTP port. Defaults to 8086.
 #
 # [*database*]
-#    InfluxDB database name. Default is icinga2.
+#    InfluxDB database name. Defaults to icinga2.
 #
 # [*username*]
-#    InfluxDB user name. Default is undef.
+#    InfluxDB user name. Defaults to undef.
 #
 # [*password*]
-#    InfluxDB user password. Default is undef.
+#    InfluxDB user password. Defaults to undef.
 #
 # [*ssl*]
 #    SSL settings will be set depending on this parameter.
@@ -29,38 +29,38 @@
 #      false: Disable SSL (default)
 #
 # [*ssl_ca_cert*]
-#    CA certificate to validate the remote host. Only valid if ssl is set to 'custom'. Default is undef.
+#    CA certificate to validate the remote host. Only valid if ssl is set to 'custom'. Defaults to undef.
 #
 # [*ssl_cert*]
 #    Host certificate to present to the remote host for mutual verification. 
-#    Only valid if ssl is set to 'custom'. Default is undef..
+#    Only valid if ssl is set to 'custom'. Defaults to undef..
 #
 # [*ssl_key*]
-#    Host key to accompany the ssl_cert. Only valid if ssl is set to 'custom'. Default is undef.
+#    Host key to accompany the ssl_cert. Only valid if ssl is set to 'custom'. Defaults to undef.
 #
 # [*host_measurement*]
-#    The value of this is used for the measurement setting in host_template. Default is  '$host.check_command$'
+#    The value of this is used for the measurement setting in host_template. Defaults to  '$host.check_command$'
 #
 # [*host_tags*]
 #    Tags defined in this hash will be set in the host_template.
 #
 #  [*service_measurement*]
-#    The value of this is used for the measurement setting in host_template. Default is  '$service.check_command$'
+#    The value of this is used for the measurement setting in host_template. Defaults to  '$service.check_command$'
 #
 # [*service_tags*]
 #    Tags defined in this hash will be set in the service_template.
 #
 # [*enable_send_thresholds*]
-#    Whether to send warn, crit, min & max tagged data. Default is false.
+#    Whether to send warn, crit, min & max tagged data. Defaults to false.
 #
 # [*enable_send_metadata*]
-#    Whether to send check metadata e.g. states, execution time, latency etc. Default is false.
+#    Whether to send check metadata e.g. states, execution time, latency etc. Defaults to false.
 #
 # [*flush_interval*]
-#    How long to buffer data points before transfering to InfluxDB. Default is 10s.
+#    How long to buffer data points before transfering to InfluxDB. Defaults to 10s.
 #
 # [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to InfluxDB. Default is 1024.
+#    How many data points to buffer before forcing a transfer to InfluxDB. Defaults to 1024.
 #
 # === Example
 #

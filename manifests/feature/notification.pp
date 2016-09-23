@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature notification, absent disabled it. Default is present.
+#   Set to present enables the feature notification, absent disabled it. Defaults to present.
 #
 # === Authors
 #

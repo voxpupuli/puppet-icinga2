@@ -5,14 +5,14 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature api, absent disabled it. Default is present.
+#   Set to present enables the feature api, absent disabled it. Defaults to present.
 #
 # [*pki*]
 #   Provides multiple sources for the certificate and key. Valid parameters are 'puppet' or 'none'.
 #   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
 #   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
 #   'none' does nothing and you either have to manage the files yourself as file resources
-#   or use the ssl_key, ssl_cert, ssl_ca parameters. Default is puppet.
+#   or use the ssl_key, ssl_cert, ssl_ca parameters. Defaults to puppet.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
@@ -27,27 +27,27 @@
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_ca_path*]
-#   Location of the CA certificate. Default is:
+#   Location of the CA certificate. Defaults to:
 #   /etc/icinga2/pki/ca.crt on Linux
 #   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
 #
 # [*ssl_key*] NOT IMPLEMENTED
 #   The private key in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
-#   with the suffix '.key'. For use 'pki' must set to 'none'. Default to undef.
+#   with the suffix '.key'. For use 'pki' must set to 'none'. Defaults to undef.
 #
 # [*ssl_cert*] NOT IMPLEMENTED
 #   The certificate in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
-#   with the suffix '.crt'. For use 'pki' must set to 'none'. Default to undef.
+#   with the suffix '.crt'. For use 'pki' must set to 'none'. Defaults to undef.
 #
 # [*ssl_ca*] NOT IMPLEMENTED
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is named to 'ca.crt'.
-#   For use 'pki' must set to 'none'. Default to undef.
+#   For use 'pki' must set to 'none'. Defaults to undef.
 #
 # [*accept_config*]
-#   Accept zone configuration. Default is false.
+#   Accept zone configuration. Defaults to false.
 #
 # [*accept_commands*]
-#   Accept remote commands. Default is false.
+#   Accept remote commands. Defaults to false.
 #
 # [*ticket_salt*]
 #   Salt to use for ticket generation. Defaults to icinga2 constant TicketSalt.

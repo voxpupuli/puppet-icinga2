@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature statusdata, absent disables it. Default is present.
+#   Set to present enables the feature statusdata, absent disables it. Defaults to present.
 #
 # [*status_path*]
 #   Absolute path to the status.dat file. Default depends on platform:
@@ -19,7 +19,7 @@
 #
 # [*update_interval*]
 #   Interval in seconds to update both status files.
-#   You can also specify it in minutes with the letter m or in seconds with s. Default is '30s'
+#   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '30s'
 #
 # === Authors
 #

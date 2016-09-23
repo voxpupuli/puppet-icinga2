@@ -5,32 +5,32 @@
 # === Parameters
 #
 # [*ensure*]
-#   Manages if the service should be stopped or running. Default is running.
+#   Manages if the service should be stopped or running. Defaults to running.
 #
 # [*enable*]
-#   If set to true the Icinga2 service will start on boot. Default is true.
+#   If set to true the Icinga2 service will start on boot. Defaults to true.
 #
 # [*manage_repo*]
 #   When set to true this module will install the packages.icinga.org repository. With this official repo you can get
 #   the latest version of Icinga. When set to false the operating systems default will be used. As the Icinga Project
 #   does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows.
-#   Default is false
+#   Defaults to false
 #
 # [*manage_service*]
 #   If set to true the service is managed otherwise the service also
-#   isn't restarted if a config file changed. Default to true.
+#   isn't restarted if a config file changed. Defaults to true.
 #
 # [*features*]
-#   List of features to activate. Default to [checker, mainlog, notification].
+#   List of features to activate. Defaults to [checker, mainlog, notification].
 #
 # [*purge_features*]
-#   Define if configuration files for features not managed by Puppet should be purged. Default is true.
+#   Define if configuration files for features not managed by Puppet should be purged. Defaults to true.
 #
 # [*constants*]
 #   Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 #
 # [*plugins*]
-#   A list of the ITL plugins to load. Default to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
+#   A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 #
 # [*confd*]
 #   This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter

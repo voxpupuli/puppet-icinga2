@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present to enable the feature command, absent to disabled it. Default is present.
+#   Set to present to enable the feature command, absent to disabled it. Defaults to present.
 #
 # [*command_path*]
 #   Absolute path to the command pipe. Default depends on platform, /var/run/icinga2/cmd/icinga2.cmd on Linux

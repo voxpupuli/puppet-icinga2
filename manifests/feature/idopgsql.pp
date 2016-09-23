@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature ido-pgsql, absent disables it. Default is present.
+#   Set to present enables the feature ido-pgsql, absent disables it. Defaults to present.
 #
 # [*host*]
 #    PostgreSQL database host address. Defaults to '127.0.0.1'.

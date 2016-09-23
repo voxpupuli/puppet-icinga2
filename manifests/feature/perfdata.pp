@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature perfdata, absent disables it. Default is present.
+#   Set to present enables the feature perfdata, absent disables it. Defaults to present.
 #
 # [*host_perfdata_path*]
 #   Absolute path to the perfdata file for hosts. Default depends on platform:

@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature compatlog, absent disabled it. Default is present.
+#   Set to present enables the feature compatlog, absent disabled it. Defaults to present.
 #
 # [*log_dir*]
 #   Absolute path to the log directory. Default depends on platform, /var/log/icinga2/compat on Linux
@@ -13,7 +13,7 @@
 #
 # [*rotation_method*]
 #   Sets how often should the log file be rotated. Valid options are: HOURLY, DAILY, WEEKLY or MONTHLY.
-#   Default is DAILY.
+#   Defaults to DAILY.
 #
 # === Authors
 #

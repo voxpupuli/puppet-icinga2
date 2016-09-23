@@ -5,11 +5,11 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature syslog, absent disables it. Default is present.
+#   Set to present enables the feature syslog, absent disables it. Defaults to present.
 #
 # [*severity*]
 #   You can choose the log severity between information, notice, warning or debug.
-#   Default to warning.
+#   Defaults to warning.
 #
 # === Authors
 #

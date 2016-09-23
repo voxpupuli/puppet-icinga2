@@ -5,10 +5,10 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature mainlog, absent disabled it. Default is present.
+#   Set to present enables the feature mainlog, absent disabled it. Defaults to present.
 #
 # [*severity*]
-#   You can set the log severity to information, notice, warning or debug. Default is information.
+#   You can set the log severity to information, notice, warning or debug. Defaults to information.
 #
 # [*path*]
 #   Absolute path to the log file. Default depends on platform, /var/log/icinga2/icinga2.log on Linux

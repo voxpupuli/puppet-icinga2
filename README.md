@@ -172,10 +172,10 @@ class { 'icinga2': }
 **Parameters within `icinga2`:**
 
 ##### `ensure`
-Defines if the service should be `running` or `stopped`. Default is `running`
+Defines if the service should be `running` or `stopped`. Defaults to `running`
 
 ##### `enable`
-If set to `true` the Icinga2 service will start on boot. Default is `true`.
+If set to `true` the Icinga2 service will start on boot. Defaults to `true`.
 
 ##### `manage_repo`
 When set to `true` this module will install the [packages.icinga.org] repository. With this official repo
@@ -184,19 +184,19 @@ Project does not offer a Chocolatey repository, you will get a warning if you en
 is `false`
 
 ##### `manage_service`
-Lets you decide if the Icinga2 daemon should be reloaded when configuration files have changed. Default is `true`
+Lets you decide if the Icinga2 daemon should be reloaded when configuration files have changed. Defaults to `true`
 
 ##### `features`
-A list of features to enable by default. Default is `[checker, mainlog, notification]`
+A list of features to enable by default. Defaults to `[checker, mainlog, notification]`
 
 ##### `purge_features`
-Define if configuration files for features not managed by Puppet should be purged. Default is true.
+Define if configuration files for features not managed by Puppet should be purged. Defaults to true.
 
 ##### `constants`
 Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 
 ##### `plugins`
-A list of the ITL plugins to load. Default to `[ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]`.
+A list of the ITL plugins to load. Defaults to `[ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]`.
 
 ##### `confd`
 This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
@@ -209,7 +209,7 @@ Enables or disables the `checker` feature.
 **Parameters of `icinga2::feature::checker`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `checker` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `checker` should be enabled. Defaults to `present`.
 
 #### Class: `icinga2::feature::mainlog`
 Enables or disables the `mainlog` feature.
@@ -217,7 +217,7 @@ Enables or disables the `mainlog` feature.
 **Parameters of `icinga2::feature::mainlog`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `mainlog` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `mainlog` should be enabled. Defaults to `present`.
 
 ##### `severity`
 Sets the severity of the `mainlog` feature. Can be set to:
@@ -227,7 +227,7 @@ Sets the severity of the `mainlog` feature. Can be set to:
 * `warning`
 * `debug`
 
-Default is `information`
+Defaults to `information`
 
 ##### `path`
 Absolute path to the logging file. Default depends on platform:
@@ -241,7 +241,7 @@ Enables or disables the `notification` feature.
 **Parameters of `icinga2::feature::notification`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `notification` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `notification` should be enabled. Defaults to `present`.
 
 #### Class: `icinga2::feature::command`
 Enables or disables the `command` feature.
@@ -249,7 +249,7 @@ Enables or disables the `command` feature.
 **Parameters of `icinga2::feature::command`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `command` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `command` should be enabled. Defaults to `present`.
 
 ##### `commandpath`
 Absolute path to the command pipe. Default depends on platform:
@@ -263,7 +263,7 @@ Enables or disables the `compatlog` feature.
 **Parameters of `icinga2::feature::compatlog`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `compatlog` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `compatlog` should be enabled. Defaults to `present`.
 
 ##### `commandpath`
 Absolute path to the command pipe. Default depends on platform:
@@ -285,7 +285,7 @@ Sets how often should the log file be rotated. Valid options are:
 * `WEEKLY`
 * `MONTHLY` 
 
-Default is `DAILY`
+Defaults to `DAILY`
 
 #### Class: `icinga2::feature::graphite`
 Enables or disables the `graphite` feature.
@@ -293,25 +293,25 @@ Enables or disables the `graphite` feature.
 **Parameters of `icinga2::feature::graphite`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `graphite` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `graphite` should be enabled. Defaults to `present`.
 
 ##### `host`
-Graphite Carbon host address. Default is `127.0.0.1`.
+Graphite Carbon host address. Defaults to `127.0.0.1`.
 
 ##### `port`
-Graphite Carbon port. Default is `2003`.
+Graphite Carbon port. Defaults to `2003`.
 
 ##### `host_name_template`
-Template for metric path of hosts. Default is `icinga2.$host.name$.host.$host.check_command$`.
+Template for metric path of hosts. Defaults to `icinga2.$host.name$.host.$host.check_command$`.
 
 ##### `service_name_template`
-Template for metric path of services. Default is `icinga2.$host.name$.services.$service.name$.$service.check_command$`.
+Template for metric path of services. Defaults to `icinga2.$host.name$.services.$service.name$.$service.check_command$`.
 
 ##### `enable_send_thresholds`
-Send threholds as metrics. Default is false.
+Send threholds as metrics. Defaults to false.
 
 ##### `enable_send_metadata`
-Send metadata as metrics. Default is false.
+Send metadata as metrics. Defaults to false.
 
 #### Class: `icinga2::feature::livestatus`
 Enables or disables the `livestatus` feature.
@@ -319,16 +319,16 @@ Enables or disables the `livestatus` feature.
 **Parameters of `icinga2::feature::livestatus`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `livestatus` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `livestatus` should be enabled. Defaults to `present`.
 
 ##### `socket_type`
-Specifies the socket type. Can be either 'tcp' or 'unix'. Default is 'unix'
+Specifies the socket type. Can be either 'tcp' or 'unix'. Defaults to 'unix'
 
 ##### `bind_host`
-IP address to listen for connections. Only valid when socket_type is `tcp`. Default is `127.0.0.1`
+IP address to listen for connections. Only valid when socket_type is `tcp`. Defaults to `127.0.0.1`
 
 ##### `bind_port`
-Port to listen for connections. Only valid when socket_type is `tcp`. Default is `6558`
+Port to listen for connections. Only valid when socket_type is `tcp`. Defaults to `6558`
 
 ##### `socket_path`
 Specifies the path to the UNIX socket file. Only valid when socket_type is `unix`. Default depends on platform:
@@ -348,13 +348,13 @@ Enables or disables the `opentsdb` feature.
 **Parameters of `icinga2::feature::opentsdb`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `opentsdb` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `opentsdb` should be enabled. Defaults to `present`.
 
 ##### `host`
-OpenTSDB host address. Default is `127.0.0.1`
+OpenTSDB host address. Defaults to `127.0.0.1`
 
 ##### `port`
-OpenTSDB port. Default is `4242`
+OpenTSDB port. Defaults to `4242`
 
 #### Class: `icinga2::feature::perfdata`
 Enables or disables the `perfdata` feature.
@@ -362,7 +362,7 @@ Enables or disables the `perfdata` feature.
 **Parameters of `icinga2::feature::perfdata`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `perfdata` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `perfdata` should be enabled. Defaults to `present`.
 
 ##### `host_perfdata_path`
 Absolute path to the perfdata file for hosts. Default depends on platform:
@@ -400,7 +400,7 @@ Enables or disables the `statusdata` feature.
 **Parameters of `icinga2::feature::statusdata`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `statusdata` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `statusdata` should be enabled. Defaults to `present`.
 
 ##### `status_path`
 Absolute path to the status.dat file. Default depends on platform:
@@ -414,7 +414,7 @@ Absolute path to the object.cache file. Default depends on platform:
 
 ##### `update_interval`
 Interval in seconds to update both status files. You can also specify it in minutes with the letter m or in seconds
-with s. Default is `30s`
+with s. Defaults to `30s`
 
 #### Class: `icinga2::feature::syslog`
 Enables or disables the `syslog` feature.
@@ -422,7 +422,7 @@ Enables or disables the `syslog` feature.
 **Parameters of `icinga2::feature::syslog`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `syslog` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `syslog` should be enabled. Defaults to `present`.
 
 ##### `severity`
 Set severity level for logging to syslog. Available options are:
@@ -432,7 +432,7 @@ Set severity level for logging to syslog. Available options are:
 * `warning`
 * `debug`
 
-Default is `warning`
+Defaults to `warning`
 
 #### Class: `icinga2::feature::debuglog`
 Enables or disables the `debuglog` feature.
@@ -440,7 +440,7 @@ Enables or disables the `debuglog` feature.
 **Parameters of `icinga2::feature::debuglog`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `debuglog` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `debuglog` should be enabled. Defaults to `present`.
 
 ##### `path`
 Absolute path to the log file. Default depends on platform:
@@ -453,19 +453,19 @@ Enables or disables the `gelf` feature.
 **Parameters of `icinga2::feature::gelf`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `gelf` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `gelf` should be enabled. Defaults to `present`.
 
 ##### `host`
-GELF receiver host address. Default is `127.0.0.1`
+GELF receiver host address. Defaults to `127.0.0.1`
 
 ##### `port`
-GELF receiver port. Default is `12201`
+GELF receiver port. Defaults to `12201`
 
 ##### `source`
-Source name for this instance. Default is `icinga2`
+Source name for this instance. Defaults to `icinga2`
 
 ##### `enable_send_perfdata`
-Enable performance data for *CHECK RESULT* events. Default is `false`.
+Enable performance data for *CHECK RESULT* events. Defaults to `false`.
 
 #### Class: `icinga2::feature::influxdb`
 Enables or disables the `influxdb` feature.
@@ -473,22 +473,22 @@ Enables or disables the `influxdb` feature.
 **Parameters of `icinga2::feature::influxdb`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `influxdb` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `influxdb` should be enabled. Defaults to `present`.
 
 ##### `host`
-InfluxDB host address. Default is `127.0.0.1`
+InfluxDB host address. Defaults to `127.0.0.1`
 
 ##### `port`
-InfluxDB HTTP port. Default is `8086`
+InfluxDB HTTP port. Defaults to `8086`
 
 ##### `database`
-InfluxDB database name. Default is `icinga2`
+InfluxDB database name. Defaults to `icinga2`
 
 ##### `username`
-InfluxDB user name. Default is `undef`
+InfluxDB user name. Defaults to `undef`
 
 ##### `password`
-InfluxDB user password. Default is `undef`
+InfluxDB user password. Defaults to `undef`
 
 ##### `ssl`
 SSL settings will be set depending on this parameter.
@@ -498,17 +498,17 @@ SSL settings will be set depending on this parameter.
 * `false` Disable SSL (default)
 
 ##### `ssl_ca_cert`
-CA certificate to validate the remote host. Only valid if ssl is set to `custom`. Default is `undef`
+CA certificate to validate the remote host. Only valid if ssl is set to `custom`. Defaults to `undef`
 
 ##### `ssl_cert`
 Host certificate to present to the remote host for mutual verification. Only valid if ssl is set to 'custom'.
-Default is `undef`
+Defaults to `undef`
 
 ##### `ssl_key`
-Host key to accompany the ssl_cert. Only valid if ssl is set to `custom`. Default is `undef`
+Host key to accompany the ssl_cert. Only valid if ssl is set to `custom`. Defaults to `undef`
 
 ##### `host_measurement`
-The value of this is used for the measurement setting in host_template. Default is  `$host.check_command$`
+The value of this is used for the measurement setting in host_template. Defaults to  `$host.check_command$`
 
 ##### `host_tags`
 Tags defined in this hash will be set in the host_template.
@@ -521,7 +521,7 @@ class { 'icinga2::feature::influxdb':
 ```
 
 ##### `service_measurement`
-The value of this is used for the measurement setting in host_template. Default is  `$service.check_command$`
+The value of this is used for the measurement setting in host_template. Defaults to  `$service.check_command$`
 
 ##### `service_tags`
 Tags defined in this hash will be set in the service_template.
@@ -534,16 +534,16 @@ class { 'icinga2::feature::influxdb':
 ```
 
 ##### `enable_send_thresholds`
-Whether to send warn, crit, min & max tagged data. Default is `false`
+Whether to send warn, crit, min & max tagged data. Defaults to `false`
 
 ##### `enable_send_metadata`
-Whether to send check metadata e.g. states, execution time, latency etc. Default is `false`
+Whether to send check metadata e.g. states, execution time, latency etc. Defaults to `false`
 
 ##### `flush_interval`
-How long to buffer data points before transfering to InfluxDB. Default is `10s`
+How long to buffer data points before transfering to InfluxDB. Defaults to `10s`
 
 ##### `flush_threshold`
-How many data points to buffer before forcing a transfer to InfluxDB. Default is `1024`
+How many data points to buffer before forcing a transfer to InfluxDB. Defaults to `1024`
 
 
 #### Class: `icinga2::feature::api`
@@ -552,7 +552,7 @@ Enables or disables the `api` feature.
 **Parameters of `icinga2::feature::api`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `api` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `api` should be enabled. Defaults to `present`.
 
 ##### `pki`
 Provides multiple sources for the certificate and key.
@@ -563,7 +563,7 @@ Provides multiple sources for the certificate and key.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
 `ssl_ca` parameters.
 
-Default is `puppet`
+Defaults to `puppet`
 
 ##### `ssl_key_path`
 Location of the private key. Default depends on platform:
@@ -588,10 +588,10 @@ Location of the CA certificate. Default depends on platform:
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
 
 ##### `accept_config`
-Accept zone configuration. Default is `false`
+Accept zone configuration. Defaults to `false`
 
 ##### `accept_commands`
-Accept remote commands. Default is `false`
+Accept remote commands. Defaults to `false`
 
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.
@@ -599,7 +599,7 @@ Enables or disables the `ido-pgsql` feature.
 **Parameters of `icinga2::feature::idopgsql`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `ido-pgsql` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `ido-pgsql` should be enabled. Defaults to `present`.
 
 ##### `host`
 PostgreSQL database host address. Defaults to `127.0.0.1`
@@ -628,7 +628,7 @@ Enables or disables the `gelf` feature.
 **Parameters of `icinga2::feature::idomysql`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature `ido-mysql` should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature `ido-mysql` should be enabled. Defaults to `present`.
 
 ##### `host`
 MySQL database host address. Defaults to `127.0.0.1`
@@ -807,7 +807,7 @@ This defined type is used by all feature defined types as basis. It can generall
 **Parameters of `icinga2::feature`:**
 
 ##### `ensure`
-Either `present` or `absent`. Defines if the feature should be enabled. Default is `present`.
+Either `present` or `absent`. Defines if the feature should be enabled. Defaults to `present`.
 
 ##### `feature`
 Name of the feature. This name is used for the corresponding configuration file.

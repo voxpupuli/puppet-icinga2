@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature mainlog, absent disables it. Default is present.
+#   Set to present enables the feature mainlog, absent disables it. Defaults to present.
 #
 # [*path*]
 #   Absolute path to the log file. Default depends on platform:
