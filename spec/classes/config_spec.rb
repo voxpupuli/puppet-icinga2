@@ -13,44 +13,39 @@ describe('icinga2', :type => :class) do
           tag    => icinga2::config::file,
         }'
       }
-      it do
-        should contain_file('/etc/icinga2/foo')
-        .that_notifies('Class[icinga2::service]')
+      it { is_expected.to contain_file('/etc/icinga2/foo')
+        .that_notifies('Class[icinga2::service]') }
         #.that_requires('Class[icinga2::config]')
-      end
     end
-  
+
     context "#{os} with constants => foo (not a valid hash)" do
       let(:params) { {:constants => 'foo'} }
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
-  
+
     context "#{os} with constants => { foo => bar }" do
       let(:params) { { :constants => {'foo' => 'bar'} } }
-      it do
-        should contain_file('/etc/icinga2/constants.conf')
-          .with_content(/^const foo = "bar"\n/)
-      end
+
+      it { is_expected.to contain_file('/etc/icinga2/constants.conf')
+        .with_content(/^const foo = "bar"\n/) }
     end
-  
+
     context "#{os} with plugins => [ foo, bar ]" do
       let(:params) { { :plugins => ['foo', 'bar'] } }
-      it do
-        should contain_file('/etc/icinga2/icinga2.conf')
-          .with_content(/^include <foo>\n/)
-          .with_content(/^include <bar>\n/)
-      end
+
+      it { is_expected.to contain_file('/etc/icinga2/icinga2.conf')
+        .with_content(/^include <foo>\n/)
+        .with_content(/^include <bar>\n/) }
     end
-  
+
     context "#{os} with confd => false" do
       let(:params) { { :confd => false } }
-      it do
-        should contain_file('/etc/icinga2/icinga2.conf')
-          .without_content(/^include_recursive "conf.d"\n/)
-      end
+
+      it { is_expected.to contain_file('/etc/icinga2/icinga2.conf')
+        .without_content(/^include_recursive "conf.d"\n/) }
     end
-  
-  
+
+
     context "#{os} with confd => foo" do
       let(:params) { { :confd => 'foo' } }
       let(:pre_condition) {
@@ -59,13 +54,11 @@ describe('icinga2', :type => :class) do
           tag    => icinga2::config::file,
         }'
       }
-      it do
-        should contain_file('/etc/icinga2/icinga2.conf')
-          .with_content(/^include_recursive "foo"\n/)
-        should contain_file('/etc/icinga2/foo')
-          .that_requires('Class[icinga2::install]')
-          .that_comes_before('Class[icinga2::config]')
-      end
+      it { is_expected.to contain_file('/etc/icinga2/icinga2.conf')
+        .with_content(/^include_recursive "foo"\n/) }
+      it { is_expected.to contain_file('/etc/icinga2/foo')
+        .that_requires('Class[icinga2::install]')
+        .that_comes_before('Class[icinga2::config]') }
     end
   end
 end
@@ -86,36 +79,32 @@ describe('icinga2', :type => :class) do
         tag    => icinga2::config::file,
       }'
     }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/foo')
-#        .that_requires('Class[icinga2::install]')
-#        .that_comes_before('Class[icinga2::config]')
-    end
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf') }
+#      .that_requires('Class[icinga2::install]')
+#      .that_comes_before('Class[icinga2::config]') }
   end
 
   context 'windows with constants => { foo => bar }' do
     let(:params) { { :constants => {'foo' => 'bar'} } }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
-        .with_content(/^const foo = "bar"\r\n/)
-    end
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
+      .with_content(/^const foo = "bar"\r\n/) }
   end
 
   context 'windows with plugins => [ foo, bar ]' do
     let(:params) { { :plugins => ['foo', 'bar'] } }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
-        .with_content(/^include <foo>\r\n/)
-        .with_content(/^include <bar>\r\n/)
-    end
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
+      .with_content(/^include <foo>\r\n/)
+      .with_content(/^include <bar>\r\n/) }
   end
 
   context 'windows with confd => false' do
     let(:params) { { :confd => false } }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
-        .without_content(/^include_recursive "conf.d"\r\n/)
-    end
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
+      .without_content(/^include_recursive "conf.d"\r\n/) }
   end
 
   context 'windows with confd => foo' do
@@ -126,12 +115,11 @@ describe('icinga2', :type => :class) do
         tag    => icinga2::config::file,
       }'
     }
-    it do
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
-        .with_content(/^include_recursive "foo"\r\n/)
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/foo')
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/icinga2.conf')
+      .with_content(/^include_recursive "foo"\r\n/) }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/foo') }
 #        .that_requires('Class[icinga2::install]')
-#        .that_comes_before('Class[icinga2::config]')
-    end
+#        .that_comes_before('Class[icinga2::config]') }
   end
 end

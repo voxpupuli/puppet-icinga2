@@ -147,14 +147,12 @@ class icinga2(
   validate_array($plugins)
 
   # validate confd, boolean or string
-  if $icinga2::confd {
-    if is_bool($icinga2::confd) {
-      $_confd = "conf.d"
-    } elsif is_string($icinga2::confd) {
-      $_confd = $icinga2::confd
-    } else {
-      fail('confd has to be a boolean or string')
-    }
+  if is_bool($confd) {
+    if $confd { $_confd = "conf.d" } else { $_confd = undef }
+  } elsif is_string($confd) {
+    $_confd = $confd
+  } else {
+    fail('confd has to be a boolean or string')
   }
 
   # merge constants with defaults
