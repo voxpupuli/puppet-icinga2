@@ -74,8 +74,11 @@ define icinga2::object(
 
   if $ensure != 'absent' {
     concat::fragment { "icinga2::object::${object_type}::${object_name}":
-      target  => $target,
-      content => template('icinga2/object.conf.erb'),
+      target => $target,
+      content  => $::osfamily ? {
+        'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
+        default   => template('icinga2/object.conf.erb'),
+      },
       order   => $order,
     }
   }

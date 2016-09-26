@@ -276,7 +276,7 @@ describe('icinga2::object', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
       .with_content(/key1 = 4247/)
-      .with_content(/key2 = \{\n\s*key3 = 666\n\s*key4 = 1m\n\s*\}/)
+      .with_content(/key2 = \{\r\n\s*key3 = 666\r\n\s*key4 = 1m\r\n\s*\}/)
       .with_content(/key5 = \[ "STRING", NodeName, \]/) }
   end
 end
