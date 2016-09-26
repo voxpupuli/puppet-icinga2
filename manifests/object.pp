@@ -64,13 +64,15 @@ define icinga2::object(
   validate_absolute_path($target)
   validate_string($order)
 
-  ensure_resource('concat', $target, {
-    ensure => present,
-    owner  => $user,
-    group  => $group,
-    tag    => 'icinga2::config::file',
-    warn   => true,
-  })
+  if !defined(Concat[$target]) {
+    concat { $target:
+      ensure => present,
+      owner  => $user,
+      group  => $group,
+      tag    => 'icinga2::config::file',
+      warn   => true,
+    }
+  }
 
   if $ensure != 'absent' {
     concat::fragment { "icinga2::object::${object_type}::${object_name}":
