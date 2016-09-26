@@ -72,6 +72,21 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
+    context "#{os} with pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
+      let(:params) { {:pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key').with({
+        'mode'  => '0600',
+      }).with_content(/^foo/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')
+        .with_content(/^bar/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')
+        .with_content(/^baz/) }
+    end
+
+
     context "#{os} with ssl_key_path = /foo/bar" do
       let(:params) { {:ssl_key_path => '/foo/bar'} }
 
@@ -104,8 +119,8 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
-    context "#{os} with ssl_ca_path = /foo/bar" do
-      let(:params) { {:ssl_ca_path => '/foo/bar'} }
+    context "#{os} with ssl_cacert_path = /foo/bar" do
+      let(:params) { {:ssl_cacert_path => '/foo/bar'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
         .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
@@ -113,8 +128,8 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
-    context "#{os} with ssl_ca_path = foo/bar (not a valid absolute path)" do
-      let(:params) { {:ssl_ca_path => 'foo/bar'} }
+    context "#{os} with ssl_cacert_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:ssl_cacert_path => 'foo/bar'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
@@ -214,16 +229,23 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
   end
+end
+
+
+describe('icinga2::feature::api', :type => :class) do
+  let(:facts) { {
+    :kernel => 'Windows',
+    :architecture => 'x86_64',
+    :osfamily => 'Windows',
+    :operatingsystem => 'Windows',
+    :operatingsystemmajrelease => '2012 R2'
+  } }
+  let(:pre_condition) { [
+    "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
+  ] }
 
 
   context 'Windows 2012 R2 with ensure => present' do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
@@ -235,13 +257,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context 'Windows 2012 R2 with ensure => absent' do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'absent'}) }
@@ -252,13 +267,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with all defaults" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
@@ -283,13 +291,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with pki => puppet" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:pki => 'puppet'} }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key') }
@@ -299,27 +300,27 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with pki => foo (not a valid value)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:pki => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
   end
 
 
+  context "Windows 2012 R2 with pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
+    let(:params) { {:pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key')
+      .with_content(/^foo/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt')
+      .with_content(/^bar/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt')
+      .with_content(/^baz/) }
+  end
+
+
   context "Windows 2012 R2 with ssl_key_path = /foo/bar" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ssl_key_path => '/foo/bar'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -329,13 +330,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with ssl_key_path = foo/bar (not a valid absolute path)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ssl_key_path => 'foo/bar'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
@@ -343,13 +337,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with ssl_cert_path = /foo/bar" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ssl_cert_path => '/foo/bar'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -359,28 +346,14 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with ssl_cert_path = foo/bar (not a valid absolute path)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ssl_cert_path => 'foo/bar'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
-  context "Windows 2012 R2 with ssl_ca_path = /foo/bar" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
-    let(:params) { {:ssl_ca_path => '/foo/bar'} }
+  context "Windows 2012 R2 with ssl_cacert_path = /foo/bar" do
+    let(:params) { {:ssl_cacert_path => '/foo/bar'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
       .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
@@ -388,28 +361,14 @@ describe('icinga2::feature::api', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with ssl_ca_path = foo/bar (not a valid absolute path)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
-    let(:params) { {:ssl_ca_path => 'foo/bar'} }
+  context "Windows 2012 R2 with ssl_cacert_path = foo/bar (not a valid absolute path)" do
+    let(:params) { {:ssl_cacert_path => 'foo/bar'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
   context "Windows 2012 R2 with accept_config => true" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:accept_config => true} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -419,13 +378,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with accept_config => false" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:accept_config => false} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -435,13 +387,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with accept_config => foo (not a valid boolean)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:accept_config => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
@@ -449,13 +394,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with accept_commands => true" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:accept_commands => true} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -465,13 +403,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with accept_commands => false" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:accept_commands => false} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -481,13 +412,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with accept_config => foo (not a valid boolean)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:accept_commands => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
@@ -495,13 +419,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with ticket_salt => foo" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ticket_salt => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
@@ -511,13 +428,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with ticket_salt => 4247 (not a valid string)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ticket_salt => 4247} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -525,13 +435,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with endpoints => { foo => {} }" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:endpoints => { 'foo' => {}} }}
 
     it { is_expected.to contain_icinga2__object__endpoint('foo') }
@@ -539,13 +442,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with endpoints => foo (not a valid hash)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:endpoints => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
@@ -553,13 +449,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with zones => { foo => {endpoints => ['bar']} } }" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:zones => { 'foo' => {'endpoints' => ['bar']}} }}
 
     it { is_expected.to contain_icinga2__object__zone('foo')
@@ -568,13 +457,6 @@ describe('icinga2::feature::api', :type => :class) do
 
 
   context "Windows 2012 R2 with zones => foo (not a valid hash)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:zones => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
