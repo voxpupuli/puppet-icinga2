@@ -56,6 +56,7 @@ class icinga2::repo {
             }
           }
           'ubuntu': {
+            include apt
             apt::source { 'icinga-stable-release':
               location    => 'http://packages.icinga.org/ubuntu',
               release     => "icinga-${::lsbdistcodename}",
