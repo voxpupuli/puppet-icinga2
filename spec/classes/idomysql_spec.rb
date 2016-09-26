@@ -363,7 +363,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
       :osfamily => 'Windows',
       :operatingsystem => 'Windows',
       :operatingsystemmajrelease => '2012 R2',
-      :fqdn => 'foo.bar.com'
+      :fqdn => 'foo.bar.com',
+      :path => 'C:/Program Files/MySQL/bin'
   } }
 
 

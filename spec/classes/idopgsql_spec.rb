@@ -231,7 +231,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
       :architecture => 'x86_64',
       :osfamily => 'Windows',
       :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
+      :operatingsystemmajrelease => '2012 R2',
+      :path => 'C:/Program Files/Postgresql/bin'
   } }
 
 
