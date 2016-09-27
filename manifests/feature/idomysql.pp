@@ -304,7 +304,7 @@ class icinga2::feature::idomysql(
     },
   }
 
-  # import library 'perfdata'
+  # import library
   concat::fragment { 'icinga2::feature::ido-mysql':
     target  => "${conf_dir}/features-available/ido-mysql.conf",
     content => "library \"db_ido_mysql\"\n\n",
