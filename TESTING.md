@@ -62,6 +62,8 @@ cd puppet-icinga2-rewrite/serverspec
 rake spec:i2debian7puppet4
 ```
 
+### Windows
+Since we don't want to violate any license of Microsoft, we are not making any Windows virtual box publicly available.
 
 [README.md]: README.md
 [metadata.json]: metadata.json
