@@ -8,7 +8,7 @@
 #   Set to present enables the feature api, absent disabled it. Defaults to present.
 #
 # [*pki*]
-#   Provides multiple sources for the certificate and key. Valid parameters are 'puppet' or 'none'.
+#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
 #   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
 #   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
 #   'none' does nothing and you either have to manage the files yourself as file resources
@@ -33,15 +33,15 @@
 #
 # [*ssl_key*]
 #   The private key in a base64 encoded string to store in pki directory, file is stored to
-#   path spicified in ssl_key_path. To affect this parameter pki has to set to 'none'.
+#   path spicified in ssl_key_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cert*]
 #   The certificate in a base64 encoded string to store in pki directory, file is  stored to
-#   path spicified in ssl_cert_path. To affect this parameter pki has to set to 'none'.
+#   path spicified in ssl_cert_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cacert*]
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
-#   to path spicified in ssl_cacert_path. To affect this parameter pki has to set to 'none'.
+#   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*accept_config*]
 #   Accept zone configuration. Defaults to false.
