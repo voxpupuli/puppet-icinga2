@@ -14,6 +14,10 @@ describe('icinga2::feature::checker', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
+        .with({ 'target' => '/etc/icinga2/features-available/checker.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -21,6 +25,9 @@ describe('icinga2::feature::checker', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
+        .with({ 'target' => '/etc/icinga2/features-available/checker.conf' }) }
     end
   end
 
@@ -36,6 +43,10 @@ describe('icinga2::feature::checker', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/checker.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -50,5 +61,8 @@ describe('icinga2::feature::checker', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/checker.conf' }) }
   end
 end

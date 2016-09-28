@@ -15,6 +15,10 @@ describe('icinga2::feature::livestatus', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -22,13 +26,17 @@ describe('icinga2::feature::livestatus', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
         .with_content(/socket_type = "unix"/)
         .with_content(/bind_host = "127.0.0.1"/)
         .with_content(/bind_port = 6558/)
@@ -40,7 +48,8 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_type => tcp" do
       let(:params) { {:socket_type => 'tcp'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
         .with_content(/socket_type = "tcp"/) }
     end
 
@@ -55,7 +64,8 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with bind_host => 127.0.0.2" do
       let(:params) { {:bind_host => '127.0.0.2'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
         .with_content(/bind_host = "127.0.0.2"/) }
     end
 
@@ -70,10 +80,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with bind_port => 4247" do
       let(:params) { {:bind_port => '4247'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
-          .with_content(/bind_port = 4247/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
+        .with_content(/bind_port = 4247/) }
     end
 
 
@@ -87,10 +96,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_path => /foo/bar" do
       let(:params) { {:socket_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
-          .with_content(/socket_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
+        .with_content(/socket_path = "\/foo\/bar"/) }
     end
 
 
@@ -104,10 +112,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with compat_log_path => /foo/bar" do
       let(:params) { {:compat_log_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/livestatus.conf')
-          .with_content(/compat_log_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
+        .with_content(/compat_log_path = "\/foo\/bar"/) }
     end
 
 
@@ -130,6 +137,10 @@ describe('icinga2::feature::livestatus', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -144,6 +155,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' }) }
   end
 
 
@@ -157,7 +171,8 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
       .with_content(/socket_type = "unix"/)
       .with_content(/bind_host = "127.0.0.1"/)
       .with_content(/bind_port = 6558/)
@@ -176,10 +191,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:socket_type => 'tcp'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
-        .with_content(/socket_type = "tcp"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+      .with_content(/socket_type = "tcp"/) }
   end
 
 
@@ -207,10 +221,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:bind_host => '127.0.0.2'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
-        .with_content(/bind_host = "127.0.0.2"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+      .with_content(/bind_host = "127.0.0.2"/) }
   end
 
 
@@ -238,10 +251,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:bind_port => '4247'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
-        .with_content(/bind_port = 4247/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+      .with_content(/bind_port = 4247/) }
   end
 
 
@@ -269,10 +281,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:socket_path => 'c:/foo/bar'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
-        .with_content(/socket_path = "c:\/foo\/bar"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+      .with_content(/socket_path = "c:\/foo\/bar"/) }
   end
 
 
@@ -300,10 +311,9 @@ describe('icinga2::feature::livestatus', :type => :class) do
     } }
     let(:params) { {:compat_log_path => 'c:/foo/bar'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf')
-        .with_content(/compat_log_path = "c:\/foo\/bar"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+      .with_content(/compat_log_path = "c:\/foo\/bar"/) }
   end
 
 

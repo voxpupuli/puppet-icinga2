@@ -22,19 +22,6 @@ define icinga2::feature(
   $group    = $::icinga2::params::group
   $conf_dir = $::icinga2::params::conf_dir
 
-  file { "${conf_dir}/features-available/${feature}.conf":
-    ensure  => file,
-    content => $::osfamily ? {
-      'windows' => regsubst(template("icinga2/feature/${feature}.conf.erb"), '\n', "\r\n", 'EMG'),
-      default   => template("icinga2/feature/${feature}.conf.erb"),
-    },
-    require => Class['icinga2::install'],
-    notify  => $ensure ? {
-      'present' => Class['icinga2::service'],
-      default   => undef,
-    },
-  }
-
   if $::osfamily != 'windows' {
     file { "${conf_dir}/features-enabled/${feature}.conf":
       ensure  => $ensure ? {
@@ -44,7 +31,8 @@ define icinga2::feature(
       owner   => 'root',
       group   => 'root',
       target  => "../features-available/${feature}.conf",
-      notify  => Class['icinga2::service'],
+      require => Concat["${conf_dir}/features-available/${feature}.conf"],
+      notify  => Class['::icinga2::service'],
     }
   } else {
     file { "${conf_dir}/features-enabled/${feature}.conf":
@@ -55,8 +43,8 @@ define icinga2::feature(
       owner   => $user,
       group   => $group,
       content => "include \"../features-available/${feature}.conf\"\r\n",
-      require => File["${conf_dir}/features-available/${feature}.conf"],
-      notify  => Class['icinga2::service'],
+      require => Concat["${conf_dir}/features-available/${feature}.conf"],
+      notify  => Class['::icinga2::service'],
     }
   }
 

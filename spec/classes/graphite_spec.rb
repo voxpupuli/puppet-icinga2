@@ -15,6 +15,10 @@ describe('icinga2::feature::graphite', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -22,13 +26,17 @@ describe('icinga2::feature::graphite', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/host = "127.0.0.1"/)
         .with_content(/port = 2003/)
         .with_content(/host_name_template = "icinga2.\$host.name\$.host.\$host.check_command\$"/)
@@ -41,7 +49,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with host => 127.0.0.2" do
       let(:params) { {:host => '127.0.0.2'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/host = "127.0.0.2"/) }
     end
 
@@ -56,7 +65,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with port => 4247" do
       let(:params) { {:port => '4247'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/port = 4247/) }
     end
 
@@ -71,7 +81,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with host_name_template => foo" do
       let(:params) { {:host_name_template => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/host_name_template = "foo"/) }
     end
 
@@ -86,7 +97,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with service_name_template => foo" do
       let(:params) { {:service_name_template => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/service_name_template = "foo"/) }
     end
 
@@ -101,7 +113,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_thresholds => true" do
       let(:params) { {:enable_send_thresholds => true} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/enable_send_thresholds = true/) }
     end
 
@@ -109,7 +122,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_thresholds => false" do
       let(:params) { {:enable_send_thresholds => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/enable_send_thresholds = false/) }
     end
 
@@ -124,7 +138,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_metadata => true" do
       let(:params) { {:enable_send_metadata => true} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/enable_send_metadata = true/) }
     end
 
@@ -132,7 +147,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_metadata => false" do
       let(:params) { {:enable_send_metadata => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/graphite.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+        .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/enable_send_metadata = false/) }
     end
 
@@ -156,6 +172,10 @@ describe('icinga2::feature::graphite', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -170,6 +190,9 @@ describe('icinga2::feature::graphite', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' }) }
   end
 
 
@@ -183,7 +206,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('graphite').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/host = "127.0.0.1"/)
       .with_content(/port = 2003/)
       .with_content(/host_name_template = "icinga2.\$host.name\$.host.\$host.check_command\$"/)
@@ -203,7 +227,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:host => '127.0.0.1'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/host = "127.0.0.1"/) }
   end
 
@@ -232,7 +257,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:port => '4247'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/port = 4247/) }
   end
 
@@ -261,7 +287,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:host_name_template => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/host_name_template = "foo"/) }
   end
 
@@ -290,7 +317,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:service_name_template => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/service_name_template = "foo"/) }
   end
 
@@ -319,7 +347,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:enable_send_thresholds => true} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/enable_send_thresholds = true/) }
   end
 
@@ -334,7 +363,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:enable_send_thresholds => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/enable_send_thresholds = false/) }
   end
 
@@ -363,7 +393,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:enable_send_metadata => true} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/enable_send_metadata = true/) }
   end
 
@@ -378,7 +409,8 @@ describe('icinga2::feature::graphite', :type => :class) do
     } }
     let(:params) { {:enable_send_metadata => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
       .with_content(/enable_send_metadata = false/) }
   end
 

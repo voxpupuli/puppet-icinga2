@@ -14,6 +14,10 @@ describe('icinga2::feature::command', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::ExternalCommandListener::command')
+        .with({ 'target' => '/etc/icinga2/features-available/command.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -21,24 +25,27 @@ describe('icinga2::feature::command', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::ExternalCommandListener::command')
+        .with({ 'target' => '/etc/icinga2/features-available/command.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/command.conf')
-          .with_content(/command_path = "\/var\/run\/icinga2\/cmd\/icinga2.cmd"/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::ExternalCommandListener::command')
+        .with({ 'target' => '/etc/icinga2/features-available/command.conf' })
+        .with_content(/command_path = "\/var\/run\/icinga2\/cmd\/icinga2.cmd"/) }
     end
 
 
     context "#{os} with command_path => /foo/bar" do
       let(:params) { {:command_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/command.conf')
-          .with_content(/command_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::ExternalCommandListener::command')
+        .with({ 'target' => '/etc/icinga2/features-available/command.conf' })
+        .with_content(/command_path = "\/foo\/bar"/) }
     end
 
 
@@ -61,6 +68,10 @@ describe('icinga2::feature::command', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::ExternalCommandListener::command')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -75,6 +86,9 @@ describe('icinga2::feature::command', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::ExternalCommandListener::command')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf' }) }
   end
 
 
@@ -88,7 +102,8 @@ describe('icinga2::feature::command', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::ExternalCommandListener::command')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf' })
       .with_content(/command_path = "C:\/ProgramData\/icinga2\/var\/run\/icinga2\/cmd\/icinga2.cmd"/) }
   end
 
@@ -103,10 +118,9 @@ describe('icinga2::feature::command', :type => :class) do
     } }
     let(:params) { {:command_path => 'c:/foo/bar'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf')
-        .with_content(/command_path = "c:\/foo\/bar"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::ExternalCommandListener::command')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/command.conf' })
+      .with_content(/command_path = "c:\/foo\/bar"/) }
   end
 
 

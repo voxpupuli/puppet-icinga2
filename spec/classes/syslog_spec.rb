@@ -15,6 +15,10 @@ describe('icinga2::feature::syslog', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::SyslogLogger::syslog')
+        .with({ 'target' => '/etc/icinga2/features-available/syslog.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -22,13 +26,17 @@ describe('icinga2::feature::syslog', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::SyslogLogger::syslog')
+        .with({ 'target' => '/etc/icinga2/features-available/syslog.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/syslog.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::SyslogLogger::syslog')
+        .with({ 'target' => '/etc/icinga2/features-available/syslog.conf' })
         .with_content(/severity = "warning"/) }
     end
 
@@ -36,7 +44,8 @@ describe('icinga2::feature::syslog', :type => :class) do
     context "#{os} with severity => notice" do
       let(:params) { {:severity => 'notice'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/syslog.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::SyslogLogger::syslog')
+        .with({ 'target' => '/etc/icinga2/features-available/syslog.conf' })
         .with_content(/severity = "notice"/) }
     end
 
@@ -60,6 +69,10 @@ describe('icinga2::feature::syslog', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::SyslogLogger::syslog')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -74,6 +87,9 @@ describe('icinga2::feature::syslog', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::SyslogLogger::syslog')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf' }) }
   end
 
 
@@ -87,7 +103,8 @@ describe('icinga2::feature::syslog', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::SyslogLogger::syslog')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf' })
       .with_content(/severity = "warning"/) }
   end
 
@@ -102,10 +119,9 @@ describe('icinga2::feature::syslog', :type => :class) do
     } }
     let(:params) { {:severity => 'notice'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf')
-        .with_content(/severity = "notice"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::SyslogLogger::syslog')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/syslog.conf' })
+      .with_content(/severity = "notice"/) }
   end
 
 

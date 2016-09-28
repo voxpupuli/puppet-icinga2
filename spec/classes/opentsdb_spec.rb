@@ -15,6 +15,10 @@ describe('icinga2::feature::opentsdb', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('opentsdb').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::OpenTsdbWriter::opentsdb')
+        .with({ 'target' => '/etc/icinga2/features-available/opentsdb.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -22,13 +26,17 @@ describe('icinga2::feature::opentsdb', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('opentsdb').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::OpenTsdbWriter::opentsdb')
+        .with({ 'target' => '/etc/icinga2/features-available/opentsdb.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('opentsdb').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/opentsdb.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
+        .with({ 'target' => '/etc/icinga2/features-available/opentsdb.conf' })
         .with_content(/host = "127.0.0.1"/)
         .with_content(/port = 4242/) }
     end
@@ -37,7 +45,8 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     context "#{os} with host => 127.0.0.2" do
       let(:params) { {:host => '127.0.0.2'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/opentsdb.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
+        .with({ 'target' => '/etc/icinga2/features-available/opentsdb.conf' })
         .with_content(/host = "127.0.0.2"/) }
     end
 
@@ -52,10 +61,9 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     context "#{os} with port => 4247" do
       let(:params) { {:port => '4247'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/opentsdb.conf')
-          .with_content(/port = 4247/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
+        .with({ 'target' => '/etc/icinga2/features-available/opentsdb.conf' })
+        .with_content(/port = 4247/) }
     end
 
 
@@ -78,6 +86,10 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('opentsdb').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::OpenTsdbWriter::opentsdb')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -92,6 +104,9 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('opentsdb').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::OpenTsdbWriter::opentsdb')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf' }) }
   end
 
 
@@ -105,7 +120,8 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('opentsdb').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf' })
       .with_content(/host = "127.0.0.1"/)
       .with_content(/port = 4242/) }
   end
@@ -121,10 +137,9 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     } }
     let(:params) { {:host => '127.0.0.2'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf')
-        .with_content(/host = "127.0.0.2"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf' })
+      .with_content(/host = "127.0.0.2"/) }
   end
 
 
@@ -152,10 +167,9 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     } }
     let(:params) { {:port => '4247'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf')
-        .with_content(/port = 4247/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf' })
+      .with_content(/port = 4247/) }
   end
 
 

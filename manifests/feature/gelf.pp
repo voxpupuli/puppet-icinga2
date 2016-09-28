@@ -31,6 +31,11 @@ class icinga2::feature::gelf(
   $enable_send_perfdata = false,
 ) {
 
+  include ::icinga2::params
+
+  $conf_dir = $::icinga2::params::conf_dir
+
+  # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_ip_address($host)
@@ -38,6 +43,35 @@ class icinga2::feature::gelf(
   validate_string($source)
   validate_bool($enable_send_perfdata)
 
+  # compose attributes
+  $attrs = {
+    host                 => $host,
+    port                 => $port,
+    source               => $source,
+    enable_send_perfdata => $enable_send_perfdata,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::GelfWriter::gelf":
+    object_name => 'gelf',
+    object_type => 'GelfWriter',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/gelf.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library 'perfdata'
+  concat::fragment { 'icinga2::feature::gelf':
+    target  => "${conf_dir}/features-available/gelf.conf",
+    content => "library \"perfdata\"\n\n",
+    order   => '05',
+  }
+
+  # manage feature
   icinga2::feature { 'gelf':
     ensure => $ensure,
   }

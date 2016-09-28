@@ -15,6 +15,10 @@ describe('icinga2::feature::statusdata', :type => :class) do
       let(:params) { {:ensure => 'present'} }
 
       it { is_expected.to contain_icinga2__feature('statusdata').with({'ensure' => 'present'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::StatusDataWriter::statusdata')
+        .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' })
+        .that_notifies('Class[icinga2::service]') }
     end
 
 
@@ -22,13 +26,17 @@ describe('icinga2::feature::statusdata', :type => :class) do
       let(:params) { {:ensure => 'absent'} }
 
       it { is_expected.to contain_icinga2__feature('statusdata').with({'ensure' => 'absent'}) }
+
+      it { is_expected.to contain_icinga2__object('icinga2::object::StatusDataWriter::statusdata')
+        .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' }) }
     end
 
 
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('statusdata').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/statusdata.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+        .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' })
         .with_content(/update_interval = 30s/)
         .with_content(/status_path = "\/var\/cache\/icinga2\/status.dat"/)
         .with_content(/objects_path = "\/var\/cache\/icinga2\/objects.cache"/) }
@@ -38,7 +46,8 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with update_interval => 1m" do
       let(:params) { {:update_interval => '1m'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/statusdata.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+        .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' })
         .with_content(/update_interval = 1m/) }
     end
 
@@ -53,7 +62,8 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with status_path => /foo/bar" do
       let(:params) { {:status_path => '/foo/bar'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/statusdata.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+        .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' })
         .with_content(/status_path = "\/foo\/bar"/) }
     end
 
@@ -68,10 +78,9 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with objects_path => /foo/bar" do
       let(:params) { {:objects_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/statusdata.conf')
-          .with_content(/objects_path = "\/foo\/bar"/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+        .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' })
+        .with_content(/objects_path = "\/foo\/bar"/) }
     end
 
 
@@ -94,6 +103,10 @@ describe('icinga2::feature::statusdata', :type => :class) do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('statusdata').with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::StatusDataWriter::statusdata')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' })
+      .that_notifies('Class[icinga2::service]') }
   end
 
 
@@ -108,6 +121,9 @@ describe('icinga2::feature::statusdata', :type => :class) do
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('statusdata').with({'ensure' => 'absent'}) }
+
+    it { is_expected.to contain_icinga2__object('icinga2::object::StatusDataWriter::statusdata')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' }) }
   end
 
 
@@ -121,7 +137,8 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     it { is_expected.to contain_icinga2__feature('statusdata').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' })
       .with_content(/update_interval = 30s/)
       .with_content(/status_path = "C:\/ProgramData\/icinga2\/var\/cache\/icinga2\/status.dat"/)
       .with_content(/objects_path = "C:\/ProgramData\/icinga2\/var\/cache\/icinga2\/objects.cache"/) }
@@ -138,10 +155,9 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     let(:params) { {:update_interval => '1m'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf')
-        .with_content(/update_interval = 1m/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' })
+      .with_content(/update_interval = 1m/) }
   end
 
 
@@ -169,10 +185,9 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     let(:params) { {:status_path => 'c:/foo/bar'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf')
-        .with_content(/status_path = "c:\/foo\/bar"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' })
+      .with_content(/status_path = "c:\/foo\/bar"/) }
   end
 
 
@@ -200,10 +215,9 @@ describe('icinga2::feature::statusdata', :type => :class) do
     } }
     let(:params) { {:objects_path => 'c:/foo/bar'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf')
-        .with_content(/objects_path = "c:\/foo\/bar"/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
+      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' })
+      .with_content(/objects_path = "c:\/foo\/bar"/) }
   end
 
 

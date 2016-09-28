@@ -20,10 +20,34 @@ class icinga2::feature::syslog(
   $severity = 'warning',
 ) {
 
+  include ::icinga2::params
+
+  $conf_dir = $::icinga2::params::conf_dir
+
+  # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_re($severity, ['^information$','^notice$','^warning$','^debug$'])
 
+  # compose attributes
+  $attrs = {
+    severity => $severity,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::SyslogLogger::syslog":
+    object_name => 'syslog',
+    object_type => 'SyslogLogger',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/syslog.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # manage feature
   icinga2::feature { 'syslog':
     ensure => $ensure,
   }

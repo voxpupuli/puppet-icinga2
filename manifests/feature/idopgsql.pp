@@ -62,8 +62,8 @@ class icinga2::feature::idopgsql(
   $instance_description   = undef,
   $enable_ha              = true,
   $failover_timeout       = '60s',
-  $cleanup                = {},
-  $categories             = [],
+  $cleanup                = undef,
+  $categories             = undef,
   $import_schema          = false,
 ) {
 
@@ -79,9 +79,11 @@ class icinga2::feature::idopgsql(
   if $instance_description { validate_string($instance_description) }
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
-  validate_hash($cleanup)
-  validate_array($categories)
+  if $cleanup { validate_hash($cleanup) }
+  if $categories { validate_array($categories) }
   validate_bool($import_schema)
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   package { 'icinga2-ido-pgsql':
     ensure => installed,
@@ -96,6 +98,41 @@ class icinga2::feature::idopgsql(
       unless      => "psql -h '${host}' -U '${user}' -d '${database}' -w -c 'select version from icinga_dbversion'",
       require     => Package['icinga2-ido-pgsql'],
     }
+  }
+
+  $attrs = {
+    host                  => $host,
+    port                  => $port,
+    user                  => $user,
+    password              => $password,
+    database              => $database,
+    table_prefix          => $table_prefix,
+    instance_name         => $instance_name,
+    instance_description  => $instance_description,
+    enable_ha             => $enable_ha,
+    failover_timeout      => $failover_timeout,
+    cleanup               => $cleanup,
+    categories            => $categories,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::IdoPgsqlConnection::ido-pgsql":
+    object_name => 'ido-pgsql',
+    object_type => 'IdoPgsqlConnection',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/ido-pgsql.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library
+  concat::fragment { 'icinga2::feature::ido-pgsql':
+    target  => "${conf_dir}/features-available/ido-pgsql.conf",
+    content => "library \"db_ido_pgsql\"\n\n",
+    order   => '05',
   }
 
   icinga2::feature { 'ido-pgsql':
