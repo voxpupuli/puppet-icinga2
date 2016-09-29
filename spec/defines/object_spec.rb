@@ -100,32 +100,44 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with all defaults and object_type => foo, target => C:/bar/baz, order => 10" do
-    let(:facts) { {
+
+end
+
+describe('icinga2::object', :type => :define) do
+  let(:facts) { {
       :kernel => 'Windows',
       :architecture => 'x86_64',
       :osfamily => 'Windows',
       :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
+      :operatingsystemmajrelease => '2012 R2',
+      :path => 'C:\Program Files\Puppet Labs\Puppet\puppet\bin;
+               C:\Program Files\Puppet Labs\Puppet\facter\bin;
+               C:\Program Files\Puppet Labs\Puppet\hiera\bin;
+               C:\Program Files\Puppet Labs\Puppet\mcollective\bin;
+               C:\Program Files\Puppet Labs\Puppet\bin;
+               C:\Program Files\Puppet Labs\Puppet\sys\ruby\bin;
+               C:\Program Files\Puppet Labs\Puppet\sys\tools\bin;
+               C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;
+               C:\Windows\System32\WindowsPowerShell\v1.0\;
+               C:\ProgramData\chocolatey\bin;',
+  } }
+  let(:title) { 'bar' }
+  let(:pre_condition) { [
+      "class { 'icinga2': }"
+  ] }
+
+  context "Windows 2012 R2 with all defaults and object_type => foo, target => C:/bar/baz, order => 10" do
     let(:params) { {:object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with({'target' => 'C:/bar/baz', 'order' => '10'})
-      .with_content(/object foo "bar"/) }
+                            .with({'target' => 'C:/bar/baz', 'order' => '10'})
+                            .with_content(/object foo "bar"/) }
   end
 
 
   context "Windows 2012 R2 with ensure => absent" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ensure => 'absent', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat('C:/bar/baz') }
@@ -135,13 +147,6 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with ensure => foo (not a valid value)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ensure => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
@@ -149,13 +154,6 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with object_type => 4247 (not valid string)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:object_type => 4247, :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -163,13 +161,6 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
@@ -177,13 +168,6 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with order => 4247 (not valid string)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:object_type => 'foo', :target => 'C:/bar/baz', :order => 4247} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -191,43 +175,22 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with template => true" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:template => true, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/template foo "bar"/) }
+                            .with_content(/template foo "bar"/) }
   end
 
 
   context "Windows 2012 R2 with template => false" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:template => false, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/object foo "bar"/) }
+                            .with_content(/object foo "bar"/) }
   end
 
 
   context "Windows 2012 R2 with template => foo (not a valid boolean)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:template => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
@@ -235,29 +198,15 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with import => [bar, baz]" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:import => ['bar', 'baz'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/import "bar"/)
-      .with_content(/import "baz"/) }
+                            .with_content(/import "bar"/)
+                            .with_content(/import "baz"/) }
   end
 
 
   context "Windows 2012 R2 with import => foo (not a valid array)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:import => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
@@ -265,18 +214,11 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName] }" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName'] }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/key1 = 4247/)
-      .with_content(/key2 = \{\r\n\s*key3 = 666\r\n\s*key4 = 1m\r\n\s*\}/)
-      .with_content(/key5 = \[ "STRING", NodeName, \]/) }
+                            .with_content(/key1 = 4247/)
+                            .with_content(/key2 = \{\r\n\s*key3 = 666\r\n\s*key4 = 1m\r\n\s*\}/)
+                            .with_content(/key5 = \[ "STRING", NodeName, \]/) }
   end
 end

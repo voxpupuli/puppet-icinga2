@@ -115,85 +115,75 @@ describe('icinga2::feature::gelf', :type => :class) do
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
   end
+end
 
 
-  context 'Windows 2012 R2 with ensure => present' do
-    let(:facts) { {
+describe('icinga2::feature::gelf', :type => :class) do
+  let(:facts) { {
       :kernel => 'Windows',
       :architecture => 'x86_64',
       :osfamily => 'Windows',
       :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
+      :operatingsystemmajrelease => '2012 R2',
+      :path => 'C:\Program Files\Puppet Labs\Puppet\puppet\bin;
+               C:\Program Files\Puppet Labs\Puppet\facter\bin;
+               C:\Program Files\Puppet Labs\Puppet\hiera\bin;
+               C:\Program Files\Puppet Labs\Puppet\mcollective\bin;
+               C:\Program Files\Puppet Labs\Puppet\bin;
+               C:\Program Files\Puppet Labs\Puppet\sys\ruby\bin;
+               C:\Program Files\Puppet Labs\Puppet\sys\tools\bin;
+               C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;
+               C:\Windows\System32\WindowsPowerShell\v1.0\;
+               C:\ProgramData\chocolatey\bin;',
+  } }
+
+  let(:pre_condition) { [
+      "class { 'icinga2': features => [], }"
+  ] }
+
+
+  context 'Windows 2012 R2 with ensure => present' do
     let(:params) { {:ensure => 'present'} }
 
     it { is_expected.to contain_icinga2__feature('gelf').with({'ensure' => 'present'}) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .that_notifies('Class[icinga2::service]') }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .that_notifies('Class[icinga2::service]') }
   end
 
 
   context 'Windows 2012 R2 with ensure => absent' do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ensure => 'absent'} }
 
     it { is_expected.to contain_icinga2__feature('gelf').with({'ensure' => 'absent'}) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' }) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' }) }
   end
 
 
   context "Windows 2012 R2 with all defaults" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     it { is_expected.to contain_icinga2__feature('gelf').with({'ensure' => 'present'}) }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .with_content(/host = "127.0.0.1"/)
-      .with_content(/port = 12201/)
-      .with_content(/source = "icinga2"/) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .with_content(/host = "127.0.0.1"/)
+                            .with_content(/port = 12201/)
+                            .with_content(/source = "icinga2"/) }
   end
 
 
   context "Windows 2012 R2  with host => 127.0.0.2" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:host => '127.0.0.2'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .with_content(/host = "127.0.0.2"/) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .with_content(/host = "127.0.0.2"/) }
   end
 
 
   context "Windows 2012 R2 with host => foo (not a valid IP address)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:host => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
@@ -201,29 +191,15 @@ describe('icinga2::feature::gelf', :type => :class) do
 
 
   context "Windows 2012 R2 with port => 4247" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:port => '4247'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .with_content(/port = 4247/) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .with_content(/port = 4247/) }
   end
 
 
   context "Windows 2012 R2 with source => 4247 (not a valid string)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:source => 4247} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -231,29 +207,15 @@ describe('icinga2::feature::gelf', :type => :class) do
 
 
   context 'Windows 2012 R2 with source => foo' do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:source => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .with_content(/source = "foo"/) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .with_content(/source = "foo"/) }
   end
 
 
   context 'Windows 2012 R2 with source => 4247 (not a valid string)' do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:source => 4247} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -261,45 +223,24 @@ describe('icinga2::feature::gelf', :type => :class) do
 
 
   context "Windows 2012 R2 with enable_send_perfdata => true" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:enable_send_perfdata => true} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .with_content(/enable_send_perfdata = true/) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .with_content(/enable_send_perfdata = true/) }
   end
 
 
   context "Windows 2012 R2 with enable_send_perfdata => false" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:enable_send_perfdata => false} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GelfWriter::gelf')
-      .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
-      .with_content(/enable_send_perfdata = false/) }
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/gelf.conf' })
+                            .with_content(/enable_send_perfdata = false/) }
   end
 
 
   context "Windows 2012 R2 with enable_send_perfdata => foo (not a valid boolean)" do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:enable_send_perfdata => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
