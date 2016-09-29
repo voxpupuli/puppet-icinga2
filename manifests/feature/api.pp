@@ -180,19 +180,19 @@ class icinga2::feature::api(
           'windows' => undef,
           default   => '0600',
         },
-        source => $::settings::hostprivkey,
+        source => $::icinga2_puppet_setting_hostprivkey,
         tag    => 'icinga2::config::file',
       }
 
       file { $_ssl_cert_path:
         ensure => file,
-        source => $::settings::hostcert,
+        source => $::icinga2_puppet_setting_hostcert,
         tag    => 'icinga2::config::file',
       }
 
       file { $_ssl_cacert_path:
         ensure => file,
-        source => $::settings::localcacert,
+        source => $::icinga2_puppet_setting_localcacert,
         tag    => 'icinga2::config::file',
       }
     } # puppet
