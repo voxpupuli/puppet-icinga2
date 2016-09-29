@@ -45,41 +45,50 @@ describe('icinga2::feature', :type => :define) do
       }
     end
   end
+end
 
-
-  context 'Windows 2012 R2 with ensure => present, feature => foo' do
-    let(:facts) { {
+describe('icinga2::feature', :type => :define) do
+  let(:facts) { {
       :kernel => 'Windows',
       :architecture => 'x86_64',
       :osfamily => 'Windows',
       :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
+      :operatingsystemmajrelease => '2012 R2',
+      :path => 'C:\Program Files\Puppet Labs\Puppet\puppet\bin;
+               C:\Program Files\Puppet Labs\Puppet\facter\bin;
+               C:\Program Files\Puppet Labs\Puppet\hiera\bin;
+               C:\Program Files\Puppet Labs\Puppet\mcollective\bin;
+               C:\Program Files\Puppet Labs\Puppet\bin;
+               C:\Program Files\Puppet Labs\Puppet\sys\ruby\bin;
+               C:\Program Files\Puppet Labs\Puppet\sys\tools\bin;
+               C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;
+               C:\Windows\System32\WindowsPowerShell\v1.0\;
+               C:\ProgramData\chocolatey\bin;',
+  } }
+  let(:title) { 'bar' }
+  let(:pre_condition) { [
+      "class { 'icinga2': features => [], }"
+  ] }
+
+  context 'Windows 2012 R2 with ensure => present, feature => foo' do
     let(:params) { {:ensure => 'present', 'feature' => 'foo'} }
 
     it {
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/foo.conf').with({
-        'ensure' => 'file',
-      }).with_content(/include "..\/features-available\/foo.conf"/)
-        .that_notifies('Class[icinga2::service]')
+      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/foo.conf')
+                 .with({'ensure' => 'file',})
+                 .with_content(/include "..\/features-available\/foo.conf"/)
+                 .that_notifies('Class[icinga2::service]')
     }
   end
 
 
   context 'Windows 2012 R2 with ensure => absent, feature => foo' do
-    let(:facts) { {
-      :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2'
-    } }
     let(:params) { {:ensure => 'absent', 'feature' => 'foo'} }
 
     it {
-      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/foo.conf').with({
-        'ensure' => 'absent',
-      }).that_notifies('Class[icinga2::service]')
+      should contain_file('C:/ProgramData/icinga2/etc/icinga2/features-enabled/foo.conf')
+                 .with({'ensure' => 'absent',})
+                 .that_notifies('Class[icinga2::service]')
     }
   end
 end
