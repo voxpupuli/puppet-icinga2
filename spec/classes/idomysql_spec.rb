@@ -8,9 +8,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   on_supported_os.each do |os, facts|
     let(:facts) do
       facts.merge({
-                      :icinga2_puppet_setting_hostcert => '/var/lib/puppet/ssl/certs/host.example.org.pem',
-                      :icinga2_puppet_setting_hostprivkey => '/var/lib/puppet/ssl/private_keys/host.example.org.pem',
-                      :icinga2_puppet_setting_localcacert => '/var/lib/puppet/ssl/certs/ca.pem',
+                      :icinga2_puppet_hostcert => '/var/lib/puppet/ssl/certs/host.example.org.pem',
+                      :icinga2_puppet_hostprivkey => '/var/lib/puppet/ssl/private_keys/host.example.org.pem',
+                      :icinga2_puppet_localcacert => '/var/lib/puppet/ssl/certs/ca.pem',
                   })
     end
 
@@ -390,9 +390,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
       :operatingsystemmajrelease => '2012 R2',
       :fqdn => 'foo.bar.com',
       :path => 'C:/Program Files/MySQL/bin',
-      :icinga2_puppet_setting_hostcert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\host.example.org.pem',
-      :icinga2_puppet_setting_hostprivkey => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\private_keys\host.example.org.pem',
-      :icinga2_puppet_setting_localcacert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\ca.pem',
+      :icinga2_puppet_hostcert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\host.example.org.pem',
+      :icinga2_puppet_hostprivkey => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\private_keys\host.example.org.pem',
+      :icinga2_puppet_localcacert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\ca.pem',
   } }
 
 

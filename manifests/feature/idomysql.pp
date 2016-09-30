@@ -203,19 +203,19 @@ class icinga2::feature::idomysql(
             'windows' => undef,
             default   => '0600',
           },
-          source => $::icinga2_puppet_setting_hostprivkey,
+          source => $::icinga2_puppet_hostprivkey,
           tag    => 'icinga2::config::file',
         }
 
         file { $_ssl_cert_path:
           ensure => file,
-          source => $::icinga2_puppet_setting_hostcert,
+          source => $::icinga2_puppet_hostcert,
           tag    => 'icinga2::config::file',
         }
 
         file { $_ssl_cacert_path:
           ensure => file,
-          source => $::icinga2_puppet_setting_localcacert,
+          source => $::icinga2_puppet_localcacert,
           tag    => 'icinga2::config::file',
         }
       } # puppet
