@@ -6,8 +6,12 @@ describe('icinga2::feature::influxdb', :type => :class) do
   ] }
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
+    let(:facts) do
+      facts.merge({
+                      :icinga2_puppet_hostcert => '/var/lib/puppet/ssl/certs/host.example.org.pem',
+                      :icinga2_puppet_hostprivkey => '/var/lib/puppet/ssl/private_keys/host.example.org.pem',
+                      :icinga2_puppet_localcacert => '/var/lib/puppet/ssl/certs/ca.pem',
+                  })
     end
 
 
@@ -386,6 +390,9 @@ describe('icinga2::feature::influxdb', :type => :class) do
       C:\Windows\System32\WindowsPowerShell\v1.0\;
       C:\ProgramData\chocolatey\bin;
       C:\Users\vagrant\AppData\Roaming\Boxstarter',
+    :icinga2_puppet_hostcert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\host.example.org.pem',
+    :icinga2_puppet_hostprivkey => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\private_keys\host.example.org.pem',
+    :icinga2_puppet_localcacert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\ca.pem',
   } }
 
   context "Windows 2012 R2 with ensure => present" do

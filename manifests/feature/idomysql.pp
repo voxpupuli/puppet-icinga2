@@ -191,6 +191,10 @@ class icinga2::feature::idomysql(
       ssl_cipher => $ssl_cipher,
     }
 
+    file { $ssl_dir:
+      ensure => directory,
+    }
+
     case $pki {
       'puppet': {
         file { $_ssl_key_path:
@@ -199,19 +203,19 @@ class icinga2::feature::idomysql(
             'windows' => undef,
             default   => '0600',
           },
-          source => $::settings::hostprivkey,
+          source => $::icinga2_puppet_hostprivkey,
           tag    => 'icinga2::config::file',
         }
 
         file { $_ssl_cert_path:
           ensure => file,
-          source => $::settings::hostcert,
+          source => $::icinga2_puppet_hostcert,
           tag    => 'icinga2::config::file',
         }
 
         file { $_ssl_cacert_path:
           ensure => file,
-          source => $::settings::localcacert,
+          source => $::icinga2_puppet_localcacert,
           tag    => 'icinga2::config::file',
         }
       } # puppet
