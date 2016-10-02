@@ -199,20 +199,20 @@ class icinga2::feature::influxdb(
           source => $::icinga2_puppet_hostprivkey,
           tag    => 'icinga2::config::file',
         }
-  
+
         file { $_ssl_cert_path:
           ensure => file,
           source => $::icinga2_puppet_hostcert,
           tag    => 'icinga2::config::file',
         }
-  
+
         file { $_ssl_cacert_path:
           ensure => file,
           source => $::icinga2_puppet_localcacert,
           tag    => 'icinga2::config::file',
         }
       } # puppet
-  
+
       'none': {
         if $ssl_key {
           file { $_ssl_key_path:
@@ -228,7 +228,7 @@ class icinga2::feature::influxdb(
             tag     => 'icinga2::config::file',
           }
         }
-  
+
         if $ssl_cert {
           file { $_ssl_cert_path:
             ensure  => file,
@@ -239,7 +239,7 @@ class icinga2::feature::influxdb(
             tag     => 'icinga2::config::file',
           }
         }
-  
+
         if $ssl_cacert {
           file { $_ssl_cacert_path:
             ensure  => file,
@@ -257,7 +257,7 @@ class icinga2::feature::influxdb(
     $attrs_ssl = { ssl_enable  => $enable_ssl }
   }
 
-  $_attrs = {
+  $attrs = {
     host                   => $host,
     port                   => $port,
     database               => $database,
@@ -271,13 +271,11 @@ class icinga2::feature::influxdb(
     flush_threshold        => $flush_threshold,
   }
 
-  $attrs = merge($_attrs, $attrs_ssl)
-
   # create object
   icinga2::object { "icinga2::object::InfluxdbWriter::influxdb":
     object_name => 'influxdb',
     object_type => 'InfluxdbWriter',
-    attrs       => $attrs,
+    attrs       => merge($attrs, $attrs_ssl),
     target      => "${conf_dir}/features-available/influxdb.conf",
     order       => '10',
     notify      => $ensure ? {

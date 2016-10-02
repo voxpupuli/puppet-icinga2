@@ -278,7 +278,7 @@ class icinga2::feature::idomysql(
     }
   }
 
-  $_attrs = {
+  $attrs = {
     host                  => $host,
     port                  => $port,
     socket_path           => $socket_path,
@@ -295,13 +295,11 @@ class icinga2::feature::idomysql(
 
   }
 
-  $attrs = merge($_attrs, $attrs_ssl)
-
   # create object
   icinga2::object { "icinga2::object::IdoMysqlConnection::ido-mysql":
     object_name => 'ido-mysql',
     object_type => 'IdoMysqlConnection',
-    attrs       => $attrs,
+    attrs       => merge($attrs, $attrs_ssl),
     target      => "${conf_dir}/features-available/ido-mysql.conf",
     order       => '10',
     notify      => $ensure ? {
@@ -316,7 +314,7 @@ class icinga2::feature::idomysql(
     content => "library \"db_ido_mysql\"\n\n",
     order   => '05',
   }
- 
+
   icinga2::feature { 'ido-mysql':
     ensure => $ensure,
     require => Package['icinga2-ido-mysql']
