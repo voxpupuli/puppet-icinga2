@@ -96,12 +96,29 @@ enable the feature `icinga2::feature::idomysql` or `icinga2::feature::idopgsql`.
 the base schema into the database, however this is disabled by default. Updating the database schema to another version
 is currently not supported.
 
+
+The IDO featues require an existing database and a user with permissions. To install database servers, create databases
+and manage user permissions we recommend the [puppetlabs/mysql] and [puppetlabs/puppetlabs-postgresql] modules. 
+Here's an example how you create a MySQL database with the corresponding user with permissions by usng the
+[puppetlabs/mysql] module:
+
 ``` puppet
+include icinga2
+include mysql::server
+
+mysql::db { 'icinga2':
+  user     => 'icinga2',
+  password => 'supersecret',
+  host     => 'localhost',
+  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+}
+
 class{ 'icinga2::feature::idomysql':
   user => "icinga2",
-  password => "icinga2",
+  password => "supersecret",
   database => "icinga2",
-  import_schema => true
+  import_schema => true,
+  require => Mysql::Db['icinga2']
 }
 ```
 
@@ -887,6 +904,8 @@ See also [CHANGELOG.md]
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
 [puppetlabs/chocolatey]: https://github.com/puppetlabs/puppetlabs-chocolatey
+[puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
+[puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
 [packages.icinga.org]: https://packages.icinga.org
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html

@@ -95,6 +95,31 @@
 # [*import_schema*]
 #   Whether to import the MySQL schema or not. Defaults to false.
 #
+# === Examples
+#
+# The ido-mysql featue requires an existing database and a user with permissions.
+# To install a database server, create databases and manage user permissions we recommend the puppetlabs/mysql module.
+# Here's an example how you create a MySQL database with the corresponding user with permissions by usng the
+# puppetlabs/mysql module:
+#
+# include icinga2
+# include mysql::server
+#
+# mysql::db { 'icinga2':
+#   user     => 'icinga2',
+#   password => 'supersecret',
+#   host     => 'localhost',
+#   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+# }
+#
+# class{ 'icinga2::feature::idomysql':
+#   user => "icinga2",
+#   password => "supersecret",
+#   database => "icinga2",
+#   import_schema => true,
+#   require => Mysql::Db['icinga2']
+# }
+#
 # === Authors
 #
 # Icinga Development Team <info@icinga.org>
