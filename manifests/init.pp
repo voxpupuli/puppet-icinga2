@@ -77,7 +77,7 @@
 # this tag and triggers a reload of Icinga2 on a file change.
 #
 #  include icinga2
-#  file { '/etc/icinga2/icinga2.conf':
+#  file { '/etc/icinga2/conf.d/foo.conf':
 #    ensure => file,
 #    owner  => icinga,
 #    ...
