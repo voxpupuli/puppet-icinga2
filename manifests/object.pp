@@ -51,8 +51,22 @@ define icinga2::object(
 
   include ::icinga2::params
 
-  $user  = $::icinga2::params::user
-  $group = $::icinga2::params::group
+  case $::osfamily {
+    'windows': {
+      Concat {
+        owner => 'Administrators',
+        group => 'NETWORK SERVICE',
+        mode  => '0770',
+      }
+    } # windows
+    default: {
+      Concat {
+        owner => $::icinga2::params::user,
+        group => $::icinga2::params::group,
+        mode  => '0640',
+      }
+    } # default
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -67,8 +81,6 @@ define icinga2::object(
   if !defined(Concat[$target]) {
     concat { $target:
       ensure => present,
-      owner  => $user,
-      group  => $group,
       tag    => 'icinga2::config::file',
       warn   => true,
     }
