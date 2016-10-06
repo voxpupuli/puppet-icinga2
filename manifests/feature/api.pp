@@ -80,7 +80,7 @@
 # named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName
 # is set to 'hostname'.
 #
-#   include icinga2::feature::api
+#   include ::icinga2::feature::api
 #
 # To use your own certificates and key as file resources if the contant NodeName is
 # set to fqdn (default) do:
