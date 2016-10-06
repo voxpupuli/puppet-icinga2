@@ -45,7 +45,7 @@ class icinga2::repo {
       'debian': {
         case $::operatingsystem {
           'debian': {
-            include apt, apt::backports
+            include ::apt, ::apt::backports
             apt::source { 'icinga-stable-release':
               location    => 'http://packages.icinga.org/debian',
               release     => "icinga-${::lsbdistcodename}",
@@ -56,7 +56,7 @@ class icinga2::repo {
             }
           }
           'ubuntu': {
-            include apt
+            include ::apt
             apt::source { 'icinga-stable-release':
               location    => 'http://packages.icinga.org/ubuntu',
               release     => "icinga-${::lsbdistcodename}",
@@ -69,7 +69,8 @@ class icinga2::repo {
           default: {
             fail('Your plattform is not supported to manage a repository.')
           }
-        }
+        } 
+        contain ::apt::update
       }
       'windows': {
         warning("The Icinga Project doesn't offer chocolaty packages at the moment.")
