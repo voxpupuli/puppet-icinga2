@@ -69,7 +69,8 @@ class icinga2::repo {
           default: {
             fail('Your plattform is not supported to manage a repository.')
           }
-        }
+        } 
+        contain ::apt::update
       }
       'windows': {
         warning("The Icinga Project doesn't offer chocolaty packages at the moment.")
