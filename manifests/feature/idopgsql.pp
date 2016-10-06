@@ -46,6 +46,29 @@
 # [*import_schema*]
 #   Whether to import the PostgreSQL schema or not. Defaults to false.
 #
+# === Examples
+#
+# The ido-pgsql featue requires an existing database and a user with permissions.
+# To install a database server, create databases and manage user permissions we recommend the puppetlabs-postgresql module.
+# Here's an example how you create a PostgreSQL database with the corresponding user with permissions by usng the
+# puppetlabs-postgresql module:
+#
+# include icinga2
+# include postgresql::server
+#
+# postgresql::server::db { 'icinga2':
+#   user     => 'icinga2',
+#   password => postgresql_password('icinga2', 'supersecret'),
+# }
+#
+# class{ 'icinga2::feature::idopgsql':
+#   user => "icinga2",
+#   password => "supersecret",
+#   database => "icinga2",
+#   import_schema => true,
+#   require => Postgresql::Server::Db['icinga2']
+# }
+#
 # === Authors
 #
 # Icinga Development Team <info@icinga.org>
