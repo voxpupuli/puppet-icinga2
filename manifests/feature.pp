@@ -10,6 +10,7 @@ define icinga2::feature(
   $ensure  = present,
   $feature = $title,
 ) {
+  require ::icinga2::config
 
   if defined($caller_module_name) and $module_name != $caller_module_name {
     fail("icinga2::feature is a private define resource of the module icinga2, you're not permitted to use it.")
