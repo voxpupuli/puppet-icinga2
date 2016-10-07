@@ -19,7 +19,7 @@
 #
 # [*update_interval*]
 #   Interval in seconds to update both status files.
-#   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '30s'
+#   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '15s'
 #
 # === Authors
 #
@@ -29,7 +29,7 @@ class icinga2::feature::statusdata(
   $ensure          = present,
   $status_path     = "${::icinga2::params::cache_dir}/status.dat",
   $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
-  $update_interval = '30s',
+  $update_interval = '15s',
 ) inherits icinga2::params {
 
   # validation
