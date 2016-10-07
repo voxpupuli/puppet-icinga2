@@ -154,6 +154,8 @@ class icinga2::feature::idomysql(
 
   include ::icinga2::params
 
+  require ::icinga2::config
+
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_ip_address($host)
