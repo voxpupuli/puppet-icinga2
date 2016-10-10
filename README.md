@@ -122,6 +122,139 @@ class{ 'icinga2::feature::idomysql':
 }
 ```
 
+
+### Clustering Icinga 2
+Icinga 2 can run in three different roles:
+ 
+* A master node which is on top of the hierarchy.
+* A satellite node which is a child of a satellite or master node.
+* A client node which works as an agent connected to master and/or satellite nodes.
+
+To learn more about Icinga 2 Clustering, follow the official docs on [distributed monitoring]. The following examples show
+how a these roles can be configured using this Puppet module.
+
+#### Master
+A Master node has no parent and is usually also the place where you enable the IDO and notification features. A Master
+sends configurations over the Icinga 2 protocol to Satellites and/or Clients.
+
+More detailed examples can be found in the [examples] directory.
+
+Ths examples creates the coniguration for a Master that has one Satellite connected. A global zone is created for
+templates and all features of a typical master are enabled.
+
+``` puppet
+  class { 'icinga2':
+    confd     => false,
+    features  => ['checker','mainlog','notification','statusdata','compatlog','command'],
+    constants => {
+      'ZoneName' => 'master',
+    },
+  }
+
+  class { 'icinga2::feature::api':
+    accept_commands => true,
+    endpoints       => {
+      'master.example.org' => {},
+      'satellite.example.org' => {
+        'host' => '172.16.2.11'
+      }
+    },
+    zones           => {
+      'master' => {
+        'endpoints' => ['master.example.org'],
+      },
+      'dmz'    => {
+        'endpoints' => ['satellite.example.org'],
+        'parent'    => 'master',
+      },
+    }
+  }
+
+  icinga2::object::zone { 'global-templates':
+    global => true,
+  }
+```
+
+#### Satellite
+A Satellite has a parent node and one or multiple child nodes. Satallites are usually created to distribute the
+monitoring load or to reach delimited zones in the network. A Satellite either executes checks itself or delegates them
+to a client.
+
+The Satellite has less features enabled but the same zones as the Master. It is connected to the Master and the Client.
+The Master is the parent of the Satellite.
+
+``` puppet
+  class { 'icinga2':
+    confd     => false,
+    features  => ['checker','mainlog'],
+    constants => {
+      'ZoneName' => 'dmz',
+    },
+  }
+
+  class { 'icinga2::feature::api':
+    accept_config   => true,
+    accept_commands => true,
+    endpoints       => {
+      'satellite.example.org' => {},
+      'master.example.org' => {
+        'host' => '172.16.1.11',
+      },
+    },
+    zones           => {
+      'master' => {
+        'endpoints' => ['master.example.org'],
+      },
+      'dmz' => {
+        'endpoints' => ['satellite.example.org'],
+        'parent'    => 'master',
+      },
+    }
+  }
+
+  icinga2::object::zone { 'global-templates':
+    global => true,
+  }
+```
+
+#### Client
+Icinga 2 runs as a client usually on each of your servers. It receives config or commands from a Satellite or Master node
+and runs the checks that must be executed locally.
+
+The Client is connected to the Satellite. The Satellite is the parent of the Client.
+
+``` puppet
+  class { 'icinga2':
+    confd     => false,
+    features  => ['checker','mainlog'],
+  }
+
+  class { 'icinga2::feature::api':
+    pki             => 'none',
+    accept_config   => true,
+    accept_commands => true,
+    endpoints       => {
+      'NodeName' => {},
+      'satellite.example.org' => {
+        'host' => '172.16.2.11',
+      }
+    },
+    zones           => {
+      'ZoneName' => {
+        'endpoints' => ['NodeName'],
+        'parent' => 'dmz',
+      },
+      'dmz' => {
+        'endpoints' => ['satellite.example.org'],
+      }
+    }
+  }
+  
+  icinga2::object::zone { 'global-templates':
+    global => true,
+  }
+```
+
 ### Custom configuration files
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
@@ -900,6 +1033,8 @@ See also [CHANGELOG.md]
 [Limitations]: #limitations
 [Development]: #development
 
+[distributed monitoring]: http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/distributed-monitoring
+[examples]: examples
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt

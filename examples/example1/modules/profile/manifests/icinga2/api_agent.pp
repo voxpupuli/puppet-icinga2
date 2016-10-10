@@ -17,6 +17,10 @@ class profile::icinga2::agent(
     endpoints       => $endpoints,
     zones           => $zones,
   }
+
+  icinga2::object::zone { 'global-templates':
+    global => true,
+  }
 }
 
 
