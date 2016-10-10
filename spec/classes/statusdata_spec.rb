@@ -37,7 +37,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
         .with({ 'target' => '/etc/icinga2/features-available/statusdata.conf' })
-        .with_content(/update_interval = 30s/)
+        .with_content(/update_interval = 15s/)
         .with_content(/status_path = "\/var\/cache\/icinga2\/status.dat"/)
         .with_content(/objects_path = "\/var\/cache\/icinga2\/objects.cache"/) }
     end
@@ -145,7 +145,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::StatusDataWriter::statusdata')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/statusdata.conf' })
-                            .with_content(/update_interval = 30s/)
+                            .with_content(/update_interval = 15s/)
                             .with_content(/status_path = "C:\/ProgramData\/icinga2\/var\/cache\/icinga2\/status.dat"/)
                             .with_content(/objects_path = "C:\/ProgramData\/icinga2\/var\/cache\/icinga2\/objects.cache"/) }
   end
