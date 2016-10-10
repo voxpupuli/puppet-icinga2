@@ -11,7 +11,7 @@ module Puppet
           if value.is_a?(Integer) || value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
             result = value
           else
-            if $constants.include?(value) || value =~ /^{{.*}}$/
+            if $constants.include?(value) || value =~ /^(host|service)\./ || value =~ /^{{.*}}$/
               result = value
             else
                result = "\"#{value}\""
@@ -45,7 +45,11 @@ module Puppet
               end
             end
           else
-            result += "%s\n" % [ types(attrs) ]
+            if attrs =~ /\s+\+\s+/
+              result += "%s\n" % [ attrs.split(/\s+\+\s+/).map {|x| types(x)}.join(' + ') ]
+            else
+              result += "%s\n" % [ types(attrs) ]
+            end
           end
           return result
         end
