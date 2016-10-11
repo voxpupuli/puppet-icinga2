@@ -54,7 +54,7 @@ module Puppet
           return result
         end
 
-        $constants = consts.concat(attrs.keys)
+        $constants = consts.concat(attrs.keys) << "name"
         return recurse(attrs)
       end
 
