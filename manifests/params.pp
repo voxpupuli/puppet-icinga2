@@ -21,7 +21,6 @@ class icinga2::params {
   $service          = 'icinga2'
   $plugins          = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
   $default_features = [ 'checker', 'mainlog', 'notification' ]
-  $globals          = [ 'SysconfDir' ]
 
   case $::kernel {
 
