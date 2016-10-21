@@ -248,6 +248,259 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
+    context "#{os} with enable_active_checks => true" do
+      let(:params) { {:enable_active_checks => true, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_active_checks = true/) }
+    end
+
+
+    context "#{os} with enable_active_checks => false" do
+      let(:params) { {:enable_active_checks => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_active_checks = false/) }
+    end
+
+
+    context "#{os} with enable_active_checks => foo (not a valid boolean)" do
+      let(:params) { {:enable_active_checks => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
+    context "#{os} with enable_passive_checks => true" do
+      let(:params) { {:enable_passive_checks => true, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_passive_checks = true/) }
+    end
+
+
+    context "#{os} with enable_passive_checks => false" do
+      let(:params) { {:enable_passive_checks => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_passive_checks = false/) }
+    end
+
+
+    context "#{os} with enable_passive_checks => foo (not a valid boolean)" do
+      let(:params) { {:enable_passive_checks => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
+    context "#{os} with enable_event_handler => true" do
+      let(:params) { {:enable_event_handler => true, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_event_handler = true/) }
+    end
+
+
+    context "#{os} with enable_event_handler => false" do
+      let(:params) { {:enable_event_handler => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_event_handler = false/) }
+    end
+
+
+    context "#{os} with enable_event_handler => foo (not a valid boolean)" do
+      let(:params) { {:enable_event_handler => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
+    context "#{os} with enable_flapping => true" do
+      let(:params) { {:enable_flapping => true, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_flapping = true/) }
+    end
+
+
+    context "#{os} with enable_flapping => false" do
+      let(:params) { {:enable_flapping => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_flapping = false/) }
+    end
+
+
+    context "#{os} with enable_flapping => foo (not a valid boolean)" do
+      let(:params) { {:enable_flapping => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
+    context "#{os} with enable_perfdata => true" do
+      let(:params) { {:enable_perfdata => true, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_perfdata = true/) }
+    end
+
+
+    context "#{os} with enable_perfdata => false" do
+      let(:params) { {:enable_perfdata => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/enable_perfdata = false/) }
+    end
+
+
+    context "#{os} with enable_perfdata => foo (not a valid boolean)" do
+      let(:params) { {:enable_perfdata => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
+    context "#{os} with event_command => foo" do
+      let(:params) { {:event_command => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/event_command = "foo"/) }
+    end
+
+
+    context "#{os} with event_command => 4247 (not a valid string)" do
+      let(:params) { {:event_command => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with zone => foo" do
+      let(:params) { {:zone => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/zone = "foo"/) }
+    end
+
+
+    context "#{os} with zone => 4247 (not a valid string)" do
+      let(:params) { {:zone => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with command_endpoint => foo" do
+      let(:params) { {:command_endpoint => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/command_endpoint = "foo"/) }
+    end
+
+
+    context "#{os} with command_endpoint => 4247 (not a valid string)" do
+      let(:params) { {:command_endpoint => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with notes => foo" do
+      let(:params) { {:notes => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/notes = "foo"/) }
+    end
+
+
+    context "#{os} with notes => 4247 (not a valid string)" do
+      let(:params) { {:notes => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with notes_url => foo" do
+      let(:params) { {:notes_url => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/notes_url = "foo"/) }
+    end
+
+
+    context "#{os} with notes_url => 4247 (not a valid string)" do
+      let(:params) { {:notes_url => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with action_url => foo" do
+      let(:params) { {:action_url => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/action_url = "foo"/) }
+    end
+
+
+    context "#{os} with action_url => 4247 (not a valid string)" do
+      let(:params) { {:action_url => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with icon_image => /foo/foobar" do
+      let(:params) { {:icon_image => '/foo/foobar', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/icon_image = "\/foo\/foobar"/) }
+    end
+
+
+    context "#{os} with icon_image => foo/foobar (not valid absolute path)" do
+      let(:params) { {:icon_image => 'foo/foobar', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/foobar" is not an absolute path/) }
+    end
+
+
+    context "#{os} with icon_image_alt => foo" do
+      let(:params) { {:icon_image_alt => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/icon_image_alt = "foo"/) }
+    end
+
+
+    context "#{os} with icon_image_alt => 4247 (not a valid string)" do
+      let(:params) { {:icon_image_alt => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with template => true" do
       let(:params) { {:template => true, :target => '/bar/baz'} }
 
@@ -497,6 +750,284 @@ describe('icinga2::object::host', :type => :define) do
     let(:params) { {:retry_interval => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_notifications => true" do
+    let(:params) { {:enable_notifications => true, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_notifications = true/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_notifications => false" do
+    let(:params) { {:enable_notifications => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_notifications = false/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_notifications => foo (not a valid boolean)" do
+    let(:params) { {:enable_notifications => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_active_checks => true" do
+    let(:params) { {:enable_active_checks => true, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_active_checks = true/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_active_checks => false" do
+    let(:params) { {:enable_active_checks => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_active_checks = false/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_active_checks => foo (not a valid boolean)" do
+    let(:params) { {:enable_active_checks => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_passive_checks => true" do
+    let(:params) { {:enable_passive_checks => true, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_passive_checks = true/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_passive_checks => false" do
+    let(:params) { {:enable_passive_checks => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_passive_checks = false/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_passive_checks => foo (not a valid boolean)" do
+    let(:params) { {:enable_passive_checks => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_event_handler => true" do
+    let(:params) { {:enable_event_handler => true, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_event_handler = true/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_event_handler => false" do
+    let(:params) { {:enable_event_handler => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_event_handler = false/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_event_handler => foo (not a valid boolean)" do
+    let(:params) { {:enable_event_handler => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_flapping => true" do
+    let(:params) { {:enable_flapping => true, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_flapping = true/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_flapping => false" do
+    let(:params) { {:enable_flapping => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_flapping = false/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_flapping => foo (not a valid boolean)" do
+    let(:params) { {:enable_flapping => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_perfdata => true" do
+    let(:params) { {:enable_perfdata => true, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_perfdata = true/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_perfdata => false" do
+    let(:params) { {:enable_perfdata => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/enable_perfdata = false/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_perfdata => foo (not a valid boolean)" do
+    let(:params) { {:enable_perfdata => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+  end
+
+
+  context "Windows 2012 R2 with event_command => foo" do
+    let(:params) { {:event_command => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/event_command = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with event_command => 4247 (not a valid string)" do
+    let(:params) { {:event_command => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with zone => foo" do
+    let(:params) { {:zone => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/zone = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with zone => 4247 (not a valid string)" do
+    let(:params) { {:zone => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with command_endpoint => foo" do
+    let(:params) { {:command_endpoint => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/command_endpoint = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with command_endpoint => 4247 (not a valid string)" do
+    let(:params) { {:command_endpoint => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with notes => foo" do
+    let(:params) { {:notes => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/notes = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with notes => 4247 (not a valid string)" do
+    let(:params) { {:notes => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with notes_url => foo" do
+    let(:params) { {:notes_url => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/notes_url = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with notes_url => 4247 (not a valid string)" do
+    let(:params) { {:notes_url => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with action_url => foo" do
+    let(:params) { {:action_url => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/action_url = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with action_url => 4247 (not a valid string)" do
+    let(:params) { {:action_url => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with icon_image => /foo/foobar" do
+    let(:params) { {:icon_image => '/foo/foobar', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/icon_image = "\/foo\/foobar"/) }
+  end
+
+
+  context "Windows 2012 R2 with icon_image => foo/foobar (not valid absolute path)" do
+    let(:params) { {:icon_image => 'foo/foobar', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/foobar" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with icon_image_alt => foo" do
+    let(:params) { {:icon_image_alt => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/icon_image_alt = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with icon_image_alt => 4247 (not a valid string)" do
+    let(:params) { {:icon_image_alt => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
