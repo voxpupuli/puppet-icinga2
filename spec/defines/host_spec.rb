@@ -389,6 +389,38 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
+    context "#{os} with flapping_threshold => 30" do
+      let(:params) { {:flapping_threshold => '30', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/flapping_threshold = 30/) }
+    end
+
+
+    context "#{os} with flapping_threshold => foo (not a valid integer)" do
+      let(:params) { {:flapping_threshold => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    end
+
+
+    context "#{os} with volatile => false" do
+      let(:params) { {:volatile => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/volatile = false/) }
+    end
+
+
+    context "#{os} with volatile => foo (not a valid boolean)" do
+      let(:params) { {:volatile => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    end
+
+
     context "#{os} with zone => foo" do
       let(:params) { {:zone => 'foo', :target => '/bar/baz'} }
 
@@ -916,6 +948,38 @@ describe('icinga2::object::host', :type => :define) do
     let(:params) { {:event_command => 4247, :target => 'C:/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with flapping_threshold => 30" do
+    let(:params) { {:flapping_threshold => '30', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/flapping_threshold = 30/) }
+  end
+
+
+  context "Windows 2012 R2 with flapping_threshold => foo (not a valid integer)" do
+    let(:params) { {:flapping_threshold => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+  end
+
+
+  context "Windows 2012 R2 with volatile => false" do
+    let(:params) { {:volatile => false, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/volatile = false/) }
+  end
+
+
+  context "Windows 2012 R2 with volatile => foo (not a valid boolean)" do
+    let(:params) { {:volatile => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 

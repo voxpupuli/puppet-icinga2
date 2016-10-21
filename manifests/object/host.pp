@@ -171,7 +171,7 @@ define icinga2::object::host(
   if $enable_flapping { validate_bool($enable_flapping) }
   if $enable_perfdata { validate_bool($enable_perfdata) }
   if $event_command { validate_string($event_command) }
-  if $flapping_threshold { validate_re($flapping_threshold, '^\d+\.?\d*%?$') }
+  if $flapping_threshold { validate_integer($flapping_threshold) }
   if $volatile { validate_bool($volatile) }
   if $zone { validate_string($zone) }
   if $command_endpoint { validate_string($command_endpoint) }
