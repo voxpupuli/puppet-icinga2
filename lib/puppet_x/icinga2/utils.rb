@@ -11,7 +11,7 @@ module Puppet
           if value.is_a?(Integer) || value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
             result = value
           else
-            if $constants.include?(value) || value =~ /^(host|service)\./ || value =~ /^{{.*}}$/
+            if $constants.include?(value) || value =~ /^(host|service|user)\./ || value =~ /^{{.*}}$/
               result = value
             else
                result = "\"#{value}\""
@@ -25,17 +25,23 @@ module Puppet
           if attrs.is_a?(Hash)
             attrs.each do |attr, value|
               txt = [ prefix, attr, recurse(value, indent+2), ' ' * indent ]
-              if value.is_a?(Hash)
-                result += case hashlevel
-                  when 0 then recurse(value, indent, 1, "%s%s." % [ ' ' * indent, attr ])
-                  when 1 then recurse(value, indent, hashlevel+1, "%s%s" % [ prefix, attr ])
-                  when 2 then "%s[\"%s\"] = {\n%s%s}\n" % [ prefix, attr, recurse(value, indent+2, hashlevel+1), ' ' * indent ]
-                  else "%s%s = {\n%s%s}\n" % txt
+              if attr =~ /^(assign|ignore) where/
+                value.each do |v|
+                  result += "%s%s %s\n" % [ ' ' * indent, attr, v.split(' ').map {|x| types(x)}.join(' ') ]
                 end
-              elsif value.is_a?(Array)
-                result += "%s%s = [ %s]\n" % txt
               else
-                result += "%s%s = %s" % txt if value != :undef
+                if value.is_a?(Hash)
+                  result += case hashlevel
+                    when 0 then recurse(value, indent, 1, "%s%s." % [ ' ' * indent, attr ])
+                    when 1 then recurse(value, indent, hashlevel+1, "%s%s" % [ prefix, attr ])
+                    when 2 then "%s[\"%s\"] = {\n%s%s}\n" % [ prefix, attr, recurse(value, indent+2, hashlevel+1), ' ' * indent ]
+                    else "%s%s = {\n%s%s}\n" % txt
+                  end
+                elsif value.is_a?(Array)
+                  result += "%s%s = [ %s]\n" % txt
+                else
+                  result += "%s%s = %s" % txt if value != :undef
+                end
               end
             end
           elsif attrs.is_a?(Array)
