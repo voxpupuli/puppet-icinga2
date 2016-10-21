@@ -20,13 +20,18 @@ module Puppet
           return result
         end
 
-        def self.recurse(attrs, indent=2)
+        def self.recurse(attrs, indent=2, hashlevel=0, prefix="%s" % [ ' ' * indent ])
           result = ''
           if attrs.is_a?(Hash)
             attrs.each do |attr, value|
-              txt = [ ' ' * indent, attr, recurse(value, indent+2), ' ' * indent ]
+              txt = [ prefix, attr, recurse(value, indent+2), ' ' * indent ]
               if value.is_a?(Hash)
-                result += "%s%s = {\n%s%s}\n" % txt
+                result += case hashlevel
+                  when 0 then recurse(value, indent, 1, "%s%s." % [ ' ' * indent, attr ])
+                  when 1 then recurse(value, indent, hashlevel+1, "%s%s" % [ prefix, attr ])
+                  when 2 then "%s[\"%s\"] = {\n%s%s}\n" % [ prefix, attr, recurse(value, indent+2, hashlevel+1), ' ' * indent ]
+                  else "%s%s = {\n%s%s}\n" % txt
+                end
               elsif value.is_a?(Array)
                 result += "%s%s = [ %s]\n" % txt
               else
