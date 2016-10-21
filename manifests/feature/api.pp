@@ -8,11 +8,11 @@
 #   Set to present enables the feature api, absent disabled it. Defaults to present.
 #
 # [*pki*]
-#   Provides multiple sources for the certificate and key. Valid parameters are 'puppet' or 'none'.
+#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
 #   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
 #   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
 #   'none' does nothing and you either have to manage the files yourself as file resources
-#   or use the ssl_key, ssl_cert, ssl_ca parameters. Defaults to puppet.
+#   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
@@ -26,22 +26,22 @@
 #   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
-# [*ssl_ca_path*]
-#   Location of the CA certificate. Defaults to:
+# [*ssl_cacert_path*]
+#   Location of the CA certificate. Default is:
 #   /etc/icinga2/pki/ca.crt on Linux
 #   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
 #
-# [*ssl_key*] NOT IMPLEMENTED
-#   The private key in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
-#   with the suffix '.key'. For use 'pki' must set to 'none'. Defaults to undef.
+# [*ssl_key*]
+#   The private key in a base64 encoded string to store in pki directory, file is stored to
+#   path spicified in ssl_key_path. This parameter requires pki to be set to 'none'.
 #
-# [*ssl_cert*] NOT IMPLEMENTED
-#   The certificate in a base64 encoded string to store in pki directory, file is named to the constants 'NodeName'
-#   with the suffix '.crt'. For use 'pki' must set to 'none'. Defaults to undef.
+# [*ssl_cert*]
+#   The certificate in a base64 encoded string to store in pki directory, file is  stored to
+#   path spicified in ssl_cert_path. This parameter requires pki to be set to 'none'.
 #
-# [*ssl_ca*] NOT IMPLEMENTED
-#   The CA root certificate in a base64 encoded string to store in pki directory, file is named to 'ca.crt'.
-#   For use 'pki' must set to 'none'. Defaults to undef.
+# [*ssl_cacert*]
+#   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
+#   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*accept_config*]
 #   Accept zone configuration. Defaults to false.
@@ -57,7 +57,7 @@
 #   NodeName is a icnga2 constant.
 #
 # [*zones*]
-#   Hash to configure zone objects. Defaults to { 'ZoneName' => ['NodeName']} }.
+#   Hash to configure zone objects. Defaults to { 'ZoneName' => {'endpoints' => ['NodeName']} }.
 #   ZoneName and NodeName are icinga2 constants.
 #
 # === Variables
@@ -71,7 +71,7 @@
 # [*_ssl_cert_path*]
 #   Validated path to certificate file.
 #
-# [*_ssl_ca_path*]
+# [*_ssl_casert_path*]
 #   Validated path to root CA certificate file.
 #
 # === Examples
@@ -80,7 +80,7 @@
 # named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName
 # is set to 'hostname'.
 #
-#   include icinga2::feature::api
+#   include ::icinga2::feature::api
 #
 # To use your own certificates and key as file resources if the contant NodeName is
 # set to fqdn (default) do:
@@ -105,7 +105,7 @@
 #
 #   class { 'icinga2::feature::api':
 #     pki         => 'none',
-#     ssl_ca_cert => '-----BEGIN CERTIFICATE----- ...',
+#     ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
 #     ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
 #     ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
 #   }
@@ -119,12 +119,15 @@ class icinga2::feature::api(
   $pki             = 'puppet',
   $ssl_key_path    = undef,
   $ssl_cert_path   = undef,
-  $ssl_ca_path     = undef,
+  $ssl_cacert_path = undef,
   $accept_config   = false,
   $accept_commands = false,
   $ticket_salt     = 'TicketSalt',
   $endpoints       = { 'NodeName' => {} },
   $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
+  $ssl_key         = undef,
+  $ssl_cert        = undef,
+  $ssl_cacert      = undef,
 ) {
 
   include ::icinga2::params
@@ -136,8 +139,8 @@ class icinga2::feature::api(
   $node_name = $::icinga2::_constants['NodeName']
 
   File {
-    owner   => $user,
-    group   => $group,
+    owner => $user,
+    group => $group,
   }
 
   # validation
@@ -151,7 +154,7 @@ class icinga2::feature::api(
   validate_hash($endpoints)
   validate_hash($zones)
 
-  # set defaults for certificate stuff and/or do validation
+  # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
     validate_absolute_path($ssl_key_path)
     $_ssl_key_path = $ssl_key_path }
@@ -162,43 +165,108 @@ class icinga2::feature::api(
     $_ssl_cert_path = $ssl_cert_path }
   else {
     $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
-  if $ssl_ca_path {
-    validate_absolute_path($ssl_ca_path)
-    $_ssl_ca_path = $ssl_ca_path }
+  if $ssl_cacert_path {
+    validate_absolute_path($ssl_cacert_path)
+    $_ssl_cacert_path = $ssl_cacert_path }
   else {
-    $_ssl_ca_path = "${pki_dir}/ca.crt" }
+    $_ssl_cacert_path = "${pki_dir}/ca.crt" }
 
   # handle the certificate's stuff
-  if $pki == 'puppet' {
-    file { $_ssl_key_path:
-      ensure => file,
-      mode   => $::kernel ? {
-        'windows' => undef,
-        default   => '0600',
-      },
-      source => $::settings::hostprivkey,
-      tag    => 'icinga2::config::file',
-    }
+  case $pki {
+    'puppet': {
+      file { $_ssl_key_path:
+        ensure => file,
+        mode   => $::kernel ? {
+          'windows' => undef,
+          default   => '0600',
+        },
+        source => $::icinga2_puppet_hostprivkey,
+        tag    => 'icinga2::config::file',
+      }
 
-    file { $_ssl_cert_path:
-      ensure => file,
-      source => $::settings::hostcert,
-      tag    => 'icinga2::config::file',
-    }
+      file { $_ssl_cert_path:
+        ensure => file,
+        source => $::icinga2_puppet_hostcert,
+        tag    => 'icinga2::config::file',
+      }
 
-    file { $_ssl_ca_path:
-      ensure => file,
-      source => $::settings::localcacert,
-      tag    => 'icinga2::config::file',
-    }
+      file { $_ssl_cacert_path:
+        ensure => file,
+        source => $::icinga2_puppet_localcacert,
+        tag    => 'icinga2::config::file',
+      }
+    } # puppet
+
+    'none': {
+      if $ssl_key {
+        file { $_ssl_key_path:
+          ensure => file,
+          mode   => $::kernel ? {
+            'windows' => undef,
+            default   => '0600',
+          },
+          content  => $::osfamily ? {
+            'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
+            default   => $ssl_key,
+          },
+          tag     => 'icinga2::config::file',
+        }
+      }
+
+      if $ssl_cert {
+        file { $_ssl_cert_path:
+          ensure  => file,
+          content  => $::osfamily ? {
+            'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
+            default   => $ssl_cert,
+          },
+          tag     => 'icinga2::config::file',
+        }
+      }
+
+      if $ssl_cacert {
+        file { $_ssl_cacert_path:
+          ensure  => file,
+          content  => $::osfamily ? {
+            'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
+            default   => $ssl_cacert,
+          },
+          tag     => 'icinga2::config::file',
+        }
+      }
+    } # none
+  } # pki
+
+  # compose attributes
+  $attrs = {
+    cert_path       => $_ssl_cert_path,
+    key_path        => $_ssl_key_path,
+    ca_path         => $_ssl_cacert_path,
+    accept_commands => $accept_commands,
+    accept_config   => $accept_config,
+    ticket_salt     => $ticket_salt,
   }
 
   # create endpoints and zones
   create_resources('icinga2::object::endpoint', $endpoints)
   create_resources('icinga2::object::zone', $zones)
 
-  # create feature
-  icinga2::feature { 'api':
-    ensure => $ensure,
+  # create object
+  icinga2::object { "icinga2::object::ApiListener::api":
+    object_name => 'api',
+    object_type => 'ApiListener',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/api.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
   }
+
+  # manage feature
+  icinga2::feature { 'api':
+    ensure      => $ensure,
+  }
+
 }

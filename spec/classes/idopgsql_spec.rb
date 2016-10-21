@@ -27,7 +27,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('ido-pgsql').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/host = "127.0.0.1"/)
                               .with_content(/port = 5432/)
                               .with_content(/user = "icinga"/)
@@ -42,7 +43,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with host => 127.0.0.2" do
       let(:params) { {:host => '127.0.0.2'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/host = "127.0.0.2"/) }
     end
 
@@ -57,7 +59,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with port => 4247" do
       let(:params) { {:port => '4247'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/port = 4247/) }
     end
 
@@ -72,7 +75,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with user => foo" do
       let(:params) { {:user => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/user = "foo"/) }
     end
 
@@ -87,7 +91,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with database => foo" do
       let(:params) { {:database => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/database = "foo"/) }
     end
 
@@ -102,7 +107,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with table_prefix => foo" do
       let(:params) { {:table_prefix => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/table_prefix = "foo"/) }
     end
 
@@ -117,7 +123,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with instance_name => foo" do
       let(:params) { {:instance_name => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/instance_name = "foo"/) }
     end
 
@@ -132,7 +139,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with enable_ha => true" do
       let(:params) { {:enable_ha => true} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/enable_ha = true/) }
     end
 
@@ -140,7 +148,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with enable_ha => false" do
       let(:params) { {:enable_ha => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/enable_ha = false/) }
     end
 
@@ -155,7 +164,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with failover_timeout => 50s" do
       let(:params) { {:failover_timeout => '50s'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
                               .with_content(/failover_timeout = 50s/) }
     end
 
@@ -170,8 +180,9 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with cleanup => { foo => 'bar', bar => 'foo' }" do
       let(:params) { {:cleanup => { 'foo' => "bar", 'bar' => "foo" } } }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
-                              .with_content(/cleanup = {\n\s+bar = "foo"\n\s+foo = "bar"\n\s+}/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
+                              .with_content(/cleanup = {\n\s+foo = "bar"\n\s+bar = "foo"\n\s+}/) }
     end
 
 
@@ -185,8 +196,9 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with categories => ['foo', 'bar']" do
       let(:params) { {:categories => ['foo', 'bar'] } }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-pgsql.conf')
-                              .with_content(/categories = \[ "bar","foo" \]/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
+                              .with_content(/categories = \[ "foo", "bar", \]/) }
     end
 
 
@@ -252,7 +264,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with all defaults" do
     it { is_expected.to contain_icinga2__feature('ido-pgsql').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/host = "127.0.0.1"/)
                             .with_content(/port = 5432/)
                             .with_content(/user = "icinga"/)
@@ -267,7 +280,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with host => 127.0.0.2" do
     let(:params) { {:host => '127.0.0.2'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/host = "127.0.0.2"/) }
   end
 
@@ -282,7 +296,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with port => 4247" do
     let(:params) { {:port => '4247'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/port = 4247/) }
   end
 
@@ -297,7 +312,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with user => foo" do
     let(:params) { {:user => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/user = "foo"/) }
   end
 
@@ -312,7 +328,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with database => foo" do
     let(:params) { {:database => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/database = "foo"/) }
   end
 
@@ -327,7 +344,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with table_prefix => foo" do
     let(:params) { {:table_prefix => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/table_prefix = "foo"/) }
   end
 
@@ -342,7 +360,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with instance_name => foo" do
     let(:params) { {:instance_name => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/instance_name = "foo"/) }
   end
 
@@ -357,7 +376,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with enable_ha => true" do
     let(:params) { {:enable_ha => true} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/enable_ha = true/) }
   end
 
@@ -365,7 +385,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with enable_ha => false" do
     let(:params) { {:enable_ha => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/enable_ha = false/) }
   end
 
@@ -380,7 +401,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with failover_timeout => 50s" do
     let(:params) { {:failover_timeout => '50s'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
                             .with_content(/failover_timeout = 50s/) }
   end
 
@@ -395,8 +417,9 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with cleanup => { foo => 'bar', bar => 'foo' }" do
     let(:params) { {:cleanup => { 'foo' => "bar", 'bar' => "foo" } } }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
-                            .with_content(/cleanup = {\r\n\s+bar = "foo"\r\n\s+foo = "bar"\r\n\s+}/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
+                            .with_content(/cleanup = {\r\n\s+foo = "bar"\r\n\s+bar = "foo"\r\n\s+}/) }
   end
 
 
@@ -410,8 +433,9 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with categories => ['foo', 'bar']" do
     let(:params) { {:categories => ['foo', 'bar'] } }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf')
-                            .with_content(/categories = \[ "bar","foo" \]/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
+                            .with_content(/categories = \[ "foo", "bar", \]/) }
   end
 
 

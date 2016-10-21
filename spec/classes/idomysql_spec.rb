@@ -2,12 +2,16 @@ require 'spec_helper'
 
 describe('icinga2::feature::idomysql', :type => :class) do
   let(:pre_condition) { [
-      "class { 'icinga2': features => [], }"
+      "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
   ] }
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
+    let(:facts) do
+      facts.merge({
+                      :icinga2_puppet_hostcert => '/var/lib/puppet/ssl/certs/host.example.org.pem',
+                      :icinga2_puppet_hostprivkey => '/var/lib/puppet/ssl/private_keys/host.example.org.pem',
+                      :icinga2_puppet_localcacert => '/var/lib/puppet/ssl/certs/ca.pem',
+                  })
     end
 
 
@@ -27,7 +31,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with all defaults" do
       it { is_expected.to contain_icinga2__feature('ido-mysql').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+        .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
         .with_content(/host = "127.0.0.1"/)
         .with_content(/port = 3306/)
         .with_content(/user = "icinga"/)
@@ -43,7 +48,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with host => 127.0.0.2" do
       let(:params) { {:host => '127.0.0.2'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/host = "127.0.0.2"/) }
     end
 
@@ -58,7 +64,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with port => 4247" do
       let(:params) { {:port => '4247'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/port = 4247/) }
     end
 
@@ -73,12 +80,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with socket_path => /foo/bar" do
       let(:params) { {:socket_path => '/foo/bar'} }
 
-      it {
-        is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                           .with_content(/socket_path = "\/foo\/bar"/)
-                           .without_content(/host = "127.0.0.1"/)
-                           .without_content(/port = 3306/)
-      }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                           .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
+                           .with_content(/socket_path = "\/foo\/bar"/) }
     end
 
 
@@ -92,7 +96,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with user => foo" do
       let(:params) { {:user => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/user = "foo"/) }
     end
 
@@ -107,7 +112,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with database => foo" do
       let(:params) { {:database => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/database = "foo"/) }
     end
 
@@ -119,112 +125,126 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with ssl => false" do
-      let(:params) { {:ssl => false} }
+    context "#{os} with enable_ssl => false" do
+      let(:params) { {:enable_ssl => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/enable_ssl = false/)
                               .without_content(/ssl_ca =/)
                               .without_content(/ssl_cert =/)
-                              .without_content(/ssl_key =/)
-                              .without_content(/ssl_cipher =/)
-                              .without_content(/ssl_capath =/)}
+                              .without_content(/ssl_key =/) }
     end
 
 
-    context "#{os} with ssl => puppet" do
-      let(:params) { {:ssl => 'puppet'} }
-      let(:facts) do
-        facts.merge({
-                        :fqdn => 'foo.bar.com',
-                    })
-      end
+    context "#{os} with enable_ssl => true, pki => puppet" do
+      let(:params) { {:enable_ssl => true, :pki => 'puppet'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                              .with_content(/enable_ssl = true/)
-                              .with_content(/ssl_ca = "\/etc\/icinga2\/pki\/ido-mysql\/ca.crt"/)
-                              .with_content(/ssl_cert = "\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.crt"/)
-                              .with_content(/ssl_key = "\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.key"/) }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/ca.crt') }
-      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/foo.bar.com.crt') }
-      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/foo.bar.com.key') }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/host.example.org.key')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/host.example.org.crt')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/ca.crt')  }
     end
 
 
-    context "#{os} with ssl => custom" do
-      let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key'} }
+    context "#{os} with pki => foo (not a valid value)" do
+      let(:params) { {:pki => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                              .with_content(/enable_ssl = true/)
-                              .with_content(/ssl_ca = "\/foo\/ca"/)
-                              .with_content(/ssl_cert = "\/foo\/cert"/)
-                              .with_content(/ssl_key = "\/foo\/key"/)}
+      it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
     end
 
 
-    context "#{os} with ssl => custom (without ssl_ca, ssl_cert, ssl_key)" do
-      let(:params) { {:ssl => 'custom'} }
+    context "#{os} with enable_ssl = true, pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
+      let(:params) { {:enable_ssl => true, :pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"" is not an absolute path/) }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/host.example.org.key').with({
+                                                                                                  'mode'  => '0600',
+                                                                                              }).with_content(/^foo/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/host.example.org.crt')
+                              .with_content(/^bar/) }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/ido-mysql/ca.crt')
+                              .with_content(/^baz/) }
     end
 
 
-    context "#{os} with ssl => custom, ssl_ca => 'foo' (invalid path)" do
-      let(:params) { {:ssl => 'custom', :ssl_ca => 'foo'} }
+    context "#{os} with enable_ssl = true, ssl_key_path = /foo/bar" do
+      let(:params) { {:enable_ssl => true, :ssl_key_path => '/foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
+                              .with_content(/ssl_key = "\/foo\/bar"/) }
     end
 
 
-    context "#{os} with ssl => custom, ssl_cert => 'foo' (invalid path)" do
-      let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => 'foo'} }
+    context "#{os} with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
-    context "#{os} with ssl => custom, ssl_key => 'foo' (invalid path)" do
-      let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => 'foo'} }
+    context "#{os} with enable_ssl = true, ssl_cert_path = /foo/bar" do
+      let(:params) { {:enable_ssl => true, :ssl_cert_path => '/foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
+                              .with_content(/ssl_cert = "\/foo\/bar"/) }
     end
 
 
-    context "#{os} with ssl => foo (not a valid value)" do
-      let(:params) { {:ssl => 'foo'} }
+    context "#{os} with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
 
-    context "#{os} with ssl_cipher => foo" do
-      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 'foo'} }
+    context "#{os} with enable_ssl = true, ssl_cacert_path = /foo/bar" do
+      let(:params) { {:enable_ssl => true, :ssl_cacert_path => '/foo/bar'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
+                              .with_content(/ssl_ca = "\/foo\/bar"/) }
+    end
+
+
+    context "#{os} with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    end
+
+
+    context "#{os} with enabl_ssl = true, pki = none, ssl_cipher = foo" do
+      let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_cipher => 'foo'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/enable_ssl = true/)
                               .with_content(/ssl_cipher = "foo"/) }
     end
 
 
-    context "#{os} with ssl_cipher => foo" do
-      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 4247} }
+    context "#{os} with enabl_ssl = true, pki = none, ssl_cipher = foo" do
+      let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_cipher => 4247} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
-    context "#{os} with ssl_capath => /foo" do
-      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => '/foo'} }
+    context "#{os} with enabl_ssl = true, pki = none, ssl_capath = /foo" do
+      let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => '/foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/enable_ssl = true/)
                               .with_content(/ssl_capath = "\/foo"/) }
     end
 
 
-    context "#{os} with ssl_capath => foo" do
-      let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => 'foo'} }
+    context "#{os} with enabl_ssl = true, pki = none, ssl_capath = foo" do
+      let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => 'foo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
     end
@@ -233,7 +253,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with table_prefix => foo" do
       let(:params) { {:table_prefix => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/table_prefix = "foo"/) }
     end
 
@@ -248,7 +269,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with instance_name => foo" do
       let(:params) { {:instance_name => 'foo'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/instance_name = "foo"/) }
     end
 
@@ -263,7 +285,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ha => true" do
       let(:params) { {:enable_ha => true} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/enable_ha = true/) }
     end
 
@@ -271,7 +294,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ha => false" do
       let(:params) { {:enable_ha => false} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/enable_ha = false/) }
     end
 
@@ -286,7 +310,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with failover_timeout => 50s" do
       let(:params) { {:failover_timeout => '50s'} }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/failover_timeout = 50s/) }
     end
 
@@ -301,8 +326,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with cleanup => { foo => 'bar', bar => 'foo' }" do
       let(:params) { {:cleanup => { 'foo' => "bar", 'bar' => "foo" } } }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                              .with_content(/cleanup = {\n\s+bar = "foo"\n\s+foo = "bar"\n\s+}/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
+                              .with_content(/cleanup = {\n\s+foo = "bar"\n\s+bar = "foo"\n\s+}/) }
     end
 
 
@@ -316,8 +342,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with categories => ['foo', 'bar']" do
       let(:params) { {:categories => ['foo', 'bar'] } }
 
-      it { is_expected.to contain_file('/etc/icinga2/features-available/ido-mysql.conf')
-                              .with_content(/categories = \[ "bar","foo" \]/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
+                              .with_content(/categories = \[ "foo", "bar", \]/) }
     end
 
 
@@ -347,14 +374,12 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
-
   end
-
 end
 
 describe('icinga2::feature::idomysql', :type => :class) do
   let(:pre_condition) { [
-      "class { 'icinga2': features => [], }"
+      "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
   ] }
 
   let(:facts) { {
@@ -364,7 +389,10 @@ describe('icinga2::feature::idomysql', :type => :class) do
       :operatingsystem => 'Windows',
       :operatingsystemmajrelease => '2012 R2',
       :fqdn => 'foo.bar.com',
-      :path => 'C:/Program Files/MySQL/bin'
+      :path => 'C:/Program Files/MySQL/bin',
+      :icinga2_puppet_hostcert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\host.example.org.pem',
+      :icinga2_puppet_hostprivkey => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\private_keys\host.example.org.pem',
+      :icinga2_puppet_localcacert => 'C:\Program Files\Puppet Labs\Puppet\var\lib\puppet\ssl\certs\ca.pem',
   } }
 
 
@@ -384,7 +412,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with all defaults" do
     it { is_expected.to contain_icinga2__feature('ido-mysql').with({'ensure' => 'present'}) }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/host = "127.0.0.1"/)
                             .with_content(/port = 3306/)
                             .with_content(/user = "icinga"/)
@@ -400,7 +430,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with host => 127.0.0.2" do
     let(:params) { {:host => '127.0.0.2'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/host = "127.0.0.2"/) }
   end
 
@@ -415,7 +447,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with port => 4247" do
     let(:params) { {:port => '4247'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/port = 4247/) }
   end
 
@@ -430,12 +464,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with socket_path => /foo/bar" do
     let(:params) { {:socket_path => '/foo/bar'} }
 
-    it {
-      is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                         .with_content(/socket_path = "\/foo\/bar"/)
-                         .without_content(/host = "127.0.0.1"/)
-                         .without_content(/port = 3306/)
-    }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/socket_path = "\/foo\/bar"/) }
   end
 
 
@@ -449,7 +480,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with user => foo" do
     let(:params) { {:user => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/user = "foo"/) }
   end
 
@@ -464,7 +496,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with database => foo" do
     let(:params) { {:database => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/database = "foo"/) }
   end
 
@@ -476,94 +509,124 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with ssl => puppet" do
-    let(:params) { {:ssl => 'puppet'} }
+  context "Windows 2012 R2 with enable_ssl => false" do
+    let(:params) { {:enable_ssl => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                            .with_content(/enable_ssl = true/)
-                            .with_content(/ssl_ca = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/ido-mysql\/ca.crt"/)
-                            .with_content(/ssl_cert = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.crt"/)
-                            .with_content(/ssl_key = "C:\/ProgramData\/icinga2\/etc\/icinga2\/pki\/ido-mysql\/foo.bar.com.key"/) }
-
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/ca.crt') }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/foo.bar.com.crt') }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/foo.bar.com.key') }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/enable_ssl = false/)
+                            .without_content(/ssl_ca =/)
+                            .without_content(/ssl_cert =/)
+                            .without_content(/ssl_key =/) }
   end
 
 
-  context "Windows 2012 R2 with ssl => custom" do
-    let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key'} }
+  context "Windows 2012 R2 with enable_ssl => true, pki => puppet" do
+    let(:params) { {:enable_ssl => true, :pki => 'puppet'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                            .with_content(/enable_ssl = true/)
-                            .with_content(/ssl_ca = "\/foo\/ca"/)
-                            .with_content(/ssl_cert = "\/foo\/cert"/)
-                            .with_content(/ssl_key = "\/foo\/key"/)}
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/host.example.org.key')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/host.example.org.crt')  }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/ca.crt')  }
   end
 
 
-  context "Windows 2012 R2 with ssl => custom (without ssl_ca, ssl_cert, ssl_key)" do
-    let(:params) { {:ssl => 'custom'} }
+  context "Windows 2012 R2 with pki => foo (not a valid value)" do
+    let(:params) { {:pki => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
   end
 
 
-  context "Windows 2012 R2 with ssl => custom, ssl_ca => 'foo' (invalid path)" do
-    let(:params) { {:ssl => 'custom', :ssl_ca => 'foo'} }
+  context "Windows 2012 R2 with enable_ssl = true, pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
+    let(:params) { {:enable_ssl => true, :pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/host.example.org.key').with_content(/^foo/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/host.example.org.crt')
+                            .with_content(/^bar/) }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ido-mysql/ca.crt')
+                            .with_content(/^baz/) }
   end
 
 
-  context "Windows 2012 R2 with ssl => custom, ssl_cert => 'foo' (invalid path)" do
-    let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => 'foo'} }
+  context "Windows 2012 R2 with enable_ssl = true, ssl_key_path = /foo/bar" do
+    let(:params) { {:enable_ssl => true, :ssl_key_path => '/foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/ssl_key = "\/foo\/bar"/) }
   end
 
 
-  context "Windows 2012 R2 with ssl => custom, ssl_key => 'foo' (invalid path)" do
-    let(:params) { {:ssl => 'custom', :ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => 'foo'} }
+  context "Windows 2012 R2 with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
+    let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
-  context "Windows 2012 R2 with ssl => foo (not a valid value)" do
-    let(:params) { {:ssl => 'foo'} }
+  context "Windows 2012 R2 with enable_ssl = true, ssl_cert_path = /foo/bar" do
+    let(:params) { {:enable_ssl => true, :ssl_cert_path => '/foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/ssl_cert = "\/foo\/bar"/) }
   end
 
 
-  context "Windows 2012 R2 with ssl_cipher => foo" do
-    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 'foo'} }
+  context "Windows 2012 R2 with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
+    let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_ssl = true, ssl_cacert_path = /foo/bar" do
+    let(:params) { {:enable_ssl => true, :ssl_cacert_path => '/foo/bar'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/ssl_ca = "\/foo\/bar"/) }
+  end
+
+
+  context "Windows 2012 R2 with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
+    let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+  end
+
+
+  context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_cipher = foo" do
+    let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_cipher => 'foo'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/enable_ssl = true/)
                             .with_content(/ssl_cipher = "foo"/) }
   end
 
 
-  context "Windows 2012 R2 with ssl_cipher => foo" do
-    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_cipher => 4247} }
+  context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_cipher = foo" do
+    let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_cipher => 4247} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
-  context "Windows 2012 R2 with ssl_capath => /foo" do
-    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => '/foo'} }
+  context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_capath = /foo" do
+    let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => '/foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/enable_ssl = true/)
                             .with_content(/ssl_capath = "\/foo"/) }
   end
 
 
-  context "Windows 2012 R2 with ssl_capath => foo" do
-    let(:params) { {:ssl => 'custom',:ssl_ca => '/foo/ca', :ssl_cert => '/foo/cert', :ssl_key => '/foo/key', :ssl_capath => 'foo'} }
+  context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_capath = foo" do
+    let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
   end
@@ -572,7 +635,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with table_prefix => foo" do
     let(:params) { {:table_prefix => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/table_prefix = "foo"/) }
   end
 
@@ -587,7 +651,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with instance_name => foo" do
     let(:params) { {:instance_name => 'foo'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/instance_name = "foo"/) }
   end
 
@@ -602,7 +667,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ha => true" do
     let(:params) { {:enable_ha => true} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/enable_ha = true/) }
   end
 
@@ -610,7 +676,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ha => false" do
     let(:params) { {:enable_ha => false} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/enable_ha = false/) }
   end
 
@@ -625,7 +692,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with failover_timeout => 50s" do
     let(:params) { {:failover_timeout => '50s'} }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/failover_timeout = 50s/) }
   end
 
@@ -640,8 +708,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with cleanup => { foo => 'bar', bar => 'foo' }" do
     let(:params) { {:cleanup => { 'foo' => "bar", 'bar' => "foo" } } }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                            .with_content(/cleanup = {\r\n\s+bar = "foo"\r\n\s+foo = "bar"\r\n\s+}/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/cleanup = {\r\n\s+foo = "bar"\r\n\s+bar = "foo"\r\n\s+}/) }
   end
 
 
@@ -655,8 +724,9 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with categories => ['foo', 'bar']" do
     let(:params) { {:categories => ['foo', 'bar'] } }
 
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf')
-                            .with_content(/categories = \[ "bar","foo" \]/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
+                            .with_content(/categories = \[ "foo", "bar", \]/) }
   end
 
 
@@ -685,6 +755,5 @@ describe('icinga2::feature::idomysql', :type => :class) do
     let(:params) { {:import_schema => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
-  end
-
+    end
 end

@@ -36,7 +36,7 @@
 #
 # [*rotation_interval*]
 #   Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
-#   i.e. 1m or 15s. Defaults is 30s.
+#   i.e. 1m or 15s. Defaults to 30s.
 #
 # === Authors
 #
@@ -53,6 +53,7 @@ class icinga2::feature::perfdata(
   $rotation_interval       = '30s',
 ) inherits icinga2::params {
 
+  # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_absolute_path($host_perfdata_path)
@@ -63,6 +64,41 @@ class icinga2::feature::perfdata(
   if $host_format_template { validate_string($host_format_template) }
   if $service_format_template { validate_string($service_format_template) }
 
+  if $host_format_template { validate_string($host_format_template) }
+  if $service_format_template { validate_string($service_format_template) }
+
+  # compose attributes
+  $attrs = {
+    host_perfdata_path      => $host_perfdata_path,
+    service_perfdata_path   => $service_perfdata_path,
+    host_temp_path          => $host_temp_path,
+    service_temp_path       => $service_temp_path,
+    host_format_template    => $host_format_template,
+    service_format_template => $service_format_template,
+    rotation_interval       => $rotation_interval,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::PerfdataWriter::perfdata":
+    object_name => 'perfdata',
+    object_type => 'PerfdataWriter',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/perfdata.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library 'perfdata'
+  concat::fragment { 'icinga2::feature::perfdata':
+    target  => "${conf_dir}/features-available/perfdata.conf",
+    content => "library \"perfdata\"\n\n",
+    order   => '05',
+  }
+
+  # manage feature
   icinga2::feature { 'perfdata':
     ensure => $ensure,
   }

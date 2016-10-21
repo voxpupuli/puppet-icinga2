@@ -1,8 +1,0 @@
-// managed by puppet
-
-library "perfdata"
-
-object OpenTsdbWriter "opentsdb" {
-  host = "<%= scope['icinga2::feature::opentsdb::host'] %>"
-  port = <%= scope['icinga2::feature::opentsdb::port'] %>
-}

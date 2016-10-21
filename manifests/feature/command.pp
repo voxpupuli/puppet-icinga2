@@ -24,6 +24,32 @@ class icinga2::feature::command(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_absolute_path($command_path)
 
+  # compose attributes
+  $attrs = {
+    command_path => $command_path,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::ExternalCommandListener::command":
+    object_name => 'command',
+    object_type => 'ExternalCommandListener',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/command.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library 'compat'
+  concat::fragment { 'icinga2::feature::command':
+    target  => "${conf_dir}/features-available/command.conf",
+    content => "library \"compat\"\n\n",
+    order   => '05',
+  }
+
+  # manage feature
   icinga2::feature { 'command':
     ensure => $ensure,
   }

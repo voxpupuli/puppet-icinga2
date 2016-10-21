@@ -25,20 +25,45 @@
 # [*database*]
 #    MySQL database name. Defaults to "icinga".
 #
-# [*ssl*]
-#    SSL settings will be set depending on this parameter.
-#      puppet: Use puppet certificates
-#      custom: Set custom paths for certificate, key and CA
-#      false: Disable SSL (default)
+# [*enable_ssl*]
+#    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+#    Defaults to 'false'.
+#
+# [*pki*]
+#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
+#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
+#   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   'none' does nothing and you either have to manage the files yourself as file resources
+#   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
+#
+# [*ssl_key_path*]
+#   Location of the private key. Default depends on platform:
+#   /etc/icinga2/pki/NodeName.key on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key on Windows
+#   The Value of NodeName comes from the corresponding constant.
+#
+# [*ssl_cert_path*]
+#   Location of the certificate. Default depends on platform:
+#   /etc/icinga2/pki/NodeName.crt on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
+#   The Value of NodeName comes from the corresponding constant.
+#
+# [*ssl_cacert_path*]
+#   Location of the CA certificate. Default is:
+#   /etc/icinga2/pki/ca.crt on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
 #
 # [*ssl_key*]
-#    MySQL SSL client key file path. Only valid if ssl is set to custom.
+#   The private key in a base64 encoded string to store in pki directory, file is stored to
+#   path spicified in ssl_key_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cert*]
-#    MySQL SSL certificate file path. Only valid if ssl is set to custom.
+#   The certificate in a base64 encoded string to store in pki directory, file is  stored to
+#   path spicified in ssl_cert_path. This parameter requires pki to be set to 'none'.
 #
-# [*ssl_ca*]
-#    MySQL SSL certificate authority certificate file path. Only valid if ssl is set to custom.
+# [*ssl_cacert*]
+#   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
+#   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_capath*]
 #    MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
@@ -70,6 +95,31 @@
 # [*import_schema*]
 #   Whether to import the MySQL schema or not. Defaults to false.
 #
+# === Examples
+#
+# The ido-mysql featue requires an existing database and a user with permissions.
+# To install a database server, create databases and manage user permissions we recommend the puppetlabs/mysql module.
+# Here's an example how you create a MySQL database with the corresponding user with permissions by usng the
+# puppetlabs/mysql module:
+#
+# include icinga2
+# include mysql::server
+#
+# mysql::db { 'icinga2':
+#   user     => 'icinga2',
+#   password => 'supersecret',
+#   host     => 'localhost',
+#   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+# }
+#
+# class{ 'icinga2::feature::idomysql':
+#   user => "icinga2",
+#   password => "supersecret",
+#   database => "icinga2",
+#   import_schema => true,
+#   require => Mysql::Db['icinga2']
+# }
+#
 # === Authors
 #
 # Icinga Development Team <info@icinga.org>
@@ -82,10 +132,14 @@ class icinga2::feature::idomysql(
   $user                   = 'icinga',
   $password               = 'icinga',
   $database               = 'icinga',
-  $ssl                    = false,
+  $enable_ssl             = false,
+  $pki                    = 'puppet',
+  $ssl_key_path           = undef,
+  $ssl_cert_path          = undef,
+  $ssl_cacert_path        = undef,
   $ssl_key                = undef,
   $ssl_cert               = undef,
-  $ssl_ca                 = undef,
+  $ssl_cacert             = undef,
   $ssl_capath             = undef,
   $ssl_cipher             = undef,
   $table_prefix           = 'icinga_',
@@ -93,12 +147,14 @@ class icinga2::feature::idomysql(
   $instance_description   = undef,
   $enable_ha              = true,
   $failover_timeout       = '60s',
-  $cleanup                = {},
-  $categories             = [],
+  $cleanup                = undef,
+  $categories             = undef,
   $import_schema          = false,
 ) {
 
   include ::icinga2::params
+
+  require ::icinga2::config
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -108,13 +164,16 @@ class icinga2::feature::idomysql(
   validate_string($user)
   validate_string($password)
   validate_string($database)
+  validate_bool($enable_ssl)
+  validate_re($pki, [ '^puppet$', '^none$' ],
+    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
   validate_string($table_prefix)
   validate_string($instance_name)
   if $instance_description { validate_string($instance_description) }
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
-  validate_hash($cleanup)
-  validate_array($categories)
+  if $cleanup { validate_hash($cleanup) }
+  if $categories { validate_array($categories) }
   validate_bool($import_schema)
   if $ssl_capath { validate_absolute_path($ssl_capath) }
   if $ssl_cipher { validate_string($ssl_cipher) }
@@ -122,6 +181,9 @@ class icinga2::feature::idomysql(
   $owner     = $::icinga2::params::user
   $group     = $::icinga2::params::group
   $node_name = $::icinga2::_constants['NodeName']
+
+  $conf_dir  = $::icinga2::params::conf_dir
+
   $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
 
   File {
@@ -129,48 +191,104 @@ class icinga2::feature::idomysql(
     group   => $group,
   }
 
-  if $ssl {
-    validate_re($ssl, [ '^puppet$', '^custom$' ],
-      "${ssl} isn't supported. Valid values are 'puppet' and 'custom'.")
+  # Set defaults for certificate stuff and/or do validation
+  if $ssl_key_path {
+    validate_absolute_path($ssl_key_path)
+    $_ssl_key_path = $ssl_key_path }
+  else {
+    $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
+  if $ssl_cert_path {
+    validate_absolute_path($ssl_cert_path)
+    $_ssl_cert_path = $ssl_cert_path }
+  else {
+    $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
+  if $ssl_cacert_path {
+    validate_absolute_path($ssl_cacert_path)
+    $_ssl_cacert_path = $ssl_cacert_path }
+  else {
+    $_ssl_cacert_path = "${ssl_dir}/ca.crt" }
 
-    case $ssl {
+  if $enable_ssl {
+    $attrs_ssl = {
+      enable_ssl => $enable_ssl,
+      ssl_ca     => $_ssl_cacert_path,
+      ssl_cert   => $_ssl_cert_path,
+      ssl_key    => $_ssl_key_path,
+      ssl_capath => $ssl_capath,
+      ssl_cipher => $ssl_cipher,
+    }
+
+    file { $ssl_dir:
+      ensure => directory,
+    }
+
+    case $pki {
       'puppet': {
-        file { $ssl_dir:
-          ensure => directory,
-          before => Icinga2::Feature['ido-mysql']
-        }
-
-        file { "${ssl_dir}/${node_name}.key":
+        file { $_ssl_key_path:
           ensure => file,
           mode   => $::kernel ? {
             'windows' => undef,
             default   => '0600',
           },
-          source => $::settings::hostprivkey,
+          source => $::icinga2_puppet_hostprivkey,
           tag    => 'icinga2::config::file',
         }
 
-       file { "${ssl_dir}/${node_name}.crt":
-         ensure => file,
-         source => $::settings::hostcert,
-         tag    => 'icinga2::config::file',
-       }
+        file { $_ssl_cert_path:
+          ensure => file,
+          source => $::icinga2_puppet_hostcert,
+          tag    => 'icinga2::config::file',
+        }
 
-       file { "${ssl_dir}/ca.crt":
-         ensure => file,
-         source => $::settings::localcacert,
-         tag    => 'icinga2::config::file',
-       }
-      }
-      'custom': {
-        validate_absolute_path($ssl_ca)
-        validate_absolute_path($ssl_cert)
-        validate_absolute_path($ssl_key)
-      }
-      default: {
-        fail("SSL method ${ssl} is not supported.")
-      }
-    }
+        file { $_ssl_cacert_path:
+          ensure => file,
+          source => $::icinga2_puppet_localcacert,
+          tag    => 'icinga2::config::file',
+        }
+      } # puppet
+
+      'none': {
+        if $ssl_key {
+          file { $_ssl_key_path:
+            ensure => file,
+            mode   => $::kernel ? {
+              'windows' => undef,
+              default   => '0600',
+            },
+            content  => $::osfamily ? {
+              'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
+              default   => $ssl_key,
+            },
+            tag     => 'icinga2::config::file',
+          }
+        }
+
+        if $ssl_cert {
+          file { $_ssl_cert_path:
+            ensure  => file,
+            content  => $::osfamily ? {
+              'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
+              default   => $ssl_cert,
+            },
+            tag     => 'icinga2::config::file',
+          }
+        }
+
+        if $ssl_cacert {
+          file { $_ssl_cacert_path:
+            ensure  => file,
+            content  => $::osfamily ? {
+              'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
+              default   => $ssl_cacert,
+            },
+            tag     => 'icinga2::config::file',
+          }
+        }
+      } # none
+    } # pki
+  } # enable_ssl
+  else {
+    $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
   package { 'icinga2-ido-mysql':
@@ -185,6 +303,43 @@ class icinga2::feature::idomysql(
       unless  => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
       require => Package['icinga2-ido-mysql'],
     }
+  }
+
+  $attrs = {
+    host                  => $host,
+    port                  => $port,
+    socket_path           => $socket_path,
+    user                  => $user,
+    password              => $password,
+    database              => $database,
+    table_prefix          => $table_prefix,
+    instance_name         => $instance_name,
+    instance_description  => $instance_description,
+    enable_ha             => $enable_ha,
+    failover_timeout      => $failover_timeout,
+    cleanup               => $cleanup,
+    categories            => $categories,
+
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::IdoMysqlConnection::ido-mysql":
+    object_name => 'ido-mysql',
+    object_type => 'IdoMysqlConnection',
+    attrs       => merge($attrs, $attrs_ssl),
+    target      => "${conf_dir}/features-available/ido-mysql.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library
+  concat::fragment { 'icinga2::feature::ido-mysql':
+    target  => "${conf_dir}/features-available/ido-mysql.conf",
+    content => "library \"db_ido_mysql\"\n\n",
+    order   => '05',
   }
 
   icinga2::feature { 'ido-mysql':

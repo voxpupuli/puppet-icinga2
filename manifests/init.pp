@@ -54,7 +54,7 @@
 # Declare icinga2 with all defaults. Keep in mind that your operating system may not have Icinga2 in its package
 # repository.
 #
-#  include icinga2
+#  include ::icinga2
 #
 # If you want to use the official Icinga Project repository, enable the manage_repo parameter. Note: On Windows only
 # chocolatey is supported as installation source. The Icinga Project does not offer a chocolatey repository, therefore
@@ -76,8 +76,8 @@
 # you can use the icinga2::config::file tag on your file ressource. This module collects all file ressource types with
 # this tag and triggers a reload of Icinga2 on a file change.
 #
-#  include icinga2
-#  file { '/etc/icinga2/icinga2.conf':
+#  include ::icinga2
+#  file { '/etc/icinga2/conf.d/foo.conf':
 #    ensure => file,
 #    owner  => icinga,
 #    ...
@@ -172,5 +172,5 @@ class icinga2(
     subscribe => Class['::icinga2::config']
   }
 
-  include prefix($features, 'icinga2::feature::')
+  include prefix($features, '::icinga2::feature::')
 }

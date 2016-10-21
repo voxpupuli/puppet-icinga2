@@ -1,5 +1,36 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.5.0
+
+### Bugs
+Bug #12775: Api feature unit tests fail for windows
+Bug #12797: windows line-breaks for objects
+Bug #12809: Path of Puppet keys and certs broken
+Bug #12821: Unify windows unit tests
+Bug #12837: File permission on windows
+Bug #12857: Default owner of config dir
+Bug #12858: Doc example class icinga2
+Bug #12864: debian based system repo handling
+Bug #12865: Class scoping
+Bug #12867: Feature-statusdata-update-interval-default
+Bug #12872: Add Requires to basic config for features and objects that need additional packages
+
+### Features
+Feature #12367: Objects
+Feature #12368: Object ApiUser
+Feature #12375: Object Endpoint
+Feature #12388: Object Zone
+Feature #12754: features-with-objects
+Feature #12759: Extend api feature with endpoints and zones parameter
+Feature #12771: Add parameter ensure to objects
+Feature #12801: Adjust SSL settings for features
+Feature #12802: Usage documentation
+Feature #12804: Rework feature influxdb
+Feature #12805: Rework feature idomysql
+Feature #12806: Rework feature idopgsql
+Feature #12836: Write profile class examples
+Feature #12859: Doc example for creating IDO database
+
 ## v0.4.0
 
 ### Bugs

@@ -42,6 +42,7 @@ class icinga2::feature::livestatus(
   $compat_log_path = "${::icinga2::params::log_dir}/compat",
 ) inherits icinga2::params {
 
+  # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_re($socket_type, [ '^unix$', '^tcp$' ],
@@ -51,6 +52,36 @@ class icinga2::feature::livestatus(
   validate_absolute_path($socket_path)
   validate_absolute_path($compat_log_path)
 
+  # compose attributes
+  $attrs = {
+    socket_type     => $socket_type,
+    bind_host       => $bind_host,
+    bind_port       => $bind_port,
+    socket_path     => $socket_path,
+    compat_log_path => $compat_log_path,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::LivestatusListener::livestatus":
+    object_name => 'livestatus',
+    object_type => 'LivestatusListener',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/livestatus.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library 'livestatus'
+  concat::fragment { 'icinga2::feature::livestatus':
+    target  => "${conf_dir}/features-available/livestatus.conf",
+    content => "library \"livestatus\"\n\n",
+    order   => '05',
+  }
+
+  # manage feature
   icinga2::feature { 'livestatus':
     ensure => $ensure,
   }

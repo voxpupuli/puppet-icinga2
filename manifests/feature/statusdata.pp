@@ -19,7 +19,7 @@
 #
 # [*update_interval*]
 #   Interval in seconds to update both status files.
-#   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '30s'
+#   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '15s'
 #
 # === Authors
 #
@@ -29,15 +29,44 @@ class icinga2::feature::statusdata(
   $ensure          = present,
   $status_path     = "${::icinga2::params::cache_dir}/status.dat",
   $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
-  $update_interval = '30s',
+  $update_interval = '15s',
 ) inherits icinga2::params {
 
+  # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_absolute_path($status_path)
   validate_absolute_path($objects_path)
   validate_re($update_interval, '^\d+[ms]*$')
 
+  # compose attributes
+  $attrs = {
+    status_path     => $status_path,
+    objects_path    => $objects_path,
+    update_interval => $update_interval,
+  }
+
+  # create object
+  icinga2::object { "icinga2::object::StatusDataWriter::statusdata":
+    object_name => 'statusdata',
+    object_type => 'StatusDataWriter',
+    attrs       => $attrs,
+    target      => "${conf_dir}/features-available/statusdata.conf",
+    order       => '10',
+    notify      => $ensure ? {
+      'present' => Class['::icinga2::service'],
+      default   => undef,
+    },
+  }
+
+  # import library 'compat'
+  concat::fragment { 'icinga2::feature::statusdata':
+    target  => "${conf_dir}/features-available/statusdata.conf",
+    content => "library \"compat\"\n\n",
+    order   => '05',
+  }
+
+  # manage feature
   icinga2::feature { 'statusdata':
     ensure => $ensure,
   }
