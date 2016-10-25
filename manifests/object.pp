@@ -11,10 +11,21 @@
 #   Set the icinga2 name of the object. Defaults to title of the define resource.
 #
 # [*template*]
-#   Set to true will define a template otherwise an object. Defaults to false.
+#   Set to true will define a template otherwise an object.
+#   Ignored if apply is set. Defaults to false.
+#
+# [*apply*]
+#   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
 # [*import*]
 #   A sorted list of templates to import in this object. Defaults to an empty array.
+#
+# [*assign*]
+#   Array of assign rules.
+#
+# [*ignore*]
+#   Array of ignore rules.
 #
 # [*attrs*]
 #   Hash for the attributes of this object. Keys are the attributes and
@@ -38,7 +49,10 @@ define icinga2::object(
   $ensure      = present,
   $object_name = $title,
   $template    = false,
+  $apply       = false,
   $import      = [],
+  $assign      = [],
+  $ignore      = [],
   $attrs       = {},
   $object_type,
   $target,
@@ -73,11 +87,19 @@ define icinga2::object(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($object_name)
   validate_bool($template)
+  unless is_bool($apply) { validate_string($apply) }
   validate_array($import)
+  validate_array($assign)
+  validate_array($ignore)
   validate_hash($attrs)
   validate_string($object_type)
   validate_absolute_path($target)
   validate_string($order)
+
+  $_attrs = merge($attrs, {
+    'assign where' => $assign,
+    'ignore where' => $ignore,
+  })
 
   if !defined(Concat[$target]) {
     concat { $target:
