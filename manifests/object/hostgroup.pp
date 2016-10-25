@@ -31,28 +31,30 @@ define icinga2::object::hostgroup(
   $hostgroup_name = $title,
   $display_name   = undef,
   $groups         = undef,
-  $assign         = undef,
-  $ignore         = undef,
+  $assign         = [],
+  $ignore         = [],
   $order          = '25',
   $target,
 ) {
 
   # validation
   validate_string($hostgroup_name)
+  validate_array($assign)
+  validate_array($ignore)
   validate_string($order)
   validate_absolute_path($target)
 
   if $display_name { validate_string($display_name) }
   if $groups { validate_array($groups) }
-  if $assign { validate_array($assign) }
-  if $ignore { validate_array($ignore) }
+
+  if $ignore != [] and $assign == [] {
+    fail('When attribute ignore is used, assign must be set.')
+  }
 
   # compose the attributes
   $attrs = {
     display_name   => $display_name,
     groups         => $groups,
-    'assign where' => $assign,
-    'ignore where' => $ignore,
   }
 
   # create object
@@ -60,6 +62,8 @@ define icinga2::object::hostgroup(
     object_name => $hostgroup_name,
     object_type => 'HostGroup',
     attrs       => $attrs,
+    assign      => $assign,
+    ignore      => $ignore,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],
