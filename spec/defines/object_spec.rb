@@ -140,7 +140,7 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with ignore => [ NodeName != baz || host.display_name]" do
+    context "#{os} with ignore => [ NodeName != baz || !host.display_name]" do
       let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
@@ -321,11 +321,11 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with ignore => [ NodeName != baz]" do
-    let(:params) { {:ignore => ['NodeName != baz'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with ignore => [ NodeName != baz || !host.display_name ]" do
+    let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/ignore where NodeName != "baz"/) }
+      .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
   end
 
 
@@ -336,12 +336,13 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName] }" do
-    let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName'] }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42 }" do
+    let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
       .with_content(/key1 = 4247/)
       .with_content(/key2.key3 = 666\r\n\s*key2.key4 = 1m\r\n/)
-      .with_content(/key5 = \[ "STRING", NodeName, \]/) }
+      .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
+      .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/) }
   end
 end

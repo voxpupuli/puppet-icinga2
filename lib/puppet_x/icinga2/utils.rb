@@ -14,7 +14,7 @@ module Puppet
             if value.is_a?(Integer) || value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
               result = value
             else
-              if $constants.include?(value) || value =~ /^(host|service|user)\./ || value =~ /^{{.*}}$/
+              if $constants.include?(value) || value =~ /^!?(host|service|user)\./ || value =~ /^{{.*}}$/
                 result = value
               else
                 if value =~ /^(.+)\((.*)\)$/
@@ -69,7 +69,11 @@ module Puppet
           return result
         end
 
+        # globals (params.pp) and all keys of attrs hash itselfs must not quoted
         $constants = consts.concat(attrs.keys) << "name"
+        # also with added not operetor '!'
+        $constants += $constants.map {|x| "!#{x}"}
+
         return recurse(attrs)
       end
 
