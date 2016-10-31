@@ -8,7 +8,7 @@ module Puppet
       def self.attributes(attrs, consts)
 
         def self.types(value)
-          if value =~ /^(.+)\s([\+-]|==|!=|&&|\|{2})\s(.+)$/
+          if value =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2})\s(.+)$/
             result = "%s %s %s" % [ types($1), $2, types($3) ]
           else
             if value.is_a?(Integer) || value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value.is_a?(TrueClass) || value.is_a?(FalseClass)
@@ -19,6 +19,10 @@ module Puppet
               else
                 if value =~ /^(.+)\((.*)\)$/
                   result = "%s(%s)" % [ $1, $2.split(',').map {|x| types(x.lstrip)}.join(', ') ]
+                elsif value =~ /^\((.*)$/
+                  result = "(%s" % [ types($1) ]
+                elsif value =~ /^(.*)\)$/
+                  result = "%s)" % [ types($1) ]
                 else
                   result = "\"#{value}\""
                 end

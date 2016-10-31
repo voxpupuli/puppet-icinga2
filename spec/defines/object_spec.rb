@@ -155,14 +155,15 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42 }" do
-      let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }" do
+      let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
         .with_content(/key1 = 4247/)
         .with_content(/key2.key3 = 666\n\s*key2.key4 = 1m\n/)
         .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
-        .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/) }
+        .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/)
+        .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/) }
     end
   end
 
@@ -336,13 +337,14 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42 }" do
-    let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }" do
+    let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
       .with_content(/key1 = 4247/)
       .with_content(/key2.key3 = 666\r\n\s*key2.key4 = 1m\r\n/)
       .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
-      .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/) }
+      .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/)
+      .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/) }
   end
 end
