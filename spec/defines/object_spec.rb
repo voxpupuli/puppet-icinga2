@@ -19,7 +19,9 @@ describe('icinga2::object', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
         .with({'target' => '/bar/baz', 'order' => '10'})
-        .with_content(/object foo "bar"/) }
+        .with_content(/object foo "bar"/)
+        .without_content(/assign where/)
+        .without_content(/ignore where/) }
     end
 
 
@@ -83,6 +85,29 @@ describe('icinga2::object', :type => :define) do
     end
 
 
+    context "#{os} with apply => true" do
+      let(:params) { {:apply => true, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+        .with_content(/apply foo "bar"/) }
+    end
+
+
+    context "#{os} with apply => (foo => config in host.vars.bar)" do
+      let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+        .with_content(/apply for \(foo => config in host.vars.bar\)/) }
+    end
+
+
+    context "#{os} with apply => 4247 (not valid string or boolean)" do
+      let(:params) { {:apply => 4247, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with import => [bar, baz]" do
       let(:params) { {:import => ['bar', 'baz'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
@@ -96,6 +121,49 @@ describe('icinga2::object', :type => :define) do
       let(:params) { {:import => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    end
+
+
+    context "#{os} with assign => [ host.vars.os == bar && host.address, NodeName != baz || !host.address]" do
+      let(:params) { {:assign => ['host.vars.os == bar && host.address', 'NodeName != baz'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+        .with_content(/assign where host.vars.os == "bar" && host.address/)
+        .with_content(/assign where NodeName != "baz"/) }
+    end
+
+
+    context "#{os} with assign => foo (not a valid array)" do
+      let(:params) { {:assign => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    end
+
+
+    context "#{os} with ignore => [ NodeName != baz || !host.display_name]" do
+      let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+        .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
+    end
+
+
+    context "#{os} with ignore => foo (not a valid array)" do
+      let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    end
+
+
+    context "#{os} with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }" do
+      let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+        .with_content(/key1 = 4247/)
+        .with_content(/key2.key3 = 666\n\s*key2.key4 = 1m\n/)
+        .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
+        .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/)
+        .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/) }
     end
   end
 
@@ -132,8 +200,10 @@ describe('icinga2::object', :type => :define) do
     it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-                            .with({'target' => 'C:/bar/baz', 'order' => '10'})
-                            .with_content(/object foo "bar"/) }
+      .with({'target' => 'C:/bar/baz', 'order' => '10'})
+      .with_content(/object foo "bar"/)
+      .without_content(/assign where/)
+      .without_content(/ignore where/) }
   end
 
 
@@ -178,7 +248,7 @@ describe('icinga2::object', :type => :define) do
     let(:params) { {:template => true, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-                            .with_content(/template foo "bar"/) }
+      .with_content(/template foo "bar"/) }
   end
 
 
@@ -186,7 +256,7 @@ describe('icinga2::object', :type => :define) do
     let(:params) { {:template => false, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-                            .with_content(/object foo "bar"/) }
+      .with_content(/object foo "bar"/) }
   end
 
 
@@ -197,12 +267,35 @@ describe('icinga2::object', :type => :define) do
   end
 
 
+  context "Windows 2012 R2 with apply => true" do
+    let(:params) { {:apply => true, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      .with_content(/apply foo "bar"/) }
+  end
+
+
+  context "Windows 2012 R2 with apply => (foo => config in host.vars.bar)" do
+    let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      .with_content(/apply for \(foo => config in host.vars.bar\)/) }
+  end
+
+
+  context "Windows 2012 R2 with apply => 4247 (not valid string or boolean)" do
+    let(:params) { {:apply => 4247, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
   context "Windows 2012 R2 with import => [bar, baz]" do
     let(:params) { {:import => ['bar', 'baz'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-                            .with_content(/import "bar"/)
-                            .with_content(/import "baz"/) }
+      .with_content(/import "bar"/)
+      .with_content(/import "baz"/) }
   end
 
 
@@ -213,12 +306,45 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName] }" do
-    let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName'] }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with assign => [ host.vars.os== bar, NodeName != baz]" do
+    let(:params) { {:assign => ['host.vars.os == bar', 'NodeName != baz'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-                            .with_content(/key1 = 4247/)
-                            .with_content(/key2 = \{\r\n\s*key3 = 666\r\n\s*key4 = 1m\r\n\s*\}/)
-                            .with_content(/key5 = \[ "STRING", NodeName, \]/) }
+      .with_content(/assign where host.vars.os == "bar"/)
+      .with_content(/assign where NodeName != "baz"/) }
+  end
+
+
+  context "Windows 2012 R2 with assign => foo (not a valid array)" do
+    let(:params) { {:assign => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+  end
+
+
+  context "Windows 2012 R2 with ignore => [ NodeName != baz || !host.display_name ]" do
+    let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
+  end
+
+
+  context "Windows 2012 R2 with ignore => foo (not a valid array)" do
+    let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { key1 => 4247, key2 => {key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }" do
+    let(:params) { {:attrs => { 'key1' => '4247', 'key2' => {'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      .with_content(/key1 = 4247/)
+      .with_content(/key2.key3 = 666\r\n\s*key2.key4 = 1m\r\n/)
+      .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
+      .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/)
+      .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/) }
   end
 end
