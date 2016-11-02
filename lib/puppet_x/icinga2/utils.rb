@@ -43,7 +43,7 @@ module Puppet
                 end
               else
                 if value.is_a?(Hash)
-                  hashlevel = 0 if ['vars'].include?(attr)
+                  hashlevel = 0 if ['vars'].include?(attr) and prefix =~ /^\s*$/
                   result += case hashlevel
                     when 0 then recurse(value, indent, 1, "%s%s." % [ ' ' * indent, attr ])
                     when 1 then recurse(value, indent, hashlevel+1, "%s%s" % [ prefix, attr ])
