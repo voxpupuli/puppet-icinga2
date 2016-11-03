@@ -139,7 +139,7 @@ define icinga2::object::host(
   $icon_image_alt        = undef,
   $template              = false,
   $order                 = '30',
-  $target,
+  $target                = undef,
 ) {
 
   include ::icinga2::params
