@@ -99,15 +99,15 @@ define icinga2::object::user (
 
   # compose attributes
   $attrs = {
-    'display_name' => $display_name,
-    'email' => $email,
-    'pager' => $pager,
-    'vars' => $vars,
-    'groups' => $groups,
+    'display_name'         => $display_name,
+    'email'                => $email,
+    'pager'                => $pager,
+    'vars'                 => $vars,
+    'groups'               => $groups,
     'enable_notifications' => $enable_notifications,
-    'period' => $period,
-    'types' => $types,
-    'states' => $states,
+    'period'               => $period,
+    'types'                => $types,
+    'states'               => $states,
   }
 
   # create object
