@@ -96,7 +96,7 @@ define icinga2::object::notification (
   if $target {
     $_target = $target
   } else {
-    $_target = "${conf_dir}/repository.d/notifications.conf"
+    $_target = "${conf_dir}/conf.d/notifications.conf"
   }
 
   # validation
