@@ -34,15 +34,24 @@ define icinga2::object::hostgroup(
   $assign         = [],
   $ignore         = [],
   $order          = '25',
-  $target,
+  $target         = undef,
 ) {
+
+  # set defaults and validate
+  $conf_dir = $::icinga2::params::conf_dir
+  if $target {
+    validate_absolute_path($target)
+    $_target = $target }
+  else {
+    $_target = "${conf_dir}/zones.conf" }
+
 
   # validation
   validate_string($hostgroup_name)
   validate_array($assign)
   validate_array($ignore)
   validate_string($order)
-  validate_absolute_path($target)
+  validate_absolute_path($_target)
 
   if $display_name { validate_string($display_name) }
   if $groups { validate_array($groups) }
@@ -64,7 +73,7 @@ define icinga2::object::hostgroup(
     attrs       => $attrs,
     assign      => $assign,
     ignore      => $ignore,
-    target      => $target,
+    target      => $_target,
     order       => $order,
     notify      => Class['::icinga2::service'],
   }
