@@ -145,11 +145,15 @@ define icinga2::object::host(
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-
+  if $target {
+    validate_absolute_path($target)
+    $_target = $target }
+  else {
+    $_target = "${conf_dir}/conf.d/hosts.conf" }
   # validation
   validate_array($import)
   validate_bool($template)
-  validate_absolute_path($target)
+  validate_absolute_path($_target)
   validate_integer($order)
 
   if $hostname { validate_string($hostname) }
@@ -220,7 +224,7 @@ define icinga2::object::host(
     template    => $template,
     import      => $import,
     attrs       => $attrs,
-    target      => $target,
+    target      => $_target,
     order       => $order,
     notify      => Class['::icinga2::service'],
   }
