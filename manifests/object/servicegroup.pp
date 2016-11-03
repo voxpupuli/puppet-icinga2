@@ -45,7 +45,7 @@ define icinga2::object::servicegroup (
   if $target {
     $_target = $target
   } else {
-    $_target = "${conf_dir}/repository.d/servicegroup.conf"
+    $_target = "${conf_dir}/conf.d/servicegroup.conf"
   }
 
   # validation
