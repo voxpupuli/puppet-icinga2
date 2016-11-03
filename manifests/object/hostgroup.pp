@@ -42,7 +42,7 @@ define icinga2::object::hostgroup (
   if $target {
     $_target = $target
   } else {
-    $_target = "${conf_dir}/repository.d/hostgroups.conf"
+    $_target = "${conf_dir}/conf.d/hostgroups.conf"
   }
 
   # validation
