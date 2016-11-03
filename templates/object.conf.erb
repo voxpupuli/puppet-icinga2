@@ -1,5 +1,8 @@
 
-<% if @apply.is_a?(String) %>apply for (<%= @apply %>)
+<% if @apply.is_a?(String) %>apply <%= @object_type -%> <% if scope.lookupvar('icinga2::_constants').include?(@object_name) -%>
+ <%= @object_name -%>
+<% else -%>
+ "<%= @object_name %>"<% end %> to <%= @apply %> {
 <% else -%>
 <% if @apply %>apply<% else -%>
 <% if @template %>template<% else %>object<% end -%>
