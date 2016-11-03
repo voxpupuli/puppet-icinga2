@@ -45,7 +45,7 @@ define icinga2::object::usergroup (
   if $target {
     $_target = $target
   } else {
-    $_target = "${conf_dir}/repository.d/usergroups.conf"
+    $_target = "${conf_dir}/conf.d/usergroups.conf"
   }
 
   # validation
