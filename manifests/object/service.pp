@@ -159,7 +159,7 @@ define icinga2::object::service (
   if $target {
     $_target = $target
   } else {
-    $_target = "${conf_dir}/repository.d/services.conf"
+    $_target = "${conf_dir}/conf.d/services.conf"
   }
 
   # validation
