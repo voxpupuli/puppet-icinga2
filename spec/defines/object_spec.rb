@@ -155,16 +155,17 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with attrs => { key1 => 4247, vars => {key2 => {key21 => {key21a => 30s}}, key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }" do
-      let(:params) { {:attrs => { 'key1' => '4247', 'vars' => {'key2' => {'key21' => {'key21a' => '30s'}},'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with attrs => { key1 => 4247, vars => {key2 => {key21 => {key21a => [30s], key21b => {key21-1 => value21b1}}}, key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, [PluginDir + /foo]], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }, key8 => {key81 => value81}" do
+      let(:params) { {:attrs => { 'key1' => '4247', 'vars' => {'key2' => {'key21' => {'key21a' => ['30s'], 'key21b' => {'key21-1' => 'value21b1'}}},'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', ['PluginDir + /foo']], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1', 'key8' => {'key81' => 'value81'}}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
         .with_content(/key1 = 4247/)
         .with_content(/vars.key3 = 666\n\s*vars.key4 = 1m\n/)
-        .with_content(/vars.key2\["key21"] = {\n\s*key21a = 30s\n\s*}/)
-        .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
+        .with_content(/vars.key2\["key21"\] = {\n\s*key21a = \[ 30s, \]\n\s*key21b = \{\n\s*"key21-1" = "value21b1"\n\s*}\n\s*}/)
+        .with_content(/key5 = \[ "STRING", NodeName, \[ PluginDir \+ "\/foo", \], \]/)
         .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/)
-        .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/) }
+        .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/)
+        .with_content(/key8 = {\n\s*key81 = "value81"\n\s*\}/) }
     end
   end
 
@@ -338,15 +339,16 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with attrs => { key1 => 4247, vars => {key2 => {key21 => {key21a => 30s}}, key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, PluginDir + /foo], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }" do
-    let(:params) { {:attrs => { 'key1' => '4247', 'vars' => {'key2' => {'key21' => { 'key21a' => '30s'}}, 'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', 'PluginDir + /foo'], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with attrs => { key1 => 4247, vars => {key2 => {key21 => {key21a => [30s], key21b => {key21-1 => value21b1}}}, key3 => 666, key4 => 1m}, key5 => [STRING, NodeName, [PluginDir + /foo]], key6 => 4247 - len(NodeName, foo,666) + 42, key7 => 42 / 2 * ((666 - 4247) * 3) + 1 }, key8 => {key81 => value81}" do
+    let(:params) { {:attrs => { 'key1' => '4247', 'vars' => {'key2' => {'key21' => {'key21a' => ['30s'], 'key21b' => {'key21-1' => 'value21b1'}}},'key3' => 666, 'key4' => '1m'}, 'key5' => ['STRING', 'NodeName', ['PluginDir + /foo']], 'key6' => '4247 - len(NodeName, foo,666) + 42', 'key7' => '42 / 2 * ((666 - 4247) * 3) + 1', 'key8' => {'key81' => 'value81'} }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
       .with_content(/key1 = 4247/)
       .with_content(/vars.key3 = 666\r\n\s*vars.key4 = 1m\r\n/)
-      .with_content(/vars.key2\["key21"] = {\r\n\s*key21a = 30s\r\n\s*}/)
-      .with_content(/key5 = \[ "STRING", NodeName, PluginDir \+ "\/foo", \]/)
+      .with_content(/vars.key2\["key21"\] = {\r\n\s*key21a = \[ 30s, \]\r\n\s*key21b = \{\r\n\s*"key21-1" = "value21b1"\r\n\s*}\r\n\s*}/)
+      .with_content(/key5 = \[ "STRING", NodeName, \[ PluginDir \+ "\/foo", \], \]/)
       .with_content(/key6 = 4247 - len\(NodeName, "foo", 666\) \+ 42/)
-      .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/) }
+      .with_content(/key7 = 42 \/ 2 \* \(\(666 - 4247\) \* 3\) \+ 1/)
+      .with_content(/key8 = {\r\n\s*key81 = "value81"\r\n\s*\}/) }
   end
 end
