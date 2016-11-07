@@ -299,6 +299,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::zone](#defined-type-icinga2objectzone)
     - [Defined type: icinga2::object::apiuser](#defined-type-icinga2objectapiuser)
     - [Defined type: icinga2::object::checkcommand](#defined-type-icinga2objectcheckcommand)
+    - [Defined type: icinga2::object::host](#defined-type-icinga2objecthost)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -960,7 +961,7 @@ Sorted List of templates to include. Defaults to an empty list.
 
 ##### `command`
 The command. This can either be an array of individual command arguments. Alternatively a string can be specified in
-which case the shell interpreter (usually /bin/sh) takes care of parsing the command. When using the "arguments"
+which case the shell interpreter (usually /bin/sh) takes care of parsing the command. When using the `arguments`
 attribute this must be an array. Can be specified as function for advanced implementations.
 
 ##### `env`
@@ -970,7 +971,7 @@ A dictionary of macros which should be exported as environment variables prior t
 A dictionary containing custom attributes that are specific to this command.
 
 ##### `timeout`
-The command timeout in seconds. Defaults to 60 seconds.
+The command timeout in seconds. Defaults to `60` seconds.
 
 ##### `arguments`
 A dictionary of command arguments.
@@ -980,8 +981,105 @@ Destination config file to store in this object. File will be declared the
 first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+String to set the position in the target file, sorted alpha numeric. Defaults to `10`
 
+#### Defined type: `icinga2::object::host`
+
+##### `hostname`
+Hostname of the Host object.
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `disply_name`
+A short description of the host (e.g. displayed by external interfaces instead of the name if set).
+
+##### `address`
+The host's address v4.
+
+##### `address6`
+The host's address v6.
+
+##### `vars`
+A dictionary containing custom attributes that are specific to this host.
+
+##### `groups`
+A list of host groups this host belongs to.
+
+##### `check_command`
+The name of the check command.
+
+##### `max_check_attempts`
+The number of times a host is re-checked before changing into a hard state. Defaults to `3`
+
+##### `check_period`
+The name of a time period which determines when this host should be checked. Not set by default.
+
+##### `check_timeout`
+Check command timeout in seconds. Overrides the CheckCommand's timeout attribute.
+
+##### `check_interval`
+The check interval (in seconds). This interval is used for checks when the host is in a HARD state. Defaults to `5` minutes.
+
+##### `retry_interval`
+The retry interval (in seconds). This interval is used for checks when the host is in a SOFT state. Defaults to `1` minute.
+
+##### `enable_notifications`
+Whether notifications are enabled. Defaults to `true`
+
+##### `enable_active_checks`
+Whether active checks are enabled. Defaults to `true`
+
+##### `enable_passive_checks`
+Whether passive checks are enabled. Defaults to `true`
+
+##### `enable_event_handle`
+Enables event handlers for this host. Defaults to `true`
+
+##### `enable_flapping`
+Whether flap detection is enabled. Defaults to `false`
+
+##### `enable_perfdata`
+Whether performance data processing is enabled. Defaults to `true`
+
+##### `event_command`
+The name of an event command that should be executed every time the host's state changes or the host is in a SOFT state.
+
+##### `flapping_threshold`
+The flapping threshold in percent when a host is considered to be flapping.
+
+##### `volatile`
+The volatile setting enables always HARD state types if NOT-OK state changes occur.
+
+##### `zone`
+The zone this object is a member of.
+
+##### `command_endpoint`
+The endpoint where commands are executed on.
+
+##### `notes`
+Notes for the host.
+
+##### `notes_url`
+Url for notes for the host (for example, in notification commands).
+
+##### `action_url`
+Url for actions for the host (for example, an external graphing tool).
+
+##### `icon_image`
+Icon image for the host. Used by external interfaces only.
+
+##### `icon_image_alt`
+Icon image description for the host. Used by external interface only.
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `10`
 
 ### Private defined types
 
