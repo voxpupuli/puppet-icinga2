@@ -298,6 +298,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::endpoint](#defined-type-icinga2objectendpoint)
     - [Defined type: icinga2::object::zone](#defined-type-icinga2objectzone)
     - [Defined type: icinga2::object::apiuser](#defined-type-icinga2objectapiuser)
+    - [Defined type: icinga2::object::checkcommand](#defined-type-icinga2objectcheckcommand)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -863,7 +864,7 @@ Starts/stops and enables/disables the service.
 #### Defined type: `icinga2::object::endpoint`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disabled it. Defaults to present.
+Set to present enables the endpoint object, absent disables it. Defaults to present.
 
 ##### `endpoint`
 Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
@@ -888,7 +889,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::zone`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disabled it. Defaults to `present`
+Set to present enables the zone object, absent disables it. Defaults to `present`
 
 ##### `zone`
 Set the name of the zone object. Defaults to the title of the define resource.
@@ -948,6 +949,39 @@ permissions = [
    }
  ]
 ``` 
+
+#### Defined type: `icinga2::object::checkcommand`
+
+##### `checkcommand`
+Title of the CheckCommand object.
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `command`
+The command. This can either be an array of individual command arguments. Alternatively a string can be specified in
+which case the shell interpreter (usually /bin/sh) takes care of parsing the command. When using the "arguments"
+attribute this must be an array. Can be specified as function for advanced implementations.
+
+##### `env`
+A dictionary of macros which should be exported as environment variables prior to executing the command.
+
+##### `vars`
+A dictionary containing custom attributes that are specific to this command.
+
+##### `timeout`
+The command timeout in seconds. Defaults to 60 seconds.
+
+##### `arguments`
+A dictionary of command arguments.
+
+##### `target`
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+
 
 ### Private defined types
 
