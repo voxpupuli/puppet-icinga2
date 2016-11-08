@@ -73,16 +73,11 @@ define icinga2::object::user (
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  if $target {
-    $_target = $target
-  } else {
-    $_target = "${conf_dir}/repository.d/users.conf"
-  }
 
   # validation
   validate_array($import)
   validate_bool($template)
-  validate_absolute_path($_target)
+  validate_absolute_path($target)
   validate_string($order)
 
   if $display_name { validate_string ($display_name) }
@@ -118,7 +113,7 @@ define icinga2::object::user (
     template    => $template,
     import      => $import,
     attrs       => $attrs,
-    target      => $_target,
+    target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],
   }
