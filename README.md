@@ -301,6 +301,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::checkcommand](#defined-type-icinga2objectcheckcommand)
     - [Defined type: icinga2::object::host](#defined-type-icinga2objecthost)
     - [Defined type: icinga2::object::hostgroup](#defined-type-icinga2objecthostgroup)
+    - [Defined type: icinga2::object::dependency](#defined-type-icinga2objectdependency)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1098,6 +1099,50 @@ Destination config file to store in this object. File will be declared at the fi
 
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+
+#### Defined type: `icinga2::object::dependency`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disabled it. Defaults to `present`
+
+##### `parent_host_name`
+The parent host.
+
+##### `parent_service_name`
+The parent service. If omitted, this dependency object is treated as host dependency.
+
+##### `child_host_name`
+The child host.
+
+##### `child_service_name`
+The child service. If omitted, this dependency object is treated as host dependency.
+
+##### `disable_checks`
+Whether to disable checks when this dependency fails. Defaults to `false`
+
+##### `disable_notifications`
+Whether to disable notifications when this dependency fails. Defaults to `true`
+
+##### `ignore_soft_states`
+Whether to ignore soft states for the reachability calculation. Defaults to `true`
+
+##### `period`
+Time period during which this dependency is enabled.
+
+##### `states`
+A list of state filters when this dependency should be OK. Defaults to [ OK, Warning ] for services and [ Up ] for hosts.
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `35`
 
 ### Private defined types
 
