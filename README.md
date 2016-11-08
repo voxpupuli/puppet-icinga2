@@ -302,6 +302,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::host](#defined-type-icinga2objecthost)
     - [Defined type: icinga2::object::hostgroup](#defined-type-icinga2objecthostgroup)
     - [Defined type: icinga2::object::dependency](#defined-type-icinga2objectdependency)
+    - [Defined type: icinga2::object::timeperiod](#defined-type-icinga2objecttimeperiod)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1143,6 +1144,42 @@ Destination config file to store in this object. File will be declared the first
 
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. Defaults to `35`
+
+#### Defined type: `icinga2::object::timeperiod`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disabled it. Defaults to `present`
+
+##### `display_name`
+A short description of the time period.
+
+##### `update`
+The "update" script method takes care of updating the internal representation of the time period. In virtually all cases
+you should import the "legacy-timeperiod" template to take care of this setting.
+
+##### `ranges`
+A dictionary containing information which days and durations apply to this timeperiod.
+
+##### `prefer_includes`
+Boolean whether to prefer timeperiods includes or excludes. Default to `true`
+
+##### `excludes`
+An array of timeperiods, which should exclude from your timerange.
+
+##### `includes`
+An array of timeperiods, which should include into your timerange
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `target`
+Destination config file to store in this object. File will be declared at the first time.
+
+##### `order`
+String to control the position in the target file, sorted alpha numeric.
 
 ### Private defined types
 
