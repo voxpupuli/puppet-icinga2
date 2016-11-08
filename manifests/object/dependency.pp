@@ -79,7 +79,7 @@ define icinga2::object::dependency (
   # validation
   validate_array($import)
   validate_bool($template)
-  validate_absolute_path($_target)
+  validate_absolute_path($target)
   validate_string($order)
 
   validate_string ( $parent_host_name )
@@ -113,7 +113,7 @@ define icinga2::object::dependency (
     import      => $import,
     template    => $template,
     attrs       => $attrs,
-    target      => $_target,
+    target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],
   }
