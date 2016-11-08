@@ -75,7 +75,7 @@ define icinga2::object::notificationcommand (
   if $env { validate_hash ($env) }
   if $vars { validate_hash ($vars) }
   if $timeout { validate_integer ($timeout) }
-  if $arguments { validate_array ($arguments) }
+  if $arguments { validate_hash ($arguments) }
 
   # compose attributes
   $attrs = {
