@@ -75,11 +75,6 @@ define icinga2::object::dependency (
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  if $target {
-    $_target = $target
-  } else {
-    $_target = "${conf_dir}/repository.d/dependencies.conf"
-  }
 
   # validation
   validate_array($import)
