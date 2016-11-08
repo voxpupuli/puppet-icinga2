@@ -305,6 +305,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::timeperiod](#defined-type-icinga2objecttimeperiod)
     - [Defined type: icinga2::object::usergroup](#defined-type-icinga2objectusergroup)
     - [Defined type: icinga2::object::notificationcommand](#defined-type-icinga2objectnotificationcommand)
+    - [Defined type: icinga2::object::notification](#defined-type-icinga2objectnotification)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1280,6 +1281,61 @@ The command timeout in seconds. Defaults to `60` seconds.
 
 ##### `arguments`
 A dictionary of command arguments.
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+
+#### Defined type: `icinga2::object::notification`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disables it. Defaults to `present`
+
+##### `host_name`
+The name of the host this notification belongs to.
+
+##### `service_name`
+The short name of the service this notification belongs to. If omitted, this notification object is treated as host
+notification.
+
+##### `vars`
+A dictionary containing custom attributes that are specific to this notification object.
+
+##### `users`
+A list of user names who should be notified.
+
+##### `user_groups`
+A list of user group names who should be notified.
+
+##### `times`
+A dictionary containing begin and end attributes for the notification.
+
+##### `command`
+The name of the notification command which should be executed when the notification is triggered.
+
+##### `interval`
+The notification interval (in seconds). This interval is used for active notifications. Defaults to `30` minutes. If set
+to 0, re-notifications are disabled.
+
+##### `period`
+The name of a time period which determines when this notification should be triggered. Not set by default.
+
+##### `zone`
+The zone this object is a member of.
+
+##### `types`
+A list of type filters when this notification should be triggered. By default everything is matched.
+
+##### `states`
+A list of state filters when this notification should be triggered. By default everything is matched.
 
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
