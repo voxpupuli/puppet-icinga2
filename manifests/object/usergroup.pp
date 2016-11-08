@@ -40,8 +40,8 @@ define icinga2::object::usergroup (
   $ensure       = 'present',
   $display_name = $title,
   $groups       = [],
-  $assign         = [],
-  $ignore         = [],
+  $assign       = [],
+  $ignore       = [],
   $import       = [],
   $template     = false,
   $target       = undef,
@@ -60,6 +60,10 @@ define icinga2::object::usergroup (
   if $display_name { validate_string ($display_name) }
   if $groups { validate_array ($groups) }
 
+  if $ignore != [] and $assign == [] {
+    fail('When attribute ignore is used, assign must be set.')
+  }
+
   # compose attributes
   $attrs = {
     'display_name'  => $display_name,
@@ -67,10 +71,10 @@ define icinga2::object::usergroup (
   }
 
   # create object
-  icinga2::object { "icinga2::object::UserGroup::${title}":
+  icinga2::object { "icinga2::object::Usergroup::${title}":
     ensure      => $ensure,
     object_name => $name,
-    object_type => 'UserGroup',
+    object_type => 'Usergroup',
     import      => $import,
     template    => $template,
     attrs       => $attrs,
