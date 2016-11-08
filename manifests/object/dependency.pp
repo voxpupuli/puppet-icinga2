@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disabled it. Defaults to present.
+#   Set to present enables the endpoint object, absent disables it. Defaults to present.
 #
 # [*parent_host_name*]
 #   The parent host.
@@ -50,7 +50,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String to set the position in the target file, sorted alpha numeric. Defaults to 35.
 #
 # === Authors
 #
@@ -70,16 +70,11 @@ define icinga2::object::dependency (
   $import                 = [],
   $template               = false,
   $target                 = undef,
-  $order                  = '10',
+  $order                  = '35',
 ){
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  if $target {
-    $_target = $target
-  } else {
-    $_target = "${conf_dir}/repository.d/dependencies.conf"
-  }
 
   # validation
   validate_array($import)
