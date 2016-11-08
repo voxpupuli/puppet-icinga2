@@ -303,6 +303,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::hostgroup](#defined-type-icinga2objecthostgroup)
     - [Defined type: icinga2::object::dependency](#defined-type-icinga2objectdependency)
     - [Defined type: icinga2::object::timeperiod](#defined-type-icinga2objecttimeperiod)
+    - [Defined type: icinga2::object::usergroup](#defined-type-icinga2objectusergroup)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1180,6 +1181,36 @@ Destination config file to store in this object. File will be declared at the fi
 
 ##### `order`
 String to control the position in the target file, sorted alpha numeric.
+
+#### Defined type: `icinga2::object::usergroup`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disables it. Defaults to `present`
+
+##### `display_name`
+A short description of the service group.
+
+##### `groups`
+An array of nested group names.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+
 
 ### Private defined types
 
