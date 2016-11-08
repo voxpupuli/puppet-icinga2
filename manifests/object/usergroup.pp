@@ -5,13 +5,19 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disabled it. Defaults to present.
+#   Set to present enables the endpoint object, absent disables it. Defaults to present.
 #
 # [*display_name*]
 #   A short description of the service group.
 #
 # [*groups*]
 #   An array of nested group names.
+#
+# [*assign*]
+#   Assign user group members using the group assign rules.
+#
+# [*ignore*]
+#   Exclude users using the group ignore rules.
 #
 # [*template*]
 #   Set to true creates a template instead of an object. Defaults to false.
@@ -34,6 +40,8 @@ define icinga2::object::usergroup (
   $ensure       = 'present',
   $display_name = $title,
   $groups       = [],
+  $assign         = [],
+  $ignore         = [],
   $import       = [],
   $template     = false,
   $target       = undef,
@@ -71,6 +79,8 @@ define icinga2::object::usergroup (
     import      => $import,
     template    => $template,
     attrs       => $attrs,
+    assign      => $assign,
+    ignore      => $ignore,
     target      => $_target,
     order       => $order,
     notify      => Class['::icinga2::service'],
