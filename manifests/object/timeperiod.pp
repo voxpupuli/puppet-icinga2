@@ -62,11 +62,11 @@ define icinga2::object::timeperiod (
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  
+
   # validation
   validate_array($import)
   validate_bool($template)
-  validate_absolute_path($_target)
+  validate_absolute_path($target)
   validate_string($order)
 
 
