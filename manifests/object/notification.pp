@@ -115,6 +115,10 @@ define icinga2::object::notification (
   if $assign { validate_array ($assign) }
   if $ignore { validate_array ($ignore) }
 
+  if $ignore != [] and $assign == [] {
+    fail('When attribute ignore is used, assign must be set.')
+  }
+
   # compose attributes
   $attrs = {
     'host_name' => $host_name,
