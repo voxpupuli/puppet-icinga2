@@ -93,16 +93,11 @@ define icinga2::object::notification (
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  if $target {
-    $_target = $target
-  } else {
-    $_target = "${conf_dir}/conf.d/notifications.conf"
-  }
 
   # validation
   validate_array($import)
   validate_bool($template)
-  validate_absolute_path($_target)
+  validate_absolute_path($target)
   validate_string($order)
 
   validate_string ($host_name)
@@ -144,7 +139,7 @@ define icinga2::object::notification (
     import      => $import,
     template    => $template,
     attrs       => $attrs,
-    target      => $_target,
+    target      => $target,
     order       => $order,
     apply       => $apply,
     assign      => $assign,
