@@ -62,11 +62,7 @@ define icinga2::object::timeperiod (
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  if $target {
-    $_target = $target
-  } else {
-    $_target = "${conf_dir}/repository.d/timeperiods.conf"
-  }
+  
   # validation
   validate_array($import)
   validate_bool($template)
