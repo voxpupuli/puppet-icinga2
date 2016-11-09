@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disabled it. Defaults to present.
+#   Set to present enables the endpoint object, absent disables it. Defaults to present.
 #
 # [*display_name*]
 #   A short description of the service.
@@ -156,16 +156,11 @@ define icinga2::object::service (
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
-  if $target {
-    $_target = $target
-  } else {
-    $_target = "${conf_dir}/conf.d/services.conf"
-  }
 
   # validation
   validate_array($import)
   validate_bool($template)
-  validate_absolute_path($_target)
+  validate_absolute_path($target)
   validate_string($order)
 
   validate_string (name)
@@ -239,7 +234,7 @@ define icinga2::object::service (
     ignore      => $ignore,
     template    => $template,
     attrs       => $attrs,
-    target      => $_target,
+    target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],
   }
