@@ -40,13 +40,13 @@ define icinga2::object::compatlogger (
 
   if $log_dir { validate_absolute_path($log_dir) }
   if $rotation_method {
-    validate_re($ensure, [ '^HOURLY$', '^DAILY$', '^WEEKLY$', '^MONTHLY$' ],
-      "${ensure} isn't supported. Valid values are 'HOURLY', 'DAILY', 'WEEKLY' and 'MONTHLY'.")
+    validate_re($rotation_method, [ '^HOURLY$', '^DAILY$', '^WEEKLY$', '^MONTHLY$' ],
+      "${rotation_method} isn't supported. Valid values are 'HOURLY', 'DAILY', 'WEEKLY' and 'MONTHLY'.")
   }
 
   # compose the attributes
   $attrs = {
-    'spool_dir'       => $spool_dir,
+    'log_dir'         => $log_dir,
     'rotation_method' => $rotation_method,
   }
 
@@ -62,7 +62,7 @@ define icinga2::object::compatlogger (
   }
 
   # import library
-  concat::fragment { "icinga2::object::CheckResultReader::${title}-library":
+  concat::fragment { "icinga2::object::CompatLogger::${title}-library":
     target  => $target,
     content => "library \"compat\"\n\n",
     order   => '05',
