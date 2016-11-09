@@ -308,6 +308,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::notification](#defined-type-icinga2objectnotification)
     - [Defined type: icinga2::object::service](#defined-type-icinga2objectservice)
     - [Defined type: icinga2::object::servicegroup](#defined-type-icinga2objectservicegroup)
+    - [Defined type: icinga2::object::downtime](#defined-type-icinga2objectdowntime)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1468,6 +1469,47 @@ Set to true creates a template instead of an object. Defaults to `false`
 
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+
+#### Defined type: `icinga2::object::downtime`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disables it. Defaults to `present`
+
+##### `host_name`
+Required. The name of the host this comment belongs to.
+
+##### `service_name`
+Optional. The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+
+##### `author`
+Required. The author's name.
+
+##### `comment`
+Required. The comment text.
+
+##### `start_time`
+Required. The start time as unix timestamp.
+
+##### `end_time`
+Required. The end time as unix timestamp.
+
+##### `duration`
+Required. The duration as number.
+
+##### `entry_time`
+Optional. The unix timestamp when this downtime was added.
+
+##### `fixed`
+Optional. Whether the downtime is fixed (true) or flexible (false). Defaults to flexible. Details in the advanced topics chapter.
+
+##### `triggers`
+Optional. List of downtimes which should be triggered by this downtime.
 
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
