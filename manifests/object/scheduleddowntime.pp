@@ -61,13 +61,13 @@ define icinga2::object::scheduleddowntime (
   validate_absolute_path($target)
   validate_integer ( $order )
 
-  validate_string($host_name)
+  if $host_name { validate_string($host_name) }
   if $service_name { validate_string ($service_name) }
-  validate_string($author)
-  validate_string($comment)
+  if $author { validate_string($author) }
+  if $comment { validate_string($comment) }
   if $fixed { validate_bool($fixed) }
   if $duration { validate_integer($duration) }
-  validate_hash($ranges)
+  if $ranges { validate_hash($ranges) }
 
   # compose attributes
   $attrs = {
