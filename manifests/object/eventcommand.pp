@@ -81,7 +81,6 @@ define icinga2::object::eventcommand (
     ensure      => $ensure,
     object_name => $name,
     object_type => 'EventCommand',
-    template    => $template,
     import      => $import,
     attrs       => $attrs,
     target      => $target,
