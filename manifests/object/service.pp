@@ -163,17 +163,17 @@ define icinga2::object::service (
   validate_absolute_path($target)
   validate_string($order)
 
-  validate_string (name)
+  validate_string ($name)
   if $display_name { validate_string ($display_name) }
   if $host_name { validate_string ($host_name) }
   if $groups { validate_array ($groups) }
   if $vars { validate_hash ($vars) }
-  validate_string (check_command)
-  if $max_check_attempts { validate_int ($max_check_attempts) }
-  if $check_period { validate_int ($check_period) }
-  if $check_timeout { validate_int ($check_timeout) }
-  if $check_interval { validate_int ($check_interval) }
-  if $retry_interval { validate_int ($retry_interval) }
+  validate_string ($check_command)
+  if $max_check_attempts { validate_integer ($max_check_attempts) }
+  if $check_period { validate_integer ($check_period) }
+  if $check_timeout { validate_integer ($check_timeout) }
+  if $check_interval { validate_integer ($check_interval) }
+  if $retry_interval { validate_integer ($retry_interval) }
   if $enable_notifications { validate_bool ($enable_notifications) }
   if $enable_active_checks { validate_bool ($enable_active_checks) }
   if $enable_passive_checks { validate_bool ($enable_passive_checks) }
@@ -181,7 +181,7 @@ define icinga2::object::service (
   if $enable_flapping { validate_bool ($enable_flapping) }
   if $enable_perfdata { validate_bool ($enable_perfdata) }
   if $event_command { validate_string ($event_command) }
-  if $flapping_threshold { validate_int ($flapping_threshold) }
+  if $flapping_threshold { validate_integer ($flapping_threshold) }
   if $volatile { validate_bool ($volatile) }
   if $zone { validate_string ($zone) }
   if $command_endpoint { validate_string ($command_endpoint) }
@@ -189,7 +189,7 @@ define icinga2::object::service (
   if $notes_url { validate_string ($notes_url) }
   if $action_url { validate_string ($action_url) }
   if $icon_image { validate_absolute_path ($icon_image) }
-  if $icon_image_alt { validate_absolute_path ($icon_image_alt) }
+  if $icon_image_alt { validate_string ($icon_image_alt) }
 
 
   # compose the attributes
