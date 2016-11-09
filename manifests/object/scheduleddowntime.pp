@@ -66,7 +66,7 @@ define icinga2::object::scheduleddowntime (
   validate_string($author)
   validate_string($comment)
   if $fixed { validate_bool($fixed) }
-  validate_integer($duration)
+  if $duration { validate_integer($duration) }
   validate_hash($ranges)
 
   # compose attributes
@@ -75,12 +75,9 @@ define icinga2::object::scheduleddowntime (
     'service_name' => $service_name,
     'author'       => $author,
     'comment'      => $comment,
-    'start_time'   => $start_time,
-    'end_time'     => $end_time,
-    'duration'     => $duration,
-    'entry_time'   => $entry_time,
     'fixed'        => $fixed,
-    'triggers'     => $triggers,
+    'duration'     => $duration,
+    'ranges'       => $ranges,
   }
 
   # create object
@@ -88,8 +85,6 @@ define icinga2::object::scheduleddowntime (
     ensure      => $ensure,
     object_name => $name,
     object_type => 'ScheduledDowntime',
-    template    => $template,
-    import      => $import,
     attrs       => $attrs,
     target      => $target,
     order       => $order,
