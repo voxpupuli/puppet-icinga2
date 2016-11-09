@@ -306,6 +306,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::usergroup](#defined-type-icinga2objectusergroup)
     - [Defined type: icinga2::object::notificationcommand](#defined-type-icinga2objectnotificationcommand)
     - [Defined type: icinga2::object::notification](#defined-type-icinga2objectnotification)
+    - [Defined type: icinga2::object::service](#defined-type-icinga2objectservice)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1336,6 +1337,107 @@ A list of type filters when this notification should be triggered. By default ev
 
 ##### `states`
 A list of state filters when this notification should be triggered. By default everything is matched.
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+
+#### Defined type: `icinga2::object::service`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disables it. Defaults to `present`
+
+##### `display_name`
+A short description of the service.
+
+##### `host_name`
+The host this service belongs to. There must be a Host object with that name.
+
+##### `name`
+The service name. Must be unique on a per-host basis (Similar to the service_description attribute in Icinga 1.x).
+
+##### `groups`
+The service groups this service belongs to.
+
+##### `vars`
+A dictionary containing custom attributes that are specific to this service.
+
+##### `check_command`
+The name of the check command.
+
+##### `max_check_attempts`
+The number of times a service is re-checked before changing into a hard state. Defaults to `3`
+
+##### `check_period`
+The name of a time period which determines when this service should be checked. Not set by default.
+
+##### `check_timeout`
+Check command timeout in seconds. Overrides the CheckCommand's timeout attribute.
+
+##### `check_interval`
+The check interval (in seconds). This interval is used for checks when the service is in a HARD state.
+Defaults to `5` minutes.
+
+##### `retry_interval`
+The retry interval (in seconds). This interval is used for checks when the service is in a SOFT state.
+Defaults to `1 minute.
+
+##### `enable_notifications`
+Whether notifications are enabled. Defaults to `true`
+
+##### `enable_active_checks`
+Whether active checks are enabled. Defaults to `true`
+
+##### `enable_passive_checks`
+Whether passive checks are enabled. Defaults to `true`
+
+##### `enable_event_handler`
+Enables event handlers for this host. Defaults to `true`
+
+##### `enable_flapping`
+Whether flap detection is enabled. Defaults to `false`
+
+##### `enable_perfdata`
+Whether performance data processing is enabled. Defaults to `true`
+
+##### `event_command`
+The name of an event command that should be executed every time the service's state changes or the service is in a SOFT
+state.
+
+##### `flapping_threshold`
+The flapping threshold in percent when a service is considered to be flapping.
+
+##### `volatile`
+The volatile setting enables always HARD state types if NOT-OK state changes occur.
+
+##### `zone`
+The zone this object is a member of.
+
+##### `command_endpoint`
+The endpoint where commands are executed on.
+
+##### `notes`
+Notes for the service.
+
+##### `notes_url`
+Url for notes for the service (for example, in notification commands).
+
+##### `action_url`
+Url for actions for the service (for example, an external graphing tool).
+
+##### `icon_image`
+Icon image for the service. Used by external interfaces only.
+
+##### `icon_image_alt`
+Icon image description for the service. Used by external interface only.
 
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
