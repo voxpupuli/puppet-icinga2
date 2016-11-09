@@ -20,7 +20,7 @@
 #     The comment text.
 #
 # [*fixed*]
-#     Whether the downtime is fixed (true) or flexible (false). Defaults to flexible. Details in the advanced topics chapter.
+#     Whether this is a fixed downtime. Defaults to true.
 #
 # [*duration*]
 #     The duration as number.
