@@ -8,34 +8,34 @@
 #   Set to present enables the endpoint object, absent disables it. Defaults to present.
 # 
 # [*host_name*]
-#     Required. The name of the host this comment belongs to.
+#     The name of the host this comment belongs to.
 #
 # [*service_name*]
-#     Optional. The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+#     The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
 #
 # [*author*]
-#     Required. The author's name.
+#     The author's name.
 #
 # [*comment*]
-#     Required. The comment text.
+#     The comment text.
 #
 # [*start_time*]
-#     Required. The start time as unix timestamp.
+#     The start time as unix timestamp.
 #
 # [*end_time*]
-#     Required. The end time as unix timestamp.
+#     The end time as unix timestamp.
 #
 # [*duration*]
-#     Required. The duration as number.
+#     The duration as number.
 #
 # [*entry_time*]
-#     Optional. The unix timestamp when this downtime was added.
+#     The unix timestamp when this downtime was added.
 #
 # [*fixed*]
-#     Optional. Whether the downtime is fixed (true) or flexible (false). Defaults to flexible. Details in the advanced topics chapter.
+#     Whether the downtime is fixed (true) or flexible (false). Defaults to flexible.
 #
 # [*triggers*]
-#     Optional. List of downtimes which should be triggered by this downtime.
+#     List of downtimes which should be triggered by this downtime.
 #
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
