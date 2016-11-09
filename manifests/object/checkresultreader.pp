@@ -49,8 +49,6 @@ define icinga2::object::checkresultreader (
     ensure      => $ensure,
     object_name => $name,
     object_type => 'CheckResultReader',
-    template    => $template,
-    import      => $import,
     attrs       => $attrs,
     target      => $target,
     order       => $order,
@@ -58,7 +56,7 @@ define icinga2::object::checkresultreader (
   }
 
   # import library
-  concat::fragment { 'icinga2::object::CheckResultReader::${title}':
+  concat::fragment { "icinga2::object::CheckResultReader::${title}-library":
     target  => $target,
     content => "library \"compat\"\n\n",
     order   => '05',
