@@ -61,7 +61,7 @@ define icinga2::object::downtime (
   $fixed                = undef,
   $triggers             = undef,
   $order                = '30',
-  $target               = undef,
+  $target,
 ){
   include ::icinga2::params
 
@@ -73,13 +73,13 @@ define icinga2::object::downtime (
   validate_absolute_path($target)
   validate_integer ( $order )
 
-  validate_string($host_name)
+  if $host_name { validate_string($host_name) }
   if $service_name { validate_string ($service_name) }
-  validate_string($author)
-  validate_string($comment)
-  validate_integer($start_time)
-  validate_integer($end_time)
-  validate_integer($duration)
+  if $author { validate_string($author) }
+  if $comment { validate_string($comment) }
+  if $start_time { validate_integer($start_time) }
+  if $end_time { validate_integer($end_time) }
+  if $duration {validate_integer($duration) }
   if $entry_time { validate_integer($entry_time) }
   if $fixed { validate_bool($fixed) }
   if $triggers { validate_array($triggers) }

@@ -12,219 +12,180 @@ describe('icinga2::object::downtime', :type => :define) do
     end
 
     context "#{os} with all defaults and target => /bar/baz" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+      let(:params) { {:target =>  '/bar/baz'} }
 
       it { is_expected.to contain_concat('/bar/baz') }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/object Downtime "bar"/)
-                              .with_content(/host_name = "foo"/)
-                              .with_content(/service_name = "fooo"/)
-                              .with_content(/author = "bar/)
-                              .with_content(/comment = "baz"/)
-                              .with_content(/start_time = 1478695277/)
-                              .with_content(/end_time = 1478795277/)
-                              .with_content(/duration = 5/)
-                              .with_content(/entry_time = 1478695277/)
-                              .with_content(/fixed = true/)
-                              .with_content(/triggers = \[ "foo", "bar", \]/) }
+                              .with_content(/object Downtime "bar"/) }
 
       it { is_expected.to contain_icinga2__object('icinga2::object::Downtime::bar')
                               .that_notifies('Class[icinga2::service]') }
     end
 
 
-    context "#{os} host_name => 4247 (not a valid string)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => 4247,
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with host_name => foo" do
+      let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/host_name = "foo"/) }
+    end
+
+
+    context "#{os} with host_name => 4247 (not a valid string)" do
+      let(:params) { {:host_name => 4247, :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
-    context "#{os} service_name => 4247 (not a valid string)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => 4247,
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with service_name => foo" do
+      let(:params) { {:service_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/service_name = "foo"/) }
+    end
+
+
+    context "#{os} with service_name => 4247 (not a valid string)" do
+      let(:params) { {:service_name => 4247, :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
-    context "#{os} author => 4247 (not a valid string)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => 4247,
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with author => foo" do
+      let(:params) { {:author => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/author = "foo"/) }
+    end
+
+
+    context "#{os} with author => 4247 (not a valid string)" do
+      let(:params) { {:author => 4247, :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
-    context "#{os} comment => 4247 (not a valid string)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => 4247,
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with comment => foo" do
+      let(:params) { {:comment => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/comment = "foo"/) }
+    end
+
+
+    context "#{os} with comment => 4247 (not a valid string)" do
+      let(:params) { {:comment => 4247, :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
-    context "#{os} start_time => 'foo' (not a valid integer)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => "foo",
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+
+    context "#{os} with start_time => 30" do
+      let(:params) { {:start_time => '30', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/start_time = 30/) }
+    end
+
+
+    context "#{os} with start_time => foo (not a valid integer)" do
+      let(:params) { {:start_time => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
-    context "#{os} end_time => 'foo' (not a valid integer)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => "foo",
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with end_time => 30" do
+      let(:params) { {:end_time => '30', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/end_time = 30/) }
+    end
+
+
+    context "#{os} with end_time => foo (not a valid integer)" do
+      let(:params) { {:end_time => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
-    context "#{os} duration => 'foo' (not a valid integer)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => "foo",
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with duration => 30" do
+      let(:params) { {:duration => '30', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/duration = 30/) }
+    end
+
+
+    context "#{os} with duration => foo (not a valid integer)" do
+      let(:params) { {:duration => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
-    context "#{os} entry_time => 'foo' (not a valid integer)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => "foo",
-          :fixed => true,
-          :triggers => ['foo','bar']} }
+    context "#{os} with entry_time => 30" do
+      let(:params) { {:entry_time => '30', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/entry_time = 30/) }
+    end
+
+
+    context "#{os} with entry_time => foo (not a valid integer)" do
+      let(:params) { {:entry_time => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
-    context "#{os} fixed => 'foo' (not a valid boolean)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => "foo",
-          :triggers => ['foo','bar']} }
+    context "#{os} with fixed => false" do
+      let(:params) { {:fixed => false, :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/fixed = false/) }
+    end
+
+
+    context "#{os} with fixed => foo (not a valid boolean)" do
+      let(:params) { {:fixed => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
 
-    context "#{os} triggers => 'foo' (not a valid array)" do
-      let(:params) { {
-          :target =>  '/bar/baz',
-          :host_name => "foo",
-          :service_name => "fooo",
-          :author => "bar",
-          :comment => "baz",
-          :start_time => 1478695277,
-          :end_time => 1478795277,
-          :duration => 5,
-          :entry_time => 1478695277,
-          :fixed => true,
-          :triggers => "foo"} }
+    context "#{os} with triggers => [foo, bar]" do
+      let(:params) { {:triggers => ['foo','bar'], :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/triggers = \[ "foo", "bar", \]/) }
+    end
+
+
+    context "#{os} with triggers => foo (not a valid array)" do
+      let(:params) { {:triggers => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
     end
   end
 end
+
 
 describe('icinga2::object::downtime', :type => :define) do
   let(:facts) { {
@@ -251,215 +212,175 @@ describe('icinga2::object::downtime', :type => :define) do
 
 
   context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+    let(:params) { {:target =>  '/bar/baz'} }
 
     it { is_expected.to contain_concat('/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/object Downtime "bar"/)
-                            .with_content(/host_name = "foo"/)
-                            .with_content(/service_name = "fooo"/)
-                            .with_content(/author = "bar/)
-                            .with_content(/comment = "baz"/)
-                            .with_content(/start_time = 1478695277/)
-                            .with_content(/end_time = 1478795277/)
-                            .with_content(/duration = 5/)
-                            .with_content(/entry_time = 1478695277/)
-                            .with_content(/fixed = true/)
-                            .with_content(/triggers = \[ "foo", "bar", \]/) }
+                            .with_content(/object Downtime "bar"/) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::Downtime::bar')
                             .that_notifies('Class[icinga2::service]') }
   end
 
 
-  context "Windows 2012 R2 host_name => 4247 (not a valid string)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => 4247,
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with host_name => foo" do
+    let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/host_name = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
+    let(:params) { {:host_name => 4247, :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
-  context "Windows 2012 R2 service_name => 4247 (not a valid string)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => 4247,
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with service_name => foo" do
+    let(:params) { {:service_name => 'foo', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/service_name = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
+    let(:params) { {:service_name => 4247, :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
-  context "Windows 2012 R2 author => 4247 (not a valid string)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => 4247,
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with author => foo" do
+    let(:params) { {:author => 'foo', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/author = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with author => 4247 (not a valid string)" do
+    let(:params) { {:author => 4247, :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
-  context "Windows 2012 R2 comment => 4247 (not a valid string)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => 4247,
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with comment => foo" do
+    let(:params) { {:comment => 'foo', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/comment = "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with comment => 4247 (not a valid string)" do
+    let(:params) { {:comment => 4247, :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
-  context "Windows 2012 R2 start_time => 'foo' (not a valid integer)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => "foo",
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+
+  context "Windows 2012 R2 with start_time => 30" do
+    let(:params) { {:start_time => '30', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/start_time = 30/) }
+  end
+
+
+  context "Windows 2012 R2 with start_time => foo (not a valid integer)" do
+    let(:params) { {:start_time => 'foo', :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
-  context "Windows 2012 R2 end_time => 'foo' (not a valid integer)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => "foo",
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with end_time => 30" do
+    let(:params) { {:end_time => '30', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/end_time = 30/) }
+  end
+
+
+  context "Windows 2012 R2 with end_time => foo (not a valid integer)" do
+    let(:params) { {:end_time => 'foo', :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
-  context "Windows 2012 R2 duration => 'foo' (not a valid integer)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => "foo",
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with duration => 30" do
+    let(:params) { {:duration => '30', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/duration = 30/) }
+  end
+
+
+  context "Windows 2012 R2 with duration => foo (not a valid integer)" do
+    let(:params) { {:duration => 'foo', :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
-  context "Windows 2012 R2 entry_time => 'foo' (not a valid integer)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => "foo",
-        :fixed => true,
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with entry_time => 30" do
+    let(:params) { {:entry_time => '30', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/entry_time = 30/) }
+  end
+
+
+  context "Windows 2012 R2 with entry_time => foo (not a valid integer)" do
+    let(:params) { {:entry_time => 'foo', :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
-  context "Windows 2012 R2 fixed => 'foo' (not a valid boolean)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => "foo",
-        :triggers => ['foo','bar']} }
+  context "Windows 2012 R2 with fixed => false" do
+    let(:params) { {:fixed => false, :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/fixed = false/) }
+  end
+
+
+  context "Windows 2012 R2 with fixed => foo (not a valid boolean)" do
+    let(:params) { {:fixed => 'foo', :target => '/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 
-  context "Windows 2012 R2 triggers => 'foo' (not a valid array)" do
-    let(:params) { {
-        :target =>  '/bar/baz',
-        :host_name => "foo",
-        :service_name => "fooo",
-        :author => "bar",
-        :comment => "baz",
-        :start_time => 1478695277,
-        :end_time => 1478795277,
-        :duration => 5,
-        :entry_time => 1478695277,
-        :fixed => true,
-        :triggers => "foo"} }
+  context "Windows 2012 R2 with triggers => [foo, bar]" do
+    let(:params) { {:triggers => ['foo','bar'], :target => '/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::Downtime::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/triggers = \[ "foo", "bar", \]/) }
+  end
+
+
+  context "Windows 2012 R2 with triggers => foo (not a valid array)" do
+    let(:params) { {:triggers => 'foo', :target => '/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
   end
 end
