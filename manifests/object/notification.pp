@@ -69,7 +69,7 @@
 # Alessandro Lorenzi <alessandro@lm-net.it>
 #
 define icinga2::object::notification (
-  $ensure       = 'present',
+  $ensure       = present,
   $host_name    = undef,
   $service_name = undef,
   $vars         = undef,
@@ -95,6 +95,8 @@ define icinga2::object::notification (
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)

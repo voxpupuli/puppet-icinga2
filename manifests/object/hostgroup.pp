@@ -44,6 +44,8 @@ define icinga2::object::hostgroup(
 ) {
 
   # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($hostgroup_name)
   validate_array($assign)
   validate_array($ignore)

@@ -55,7 +55,7 @@
 # Alessandro Lorenzi <alessandro@lm-net.it>
 #
 define icinga2::object::user (
-  $ensure               = 'present',
+  $ensure               = present,
   $display_name         = $title,
   $email                = undef,
   $pager                = undef,
@@ -75,6 +75,8 @@ define icinga2::object::user (
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)

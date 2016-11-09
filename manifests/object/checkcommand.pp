@@ -59,7 +59,6 @@ define icinga2::object::checkcommand(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-
   validate_array($import)
   validate_absolute_path($target)
   validate_integer($order)

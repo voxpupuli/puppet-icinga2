@@ -158,6 +158,8 @@ define icinga2::object::service (
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
+  validate_re($ensure, [ '^present$', '^absent$' ],
+    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
