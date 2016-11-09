@@ -32,6 +32,9 @@
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
+# [*import*]
+#   Sorted List of templates to include. Defaults to an empty list.
+#
 # [*order*]
 #   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
 #
