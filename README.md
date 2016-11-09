@@ -309,6 +309,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::service](#defined-type-icinga2objectservice)
     - [Defined type: icinga2::object::servicegroup](#defined-type-icinga2objectservicegroup)
     - [Defined type: icinga2::object::downtime](#defined-type-icinga2objectdowntime)
+    - [Defined type: icinga2::object::scheduleddowntime](#defined-type-icinga2objectscheduleddowntime)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1506,7 +1507,7 @@ Required. The duration as number.
 Optional. The unix timestamp when this downtime was added.
 
 ##### `fixed`
-Optional. Whether the downtime is fixed (true) or flexible (false). Defaults to flexible. Details in the advanced topics chapter.
+Optional. Whether the downtime is fixed (`true`) or flexible (`false`). Defaults to flexible.
 
 ##### `triggers`
 Optional. List of downtimes which should be triggered by this downtime.
@@ -1516,6 +1517,39 @@ Destination config file to store in this object. File will be declared the first
 
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+
+#### Defined type: `icinga2::object::scheduleddowntime`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disables it. Defaults to `present`
+
+##### `host_name`
+The name of the host this comment belongs to.
+
+##### `service_name`
+The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+
+##### `author`
+The author's name.
+
+##### `comment`
+The comment text.
+
+##### `fixed`
+Whether this is a fixed downtime. Defaults to `true`
+
+##### `duration`
+The duration as number.
+
+##### `ranges`
+A dictionary containing information which days and durations apply to this timeperiod.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+
 
 ### Private defined types
 
