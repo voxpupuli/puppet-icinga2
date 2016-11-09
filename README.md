@@ -307,6 +307,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::notificationcommand](#defined-type-icinga2objectnotificationcommand)
     - [Defined type: icinga2::object::notification](#defined-type-icinga2objectnotification)
     - [Defined type: icinga2::object::service](#defined-type-icinga2objectservice)
+    - [Defined type: icinga2::object::servicegroup](#defined-type-icinga2objectservicegroup)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1450,6 +1451,29 @@ Destination config file to store in this object. File will be declared the first
 
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+
+#### Defined type: `icinga2::object::servicegroup`
+
+##### `ensure`
+Set to present enables the endpoint object, absent disables it. Defaults to `present`
+
+##### `display_name`
+A short description of the service group.
+
+##### `groups`
+An array of nested group names.
+
+##### `template`
+Set to true creates a template instead of an object. Defaults to `false`
+
+##### `import`
+Sorted List of templates to include. Defaults to an empty list.
+
+##### `target`
+Destination config file to store in this object. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted alpha numeric. Defaults to `30`
 
 ### Private defined types
 
