@@ -64,7 +64,7 @@ define icinga2::object::eventcommand (
   validate_integer ( $order )
   validate_array($import)
 
-  if $command { validate_array($command) }
+  validate_array($command)
   if $env { validate_hash($env) }
   if $vars { validate_hash($vars) }
   if $timeout { validate_integer($timeout) }
