@@ -12,7 +12,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     end
 
     context "#{os} with all defaults and target => /bar/baz" do
-      let(:params) { {:target =>  '/bar/baz'} }
+      let(:params) { {:target =>  '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to contain_concat('/bar/baz') }
 
@@ -28,7 +28,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
 
     context "#{os} with display_name => foo" do
-      let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:display_name => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
@@ -37,46 +37,30 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
 
     context "#{os} with display_name => 4247 (not a valid string)" do
-      let(:params) { {:display_name => 4247, :target => '/bar/baz'} }
+      let(:params) { {:display_name => 4247, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
-    context "#{os} with update => foo" do
-      let(:params) { {:update => 'foo', :target => '/bar/baz'} }
+    context "#{os} with ranges => { foo => 'bar', bar => 'foo' }" do
+      let(:params) { {:ranges => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz' } }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/update = "foo"/) }
+                              .with({ 'target' => '/bar/baz' })
+                              .with_content(/ranges = {\n\s+foo = "bar"\n\s+bar = "foo"\n\s+}/) }
     end
 
 
-    context "#{os} with update => 4247 (not a valid string)" do
-      let(:params) { {:update => 4247, :target => '/bar/baz'} }
+    context "#{os} with ranges => 'foo' (not a valid hash)" do
+      let(:params) { {:ranges => 'foo', :target => '/bar/baz' } }
 
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
-    context "#{os} with ranges => foo" do
-      let(:params) { {:ranges => 'foo', :target => '/bar/baz'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/ranges = "foo"/) }
-    end
-
-
-    context "#{os} with ranges => 4247 (not a valid string)" do
-      let(:params) { {:ranges => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
 
 
     context "#{os} with prefer_incluces => false" do
-      let(:params) { {:prefer_includes => false, :target => '/bar/baz'} }
+      let(:params) { {:prefer_includes => false, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
@@ -85,14 +69,14 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
 
     context "#{os} with prefer_includes => foo (not a valid boolean)" do
-      let(:params) { {:prefer_includes => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:prefer_includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
 
     context "#{os} with excludes => foo" do
-      let(:params) { {:excludes => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:excludes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
@@ -101,14 +85,14 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
 
     context "#{os} with excludes => 4247 (not a valid string)" do
-      let(:params) { {:excludes => 4247, :target => '/bar/baz'} }
+      let(:params) { {:excludes => 4247, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
     context "#{os} with includes => foo" do
-      let(:params) { {:includes => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
@@ -117,7 +101,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
 
     context "#{os} with includes => 4247 (not a valid string)" do
-      let(:params) { {:includes => 4247, :target => '/bar/baz'} }
+      let(:params) { {:includes => 4247, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
@@ -148,7 +132,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   ] }
 
   context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {:target =>  '/bar/baz'} }
+    let(:params) { {:target =>  '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat('/bar/baz') }
 
@@ -164,7 +148,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
 
 
   context "Windows 2012 R2 with display_name => foo" do
-    let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:display_name => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
@@ -173,46 +157,30 @@ describe('icinga2::object::TimePeriod', :type => :define) do
 
 
   context "Windows 2012 R2 with display_name => 4247 (not a valid string)" do
-    let(:params) { {:display_name => 4247, :target => '/bar/baz'} }
+    let(:params) { {:display_name => 4247, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
-  context "Windows 2012 R2 with update => foo" do
-    let(:params) { {:update => 'foo', :target => '/bar/baz'} }
+  context "Windows 2012 R2 with ranges => { foo => 'bar', bar => 'foo' }" do
+    let(:params) { {:ranges => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz' } }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/update = "foo"/) }
+                            .with({ 'target' => '/bar/baz' })
+                            .with_content(/ranges = {\r\n\s+foo = "bar"\r\n\s+bar = "foo"\r\n\s+}/) }
   end
 
 
-  context "Windows 2012 R2 with update => 4247 (not a valid string)" do
-    let(:params) { {:update => 4247, :target => '/bar/baz'} }
+  context "Windows 2012 R2 with ranges => 'foo' (not a valid hash)" do
+    let(:params) { {:ranges => 'foo', :target => '/bar/baz' } }
 
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
-  context "Windows 2012 R2 with ranges => foo" do
-    let(:params) { {:ranges => 'foo', :target => '/bar/baz'} }
-
-    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/ranges = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with ranges => 4247 (not a valid string)" do
-    let(:params) { {:ranges => 4247, :target => '/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
   context "Windows 2012 R2 with prefer_incluces => false" do
-    let(:params) { {:prefer_includes => false, :target => '/bar/baz'} }
+    let(:params) { {:prefer_includes => false, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
@@ -221,14 +189,14 @@ describe('icinga2::object::TimePeriod', :type => :define) do
 
 
   context "Windows 2012 R2 with prefer_includes => foo (not a valid boolean)" do
-    let(:params) { {:prefer_includes => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:prefer_includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
 
   context "Windows 2012 R2 with excludes => foo" do
-    let(:params) { {:excludes => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:excludes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
@@ -237,14 +205,14 @@ describe('icinga2::object::TimePeriod', :type => :define) do
 
 
   context "Windows 2012 R2 with excludes => 4247 (not a valid string)" do
-    let(:params) { {:excludes => 4247, :target => '/bar/baz'} }
+    let(:params) { {:excludes => 4247, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with includes => foo" do
-    let(:params) { {:includes => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
@@ -253,7 +221,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
 
 
   context "Windows 2012 R2 with includes => 4247 (not a valid string)" do
-    let(:params) { {:includes => 4247, :target => '/bar/baz'} }
+    let(:params) { {:includes => 4247, :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
