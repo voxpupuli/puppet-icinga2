@@ -108,6 +108,12 @@
 # [*apply_target*]
 #   An object type on which to target the apply rule.
 #
+# [*assign*]
+#   Assign user group members using the group assign rules.
+#
+# [*ignore*]
+#   Exclude users using the group ignore rules.
+#
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
