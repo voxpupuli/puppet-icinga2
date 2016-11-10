@@ -118,7 +118,7 @@
 
 define icinga2::object::service (
   $ensure                 = present,
-  $display_name           = $title,
+  $display_name           = undef,
   $host_name              = undef,
   $groups                 = undef,
   $vars                   = {},
@@ -165,12 +165,11 @@ define icinga2::object::service (
   validate_absolute_path($target)
   validate_string($order)
 
-  validate_string ($name)
   if $display_name { validate_string ($display_name) }
-  if $host_name { validate_string ($host_name) }
+  validate_string($host_name)
   if $groups { validate_array ($groups) }
   if $vars { validate_hash ($vars) }
-  validate_string ($check_command)
+  validate_string($check_command)
   if $max_check_attempts { validate_integer ($max_check_attempts) }
   if $check_period { validate_integer ($check_period) }
   if $check_timeout { validate_integer ($check_timeout) }
