@@ -90,10 +90,10 @@ define icinga2::object::timeperiod (
   }
 
   # create object
-  icinga2::object { "icinga2::object::Timeperiod::${title}":
+  icinga2::object { "icinga2::object::TimePeriod::${title}":
     ensure      => $ensure,
     object_name => $name,
-    object_type => 'Timeperiod',
+    object_type => 'TimePeriod',
     template    => $template,
     import      => $import,
     attrs       => $attrs,

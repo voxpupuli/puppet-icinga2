@@ -16,20 +16,20 @@ describe('icinga2::object::usergroup', :type => :define) do
 
       it { is_expected.to contain_concat('/bar/baz') }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Usergroup::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::UserGroup::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/object Usergroup "bar"/)
+                              .with_content(/object UserGroup "bar"/)
                               .without_content(/assign where/)
                               .without_content(/ignore where/) }
 
-      it { is_expected.to contain_icinga2__object('icinga2::object::Usergroup::bar')
+      it { is_expected.to contain_icinga2__object('icinga2::object::UserGroup::bar')
                               .that_notifies('Class[icinga2::service]') }
     end
 
     context "#{os} with display_name => foo" do
       let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Usergroup::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::UserGroup::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/display_name = "foo"/) }
     end
@@ -45,7 +45,7 @@ describe('icinga2::object::usergroup', :type => :define) do
     context "#{os} with groups => [foo, bar]" do
       let(:params) { {:groups => ['foo','bar'], :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Usergroup::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::UserGroup::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/groups = \[ "foo", "bar", \]/) }
     end
@@ -94,20 +94,20 @@ describe('icinga2::object::usergroup', :type => :define) do
 
     it { is_expected.to contain_concat('/bar/baz') }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Usergroup::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::UserGroup::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/object Usergroup "bar"/)
+                            .with_content(/object UserGroup "bar"/)
                             .without_content(/assign where/)
                             .without_content(/ignore where/) }
 
-    it { is_expected.to contain_icinga2__object('icinga2::object::Usergroup::bar')
+    it { is_expected.to contain_icinga2__object('icinga2::object::UserGroup::bar')
                             .that_notifies('Class[icinga2::service]') }
   end
 
   context "Windows 2012 R2 with display_name => foo" do
     let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Usergroup::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::UserGroup::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/display_name = "foo"/) }
   end
@@ -123,7 +123,7 @@ describe('icinga2::object::usergroup', :type => :define) do
   context "Windows 2012 R2 with groups => [foo, bar]" do
     let(:params) { {:groups => ['foo','bar'], :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Usergroup::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::UserGroup::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/groups = \[ "foo", "bar", \]/) }
   end

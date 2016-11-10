@@ -16,13 +16,13 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
       it { is_expected.to contain_concat('/bar/baz') }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/object Timeperiod "bar"/)
+                              .with_content(/object TimePeriod "bar"/)
                               .without_content(/assign where/)
                               .without_content(/ignore where/) }
 
-      it { is_expected.to contain_icinga2__object('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_icinga2__object('icinga2::object::TimePeriod::bar')
                               .that_notifies('Class[icinga2::service]') }
     end
 
@@ -30,7 +30,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with display_name => foo" do
       let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/display_name = "foo"/) }
     end
@@ -46,7 +46,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with update => foo" do
       let(:params) { {:update => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/update = "foo"/) }
     end
@@ -62,7 +62,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with ranges => foo" do
       let(:params) { {:ranges => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/ranges = "foo"/) }
     end
@@ -78,7 +78,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with prefer_incluces => false" do
       let(:params) { {:prefer_includes => false, :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/prefer_includes = false/) }
     end
@@ -94,7 +94,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with excludes => foo" do
       let(:params) { {:excludes => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/excludes = "foo"/) }
     end
@@ -110,7 +110,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with includes => foo" do
       let(:params) { {:includes => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/includes = "foo"/) }
     end
@@ -124,7 +124,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   end
 end
 
-describe('icinga2::object::timeperiod', :type => :define) do
+describe('icinga2::object::TimePeriod', :type => :define) do
   let(:facts) { {
       :kernel => 'Windows',
       :architecture => 'x86_64',
@@ -152,13 +152,13 @@ describe('icinga2::object::timeperiod', :type => :define) do
 
     it { is_expected.to contain_concat('/bar/baz') }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/object Timeperiod "bar"/)
+                            .with_content(/object TimePeriod "bar"/)
                             .without_content(/assign where/)
                             .without_content(/ignore where/) }
 
-    it { is_expected.to contain_icinga2__object('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_icinga2__object('icinga2::object::TimePeriod::bar')
                             .that_notifies('Class[icinga2::service]') }
   end
 
@@ -166,7 +166,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   context "Windows 2012 R2 with display_name => foo" do
     let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/display_name = "foo"/) }
   end
@@ -182,7 +182,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   context "Windows 2012 R2 with update => foo" do
     let(:params) { {:update => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/update = "foo"/) }
   end
@@ -198,7 +198,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   context "Windows 2012 R2 with ranges => foo" do
     let(:params) { {:ranges => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/ranges = "foo"/) }
   end
@@ -214,7 +214,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   context "Windows 2012 R2 with prefer_incluces => false" do
     let(:params) { {:prefer_includes => false, :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/prefer_includes = false/) }
   end
@@ -230,7 +230,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   context "Windows 2012 R2 with excludes => foo" do
     let(:params) { {:excludes => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/excludes = "foo"/) }
   end
@@ -246,7 +246,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
   context "Windows 2012 R2 with includes => foo" do
     let(:params) { {:includes => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Timeperiod::bar')
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/includes = "foo"/) }
   end

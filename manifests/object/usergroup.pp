@@ -73,10 +73,10 @@ define icinga2::object::usergroup (
   }
 
   # create object
-  icinga2::object { "icinga2::object::Usergroup::${title}":
+  icinga2::object { "icinga2::object::UserGroup::${title}":
     ensure      => $ensure,
     object_name => $name,
-    object_type => 'Usergroup',
+    object_type => 'UserGroup',
     import      => $import,
     template    => $template,
     attrs       => $attrs,
