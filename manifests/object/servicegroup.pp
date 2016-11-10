@@ -13,6 +13,12 @@
 # [*groups*]
 #   An array of nested group names.
 #
+# [*assign*]
+#   Assign user group members using the group assign rules.
+#
+# [*ignore*]
+#   Exclude users using the group ignore rules.
+#
 # [*template*]
 #   Set to true creates a template instead of an object. Defaults to false.
 #
@@ -35,6 +41,8 @@ define icinga2::object::servicegroup (
   $ensure       = present,
   $display_name = $title,
   $groups       = [],
+  $assign       = [],
+  $ignore       = [],
   $template     = false,
   $import       = [],
   $order        = '30',
@@ -70,6 +78,8 @@ define icinga2::object::servicegroup (
     import      => $import,
     template    => $template,
     attrs       => $attrs,
+    assign      => $assign,
+    ignore      => $ignore,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

@@ -1,5 +1,5 @@
 
-<% if @apply.is_a?(String) %>apply for (<%= @apply %>)
+<% if @apply.is_a?(String) %>apply <%= @object_type -%> for (<%= @apply %>) to <%= @apply_target -%> {
 <% else -%>
 <% if @apply %>apply<% else -%>
 <% if @template %>template<% else %>object<% end -%>
@@ -7,7 +7,8 @@
 <% if scope.lookupvar('icinga2::_constants').include?(@object_name) -%>
  <%= @object_name -%>
 <% else -%>
- "<%= @object_name %>"<% end %> {
+ "<%= @object_name %>" <% end -%>
+<% if @apply && @apply_target %>to <%= @apply_target -%><% end -%> {
 <% @import.each do |i| -%>
   import "<%= i %>"
 <% end -%>

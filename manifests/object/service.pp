@@ -101,6 +101,19 @@
 # [*template*]
 #   Set to true creates a template instead of an object. Defaults to false.
 #
+# [*apply*]
+#   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#
+# [*apply_target*]
+#   An object type on which to target the apply rule.
+#
+# [*assign*]
+#   Assign user group members using the group assign rules.
+#
+# [*ignore*]
+#   Exclude users using the group ignore rules.
+#
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
@@ -146,6 +159,7 @@ define icinga2::object::service (
   $icon_image             = undef,
   $icon_image_alt         = undef,
   $apply                  = false,
+  $apply_target           = 'Host',
   $assign                 = [],
   $ignore                 = [],
   $import                 = [],
@@ -161,6 +175,9 @@ define icinga2::object::service (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  unless is_bool($apply) { validate_string($apply) }
+  validate_re($apply_target, ['^Host$', '^Service$'],
+    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
@@ -227,17 +244,18 @@ define icinga2::object::service (
 
   # create object
   icinga2::object { "icinga2::object::Service::${title}":
-    ensure      => $ensure,
-    object_name => $name,
-    object_type => 'Service',
-    import      => $import,
-    apply       => $apply,
-    assign      => $assign,
-    ignore      => $ignore,
-    template    => $template,
-    attrs       => $attrs,
-    target      => $target,
-    order       => $order,
-    notify      => Class['::icinga2::service'],
+    ensure       => $ensure,
+    object_name  => $name,
+    object_type  => 'Service',
+    import       => $import,
+    apply        => $apply,
+    apply_target => $apply_target,
+    assign       => $assign,
+    ignore       => $ignore,
+    template     => $template,
+    attrs        => $attrs,
+    target       => $target,
+    order        => $order,
+    notify       => Class['::icinga2::service'],
   }
 }

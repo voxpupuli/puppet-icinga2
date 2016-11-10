@@ -1163,6 +1163,19 @@ Time period during which this dependency is enabled.
 ##### `states`
 A list of state filters when this dependency should be OK. Defaults to [ OK, Warning ] for services and [ Up ] for hosts.
 
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
+
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
 
@@ -1364,6 +1377,13 @@ A list of type filters when this notification should be triggered. By default ev
 ##### `states`
 A list of state filters when this notification should be triggered. By default everything is matched.
 
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
+
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
 
@@ -1465,6 +1485,19 @@ Icon image for the service. Used by external interfaces only.
 ##### `icon_image_alt`
 Icon image description for the service. Used by external interface only.
 
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
+
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
 
@@ -1487,6 +1520,12 @@ A short description of the service group.
 
 ##### `groups`
 An array of nested group names.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
 
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
@@ -1566,6 +1605,19 @@ The duration as number.
 
 ##### `ranges`
 A dictionary containing information which days and durations apply to this timeperiod.
+
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
 
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
@@ -1691,6 +1743,13 @@ Set the icinga2 name of the object. Defaults to title of the define resource.
 
 ##### `template`
 Set to true will define a template otherwise an object. Defaults to false.
+
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
 
 ##### `import`
 A sorted list of templates to import in this object. Defaults to an empty array.
