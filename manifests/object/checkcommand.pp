@@ -67,7 +67,7 @@ define icinga2::object::checkcommand(
   validate_integer($order)
 
   if $checkcommand { validate_string($checkcommand) }
-  if $command { validate_array($command) }
+  validate_array($command)
   if $env { validate_hash($env) }
   if $vars { validate_hash($vars) }
   if $timeout { validate_integer($timeout) }
