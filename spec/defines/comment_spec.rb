@@ -12,7 +12,7 @@ describe('icinga2::object::comment', :type => :define) do
     end
 
     context "#{os} with all defaults and target => /bar/baz" do
-      let(:params) { {:target =>  '/bar/baz'} }
+      let(:params) { {:target =>  '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat('/bar/baz') }
 
@@ -26,7 +26,7 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with host_name => foo" do
-      let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:host_name => 'foo', :target => '/bar/baz', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -35,14 +35,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with host_name => 4247 (not a valid string)" do
-      let(:params) { {:host_name => 4247, :target => '/bar/baz'} }
+      let(:params) { {:host_name => 4247, :target => '/bar/baz', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
     context "#{os} with service_name => foo" do
-      let(:params) { {:service_name => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:service_name => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -51,14 +51,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with service_name => 4247 (not a valid string)" do
-      let(:params) { {:service_name => 4247, :target => '/bar/baz'} }
+      let(:params) { {:service_name => 4247, :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
     context "#{os} with author => foo" do
-      let(:params) { {:author => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:author => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -67,14 +67,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with author => 4247 (not a valid string)" do
-      let(:params) { {:author => 4247, :target => '/bar/baz'} }
+      let(:params) { {:author => 4247, :target => '/bar/baz', :host_name => 'hostfoo', :text => 'textfoo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
     context "#{os} with text => foo" do
-      let(:params) { {:text => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:text => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -83,14 +83,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with text => 4247 (not a valid string)" do
-      let(:params) { {:text => 4247, :target => '/bar/baz'} }
+      let(:params) { {:text => 4247, :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
     context "#{os} with entry_time => 30" do
-      let(:params) { {:entry_time => '30', :target => '/bar/baz'} }
+      let(:params) { {:entry_time => '30', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -99,14 +99,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with entry_time => foo (not a valid integer)" do
-      let(:params) { {:entry_time => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:entry_time => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
     context "#{os} with entry_type => 30" do
-      let(:params) { {:entry_type => '30', :target => '/bar/baz'} }
+      let(:params) { {:entry_type => '30', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -115,14 +115,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
     context "#{os} with entry_type => foo (not a valid integer)" do
-      let(:params) { {:entry_type => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:entry_type => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
     context "#{os} with expire_time => 30" do
-      let(:params) { {:expire_time => '30', :target => '/bar/baz'} }
+      let(:params) { {:expire_time => '30', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                               .with({'target' => '/bar/baz'})
@@ -164,7 +164,7 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {:target =>  '/bar/baz'} }
+    let(:params) { {:target =>  '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat('/bar/baz') }
 
@@ -178,7 +178,7 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with host_name => foo" do
-    let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:host_name => 'foo', :target => '/bar/baz', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
@@ -187,14 +187,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
-    let(:params) { {:host_name => 4247, :target => '/bar/baz'} }
+    let(:params) { {:host_name => 4247, :target => '/bar/baz', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with service_name => foo" do
-    let(:params) { {:service_name => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:service_name => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
@@ -203,14 +203,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
-    let(:params) { {:service_name => 4247, :target => '/bar/baz'} }
+    let(:params) { {:service_name => 4247, :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with author => foo" do
-    let(:params) { {:author => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:author => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
@@ -219,14 +219,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with author => 4247 (not a valid string)" do
-    let(:params) { {:author => 4247, :target => '/bar/baz'} }
+    let(:params) { {:author => 4247, :target => '/bar/baz', :host_name => 'hostfoo', :text => 'textfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with text => foo" do
-    let(:params) { {:text => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:text => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
@@ -235,14 +235,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with text => 4247 (not a valid string)" do
-    let(:params) { {:text => 4247, :target => '/bar/baz'} }
+    let(:params) { {:text => 4247, :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with entry_time => 30" do
-    let(:params) { {:entry_time => '30', :target => '/bar/baz'} }
+    let(:params) { {:entry_time => '30', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
@@ -251,14 +251,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with entry_time => foo (not a valid integer)" do
-    let(:params) { {:entry_time => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:entry_time => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
   context "Windows 2012 R2 with entry_type => 30" do
-    let(:params) { {:entry_type => '30', :target => '/bar/baz'} }
+    let(:params) { {:entry_type => '30', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
@@ -267,14 +267,14 @@ describe('icinga2::object::comment', :type => :define) do
 
 
   context "Windows 2012 R2 with entry_type => foo (not a valid integer)" do
-    let(:params) { {:entry_type => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:entry_type => 'foo', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
   context "Windows 2012 R2 with expire_time => 30" do
-    let(:params) { {:expire_time => '30', :target => '/bar/baz'} }
+    let(:params) { {:expire_time => '30', :target => '/bar/baz', :host_name => 'hostfoo', :author => 'authorfoo', :text => 'textfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Comment::bar')
                             .with({'target' => '/bar/baz'})
