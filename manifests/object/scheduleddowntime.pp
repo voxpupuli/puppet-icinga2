@@ -28,6 +28,19 @@
 # [*ranges*]
 #     A dictionary containing information which days and durations apply to this timeperiod.
 #
+# [*apply*]
+#   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#
+# [*apply_target*]
+#   An object type on which to target the apply rule.
+#
+# [*assign*]
+#   Assign user group members using the group assign rules.
+#
+# [*ignore*]
+#   Exclude users using the group ignore rules.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -48,6 +61,10 @@ define icinga2::object::scheduleddowntime (
   $fixed                = undef,
   $duration             = undef,
   $ranges               = undef,
+  $apply                = false,
+  $apply_target         = 'Host',
+  $assign               = [],
+  $ignore               = [],
   $order                = '30',
   $target               = undef,
 ){
@@ -58,6 +75,9 @@ define icinga2::object::scheduleddowntime (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  unless is_bool($apply) { validate_string($apply) }
+  validate_re($apply_target, ['^Host$', '^Service$'],
+    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
   validate_absolute_path($target)
   validate_integer ( $order )
 
@@ -86,6 +106,10 @@ define icinga2::object::scheduleddowntime (
     object_name => $name,
     object_type => 'ScheduledDowntime',
     attrs       => $attrs,
+    apply        => $apply,
+    apply_target => $apply_target,
+    assign       => $assign,
+    ignore       => $ignore,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

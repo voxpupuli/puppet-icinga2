@@ -1606,6 +1606,19 @@ The duration as number.
 ##### `ranges`
 A dictionary containing information which days and durations apply to this timeperiod.
 
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
+
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
 
