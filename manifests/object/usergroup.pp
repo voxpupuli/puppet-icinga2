@@ -35,6 +35,7 @@
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
+# Icinga Development Team <info@icinga.org>
 #
 define icinga2::object::usergroup (
   $ensure       = present,
