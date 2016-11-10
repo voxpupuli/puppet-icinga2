@@ -1163,6 +1163,19 @@ Time period during which this dependency is enabled.
 ##### `states`
 A list of state filters when this dependency should be OK. Defaults to [ OK, Warning ] for services and [ Up ] for hosts.
 
+##### `apply`
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `apply_target`
+An object type on which to target the apply rule.
+
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
+
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
 
