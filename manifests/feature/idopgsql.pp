@@ -62,11 +62,11 @@
 # }
 #
 # class{ 'icinga2::feature::idopgsql':
-#   user => "icinga2",
-#   password => "supersecret",
-#   database => "icinga2",
+#   user          => "icinga2",
+#   password      => "supersecret",
+#   database      => "icinga2",
 #   import_schema => true,
-#   require => Postgresql::Server::Db['icinga2']
+#   require       => Postgresql::Server::Db['icinga2']
 # }
 #
 # === Authors

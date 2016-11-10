@@ -97,10 +97,10 @@ the base schema into the database, however this is disabled by default. Updating
 is currently not supported.
 
 
-The IDO featues require an existing database and a user with permissions. To install database servers, create databases
-and manage user permissions we recommend the [puppetlabs/mysql] and [puppetlabs/puppetlabs-postgresql] modules. 
-Here's an example how you create a MySQL database with the corresponding user with permissions by usng the
-[puppetlabs/mysql] module:
+The IDO featues require an existing database and a user with permissions. When using MySQL we recommend the
+[puppetlabs/mysql] Puppet module to install the database server, creat a database and manage user permissions. Here's an
+example how you create a MySQL database with the corresponding user with permissions by usng the [puppetlabs/mysql]
+module:
 
 ``` puppet
 include icinga2
@@ -114,14 +114,33 @@ mysql::db { 'icinga2':
 }
 
 class{ 'icinga2::feature::idomysql':
-  user => "icinga2",
-  password => "supersecret",
-  database => "icinga2",
+  user          => "icinga2",
+  password      => "supersecret",
+  database      => "icinga2",
   import_schema => true,
-  require => Mysql::Db['icinga2']
+  require       => Mysql::Db['icinga2']
 }
 ```
+For PostgreSQL we recomment the [puppetlabs/puppetlabs-postgresql] module. You can install the server, create databases
+and manage user permissions with the module. Here's an example on how to use it in combination with Icinga2:
 
+``` puppet
+include icinga2
+include postgresql::server
+
+postgresql::server::db { 'icinga2':
+  user     => 'icinga2',
+  password => postgresql_password('icinga2', 'supersecret'),
+}
+
+class{ 'icinga2::feature::idopgsql':
+  user          => "icinga2",
+  password      => "supersecret",
+  database      => "icinga2",
+  import_schema => true,
+  require       => Postgresql::Server::Db['icinga2']
+}
+```
 
 ### Clustering Icinga 2
 Icinga 2 can run in three different roles:
