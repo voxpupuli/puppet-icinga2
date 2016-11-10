@@ -54,6 +54,13 @@
 # [*template*]
 #   Set to true creates a template instead of an object. Defaults to false.
 #
+# [*apply*]
+#   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#
+# [*apply_target*]
+#   An object type on which to target the apply rule.
+#
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
@@ -84,6 +91,7 @@ define icinga2::object::notification (
   $types        = undef,
   $states       = undef,
   $apply        = false,
+  $apply_target = undef,
   $assign       = [],
   $ignore       = [],
   $import       = [],
@@ -98,6 +106,9 @@ define icinga2::object::notification (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  unless is_bool($apply) { validate_string($apply) }
+  validate_re($apply_target, ['^Host$', '^Service$'],
+    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
@@ -140,18 +151,19 @@ define icinga2::object::notification (
 
   # create object
   icinga2::object { "icinga2::object::Notification::${title}":
-    ensure      => $ensure,
-    object_name => $name,
-    object_type => 'Notification',
-    import      => $import,
-    template    => $template,
-    attrs       => $attrs,
-    target      => $target,
-    order       => $order,
-    apply       => $apply,
-    assign      => $assign,
-    ignore      => $ignore,
-    notify      => Class['::icinga2::service'],
+    ensure       => $ensure,
+    object_name  => $name,
+    object_type  => 'Notification',
+    import       => $import,
+    template     => $template,
+    attrs        => $attrs,
+    target       => $target,
+    order        => $order,
+    apply        => $apply,
+    apply_target => $apply_target,
+    assign       => $assign,
+    ignore       => $ignore,
+    notify       => Class['::icinga2::service'],
   }
 
 }

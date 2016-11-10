@@ -18,6 +18,9 @@
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
+# [*apply_target*]
+#   An object type on which to target the apply rule.
+#
 # [*import*]
 #   A sorted list of templates to import in this object. Defaults to an empty array.
 #
@@ -46,14 +49,15 @@
 # Icinga Development Team <info@icinga.org>
 #
 define icinga2::object(
-  $ensure      = present,
-  $object_name = $title,
-  $template    = false,
-  $apply       = false,
-  $import      = [],
-  $assign      = [],
-  $ignore      = [],
-  $attrs       = {},
+  $ensure       = present,
+  $object_name  = $title,
+  $template     = false,
+  $apply        = false,
+  $apply_target = undef,
+  $import       = [],
+  $assign       = [],
+  $ignore       = [],
+  $attrs        = {},
   $object_type,
   $target,
   $order,
@@ -88,6 +92,8 @@ define icinga2::object(
   validate_string($object_name)
   validate_bool($template)
   unless is_bool($apply) { validate_string($apply) }
+  if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
+    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.") }
   validate_array($import)
   validate_array($assign)
   validate_array($ignore)
@@ -95,6 +101,10 @@ define icinga2::object(
   validate_string($object_type)
   validate_absolute_path($target)
   validate_string($order)
+
+  if $object_type == $apply_target { 
+    fail("The object type must be different from the apply target")
+  }
 
   $_attrs = merge($attrs, {
     'assign where' => $assign,

@@ -97,7 +97,7 @@ describe('icinga2::object', :type => :define) do
       let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-        .with_content(/apply for \(foo => config in host.vars.bar\)/) }
+        .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
     end
 
 
@@ -105,6 +105,32 @@ describe('icinga2::object', :type => :define) do
       let(:params) { {:apply => 4247, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with apply_target => 'foo' (not a valid value)" do
+      let(:params) { {:apply_target => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    end
+
+
+    context "#{os} with apply_target => 'Service', object_tpye => 'Service' (same value)" do
+      let(:params) { {:apply_target => 'Service', :object_type => 'Service', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /must be different/) }
+    end
+
+
+    context "#{os} with apply_target => 'Host', object_tpye => 'Service' (same value)" do
+      let(:params) { {:apply => true,
+                      :apply_target => 'Host',
+                      :object_type => 'Service',
+                      :target => '/bar/baz',
+                      :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+                              .with_content(/apply Service "bar" to Host/) }
     end
 
 
@@ -270,25 +296,51 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with apply => true" do
-    let(:params) { {:apply => true, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+    let(:params) { {:apply => true, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/apply foo "bar"/) }
+                            .with_content(/apply foo "bar"/) }
   end
 
 
   context "Windows 2012 R2 with apply => (foo => config in host.vars.bar)" do
-    let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+    let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
-      .with_content(/apply for \(foo => config in host.vars.bar\)/) }
+                            .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
   end
 
 
   context "Windows 2012 R2 with apply => 4247 (not valid string or boolean)" do
-    let(:params) { {:apply => 4247, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+    let(:params) { {:apply => 4247, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with apply_target => 'foo' (not a valid value)" do
+    let(:params) { {:apply_target => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+  end
+
+
+  context "Windows 2012 R2 with apply_target => 'Service', object_tpye => 'Service' (same value)" do
+    let(:params) { {:apply_target => 'Service', :object_type => 'Service', :target => '/bar/baz', :order => '10'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /must be different/) }
+  end
+
+
+  context "Windows 2012 R2 with apply_target => 'Host', object_tpye => 'Service' (same value)" do
+    let(:params) { {:apply => true,
+                    :apply_target => 'Host',
+                    :object_type => 'Service',
+                    :target => '/bar/baz',
+                    :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+                            .with_content(/apply Service "bar" to Host/) }
   end
 
 
