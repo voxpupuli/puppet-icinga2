@@ -19,7 +19,8 @@ describe('icinga2::object::host', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
         .with({'target' => '/bar/baz'})
-        .with_content(/object Host "bar"/) }
+        .with_content(/object Host "bar"/)
+        .with_content(/check_command = "foocommand"/)}
     end
 
 
@@ -569,7 +570,8 @@ describe('icinga2::object::host', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/object Host "bar"/) }
+                            .with_content(/object Host "bar"/)
+                            .with_content(/check_command = "foocommand"/)}
   end
 
 
