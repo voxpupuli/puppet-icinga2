@@ -1502,6 +1502,12 @@ A short description of the service group.
 ##### `groups`
 An array of nested group names.
 
+##### `assign`
+Assign user group members using the group assign rules.
+
+##### `ignore`
+Exclude users using the group ignore rules.
+
 ##### `template`
 Set to true creates a template instead of an object. Defaults to `false`
 
