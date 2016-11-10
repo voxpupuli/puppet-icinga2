@@ -50,13 +50,12 @@
 define icinga2::object::timeperiod (
   $ensure           = present,
   $display_name     = $title,
-  $update           = undef,
   $ranges           = undef,
   $prefer_includes  = undef,
   $excludes         = undef,
   $includes         = undef,
   $template         = false,
-  $import           = [],
+  $import           = ['legacy-timeperiod'],
   $target           = undef,
   $order            = '10',
 ){
@@ -74,8 +73,7 @@ define icinga2::object::timeperiod (
 
 
   if $display_name { validate_string ($display_name) }
-  if $update { validate_string ($update) }
-  if $ranges { validate_string ($ranges) }
+  validate_hash ($ranges)
   if $prefer_includes { validate_bool ($prefer_includes) }
   if $excludes { validate_string ($excludes) }
   if $includes { validate_string ($includes) }
@@ -83,7 +81,6 @@ define icinga2::object::timeperiod (
   # compose attributes
   $attrs = {
     'display_name'    => $display_name,
-    'update'          => $update,
     'ranges'          => $ranges,
     'prefer_includes' => $prefer_includes,
     'excludes'        => $excludes,

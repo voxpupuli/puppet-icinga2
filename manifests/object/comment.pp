@@ -61,10 +61,10 @@ define icinga2::object::comment (
   validate_absolute_path($target)
   validate_integer ( $order )
 
-  if $host_name { validate_string($host_name) }
+  validate_string($host_name)
   if $service_name { validate_string($service_name) }
-  if $author { validate_string($author) }
-  if $text { validate_string($text) }
+  validate_string($author)
+  validate_string($text)
   if $entry_time { validate_integer($entry_time) }
   if $entry_type { validate_integer($entry_type) }
   if $expire_time { validate_integer($expire_time) }

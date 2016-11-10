@@ -50,7 +50,6 @@
 #
 define icinga2::object::notificationcommand (
   $ensure     = present,
-  $execute    = undef,
   $command    = undef,
   $env        = undef,
   $vars       = undef,
@@ -73,8 +72,7 @@ define icinga2::object::notificationcommand (
   validate_absolute_path($target)
   validate_string($order)
 
-  if $execute { validate_string ($execute) }
-  if $command { validate_string ($command) }
+  validate_array($command)
   if $env { validate_hash ($env) }
   if $vars { validate_hash ($vars) }
   if $timeout { validate_integer ($timeout) }
@@ -82,7 +80,6 @@ define icinga2::object::notificationcommand (
 
   # compose attributes
   $attrs = {
-    'execute' => $execute,
     'command' => $command,
     'env' => $env,
     'vars' => $vars,

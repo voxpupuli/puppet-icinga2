@@ -12,53 +12,38 @@ describe('icinga2::object::notificationcommand', :type => :define) do
     end
 
     context "#{os} with all defaults and target => /bar/baz" do
-      let(:params) { {:target =>  '/bar/baz'} }
+      let(:params) { {:target =>  '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to contain_concat('/bar/baz') }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/object NotificationCommand "bar"/) }
+                              .with_content(/object NotificationCommand "bar"/)
+                              .with_content(/command = \[ "foocommand", \]/)}
 
       it { is_expected.to contain_icinga2__object('icinga2::object::NotificationCommand::bar')
                               .that_notifies('Class[icinga2::service]') }
     end
 
 
-    context "#{os} with execute => foo" do
-      let(:params) { {:execute => 'foo', :target => '/bar/baz'} }
+    context "#{os} with command => [foo, bar]" do
+      let(:params) { {:command => ['foo','bar'], :target => '/bar/baz'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/execute = "foo"/) }
+                              .with_content(/command = \[ "foo", "bar", \]/) }
     end
 
 
-    context "#{os} with execute => 4247 (not a valid string)" do
-      let(:params) { {:execute => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
-    context "#{os} with command => foo" do
+    context "#{os} with command => foo (not a valid array)" do
       let(:params) { {:command => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/command = "foo"/) }
-    end
-
-
-    context "#{os} with command => 4247 (not a valid string)" do
-      let(:params) { {:command => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
     end
 
 
     context "#{os} with env => { foo => 'bar', bar => 'foo' }" do
-      let(:params) { {:env => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz' } }
+      let(:params) { {:env => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :command => ['foocommand'] } }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                               .with({ 'target' => '/bar/baz' })
@@ -67,14 +52,14 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
     context "#{os} with env => 'foo' (not a valid hash)" do
-      let(:params) { {:env => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:env => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
 
 
     context "#{os} with vars => { foo => 'bar', bar => 'foo' }" do
-      let(:params) { {:vars => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz' } }
+      let(:params) { {:vars => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :command => ['foocommand'] } }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                               .with({ 'target' => '/bar/baz' })
@@ -84,14 +69,14 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
     context "#{os} with vars => 'foo' (not a valid hash)" do
-      let(:params) { {:vars => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:vars => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
 
 
     context "#{os} with timeout => 30" do
-      let(:params) { {:timeout => '30', :target => '/bar/baz'} }
+      let(:params) { {:timeout => '30', :target => '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                               .with({'target' => '/bar/baz'})
@@ -100,14 +85,17 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
     context "#{os} with timeout => foo (not a valid integer)" do
-      let(:params) { {:timeout => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:timeout => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
     end
 
 
     context "#{os} with arguments => {-foo1 => bar1, -foo2 => {bar_21 => baz21}}" do
-      let(:params) { {:arguments => {'-foo1' => 'bar1', '-foo2' => {'bar_21' => 'baz21'}}, :target => '/bar/baz'} }
+      let(:params) { {
+          :arguments => {'-foo1' => 'bar1', '-foo2' => {'bar_21' => 'baz21'}},
+          :target => '/bar/baz',
+          :command => ['foocommand']} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                               .with({'target' => '/bar/baz'})
@@ -116,7 +104,7 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
     context "#{os} with arguments => foo (not a valid hash)" do
-      let(:params) { {:arguments => 'foo', :target => '/bar/baz'} }
+      let(:params) { {:arguments => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
@@ -149,53 +137,38 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
   context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {:target =>  '/bar/baz'} }
+    let(:params) { {:target =>  '/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to contain_concat('/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/object NotificationCommand "bar"/) }
+                            .with_content(/object NotificationCommand "bar"/)
+                            .with_content(/command = \[ "foocommand", \]/)}
 
     it { is_expected.to contain_icinga2__object('icinga2::object::NotificationCommand::bar')
                             .that_notifies('Class[icinga2::service]') }
   end
 
 
-  context "Windows 2012 R2 with execute => foo" do
-    let(:params) { {:execute => 'foo', :target => '/bar/baz'} }
+  context "Windows 2012 R2 with command => [foo, bar]" do
+    let(:params) { {:command => ['foo','bar'], :target => '/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/execute = "foo"/) }
+                            .with_content(/command = \[ "foo", "bar", \]/) }
   end
 
 
-  context "Windows 2012 R2 with execute => 4247 (not a valid string)" do
-    let(:params) { {:execute => 4247, :target => '/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
-  context "Windows 2012 R2 with command => foo" do
+  context "Windows 2012 R2 with command => foo (not a valid array)" do
     let(:params) { {:command => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/command = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with command => 4247 (not a valid string)" do
-    let(:params) { {:command => 4247, :target => '/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
   end
 
 
   context "Windows 2012 R2 with env => { foo => 'bar', bar => 'foo' }" do
-    let(:params) { {:env => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz' } }
+    let(:params) { {:env => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :command => ['foocommand'] } }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                             .with({ 'target' => '/bar/baz' })
@@ -204,14 +177,14 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
   context "Windows 2012 R2 with env => 'foo' (not a valid hash)" do
-    let(:params) { {:env => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:env => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
   context "Windows 2012 R2 with vars => { foo => 'bar', bar => 'foo' }" do
-    let(:params) { {:vars => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz' } }
+    let(:params) { {:vars => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :command => ['foocommand'] } }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                             .with({ 'target' => '/bar/baz' })
@@ -221,14 +194,14 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
   context "Windows 2012 R2 with vars => 'foo' (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:vars => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
   context "Windows 2012 R2 with timeout => 30" do
-    let(:params) { {:timeout => '30', :target => '/bar/baz'} }
+    let(:params) { {:timeout => '30', :target => '/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                             .with({'target' => '/bar/baz'})
@@ -237,14 +210,17 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
   context "Windows 2012 R2 with timeout => foo (not a valid integer)" do
-    let(:params) { {:timeout => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:timeout => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
   context "Windows 2012 R2 with arguments => {-foo1 => bar1, -foo2 => {bar_21 => baz21}}" do
-    let(:params) { {:arguments => {'-foo1' => 'bar1', '-foo2' => {'bar_21' => 'baz21'}}, :target => '/bar/baz'} }
+    let(:params) { {
+        :arguments => {'-foo1' => 'bar1', '-foo2' => {'bar_21' => 'baz21'}},
+        :target => '/bar/baz',
+        :command => ['foocommand']} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
                             .with({'target' => '/bar/baz'})
@@ -253,7 +229,7 @@ describe('icinga2::object::notificationcommand', :type => :define) do
 
 
   context "Windows 2012 R2 with arguments => foo (not a valid hash)" do
-    let(:params) { {:arguments => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:arguments => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
