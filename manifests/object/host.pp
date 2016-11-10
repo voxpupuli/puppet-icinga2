@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the object, absent disables it. Defaults to present.
+#
 # [*hostname*]
 #   Hostname of the Host object.
 #

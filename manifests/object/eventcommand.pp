@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disables it. Defaults to present.
+#   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*execute*]
 #     The "execute" script method takes care of executing the event handler. 

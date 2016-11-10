@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disabled it. Defaults to present.
+#   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*endpoint*]
 #   Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.

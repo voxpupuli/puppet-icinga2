@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the object, absent disables it. Defaults to present.
+#
 # [*display_name*]
 #   A short description of the host group.
 #
@@ -34,6 +37,7 @@
 # Icinga Development Team <info@icinga.org>
 #
 define icinga2::object::hostgroup(
+  $ensure         = present,
   $hostgroup_name = $title,
   $display_name   = undef,
   $groups         = undef,
@@ -67,6 +71,7 @@ define icinga2::object::hostgroup(
 
   # create object
   icinga2::object { "icinga2::object::HostGroup::${title}":
+    ensure      => $ensure,
     object_name => $hostgroup_name,
     object_type => 'HostGroup',
     attrs       => $attrs,

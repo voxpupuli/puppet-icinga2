@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disables it. Defaults to present.
+#   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*spool_dir*]
 #   The directory which contains the check result files. Defaults to LocalStateDir + "/lib/icinga2/spool/checkresults/".

@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the object, absent disables it. Defaults to present.
+#
 # [*checkcommand*]
 #   Title of the CheckCommand object.
 #

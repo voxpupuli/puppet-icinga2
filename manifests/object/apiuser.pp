@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set to present enables the object, absent disables it. Defaults to present.
+#
 # [*password*]
 #   Password string.
 #
@@ -43,6 +46,7 @@
 # Icinga Development Team <info@icinga.org>
 #
 define icinga2::object::apiuser(
+  $ensure      = present,
   $apiuser     = $title,
   $password    = undef,
   $client_cn   = undef,
@@ -73,6 +77,7 @@ define icinga2::object::apiuser(
 
   # create object
   icinga2::object { "icinga2::object::ApiUser::${title}":
+    ensure      => $ensure,
     object_name => $apiuser,
     object_type => 'ApiUser',
     attrs       => $attrs,

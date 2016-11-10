@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disables it. Defaults to present.
+#   Set to present enables the object, absent disables it. Defaults to present.
 # 
 # [*host_name*]
 #     The name of the host this comment belongs to.

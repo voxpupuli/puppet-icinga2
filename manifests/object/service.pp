@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the endpoint object, absent disables it. Defaults to present.
+#   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*display_name*]
 #   A short description of the service.
