@@ -1489,9 +1489,6 @@ Icon image description for the service. Used by external interface only.
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 
-##### `apply_target`
-An object type on which to target the apply rule.
-
 ##### `assign`
 Assign user group members using the group assign rules.
 

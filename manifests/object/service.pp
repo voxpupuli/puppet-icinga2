@@ -105,9 +105,6 @@
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
-# [*apply_target*]
-#   An object type on which to target the apply rule.
-#
 # [*assign*]
 #   Assign user group members using the group assign rules.
 #
@@ -159,7 +156,6 @@ define icinga2::object::service (
   $icon_image             = undef,
   $icon_image_alt         = undef,
   $apply                  = false,
-  $apply_target           = 'Host',
   $assign                 = [],
   $ignore                 = [],
   $import                 = [],
@@ -176,8 +172,6 @@ define icinga2::object::service (
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   unless is_bool($apply) { validate_string($apply) }
-  validate_re($apply_target, ['^Host$', '^Service$'],
-    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
@@ -249,7 +243,7 @@ define icinga2::object::service (
     object_type  => 'Service',
     import       => $import,
     apply        => $apply,
-    apply_target => $apply_target,
+    apply_target => 'Host',
     assign       => $assign,
     ignore       => $ignore,
     template     => $template,
