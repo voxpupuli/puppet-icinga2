@@ -13,7 +13,7 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
-# [*disply_name*]
+# [*display_name*]
 #   A short description of the host (e.g. displayed by external interfaces instead of the name if set).
 #
 # [*address*]

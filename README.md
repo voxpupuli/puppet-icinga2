@@ -20,7 +20,7 @@
 ## Overview
 
 Icinga2 is a widely used open source monitoring software. This Puppet module helps installing and managing configuration
-of Icinga2 on multiple operating sytems. 
+of Icinga2 on multiple operating sytems.
 
 >> This Module is a rewrite of [puppet-icinga2] and will replace it in the future.
 
@@ -35,12 +35,12 @@ available in Icinga2 can be enabled and configured with this module.
 ### What the Icinga2 Puppet module affects
 
 * Packages Installation
-* Service 
+* Service
 * Objects Configuration
 * Feature Configuration
 * Apply Rules
-* MySQL/PostgreSQL Database Schema Import 
-* Repository Management 
+* MySQL/PostgreSQL Database Schema Import
+* Repository Management
 * Certification Authority
 
 ### Dependencies
@@ -72,7 +72,7 @@ parameter, which will allow the module to add the official [packages.icinga.org]
 Each Icinga2 feature can be enabled or disabled by using the according classes. In addition to that, there is a set of
 default features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
 
-The default set of features can be changed by setting the `features` parameter: 
+The default set of features can be changed by setting the `features` parameter:
 ``` puppet
 class { 'icinga2':
   manage_repo => true,
@@ -144,7 +144,7 @@ class{ 'icinga2::feature::idopgsql':
 
 ### Clustering Icinga 2
 Icinga 2 can run in three different roles:
- 
+
 * A master node which is on top of the hierarchy.
 * A satellite node which is a child of a satellite or master node.
 * A client node which works as an agent connected to master and/or satellite nodes.
@@ -268,7 +268,7 @@ The Client is connected to the Satellite. The Satellite is the parent of the Cli
       }
     }
   }
-  
+
   icinga2::object::zone { 'global-templates':
     global => true,
   }
@@ -389,7 +389,7 @@ to `false`. It's also possible to assign your own directory. This directory is r
 managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is `true`.
 
 #### Class: `icinga2::feature::checker`
-Enables or disables the `checker` feature. 
+Enables or disables the `checker` feature.
 
 **Parameters of `icinga2::feature::checker`:**
 
@@ -438,7 +438,7 @@ Either `present` or `absent`. Defines if the feature `command` should be enabled
 
 ##### `commandpath`
 Absolute path to the command pipe. Default depends on platform:
- 
+
 * Linux: `/var/run/icinga2/cmd/icinga2.cmd`
 * Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd`
 
@@ -452,7 +452,7 @@ Either `present` or `absent`. Defines if the feature `compatlog` should be enabl
 
 ##### `commandpath`
 Absolute path to the command pipe. Default depends on platform:
- 
+
 * Linux: `/var/run/icinga2/cmd/icinga2.cmd`
 * Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd`
 
@@ -468,7 +468,7 @@ Sets how often should the log file be rotated. Valid options are:
 * `HOURLY`
 * `DAILY`
 * `WEEKLY`
-* `MONTHLY` 
+* `MONTHLY`
 
 Defaults to `DAILY`
 
@@ -517,7 +517,7 @@ Port to listen for connections. Only valid when socket_type is `tcp`. Defaults t
 
 ##### `socket_path`
 Specifies the path to the UNIX socket file. Only valid when socket_type is `unix`. Default depends on platform:
- 
+
 * Linux: `/var/run/icinga2/cmd/livestatus`
 * Windows: `C:/ProgramData/icinga2/var/run/icinga2/cmd/livestatus`
 
@@ -561,12 +561,12 @@ Absolute path to the perfdata file for services. Default depends on platform:
 
 ###### `host_temp_path`
 Path to the temporary host file. Defaults depends on platform:
-* Linux: `/var/spool/icinga2/tmp/host-perfdata` 
+* Linux: `/var/spool/icinga2/tmp/host-perfdata`
 * Windows: `C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata`
 
 ##### `service_temp_path`
 Path to the temporary service file. Defaults depends on platform:
-* Linux: `/var/spool/icinga2/tmp/host-perfdata` 
+* Linux: `/var/spool/icinga2/tmp/host-perfdata`
 * Windows: `C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata`
 
 ##### `host_format_template`
@@ -753,7 +753,7 @@ Defaults to `puppet`
 ##### `ssl_key_path`
 Location of the private key. Default depends on platform:
 
-* Linux `/etc/icinga2/pki/NodeName.key` 
+* Linux `/etc/icinga2/pki/NodeName.key`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key`
 
 The Value of `NodeName` comes from the corresponding constant.
@@ -761,7 +761,7 @@ The Value of `NodeName` comes from the corresponding constant.
 ##### `ssl_cert_path`
 Location of the certificate. Default depends on platform:
 
-* Linux `/etc/icinga2/pki/NodeName.crt` 
+* Linux `/etc/icinga2/pki/NodeName.crt`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt`
 
 The Value of `NodeName` comes from the corresponding constant.
@@ -769,7 +769,7 @@ The Value of `NodeName` comes from the corresponding constant.
 ##### `ssl_ca_path`
 Location of the CA certificate. Default depends on platform:
 
-* Linux `/etc/icinga2/pki/ca.crt` 
+* Linux `/etc/icinga2/pki/ca.crt`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
 
 ##### `accept_config`
@@ -853,7 +853,7 @@ MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid i
 
 ##### `ssl_cipher`
 MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
-      
+
 ##### `table_prefix`
 MySQL database table prefix. Defaults to `icinga_`
 
@@ -982,7 +982,7 @@ permissions = [
      filter = {{ regex("^Linux", service.vars.os) }}
    }
  ]
-``` 
+```
 
 #### Defined type: `icinga2::object::checkcommand`
 
@@ -1024,7 +1024,7 @@ Hostname of the Host object.
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
-##### `disply_name`
+##### `display_name`
 A short description of the host (e.g. displayed by external interfaces instead of the name if set).
 
 ##### `address`
