@@ -91,7 +91,7 @@ define icinga2::object::notification (
   $types        = undef,
   $states       = undef,
   $apply        = false,
-  $apply_target = undef,
+  $apply_target = 'Host',
   $assign       = [],
   $ignore       = [],
   $import       = [],
