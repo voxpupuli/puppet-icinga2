@@ -94,7 +94,7 @@ describe('icinga2::object', :type => :define) do
 
 
     context "#{os} with apply => (foo => config in host.vars.bar)" do
-      let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+      let(:params) { {:apply => 'foo => config in host.vars.bar', :apply_target => 'Host', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
         .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
@@ -304,7 +304,7 @@ describe('icinga2::object', :type => :define) do
 
 
   context "Windows 2012 R2 with apply => (foo => config in host.vars.bar)" do
-    let(:params) { {:apply => 'foo => config in host.vars.bar', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    let(:params) { {:apply => 'foo => config in host.vars.bar', :apply_target => 'Host', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
                             .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
