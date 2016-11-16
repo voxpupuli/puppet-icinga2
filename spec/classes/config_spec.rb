@@ -23,11 +23,11 @@ describe('icinga2', :type => :class) do
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
 
-    context "#{os} with constants => { foo => bar }" do
-      let(:params) { { :constants => {'foo' => 'bar'} } }
+    context "#{os} with constants => { foo => bar in foobar}" do
+      let(:params) { { :constants => {'foo' => 'bar in foobar'} } }
 
       it { is_expected.to contain_file('/etc/icinga2/constants.conf')
-        .with_content(/^const foo = "bar"\n/) }
+        .with_content(/^const foo = "bar in foobar"\n/) }
     end
 
     context "#{os} with plugins => [ foo, bar ]" do
@@ -85,11 +85,11 @@ describe('icinga2', :type => :class) do
 #      .that_comes_before('Class[icinga2::config]') }
   end
 
-  context 'windows with constants => { foo => bar }' do
-    let(:params) { { :constants => {'foo' => 'bar'} } }
+  context 'windows with constants => { foo => bar in foobar }' do
+    let(:params) { { :constants => {'foo' => 'bar in foobar'} } }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
-      .with_content(/^const foo = "bar"\r\n/) }
+      .with_content(/^const foo = "bar in foobar"\r\n/) }
   end
 
   context 'windows with plugins => [ foo, bar ]' do

@@ -150,12 +150,12 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with assign => [ host.vars.os == bar && host.address, NodeName != baz || !host.address]" do
-      let(:params) { {:assign => ['host.vars.os == bar && host.address', 'NodeName != baz'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with assign => [ host.vars.os == bar && host.address, generic-host in host.templates]" do
+      let(:params) { {:assign => ['host.vars.os == bar && host.address', 'generic-host in host.templates'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
         .with_content(/assign where host.vars.os == "bar" && host.address/)
-        .with_content(/assign where NodeName != "baz"/) }
+        .with_content(/assign where "generic-host" in host.templates/) }
     end
 
 

@@ -36,7 +36,7 @@ module Puppet
         def self.parse(row)
           result = ''
 
-          if row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2})\s(.+)$/
+          if row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
             if row =~ /^(.+)\((.*)\)$/
