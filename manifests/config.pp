@@ -20,16 +20,16 @@ class icinga2::config {
     fail("icinga2::config is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  $constants = $::icinga2::_constants
+  $constants = prefix($::icinga2::_constants, 'const ')
   $conf_dir  = $::icinga2::params::conf_dir
   $plugins   = $::icinga2::plugins
   $confd     = $::icinga2::_confd
 
   if $::kernel != 'windows' {
-    $template_constants  = template('icinga2/constants.conf.erb')
+    $template_constants  = icinga2_attributes($constants)
     $template_mainconfig = template('icinga2/icinga2.conf.erb')
   } else {
-    $template_constants  = regsubst(template('icinga2/constants.conf.erb'), '\n', "\r\n", 'EMG')
+    $template_constants  = regsubst(icinga2_attributes($constants), '\n', "\r\n", 'EMG')
     $template_mainconfig = regsubst(template('icinga2/icinga2.conf.erb'), '\n', "\r\n", 'EMG')
   }
 

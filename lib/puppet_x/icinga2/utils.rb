@@ -39,18 +39,26 @@ module Puppet
           if row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
-            if row =~ /^(.+)\((.*)\)$/
-              result += "%s(%s)" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
+            # fct(a, b)
+            #if row =~ /^(.+)\((.*)\)$/
+            #  result += "%s(%s)" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
+            # fct(a, b + ...
+            if row =~ /^(.+)\((.*)$/
+              result += "%s(%s" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
+            elsif row =~ /^(.*)\)$/
+              result += "%s)" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
+            # (a + b)
             elsif row =~ /^\((.*)$/
               result += "(%s" % [ parse($1) ]
-            elsif row =~ /^(.*)\)$/
-              result += "%s)" % [ parse($1) ]
+            # (a + b)
+            #elsif row =~ /^(.*)\)$/
+            #  result += "%s)" % [ parse($1) ]
             else
               result += value_types(row.to_s)
             end
           end
 
-          return result
+          return result.gsub(/" in "/, ' in ')
         end
 
 
