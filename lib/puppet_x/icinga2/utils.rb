@@ -1,9 +1,75 @@
+# == Helper function attributes
+#
+# Returns formatted attributes for objects as string.
+#
+# === Common Explanation:
+#
+# To generate a valid Icinga 2 configuration all object attributes are parsed. This
+# simple parsing make a decision if a part of string is to be quoted, how an array
+# or dictionary is to be formatted.
+#
+# An array, a hash or string can assign to an object attribute. Also true and false
+# are valid values.
+#
+# Hashes and arrays are created recursively and all parts like single items of an array,
+# keys and its value are parsed separateted as strings.
+#
+# Strings will parsed by splitting off in parts of strings by some keywords (operators)
+# like +, -, in, &&, ||, etc.
+#
+# NOTICE: Works only by using a white space before and after the keyword!!!
+#
+#   attr => 'string1 + string2 - string3'
+#
+# first will split in 'string1' and 'string2 + string2', 'string1' will give to
+# sub function 'value_types' and the second string will be parsed again.
+#
+# Brackets are parsed for expressions:
+#
+#   attr => '3 * (value1 - value2) / 2'
+#
+# The parser also detect function calls and will parse all parameters separately.
+#
+#   attr => 'function(param1, param2, ...)'
+#
+# True and false can be used as boolean or string.
+#
+#   attrs => true or  attr => 'true'
+#
+# In Icinga you can write your own function with {{ .. }}. For puppet use:
+#
+#   attrs => '{{ ... }}'
+#
+# The parser calculates which parts of a string has to quoted and which not.
+#
+# All fragments are quoted expect the following:
+#
+#   - boolean: true, false
+#   - numbers: 3 or 2.5
+#   - time intervals: 3m or 2.5h  (s = seconds, m = minutes, h = hours, d = days)
+#   - functions: {{ ... }}
+#   - all constants are declared in parameter constants of main class icinga2:
+#       NodeName
+#   - names of attributes that belong to the same type of object:
+#       name, check_command (host object)
+#   - all attributes or variables (custom attributes) from host, service or user context:
+#       host.name, service.check_command, user.groups, ...
+#
+# === What isn't supported?
+#
+# It's not possible to use arrays or dictionaries in a string, like
+#
+#   attr => 'array1 + [ item1, item2, ... ]'
+#
+# === Authors
+#
+# Icinga Development Team <info@icinga.org>
+#
 require 'puppet'
 
 module Puppet
   module Icinga2
     module Utils
-
 
       def self.attributes(attrs, consts, indent=2)
 
@@ -39,20 +105,12 @@ module Puppet
           if row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
-            # fct(a, b)
-            #if row =~ /^(.+)\((.*)\)$/
-            #  result += "%s(%s)" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
-            # fct(a, b + ...
             if row =~ /^(.+)\((.*)$/
               result += "%s(%s" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
             elsif row =~ /^(.*)\)$/
               result += "%s)" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
-            # (a + b)
             elsif row =~ /^\((.*)$/
               result += "(%s" % [ parse($1) ]
-            # (a + b)
-            #elsif row =~ /^(.*)\)$/
-            #  result += "%s)" % [ parse($1) ]
             else
               result += value_types(row.to_s)
             end
