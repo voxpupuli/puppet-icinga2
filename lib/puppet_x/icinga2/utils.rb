@@ -11,7 +11,7 @@ module Puppet
           if value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value =~ /^(true|false)$/
             result = value
           else
-            if $constants.include?(value) || value =~ /^!?(host|service|user)\./ || value =~ /^{{.*}}$/
+            if $constants.include?(value) || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
               result = value
             else
               result = "\"#{value}\""

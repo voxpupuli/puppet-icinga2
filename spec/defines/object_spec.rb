@@ -205,10 +205,15 @@ describe('icinga2::object', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
         .with_content(/vars.foo\["bar"\] = \{\n\s+key1 = 4247\n\s+key2 = "value2"\n\s+\}\n/) }
     end
+
+
+    context "#{os} with attrs => { foo => {{ unparsed string }} }" do
+      let(:params) { {:attrs => { 'foo' => '{{ unparsed string }}' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+        .with_content(/foo = \{{2} unparsed string \}{2}\n/) }
+    end
   end
-
-
-
 end
 
 describe('icinga2::object', :type => :define) do
@@ -426,5 +431,13 @@ describe('icinga2::object', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
       .with_content(/vars.foo\["bar"\] = \{\r\n\s+key1 = 4247\r\n\s+key2 = "value2"\r\n\s+\}\r\n/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { foo => {{ unparsed string }} }" do
+    let(:params) { {:attrs => { 'foo' => '{{ unparsed string }}' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      .with_content(/foo = \{{2} unparsed string \}{2}\r\n/) }
   end
 end
