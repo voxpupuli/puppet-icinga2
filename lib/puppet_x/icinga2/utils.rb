@@ -1,65 +1,70 @@
 # == Helper function attributes
 #
-# Returns formatted attributes for objects as string.
+# Returns formatted attributes for objects as strings.
 #
 # === Common Explanation:
 #
 # To generate a valid Icinga 2 configuration all object attributes are parsed. This
-# simple parsing make a decision if a part of string is to be quoted, how an array
-# or dictionary is to be formatted.
+# simple parsing algorithm takes a decision for each attribute, whether part of the
+# string is to be quoted or not, and how an array or dictionary is to be formatted.
 #
-# An array, a hash or string can assign to an object attribute. Also true and false
-# are valid values.
+# An array, a hash or a string can be assigned to an object attribute. True and false
+# are also valid values.
 #
-# Hashes and arrays are created recursively and all parts like single items of an array,
-# keys and its value are parsed separateted as strings.
+# Hashes and arrays are created recursively, and all parts – such as single items of an array,
+# keys and its values – are parsed separately as strings.
 #
-# Strings will parsed by splitting off in parts of strings by some keywords (operators)
-# like +, -, in, &&, ||, etc.
+# Strings are parsed in chunks, by splitting the original string into separate substrings
+# at specific keywords (operators) such as +, -, in, &&, ||, etc.
 #
-# NOTICE: Works only by using a white space before and after the keyword!!!
+# NOTICE: This splitting only works for keywords that are surrounded by whitespace, e.g.:
 #
 #   attr => 'string1 + string2 - string3'
 #
-# first will split in 'string1' and 'string2 + string2', 'string1' will give to
-# sub function 'value_types' and the second string will be parsed again.
+# The algorithm will loop over the parameter and start by splitting it into 'string1' and 'string2 - string3'.
+# 'string1' will be passed to the sub function 'value_types' and then the algorithm will continue parsing
+# the rest of the string ('string2 - string3'), splitting it, passing it to value_types, etc.
 #
 # Brackets are parsed for expressions:
 #
 #   attr => '3 * (value1 - value2) / 2'
 #
-# The parser also detect function calls and will parse all parameters separately.
+# The parser also detects function calls and will parse all parameters separately.
 #
 #   attr => 'function(param1, param2, ...)'
 #
-# True and false can be used as boolean or string.
+# True and false can be used as either booleans or strings.
 #
 #   attrs => true or  attr => 'true'
 #
-# In Icinga you can write your own function with {{ .. }}. For puppet use:
+# In Icinga you can write your own lambda functions with {{ ... }}. For puppet use:
 #
 #   attrs => '{{ ... }}'
 #
-# The parser calculates which parts of a string has to quoted and which not.
+# The parser analyzes which parts of the string have to be quoted and which do not.
 #
-# All fragments are quoted expect the following:
+# As a general rule, all fragments are quoted except for the following:
 #
 #   - boolean: true, false
 #   - numbers: 3 or 2.5
 #   - time intervals: 3m or 2.5h  (s = seconds, m = minutes, h = hours, d = days)
-#   - functions: {{ ... }}
-#   - all constants are declared in parameter constants of main class icinga2:
+#   - functions: {{ ... }} or function () {}
+#   - all constants, which are declared in the constants parameter in main class icinga2:
 #       NodeName
 #   - names of attributes that belong to the same type of object:
-#       name, check_command (host object)
-#   - all attributes or variables (custom attributes) from host, service or user context:
+#       e.g. name and check_command for a host object
+#   - all attributes or variables (custom attributes) from the host, service or user contexts:
 #       host.name, service.check_command, user.groups, ...
 #
 # === What isn't supported?
 #
-# It's not possible to use arrays or dictionaries in a string, like
+# It's not currently possible to use arrays or dictionaries in a string, like
 #
 #   attr => 'array1 + [ item1, item2, ... ]'
+#
+# Assignments other than simple attribution are not currently possible either, e.g. building something like
+#
+#   vars += config
 #
 # === Authors
 #
@@ -74,7 +79,7 @@ module Puppet
       def self.attributes(attrs, consts, indent=2)
 
         def self.value_types(value)
-          if value =~ /^\d+\.?\d*[d|h|m|s]?$/ || value =~ /^(true|false)$/
+          if value =~ /^\d+\.?\d*[dhms]?$/ || value =~ /^(true|false)$/
             result = value
           else
             if $constants.include?(value) || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/

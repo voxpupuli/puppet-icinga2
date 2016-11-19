@@ -130,7 +130,8 @@ describe('icinga2::object', :type => :define) do
                       :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
-                              .with_content(/apply Service "bar" to Host/) }
+        .with_content(/apply Service "bar" to Host/)
+      }
     end
 
 

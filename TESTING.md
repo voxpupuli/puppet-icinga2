@@ -37,7 +37,7 @@ In addition to Vagrant, you need to install all dependent modules to run the tes
 
 ```
 cd puppet-icinga2-rewrite/serverspec/environments/production
-r10k puppetfile install -v 
+r10k puppetfile install -v
 ```
 
 ### Run tests
