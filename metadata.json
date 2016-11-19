@@ -1,6 +1,6 @@
 {
   "name": "puppet-icinga2",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache 2.0",
@@ -14,7 +14,8 @@
     { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.10.0" },
     { "name": "puppetlabs/concat", "version_requirement": ">= 2.0.1" },
     { "name": "puppetlabs/apt", "version_requirement": ">= 1.8.0" },
-    { "name": "puppetlabs/chocolatey", "version_requirement": ">= 0.7.0" }
+    { "name": "puppetlabs/chocolatey", "version_requirement": ">= 0.7.0" },
+    { "name": "darin/zypprepo", "version_requirement": ">= 1.0.2" }
   ],
   "operatingsystem_support": [
     {
@@ -50,6 +51,12 @@
       "operatingsystemrelease": [
         "14.04",
         "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "12"
       ]
     }
   ]

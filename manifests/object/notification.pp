@@ -74,7 +74,7 @@
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::notification (
   $ensure       = present,
@@ -91,13 +91,13 @@ define icinga2::object::notification (
   $types        = undef,
   $states       = undef,
   $apply        = false,
-  $apply_target = undef,
+  $apply_target = 'Host',
   $assign       = [],
   $ignore       = [],
   $import       = [],
   $template     = false,
   $target       = undef,
-  $order        = '10',
+  $order        = '85',
 ){
   include ::icinga2::params
 

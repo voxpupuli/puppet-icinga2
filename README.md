@@ -1,6 +1,6 @@
 # Icinga2 Puppet Module
 
-![Icina Logo](https://www.icinga.org/wp-content/uploads/2014/06/icinga_logo.png)
+![Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
 #### Table of Contents
 
@@ -14,8 +14,7 @@
     * [Private Classes][]
     * [Public defined types][]
     * [Private defined types][]
-6. [Limitations - OS compatibility, etc.][Limitations]
-7. [Development - Guide for contributing to the module][Development]
+6. [Development - Guide for contributing to the module][Development]
 
 ## Overview
 
@@ -26,7 +25,7 @@ of Icinga2 on multiple operating sytems.
 
 ## Module Description
 This module installs and configures Icinga2 on your Linux or Windows hosts. By default it will use packages provided by
-your distributions repository, respectively chocolatey on Windows. The module can be enabled to use [packages.icinga.org]
+your distributions repository, respectively chocolatey on Windows. The module can be enabled to use [packages.icinga.com]
 as primary repository, which will give you the ability to install the latest Icinga2 release. All features and objects
 available in Icinga2 can be enabled and configured with this module.
 
@@ -54,13 +53,25 @@ Depending on your setup following modules may also be required:
 * [puppetlabs/apt]
 * [puppetlabs/chocolatey]
 
+### Limitations
+This module has been tested on:
+
+* Ruby >= 1.9
+* Debian 7, 8
+* Ubuntu 14.04, 16.04
+* CentOS/RHEL 6, 7
+    * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
+* Windows Server 2012
+
+Other operating systems or versions may work but have not been tested.
+
 ## Usage
 
 ### Installing Icinga2
 The default class `icinga2` will install and configure a basic installation of Icinga2 on your system. By default it will
 enable the features `checker`, `mainlog` and `notification`. As default installation source the distributions repository will
 used. On Windows systems we use chocolatey. To get the latest version of Icinga2 you need to enable the `manage_repo`
-parameter, which will allow the module to add the official [packages.icinga.org] repository to your host.
+parameter, which will allow the module to add the official [packages.icinga.com] repository to your host.
 
 ``` puppet
   class { 'icinga2':
@@ -76,7 +87,7 @@ The default set of features can be changed by setting the `features` parameter:
 ``` puppet
 class { 'icinga2':
   manage_repo => true,
-  features    => ['checker', 'mainlog', 'command']
+  features    => ['checker', 'mainlog', 'command'],
 }
 ```
 
@@ -86,7 +97,7 @@ class { 'icinga2::feature::graphite':
   host                   => '10.10.0.15',
   port                   => 2003,
   enable_send_thresholds => true,
-  enable_send_metadata   => true
+  enable_send_metadata   => true,
 }
 ```
 
@@ -99,7 +110,7 @@ is currently not supported.
 
 The IDO featues require an existing database and a user with permissions. When using MySQL we recommend the
 [puppetlabs/mysql] Puppet module to install the database server, creat a database and manage user permissions. Here's an
-example how you create a MySQL database with the corresponding user with permissions by usng the [puppetlabs/mysql]
+example how you create a MySQL database with the corresponding user with permissions by using the [puppetlabs/mysql]
 module:
 
 ``` puppet
@@ -110,15 +121,15 @@ mysql::db { 'icinga2':
   user     => 'icinga2',
   password => 'supersecret',
   host     => 'localhost',
-  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE'],
 }
 
 class{ 'icinga2::feature::idomysql':
-  user          => "icinga2",
-  password      => "supersecret",
-  database      => "icinga2",
+  user          => 'icinga2',
+  password      => 'supersecret',
+  database      => 'icinga2',
   import_schema => true,
-  require       => Mysql::Db['icinga2']
+  require       => Mysql::Db['icinga2'],
 }
 ```
 For PostgreSQL we recomment the [puppetlabs/puppetlabs-postgresql] module. You can install the server, create databases
@@ -134,11 +145,11 @@ postgresql::server::db { 'icinga2':
 }
 
 class{ 'icinga2::feature::idopgsql':
-  user          => "icinga2",
-  password      => "supersecret",
-  database      => "icinga2",
+  user          => 'icinga2',
+  password      => 'supersecret',
+  database      => 'icinga2',
   import_schema => true,
-  require       => Postgresql::Server::Db['icinga2']
+  require       => Postgresql::Server::Db['icinga2'],
 }
 ```
 
@@ -150,7 +161,7 @@ Icinga 2 can run in three different roles:
 * A client node which works as an agent connected to master and/or satellite nodes.
 
 To learn more about Icinga 2 Clustering, follow the official docs on [distributed monitoring]. The following examples show
-how a these roles can be configured using this Puppet module.
+how these roles can be configured using this Puppet module.
 
 #### Master
 A Master node has no parent and is usually also the place where you enable the IDO and notification features. A Master
@@ -273,8 +284,276 @@ The Client is connected to the Satellite. The Satellite is the parent of the Cli
     global => true,
   }
 ```
+### Config Objects
+With this module you can create almost every object that Icinga 2 knows about. When creating objects some parameters are
+required. This module sets the same requirements as Icinga 2 does. When creating an object you must set a target for the
+configuration. Here are some examples for some object types:
 
-### Custom configuration files
+#### Host
+``` puppet
+icinga2::object::host { 'srv-web1.fqdn.com':
+  display_name  => 'srv-web1.fqdn.com',
+  address       => '127.0.0.1',
+  address6      => '::1',
+  check_command => 'hostalive',
+  target        => '/etc/icinga2/conf.d/srv-web1.fqdn.com.conf',
+}
+```
+
+#### Service
+``` puppet
+icinga2::object::service { 'uptime':
+  host_name      => 'srv-web1.fqdn.com',
+  display_name   => 'Uptime',
+  check_command  => 'check_uptime',
+  check_interval => 600m
+  groups         => ['uptime', 'linux']
+  target         => '/etc/icinga2/conf.d/uptime.conf',
+}
+```
+
+#### Hostgroup
+``` puppet
+icinga2::object::hostgroup { 'monitoring-hosts':
+  display_name => 'Linux Servers',
+  groups       => [ 'linux-servers' ],
+  target       => '/etc/icinga2/conf.d/groups2.conf',
+  assign       => [ 'host.vars.os == "linux"' ],
+}
+```
+
+#### Parsing Cofiguration
+To generate a valid Icinga 2 configuration all object attributes are parsed. This simple parsing algorithm takes a
+decision for each attribute, whether part of the string is to be quoted or not, and how an array or dictionary is to be
+formatted.
+
+An array, a hash or a string can be assigned to an object attribute. True and false are also valid values.
+
+Hashes and arrays are created recursively, and all parts – such as single items of an array, keys and its values
+are parsed separately as strings.
+
+Strings are parsed in chunks, by splitting the original string into separate substrings at specific keywords (operators)
+such as `+`, `-`, `in`, `&&`, `||`, etc.
+
+**NOTICE**: This splitting only works for keywords that are surrounded by whitespace, e.g.:
+```
+   attr => 'string1 + string2 - string3'
+```
+
+The algorithm will loop over the parameter and start by splitting it into 'string1' and 'string2 - string3'.
+'string1' will be passed to the sub function 'value_types' and then the algorithm will continue parsing the rest of the
+string ('string2 - string3'), splitting it, passing it to value_types, etc.
+
+Brackets are parsed for expressions:
+```
+  attr => '3 * (value1 - value2) / 2'
+```
+
+The parser also detects function calls and will parse all parameters separately.
+```
+  attr => 'function(param1, param2, ...)'
+```
+
+True and false can be used as either booleans or strings.
+```
+  attrs => true or  attr => 'true'
+```
+
+In Icinga you can write your own lambda functions with {{ ... }}. For puppet use:
+```
+  attrs => '{{ ... }}'
+```
+
+The parser analyzes which parts of the string have to be quoted and which do not.
+
+As a general rule, all fragments are quoted except for the following:
+
+* Boolean: `true`, `false`
+* Numbers: `3` or `2.5`
+* Time Intervals: `3m` or `2.5h`  (s = seconds, m = minutes, h = hours, d = days)
+* Functions: `{{ ... }}` or function `()` `{}`
+* All constants, which are declared in the constants parameter in main class `icinga2`
+    * `NodeName`
+* Names of attributes that belong to the same type of object:
+    * e.g. `name` and `check_command` for a host object
+* All attributes or variables (custom attributes) from the host, service or user contexts:
+    * `host.name`, `service.check_command`, `user.groups`, ...
+
+###### What isn't supported?
+
+It's not currently possible to use arrays or dictionaries in a string, like
+```
+  attr => 'array1 + [ item1, item2, ... ]'
+```
+
+Assignments other than simple attribution are not currently possible either, e.g. building something like
+```
+  vars += config
+```
+
+### Apply Rules
+Some objects support to be applied to other objects. To create a simple apply rule you must set the `apply` parameter to
+`true`. If this parameter is set to a string, this string will be used to build an `apply for` loop. A service object
+always targets a host object. All other objects need to explicitly set an `apply_target`
+
+Apply a SSH service to all Linux hosts:
+``` puppet
+icinga2::object::service { 'SSH':
+  target        => '/etc/icinga2/conf.d/test.conf',
+  apply         => true,
+  assign        => [ 'host.vars.os == Linux' ],
+  ignore        => [ 'host.vars.os == Windows' ],
+  display_name  => 'Test Service',
+  check_command => 'ssh',
+}
+```
+
+Apply notifications to services:
+
+``` puppet
+icinga2::object::notification { 'testnotification':
+  target       => '/etc/icinga2/conf.d/test.conf',
+  apply        => true,
+  apply_target => 'Service',
+  assign       => [ 'host.vars.os == Linux' ],
+  ignore       => [ 'host.vars.os == Windows' ],
+  user_groups  => ['icingaadmins']
+}
+```
+
+Assign all Linux hosts to a hostgroup:
+``` puppet
+icinga2::object::hostgroup { 'monitoring-hosts':
+  display_name => 'Linux Servers',
+  groups       => [ 'linux-servers' ],
+  target       => '/etc/icinga2/conf.d/groups2.conf',
+  assign       => [ 'host.vars.os == "linux"' ],
+}
+```
+
+A loop to create HTTP services for all vHosts of a host object:
+``` puppet
+icinga2::object::service { 'HTTP':
+  target        => '/etc/icinga2/conf.d/http.conf',
+  apply         => 'http_vhost => config in host.vars_http_vhost',
+  assign        => [ 'host.vars.os == Linux' ],
+  display_name  => 'HTTP Service',
+  check_command => 'http',
+}
+```
+
+### CA and Certificates
+Handling the CA and certificates is an important part of Icinga2, because the communication between Icinga processes will
+not work without SSL. This module offers multiple choices to treat this. 
+
+#### CA on your Icinga Master
+One of your Icinga master needs to bahave as a CA. With the class `icinga2::pki::ca` you can do following to fullfil
+this requiremen:
+
+* Use the ability of the icinga2 CLI to generate a complete new CA
+``` puppet
+  include icinga2
+  class { 'icinga2::pki::ca': }
+```
+
+
+* Set a custom content of the CA certificate and key
+``` puppet
+  include icinga2
+  class { 'icinga2::pki::ca':
+    ca_cert => '-----BEGIN CERTIFICATE----- ...',
+    ca_key  => '-----BEGIN RSA PRIVATE KEY----- ...',
+  }
+```
+
+* Transfer a CA certificate and key from an existing CA by using the file ressource:
+``` puppet
+  include icinga2
+  file { '/var/lib/icinga2/ca/ca.crt':
+    source => '...',
+    tag    => 'icinga2::config::file',
+  }
+  
+  file { '/var/lib/icinga2/ca/ca.key':
+    source => '...',
+    tag    => 'icinga2::config::file',
+  }
+```
+
+If you are looking for an option to use your Puppet CA, have a look to the
+[Client/Satellite Certificates](#clientsatellite-certificates) section.
+
+#### Client/Satellite Certificates
+In addition to the Master, each Client and Satellite needs valid certifacates to communicate with other Icinga2 instanzes.
+This module offers following options to create these certificates:
+
+* Use te Puppet CA and its client certificatse. This is convinient since you don't need to maintain an additional CA.
+``` puppet
+  include ::icinga2::feature::api
+```
+
+* Use a custom function impletemented in this module to generate a certificate. This feature will to the following:
+  * Generate a key and certificate based on the FQDN of the host
+  * Save the certificate of another Icinga2 instance, usually the Icinga master where your Icinga CA is located
+  * Generate a ticket based on the TicketSalt
+  * Request a signed certificate at your Icinga CA
+  
+``` puppet
+  class { 'icinga2::feature::api':
+    pki             => 'icinga2',
+    ca_host         => 'icinga2-master.example.com',
+    ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
+    accept_config   => true,
+    accept_commands => true,
+    endpoints       => {
+      'NodeName' => {},
+      'icinga2-master.example.com' => {
+        'host' => '192.168.56.103',
+      }
+    },
+    zones           => {
+      'NodeName' => {
+        'endpoints' => ['NodeName'],
+        'parent' => 'master',
+      },
+      'master' => {
+        'endpoints' => ['icinga2-master.example.com']
+      }
+    }
+  }
+```
+
+* Use custom file ressources to transfer your own certificate and key
+``` puppet
+  class { 'icinga2::feature::api':
+    pki => 'none',
+  }
+
+  file { "/etc/icinga2/pki/${::fqdn}.crt":
+    ensure => file,
+    tag    => 'icinga2::config::file,
+    source => "puppet:///modules/profiles/certificates/${::fqdn}.crt",
+  }
+
+  file { "/etc/icinga2/pki/${::fqdn}.key":
+    ensure => file,
+    tag    => 'icinga2::config::file,
+    source => "puppet:///modules/profiles/private_keys/${::fqdn}.key",
+  }
+```
+
+* Set a custom content for the certificate and key
+
+``` puppet
+  class { 'icinga2::feature::api':
+    pki         => 'none',
+    ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
+    ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
+    ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
+  }
+```
+
+### Custom configuration
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
 tag and triggers a reload of Icinga2 on a file change.
@@ -285,6 +564,37 @@ tag and triggers a reload of Icinga2 on a file change.
     ensure => file,
     tag    => 'icinga2::config::file',
   }
+```
+
+If you want to add custom configuration fragments to existing config files, you can do this with
+`icinga2::config::fragment`. It adds content into a specified target to the position you set in the order parameter.
+You can use also Puppet templates to set the content of the config fragment.
+
+For example, you can add custom functions to existing config files:
+
+``` puppet 
+include icinga2
+
+icinga2::object::service { 'load':
+  display_name  => 'Load',
+  apply         => true,
+  check_command => 'load',
+  assign        => ['vars.os == Linux'],
+  target        => '/etc/icinga2/conf.d/service_load.conf',
+  order         => '30',
+}
+
+icinga2::config::fragment { 'load-function':
+  target => '/etc/icinga2/conf.d/service_load.conf',
+  order => '10',
+  content => 'vars.load_wload1 = {{
+    if (get_time_period("backup").is_inside) {
+      return 20
+    } else {
+      return 5
+    }
+  }}',
+}
 ```
 
 ## Reference
@@ -308,6 +618,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class::icinga2::feature::api](#class-icinga2featureapi)
     - [Class::icinga2::feature::idopgsql](#class-icinga2featureidopgsql)
     - [Class::icinga2::feature::idomysql](#class-icinga2featureidomysql)
+    - [Class::icinga2::pki::ca](#class-icinga2pkica)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -332,7 +643,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::eventcommand](#defined-type-icinga2objecteventcommand)
     - [Defined type: icinga2::object::checkresultreader](#defined-type-icinga2objectcheckresultreader)
     - [Defined type: icinga2::object::compatlogger](#defined-type-icinga2objectcompatlogger)
-    - [Defined type: icinga2::object::comment](#defined-type-icinga2objectcomment)
+    - [Defined type: icinga2::config::fragment](#defined-type-icinga2configfragment)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -363,7 +674,7 @@ Defines if the service should be `running` or `stopped`. Defaults to `running`
 If set to `true` the Icinga2 service will start on boot. Defaults to `true`.
 
 ##### `manage_repo`
-When set to `true` this module will install the [packages.icinga.org] repository. With this official repo
+When set to `true` this module will install the [packages.icinga.com] repository. With this official repo
 you can get the latest version of Icinga. When set to `false` the operating systems default will be used. As the Icinga
 Project does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows. Default
 is `false`
@@ -675,7 +986,10 @@ InfluxDB user name. Defaults to `undef`
 ##### `password`
 InfluxDB user password. Defaults to `undef`
 
-##### `ssl`
+##### `enable_ssl`
+Either enable or disable SSL. Other SSL parameters are only affected if this is set to `true`. Defaults to `false`.
+
+##### `pki`
 SSL settings will be set depending on this parameter.
 
 * `puppet` Use puppet certificates. This will copy the ca.pem, certificate and key generated by Puppet.
@@ -700,8 +1014,8 @@ Tags defined in this hash will be set in the host_template.
 
 ``` puppet
 class { 'icinga2::feature::influxdb':
-  host_measurement => '$host.check_command$'
-  host_tags        => { hostname => '$host.name$' }
+  host_measurement => '$host.check_command$',
+  host_tags        => { hostname => '$host.name$' },
 }
 ```
 
@@ -714,7 +1028,7 @@ Tags defined in this hash will be set in the service_template.
 ``` puppet
 class { 'icinga2::feature::influxdb':
   service_measurement => '$service.check_command$',
-  service_tags        => { hostname => '$host.name$', service => '$service.name$' }
+  service_tags        => { hostname => '$host.name$', service => '$service.name$' },
 }
 ```
 
@@ -745,6 +1059,8 @@ Provides multiple sources for the certificate and key.
 * `puppet` Copies the key, cert and CAcert from the Puppet ssl directory to the Icinga pki directory.
   * Linux: `/etc/icinga2/pki`
   * Windows: `C:/ProgramData/icinga2/etc/icinga2/pki`
+* `icinga2` Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the Puppetmaster by using
+the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
 `ssl_ca` parameters.
 
@@ -777,6 +1093,22 @@ Accept zone configuration. Defaults to `false`
 
 ##### `accept_commands`
 Accept remote commands. Defaults to `false`
+
+##### `ca_host`
+This host will be connected to request the certificate. Set this if you use the `icinga2` pki. 
+
+##### `ca_port`
+Port of the 'ca_host'. Defaults to `5665`
+
+##### `ticket_salt`
+Salt to use for ticket generation. Defaults to icinga2 constant `TicketSalt`.
+
+##### `endpoints`
+Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeName` is a Icnga2 constant.
+
+##### `zones`
+Hash to configure zone objects. Defaults to `{ 'ZoneName' => {'endpoints' => ['NodeName']} }`. `ZoneName` and `NodeName`
+are Icinga2 constants.
 
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.
@@ -878,10 +1210,23 @@ Array of information types that should be written to the database.
 ##### `import_schema`
 Whether to import the MySQL schema or not. Defaults to `false`
 
+#### Class: `icinga2::pki::ca`
+This class provides multiple ways to create the CA used by Icinga2. By default it will create a CA by using the Icinga2
+CLI. If you want to use your own CA you will either have to transfer it by using a file ressource or you can set the
+content of your certificat and key in this class.
+
+**Parameters of `icinga2::pki::ca`:**
+
+##### `ca_cert`
+Content of the CA certificate. If this is unset, a certificate will be generated with the Icinga 2 CLI.
+
+##### `ca_key`
+Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
+
 ### Private Classes
 
 #### Class: `icinga2::repo`
-Installs the [packages.icinga.org] repository. Depending on your operating system [puppetlabs/apt] or
+Installs the [packages.icinga.com] repository. Depending on your operating system [puppetlabs/apt] or
 [puppetlabs/chocolatey] are required.
 
 #### Class: `icinga2::install`
@@ -1196,9 +1541,8 @@ Set to present enables the endpoint object, absent disabled it. Defaults to `pre
 ##### `display_name`
 A short description of the time period.
 
-##### `update`
-The "update" script method takes care of updating the internal representation of the time period. In virtually all cases
-you should import the "legacy-timeperiod" template to take care of this setting.
+##### `import`
+Sorted List of templates to include. Defaults to [ "legacy-timeperiod" ].
 
 ##### `ranges`
 A dictionary containing information which days and durations apply to this timeperiod.
@@ -1216,10 +1560,7 @@ An array of timeperiods, which should include into your timerange
 Set to true creates a template instead of an object. Defaults to `false`
 
 ##### `target`
-Destination config file to store in this object. File will be declared the first time.
-
-##### `target`
-Destination config file to store in this object. File will be declared at the first time.
+Destination config file to store this object in. File will be declared on the first run.
 
 ##### `order`
 String to control the position in the target file, sorted alpha numeric.
@@ -1684,37 +2025,17 @@ Destination config file to store in this object. File will be declared the first
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. `Defaults to 30`
 
-#### Defined type: `icinga2::object::comment`
+#### Defined type: `icinga2::config::fragment`
 
-##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
-
-##### `host_name`
-The name of the host this comment belongs to.
-
-##### `service_name`
-The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
-
-##### `author`
-The author's name.
-
-##### `text`
-The comment text.
-
-##### `entry_time`
-The unix timestamp when this comment was added.
-
-##### `entry_type`
-The comment type (User = 1, Downtime = 2, Flapping = 3, Acknowledgement = 4).
-
-##### `expire_time`
-The comment's expire time as unix timestamp.
+##### `content`
+Content to insert in file specified in target.
 
 ##### `target`
-Destination config file to store in this object. File will be declared the first time.
+Destination config file to store in this fragment. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+String to set the position in the target file, sorted in alpha numeric order.
+
 
 ### Private defined types
 
@@ -1763,18 +2084,9 @@ Destination config file to store in this object. File will be declared the first
 ##### `order`
 String to set the position in the target file, sorted alpha numeric.
 
-## Limitations
-This module has been tested on:
-
-* Debian 7, 8
-* Ubuntu 14.04, 16.04
-* CentOS/RHEL 6, 7
-* Windows Server 2012
-
-Other operating systems or versions may work but have not been tested.
 
 ## Development
-A roadmap of this project is located at https://dev.icinga.org/projects/puppet-icinga2-rewrite/roadmap. Please consider
+A roadmap of this project is located at https://dev.icinga.com/projects/puppet-icinga2-rewrite/roadmap. Please consider
 this roadmap when you start contributing to the project.
 
 ### Contributing
@@ -1807,7 +2119,7 @@ See also [CHANGELOG.md]
 [Limitations]: #limitations
 [Development]: #development
 
-[distributed monitoring]: http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/distributed-monitoring
+[distributed monitoring]: http://docs.icinga.com/icinga2/latest/doc/module/icinga2/chapter/distributed-monitoring
 [examples]: examples
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
@@ -1816,7 +2128,7 @@ See also [CHANGELOG.md]
 [puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
 [puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
-[packages.icinga.org]: https://packages.icinga.org
+[packages.icinga.com]: https://packages.icinga.com
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 
 [CONTRIBUTING.md]: CONTRIBUTING.md

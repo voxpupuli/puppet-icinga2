@@ -107,7 +107,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::host(
   $ensure                = present,
@@ -141,7 +141,7 @@ define icinga2::object::host(
   $icon_image            = undef,
   $icon_image_alt        = undef,
   $template              = false,
-  $order                 = '30',
+  $order                 = '50',
   $target,
 ) {
 

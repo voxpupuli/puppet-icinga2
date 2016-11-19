@@ -13,7 +13,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 class icinga2::params {
 
@@ -93,6 +93,7 @@ class icinga2::params {
       $spool_dir = '/var/spool/icinga2'
       $cache_dir = '/var/cache/icinga2'
       $pki_dir   = "${conf_dir}/pki"
+      $ca_dir    = "/var/lib/icinga2/ca"
 
       case $::osfamily {
         'redhat': {
@@ -109,6 +110,15 @@ class icinga2::params {
           $group    = 'nagios'
           $lib_dir  = '/usr/lib'
         } # Debian
+
+        'suse': {
+          $user     = 'icinga'
+          $group    = 'icinga'
+          $lib_dir  = $::architecture ? {
+            'x86_64' => '/usr/lib64',
+            default  => '/usr/lib',
+          }
+        } # Suse
 
         default: {
           fail("Your plattform ${::osfamily} is not supported, yet.")
@@ -134,6 +144,7 @@ class icinga2::params {
       $spool_dir = 'C:/ProgramData/icinga2/var/spool/icinga2'
       $cache_dir = 'C:/ProgramData/icinga2/var/cache/icinga2'
       $pki_dir   = "${conf_dir}/pki"
+      $ca_dir    = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
       $constants = {
         'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
         'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",

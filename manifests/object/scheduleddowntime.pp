@@ -50,7 +50,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::scheduleddowntime (
   $ensure               = present,
@@ -65,7 +65,7 @@ define icinga2::object::scheduleddowntime (
   $apply_target         = 'Host',
   $assign               = [],
   $ignore               = [],
-  $order                = '30',
+  $order                = '90',
   $target               = undef,
 ){
   include ::icinga2::params

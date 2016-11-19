@@ -19,12 +19,12 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::checkresultreader (
   $ensure               = present,
   $spool_dir            = undef,
-  $order                = '30',
+  $order                = '10',
   $target,
 ){
   include ::icinga2::params

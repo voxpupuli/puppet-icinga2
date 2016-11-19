@@ -29,7 +29,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::zone(
   $ensure    = present,
@@ -38,7 +38,7 @@ define icinga2::object::zone(
   $parent    = undef,
   $global    = false,
   $target    = undef,
-  $order     = '20',
+  $order     = '45',
 ) {
 
   include ::icinga2::params

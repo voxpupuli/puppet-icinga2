@@ -68,7 +68,7 @@
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::dependency (
   $ensure                 = present,
@@ -88,7 +88,7 @@ define icinga2::object::dependency (
   $import                 = [],
   $template               = false,
   $target                 = undef,
-  $order                  = '35',
+  $order                  = '70',
 ){
   include ::icinga2::params
 

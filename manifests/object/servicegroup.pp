@@ -35,7 +35,7 @@
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::servicegroup (
   $ensure       = present,
@@ -45,7 +45,7 @@ define icinga2::object::servicegroup (
   $ignore       = [],
   $template     = false,
   $import       = [],
-  $order        = '30',
+  $order        = '65',
   $target       = undef,
 ){
   include ::icinga2::params

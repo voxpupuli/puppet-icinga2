@@ -1,5 +1,5 @@
 # Contributing
-A roadmap of this project is located at https://dev.icinga.org/projects/puppet-icinga2-rewrite/roadmap. Please consider
+A roadmap of this project is located at https://dev.icinga.com/projects/puppet-icinga2-rewrite/roadmap. Please consider
 this roadmap when you start contributing to the project.
 
 Before starting your work on this module, you should [fork the project] to your GitHub account. This allows you to
@@ -14,7 +14,7 @@ reviewed and merged if they suit some general guidelines:
 
 ## Issue Tracker
 If you think your changes need further discussion, you found a bug or have a feature request, login to
-[dev.icinga.org] and create an issue. The issue number should be used in your branch name as reference to a certain bug
+[dev.icinga.com] and create an issue. The issue number should be used in your branch name as reference to a certain bug
 or feature discussion.
 
 ## Branches
@@ -35,7 +35,7 @@ tests as well. A complete guide on how to run tests is described in [TESTING.md]
 
 [fork the project]: https://help.github.com/articles/fork-a-repo/
 [pull request]: https://help.github.com/articles/using-pull-requests/
-[dev.icinga.org]: https://dev.icinga.org/puppet-icinga2-rewrite
+[dev.icinga.com]: https://dev.icinga.com/puppet-icinga2-rewrite
 [RSpec]: http://rspec-puppet.com/
 [Serverspec]: http://serverspec.org/
 [TESTING.md]: TESTING.md

@@ -71,7 +71,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::idopgsql(
   $ensure                 = present,

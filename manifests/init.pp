@@ -11,7 +11,7 @@
 #   If set to true the Icinga2 service will start on boot. Defaults to true.
 #
 # [*manage_repo*]
-#   When set to true this module will install the packages.icinga.org repository. With this official repo you can get
+#   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
 #   the latest version of Icinga. When set to false the operating systems default will be used. As the Icinga Project
 #   does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows.
 #   Defaults to false
@@ -122,7 +122,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 class icinga2(
   $ensure         = running,

@@ -9,10 +9,12 @@
 #
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
-#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
-#   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
-#   'none' does nothing and you either have to manage the files yourself as file resources
-#   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
+#   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
+#             /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the 
+#              Puppetmaster by using the configured 'ticket_salt' in a custom function.
+#   - none: Does nothing and you either have to manage the files yourself as file resources
+#           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
@@ -48,6 +50,12 @@
 #
 # [*accept_commands*]
 #   Accept remote commands. Defaults to false.
+#
+# [*ca_host*]
+#   This host will be connected to request the certificate. Set this if you use the icinga2 pki. 
+#
+# [*ca_port*]
+#   Port of the 'ca_host'. Defaults to 5665
 #
 # [*ticket_salt*]
 #   Salt to use for ticket generation. Defaults to icinga2 constant TicketSalt.
@@ -90,7 +98,7 @@
 #   }
 #
 #   File {
-#     owner => 'icnga',
+#     owner => 'icinga',
 #     group => 'icinga',
 #   }
 #
@@ -112,7 +120,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::api(
   $ensure          = present,
@@ -122,6 +130,8 @@ class icinga2::feature::api(
   $ssl_cacert_path = undef,
   $accept_config   = false,
   $accept_commands = false,
+  $ca_host         = undef,
+  $ca_port         = 5665,
   $ticket_salt     = 'TicketSalt',
   $endpoints       = { 'NodeName' => {} },
   $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
@@ -143,11 +153,16 @@ class icinga2::feature::api(
     group => $group,
   }
 
+  Exec {
+    user => 'root',
+    path => $::path,
+  }
+
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($pki, [ '^puppet$', '^none$' ],
-    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
+  validate_re($pki, [ '^puppet$', '^none$', '^icinga2' ],
+    "${pki} isn't supported. Valid values are 'puppet', 'none' and 'icinga2'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
   validate_string($ticket_salt)
@@ -235,6 +250,39 @@ class icinga2::feature::api(
         }
       }
     } # none
+
+    'icinga2': {
+      validate_string($ca_host)
+      validate_integer($ca_port)
+
+      $ticket_id = icinga2_ticket_id($::fqdn, $ticket_salt)
+      $trusted_cert = "${pki_dir}/trusted-cert.crt"
+
+      exec { 'icinga2 pki create key':
+        command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
+        creates => $_ssl_key_path,
+        notify  => Class['::icinga2::service'],
+      } ->
+      file {
+        $_ssl_key_path:
+          mode => '0600';
+        $_ssl_cert_path:
+      } ->
+    
+      exec { 'icinga2 pki get trusted-cert':
+        command => "icinga2 pki save-cert --host '${ca_host}' --port ${ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
+        creates => $trusted_cert,
+        notify  => Class['::icinga2::service'],
+      } ->
+      file { $trusted_cert: } ->
+    
+      exec { 'icinga2 pki request':
+        command => "icinga2 pki request --host '${ca_host}' --port ${ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
+        creates => $_ssl_cacert_path,
+        notify  => Class['::icinga2::service'],
+      } ->
+      file { $_ssl_cacert_path: } 
+    } # icinga2    
   } # pki
 
   # compose attributes

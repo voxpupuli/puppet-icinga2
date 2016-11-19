@@ -12,5 +12,7 @@ fixtures:
     chocolatey:
       repo: "git://github.com/puppetlabs/puppetlabs-chocolatey"
       ref: "1.2.6"
+  forge_modules:
+    zypprepo: "darin/zypprepo"
   symlinks:
     icinga2: "#{source_dir}"

@@ -10,10 +10,8 @@
 # [*display_name*]
 # 	A short description of the time period.
 #
-# [*update*]
-# 	The "update" script method takes care of updating the internal
-#   representation of the time period. In virtually all cases you should import
-#   the "legacy-timeperiod" template to take care of this setting.
+# [*import*]
+#   Sorted List of templates to include. Defaults to [ "legacy-timeperiod" ].
 #
 # [*ranges*]
 # 	A dictionary containing information which days and durations apply to this
@@ -32,12 +30,7 @@
 #   Set to true creates a template instead of an object. Defaults to false.
 #
 # [*target*]
-#   Destination config file to store in this object. File will be declared the
-#   first time.
-#
-# [*target*]
-#   Destination config file to store in this object. File will be declared at the
-#   first time.
+#   Destination config file to store this object in. File will be declared on the first run.
 #
 # [*order*]
 #   String to control the position in the target file, sorted alpha numeric.
@@ -45,7 +38,7 @@
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::timeperiod (
   $ensure           = present,
@@ -57,7 +50,7 @@ define icinga2::object::timeperiod (
   $template         = false,
   $import           = ['legacy-timeperiod'],
   $target           = undef,
-  $order            = '10',
+  $order            = '35',
 ){
   include ::icinga2::params
 
@@ -75,8 +68,8 @@ define icinga2::object::timeperiod (
   if $display_name { validate_string ($display_name) }
   validate_hash ($ranges)
   if $prefer_includes { validate_bool ($prefer_includes) }
-  if $excludes { validate_string ($excludes) }
-  if $includes { validate_string ($includes) }
+  if $excludes { validate_array ($excludes) }
+  if $includes { validate_array ($includes) }
 
   # compose attributes
   $attrs = {

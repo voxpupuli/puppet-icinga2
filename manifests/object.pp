@@ -46,7 +46,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object(
   $ensure       = present,
@@ -91,7 +91,7 @@ define icinga2::object(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($object_name)
   validate_bool($template)
-  unless is_bool($apply) { validate_string($apply) }
+  unless is_bool($apply) { validate_re($apply, '^.+\s+(=>\s+.+\s+)?in\s+.+$') }
   if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
     "$apply_target isn't supported. Valid values are 'Host' and 'Service'.") }
   validate_array($import)
@@ -102,7 +102,7 @@ define icinga2::object(
   validate_absolute_path($target)
   validate_string($order)
 
-  if $object_type == $apply_target { 
+  if $object_type == $apply_target {
     fail("The object type must be different from the apply target")
   }
 

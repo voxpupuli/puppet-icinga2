@@ -46,7 +46,7 @@
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::notificationcommand (
   $ensure     = present,
@@ -57,7 +57,7 @@ define icinga2::object::notificationcommand (
   $arguments  = undef,
   $template   = false,
   $import     = ['plugin-notification-command'],
-  $order      = '10',
+  $order      = '25',
   $target     = undef,
 ){
   include ::icinga2::params

@@ -43,14 +43,14 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::apiuser(
   $ensure      = present,
   $apiuser     = $title,
   $password    = undef,
   $client_cn   = undef,
-  $order       = '10',
+  $order       = '30',
   $target,
   $permissions,
 ) {
