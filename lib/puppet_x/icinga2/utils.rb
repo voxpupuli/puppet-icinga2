@@ -105,7 +105,12 @@ module Puppet
           if row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
-            if row =~ /^(.+)\((.*)$/
+             # fct(a,b) use (c) {} (If this is a function, we don't want to further parse the individual parts
+            # since they're likely to be variables… not string arguments?) (Do we expect the user to know what they're doing?)
+            # We could maybe have % [ $1.split().map ], but not for $2 or $3, since that would defeat the purpose of this...
+            if row =~ /^(?:.+)\((.*)\)\s*use\s*\((.*)\)\s*{(.*)}$/
+              result += "function (%s) use (%s) { %s }" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', '), $2.strip, $3.strip ]
+            elsif row =~ /^(.+)\((.*)$/
               result += "%s(%s" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
             elsif row =~ /^(.*)\)$/
               result += "%s)" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
