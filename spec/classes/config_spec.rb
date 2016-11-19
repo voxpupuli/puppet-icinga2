@@ -50,6 +50,14 @@ describe('icinga2', :type => :class) do
     end
 
 
+    context "#{os} with constants => { foo => bar(4247)}" do
+      let(:params) { { :constants => {'foo' => 'bar(4247)'} } }
+
+      it { is_expected.to contain_file('/etc/icinga2/constants.conf')
+        .with_content(/^const foo = bar\(4247\)\n/) }
+    end
+
+
     context "#{os} with constants => { foo => 4247 - bar(NodeName + baz, 1m) * (foo + 2) }" do
       let(:params) { { :constants => {'foo' => '4247 - bar(NodeName + baz, 1m) * (foo + 2)'} } }
 
@@ -201,12 +209,20 @@ describe('icinga2', :type => :class) do
   end
 
 
-    context "Windows 2012 R2 with constants => { foo => 4247 - bar(NodeName + baz, 1m) * (foo + 2) }" do
-      let(:params) { { :constants => {'foo' => '4247 - bar(NodeName + baz, 1m) * (foo + 2)'} } }
+  context "Windows 2012 R2 with constants => { foo => bar(4247)}" do
+    let(:params) { { :constants => {'foo' => 'bar(4247)'} } }
 
-      it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
-        .with_content(/^const foo = 4247 - bar\(NodeName \+ "baz", 1m\) \* \(foo \+ 2\)\r\n/) }
-    end
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
+      .with_content(/^const foo = bar\(4247\)\r\n/) }
+  end
+
+
+  context "Windows 2012 R2 with constants => { foo => 4247 - bar(NodeName + baz, 1m) * (foo + 2) }" do
+    let(:params) { { :constants => {'foo' => '4247 - bar(NodeName + baz, 1m) * (foo + 2)'} } }
+
+    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/constants.conf')
+      .with_content(/^const foo = 4247 - bar\(NodeName \+ "baz", 1m\) \* \(foo \+ 2\)\r\n/) }
+  end
 
 
   context "Windows 2012 R2 with constants => { foo => true, bar => false }" do
