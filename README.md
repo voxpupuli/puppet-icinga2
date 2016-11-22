@@ -76,7 +76,7 @@ The default set of features can be changed by setting the `features` parameter:
 ``` puppet
 class { 'icinga2':
   manage_repo => true,
-  features    => ['checker', 'mainlog', 'command']
+  features    => ['checker', 'mainlog', 'command'],
 }
 ```
 
@@ -86,7 +86,7 @@ class { 'icinga2::feature::graphite':
   host                   => '10.10.0.15',
   port                   => 2003,
   enable_send_thresholds => true,
-  enable_send_metadata   => true
+  enable_send_metadata   => true,
 }
 ```
 
@@ -114,11 +114,11 @@ mysql::db { 'icinga2':
 }
 
 class{ 'icinga2::feature::idomysql':
-  user          => "icinga2",
-  password      => "supersecret",
-  database      => "icinga2",
+  user          => 'icinga2',
+  password      => 'supersecret',
+  database      => 'icinga2',
   import_schema => true,
-  require       => Mysql::Db['icinga2']
+  require       => Mysql::Db['icinga2'],
 }
 ```
 For PostgreSQL we recomment the [puppetlabs/puppetlabs-postgresql] module. You can install the server, create databases
@@ -134,11 +134,11 @@ postgresql::server::db { 'icinga2':
 }
 
 class{ 'icinga2::feature::idopgsql':
-  user          => "icinga2",
-  password      => "supersecret",
-  database      => "icinga2",
+  user          => 'icinga2',
+  password      => 'supersecret',
+  database      => 'icinga2',
   import_schema => true,
-  require       => Postgresql::Server::Db['icinga2']
+  require       => Postgresql::Server::Db['icinga2'],
 }
 ```
 
@@ -700,8 +700,8 @@ Tags defined in this hash will be set in the host_template.
 
 ``` puppet
 class { 'icinga2::feature::influxdb':
-  host_measurement => '$host.check_command$'
-  host_tags        => { hostname => '$host.name$' }
+  host_measurement => '$host.check_command$',
+  host_tags        => { hostname => '$host.name$' },
 }
 ```
 
@@ -714,7 +714,7 @@ Tags defined in this hash will be set in the service_template.
 ``` puppet
 class { 'icinga2::feature::influxdb':
   service_measurement => '$service.check_command$',
-  service_tags        => { hostname => '$host.name$', service => '$service.name$' }
+  service_tags        => { hostname => '$host.name$', service => '$service.name$' },
 }
 ```
 
