@@ -380,6 +380,57 @@ Assignments other than simple attribution are not currently possible either, e.g
   vars += config
 ```
 
+### Apply Rules
+Some objects support to be applied to other objects. To create a simple apply rule you must set the `apply` parameter to
+`true`. If this parameter is set to a string, this string will be used to build an `apply for` loop. A service object
+always targets a host object. All other objects need to explicitly set an `apply_target`
+
+Apply a SSH service to all Linux hosts:
+``` puppet
+icinga2::object::service { 'SSH':
+  target        => '/etc/icinga2/conf.d/test.conf',
+  apply         => true,
+  assign        => [ 'host.vars.os == Linux' ],
+  ignore        => [ 'host.vars.os == Windows' ],
+  display_name  => 'Test Service',
+  check_command => 'ssh',
+}
+```
+
+Apply notifications to services:
+
+``` puppet
+icinga2::object::notification { 'testnotification':
+  target       => '/etc/icinga2/conf.d/test.conf',
+  apply        => true,
+  apply_target => 'Service',
+  assign       => [ 'host.vars.os == Linux' ],
+  ignore       => [ 'host.vars.os == Windows' ],
+  user_groups  => ['icingaadmins']
+}
+``` 
+
+Assign all Linux hosts to a hostgroup:
+``` puppet
+icinga2::object::hostgroup { 'monitoring-hosts':
+  display_name => 'Linux Servers',
+  groups       => [ 'linux-servers' ],
+  target       => '/etc/icinga2/conf.d/groups2.conf',
+  assign       => [ 'host.vars.os == "linux"' ],
+}
+```
+
+A loop to create HTTP services for all vHosts of a host object:
+``` puppet
+icinga2::object::service { 'HTTP':
+  target        => '/etc/icinga2/conf.d/http.conf',
+  apply         => 'http_vhost => config in host.vars_http_vhost',
+  assign        => [ 'host.vars.os == Linux' ],
+  display_name  => 'HTTP Service',
+  check_command => 'http',
+}
+```
+
 ### Custom configuration files
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
