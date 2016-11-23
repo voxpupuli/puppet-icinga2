@@ -1,5 +1,42 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.6.0
+
+### Bugs
+Bug #12980: Symlinks in modules are not allowed in puppet modules
+Bug #13035: Wrong syntax of "apply" in object.conf.erb template (afaik)
+Bug #13123: Objects with required parameters
+Bug #13149: "in" is a keyword for assignment
+Bug #13179: Ruby 1.8 testing
+Bug #13207: Wrong config for attribute vars in level 3 hash
+Bug #13217: Icinga Functions don't parse correctly
+
+### Features
+Feature #12349: Apply Rules
+Feature #12369: Object CheckCommand
+Feature #12370: Object CheckResultReader
+Feature #12372: Object CompatLogger
+Feature #12373: Object Dependency
+Feature #12376: Object EventCommand
+Feature #12377: Object Host
+Feature #12378: Object HostGroup
+Feature #12379: Object Notification
+Feature #12380: Object NotificationCommand
+Feature #12381: Object ScheduledDowntime
+Feature #12382: Object Service
+Feature #12383: Object ServiceGroup
+Feature #12384: Object TimePeriod
+Feature #12385: Object User
+Feature #12387: Object UserGroup
+Feature #12839: use-fct-attributes-for-other-configs
+Feature #12878: Extend attributes fct to parse connected strings
+Feature #12957: Extend attributes Function
+Feature #12958: Add parsing of assign rules to attribute function
+Feature #12959: Attribute function does not included adding value
+Feature #12960: Consider function calls in attributes parsing
+Feature #13181: Apply Rules Docs
+Feature #13219: How attribute parsing works documentation
+
 ## v0.5.0
 
 ### Bugs
