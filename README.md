@@ -14,8 +14,7 @@
     * [Private Classes][]
     * [Public defined types][]
     * [Private defined types][]
-6. [Limitations - OS compatibility, etc.][Limitations]
-7. [Development - Guide for contributing to the module][Development]
+6. [Development - Guide for contributing to the module][Development]
 
 ## Overview
 
@@ -53,6 +52,18 @@ Depending on your setup following modules may also be required:
 
 * [puppetlabs/apt]
 * [puppetlabs/chocolatey]
+
+### Limitations
+This module has been tested on:
+
+* Ruby >= 1.9
+* Debian 7, 8
+* Ubuntu 14.04, 16.04
+* CentOS/RHEL 6, 7
+    * **Coution:** CentOS 6 comes with Ruby 1.8.7 by default
+* Windows Server 2012
+
+Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
@@ -1920,15 +1931,6 @@ Destination config file to store in this object. File will be declared the first
 ##### `order`
 String to set the position in the target file, sorted alpha numeric.
 
-## Limitations
-This module has been tested on:
-
-* Debian 7, 8
-* Ubuntu 14.04, 16.04
-* CentOS/RHEL 6, 7
-* Windows Server 2012
-
-Other operating systems or versions may work but have not been tested.
 
 ## Development
 A roadmap of this project is located at https://dev.icinga.org/projects/puppet-icinga2-rewrite/roadmap. Please consider
