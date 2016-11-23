@@ -273,6 +273,112 @@ The Client is connected to the Satellite. The Satellite is the parent of the Cli
     global => true,
   }
 ```
+### Config Objects
+With this module you can create almost every object that Icinga 2 knows about. When creating objects some parameters are
+required. This module sets the same requirements as Icinga 2 does. When creating an object you must set a target for the
+configuration. Here are some examples for some object types:
+
+#### Host
+``` puppet
+icinga2::object::host { 'srv-web1.fqdn.com':
+  display_name  => 'srv-web1.fqdn.com',
+  address       => '127.0.0.1',
+  address6      => '::1',
+  check_command => 'hostalive',
+  target        => '/etc/icinga2/conf.d/srv-web1.fqdn.com.conf',
+}
+```
+
+#### Service
+``` puppet
+icinga2::object::service { 'uptime':
+  host_name      => 'srv-web1.fqdn.com',
+  display_name   => 'Uptime',
+  check_command  => 'check_uptime',
+  check_interval => 600m
+  groups         => ['uptime', 'linux']
+  target         => '/etc/icinga2/conf.d/uptime.conf',
+}
+```
+
+#### Hostgroup
+``` puppet
+icinga2::object::hostgroup { 'monitoring-hosts':
+  display_name => 'Linux Servers',
+  groups       => [ 'linux-servers' ],
+  target       => '/etc/icinga2/conf.d/groups2.conf',
+  assign       => [ 'host.vars.os == "linux"' ],
+}
+```
+
+#### Parsing Cofiguration
+To generate a valid Icinga 2 configuration all object attributes are parsed. Thissimple parsing algorithm takes a
+decision for each attribute, whether part of the string is to be quoted or not, and how an array or dictionary is to be
+formatted.
+
+An array, a hash or a string can be assigned to an object attribute. True and false are also valid values.
+
+Hashes and arrays are created recursively, and all parts – such as single items of an array, keys and its values
+are parsed separately as strings.
+
+Strings are parsed in chunks, by splitting the original string into separate substrings at specific keywords (operators)
+such as `+`, `-`, `in`, `&&`, `||`, etc.
+
+**NOTICE**: This splitting only works for keywords that are surrounded by whitespace, e.g.:
+``` 
+   attr => 'string1 + string2 - string3'
+```
+
+The algorithm will loop over the parameter and start by splitting it into 'string1' and 'string2 - string3'. 
+'string1' will be passed to the sub function 'value_types' and then the algorithm will continue parsing the rest of the
+string ('string2 - string3'), splitting it, passing it to value_types, etc.
+
+Brackets are parsed for expressions:
+```
+  attr => '3 * (value1 - value2) / 2'
+```
+
+The parser also detects function calls and will parse all parameters separately.
+```
+  attr => 'function(param1, param2, ...)'
+```
+
+True and false can be used as either booleans or strings.
+```
+  attrs => true or  attr => 'true'
+```
+
+In Icinga you can write your own lambda functions with {{ ... }}. For puppet use:
+```
+  attrs => '{{ ... }}'
+```
+
+The parser analyzes which parts of the string have to be quoted and which do not.
+
+As a general rule, all fragments are quoted except for the following:
+
+* Boolean: `true`, `false`
+* Numbers: `3` or `2.5`
+* Time Intervals: `3m` or `2.5h`  (s = seconds, m = minutes, h = hours, d = days)
+* Functions: `{{ ... }}` or function `()` `{}`
+* All constants, which are declared in the constants parameter in main class `icinga2`
+    * `NodeName`
+* Names of attributes that belong to the same type of object:
+    * e.g. `name` and `check_command` for a host object
+* All attributes or variables (custom attributes) from the host, service or user contexts:
+    * `host.name`, `service.check_command`, `user.groups`, ...
+
+###### What isn't supported?
+
+It's not currently possible to use arrays or dictionaries in a string, like
+```
+  attr => 'array1 + [ item1, item2, ... ]'
+```
+
+Assignments other than simple attribution are not currently possible either, e.g. building something like
+```
+  vars += config
+```
 
 ### Custom configuration files
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
