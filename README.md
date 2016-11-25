@@ -60,7 +60,7 @@ This module has been tested on:
 * Debian 7, 8
 * Ubuntu 14.04, 16.04
 * CentOS/RHEL 6, 7
-    * **Coution:** CentOS 6 comes with Ruby 1.8.7 by default
+    * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
 * Windows Server 2012
 
 Other operating systems or versions may work but have not been tested.
@@ -110,7 +110,7 @@ is currently not supported.
 
 The IDO featues require an existing database and a user with permissions. When using MySQL we recommend the
 [puppetlabs/mysql] Puppet module to install the database server, creat a database and manage user permissions. Here's an
-example how you create a MySQL database with the corresponding user with permissions by usng the [puppetlabs/mysql]
+example how you create a MySQL database with the corresponding user with permissions by using the [puppetlabs/mysql]
 module:
 
 ``` puppet
@@ -161,7 +161,7 @@ Icinga 2 can run in three different roles:
 * A client node which works as an agent connected to master and/or satellite nodes.
 
 To learn more about Icinga 2 Clustering, follow the official docs on [distributed monitoring]. The following examples show
-how a these roles can be configured using this Puppet module.
+how these roles can be configured using this Puppet module.
 
 #### Master
 A Master node has no parent and is usually also the place where you enable the IDO and notification features. A Master
@@ -323,7 +323,7 @@ icinga2::object::hostgroup { 'monitoring-hosts':
 ```
 
 #### Parsing Cofiguration
-To generate a valid Icinga 2 configuration all object attributes are parsed. Thissimple parsing algorithm takes a
+To generate a valid Icinga 2 configuration all object attributes are parsed. This simple parsing algorithm takes a
 decision for each attribute, whether part of the string is to be quoted or not, and how an array or dictionary is to be
 formatted.
 
