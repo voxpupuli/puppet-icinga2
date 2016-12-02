@@ -51,6 +51,13 @@
         "14.04",
         "16.04"
       ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "11",
+        "12"
+      ]
     }
   ]
 }

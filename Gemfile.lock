@@ -1,0 +1,79 @@
+GIT
+  remote: https://github.com/jfryman/facterdb
+  revision: 3e314963146b0b831441556f7be3960ef4c930fe
+  ref: sles-12-support
+  specs:
+    facterdb (0.3.8)
+      facter
+      jgrep
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    CFPropertyList (2.2.8)
+    diff-lcs (1.2.5)
+    facter (2.4.6)
+      CFPropertyList (~> 2.2.6)
+    hiera (3.2.2)
+    jgrep (1.4.1)
+      json
+    json (2.0.2)
+    json_pure (1.8.3)
+    mcollective-client (2.9.1)
+      json
+      stomp
+      systemu
+    metaclass (0.0.4)
+    mocha (1.2.1)
+      metaclass (~> 0.0.1)
+    puppet (4.8.1)
+      CFPropertyList (~> 2.2.6)
+      facter (> 2.0, < 4)
+      hiera (>= 2.0, < 4)
+      json_pure (~> 1.8)
+    puppet-lint (2.0.2)
+    puppet-syntax (2.1.1)
+      rake
+    puppetlabs_spec_helper (1.2.2)
+      mocha (~> 1.0)
+      puppet-lint (~> 2.0)
+      puppet-syntax (~> 2.0)
+      rspec-puppet (~> 2.0)
+    rake (11.3.0)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-puppet (2.5.0)
+      rspec
+    rspec-puppet-facts (1.7.0)
+      facter
+      facterdb (>= 0.3.0)
+      json
+      mcollective-client
+      puppet
+    rspec-support (3.5.0)
+    stomp (1.4.3)
+    systemu (2.6.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  facter (>= 1.7.0)
+  facterdb!
+  puppet (>= 3.3)
+  puppet-lint (>= 0.3.2)
+  puppetlabs_spec_helper (>= 0.1.0)
+  rspec-puppet-facts (>= 1.6.0)
+
+BUNDLED WITH
+   1.12.5
