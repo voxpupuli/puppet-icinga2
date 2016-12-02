@@ -1,0 +1,63 @@
+---
+#Travis CI Job File. Feel free to extend. Have a look at the special cases in the Gemfile for Ruby 1.9
+sudo: false
+language: ruby
+cache: bundler
+#bundler_args: --without system_tests development
+before_install:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec rake $CHECK'
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 2.4.0-preview3
+    env: PUPPET_VERSION="~> 4.8" CHECK=spec
+  - rvm: 2.4.0-preview3
+    env: PUPPET_VERSION="~> 4.0" CHECK=spec
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.8" CHECK=spec
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=spec
+  - rvm: 2.2.5
+    env: PUPPET_VERSION="~> 4.8" CHECK=spec
+  - rvm: 2.2.5
+    env: PUPPET_VERSION="~> 4.0" CHECK=spec
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.8" CHECK=spec
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.0" CHECK=spec
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=spec
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" CHECK=spec
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" CHECK=spec
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=spec
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.6" CHECK=spec
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 3.6" CHECK=spec
+  allow_failures:
+    - rvm: 2.4.0-preview3
+notifications:
+  email: false
+#deploy:
+#  provider: puppetforge
+#  deploy:
+#    branch: master
+#  user: someuser
+#  password:
+#    secure: "somepasswordhash"
+#  on:
+#    tags: true
+    # all_branches is required to use tags
+#    all_branches: true
+    # Only publish the build marked with "DEPLOY_TO_FORGE"
+#    condition: "$DEPLOY_TO_FORGE = yes"
