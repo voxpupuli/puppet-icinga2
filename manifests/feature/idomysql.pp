@@ -109,7 +109,7 @@
 #   user     => 'icinga2',
 #   password => 'supersecret',
 #   host     => 'localhost',
-#   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+#   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE'],
 # }
 #
 # class{ 'icinga2::feature::idomysql':
