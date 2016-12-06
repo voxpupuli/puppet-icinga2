@@ -7,5 +7,5 @@ mod 'puppetlabs/chocolatey', :latest
 mod 'puppetlabs/powershell', :latest
 mod 'badgerious/windows_env', :latest
 mod 'icinga2',
-  :git    => 'git@git.icinga.org:puppet-icinga2-rewrite.git',
-  :branch => 'master'
+  :git    => 'git@git.icinga.com:puppet-icinga2-rewrite.git',
+  :branch => 'feature/sles-support-12653'
