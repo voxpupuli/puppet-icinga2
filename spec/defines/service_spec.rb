@@ -165,14 +165,14 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with check_interval => 30" do
-      let(:params) { {:check_interval => '30', :target => '/bar/baz',
+    context "#{os} with check_interval => 30s" do
+      let(:params) { {:check_interval => '30s', :target => '/bar/baz',
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/check_interval = 30/) }
+                              .with_content(/check_interval = 30s/) }
     end
 
 

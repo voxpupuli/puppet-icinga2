@@ -183,10 +183,10 @@ define icinga2::object::service (
   if $vars { validate_hash ($vars) }
   validate_string($check_command)
   if $max_check_attempts { validate_integer ($max_check_attempts) }
-  if $check_period { validate_integer ($check_period) }
-  if $check_timeout { validate_integer ($check_timeout) }
-  if $check_interval { validate_integer ($check_interval) }
-  if $retry_interval { validate_integer ($retry_interval) }
+  if $check_period { validate_string ($check_period) }
+  if $check_timeout { validate_re($check_timeout, '^\d+\.?\d*[d|h|m|s]?$') }
+  if $check_interval { validate_re($check_interval, '^\d+\.?\d*[d|h|m|s]?$') }
+  if $retry_interval { validate_re($retry_interval, '^\d+\.?\d*[d|h|m|s]?$') }
   if $enable_notifications { validate_bool ($enable_notifications) }
   if $enable_active_checks { validate_bool ($enable_active_checks) }
   if $enable_passive_checks { validate_bool ($enable_passive_checks) }
