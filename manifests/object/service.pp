@@ -128,6 +128,7 @@
 #
 
 define icinga2::object::service (
+  $service_name           = $title,
   $ensure                 = present,
   $display_name           = undef,
   $host_name              = undef,
@@ -177,6 +178,7 @@ define icinga2::object::service (
   validate_absolute_path($target)
   validate_string($order)
 
+  if $service_name { validate_string($service_name) }
   if $display_name { validate_string ($display_name) }
   validate_string($host_name)
   if $groups { validate_array ($groups) }
@@ -209,7 +211,7 @@ define icinga2::object::service (
   $attrs = {
     'display_name' => $display_name ,
     'host_name' => $host_name ,
-    'name' => $name ,
+    'name' => $service_name ,
     'groups' => $groups ,
     'vars' => $vars ,
     'check_command' => $check_command ,
@@ -239,7 +241,7 @@ define icinga2::object::service (
   # create object
   icinga2::object { "icinga2::object::Service::${title}":
     ensure       => $ensure,
-    object_name  => $name,
+    object_name  => $service_name,
     object_type  => 'Service',
     import       => $import,
     apply        => $apply,
