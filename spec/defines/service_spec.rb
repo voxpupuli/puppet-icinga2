@@ -145,63 +145,59 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with check_period => 30" do
-      let(:params) { {:check_period => '30', :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/check_period = 30/) }
-    end
-
-
-    context "#{os} with check_period => foo (not a valid integer)" do
+    context "#{os} with check_period => foo" do
       let(:params) { {:check_period => 'foo', :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
+                      :host_name => 'hostfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/check_period = "foo"/) }
     end
 
 
-    context "#{os} with check_interval => 30s" do
-      let(:params) { {:check_interval => '30s', :target => '/bar/baz',
+    context "#{os} with check_period => 4247 (not a valid string)" do
+      let(:params) { {:check_period => 4247, :target => '/bar/baz',
+                      :host_name => 'hostfoo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+
+    context "#{os} with check_interval => 1m" do
+      let(:params) { {:check_interval => '1m', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/check_interval = 1m/) }
+    end
+
+
+    context "#{os} with check_interval => foo (not a valid value)" do
+      let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    end
+
+
+    context "#{os} with retry_interval => 30s" do
+      let(:params) { {:retry_interval => '30s', :target => '/bar/baz',
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                               .with({'target' => '/bar/baz'})
-                              .with_content(/check_interval = 30s/) }
+                              .with_content(/retry_interval = 30s/) }
     end
 
 
-    context "#{os} with check_interval => foo (not a valid integer)" do
-      let(:params) { {:check_interval => 'foo', :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
-    end
-
-
-    context "#{os} with retry_interval => 30" do
-      let(:params) { {:retry_interval => '30', :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/retry_interval = 30/) }
-    end
-
-
-    context "#{os} with retry_interval => foo (not a valid integer)" do
+    context "#{os} with retry_interval => foo (not a valid value)" do
       let(:params) { {:retry_interval => 'foo', :target => '/bar/baz',
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -683,63 +679,57 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with check_period => 30" do
-    let(:params) { {:check_period => '30', :target => '/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/check_period = 30/) }
-  end
-
-
-  context "Windows 2012 R2 with check_period => foo (not a valid integer)" do
+  context "Windows 2012 R2 with check_period => foo" do
     let(:params) { {:check_period => 'foo', :target => '/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
+                    :host_name => 'hostfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/check_period = "foo"/) }
   end
 
 
-  context "Windows 2012 R2 with check_interval => 30" do
-    let(:params) { {:check_interval => '30', :target => '/bar/baz',
+  context "Windows 2012 R2 with check_period => 4247 (not a valid string)" do
+    let(:params) { {:check_period => 4247, :target => '/bar/baz',
+                    :host_name => 'hostfoo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with check_interval => 1m" do
+    let(:params) { {:check_interval => '1m', :target => '/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/check_interval = 1m/) }
+  end
+
+
+  context "Windows 2012 R2 with check_interval => foo (not a valid value)" do
+    let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+  end
+
+
+  context "Windows 2012 R2 with retry_interval => 30s" do
+    let(:params) { {:retry_interval => '30s', :target => '/bar/baz',
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/check_interval = 30/) }
+                            .with_content(/retry_interval = 30s/) }
   end
 
 
-  context "Windows 2012 R2 with check_interval => foo (not a valid integer)" do
-    let(:params) { {:check_interval => 'foo', :target => '/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
-  end
-
-
-  context "Windows 2012 R2 with retry_interval => 30" do
-    let(:params) { {:retry_interval => '30', :target => '/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/retry_interval = 30/) }
-  end
-
-
-  context "Windows 2012 R2 with retry_interval => foo (not a valid integer)" do
+  context "Windows 2012 R2 with retry_interval => foo (not a valid value)" do
     let(:params) { {:retry_interval => 'foo', :target => '/bar/baz',
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
