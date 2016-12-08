@@ -2,6 +2,11 @@
 # vi: set ft=ruby :
 
 nodes = {
+  'i2sles12sp1puppet4' => {
+    :box => 'sles-12-sp1-x64-virtualbox.box',
+    :url => 'http://boxes.icinga.com/vagrant/sles/sles-12-sp1-x64-virtualbox.box',
+    :md5 => 'f69a32869d2cffc240e95e9089d3e63a'
+  },
   'i2rhel7puppet4' => {
     :box => 'centos-7.2-x64-virtualbox',
     :url => 'http://boxes.icinga.org/vagrant/centos/centos-7.2-x64-virtualbox.box',

@@ -110,6 +110,15 @@ class icinga2::params {
           $lib_dir  = '/usr/lib'
         } # Debian
 
+        'suse': {
+          $user     = 'icinga'
+          $group    = 'icinga'
+          $lib_dir  = $::architecture ? {
+            'x86_64' => '/usr/lib64',
+            default  => '/usr/lib',
+          }
+        } # Suse
+
         default: {
           fail("Your plattform ${::osfamily} is not supported, yet.")
         }
