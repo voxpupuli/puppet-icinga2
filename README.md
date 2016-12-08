@@ -1,6 +1,6 @@
 # Icinga2 Puppet Module
 
-![Icina Logo](https://www.icinga.org/wp-content/uploads/2014/06/icinga_logo.png)
+![Icinga Logo](https://www.icinga.org/wp-content/uploads/2014/06/icinga_logo.png)
 
 #### Table of Contents
 
