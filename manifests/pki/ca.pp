@@ -10,7 +10,7 @@
 # [*source*]
 #   This class support multiple sources to create the Icinga CA: 
 #    - file: Transfer files from pathes set in 'ca_cert' and 'ca_key'
-#    - cli: Generate a CA using the icinga2 CLI command
+#    - cli: Generate a CA using the icinga2 CLI command (default)
 #    - content: Use the strings set in 'ca_cert' and 'ca_key'
 #
 # [*ca_cert*]
@@ -39,7 +39,7 @@
 #
 class icinga2::pki::ca(
   $ensure          = present,
-  $source          = 'file',
+  $source          = 'cli',
   $ca_cert         = undef,
   $ca_key          = undef,
 ) {
@@ -118,8 +118,17 @@ class icinga2::pki::ca(
         },
         tag    => 'icinga2::config::file',
       }
-
     } # content
-  } # source
 
+    'cli': {
+      exec { 'create-icinga2-ca':
+        path    => $::osfamily ? {
+          'windows' => 'C:/ProgramFiles/ICINGA2/sbin',
+          default   => '/bin:/usr/bin:/sbin:/usr/sbin',
+        },
+        command => 'icinga2 pki new-ca',
+        creates => "$ca_dir/ca.crt",
+      }
+    } # cli
+  } # source
 }
