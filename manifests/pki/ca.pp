@@ -4,9 +4,6 @@
 #
 # === Parameters
 #
-# [*ensure*]
-#   Set to present enables the feature api, absent disabled it. Defaults to present.
-#
 # [*source*]
 #   This class support multiple sources to create the Icinga CA: 
 #    - file: Transfer files from pathes set in 'ca_cert' and 'ca_key'
@@ -23,10 +20,14 @@
 #
 # === Examples
 #
+# Generate a CA with the icinga2 CLI:
+# 
+# class { 'icinga2::pki::ca':
+#   source  => 'cli',
+# }
+#
 # Create the CA by transfering your own files:
 #
-# include icinga2
-# 
 # class { 'icinga2::pki::ca':
 #   source => 'file',
 #   ca_cert => 'puppet:///modules/icinga2/test_ca.crt',
@@ -38,7 +39,6 @@
 # Icinga Development Team <info@icinga.org>
 #
 class icinga2::pki::ca(
-  $ensure          = present,
   $source          = 'cli',
   $ca_cert         = undef,
   $ca_key          = undef,
@@ -56,8 +56,6 @@ class icinga2::pki::ca(
   }
 
   # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_re($source, [ '^file$', '^cli$', '^content$' ],
     "${source} isn't supported. Valid values are 'file', 'cli' and 'content'.")
 
