@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*content*]
-#   Content.
+#   Content to insert in file specified in target.
 #
 # [*target*]
 #   Destination config file to store in this fragment. File will be declared the
