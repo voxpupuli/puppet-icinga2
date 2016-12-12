@@ -1,3 +1,7 @@
-gem list | grep puppet 1> /dev/null || gem install puppet
+rpm --import https://yum.puppetlabs.com/RPM-GPG-KEY-puppet
 
-test -x /usr/bin/puppet.ruby2.1 && ln -s /usr/bin/puppet.ruby2.1 /usr/bin/puppet
+rpm -aq |grep puppetlabs-release 1>/dev/null || zypper install -y https://yum.puppetlabs.com/puppetlabs-release-pc1-sles-12.noarch.rpm
+
+rpm -q puppet-agent || zypper install -y puppet-agent
+
+test -x /bin/puppet || ln -s /opt/puppetlabs/bin/puppet /bin/puppet
