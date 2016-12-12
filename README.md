@@ -476,6 +476,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Class::icinga2::feature::api](#class-icinga2featureapi)
     - [Class::icinga2::feature::idopgsql](#class-icinga2featureidopgsql)
     - [Class::icinga2::feature::idomysql](#class-icinga2featureidomysql)
+    - [Class::icinga2::pki::ca](#class-icinga2pkica)
 - [**Private classes**](#private-classes)
     - [Class: icinga2::repo](#class-icinga2repo)
     - [Class: icinga2::install](#class-icinga2install)
@@ -1047,6 +1048,19 @@ Array of information types that should be written to the database.
 
 ##### `import_schema`
 Whether to import the MySQL schema or not. Defaults to `false`
+
+#### Class: `icinga2::pki::ca`
+This class provides multiple ways to create the CA used by Icinga2. By default it will create a CA by using the Icinga2
+CLI. If you want to use your own CA you will either have to transfer it by using a file ressource or you can set the
+content of your certificat and key in this class.
+
+**Parameters of `icinga2::pki::ca`:**
+
+##### `ca_cert`
+Content of the CA certificate. If this is unset, a certificate will be generated with the Icinga 2 CLI.
+
+##### `ca_key`
+Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 
 ### Private Classes
 
