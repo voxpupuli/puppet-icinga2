@@ -442,7 +442,7 @@ icinga2::object::service { 'HTTP':
 }
 ```
 
-### Custom configuration files
+### Custom configuration
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
 tag and triggers a reload of Icinga2 on a file change.
@@ -453,6 +453,37 @@ tag and triggers a reload of Icinga2 on a file change.
     ensure => file,
     tag    => 'icinga2::config::file',
   }
+```
+
+If you want to add custom configuration fragments to existing config files, you can do this with
+`icinga2::config::fragment`. It adds content into a specified target to the position you set in the order parameter.
+You can use also Puppet templates to set the content of the config fragment.
+
+For example, you can add custom functions to existing config files:
+
+``` puppet 
+include icinga2
+
+icinga2::object::service { 'load':
+  display_name  => 'Load',
+  apply         => true,
+  check_command => 'load',
+  assign        => ['vars.os == Linux'],
+  target        => '/etc/icinga2/conf.d/service_load.conf',
+  order         => '30',
+}
+
+icinga2::config::fragment { 'load-function':
+  target => '/etc/icinga2/conf.d/service_load.conf',
+  order => '10',
+  content => 'vars.load_wload1 = {{
+    if (get_time_period("backup").is_inside) {
+      return 20
+    } else {
+      return 5
+    }
+  }}',
+}
 ```
 
 ## Reference
@@ -500,6 +531,7 @@ tag and triggers a reload of Icinga2 on a file change.
     - [Defined type: icinga2::object::eventcommand](#defined-type-icinga2objecteventcommand)
     - [Defined type: icinga2::object::checkresultreader](#defined-type-icinga2objectcheckresultreader)
     - [Defined type: icinga2::object::compatlogger](#defined-type-icinga2objectcompatlogger)
+    - [Defined type: icinga2::config::fragment](#defined-type-icinga2configfragment)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icinga2::feature](#defined-type-icinga2feature)
     - [Defined type: icinga2::object](#defined-type-icinga2object)
@@ -1849,6 +1881,18 @@ Destination config file to store in this object. File will be declared the first
 
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. `Defaults to 30`
+
+#### Defined type: `icinga2::config::fragment`
+
+##### `content`
+Content to insert in file specified in target.
+
+##### `target`
+Destination config file to store in this fragment. File will be declared the first time.
+
+##### `order`
+String to set the position in the target file, sorted in alpha numeric order.
+
 
 ### Private defined types
 

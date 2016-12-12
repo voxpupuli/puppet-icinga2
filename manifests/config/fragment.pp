@@ -64,7 +64,7 @@ define icinga2::config::fragment(
       default   => $content,
     },
     order  => $order,
-    notify => Class['::icinga2::serice'],
+    notify => Class['::icinga2::service'],
   }
 
 }
