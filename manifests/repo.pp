@@ -91,7 +91,6 @@ class icinga2::repo {
             'SLES': {
               zypprepo { 'icinga-stable-release':
                 baseurl      => "http://packages.icinga.com/SUSE/${::operatingsystemrelease}/release/",
-                name         => 'icinga-stable-release',
                 enabled      => 1,
                 gpgcheck     => 1,
                 require      => Exec['import icinga gpg key']

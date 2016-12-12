@@ -41,6 +41,14 @@ describe('icinga2', :type => :class) do
 
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+      when 'Suse'
+        let(:facts) { facts.merge({ :osfamily => 'Suse' }) }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
       end
 
       it { is_expected.to contain_file(@constants_conf)
@@ -84,6 +92,8 @@ describe('icinga2', :type => :class) do
         it { should_not contain_apt__source('icinga-stable-release') }
       when 'RedHat'
         it { should_not contain_yumrepo('icinga-stable-release') }
+      when 'Suse'
+        it { should_not contain_zypprepo('icinga-stable-release') }
       end
     end
   end

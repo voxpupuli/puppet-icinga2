@@ -14,6 +14,9 @@ describe('icinga2', :type => :class) do
       when 'RedHat'
         let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
         it { should contain_yumrepo('icinga-stable-release') }
+      when 'Suse'
+        let(:facts) { facts.merge({ :osfamily => 'Suse' }) }
+        it { should contain_zypprepo('icinga-stable-release') }
       end
     end
 
@@ -23,9 +26,15 @@ describe('icinga2', :type => :class) do
       case facts[:osfamily]
       when 'Debian'
         it { should_not contain_apt__source('icinga-stable-release') }
+        it { should_not contain_zypprepo('icinga-stable-release') }
       when 'RedHat'
         let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
         it { should_not contain_yumrepo('icinga-stable-release') }
+        it { should_not contain_zypprepo('icinga-stable-release') }
+      when 'Suse'
+        let(:facts) { facts.merge({ :osfamily => 'Suse' }) }
+        it { should_not contain_yumrepo('icinga-stable-release') }
+        it { should_not contain_apt__source('icinga-stable-release') }
       end
     end
   end
