@@ -15,30 +15,29 @@ describe('icinga2::pki::ca', :type => :class) do
       facts
     end
 
-    context "#{os} with source => file, ca_cert => '/my/ca.crt', ca_key => '/my/ca.key'" do
-      let(:params) {{:source => 'file', :ca_cert => '/my/ca.crt', :ca_key => '/my/ca.key'}}
-
-      it { is_expected.to contain_file(@ca_cert)}
-      it { is_expected.to contain_file(@ca_key)}
+    context "#{os} with defaults (no params)" do
+      it { is_expected.to contain_exec('create-icinga2-ca') }
     end
 
-    context "#{os} with source => content, ca_cert => 'foo', ca_key => 'bar'" do
-      let(:params) {{:source => 'content', :ca_cert => 'foo', :ca_key => 'bar'}}
+
+    context "#{os} with ca_cert => 'foo', ca_key => 'bar'" do
+      let(:params) {{:ca_cert => 'foo', :ca_key => 'bar'}}
 
       it { is_expected.to contain_file(@ca_cert).with_content(/foo/) }
       it { is_expected.to contain_file(@ca_key).with_content(/bar/) }
     end
 
-    context "#{os} with source => cli" do
-      let(:params) { {:source => 'cli'} }
 
-      it { is_expected.to contain_exec('create-icinga2-ca') }
+    context "#{os} with ca_cert => 4247, ca_key => 'bar' (not a valid string)" do
+      let(:params) { {:ca_cert => 4247, :ca_key => 'bar'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
-    context "#{os} with source => foo (invalid option)" do
-      let(:params) {{:source => 'foo'}}
+    context "#{os} with ca_cert => 'foo', ca_key => 4247 (not a valid string)" do
+      let(:params) { {:ca_cert => 'foo', :ca_key => 4247} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
   end
@@ -71,31 +70,31 @@ describe('icinga2::pki::ca', :type => :class) do
     @ca_key = "C:/ProgramData/icinga2/var/lib/icinga2/ca/ca.key"
   end
 
-  context "Windows 2012 R2 with source => file, ca_cert => '/my/ca.crt', ca_key => '/my/ca.key'" do
-    let(:params) {{:source => 'file', :ca_cert => '/my/ca.crt', :ca_key => '/my/ca.key'}}
-
-    it { is_expected.to contain_file(@ca_cert)}
-    it { is_expected.to contain_file(@ca_key)}
+  context "Windows 2012 R2 with defaults (no params)" do
+    it { is_expected.to contain_exec('create-icinga2-ca') }
   end
 
-  context "Windows 2012 R2 with source => content, ca_cert => 'foo', ca_key => 'bar'" do
-    let(:params) {{:source => 'content', :ca_cert => 'foo', :ca_key => 'bar'}}
+
+  context "Windows 2012 R2 with ca_cert => 'foo', ca_key => 'bar'" do
+    let(:params) {{:ca_cert => 'foo', :ca_key => 'bar'}}
 
     it { is_expected.to contain_file(@ca_cert).with_content(/foo/) }
     it { is_expected.to contain_file(@ca_key).with_content(/bar/) }
   end
 
-  context "Windows 2012 R2 with source => cli" do
-    let(:params) { {:source => 'cli'} }
 
-    it { is_expected.to contain_exec('create-icinga2-ca') }
+  context "Windows 2012 R2 with ca_cert => 4247, ca_key => 'bar' (not a valid string)" do
+    let(:params) { {:ca_cert => 4247, :ca_key => 'bar'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
-  context "Windows 2012 R2 with source => foo (invalid option)" do
-    let(:params) {{:source => 'foo'}}
+  context "Windows 2012 R2 with ca_cert => 'foo', ca_key => 4247 (not a valid string)" do
+    let(:params) { {:ca_cert => 'foo', :ca_key => 4247} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
+
 
 end
 
