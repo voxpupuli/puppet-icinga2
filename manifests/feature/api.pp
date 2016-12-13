@@ -9,10 +9,12 @@
 #
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
-#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
-#   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
-#   'none' does nothing and you either have to manage the files yourself as file resources
-#   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
+#   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
+#             /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the 
+#              Puppetmaster by using the configured 'ticket_salt' in a custom function.
+#   - none: Does nothing and you either have to manage the files yourself as file resources
+#           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
@@ -48,6 +50,12 @@
 #
 # [*accept_commands*]
 #   Accept remote commands. Defaults to false.
+#
+# [*ca_host*]
+#   This host will be connected to request the certificate. Set this if you use the icinga2 pki. 
+#
+# [*ca_port*]
+#   Port of the 'ca_host'. Defaults to 5665
 #
 # [*ticket_salt*]
 #   Salt to use for ticket generation. Defaults to icinga2 constant TicketSalt.
@@ -122,9 +130,9 @@ class icinga2::feature::api(
   $ssl_cacert_path = undef,
   $accept_config   = false,
   $accept_commands = false,
-  $ticket_salt     = 'TicketSalt',
-  $ca_host         = undef,
   $ca_port         = undef,
+  $ca_host         = undef,
+  $ticket_salt     = 'TicketSalt',
   $endpoints       = { 'NodeName' => {} },
   $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
   $ssl_key         = undef,
@@ -257,6 +265,7 @@ class icinga2::feature::api(
       exec { 'icinga2 pki create key':
         command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
         creates => $_ssl_key_path,
+        tag     => 'icinga2::config::file',
       } ->
       file {
         $_ssl_key_path:
@@ -267,15 +276,16 @@ class icinga2::feature::api(
       exec { 'icinga2 pki get trusted-cert':
         command => "icinga2 pki save-cert --host '${ca_host}'${_ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
         creates => $trusted_cert,
+        tag     => 'icinga2::config::file',
       } ->
       file { $trusted_cert: } ->
     
       exec { 'icinga2 pki request':
         command => "icinga2 pki request --host '${ca_host}'${_ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
         creates => $_ssl_cacert_path,
+        tag     => 'icinga2::config::file',
       } ->
-      file { $_ssl_cacert_path: }
-
+      file { $_ssl_cacert_path: } 
     } # icinga2    
   } # pki
 
