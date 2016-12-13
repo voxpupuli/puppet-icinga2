@@ -254,6 +254,7 @@ class icinga2::feature::api(
     'icinga2': {
       validate_string($ca_host)
       if $ca_port {
+        validate_integer($ca_port)
         $_ca_port = "--port ${ca_port}"
       } else {
         $_ca_port = ''
