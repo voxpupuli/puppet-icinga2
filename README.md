@@ -442,6 +442,117 @@ icinga2::object::service { 'HTTP':
 }
 ```
 
+### CA and Certificates
+Handling the CA and certificates is an important part of Icinga2, because the communication between Icinga processes will
+not work without SSL. This module offers multiple choices to treat this. 
+
+#### CA on your Icinga Master
+One of your Icinga master needs to bahave as a CA. With the class `icinga2::pki::ca` you can do following to fullfil
+this requiremen:
+
+* Use the ability of the icinga2 CLI to generate a complete new CA
+``` puppet
+  include icinga2
+  class { 'icinga2::pki::ca': }
+```
+
+
+* Set a custom content of the CA certificate and key
+``` puppet
+  include icinga2
+  class { 'icinga2::pki::ca':
+    ca_cert => '-----BEGIN CERTIFICATE----- ...',
+    ca_key  => '-----BEGIN RSA PRIVATE KEY----- ...',
+  }
+```
+
+* Transfer a CA certificate and key from an existing CA by using the file ressource:
+``` puppet
+  include icinga2
+  file { '/var/lib/icinga2/ca/ca.crt':
+    source => '...',
+    tag    => 'icinga2::config::file',
+  }
+  
+  file { '/var/lib/icinga2/ca/ca.key':
+    source => '...',
+    tag    => 'icinga2::config::file',
+  }
+```
+
+If you are looking for an option to use your Puppet CA, have a look to the
+[Client/Satellite Certificates](#clientsatellite-certificates) section.
+
+#### Client/Satellite Certificates
+In addition to the Master, each Client and Satellite needs valid certifacates to communicate with other Icinga2 instanzes.
+This module offers following options to create these certificates:
+
+* Use te Puppet CA and its client certificatse. This is convinient since you don't need to maintain an additional CA.
+``` puppet
+  include ::icinga2::feature::api
+```
+
+* Use a custom function impletemented in this module to generate a certificate. This feature will to the following:
+  * Generate a key and certificate based on the FQDN of the host
+  * Save the certificate of another Icinga2 instance, usually the Icinga master where your Icinga CA is located
+  * Generate a ticket based on the TicketSalt
+  * Request a signed certificate at your Icinga CA
+  
+``` puppet
+  class { 'icinga2::feature::api':
+    pki             => 'icinga2',
+    ca_host         => 'icinga2-master.example.com',
+    ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
+    accept_config   => true,
+    accept_commands => true,
+    endpoints       => {
+      'NodeName' => {},
+      'icinga2-master.example.com' => {
+        'host' => '192.168.56.103',
+      }
+    },
+    zones           => {
+      'NodeName' => {
+        'endpoints' => ['NodeName'],
+        'parent' => 'master',
+      },
+      'master' => {
+        'endpoints' => ['icinga2-master.example.com']
+      }
+    }
+  }
+```
+
+* Use custom file ressources to transfer your own certificate and key
+``` puppet
+  class { 'icinga2::feature::api':
+    pki => 'none',
+  }
+
+  file { "/etc/icinga2/pki/${::fqdn}.crt":
+    ensure => file,
+    tag    => 'icinga2::config::file,
+    source => "puppet:///modules/profiles/certificates/${::fqdn}.crt",
+  }
+
+  file { "/etc/icinga2/pki/${::fqdn}.key":
+    ensure => file,
+    tag    => 'icinga2::config::file,
+    source => "puppet:///modules/profiles/private_keys/${::fqdn}.key",
+  }
+```
+
+* Set a custom content for the certificate and key
+
+``` puppet
+  class { 'icinga2::feature::api':
+    pki         => 'none',
+    ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
+    ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
+    ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
+  }
+```
+
 ### Custom configuration
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
 can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
@@ -948,6 +1059,8 @@ Provides multiple sources for the certificate and key.
 * `puppet` Copies the key, cert and CAcert from the Puppet ssl directory to the Icinga pki directory.
   * Linux: `/etc/icinga2/pki`
   * Windows: `C:/ProgramData/icinga2/etc/icinga2/pki`
+* `icinga2` Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the Puppetmaster by using
+the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
 `ssl_ca` parameters.
 
@@ -980,6 +1093,22 @@ Accept zone configuration. Defaults to `false`
 
 ##### `accept_commands`
 Accept remote commands. Defaults to `false`
+
+##### `ca_host`
+This host will be connected to request the certificate. Set this if you use the `icinga2` pki. 
+
+##### `ca_port`
+Port of the 'ca_host'. Defaults to `5665`
+
+##### `ticket_salt`
+Salt to use for ticket generation. Defaults to icinga2 constant `TicketSalt`.
+
+##### `endpoints`
+Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeName` is a Icnga2 constant.
+
+##### `zones`
+Hash to configure zone objects. Defaults to `{ 'ZoneName' => {'endpoints' => ['NodeName']} }`. `ZoneName` and `NodeName`
+are Icinga2 constants.
 
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.

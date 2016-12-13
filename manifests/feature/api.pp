@@ -98,7 +98,7 @@
 #   }
 #
 #   File {
-#     owner => 'icnga',
+#     owner => 'icinga',
 #     group => 'icinga',
 #   }
 #
