@@ -161,7 +161,7 @@ define icinga2::object::service (
   $import                 = [],
   $template               = false,
   $target                 = undef,
-  $order                  = '10',
+  $order                  = '60',
 ) {
 
   include ::icinga2::params

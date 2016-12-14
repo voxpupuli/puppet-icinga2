@@ -40,7 +40,7 @@ define icinga2::object::endpoint(
   $port         = undef,
   $log_duration = undef,
   $target       = undef,
-  $order        = '10',
+  $order        = '40',
 ) {
 
   include ::icinga2::params

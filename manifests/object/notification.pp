@@ -97,7 +97,7 @@ define icinga2::object::notification (
   $import       = [],
   $template     = false,
   $target       = undef,
-  $order        = '10',
+  $order        = '85',
 ){
   include ::icinga2::params
 

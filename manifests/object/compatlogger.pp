@@ -25,7 +25,7 @@ define icinga2::object::compatlogger (
   $ensure               = present,
   $log_dir              = undef,
   $rotation_method      = undef,
-  $order                = '30',
+  $order                = '5',
   $target,
 ){
   include ::icinga2::params

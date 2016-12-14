@@ -88,7 +88,7 @@ define icinga2::object::dependency (
   $import                 = [],
   $template               = false,
   $target                 = undef,
-  $order                  = '35',
+  $order                  = '70',
 ){
   include ::icinga2::params
 

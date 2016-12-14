@@ -50,7 +50,7 @@ define icinga2::object::eventcommand (
   $timeout              = undef,
   $arguments            = undef,
   $import               = ['plugin-event-command'],
-  $order                = '30',
+  $order                = '20',
   $target,
 ){
   include ::icinga2::params

@@ -51,7 +51,7 @@ define icinga2::object::checkcommand(
   $timeout      = undef,
   $arguments    = undef,
   $template     = false,
-  $order        = '10',
+  $order        = '15',
   $target,
 ) {
 
