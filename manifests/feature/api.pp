@@ -130,8 +130,8 @@ class icinga2::feature::api(
   $ssl_cacert_path = undef,
   $accept_config   = false,
   $accept_commands = false,
-  $ca_port         = undef,
   $ca_host         = undef,
+  $ca_port         = 5665,
   $ticket_salt     = 'TicketSalt',
   $endpoints       = { 'NodeName' => {} },
   $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
@@ -253,12 +253,7 @@ class icinga2::feature::api(
 
     'icinga2': {
       validate_string($ca_host)
-      if $ca_port {
-        validate_integer($ca_port)
-        $_ca_port = "--port ${ca_port}"
-      } else {
-        $_ca_port = ''
-      }
+      validate_integer($ca_port)
 
       $ticket_id = icinga2_ticket_id($::fqdn, $ticket_salt)
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
@@ -275,14 +270,14 @@ class icinga2::feature::api(
       } ->
     
       exec { 'icinga2 pki get trusted-cert':
-        command => "icinga2 pki save-cert --host '${ca_host}'${_ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
+        command => "icinga2 pki save-cert --host '${ca_host}' --port ${ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
         creates => $trusted_cert,
         tag     => 'icinga2::config::file',
       } ->
       file { $trusted_cert: } ->
     
       exec { 'icinga2 pki request':
-        command => "icinga2 pki request --host '${ca_host}'${_ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
+        command => "icinga2 pki request --host '${ca_host}' --port ${ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
         creates => $_ssl_cacert_path,
         tag     => 'icinga2::config::file',
       } ->
