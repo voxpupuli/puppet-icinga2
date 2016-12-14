@@ -30,7 +30,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 class icinga2::pki::ca(
   $ca_cert         = undef,

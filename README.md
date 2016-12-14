@@ -1,6 +1,6 @@
 # Icinga2 Puppet Module
 
-![Icinga Logo](https://www.icinga.org/wp-content/uploads/2014/06/icinga_logo.png)
+![Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
 #### Table of Contents
 
@@ -25,7 +25,7 @@ of Icinga2 on multiple operating sytems.
 
 ## Module Description
 This module installs and configures Icinga2 on your Linux or Windows hosts. By default it will use packages provided by
-your distributions repository, respectively chocolatey on Windows. The module can be enabled to use [packages.icinga.org]
+your distributions repository, respectively chocolatey on Windows. The module can be enabled to use [packages.icinga.com]
 as primary repository, which will give you the ability to install the latest Icinga2 release. All features and objects
 available in Icinga2 can be enabled and configured with this module.
 
@@ -71,7 +71,7 @@ Other operating systems or versions may work but have not been tested.
 The default class `icinga2` will install and configure a basic installation of Icinga2 on your system. By default it will
 enable the features `checker`, `mainlog` and `notification`. As default installation source the distributions repository will
 used. On Windows systems we use chocolatey. To get the latest version of Icinga2 you need to enable the `manage_repo`
-parameter, which will allow the module to add the official [packages.icinga.org] repository to your host.
+parameter, which will allow the module to add the official [packages.icinga.com] repository to your host.
 
 ``` puppet
   class { 'icinga2':
@@ -674,7 +674,7 @@ Defines if the service should be `running` or `stopped`. Defaults to `running`
 If set to `true` the Icinga2 service will start on boot. Defaults to `true`.
 
 ##### `manage_repo`
-When set to `true` this module will install the [packages.icinga.org] repository. With this official repo
+When set to `true` this module will install the [packages.icinga.com] repository. With this official repo
 you can get the latest version of Icinga. When set to `false` the operating systems default will be used. As the Icinga
 Project does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows. Default
 is `false`
@@ -1226,7 +1226,7 @@ Content of the CA key. If this is unset, a key will be generated with the Icinga
 ### Private Classes
 
 #### Class: `icinga2::repo`
-Installs the [packages.icinga.org] repository. Depending on your operating system [puppetlabs/apt] or
+Installs the [packages.icinga.com] repository. Depending on your operating system [puppetlabs/apt] or
 [puppetlabs/chocolatey] are required.
 
 #### Class: `icinga2::install`
@@ -2086,7 +2086,7 @@ String to set the position in the target file, sorted alpha numeric.
 
 
 ## Development
-A roadmap of this project is located at https://dev.icinga.org/projects/puppet-icinga2-rewrite/roadmap. Please consider
+A roadmap of this project is located at https://dev.icinga.com/projects/puppet-icinga2-rewrite/roadmap. Please consider
 this roadmap when you start contributing to the project.
 
 ### Contributing
@@ -2119,7 +2119,7 @@ See also [CHANGELOG.md]
 [Limitations]: #limitations
 [Development]: #development
 
-[distributed monitoring]: http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/distributed-monitoring
+[distributed monitoring]: http://docs.icinga.com/icinga2/latest/doc/module/icinga2/chapter/distributed-monitoring
 [examples]: examples
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
@@ -2128,7 +2128,7 @@ See also [CHANGELOG.md]
 [puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
 [puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
-[packages.icinga.org]: https://packages.icinga.org
+[packages.icinga.com]: https://packages.icinga.com
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 
 [CONTRIBUTING.md]: CONTRIBUTING.md

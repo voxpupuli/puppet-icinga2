@@ -15,7 +15,7 @@ git commit -am "Update AUTHORS"
 ## 2. Changelog
 We currently don't have any automation to generate the content of [CHANGELOG]. A possible way to collect all changes made
 since the last version is to look at the merged pull requests. Issue numbers in branch will lead you also to the relevant
-tickets on [dev.icinga.org].
+tickets on [dev.icinga.com].
 
 ## 3. Version
 Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
@@ -47,6 +47,6 @@ TODO: Write Puppet Forge workflow.
 
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 [CHANGELOG]: CHANGELOG
-[dev.icinga.org]: https://dev.icinga.org/puppet-icinga2-rewrite
+[dev.icinga.com]: https://dev.icinga.com/puppet-icinga2-rewrite
 [AUTHORS]: AUTHORS
 [.mailmap]: .mailmap

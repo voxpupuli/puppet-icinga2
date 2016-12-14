@@ -1,6 +1,6 @@
 # == Class: icinga2::repo
 #
-# This class manages the packages.icinga.org repository based on the operating system. Windows is not supported, as the
+# This class manages the packages.icinga.com repository based on the operating system. Windows is not supported, as the
 # Icinga Project does not offer a chocolate repository.
 #
 # === Parameters
@@ -15,7 +15,7 @@
 #
 # === Authors
 #
-# Icinga Development Team <info@icinga.org>
+# Icinga Development Team <info@icinga.com>
 #
 class icinga2::repo {
 
@@ -30,11 +30,11 @@ class icinga2::repo {
         case $::operatingsystem {
           'centos', 'redhat': {
             yumrepo { 'icinga-stable-release':
-              baseurl  => "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release/",
+              baseurl  => "http://packages.icinga.com/epel/${::operatingsystemmajrelease}/release/",
               descr    => 'ICINGA (stable release for epel)',
               enabled  => 1,
               gpgcheck => 1,
-              gpgkey   => 'http://packages.icinga.org/icinga.key',
+              gpgkey   => 'http://packages.icinga.com/icinga.key',
             }
           }
           default: {
@@ -47,10 +47,10 @@ class icinga2::repo {
           'debian': {
             include ::apt, ::apt::backports
             apt::source { 'icinga-stable-release':
-              location    => 'http://packages.icinga.org/debian',
+              location    => 'http://packages.icinga.com/debian',
               release     => "icinga-${::lsbdistcodename}",
               repos       => 'main',
-              key_source  => 'http://packages.icinga.org/icinga.key',
+              key_source  => 'http://packages.icinga.com/icinga.key',
               key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
               include_src => false,
             }
@@ -58,10 +58,10 @@ class icinga2::repo {
           'ubuntu': {
             include ::apt
             apt::source { 'icinga-stable-release':
-              location    => 'http://packages.icinga.org/ubuntu',
+              location    => 'http://packages.icinga.com/ubuntu',
               release     => "icinga-${::lsbdistcodename}",
               repos       => 'main',
-              key_source  => 'http://packages.icinga.org/icinga.key',
+              key_source  => 'http://packages.icinga.com/icinga.key',
               key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
               include_src => false,
             }
@@ -76,7 +76,7 @@ class icinga2::repo {
        
           file { '/etc/pki/GPG-KEY-icinga':
             ensure => present,
-            source => 'http://packages.icinga.org/icinga.key',
+            source => 'http://packages.icinga.com/icinga.key',
           }
 
           exec { "import icinga gpg key":
