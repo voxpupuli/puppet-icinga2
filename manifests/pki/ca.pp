@@ -56,6 +56,7 @@ class icinga2::pki::ca(
       },
       command => 'icinga2 pki new-ca',
       creates => "$ca_dir/ca.crt",
+      notify  => Class['::icinga2::service'],
     }
   } else {
 
