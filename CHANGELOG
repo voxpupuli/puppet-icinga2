@@ -1,5 +1,19 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.7.0
+
+### Bugs
+Bug #13365: Wrong MySQL user grants for schema import in docs
+
+### Features
+Feature #12651: CA handling with base64 encoded string
+Feature #12652: CA handling using custom function from puppet-icinga2-legacy
+Feature #12653: Add Support for SLES 12
+Feature #13385: Add Travis CI Tests
+Feature #13495: CA handling using the icinga2 CLI
+Feature #13511: Add custom config fragment
+Feature #13513: Rework default order values for all objects
+
 ## v0.6.0
 
 ### Bugs
