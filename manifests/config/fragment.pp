@@ -20,9 +20,9 @@
 #
 define icinga2::config::fragment(
   $code_name = $title,
+  $order       = '0',
   $content,
   $target,
-  $order,
 ) {
 
   include ::icinga2::params

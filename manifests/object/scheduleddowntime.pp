@@ -65,7 +65,7 @@ define icinga2::object::scheduleddowntime (
   $apply_target         = 'Host',
   $assign               = [],
   $ignore               = [],
-  $order                = '30',
+  $order                = '90',
   $target               = undef,
 ){
   include ::icinga2::params

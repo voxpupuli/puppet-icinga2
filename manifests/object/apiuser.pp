@@ -50,7 +50,7 @@ define icinga2::object::apiuser(
   $apiuser     = $title,
   $password    = undef,
   $client_cn   = undef,
-  $order       = '10',
+  $order       = '30',
   $target,
   $permissions,
 ) {

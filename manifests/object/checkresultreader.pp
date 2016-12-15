@@ -24,7 +24,7 @@
 define icinga2::object::checkresultreader (
   $ensure               = present,
   $spool_dir            = undef,
-  $order                = '30',
+  $order                = '10',
   $target,
 ){
   include ::icinga2::params

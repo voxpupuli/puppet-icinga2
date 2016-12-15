@@ -38,7 +38,7 @@ define icinga2::object::zone(
   $parent    = undef,
   $global    = false,
   $target    = undef,
-  $order     = '20',
+  $order     = '45',
 ) {
 
   include ::icinga2::params

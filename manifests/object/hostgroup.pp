@@ -43,7 +43,7 @@ define icinga2::object::hostgroup(
   $groups         = undef,
   $assign         = [],
   $ignore         = [],
-  $order          = '25',
+  $order          = '55',
   $target,
 ) {
 
