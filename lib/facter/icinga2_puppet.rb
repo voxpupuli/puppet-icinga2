@@ -1,6 +1,4 @@
-require 'facter'
-
-Puppet.settings.preferred_run_mode= :agent
+require 'puppet'
 
 Facter.add(:icinga2_puppet_hostcert) do
   setcode do
