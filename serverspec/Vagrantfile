@@ -3,19 +3,19 @@
 
 nodes = {
   'i2sles12sp1puppet4' => {
-    :box => 'sles-12-sp1-x64-virtualbox.box',
+    :box => 'sles-12-sp1-x64-virtualbox',
     :url => 'http://boxes.icinga.com/vagrant/sles/sles-12-sp1-x64-virtualbox.box',
     :md5 => '033c565eac5efc631012c44d73aa1e33'
   },
   'i2rhel7puppet4' => {
-    :box => 'centos-7.2-x64-virtualbox',
-    :url => 'http://boxes.icinga.org/vagrant/centos/centos-7.2-x64-virtualbox.box',
-    :md5 => '30fe8faeaf5e67d1dfcdeb8631e757e7'
+    :box => 'centos-7.3-x64-virtualbox',
+    :url => 'http://boxes.icinga.org/vagrant/centos/centos-7.3-x64-virtualbox.box',
+    :md5 => 'd458134dc2cfddfb4765b2e64cff6b3a'
   },
   'i2rhel6puppet4' => {
-    :box => 'centos-6.7-x64-virtualbox',
-    :url => 'http://boxes.icinga.org/vagrant/centos/centos-6.7-x64-virtualbox.box',
-    :md5 => 'ef0c3e7a9d798a911a908c77dd816e94'
+    :box => 'centos-6.8-x64-virtualbox',
+    :url => 'http://boxes.icinga.org/vagrant/centos/centos-6.8-x64-virtualbox.box',
+    :md5 => '7fb5b9b1c9dfdaed2da4ecb0d15eea99'
   },
   'i2debian8puppet4' => {
     :box => 'debian-8.5-amd64-virtualbox',
