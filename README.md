@@ -45,13 +45,14 @@ available in Icinga2 can be enabled and configured with this module.
 ### Dependencies
 This module depends on:
 
-* [puppetlabs/stdlib]
-* [puppetlabs/concat]
+* [puppetlabs/stdlib] >= 4.10.0
+* [puppetlabs/concat] >= 2.0.1
 
 Depending on your setup following modules may also be required:
 
-* [puppetlabs/apt]
-* [puppetlabs/chocolatey]
+* [puppetlabs/apt] >= 1.8.0
+* [puppetlabs/chocolatey] >= 0.7.0
+* [darin/zypprepo] >= 1.0.2
 
 ### Limitations
 This module has been tested on:
@@ -61,6 +62,7 @@ This module has been tested on:
 * Ubuntu 14.04, 16.04
 * CentOS/RHEL 6, 7
     * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
+* SLES 12
 * Windows Server 2012
 
 Other operating systems or versions may work but have not been tested.
@@ -2125,6 +2127,7 @@ See also [CHANGELOG.md]
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
 [puppetlabs/chocolatey]: https://github.com/puppetlabs/puppetlabs-chocolatey
+[darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
 [puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
 [puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
