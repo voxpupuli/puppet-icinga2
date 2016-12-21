@@ -105,7 +105,7 @@ class icinga2::feature::idopgsql(
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
   if $cleanup { validate_hash($cleanup) }
-  if $categories { validate_array($categories) }
+  if $categories { validate_array($categories) }
   validate_bool($import_schema)
 
   $conf_dir  = $::icinga2::params::conf_dir
