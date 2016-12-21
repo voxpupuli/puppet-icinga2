@@ -128,7 +128,7 @@ class icinga2::feature::influxdb(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_ip_address($host)
+  validate_string($host)
   validate_integer($port)
   validate_string($database)
   validate_string($username)

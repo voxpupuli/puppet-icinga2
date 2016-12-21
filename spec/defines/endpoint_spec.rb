@@ -61,10 +61,11 @@ describe('icinga2::object::endpoint', :type => :define) do
     end
 
 
-    context "#{os} with host => foo (not a valid IP address" do
-      let(:params) { {:host => 'foo', :target => '/bar/baz'} }
+    context "#{os} with host => foo.example.com" do
+      let(:params) { {:host => 'foo.example.com', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+        .with_content(/host = "foo.example.com"/) }
     end
 
 
@@ -172,10 +173,11 @@ describe('icinga2::object::endpoint', :type => :define) do
   end
 
 
-  context "Windows 2012 R2  with host => foo (not a valid IP address" do
-    let(:params) { {:host => 'foo', :target => 'C:/bar/baz'} }
+  context "Windows 2012 R2  with host => foo.example.com" do
+    let(:params) { {:host => 'foo.example.com', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
+                            .with_content(/host = "foo.example.com"/) }
   end
 
 

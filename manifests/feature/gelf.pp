@@ -38,7 +38,7 @@ class icinga2::feature::gelf(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_ip_address($host)
+  validate_string($host)
   validate_integer($port)
   validate_string($source)
   validate_bool($enable_send_perfdata)

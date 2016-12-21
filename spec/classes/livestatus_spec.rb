@@ -70,10 +70,12 @@ describe('icinga2::feature::livestatus', :type => :class) do
     end
 
 
-    context "#{os} with bind_host => foo (not a valid IP address)" do
-      let(:params) { {:bind_host => 'foo'} }
+    context "#{os} with bind_host => foo.example.com" do
+      let(:params) { {:bind_host => 'foo.example.com'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+        .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
+        .with_content(/bind_host = "foo.example.com"/) }
     end
 
 
@@ -208,10 +210,12 @@ describe('icinga2::feature::livestatus', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with bind_host => foo (not a valid IP address)" do
-    let(:params) { {:bind_host => 'foo'} }
+  context "Windows 2012 R2 with bind_host => foo.example.com" do
+    let(:params) { {:bind_host => 'foo.example.com'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
+                            .with_content(/bind_host = "foo.example.com"/) }
   end
 
 

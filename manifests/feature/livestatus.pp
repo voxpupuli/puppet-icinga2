@@ -47,7 +47,7 @@ class icinga2::feature::livestatus(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_re($socket_type, [ '^unix$', '^tcp$' ],
     "${socket_type} isn't supported. Valid values are 'unix' and 'tcp'.")
-  validate_ip_address($bind_host)
+  validate_string($bind_host)
   validate_integer($bind_port)
   validate_absolute_path($socket_path)
   validate_absolute_path($compat_log_path)
