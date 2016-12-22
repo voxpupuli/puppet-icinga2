@@ -158,7 +158,7 @@ class icinga2::feature::idomysql(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_ip_address($host)
+  validate_string($host)
   validate_integer($port)
   if $socket_path { validate_absolute_path($socket_path) }
   validate_string($user)

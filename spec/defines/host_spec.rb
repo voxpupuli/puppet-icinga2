@@ -70,35 +70,35 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
-    context "#{os} with address => 127.0.0.2" do
-      let(:params) { {:address => '127.0.0.2', :target => '/bar/baz', :check_command => 'foocommand'} }
+    context "#{os} with address => 4247" do
+      let(:params) { {:address => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
+    context "#{os} with address => foo.example.com" do
+      let(:params) { {:address => 'foo.example.com', :target => '/bar/baz', :check_command => 'foocommand'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
         .with({'target' => '/bar/baz'})
-        .with_content(/address = "127.0.0.2"/) }
+        .with_content(/address = "foo.example.com"/) }
     end
 
 
-    context "#{os} with address => foo (not a valid IP address)" do
-      let(:params) { {:address => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
+    context "#{os} with address6 => 4247" do
+      let(:params) { {:address6 => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
-    context "#{os} with address6 => ::2" do
-      let(:params) { {:address6 => '::2', :target => '/bar/baz', :check_command => 'foocommand'} }
+    context "#{os} with address6 => foo.example.com" do
+      let(:params) { {:address6 => 'foo.example.com', :target => '/bar/baz', :check_command => 'foocommand'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
         .with({'target' => '/bar/baz'})
-        .with_content(/address6 = "::2"/) }
-    end
-
-
-    context "#{os} with address6 => foo (not a valid IP address)" do
-      let(:params) { {:address6 => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+        .with_content(/address6 = "foo.example.com"/) }
     end
 
 
@@ -621,35 +621,35 @@ describe('icinga2::object::host', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with address => 127.0.0.2" do
-    let(:params) { {:address => '127.0.0.2', :target => '/bar/baz', :check_command => 'foocommand'} }
+  context "Windows 2012 R2 with address => 4247" do
+    let(:params) { {:address => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with address => foo.example.com" do
+    let(:params) { {:address => 'foo.example.com', :target => '/bar/baz', :check_command => 'foocommand'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/address = "127.0.0.2"/) }
+                            .with_content(/address = "foo.example.com"/) }
   end
 
 
-  context "Windows 2012 R2 with address => foo (not a valid IP address)" do
-    let(:params) { {:address => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
+  context "Windows 2012 R2 with address6 => 4247" do
+    let(:params) { {:address6 => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
-  context "Windows 2012 R2 with address6 => ::2" do
-    let(:params) { {:address6 => '::2', :target => '/bar/baz', :check_command => 'foocommand'} }
+  context "Windows 2012 R2 with address6 => foo.example.com" do
+    let(:params) { {:address6 => 'foo.example.com', :target => '/bar/baz', :check_command => 'foocommand'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
                             .with({'target' => '/bar/baz'})
-                            .with_content(/address6 = "::2"/) }
-  end
-
-
-  context "Windows 2012 R2 with address6 => foo (not a valid IP address)" do
-    let(:params) { {:address6 => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a valid IP address/) }
+                            .with_content(/address6 = "foo.example.com"/) }
   end
 
 

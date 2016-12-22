@@ -53,7 +53,7 @@ define icinga2::object::endpoint(
   validate_integer($order)
 
   if $endpoint { validate_string($endpoint) }
-  if $host { validate_ip_address($host) }
+  if $host { validate_string($host) }
   if $port { validate_integer($port) }
   if $log_duration { validate_re($log_duration, '^\d+\.?\d*[d|h|m|s]?$') }
 

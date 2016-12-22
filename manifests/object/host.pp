@@ -158,8 +158,8 @@ define icinga2::object::host(
   validate_integer($order)
 
   if $hostname { validate_string($hostname) }
-  if $address { validate_ip_address($address) }
-  if $address6 { validate_ip_address($address6) }
+  if $address { validate_string($address) }
+  if $address6 { validate_string($address6) }
   if $vars { validate_hash($vars) }
   if $groups { validate_array($groups) }
   if $display_name { validate_string($display_name) }
