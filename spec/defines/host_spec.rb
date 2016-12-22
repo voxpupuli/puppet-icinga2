@@ -70,12 +70,10 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
-    context "#{os} with address => 127.0.0.2" do
-      let(:params) { {:address => '127.0.0.2', :target => '/bar/baz', :check_command => 'foocommand'} }
+    context "#{os} with address => 4247" do
+      let(:params) { {:address => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
-        .with({'target' => '/bar/baz'})
-        .with_content(/address = "127.0.0.2"/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -88,12 +86,10 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
-    context "#{os} with address6 => ::2" do
-      let(:params) { {:address6 => '::2', :target => '/bar/baz', :check_command => 'foocommand'} }
+    context "#{os} with address6 => 4247" do
+      let(:params) { {:address6 => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
-        .with({'target' => '/bar/baz'})
-        .with_content(/address6 = "::2"/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -625,12 +621,10 @@ describe('icinga2::object::host', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with address => 127.0.0.2" do
-    let(:params) { {:address => '127.0.0.2', :target => '/bar/baz', :check_command => 'foocommand'} }
+  context "Windows 2012 R2 with address => 4247" do
+    let(:params) { {:address => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/address = "127.0.0.2"/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -643,12 +637,10 @@ describe('icinga2::object::host', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with address6 => ::2" do
-    let(:params) { {:address6 => '::2', :target => '/bar/baz', :check_command => 'foocommand'} }
+  context "Windows 2012 R2 with address6 => 4247" do
+    let(:params) { {:address6 => 4247, :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/address6 = "::2"/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

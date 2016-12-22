@@ -45,12 +45,10 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with host => 127.0.0.2" do
-      let(:params) { {:host => '127.0.0.2'} }
+    context "#{os} with host => 4247" do
+      let(:params) { {:host => 4247} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
-                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
-                              .with_content(/host = "127.0.0.2"/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -429,13 +427,11 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with host => 127.0.0.2" do
-    let(:params) { {:host => '127.0.0.2'} }
+  context "Windows 2012 R2 with host => 4247" do
+    let(:params) { {:host => 4247} }
 
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
-                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
-                            .with_content(/host = "127.0.0.2"/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

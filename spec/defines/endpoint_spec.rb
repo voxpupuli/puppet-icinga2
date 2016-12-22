@@ -53,11 +53,10 @@ describe('icinga2::object::endpoint', :type => :define) do
     end
 
 
-    context "#{os} with host => 127.0.0.2" do
-      let(:params) { {:host => '127.0.0.2', :target => '/bar/baz'} }
+    context "#{os} with host => 4247" do
+      let(:params) { {:host => 4247, :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
-        .with_content(/host = "127.0.0.2"/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -165,11 +164,10 @@ describe('icinga2::object::endpoint', :type => :define) do
   end
 
 
-  context "Windows 2012 R2  with host => 127.0.0.2" do
-    let(:params) { {:host => '127.0.0.2', :target => 'C:/bar/baz'} }
+  context "Windows 2012 R2  with host => 4247" do
+    let(:params) { {:host => 4247, :target => 'C:/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
-                            .with_content(/host = "127.0.0.2"/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
