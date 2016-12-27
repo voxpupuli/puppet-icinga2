@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*service_name*]
+#   Set the Icinga2 name of the service object. Defaults to title of the define resource.
+#
 # [*display_name*]
 #   A short description of the service.
 #
@@ -129,6 +132,7 @@
 
 define icinga2::object::service (
   $ensure                 = present,
+  $service_name           = $title,
   $display_name           = undef,
   $host_name              = undef,
   $groups                 = undef,
@@ -171,6 +175,7 @@ define icinga2::object::service (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($service_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_array($import)
   validate_bool($template)
@@ -207,39 +212,38 @@ define icinga2::object::service (
 
   # compose the attributes
   $attrs = {
-    'display_name' => $display_name ,
-    'host_name' => $host_name ,
-    'name' => $name ,
-    'groups' => $groups ,
-    'vars' => $vars ,
-    'check_command' => $check_command ,
-    'max_check_attempts' => $max_check_attempts ,
-    'check_period' => $check_period ,
-    'check_timeout' => $check_timeout ,
-    'check_interval' => $check_interval ,
-    'retry_interval' => $retry_interval ,
-    'enable_notifications' => $enable_notifications ,
-    'enable_active_checks' => $enable_active_checks ,
+    'display_name'          => $display_name ,
+    'host_name'             => $host_name ,
+    'groups'                => $groups ,
+    'vars'                  => $vars ,
+    'check_command'         => $check_command ,
+    'max_check_attempts'    => $max_check_attempts ,
+    'check_period'          => $check_period ,
+    'check_timeout'         => $check_timeout ,
+    'check_interval'        => $check_interval ,
+    'retry_interval'        => $retry_interval ,
+    'enable_notifications'  => $enable_notifications ,
+    'enable_active_checks'  => $enable_active_checks ,
     'enable_passive_checks' => $enable_passive_checks ,
-    'enable_event_handler' => $enable_event_handler ,
-    'enable_flapping' => $enable_flapping ,
-    'enable_perfdata' => $enable_perfdata ,
-    'event_command' => $event_command ,
-    'flapping_threshold' => $flapping_threshold ,
-    'volatile' => $volatile ,
-    'zone' => $zone ,
-    'command_endpoint' => $command_endpoint ,
-    'notes' => $notes ,
-    'notes_url' => $notes_url ,
-    'action_url' => $action_url ,
-    'icon_image' => $icon_image ,
-    'icon_image_alt' => $icon_image_alt ,
+    'enable_event_handler'  => $enable_event_handler ,
+    'enable_flapping'       => $enable_flapping ,
+    'enable_perfdata'       => $enable_perfdata ,
+    'event_command'         => $event_command ,
+    'flapping_threshold'    => $flapping_threshold ,
+    'volatile'              => $volatile ,
+    'zone'                  => $zone ,
+    'command_endpoint'      => $command_endpoint ,
+    'notes'                 => $notes ,
+    'notes_url'             => $notes_url ,
+    'action_url'            => $action_url ,
+    'icon_image'            => $icon_image ,
+    'icon_image_alt'        => $icon_image_alt ,
   }
 
   # create object
   icinga2::object { "icinga2::object::Service::${title}":
     ensure       => $ensure,
-    object_name  => $name,
+    object_name  => $service_name,
     object_type  => 'Service',
     import       => $import,
     apply        => $apply,
