@@ -17,7 +17,7 @@ describe('icinga2::object', :type => :define) do
 
       it { is_expected.to contain_concat('/bar/baz') }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with({'target' => '/bar/baz', 'order' => '10'})
         .with_content(/object foo "bar"/)
         .without_content(/assign where/)
@@ -30,7 +30,7 @@ describe('icinga2::object', :type => :define) do
 
       it { is_expected.to contain_concat('/bar/baz') }
 
-      it { is_expected.not_to contain_concat__fragment('icinga2::object::foo::bar') }
+      it { is_expected.not_to contain_concat__fragment('bar') }
     end
 
 
@@ -65,7 +65,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with template => true" do
       let(:params) { {:template => true, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/template foo "bar"/) }
     end
 
@@ -73,7 +73,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with template => false" do
       let(:params) { {:template => false, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/object foo "bar"/) }
     end
 
@@ -88,7 +88,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with apply => true" do
       let(:params) { {:apply => true, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/apply foo "bar"/) }
     end
 
@@ -96,7 +96,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with apply => foo in host.vars.bar" do
       let(:params) { {:apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/vars = vars \+ foo\n/)
         .with_content(/apply foo for \(foo in host.vars.bar\) to Host/) }
     end
@@ -105,7 +105,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with apply => foo => config in host.vars.bar" do
       let(:params) { {:apply => 'foo => config in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo + config'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/vars = vars \+ foo \+ config\n/)
         .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
     end
@@ -139,7 +139,7 @@ describe('icinga2::object', :type => :define) do
                       :target => '/bar/baz',
                       :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/apply Service "bar" to Host/)
       }
     end
@@ -148,7 +148,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with import => [bar, baz]" do
       let(:params) { {:import => ['bar', 'baz'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/import "bar"/)
         .with_content(/import "baz"/) }
     end
@@ -164,7 +164,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with assign => [ host.vars.os == bar && host.address, generic-host in host.templates]" do
       let(:params) { {:assign => ['host.vars.os == bar && host.address', 'generic-host in host.templates'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/assign where host.vars.os == "bar" && host.address/)
         .with_content(/assign where "generic-host" in host.templates/) }
     end
@@ -180,7 +180,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with ignore => [ NodeName != baz || !host.display_name]" do
       let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
     end
 
@@ -195,7 +195,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with attrs => { vars => {key1 => 4247, key2 => value2} }" do
       let(:params) { {:attrs => { 'vars' => {'key1' => '4247', 'key2' => 'value2'} }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/vars.key1 = 4247\n/)
         .with_content(/vars.key2 = "value2"\n/) }
     end
@@ -204,7 +204,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with attrs => { vars => {foo => {key1 => 4247, key2 => value2}} }" do
       let(:params) { {:attrs => { 'vars' => {'foo' => {'key1' => '4247', 'key2' => 'value2'}} }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/vars.foo\["key1"\] = 4247\n/)
         .with_content(/vars.foo\["key2"\] = "value2"\n/) }
     end
@@ -213,7 +213,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with attrs => { vars => {foo => {bar => {key => 4247, key2 => value2}}} }" do
       let(:params) { {:attrs => { 'vars' => {'foo' => { 'bar' => {'key1' => '4247', 'key2' => 'value2'}}} }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/vars.foo\["bar"\] = \{\n\s+key1 = 4247\n\s+key2 = "value2"\n\s+\}\n/) }
     end
 
@@ -221,7 +221,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with attrs => { foo => {{ unparsed string }} }" do
       let(:params) { {:attrs => { 'foo' => '{{ unparsed string }}' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+      it { is_expected.to contain_concat__fragment('bar')
         .with_content(/foo = \{{2} unparsed string \}{2}\n/) }
     end
   end
@@ -255,7 +255,7 @@ describe('icinga2::object', :type => :define) do
 
     it { is_expected.to contain_concat('C:/bar/baz') }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with({'target' => 'C:/bar/baz', 'order' => '10'})
       .with_content(/object foo "bar"/)
       .without_content(/assign where/)
@@ -268,7 +268,7 @@ describe('icinga2::object', :type => :define) do
 
     it { is_expected.to contain_concat('C:/bar/baz') }
 
-    it { is_expected.not_to contain_concat__fragment('icinga2::object::foo::bar') }
+    it { is_expected.not_to contain_concat__fragment('bar') }
   end
 
 
@@ -303,7 +303,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with template => true" do
     let(:params) { {:template => true, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/template foo "bar"/) }
   end
 
@@ -311,7 +311,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with template => false" do
     let(:params) { {:template => false, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/object foo "bar"/) }
   end
 
@@ -326,7 +326,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with apply => true" do
     let(:params) { {:apply => true, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
                             .with_content(/apply foo "bar"/) }
   end
 
@@ -334,7 +334,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with apply => foo in host.vars.bar" do
     let(:params) { {:apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/vars = vars \+ foo\r\n/)
       .with_content(/apply foo for \(foo in host.vars.bar\) to Host/) }
   end
@@ -343,7 +343,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with apply => foo => config in host.vars.bar" do
     let(:params) { {:apply => 'foo => config in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo + config'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/vars = vars \+ foo \+ config\r\n/)
       .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
   end
@@ -377,7 +377,7 @@ describe('icinga2::object', :type => :define) do
                     :target => 'C:/bar/baz',
                     :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
+    it { is_expected.to contain_concat__fragment('bar')
                             .with_content(/apply Service "bar" to Host/) }
   end
 
@@ -385,7 +385,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with import => [bar, baz]" do
     let(:params) { {:import => ['bar', 'baz'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/import "bar"/)
       .with_content(/import "baz"/) }
   end
@@ -401,7 +401,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with assign => [ host.vars.os == bar && host.address, generic-host in host.templates]" do
     let(:params) { {:assign => ['host.vars.os == bar && host.address', 'generic-host in host.templates'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/assign where host.vars.os == "bar" && host.address/)
       .with_content(/assign where "generic-host" in host.templates/) }
   end
@@ -417,7 +417,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with ignore => [ NodeName != baz || !host.display_name ]" do
     let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
   end
 
@@ -432,7 +432,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with attrs => { vars => {key1 => 4247, key2 => value2} }" do
     let(:params) { {:attrs => { 'vars' => {'key1' => '4247', 'key2' => 'value2'} }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/vars.key1 = 4247\r\n/)
       .with_content(/vars.key2 = "value2"\r\n/) }
   end
@@ -441,7 +441,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with attrs => { vars => {foo => {key1 => 4247, key2 => value2}} }" do
     let(:params) { {:attrs => { 'vars' => {'foo' => {'key1' => '4247', 'key2' => 'value2'}} }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/vars.foo\["key1"\] = 4247\r\n/)
       .with_content(/vars.foo\["key2"\] = "value2"\r\n/) }
   end
@@ -450,7 +450,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with attrs => { vars => {foo => {bar => {key => 4247, key2 => value2}}} }" do
     let(:params) { {:attrs => { 'vars' => {'foo' => { 'bar' => {'key1' => '4247', 'key2' => 'value2'}}} }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/vars.foo\["bar"\] = \{\r\n\s+key1 = 4247\r\n\s+key2 = "value2"\r\n\s+\}\r\n/) }
   end
 
@@ -458,7 +458,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with attrs => { foo => {{ unparsed string }} }" do
     let(:params) { {:attrs => { 'foo' => '{{ unparsed string }}' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::foo::bar')
+    it { is_expected.to contain_concat__fragment('bar')
       .with_content(/foo = \{{2} unparsed string \}{2}\r\n/) }
   end
 end
