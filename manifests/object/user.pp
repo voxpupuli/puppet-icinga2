@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*user_name*]
+#   Set the Icinga2 name of the user object. Defaults to title of the define resource.
+#
 # [*display_name*]
 #   A short description of the user.
 #
@@ -57,7 +60,8 @@
 #
 define icinga2::object::user (
   $ensure               = present,
-  $display_name         = $title,
+  $user_name            = $title,
+  $display_name         = undef,
   $email                = undef,
   $pager                = undef,
   $vars                 = undef,
@@ -78,6 +82,7 @@ define icinga2::object::user (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($user_name)
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
@@ -111,7 +116,7 @@ define icinga2::object::user (
   # create object
   icinga2::object { "icinga2::object::User::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $user_name,
     object_type => 'User',
     template    => $template,
     import      => $import,

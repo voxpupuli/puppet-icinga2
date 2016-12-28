@@ -1584,6 +1584,9 @@ String to control the position in the target file, sorted alpha numeric.
 ##### `ensure`
 Set to present enables the usergroup object, absent disables it. Defaults to `present`
 
+##### `user_name`
+Set the Icinga2 name of the user object. Defaults to title of the define resource.
+
 ##### `display_name`
 A short description of the service group.
 
