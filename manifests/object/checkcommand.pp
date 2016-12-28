@@ -83,7 +83,7 @@ define icinga2::object::checkcommand(
   }
 
   # create object
-  icinga2::object { "icinga2::object::Host::${title}":
+  icinga2::object { "icinga2::object::CheckCommand::${title}":
     ensure      => $ensure,
     object_name => $checkcommand,
     object_type => 'CheckCommand',
