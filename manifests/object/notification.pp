@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*notification_name*]
+#   Set the Icinga2 name of the notification object. Defaults to title of the define resource.
+#
 # [*host_name*]
 # 	The name of the host this notification belongs to.
 #
@@ -77,27 +80,28 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::notification (
-  $ensure       = present,
-  $host_name    = undef,
-  $service_name = undef,
-  $vars         = undef,
-  $users        = undef,
-  $user_groups  = undef,
-  $times        = undef,
-  $command      = undef,
-  $interval     = undef,
-  $period       = undef,
-  $zone         = undef,
-  $types        = undef,
-  $states       = undef,
-  $apply        = false,
-  $apply_target = 'Host',
-  $assign       = [],
-  $ignore       = [],
-  $import       = [],
-  $template     = false,
-  $target       = undef,
-  $order        = '85',
+  $ensure            = present,
+  $notification_name = $title,
+  $host_name         = undef,
+  $service_name      = undef,
+  $vars              = undef,
+  $users             = undef,
+  $user_groups       = undef,
+  $times             = undef,
+  $command           = undef,
+  $interval          = undef,
+  $period            = undef,
+  $zone              = undef,
+  $types             = undef,
+  $states            = undef,
+  $apply             = false,
+  $apply_target      = 'Host',
+  $assign            = [],
+  $ignore            = [],
+  $import            = [],
+  $template          = false,
+  $target            = undef,
+  $order             = '85',
 ){
   include ::icinga2::params
 
@@ -106,6 +110,7 @@ define icinga2::object::notification (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($notification_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
     "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
@@ -152,7 +157,7 @@ define icinga2::object::notification (
   # create object
   icinga2::object { "icinga2::object::Notification::${title}":
     ensure       => $ensure,
-    object_name  => $name,
+    object_name  => $notification_name,
     object_type  => 'Notification',
     import       => $import,
     template     => $template,

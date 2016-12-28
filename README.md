@@ -1700,6 +1700,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the notification object, absent disables it. Defaults to `present`
 
+##### `notification_name`
+Set the Icinga2 name of the notification object. Defaults to `title` of the define resource.
+
 ##### `host_name`
 The name of the host this notification belongs to.
 

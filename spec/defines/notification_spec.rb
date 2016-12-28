@@ -26,6 +26,22 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
+    context "#{os} with notification_name => foo" do
+      let(:params) { {:notification_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/object Notification "foo"/) }
+    end
+
+
+    context "#{os} with notification_name => 4247 (not a valid string)" do
+      let(:params) { {:notification_name => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with host_name => foo" do
       let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
 
@@ -249,13 +265,13 @@ describe('icinga2::object::notification', :type => :define) do
   ] }
 
 
-  context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {:target =>  '/bar/baz', :host_name => 'foohost'} }
+  context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
+    let(:params) { {:target =>  'C:/bar/baz', :host_name => 'foohost'} }
 
-    it { is_expected.to contain_concat('/bar/baz') }
+    it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/object Notification "bar"/)
                             .with_content(/host_name = "foohost"/)}
 
@@ -264,199 +280,216 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with host_name => foo" do
-    let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
+  context "Windows 2012 R2 with notification_name => foo" do
+    let(:params) { {:notification_name => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/object Notification "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with notification_name => 4247 (not a valid string)" do
+    let(:params) { {:notification_name => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+
+  context "Windows 2012 R2 with host_name => foo" do
+    let(:params) { {:host_name => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/host_name = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
-    let(:params) { {:host_name => 4247, :target => '/bar/baz'} }
+    let(:params) { {:host_name => 4247, :target => 'C:/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with service_name => foo" do
-    let(:params) { {:service_name => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:service_name => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/service_name = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
-    let(:params) { {:service_name => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:service_name => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with vars => { foo => 'bar', bar => 'foo' }" do
-    let(:params) { {:vars => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :host_name => 'foohost' } }
+    let(:params) { {:vars => { 'foo' => "bar", 'bar' => "foo"}, :target => 'C:/bar/baz', :host_name => 'foohost' } }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({ 'target' => '/bar/baz' })
+                            .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/vars.foo = "bar"/)
                             .with_content(/vars.bar = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with vars => 'foo' (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:vars => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
   context "Windows 2012 R2 with users => [foo, bar]" do
-    let(:params) { {:users => ['foo','bar'], :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:users => ['foo','bar'], :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/users = \[ "foo", "bar", \]/) }
   end
 
 
   context "Windows 2012 R2 with users => foo (not a valid array)" do
-    let(:params) { {:users => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:users => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
   end
 
 
   context "Windows 2012 R2 with user_groups => [foo, bar]" do
-    let(:params) { {:user_groups => ['foo','bar'], :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:user_groups => ['foo','bar'], :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/user_groups = \[ "foo", "bar", \]/) }
   end
 
 
   context "Windows 2012 R2 with user_groups => foo (not a valid array)" do
-    let(:params) { {:user_groups => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:user_groups => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
   end
 
 
   context "Windows 2012 R2 with times => { foo => 'bar', bar => 'foo' }" do
-    let(:params) { {:times => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :host_name => 'foohost' } }
+    let(:params) { {:times => { 'foo' => "bar", 'bar' => "foo"}, :target => 'C:/bar/baz', :host_name => 'foohost' } }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({ 'target' => '/bar/baz' })
+                            .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/times = {\r\n\s+foo = "bar"\r\n\s+bar = "foo"\r\n\s+}/) }
   end
 
 
   context "Windows 2012 R2 with times => 'foo' (not a valid hash)" do
-    let(:params) { {:times => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:times => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
   context "Windows 2012 R2 with command => foo" do
-    let(:params) { {:command => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:command => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/command = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with command => 4247 (not a valid string)" do
-    let(:params) { {:command => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:command => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with interval => 30" do
-    let(:params) { {:interval => '30', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:interval => '30', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/interval = 30/) }
   end
 
 
   context "Windows 2012 R2 with interval => foo (not a valid integer)" do
-    let(:params) { {:interval => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:interval => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 
 
   context "Windows 2012 R2 with period => foo" do
-    let(:params) { {:period => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:period => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/period = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with period => 4247 (not a valid string)" do
-    let(:params) { {:period => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:period => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with zone => foo" do
-    let(:params) { {:zone => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:zone => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/zone = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with zone => 4247 (not a valid string)" do
-    let(:params) { {:zone => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:zone => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
   context "Windows 2012 R2 with types => [foo, bar]" do
-    let(:params) { {:types => ['foo','bar'], :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:types => ['foo','bar'], :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/types = \[ "foo", "bar", \]/) }
   end
 
 
   context "Windows 2012 R2 with types => foo (not a valid array)" do
-    let(:params) { {:types => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:types => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
   end
 
 
   context "Windows 2012 R2 with states => [foo, bar]" do
-    let(:params) { {:states => ['foo','bar'], :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:states => ['foo','bar'], :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/states = \[ "foo", "bar", \]/) }
   end
 
 
   context "Windows 2012 R2 with states => foo (not a valid array)" do
-    let(:params) { {:states => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:states => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
   end
 
   context "Windows 2012 R2 with assign => [] and ignore => [ foo ]" do
-    let(:params) { {:assign => [], :ignore => ['foo'], :target => '/bar/baz', :host_name => 'foohost'} }
+    let(:params) { {:assign => [], :ignore => ['foo'], :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to raise_error(Puppet::Error, /When attribute ignore is used, assign must be set/) }
   end
