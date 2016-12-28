@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [ceckresultreader_name*]
+#   Set the Icinga2 name of the ceckresultreader object. Defaults to title of the define resource.
+#
 # [*spool_dir*]
 #   The directory which contains the check result files. Defaults to LocalStateDir + "/lib/icinga2/spool/checkresults/".
 #
@@ -22,9 +25,10 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::checkresultreader (
-  $ensure               = present,
-  $spool_dir            = undef,
-  $order                = '10',
+  $ensure                 = present,
+  $checkresultreader_name = $title,
+  $spool_dir              = undef,
+  $order                  = '10',
   $target,
 ){
   include ::icinga2::params
@@ -34,8 +38,9 @@ define icinga2::object::checkresultreader (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($checkresultreader_name)
   validate_absolute_path($target)
-  validate_integer ( $order )
+  validate_string($order)
 
   if $spool_dir { validate_absolute_path($spool_dir) }
 
@@ -47,7 +52,7 @@ define icinga2::object::checkresultreader (
   # create object
   icinga2::object { "icinga2::object::CheckResultReader::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $checkresultreader_name,
     object_type => 'CheckResultReader',
     attrs       => $attrs,
     target      => $target,

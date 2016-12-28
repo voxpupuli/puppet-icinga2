@@ -2040,6 +2040,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the checkresultreader object, absent disables it. Defaults to `present`
 
+##### `checkresultreader_name`
+Set the Icinga2 name of the ceckresultreader object. Defaults to `title` of the define resource.
+
 ##### `spool_dir`
 The directory which contains the check result files. Defaults to `LocalStateDir + "/lib/icinga2/spool/checkresults/"`
 

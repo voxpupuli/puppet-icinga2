@@ -29,6 +29,22 @@ describe('icinga2::object::checkresultreader', :type => :define) do
     end
 
 
+    context "#{os} with checkresultreader_name => foo" do
+      let(:params) { {:checkresultreader_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::CheckResultReader::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/object CheckResultReader "foo"/) }
+    end
+
+
+    context "#{os} with checkresultreader_name => 4247 (not a valid string)" do
+      let(:params) { {:checkresultreader_name => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with spool_dir = /foo/bar" do
       let(:params) { {:spool_dir => '/foo/bar', :target => '/bar/baz'} }
 
@@ -71,17 +87,17 @@ describe('icinga2::object::checkresultreader', :type => :define) do
   ] }
 
 
-  context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {:target =>  '/bar/baz'} }
+  context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
+    let(:params) { {:target =>  'C:/bar/baz'} }
 
-    it { is_expected.to contain_concat('/bar/baz') }
+    it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckResultReader::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/object CheckResultReader "bar"/) }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckResultReader::bar-library')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/library "compat"/) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::CheckResultReader::bar')
@@ -89,17 +105,33 @@ describe('icinga2::object::checkresultreader', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with spool_dir = /foo/bar" do
-    let(:params) { {:spool_dir => '/foo/bar', :target => '/bar/baz'} }
+  context "Windows 2012 R2 with checkresultreader_name => foo" do
+    let(:params) { {:checkresultreader_name => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckResultReader::bar')
-                            .with({ 'target' => '/bar/baz' })
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/object CheckResultReader "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with checkresultreader_name => 4247 (not a valid string)" do
+    let(:params) { {:checkresultreader_name => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with spool_dir = /foo/bar" do
+    let(:params) { {:spool_dir => '/foo/bar', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::CheckResultReader::bar')
+                            .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/spool_dir = "\/foo\/bar"/) }
   end
 
 
   context "Windows 2012 R2 with spool_dir = foo/bar (not a valid absolute path)" do
-    let(:params) { {:spool_dir => 'foo/bar', :target => '/bar/baz'} }
+    let(:params) { {:spool_dir => 'foo/bar', :target => 'C:/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
