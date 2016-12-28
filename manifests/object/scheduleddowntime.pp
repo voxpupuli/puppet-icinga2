@@ -6,7 +6,10 @@
 #
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
-# 
+#
+# [*scheduleddowntime_name*]
+#   Set the Icinga2 name of the scheduleddowntime object. Defaults to title of the define resource.
+#
 # [*host_name*]
 #     The name of the host this comment belongs to.
 #
@@ -53,20 +56,21 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::scheduleddowntime (
-  $ensure               = present,
-  $host_name            = undef,
-  $service_name         = undef,
-  $author               = undef,
-  $comment              = undef,
-  $fixed                = undef,
-  $duration             = undef,
-  $ranges               = undef,
-  $apply                = false,
-  $apply_target         = 'Host',
-  $assign               = [],
-  $ignore               = [],
-  $order                = '90',
-  $target               = undef,
+  $ensure                 = present,
+  $scheduleddowntime_name = $title,
+  $host_name              = undef,
+  $service_name           = undef,
+  $author                 = undef,
+  $comment                = undef,
+  $fixed                  = undef,
+  $duration               = undef,
+  $ranges                 = undef,
+  $apply                  = false,
+  $apply_target           = 'Host',
+  $assign                 = [],
+  $ignore                 = [],
+  $order                  = '90',
+  $target                 = undef,
 ){
   include ::icinga2::params
 
@@ -75,19 +79,20 @@ define icinga2::object::scheduleddowntime (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($scheduleddowntime_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
     "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
   validate_absolute_path($target)
-  validate_integer ( $order )
+  validate_string($order)
 
-  validate_string($host_name)
+  if $host_name { validate_string($host_name) }
   if $service_name { validate_string ($service_name) }
-  validate_string($author)
-  validate_string($comment)
+  if $author { validate_string($author) }
+  if $comment { validate_string($comment) }
   if $fixed { validate_bool($fixed) }
   if $duration { validate_integer($duration) }
-  validate_hash($ranges)
+  if $ranges { validate_hash($ranges) }
 
   # compose attributes
   $attrs = {
@@ -102,16 +107,16 @@ define icinga2::object::scheduleddowntime (
 
   # create object
   icinga2::object { "icinga2::object::ScheduledDowntime::${title}":
-    ensure      => $ensure,
-    object_name => $name,
-    object_type => 'ScheduledDowntime',
-    attrs       => $attrs,
+    ensure       => $ensure,
+    object_name  => $scheduleddowntime_name,
+    object_type  => 'ScheduledDowntime',
+    attrs        => $attrs,
     apply        => $apply,
     apply_target => $apply_target,
     assign       => $assign,
     ignore       => $ignore,
-    target      => $target,
-    order       => $order,
+    target       => $target,
+    order        => $order,
     notify      => Class['::icinga2::service'],
   }
 

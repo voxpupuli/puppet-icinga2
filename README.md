@@ -1961,6 +1961,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the scheduleddowntime object, absent disables it. Defaults to `present`
 
+##### `scheduleddowntime_name`
+Set the Icinga2 name of the scheduleddowntime object. Defaults to `title` of the define resource.
+
 ##### `host_name`
 The name of the host this comment belongs to.
 

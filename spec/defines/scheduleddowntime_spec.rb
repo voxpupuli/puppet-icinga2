@@ -30,6 +30,22 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
     end
 
 
+    context "#{os} with scheduleddowntime_name => foo" do
+      let(:params) { {:scheduleddowntime_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/object ScheduledDowntime "foo"/) }
+    end
+
+
+    context "#{os} with scheduleddowntime_name => 4247 (not a valid string)" do
+      let(:params) { {:scheduleddowntime_name => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with host_name => foo" do
       let(:params) { {:host_name => 'foo', :target => '/bar/baz',
                       :author => 'fooauthor',
@@ -194,18 +210,18 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
   ] }
 
 
-  context "Windows 2012 R2 with all defaults and target => /bar/baz" do
+  context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
     let(:params) { {
-        :target =>  '/bar/baz',
+        :target =>  'C:/bar/baz',
         :host_name => 'foohost',
         :author => 'fooauthor',
         :comment => 'foocomment',
         :ranges => { 'foo' => "bar", 'bar' => "foo"} } }
 
-    it { is_expected.to contain_concat('/bar/baz') }
+    it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/object ScheduledDowntime "bar"/) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::ScheduledDowntime::bar')
@@ -213,20 +229,36 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
   end
 
 
+  context "Windows 2012 R2 with scheduleddowntime_name => foo" do
+    let(:params) { {:scheduleddowntime_name => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/object ScheduledDowntime "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with scheduleddowntime_name => 4247 (not a valid string)" do
+    let(:params) { {:scheduleddowntime_name => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
   context "Windows 2012 R2 with host_name => foo" do
-    let(:params) { {:host_name => 'foo', :target => '/bar/baz',
+    let(:params) { {:host_name => 'foo', :target => 'C:/bar/baz',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/host_name = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
-    let(:params) { {:host_name => 4247, :target => '/bar/baz',
+    let(:params) { {:host_name => 4247, :target => 'C:/bar/baz',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
@@ -236,20 +268,20 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
 
 
   context "Windows 2012 R2 with service_name => foo" do
-    let(:params) { {:service_name => 'foo', :target => '/bar/baz',
+    let(:params) { {:service_name => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/service_name = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
-    let(:params) { {:service_name => 4247, :target => '/bar/baz',
+    let(:params) { {:service_name => 4247, :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
@@ -260,19 +292,19 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
 
 
   context "Windows 2012 R2 with author => foo" do
-    let(:params) { {:author => 'foo', :target => '/bar/baz',
+    let(:params) { {:author => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/author = "foo"/) }
   end
 
 
   context "Windows 2012 R2 with author => 4247 (not a valid string)" do
-    let(:params) { {:author => 4247, :target => '/bar/baz',
+    let(:params) { {:author => 4247, :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
@@ -282,20 +314,20 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
 
 
   context "Windows 2012 R2 with fixed => false" do
-    let(:params) { {:fixed => false, :target => '/bar/baz',
+    let(:params) { {:fixed => false, :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/fixed = false/) }
   end
 
 
   context "Windows 2012 R2 with fixed => foo (not a valid boolean)" do
-    let(:params) { {:fixed => 'foo', :target => '/bar/baz',
+    let(:params) { {:fixed => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
@@ -306,20 +338,20 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
 
 
   context "Windows 2012 R2 with duration => 30" do
-    let(:params) { {:duration => '30', :target => '/bar/baz',
+    let(:params) { {:duration => '30', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/duration = 30/) }
   end
 
 
   context "Windows 2012 R2 with duration => foo (not a valid integer)" do
-    let(:params) { {:duration => 'foo', :target => '/bar/baz',
+    let(:params) { {:duration => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
@@ -330,19 +362,19 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
 
 
   context "Windows 2012 R2 with ranges => { foo => 'bar', bar => 'foo' }" do
-    let(:params) { {:ranges => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz',
+    let(:params) { {:ranges => { 'foo' => "bar", 'bar' => "foo"}, :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment' } }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
-                            .with({ 'target' => '/bar/baz' })
+                            .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/ranges = {\r\n\s+foo = "bar"\r\n\s+bar = "foo"\r\n\s+}/) }
   end
 
 
   context "Windows 2012 R2 with ranges => 'foo' (not a valid hash)" do
-    let(:params) { {:ranges => 'foo', :target => '/bar/baz',
+    let(:params) { {:ranges => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment'} }
