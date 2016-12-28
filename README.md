@@ -1666,6 +1666,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the notificationcommand object, absent disabled it. Defaults to present.
 
+##### `notificationcommand_name`
+Set the Icinga2 name of the notificationcommand object. Defaults to `title` of the define resource.
+
 ##### `execute`
 The "execute" script method takes care of executing the notification. The default template "plugin-notification-command"
 which is imported into all CheckCommand objects takes care of this setting.

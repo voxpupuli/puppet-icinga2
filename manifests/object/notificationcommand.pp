@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*notificationcommand_name*]
+#   Set the Icinga2 name of the notificationcommand object. Defaults to title of the define resource.
+#
 # [*execute*]
 # 	 The "execute" script method takes care of executing the notification.
 #    The default template "plugin-notification-command" which is imported into
@@ -49,16 +52,17 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::notificationcommand (
-  $ensure     = present,
-  $command    = undef,
-  $env        = undef,
-  $vars       = undef,
-  $timeout    = undef,
-  $arguments  = undef,
-  $template   = false,
-  $import     = ['plugin-notification-command'],
-  $order      = '25',
-  $target     = undef,
+  $ensure                   = present,
+  $notificationcommand_name = $title,
+  $command                  = undef,
+  $env                      = undef,
+  $vars                     = undef,
+  $timeout                  = undef,
+  $arguments                = undef,
+  $template                 = false,
+  $import                   = ['plugin-notification-command'],
+  $order                    = '25',
+  $target                   = undef,
 ){
   include ::icinga2::params
 
@@ -67,12 +71,13 @@ define icinga2::object::notificationcommand (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($notificationcommand_name)
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
-  validate_array($command)
+  if $command { validate_array($command) }
   if $env { validate_hash ($env) }
   if $vars { validate_hash ($vars) }
   if $timeout { validate_integer ($timeout) }
@@ -80,17 +85,17 @@ define icinga2::object::notificationcommand (
 
   # compose attributes
   $attrs = {
-    'command' => $command,
-    'env' => $env,
-    'vars' => $vars,
-    'timeout' => $timeout,
+    'command'   => $command,
+    'env'       => $env,
+    'vars'      => $vars,
+    'timeout'   => $timeout,
     'arguments' => $arguments,
   }
 
   # create object
   icinga2::object { "icinga2::object::NotificationCommand::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $notificationcommand_name,
     object_type => 'NotificationCommand',
     template    => $template,
     import      => $import,
