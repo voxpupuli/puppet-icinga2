@@ -1292,6 +1292,9 @@ String to control the position in the target file, sorted alpha numeric.
 
 #### Defined type: `icinga2::object::apiuser`
 
+##### `ensure`
+Set to present enables the apiuser object, absent disables it. Defaults to present.
+
 ##### `password`
 Password string.
 
@@ -1333,6 +1336,9 @@ permissions = [
 
 #### Defined type: `icinga2::object::checkcommand`
 
+##### `ensure`
+Set to present enables the checkcommand object, absent disables it. Defaults to present.
+
 ##### `checkcommand`
 Title of the CheckCommand object.
 
@@ -1364,6 +1370,9 @@ first time.
 String to set the position in the target file, sorted alpha numeric. Defaults to `10`
 
 #### Defined type: `icinga2::object::host`
+
+##### `ensure`
+Set to present enables the host object, absent disables it. Defaults to present.
 
 ##### `hostname`
 Hostname of the Host object.
@@ -1463,6 +1472,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 
 #### Defined type: `icinga2::object::hostgroup`
 
+##### `ensure`
+Set to present enables the hostgroup object, absent disables it. Defaults to present.
+
 ##### `display_name`
 A short description of the host group.
 
@@ -1481,7 +1493,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::dependency`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disabled it. Defaults to `present`
+Set to present enables the dependency object, absent disabled it. Defaults to `present`
 
 ##### `parent_host_name`
 The parent host.
@@ -1538,7 +1550,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::timeperiod`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disabled it. Defaults to `present`
+Set to present enables the timeperiod object, absent disabled it. Defaults to `present`
 
 ##### `display_name`
 A short description of the time period.
@@ -1856,7 +1868,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::servicegroup`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the servicegroup object, absent disables it. Defaults to `present`
 
 ##### `display_name`
 A short description of the service group.
@@ -1885,7 +1897,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::downtime`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the downtime object, absent disables it. Defaults to `present`
 
 ##### `host_name`
 The name of the host this comment belongs to.
@@ -1926,7 +1938,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::scheduleddowntime`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the scheduleddowntime object, absent disables it. Defaults to `present`
 
 ##### `host_name`
 The name of the host this comment belongs to.
@@ -1971,7 +1983,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::eventcommand`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the eventcommand object, absent disables it. Defaults to `present`
 
 ##### `execute`
 The "execute" script method takes care of executing the event handler. In virtually all cases you should import the
@@ -2005,7 +2017,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::checkresultreader`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the checkresultreader object, absent disables it. Defaults to `present`
 
 ##### `spool_dir`
 The directory which contains the check result files. Defaults to `LocalStateDir + "/lib/icinga2/spool/checkresults/"`
@@ -2019,7 +2031,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::compatlogger`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the compatlogger object, absent disables it. Defaults to `present`
 
 ##### `spool_dir`
 The directory which contains the check result files. Defaults to `LocalStateDir + "/lib/icinga2/spool/checkresults/"`
