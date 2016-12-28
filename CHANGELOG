@@ -1,5 +1,26 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.7.1
+
+### Bugs
+Bug #13817: Calling private method "Puppet.settings.preferred_run_mode=" in facter/icinga2_puppet.rb breaks Puppet master
+Bug #13767: add attribute service_name to object service
+Bug #13769: add attribute checkresultreader_name to object checkresultreader
+Bug #13773: add attribute dependency_name to object dependency
+Bug #13775: add attribute eventcommand_name to object eventcommand
+Bug #13777: add attribute notification_name to object notification
+Bug #13781: add attribute scheduleddowntime_name to object scheduleddowntime
+Bug #13783: add attribute servicegroup_name to object servicegroup
+Bug #13785: add attribute timeperiod_name to object timeperiod
+Bug #13787: add attribute user_name to object user
+Bug #13789: add attribute usergroup_name to object usergroup
+Bug #13801: change title of concat_fragment in object to title
+Bug #13803: fix documentation of all objects
+Bug #13815: add attribute notificationcommand_name to object notificationcommand
+Bug #13817: fix feature mainlog
+Bug #13819: fix object checkcommand
+Bug #13821: fix feature debuglog
+
 ## v0.7.0
 
 ### Bugs
