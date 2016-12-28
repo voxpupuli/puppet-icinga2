@@ -1552,6 +1552,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the timeperiod object, absent disabled it. Defaults to `present`
 
+##### `timeperiod_name`
+Set the Icinga2 name of the timeperiod object. Defaults to `title` of the define resource.
+
 ##### `display_name`
 A short description of the time period.
 

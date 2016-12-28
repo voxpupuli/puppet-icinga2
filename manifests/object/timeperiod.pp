@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*timeperiod_name*]
+#   Set the Icinga2 name of the timeperiod object. Defaults to title of the define resource.
+#
 # [*display_name*]
 # 	A short description of the time period.
 #
@@ -41,16 +44,17 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::timeperiod (
-  $ensure           = present,
-  $display_name     = $title,
-  $ranges           = undef,
-  $prefer_includes  = undef,
-  $excludes         = undef,
-  $includes         = undef,
-  $template         = false,
-  $import           = ['legacy-timeperiod'],
-  $target           = undef,
-  $order            = '35',
+  $ensure          = present,
+  $timeperiod_name = $title,
+  $display_name    = undef,
+  $ranges          = undef,
+  $prefer_includes = undef,
+  $excludes        = undef,
+  $includes        = undef,
+  $template        = false,
+  $import          = ['legacy-timeperiod'],
+  $target          = undef,
+  $order           = '35',
 ){
   include ::icinga2::params
 
@@ -59,6 +63,7 @@ define icinga2::object::timeperiod (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($timeperiod_name)
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
@@ -66,7 +71,7 @@ define icinga2::object::timeperiod (
 
 
   if $display_name { validate_string ($display_name) }
-  validate_hash ($ranges)
+  if $ranges { validate_hash ($ranges) }
   if $prefer_includes { validate_bool ($prefer_includes) }
   if $excludes { validate_array ($excludes) }
   if $includes { validate_array ($includes) }
@@ -83,7 +88,7 @@ define icinga2::object::timeperiod (
   # create object
   icinga2::object { "icinga2::object::TimePeriod::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $timeperiod_name,
     object_type => 'TimePeriod',
     template    => $template,
     import      => $import,
