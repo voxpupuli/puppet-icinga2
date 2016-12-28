@@ -30,6 +30,22 @@ describe('icinga2::object::compatlogger', :type => :define) do
     end
 
 
+    context "#{os} with compatlogger_name => foo" do
+      let(:params) { {:compatlogger_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::CompatLogger::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/object CompatLogger "foo"/) }
+    end
+
+
+    context "#{os} with compatlogger_name => 4247 (not a valid string)" do
+      let(:params) { {:compatlogger_name => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with log_dir = /foo/bar" do
       let(:params) { {:log_dir => '/foo/bar', :target => '/bar/baz'} }
 
@@ -87,17 +103,17 @@ describe('icinga2::object::compatlogger', :type => :define) do
   ] }
 
 
-  context "Windows 2012 R2 with all defaults and target => /bar/baz" do
-    let(:params) { {:target => '/bar/baz'} }
+  context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
+    let(:params) { {:target => 'C:/bar/baz'} }
 
-    it { is_expected.to contain_concat('/bar/baz') }
+    it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CompatLogger::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/object CompatLogger "bar"/) }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CompatLogger::bar-library')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/library "compat"/) }
 
     it { is_expected.to contain_icinga2__object('icinga2::object::CompatLogger::bar')
@@ -105,32 +121,48 @@ describe('icinga2::object::compatlogger', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with log_dir = /foo/bar" do
-    let(:params) { {:log_dir => '/foo/bar', :target => '/bar/baz'} }
+  context "Windows 2012 R2 with compatlogger_name => foo" do
+    let(:params) { {:compatlogger_name => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CompatLogger::bar')
-                            .with({ 'target' => '/bar/baz' })
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/object CompatLogger "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with compatlogger_name => 4247 (not a valid string)" do
+    let(:params) { {:compatlogger_name => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
+  context "Windows 2012 R2 with log_dir = /foo/bar" do
+    let(:params) { {:log_dir => '/foo/bar', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::CompatLogger::bar')
+                            .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/log_dir = "\/foo\/bar"/) }
   end
 
 
   context "Windows 2012 R2 with log_dir = foo/bar (not a valid absolute path)" do
-    let(:params) { {:log_dir => 'foo/bar', :target => '/bar/baz'} }
+    let(:params) { {:log_dir => 'foo/bar', :target => 'C:/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
   end
 
 
   context "Windows 2012 R2 with rotation_method = 'DAILY'" do
-    let(:params) { {:rotation_method => 'DAILY', :target => '/bar/baz'} }
+    let(:params) { {:rotation_method => 'DAILY', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CompatLogger::bar')
-                            .with({ 'target' => '/bar/baz' })
+                            .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/rotation_method = "DAILY"/) }
   end
 
   context "Windows 2012 R2 with rotation_method = 'foo' (not a valid absolute path)" do
-    let(:params) { {:rotation_method => 'foo', :target => '/bar/baz'} }
+    let(:params) { {:rotation_method => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
   end

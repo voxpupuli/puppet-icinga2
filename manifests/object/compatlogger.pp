@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [compatlogger_name*]
+#   Set the Icinga2 name of the compatlogger object. Defaults to title of the define resource.
+#
 # [*spool_dir*]
 #   The directory which contains the check result files. Defaults to LocalStateDir + "/lib/icinga2/spool/checkresults/".
 #
@@ -22,10 +25,11 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::compatlogger (
-  $ensure               = present,
-  $log_dir              = undef,
-  $rotation_method      = undef,
-  $order                = '5',
+  $ensure            = present,
+  $compatlogger_name = $title,
+  $log_dir           = undef,
+  $rotation_method   = undef,
+  $order             = '5',
   $target,
 ){
   include ::icinga2::params
@@ -35,8 +39,9 @@ define icinga2::object::compatlogger (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($compatlogger_name)
   validate_absolute_path($target)
-  validate_integer ( $order )
+  validate_string($order)
 
   if $log_dir { validate_absolute_path($log_dir) }
   if $rotation_method {
@@ -53,7 +58,7 @@ define icinga2::object::compatlogger (
   # create object
   icinga2::object { "icinga2::object::CompatLogger::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $compatlogger_name,
     object_type => 'CompatLogger',
     attrs       => $attrs,
     target      => $target,

@@ -2057,6 +2057,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the compatlogger object, absent disables it. Defaults to `present`
 
+##### `compatlogger_name`
+Set the Icinga2 name of the compatlogger object. Defaults to `title` of the define resource.
+
 ##### `spool_dir`
 The directory which contains the check result files. Defaults to `LocalStateDir + "/lib/icinga2/spool/checkresults/"`
 
