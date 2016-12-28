@@ -2003,6 +2003,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the eventcommand object, absent disables it. Defaults to `present`
 
+##### `eventcommand_name`
+Set the Icinga2 name of the eventcommand object. Defaults to `title` of the define resource.
+
 ##### `execute`
 The "execute" script method takes care of executing the event handler. In virtually all cases you should import the
 "plugin-event-command" template to take care of this setting.

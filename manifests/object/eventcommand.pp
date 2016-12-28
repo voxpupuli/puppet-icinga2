@@ -7,13 +7,16 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*eventcommand_name*]
+#   Set the Icinga2 name of the eventcommand object. Defaults to title of the define resource.
+#
 # [*execute*]
-#     The "execute" script method takes care of executing the event handler. 
+#     The "execute" script method takes care of executing the event handler.
 #     In virtually all cases you should import the "plugin-event-command" template to take care of this setting.
 #
 # [*command*]
 #     The command. This can either be an array of individual command arguments.
-#     Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh) 
+#     Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh)
 #     takes care of parsing the command.
 #
 # [*env*]
@@ -43,14 +46,15 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::eventcommand (
-  $ensure               = present,
-  $command              = undef,
-  $env                  = undef,
-  $vars                 = undef,
-  $timeout              = undef,
-  $arguments            = undef,
-  $import               = ['plugin-event-command'],
-  $order                = '20',
+  $ensure            = present,
+  $eventcommand_name = $title,
+  $command           = undef,
+  $env               = undef,
+  $vars              = undef,
+  $timeout           = undef,
+  $arguments         = undef,
+  $import            = ['plugin-event-command'],
+  $order             = '20',
   $target,
 ){
   include ::icinga2::params
@@ -60,11 +64,12 @@ define icinga2::object::eventcommand (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($eventcommand_name)
   validate_absolute_path($target)
-  validate_integer ( $order )
+  validate_string($order)
   validate_array($import)
 
-  validate_array($command)
+  if $command { validate_array($command) }
   if $env { validate_hash($env) }
   if $vars { validate_hash($vars) }
   if $timeout { validate_integer($timeout) }
@@ -82,7 +87,7 @@ define icinga2::object::eventcommand (
   # create object
   icinga2::object { "icinga2::object::EventCommand::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $eventcommand_name,
     object_type => 'EventCommand',
     import      => $import,
     attrs       => $attrs,
