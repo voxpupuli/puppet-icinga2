@@ -1495,6 +1495,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the dependency object, absent disabled it. Defaults to `present`
 
+##### `dependency_name`
+Set the Icinga2 name of the dependency object. Defaults to `title` of the define resource.
+
 ##### `parent_host_name`
 The parent host.
 

@@ -30,6 +30,22 @@ describe('icinga2::object::dependency', :type => :define) do
     end
 
 
+    context "#{os} with dependency_name => foo" do
+      let(:params) { {:dependency_name => 'foo', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/object Dependency "foo"/) }
+    end
+
+
+    context "#{os} with dependency_name => 4247 (not a valid string)" do
+      let(:params) { {:dependency_name => 4247, :target => '/bar/baz'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+    end
+
+
     context "#{os} with parent_host_name => foo" do
       let(:params) { {
           :parent_host_name => 'foo',
@@ -267,16 +283,16 @@ describe('icinga2::object::dependency', :type => :define) do
   ] }
 
 
-  context "Windows 2012 R2 with all defaults and target => /bar/baz" do
+  context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
     let(:params) { {
-        :target =>  '/bar/baz',
+        :target =>  'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to contain_concat('/bar/baz') }
+    it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/object Dependency "bar"/)
                             .without_content(/assign where/)
                             .without_content(/ignore where/) }
@@ -286,14 +302,30 @@ describe('icinga2::object::dependency', :type => :define) do
   end
 
 
+  context "Windows 2012 R2 with dependency_name => foo" do
+    let(:params) { {:dependency_name => 'foo', :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/object Dependency "foo"/) }
+  end
+
+
+  context "Windows 2012 R2 with dependency_name => 4247 (not a valid string)" do
+    let(:params) { {:dependency_name => 4247, :target => 'C:/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
+  end
+
+
   context "Windows 2012 R2 with parent_host_name => foo" do
     let(:params) { {
         :parent_host_name => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/parent_host_name = "foo"/) }
   end
 
@@ -301,7 +333,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with parent_host_name => 4247 (not a valid string)" do
     let(:params) { {
         :parent_host_name => 4247,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -311,12 +343,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with parent_service_name => foo" do
     let(:params) { {
         :parent_service_name => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/parent_service_name = "foo"/) }
   end
 
@@ -324,7 +356,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with parent_service_name => 4247 (not a valid string)" do
     let(:params) { {
         :parent_service_name => 4247,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
@@ -335,11 +367,11 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with child_host_name => foo" do
     let(:params) { {
         :child_host_name => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/child_host_name = "foo"/) }
   end
 
@@ -347,7 +379,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with child_host_name => 4247 (not a valid string)" do
     let(:params) { {
         :child_host_name => 4247,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
@@ -357,12 +389,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with child_service_name => foo" do
     let(:params) { {
         :child_service_name => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/child_service_name = "foo"/) }
   end
 
@@ -370,7 +402,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with child_service_name => 4247 (not a valid string)" do
     let(:params) { {
         :child_service_name => 4247,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
@@ -381,12 +413,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with disable_checks => false" do
     let(:params) { {
         :disable_checks => false,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/disable_checks = false/) }
   end
 
@@ -394,7 +426,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with disable_checks => foo (not a valid boolean)" do
     let(:params) { {
         :disable_checks => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
@@ -405,12 +437,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with disable_notifications => false" do
     let(:params) { {
         :disable_notifications => false,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/disable_notifications = false/) }
   end
 
@@ -418,7 +450,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with disable_notifications => foo (not a valid boolean)" do
     let(:params) { {
         :disable_notifications => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
@@ -429,12 +461,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with ignore_soft_states => false" do
     let(:params) { {
         :ignore_soft_states => false,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/ignore_soft_states = false/) }
   end
 
@@ -442,7 +474,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with ignore_soft_states => foo (not a valid boolean)" do
     let(:params) { {
         :ignore_soft_states => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
@@ -453,12 +485,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with period => foo" do
     let(:params) { {
         :period => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/period = "foo"/) }
   end
 
@@ -466,7 +498,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with period => 4247 (not a valid string)" do
     let(:params) { {
         :period => 4247,
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
@@ -477,12 +509,12 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with states => [foo, bar]" do
     let(:params) { {
         :states => ['foo','bar'],
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => '/bar/baz'})
+                            .with({'target' => 'C:/bar/baz'})
                             .with_content(/states = \[ "foo", "bar", \]/) }
   end
 
@@ -490,7 +522,7 @@ describe('icinga2::object::dependency', :type => :define) do
   context "Windows 2012 R2 with states => foo (not a valid array)" do
     let(:params) { {
         :states => 'foo',
-        :target => '/bar/baz',
+        :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 

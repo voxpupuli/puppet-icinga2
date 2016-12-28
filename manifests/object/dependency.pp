@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*dependency_name*]
+#   Set the Icinga2 name of the dependency object. Defaults to title of the define resource.
+#
 # [*parent_host_name*]
 #   The parent host.
 #
@@ -71,24 +74,25 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::dependency (
-  $ensure                 = present,
-  $parent_host_name       = undef,
-  $parent_service_name    = undef,
-  $child_host_name        = undef,
-  $child_service_name     = undef,
-  $disable_checks         = undef,
-  $disable_notifications  = undef,
-  $ignore_soft_states     = undef,
-  $period                 = undef,
-  $states                 = undef,
-  $apply                  = false,
-  $apply_target           = 'Host',
-  $assign                 = [],
-  $ignore                 = [],
-  $import                 = [],
-  $template               = false,
-  $target                 = undef,
-  $order                  = '70',
+  $ensure                = present,
+  $dependency_name       = $title,
+  $parent_host_name      = undef,
+  $parent_service_name   = undef,
+  $child_host_name       = undef,
+  $child_service_name    = undef,
+  $disable_checks        = undef,
+  $disable_notifications = undef,
+  $ignore_soft_states    = undef,
+  $period                = undef,
+  $states                = undef,
+  $apply                 = false,
+  $apply_target          = 'Host',
+  $assign                = [],
+  $ignore                = [],
+  $import                = [],
+  $template              = false,
+  $target                = undef,
+  $order                 = '70',
 ){
   include ::icinga2::params
 
@@ -97,6 +101,7 @@ define icinga2::object::dependency (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($dependency_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
     "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
@@ -105,9 +110,9 @@ define icinga2::object::dependency (
   validate_absolute_path($target)
   validate_string($order)
 
-  validate_string ( $parent_host_name )
+  if $parent_host_name { validate_string ($parent_host_name) }
   if $parent_service_name { validate_string ( $parent_service_name ) }
-  validate_string ( $child_host_name )
+  if $child_host_name { validate_string ($child_host_name) }
   if $child_service_name { validate_string ( $child_service_name ) }
   if $disable_checks { validate_bool ( $disable_checks ) }
   if $disable_notifications { validate_bool ( $disable_notifications ) }
@@ -117,21 +122,21 @@ define icinga2::object::dependency (
 
   # compose attributes
   $attrs = {
-    'parent_host_name' => $parent_host_name,
-    'parent_service_name' => $parent_service_name,
-    'child_host_name' => $child_host_name,
-    'child_service_name' => $child_service_name,
-    'disable_checks' => $disable_checks,
+    'parent_host_name'      => $parent_host_name,
+    'parent_service_name'   => $parent_service_name,
+    'child_host_name'       => $child_host_name,
+    'child_service_name'    => $child_service_name,
+    'disable_checks'        => $disable_checks,
     'disable_notifications' => $disable_notifications,
-    'ignore_soft_states' => $ignore_soft_states,
-    'period' => $period,
-    'states' => $states,
+    'ignore_soft_states'    => $ignore_soft_states,
+    'period'                => $period,
+    'states'                => $states,
   }
 
   # create object
   icinga2::object { "icinga2::object::Dependency::${title}":
     ensure       => $ensure,
-    object_name  => $name,
+    object_name  => $dependency_name,
     object_type  => 'Dependency',
     import       => $import,
     template     => $template,
