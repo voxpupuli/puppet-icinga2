@@ -446,7 +446,7 @@ icinga2::object::service { 'HTTP':
 
 ### CA and Certificates
 Handling the CA and certificates is an important part of Icinga2, because the communication between Icinga processes will
-not work without SSL. This module offers multiple choices to treat this. 
+not work without SSL. This module offers multiple choices to treat this.
 
 #### CA on your Icinga Master
 One of your Icinga master needs to bahave as a CA. With the class `icinga2::pki::ca` you can do following to fullfil
@@ -574,7 +574,7 @@ You can use also Puppet templates to set the content of the config fragment.
 
 For example, you can add custom functions to existing config files:
 
-``` puppet 
+``` puppet
 include icinga2
 
 icinga2::object::service { 'load':
@@ -1570,7 +1570,7 @@ String to control the position in the target file, sorted alpha numeric.
 #### Defined type: `icinga2::object::usergroup`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the usergroup object, absent disables it. Defaults to `present`
 
 ##### `display_name`
 A short description of the service group.
@@ -1599,7 +1599,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::user`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the user object, absent disables it. Defaults to `present`
 
 ##### `display_name`
 A short description of the user.
@@ -1643,7 +1643,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::notificationcommand`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disabled it. Defaults to present.
+Set to present enables the notificationcommand object, absent disabled it. Defaults to present.
 
 ##### `execute`
 The "execute" script method takes care of executing the notification. The default template "plugin-notification-command"
@@ -1680,7 +1680,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::notification`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the notification object, absent disables it. Defaults to `present`
 
 ##### `host_name`
 The name of the host this notification belongs to.
@@ -1742,7 +1742,10 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 #### Defined type: `icinga2::object::service`
 
 ##### `ensure`
-Set to present enables the endpoint object, absent disables it. Defaults to `present`
+Set to present enables the service object, absent disables it. Defaults to `present`
+
+##### `service_name`
+Set the Icinga2 name of the service object. Defaults to `title` of the define resource.
 
 ##### `display_name`
 A short description of the service.
