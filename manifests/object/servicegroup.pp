@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*servicegroup_name*]
+#   Set the Icinga2 name of the servicegroup object. Defaults to title of the define resource.
+#
 # [*display_name*]
 #   A short description of the service group.
 #
@@ -38,15 +41,16 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::servicegroup (
-  $ensure       = present,
-  $display_name = $title,
-  $groups       = [],
-  $assign       = [],
-  $ignore       = [],
-  $template     = false,
-  $import       = [],
-  $order        = '65',
-  $target       = undef,
+  $ensure            = present,
+  $servicegroup_name = $title,
+  $display_name      = undef,
+  $groups            = [],
+  $assign            = [],
+  $ignore            = [],
+  $template          = false,
+  $import            = [],
+  $order             = '65',
+  $target            = undef,
 ){
   include ::icinga2::params
 
@@ -55,13 +59,14 @@ define icinga2::object::servicegroup (
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($servicegroup_name)
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
-
-  validate_string ( $display_name )
   validate_array ( $groups )
+
+  if $display_name { validate_string ( $display_name ) }
 
 
   # compose attributes
@@ -73,7 +78,7 @@ define icinga2::object::servicegroup (
   # create object
   icinga2::object { "icinga2::object::ServiceGroup::${title}":
     ensure      => $ensure,
-    object_name => $name,
+    object_name => $servicegroup_name,
     object_type => 'ServiceGroup',
     import      => $import,
     template    => $template,

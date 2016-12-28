@@ -1873,6 +1873,9 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the servicegroup object, absent disables it. Defaults to `present`
 
+##### `servicegroup_name`
+Set the Icinga2 name of the servicegroup object. Defaults to `title` of the define resource.
+
 ##### `display_name`
 A short description of the service group.
 
