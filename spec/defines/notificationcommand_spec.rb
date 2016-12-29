@@ -50,13 +50,13 @@ describe('icinga2::object::notificationcommand', :type => :define) do
                               .with_content(/command = \[ "foo", "bar", \]/) }
     end
 
+    context "#{os} with command => /usr/local/bin/foo" do
+      let(:params) { {:command => '/usr/local/bin/foo', :target => '/bar/baz'} }
 
-    context "#{os} with command => foo (not a valid array)" do
-      let(:params) { {:command => 'foo', :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/command = "\/usr\/local\/bin\/foo"/) }
     end
-
 
     context "#{os} with env => { foo => 'bar', bar => 'foo' }" do
       let(:params) { {:env => { 'foo' => "bar", 'bar' => "foo"}, :target => '/bar/baz', :command => ['foocommand'] } }
@@ -191,13 +191,13 @@ describe('icinga2::object::notificationcommand', :type => :define) do
                             .with_content(/command = \[ "foo", "bar", \]/) }
   end
 
+  context "Windows 2012 R2 with command => /usr/local/bin/foo" do
+    let(:params) { {:command => '/usr/local/bin/foo', :target => 'C:/bar/baz'} }
 
-  context "Windows 2012 R2 with command => foo (not a valid array)" do
-    let(:params) { {:command => 'foo', :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::NotificationCommand::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/command = "\/usr\/local\/bin\/foo"/) } 
   end
-
 
   context "Windows 2012 R2 with env => { foo => 'bar', bar => 'foo' }" do
     let(:params) { {:env => { 'foo' => "bar", 'bar' => "foo"}, :target => 'C:/bar/baz', :command => ['foocommand'] } }
