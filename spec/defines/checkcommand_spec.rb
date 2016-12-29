@@ -30,10 +30,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
     end
 
 
-    context "#{os} with command => foo (not a valid array)" do
-      let(:params) { {:command => 'foo', :target => '/bar/baz'} }
+    context "#{os} with command => /usr/local/bin/foo" do
+      let(:params) { {:command => '/usr/local/bin/foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/command = "\/usr\/local\/bin\/foo"/) }
     end
 
 
@@ -128,10 +130,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with command => foo (not a valid array)" do
-    let(:params) { {:command => 'foo', :target => 'C:/bar/baz'} }
+  context "Windows 2012 R2 with command => /usr/local/bin/foo" do
+    let(:params) { {:command => '/usr/local/bin/foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/command = "\/usr\/local\/bin\/foo"/) }
   end
 
 
