@@ -53,8 +53,8 @@ define icinga2::object::timeperiod (
   $includes        = undef,
   $template        = false,
   $import          = ['legacy-timeperiod'],
-  $target          = undef,
   $order           = '35',
+  $target,
 ){
   include ::icinga2::params
 

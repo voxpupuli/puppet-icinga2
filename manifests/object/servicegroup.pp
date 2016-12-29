@@ -50,7 +50,7 @@ define icinga2::object::servicegroup (
   $template          = false,
   $import            = [],
   $order             = '65',
-  $target            = undef,
+  $target,
 ){
   include ::icinga2::params
 

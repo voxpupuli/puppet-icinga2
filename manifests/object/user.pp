@@ -73,7 +73,7 @@ define icinga2::object::user (
   $import               = [],
   $template             = false,
   $order                = '75',
-  $target               = undef,
+  $target,
 ){
   include ::icinga2::params
 

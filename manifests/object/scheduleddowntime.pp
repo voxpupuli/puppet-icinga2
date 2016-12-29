@@ -36,7 +36,7 @@
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
 # [*apply_target*]
-#   An object type on which to target the apply rule.
+#   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 #
 # [*assign*]
 #   Assign user group members using the group assign rules.
@@ -70,7 +70,7 @@ define icinga2::object::scheduleddowntime (
   $assign                 = [],
   $ignore                 = [],
   $order                  = '90',
-  $target                 = undef,
+  $target,
 ){
   include ::icinga2::params
 

@@ -62,7 +62,7 @@
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
 # [*apply_target*]
-#   An object type on which to target the apply rule.
+#   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 #
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
@@ -100,8 +100,8 @@ define icinga2::object::notification (
   $ignore            = [],
   $import            = [],
   $template          = false,
-  $target            = undef,
   $order             = '85',
+  $target,
 ){
   include ::icinga2::params
 
