@@ -26,6 +26,15 @@ describe('icinga2::object::eventcommand', :type => :define) do
     end
 
 
+    context "#{os} with command => [ PluginDir + /bar, foo ]" do
+      let(:params) { {:command => [ 'PluginDir + /bar', 'foo' ], :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::EventCommand::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/command = \[ PluginDir \+ "\/bar", "foo", \]/) }
+    end
+
+
     context "#{os} with eventcommand_name => foo" do
       let(:params) { {:eventcommand_name => 'foo', :target => '/bar/baz'} }
 
@@ -51,10 +60,10 @@ describe('icinga2::object::eventcommand', :type => :define) do
     end
 
 
-    context "#{os} with command => foo (not a valid array)" do
-      let(:params) { {:command => 'foo', :target => '/bar/baz'} }
+    context "#{os} with command => 4247 (not a valid array or string)" do
+      let(:params) { {:command => 4247, :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -168,6 +177,15 @@ describe('icinga2::object::eventcommand', :type => :define) do
   end
 
 
+  context "Windows 2012 R2 with command => [ PluginDir + /bar, foo ]" do
+    let(:params) { {:command => [ 'PluginDir + /bar', 'foo' ], :target => 'C:/bar/baz'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::EventCommand::bar')
+      .with({'target' => 'C:/bar/baz'})
+      .with_content(/command = \[ PluginDir \+ "\/bar", "foo", \]/) }
+  end
+
+
   context "Windows 2012 R2 with eventcommand_name => foo" do
     let(:params) { {:eventcommand_name => 'foo', :target => 'C:/bar/baz'} }
 
@@ -193,10 +211,10 @@ describe('icinga2::object::eventcommand', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with command => foo (not a valid array)" do
-    let(:params) { {:command => 'foo', :target => 'C:/bar/baz'} }
+  context "Windows 2012 R2 with command => 4247 (not a valid array or string)" do
+    let(:params) { {:command => 4247, :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
