@@ -100,8 +100,8 @@ define icinga2::object::notification (
   $ignore            = [],
   $import            = [],
   $template          = false,
-  $target            = undef,
   $order             = '85',
+  $target,
 ){
   include ::icinga2::params
 

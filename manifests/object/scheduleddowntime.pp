@@ -70,7 +70,7 @@ define icinga2::object::scheduleddowntime (
   $assign                 = [],
   $ignore                 = [],
   $order                  = '90',
-  $target                 = undef,
+  $target,
 ){
   include ::icinga2::params
 

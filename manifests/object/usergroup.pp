@@ -49,8 +49,8 @@ define icinga2::object::usergroup (
   $ignore         = [],
   $import         = [],
   $template       = false,
-  $target         = undef,
   $order          = '80',
+  $target,
 ){
   include ::icinga2::params
 

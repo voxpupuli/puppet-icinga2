@@ -62,7 +62,7 @@ define icinga2::object::notificationcommand (
   $template                 = false,
   $import                   = ['plugin-notification-command'],
   $order                    = '25',
-  $target                   = undef,
+  $target,
 ){
   include ::icinga2::params
 

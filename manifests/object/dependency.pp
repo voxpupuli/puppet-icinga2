@@ -91,8 +91,8 @@ define icinga2::object::dependency (
   $ignore                = [],
   $import                = [],
   $template              = false,
-  $target                = undef,
   $order                 = '70',
+  $target,
 ){
   include ::icinga2::params
 
