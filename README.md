@@ -1374,7 +1374,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the host object, absent disables it. Defaults to present.
 
-##### `hostname`
+##### `host_name`
 Hostname of the Host object.
 
 ##### `import`

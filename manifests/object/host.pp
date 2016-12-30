@@ -7,7 +7,7 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
-# [*hostname*]
+# [*host_name*]
 #   Hostname of the Host object.
 #
 # [*import*]
@@ -111,7 +111,7 @@
 #
 define icinga2::object::host(
   $ensure                = present,
-  $hostname              = $title,
+  $host_name             = $title,
   $import                = [],
   $address               = undef,
   $address6              = undef,
@@ -157,7 +157,7 @@ define icinga2::object::host(
   validate_absolute_path($target)
   validate_integer($order)
 
-  if $hostname { validate_string($hostname) }
+  if $host_name { validate_string($host_name) }
   if $address { validate_string($address) }
   if $address6 { validate_string($address6) }
   if $vars { validate_hash($vars) }
@@ -220,7 +220,7 @@ define icinga2::object::host(
   # create object
   icinga2::object { "icinga2::object::Host::${title}":
     ensure      => $ensure,
-    object_name => $hostname,
+    object_name => $host_name,
     object_type => 'Host',
     template    => $template,
     import      => $import,
