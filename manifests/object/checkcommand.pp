@@ -7,7 +7,7 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
-# [*checkcommand*]
+# [*checkcommand_name*]
 #   Title of the CheckCommand object.
 #
 # [*import*]
@@ -42,16 +42,16 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::checkcommand(
-  $ensure       = present,
-  $checkcommand = $title,
-  $import       = ['plugin-check-command'],
-  $command      = undef,
-  $env          = undef,
-  $vars         = undef,
-  $timeout      = undef,
-  $arguments    = undef,
-  $template     = false,
-  $order        = '15',
+  $ensure            = present,
+  $checkcommand_name = $title,
+  $import            = ['plugin-check-command'],
+  $command           = undef,
+  $env               = undef,
+  $vars              = undef,
+  $timeout           = undef,
+  $arguments         = undef,
+  $template          = false,
+  $order             = '15',
   $target,
 ) {
 
@@ -66,7 +66,7 @@ define icinga2::object::checkcommand(
   validate_absolute_path($target)
   validate_integer($order)
 
-  if $checkcommand { validate_string($checkcommand) }
+  if $checkcommand_name { validate_string($checkcommand_name) }
   if !is_array($command) { validate_string($command) }
   if !is_string($command) { validate_array($command) }
   if $env { validate_hash($env) }
@@ -86,7 +86,7 @@ define icinga2::object::checkcommand(
   # create object
   icinga2::object { "icinga2::object::CheckCommand::${title}":
     ensure      => $ensure,
-    object_name => $checkcommand,
+    object_name => $checkcommand_name,
     object_type => 'CheckCommand',
     template    => $template,
     import      => $import,

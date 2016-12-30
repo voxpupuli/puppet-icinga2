@@ -1342,7 +1342,7 @@ permissions = [
 ##### `ensure`
 Set to present enables the checkcommand object, absent disables it. Defaults to present.
 
-##### `checkcommand`
+##### `checkcommand_name`
 Title of the CheckCommand object.
 
 ##### `import`
