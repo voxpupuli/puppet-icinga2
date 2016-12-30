@@ -1247,7 +1247,7 @@ Starts/stops and enables/disables the service.
 ##### `ensure`
 Set to present enables the endpoint object, absent disables it. Defaults to present.
 
-##### `endpoint`
+##### `endpoint_name`
 Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
 
 ##### `host`
