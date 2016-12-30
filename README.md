@@ -1272,7 +1272,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the zone object, absent disables it. Defaults to `present`
 
-##### `zone`
+##### `zone_name`
 Set the name of the zone object. Defaults to the title of the define resource.
 
 ##### `endpoints`
