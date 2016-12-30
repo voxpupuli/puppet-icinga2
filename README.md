@@ -1295,6 +1295,9 @@ String to control the position in the target file, sorted alpha numeric.
 ##### `ensure`
 Set to present enables the apiuser object, absent disables it. Defaults to present.
 
+##### `apiuser_name`
+Set the name of the apiuser object. Defaults to title of the define resource.
+
 ##### `password`
 Password string.
 
