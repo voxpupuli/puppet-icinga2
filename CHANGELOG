@@ -1,5 +1,15 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.7.2
+
+### Bugs
+Bug #13829: fix target as undef in several objects
+Bug #13831: fix target as undef in several objects
+Bug #13833: Add possibility to set command parameter as String.
+
+### Features
+Feature #13835: Added an example that uses exported resources
+
 ## v0.7.1
 
 ### Bugs
