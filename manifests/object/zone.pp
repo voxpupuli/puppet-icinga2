@@ -7,7 +7,7 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
-# [*zone*]
+# [*zone_name*]
 #   Set the Icinga2 name of the zone object. Defaults to title of the define resource.
 #
 # [*endpoints*]
@@ -33,7 +33,7 @@
 #
 define icinga2::object::zone(
   $ensure    = present,
-  $zone      = $title,
+  $zone_name = $title,
   $endpoints = [],
   $parent    = undef,
   $global    = false,
@@ -48,7 +48,7 @@ define icinga2::object::zone(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($zone)
+  validate_string($zone_name)
   validate_integer($order)
 
   if $endpoints { validate_array($endpoints) }
@@ -79,7 +79,7 @@ define icinga2::object::zone(
   # create object
   icinga2::object { "icinga2::object::Zone::${title}":
     ensure      => $ensure,
-    object_name => $zone,
+    object_name => $zone_name,
     object_type => 'Zone',
     attrs       => $attrs,
     target      => $_target,

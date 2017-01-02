@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*apiuser_name*]
+#   Set the name of the apiuser object. Defaults to title of the define resource.
+#
 # [*password*]
 #   Password string.
 #
@@ -46,11 +49,11 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::apiuser(
-  $ensure      = present,
-  $apiuser     = $title,
-  $password    = undef,
-  $client_cn   = undef,
-  $order       = '30',
+  $ensure       = present,
+  $apiuser_name = $title,
+  $password     = undef,
+  $client_cn    = undef,
+  $order        = '30',
   $target,
   $permissions,
 ) {
@@ -60,7 +63,7 @@ define icinga2::object::apiuser(
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
-  validate_string($apiuser)
+  validate_string($apiuser_name)
   validate_string($order)
   validate_absolute_path($target)
   validate_array($permissions)
@@ -78,7 +81,7 @@ define icinga2::object::apiuser(
   # create object
   icinga2::object { "icinga2::object::ApiUser::${title}":
     ensure      => $ensure,
-    object_name => $apiuser,
+    object_name => $apiuser_name,
     object_type => 'ApiUser',
     attrs       => $attrs,
     target      => $target,

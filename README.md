@@ -1247,7 +1247,7 @@ Starts/stops and enables/disables the service.
 ##### `ensure`
 Set to present enables the endpoint object, absent disables it. Defaults to present.
 
-##### `endpoint`
+##### `endpoint_name`
 Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
 
 ##### `host`
@@ -1272,7 +1272,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the zone object, absent disables it. Defaults to `present`
 
-##### `zone`
+##### `zone_name`
 Set the name of the zone object. Defaults to the title of the define resource.
 
 ##### `endpoints`
@@ -1294,6 +1294,9 @@ String to control the position in the target file, sorted alpha numeric.
 
 ##### `ensure`
 Set to present enables the apiuser object, absent disables it. Defaults to present.
+
+##### `apiuser_name`
+Set the name of the apiuser object. Defaults to title of the define resource.
 
 ##### `password`
 Password string.
@@ -1339,7 +1342,7 @@ permissions = [
 ##### `ensure`
 Set to present enables the checkcommand object, absent disables it. Defaults to present.
 
-##### `checkcommand`
+##### `checkcommand_name`
 Title of the CheckCommand object.
 
 ##### `import`
@@ -1374,7 +1377,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 ##### `ensure`
 Set to present enables the host object, absent disables it. Defaults to present.
 
-##### `hostname`
+##### `host_name`
 Hostname of the Host object.
 
 ##### `import`
