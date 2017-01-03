@@ -89,7 +89,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with excludes => foo (not a valid array)" do
       let(:params) { {:excludes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -105,7 +105,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with includes => foo (not a valid array)" do
       let(:params) { {:includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
   end
 end
@@ -211,7 +211,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   context "Windows 2012 R2 with excludes => foo (not a valid array)" do
     let(:params) { {:excludes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -227,7 +227,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   context "Windows 2012 R2 with includes => foo (not a valid array)" do
     let(:params) { {:includes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 end
 

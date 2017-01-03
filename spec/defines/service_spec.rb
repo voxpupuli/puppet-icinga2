@@ -77,7 +77,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
     context "#{os} with vars => { foo => 'bar', bar => 'foo' }" do
@@ -525,7 +525,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
   context "Windows 2012 R2 with vars => { foo => 'bar', bar => 'foo' }" do
