@@ -17,19 +17,11 @@ matrix:
   fast_finish: true
   include:
   - rvm: 2.4.0
-    env: PUPPET_VERSION="~> 4.8" CHECK=spec
-  - rvm: 2.4.0
     env: PUPPET_VERSION="~> 4.0" CHECK=spec
-  - rvm: 2.3.1
-    env: PUPPET_VERSION="~> 4.8" CHECK=spec
-  - rvm: 2.3.1
+  - rvm: 2.3.3
     env: PUPPET_VERSION="~> 4.0" CHECK=spec
-  - rvm: 2.2.5
-    env: PUPPET_VERSION="~> 4.8" CHECK=spec
-  - rvm: 2.2.5
+  - rvm: 2.2.6
     env: PUPPET_VERSION="~> 4.0" CHECK=spec
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.8" CHECK=spec
   - rvm: 2.1.9
     env: PUPPET_VERSION="~> 4.0" CHECK=spec
   - rvm: 2.1.9
@@ -41,9 +33,9 @@ matrix:
   - rvm: 1.9.3
     env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=spec
   - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 3.6" CHECK=spec
+    env: PUPPET_VERSION="~> 3.6.0" CHECK=spec
   - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 3.6" CHECK=spec
+    env: PUPPET_VERSION="~> 3.6.0" CHECK=spec
   allow_failures:
     - rvm: 2.4.0
 notifications:
