@@ -41,24 +41,10 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with object_type => 4247 (not valid string)" do
-      let(:params) { {:object_type => 4247, :target => '/bar/baz', :order => '10'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
-    end
-
-
-    context "#{os} with order => 4247 (not valid string)" do
-      let(:params) { {:object_type => 'foo', :target => '/bar/baz', :order => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -279,24 +265,10 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with object_type => 4247 (not valid string)" do
-    let(:params) { {:object_type => 4247, :target => 'C:/bar/baz', :order => '10'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
-  end
-
-
-  context "Windows 2012 R2 with order => 4247 (not valid string)" do
-    let(:params) { {:object_type => 'foo', :target => 'C:/bar/baz', :order => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

@@ -40,15 +40,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with service_name => 4247 (not a valid string)" do
-      let(:params) { {:service_name => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with display_name => foo" do
       let(:params) { {:display_name => 'foo', :target => '/bar/baz',
                       :host_name => 'hostfoo',
@@ -60,15 +51,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with display_name => 4247 (not a valid string)" do
-      let(:params) { {:display_name => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host_name => foo" do
       let(:params) { {:host_name => 'foo', :target => '/bar/baz',
                       :check_command => 'commandfoo'} }
@@ -76,14 +58,6 @@ describe('icinga2::object::service', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/host_name = "foo"/) }
-    end
-
-
-    context "#{os} with host_name => 4247 (not a valid string)" do
-      let(:params) { {:host_name => 4247, :target => '/bar/baz',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -137,14 +111,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with check_command => 4247 (not a valid string)" do
-      let(:params) { {:check_command => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with max_check_attempts => 30" do
       let(:params) { {:max_check_attempts => '30', :target => '/bar/baz',
                       :host_name => 'hostfoo',
@@ -174,15 +140,6 @@ describe('icinga2::object::service', :type => :define) do
                               .with({'target' => '/bar/baz'})
                               .with_content(/check_period = "foo"/) }
     end
-
-
-    context "#{os} with check_period => 4247 (not a valid string)" do
-      let(:params) { {:check_period => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
 
 
     context "#{os} with check_interval => 1m" do
@@ -352,15 +309,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with event_command => 4247 (not a valid string)" do
-      let(:params) { {:event_command => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with flapping_threshold => 30" do
       let(:params) { {:flapping_threshold => '30', :target => '/bar/baz',
                       :host_name => 'hostfoo',
@@ -412,15 +360,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with zone => 4247 (not a valid string)" do
-      let(:params) { {:zone => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with command_endpoint => foo" do
       let(:params) { {:command_endpoint => 'foo', :target => '/bar/baz',
                       :host_name => 'hostfoo',
@@ -429,15 +368,6 @@ describe('icinga2::object::service', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/command_endpoint = "foo"/) }
-    end
-
-
-    context "#{os} with command_endpoint => 4247 (not a valid string)" do
-      let(:params) { {:command_endpoint => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -452,15 +382,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with notes => 4247 (not a valid string)" do
-      let(:params) { {:notes => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with notes_url => foo" do
       let(:params) { {:notes_url => 'foo', :target => '/bar/baz',
                       :host_name => 'hostfoo',
@@ -472,15 +393,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with notes_url => 4247 (not a valid string)" do
-      let(:params) { {:notes_url => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with action_url => foo" do
       let(:params) { {:action_url => 'foo', :target => '/bar/baz',
                       :host_name => 'hostfoo',
@@ -489,15 +401,6 @@ describe('icinga2::object::service', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/action_url = "foo"/) }
-    end
-
-
-    context "#{os} with action_url => 4247 (not a valid string)" do
-      let(:params) { {:action_url => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -529,15 +432,6 @@ describe('icinga2::object::service', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/icon_image_alt = "foo"/) }
-    end
-
-
-    context "#{os} with icon_image_alt => 4247 (not a valid string)" do
-      let(:params) { {:icon_image_alt => 4247, :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
   end
 end
@@ -594,15 +488,6 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
-    let(:params) { {:service_name => 4247, :target => 'C:/bar/baz',
-                       :host_name => 'hostfoo',
-                       :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with display_name => foo" do
     let(:params) { {:display_name => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
@@ -614,15 +499,6 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with display_name => 4247 (not a valid string)" do
-    let(:params) { {:display_name => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with host_name => foo" do
     let(:params) { {:host_name => 'foo', :target => 'C:/bar/baz',
                     :check_command => 'commandfoo'} }
@@ -630,14 +506,6 @@ describe('icinga2::object::service', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/host_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
-    let(:params) { {:host_name => 4247, :target => 'C:/bar/baz',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -691,14 +559,6 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with check_command => 4247 (not a valid string)" do
-    let(:params) { {:check_command => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with max_check_attempts => 30" do
     let(:params) { {:max_check_attempts => '30', :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
@@ -726,14 +586,6 @@ describe('icinga2::object::service', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/check_period = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with check_period => 4247 (not a valid string)" do
-    let(:params) { {:check_period => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -904,15 +756,6 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with event_command => 4247 (not a valid string)" do
-    let(:params) { {:event_command => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with flapping_threshold => 30" do
     let(:params) { {:flapping_threshold => '30', :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
@@ -964,15 +807,6 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with zone => 4247 (not a valid string)" do
-    let(:params) { {:zone => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with command_endpoint => foo" do
     let(:params) { {:command_endpoint => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
@@ -981,15 +815,6 @@ describe('icinga2::object::service', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/command_endpoint = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with command_endpoint => 4247 (not a valid string)" do
-    let(:params) { {:command_endpoint => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -1004,15 +829,6 @@ describe('icinga2::object::service', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with notes => 4247 (not a valid string)" do
-    let(:params) { {:notes => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with notes_url => foo" do
     let(:params) { {:notes_url => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
@@ -1021,15 +837,6 @@ describe('icinga2::object::service', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/notes_url = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with notes_url => 4247 (not a valid string)" do
-    let(:params) { {:notes_url => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -1042,16 +849,6 @@ describe('icinga2::object::service', :type => :define) do
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/action_url = "foo"/) }
   end
-
-
-  context "Windows 2012 R2 with action_url => 4247 (not a valid string)" do
-    let(:params) { {:action_url => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
 
   context "Windows 2012 R2 with icon_image = /foo/bar" do
     let(:params) { {:icon_image => '/foo/bar', :target => 'C:/bar/baz',
@@ -1081,14 +878,5 @@ describe('icinga2::object::service', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Service::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/icon_image_alt = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with icon_image_alt => 4247 (not a valid string)" do
-    let(:params) { {:icon_image_alt => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 end

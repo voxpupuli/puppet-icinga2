@@ -34,13 +34,6 @@ describe('icinga2::object::apiuser', :type => :define) do
     end
 
 
-    context "#{os} with order => 4247 (not valid string)" do
-      let(:params) { {:target => '/bar/baz', :permissions => ['*'], :order => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with password => foo" do
       let(:params) { {:password => 'foo', :permissions => ['*'], :target => '/bar/baz'} }
 
@@ -50,26 +43,12 @@ describe('icinga2::object::apiuser', :type => :define) do
     end
 
 
-    context "#{os} with password => 4247 (not a valid string" do
-      let(:params) { {:password =>  4247, :permissions => ['*'], :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with client_cn => foo" do
       let(:params) { {:client_cn => 'foo', :permissions => ['*'], :target => '/bar/baz'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::ApiUser::bar')
         .with({'target' => '/bar/baz'})
         .with_content(/client_cn = "foo"/) }
-    end
-
-
-    context "#{os} with client => 4247 (not a valid string)" do
-      let(:params) { {:client_cn => 4247, :permissions => ['*'], :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -135,13 +114,6 @@ describe('icinga2::object::apiuser', :type => :define) do
   end
 
 
-  context "Windows 2012 R2  with order => 4247 (not valid string)" do
-    let(:params) { {:target => 'C:/bar/baz', :permissions => ['*'], :order => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2  with password => foo" do
     let(:params) { {:password => 'foo', :permissions => ['*'], :target => 'C:/bar/baz'} }
 
@@ -151,26 +123,12 @@ describe('icinga2::object::apiuser', :type => :define) do
   end
 
 
-  context "Windows 2012 R2  with password => 4247 (not a valid string" do
-    let(:params) { {:password =>  4247, :permissions => ['*'], :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2  with client_cn => foo" do
     let(:params) { {:client_cn => 'foo', :permissions => ['*'], :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiUser::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/client_cn = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2  with client => 4247 (not a valid string)" do
-    let(:params) { {:client_cn => 4247, :permissions => ['*'], :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

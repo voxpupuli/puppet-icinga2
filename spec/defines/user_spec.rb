@@ -36,26 +36,12 @@ describe('icinga2::object::user', :type => :define) do
     end
 
 
-    context "#{os} with user_name => 4247 (not a valid string)" do
-      let(:params) { {:user_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with display_name => foo" do
       let(:params) { {:display_name => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/display_name = "foo"/) }
-    end
-
-
-    context "#{os} with display_name => 4247 (not a valid string)" do
-      let(:params) { {:display_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -68,26 +54,12 @@ describe('icinga2::object::user', :type => :define) do
     end
 
 
-    context "#{os} with email => 4247 (not a valid string)" do
-      let(:params) { {:email => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with pager => foo" do
       let(:params) { {:pager => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/pager = "foo"/) }
-    end
-
-
-    context "#{os} with pager => 4247 (not a valid string)" do
-      let(:params) { {:pager => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -145,13 +117,6 @@ describe('icinga2::object::user', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/period = "foo"/) }
-    end
-
-
-    context "#{os} with period => 4247 (not a valid string)" do
-      let(:params) { {:period => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -236,26 +201,12 @@ describe('icinga2::object::user', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with user_name => 4247 (not a valid string)" do
-    let(:params) { {:user_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with display_name => foo" do
     let(:params) { {:display_name => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/display_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with display_name => 4247 (not a valid string)" do
-    let(:params) { {:display_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -268,26 +219,12 @@ describe('icinga2::object::user', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with email => 4247 (not a valid string)" do
-    let(:params) { {:email => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with pager => foo" do
     let(:params) { {:pager => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/pager = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with pager => 4247 (not a valid string)" do
-    let(:params) { {:pager => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -345,13 +282,6 @@ describe('icinga2::object::user', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/period = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with period => 4247 (not a valid string)" do
-    let(:params) { {:period => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

@@ -26,20 +26,6 @@ describe('icinga2::pki::ca', :type => :class) do
       it { is_expected.to contain_file(@ca_cert).with_content(/foo/) }
       it { is_expected.to contain_file(@ca_key).with_content(/bar/) }
     end
-
-
-    context "#{os} with ca_cert => 4247, ca_key => 'bar' (not a valid string)" do
-      let(:params) { {:ca_cert => 4247, :ca_key => 'bar'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-    context "#{os} with ca_cert => 'foo', ca_key => 4247 (not a valid string)" do
-      let(:params) { {:ca_cert => 'foo', :ca_key => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
   end
 end
 
@@ -81,21 +67,6 @@ describe('icinga2::pki::ca', :type => :class) do
     it { is_expected.to contain_file(@ca_cert).with_content(/foo/) }
     it { is_expected.to contain_file(@ca_key).with_content(/bar/) }
   end
-
-
-  context "Windows 2012 R2 with ca_cert => 4247, ca_key => 'bar' (not a valid string)" do
-    let(:params) { {:ca_cert => 4247, :ca_key => 'bar'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-  context "Windows 2012 R2 with ca_cert => 'foo', ca_key => 4247 (not a valid string)" do
-    let(:params) { {:ca_cert => 'foo', :ca_key => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
 end
 
 

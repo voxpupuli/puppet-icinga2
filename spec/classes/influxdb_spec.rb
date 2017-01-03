@@ -49,13 +49,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
     end
 
 
-    context "#{os} with host => 4247" do
-      let(:params) { {:host => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host => foo.example.com" do
       let(:params) { {:host => 'foo.example.com'} }
 
@@ -90,13 +83,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
     end
 
 
-    context "#{os} with database => 123 (not a valid string)" do
-      let(:params) { {:database => 123} }
-
-      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
-    end
-
-
     context "#{os} with username => foo" do
       let(:params) { {:username => 'foo'} }
 
@@ -106,25 +92,12 @@ describe('icinga2::feature::influxdb', :type => :class) do
     end
 
 
-    context "#{os} with username => 123 (not a valid string)" do
-      let(:params) { {:username => 123} }
-
-      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
-    end
-
     context "#{os} with password => foo" do
       let(:params) { {:password => 'foo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
                               .with({ 'target' => '/etc/icinga2/features-available/influxdb.conf' })
                               .with_content(/password = "foo"/) }
-    end
-
-
-    context "#{os} with password => 123 (not a valid string)" do
-      let(:params) { {:password => 123} }
-
-      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
 
@@ -229,13 +202,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
     end
 
 
-    context "#{os} with host_measurement => 123 (not a valid string)" do
-      let(:params) { {:host_measurement => 123} }
-
-      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
-    end
-
-
     context "#{os} with host_tags => { foo => 'bar', bar => 'foo' }" do
       let(:params) { {:host_tags => { 'foo' => "bar", 'bar' => "foo" } } }
 
@@ -258,13 +224,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
       it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
                               .with({ 'target' => '/etc/icinga2/features-available/influxdb.conf' })
                               .with_content(/service_template = {\n\s+measurement = "bar"/) }
-    end
-
-
-    context "#{os} with service_measurement => 123 (not a valid string)" do
-      let(:params) { {:service_measurement => 123} }
-
-      it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
     end
 
 
@@ -429,13 +388,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with host => 4247" do
-    let(:params) { {:host => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with host => foo.example.com" do
     let(:params) { {:host => 'foo.example.com'} }
 
@@ -470,13 +422,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with database => 123 (not a valid string)" do
-    let(:params) { {:database => 123} }
-
-    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with username => foo" do
     let(:params) { {:username => 'foo'} }
 
@@ -486,25 +431,12 @@ describe('icinga2::feature::influxdb', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with username => 123 (not a valid string)" do
-    let(:params) { {:username => 123} }
-
-    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
-  end
-
   context "Windows 2012 R2 with password => foo" do
     let(:params) { {:password => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf' })
                             .with_content(/password = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with password => 123 (not a valid string)" do
-    let(:params) { {:password => 123} }
-
-    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 
@@ -608,13 +540,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with host_measurement => 123 (not a valid string)" do
-    let(:params) { {:host_measurement => 123} }
-
-    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with host_tags => { foo => 'bar', bar => 'foo' }" do
     let(:params) { {:host_tags => { 'foo' => "bar", 'bar' => "foo" } } }
 
@@ -637,13 +562,6 @@ describe('icinga2::feature::influxdb', :type => :class) do
     it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf' })
                             .with_content(/service_template = {\r\n\s+measurement = "bar"/) }
-  end
-
-
-  context "Windows 2012 R2 with service_measurement => 123 (not a valid string)" do
-    let(:params) { {:service_measurement => 123} }
-
-    it { is_expected.to raise_error(Puppet::Error, /123 is not a string/) }
   end
 
 

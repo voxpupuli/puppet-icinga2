@@ -38,13 +38,6 @@ describe('icinga2::object::checkresultreader', :type => :define) do
     end
 
 
-    context "#{os} with checkresultreader_name => 4247 (not a valid string)" do
-      let(:params) { {:checkresultreader_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with spool_dir = /foo/bar" do
       let(:params) { {:spool_dir => '/foo/bar', :target => '/bar/baz'} }
 
@@ -111,13 +104,6 @@ describe('icinga2::object::checkresultreader', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckResultReader::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/object CheckResultReader "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with checkresultreader_name => 4247 (not a valid string)" do
-    let(:params) { {:checkresultreader_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

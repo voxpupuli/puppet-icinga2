@@ -45,13 +45,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with host => 4247" do
-      let(:params) { {:host => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host => foo.example.com" do
       let(:params) { {:host => 'foo.example.com'} }
 
@@ -102,26 +95,12 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with user => 4247 (not a valid string)" do
-      let(:params) { {:user => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with database => foo" do
       let(:params) { {:database => 'foo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
                               .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/database = "foo"/) }
-    end
-
-
-    context "#{os} with database => 4247 (not a valid string)" do
-      let(:params) { {:database => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -226,13 +205,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with enabl_ssl = true, pki = none, ssl_cipher = foo" do
-      let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_cipher => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with enabl_ssl = true, pki = none, ssl_capath = /foo" do
       let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => '/foo'} }
 
@@ -259,26 +231,12 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with table_prefix => 4247 (not a valid string)" do
-      let(:params) { {:table_prefix => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with instance_name => foo" do
       let(:params) { {:instance_name => 'foo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
                               .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
                               .with_content(/instance_name = "foo"/) }
-    end
-
-
-    context "#{os} with instance_name => 4247 (not a valid string)" do
-      let(:params) { {:instance_name => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -427,14 +385,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with host => 4247" do
-    let(:params) { {:host => 4247} }
-
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with host => foo.example.com" do
     let(:params) { {:host => 'foo.example.com'} }
 
@@ -486,26 +436,12 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with user => 4247 (not a valid string)" do
-    let(:params) { {:user => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with database => foo" do
     let(:params) { {:database => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/database = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with database => 4247 (not a valid string)" do
-    let(:params) { {:database => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -608,13 +544,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_cipher = foo" do
-    let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_cipher => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_capath = /foo" do
     let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => '/foo'} }
 
@@ -641,26 +570,12 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with table_prefix => 4247 (not a valid string)" do
-    let(:params) { {:table_prefix => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with instance_name => foo" do
     let(:params) { {:instance_name => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
                             .with_content(/instance_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with instance_name => 4247 (not a valid string)" do
-    let(:params) { {:instance_name => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

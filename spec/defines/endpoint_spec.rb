@@ -46,20 +46,6 @@ describe('icinga2::object::endpoint', :type => :define) do
     end
 
 
-    context "#{os} with order => 4247 (not valid string)" do
-      let(:params) { {:target => '/bar/baz', :order => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
-    context "#{os} with host => 4247" do
-      let(:params) { {:host => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host => foo.example.com" do
       let(:params) { {:host => 'foo.example.com', :target => '/bar/baz'} }
 
@@ -154,20 +140,6 @@ describe('icinga2::object::endpoint', :type => :define) do
     let(:params) { {:target => 'bar/baz'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
-  end
-
-
-  context "Windows 2012 R2  with order => 4247 (not valid string)" do
-    let(:params) { {:target => 'C:/bar/baz', :order => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
-  context "Windows 2012 R2  with host => 4247" do
-    let(:params) { {:host => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
