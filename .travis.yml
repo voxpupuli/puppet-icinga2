@@ -16,9 +16,9 @@ script:
 matrix:
   fast_finish: true
   include:
-  - rvm: 2.4.0-preview3
+  - rvm: 2.4.0
     env: PUPPET_VERSION="~> 4.8" CHECK=spec
-  - rvm: 2.4.0-preview3
+  - rvm: 2.4.0
     env: PUPPET_VERSION="~> 4.0" CHECK=spec
   - rvm: 2.3.1
     env: PUPPET_VERSION="~> 4.8" CHECK=spec
@@ -45,7 +45,7 @@ matrix:
   - rvm: 2.1.9
     env: PUPPET_VERSION="~> 3.6" CHECK=spec
   allow_failures:
-    - rvm: 2.4.0-preview3
+    - rvm: 2.4.0
 notifications:
   email: false
 #deploy:
