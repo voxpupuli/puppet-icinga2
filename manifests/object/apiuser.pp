@@ -49,13 +49,13 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::apiuser(
+  $target,
+  $permissions,
   $ensure       = present,
   $apiuser_name = $title,
   $password     = undef,
   $client_cn    = undef,
   $order        = '30',
-  $target,
-  $permissions,
 ) {
 
   include ::icinga2::params

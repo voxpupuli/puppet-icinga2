@@ -19,10 +19,10 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::config::fragment(
-  $code_name = $title,
-  $order       = '0',
   $content,
   $target,
+  $code_name = $title,
+  $order       = '0',
 ) {
 
   include ::icinga2::params
@@ -58,13 +58,13 @@ define icinga2::config::fragment(
   }
 
   concat::fragment { "icinga2::config::${code_name}":
-    target   => $target,
-    content  => $::osfamily ? {
+    target  => $target,
+    content => $::osfamily ? {
       'windows' => regsubst($content, '\n', "\r\n", 'EMG'),
       default   => $content,
     },
-    order  => $order,
-    notify => Class['::icinga2::service'],
+    order   => $order,
+    notify  => Class['::icinga2::service'],
   }
 
 }

@@ -33,11 +33,11 @@ class icinga2::feature::debuglog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::FileLogger::debuglog":
+  icinga2::object { 'icinga2::object::FileLogger::debuglog':
     object_name => 'debug-file',
     object_type => 'FileLogger',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/debuglog.conf",
+    target      => "${::conf_dir}/features-available/debuglog.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],

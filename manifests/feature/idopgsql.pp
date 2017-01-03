@@ -141,7 +141,7 @@ class icinga2::feature::idopgsql(
   }
 
   # create object
-  icinga2::object { "icinga2::object::IdoPgsqlConnection::ido-pgsql":
+  icinga2::object { 'icinga2::object::IdoPgsqlConnection::ido-pgsql':
     object_name => 'ido-pgsql',
     object_type => 'IdoPgsqlConnection',
     attrs       => $attrs,
@@ -161,7 +161,7 @@ class icinga2::feature::idopgsql(
   }
 
   icinga2::feature { 'ido-pgsql':
-    ensure => $ensure,
+    ensure  => $ensure,
     require => Package['icinga2-ido-pgsql']
   }
 }

@@ -35,7 +35,7 @@ class icinga2::feature::syslog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::SyslogLogger::syslog":
+  icinga2::object { 'icinga2::object::SyslogLogger::syslog':
     object_name => 'syslog',
     object_type => 'SyslogLogger',
     attrs       => $attrs,

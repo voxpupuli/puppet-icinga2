@@ -40,7 +40,7 @@ class icinga2::feature::opentsdb(
   }
 
   # create object
-  icinga2::object { "icinga2::object::OpenTsdbWriter::opentsdb":
+  icinga2::object { 'icinga2::object::OpenTsdbWriter::opentsdb':
     object_name => 'opentsdb',
     object_type => 'OpenTsdbWriter',
     attrs       => $attrs,

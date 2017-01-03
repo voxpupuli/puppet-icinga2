@@ -42,6 +42,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::checkcommand(
+  $target,
   $ensure            = present,
   $checkcommand_name = $title,
   $import            = ['plugin-check-command'],
@@ -52,7 +53,6 @@ define icinga2::object::checkcommand(
   $arguments         = undef,
   $template          = false,
   $order             = '15',
-  $target,
 ) {
 
   include ::icinga2::params

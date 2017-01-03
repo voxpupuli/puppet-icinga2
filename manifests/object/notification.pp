@@ -80,6 +80,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::notification (
+  $target,
   $ensure            = present,
   $notification_name = $title,
   $host_name         = undef,
@@ -101,7 +102,6 @@ define icinga2::object::notification (
   $import            = [],
   $template          = false,
   $order             = '85',
-  $target,
 ){
   include ::icinga2::params
 
@@ -113,7 +113,7 @@ define icinga2::object::notification (
   validate_string($notification_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
-    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
+    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)

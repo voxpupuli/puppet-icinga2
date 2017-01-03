@@ -151,8 +151,8 @@ class icinga2::feature::influxdb(
   $conf_dir  = $::icinga2::params::conf_dir
   $ssl_dir   = "${::icinga2::params::pki_dir}/influxdb"
 
-  $host_template = { measurement => "$host_measurement", tags => $host_tags }
-  $service_template = { measurement => "$service_measurement", tags => $service_tags}
+  $host_template = { measurement => "${host_measurement}", tags => $host_tags }
+  $service_template = { measurement => "${service_measurement}", tags => $service_tags}
 
   File {
     owner   => $user,
@@ -216,12 +216,12 @@ class icinga2::feature::influxdb(
       'none': {
         if $ssl_key {
           file { $_ssl_key_path:
-            ensure => file,
-            mode   => $::kernel ? {
+            ensure  => file,
+            mode    => $::kernel ? {
               'windows' => undef,
               default   => '0600',
             },
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
               default   => $ssl_key,
             },
@@ -232,7 +232,7 @@ class icinga2::feature::influxdb(
         if $ssl_cert {
           file { $_ssl_cert_path:
             ensure  => file,
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
               default   => $ssl_cert,
             },
@@ -243,7 +243,7 @@ class icinga2::feature::influxdb(
         if $ssl_cacert {
           file { $_ssl_cacert_path:
             ensure  => file,
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
               default   => $ssl_cacert,
             },
@@ -272,7 +272,7 @@ class icinga2::feature::influxdb(
   }
 
   # create object
-  icinga2::object { "icinga2::object::InfluxdbWriter::influxdb":
+  icinga2::object { 'icinga2::object::InfluxdbWriter::influxdb':
     object_name => 'influxdb',
     object_type => 'InfluxdbWriter',
     attrs       => merge($attrs, $attrs_ssl),

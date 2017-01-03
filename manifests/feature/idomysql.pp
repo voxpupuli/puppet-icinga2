@@ -250,12 +250,12 @@ class icinga2::feature::idomysql(
       'none': {
         if $ssl_key {
           file { $_ssl_key_path:
-            ensure => file,
-            mode   => $::kernel ? {
+            ensure  => file,
+            mode    => $::kernel ? {
               'windows' => undef,
               default   => '0600',
             },
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
               default   => $ssl_key,
             },
@@ -266,7 +266,7 @@ class icinga2::feature::idomysql(
         if $ssl_cert {
           file { $_ssl_cert_path:
             ensure  => file,
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
               default   => $ssl_cert,
             },
@@ -277,7 +277,7 @@ class icinga2::feature::idomysql(
         if $ssl_cacert {
           file { $_ssl_cacert_path:
             ensure  => file,
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
               default   => $ssl_cacert,
             },
@@ -323,7 +323,7 @@ class icinga2::feature::idomysql(
   }
 
   # create object
-  icinga2::object { "icinga2::object::IdoMysqlConnection::ido-mysql":
+  icinga2::object { 'icinga2::object::IdoMysqlConnection::ido-mysql':
     object_name => 'ido-mysql',
     object_type => 'IdoMysqlConnection',
     attrs       => merge($attrs, $attrs_ssl),
@@ -343,7 +343,7 @@ class icinga2::feature::idomysql(
   }
 
   icinga2::feature { 'ido-mysql':
-    ensure => $ensure,
+    ensure  => $ensure,
     require => Package['icinga2-ido-mysql']
   }
 }

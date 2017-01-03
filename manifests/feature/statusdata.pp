@@ -47,11 +47,11 @@ class icinga2::feature::statusdata(
   }
 
   # create object
-  icinga2::object { "icinga2::object::StatusDataWriter::statusdata":
+  icinga2::object { 'icinga2::object::StatusDataWriter::statusdata':
     object_name => 'statusdata',
     object_type => 'StatusDataWriter',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/statusdata.conf",
+    target      => "${::conf_dir}/features-available/statusdata.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -61,7 +61,7 @@ class icinga2::feature::statusdata(
 
   # import library 'compat'
   concat::fragment { 'icinga2::feature::statusdata':
-    target  => "${conf_dir}/features-available/statusdata.conf",
+    target  => "${::conf_dir}/features-available/statusdata.conf",
     content => "library \"compat\"\n\n",
     order   => '05',
   }

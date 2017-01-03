@@ -93,7 +93,7 @@ class icinga2::params {
       $spool_dir = '/var/spool/icinga2'
       $cache_dir = '/var/cache/icinga2'
       $pki_dir   = "${conf_dir}/pki"
-      $ca_dir    = "/var/lib/icinga2/ca"
+      $ca_dir    = '/var/lib/icinga2/ca'
 
       case $::osfamily {
         'redhat': {
@@ -146,9 +146,9 @@ class icinga2::params {
       $pki_dir   = "${conf_dir}/pki"
       $ca_dir    = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
       $constants = {
-        'PluginDir'          => "C:/Program Files/ICINGA2/sbin",
-        'PluginContribDir'   => "C:/Program Files/ICINGA2/sbin",
-        'ManubulonPluginDir' => "C:/Program Files/ICINGA2/sbin",
+        'PluginDir'          => 'C:/Program Files/ICINGA2/sbin',
+        'PluginContribDir'   => 'C:/Program Files/ICINGA2/sbin',
+        'ManubulonPluginDir' => 'C:/Program Files/ICINGA2/sbin',
         'ZoneName'           => $::fqdn,
         'NodeName'           => $::fqdn,
         'TicketSalt'         => '',

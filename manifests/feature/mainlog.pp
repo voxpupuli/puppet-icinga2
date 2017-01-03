@@ -37,11 +37,11 @@ class icinga2::feature::mainlog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::FileLogger::mainlog":
+  icinga2::object { 'icinga2::object::FileLogger::mainlog':
     object_name => 'main-log',
     object_type => 'FileLogger',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/mainlog.conf",
+    target      => "${::conf_dir}/features-available/mainlog.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],

@@ -52,7 +52,7 @@ class icinga2::feature::gelf(
   }
 
   # create object
-  icinga2::object { "icinga2::object::GelfWriter::gelf":
+  icinga2::object { 'icinga2::object::GelfWriter::gelf':
     object_name => 'gelf',
     object_type => 'GelfWriter',
     attrs       => $attrs,

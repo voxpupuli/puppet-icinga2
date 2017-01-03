@@ -3,7 +3,15 @@ require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.send('disable_class_inherits_from_params_class')
-PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "pkg/**/*.pp"]
+PuppetLint.configuration.send('disable_selector_inside_resource')
+PuppetLint.configuration.send('disable_only_variable_string')
+PuppetLint.configuration.ignore_paths = [
+  "spec/**/*.pp",
+  "serverspec/**/*.pp",
+  "pkg/**/*.pp",
+  "examples/**/*.pp",
+  "vendor/**/*.pp"
+]
 
 desc "Validate manifests, templates, and ruby files"
 task :validate do
@@ -17,3 +25,7 @@ task :validate do
     sh "erb -P -x -T '-' #{template} | ruby -c"
   end
 end
+
+#PuppetLint::RakeTask.new :lint do |config|
+#  config.pattern = 'manifests/*/**.pp'
+#end

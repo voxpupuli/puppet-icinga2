@@ -38,11 +38,11 @@ class icinga2::feature::compatlog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::CompatLogger::compatlog":
+  icinga2::object { 'icinga2::object::CompatLogger::compatlog':
     object_name => 'compatlog',
     object_type => 'CompatLogger',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/compatlog.conf",
+    target      => "${::conf_dir}/features-available/compatlog.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -52,7 +52,7 @@ class icinga2::feature::compatlog(
 
   # import library 'compat'
   concat::fragment { 'icinga2::feature::compatlog':
-    target  => "${conf_dir}/features-available/compatlog.conf",
+    target  => "${::conf_dir}/features-available/compatlog.conf",
     content => "library \"compat\"\n\n",
     order   => '05',
   }

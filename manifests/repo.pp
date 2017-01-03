@@ -69,19 +69,19 @@ class icinga2::repo {
           default: {
             fail('Your plattform is not supported to manage a repository.')
           }
-        } 
+        }
         contain ::apt::update
       }
       'suse': {
-       
+
           file { '/etc/pki/GPG-KEY-icinga':
             ensure => present,
             source => 'http://packages.icinga.com/icinga.key',
           }
 
-          exec { "import icinga gpg key":
+          exec { 'import icinga gpg key':
             path      => '/bin:/usr/bin:/sbin:/usr/sbin',
-            command   => "rpm --import /etc/pki/GPG-KEY-icinga",
+            command   => 'rpm --import /etc/pki/GPG-KEY-icinga',
             unless    => "rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/GPG-KEY-icinga) | cut --characters=11-18 | tr [A-Z] [a-z]`",
             require   => File['/etc/pki/GPG-KEY-icinga'],
             logoutput => 'on_failure',
@@ -90,10 +90,10 @@ class icinga2::repo {
           case $::operatingsystem {
             'SLES': {
               zypprepo { 'icinga-stable-release':
-                baseurl      => "http://packages.icinga.com/SUSE/${::operatingsystemrelease}/release/",
-                enabled      => 1,
-                gpgcheck     => 1,
-                require      => Exec['import icinga gpg key']
+                baseurl  => "http://packages.icinga.com/SUSE/${::operatingsystemrelease}/release/",
+                enabled  => 1,
+                gpgcheck => 1,
+                require  => Exec['import icinga gpg key']
               }
             }
             default: {

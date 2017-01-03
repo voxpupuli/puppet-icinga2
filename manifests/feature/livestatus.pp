@@ -62,11 +62,11 @@ class icinga2::feature::livestatus(
   }
 
   # create object
-  icinga2::object { "icinga2::object::LivestatusListener::livestatus":
+  icinga2::object { 'icinga2::object::LivestatusListener::livestatus':
     object_name => 'livestatus',
     object_type => 'LivestatusListener',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/livestatus.conf",
+    target      => "${::conf_dir}/features-available/livestatus.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -76,7 +76,7 @@ class icinga2::feature::livestatus(
 
   # import library 'livestatus'
   concat::fragment { 'icinga2::feature::livestatus':
-    target  => "${conf_dir}/features-available/livestatus.conf",
+    target  => "${::conf_dir}/features-available/livestatus.conf",
     content => "library \"livestatus\"\n\n",
     order   => '05',
   }

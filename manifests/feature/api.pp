@@ -215,12 +215,12 @@ class icinga2::feature::api(
     'none': {
       if $ssl_key {
         file { $_ssl_key_path:
-          ensure => file,
-          mode   => $::kernel ? {
+          ensure  => file,
+          mode    => $::kernel ? {
             'windows' => undef,
             default   => '0600',
           },
-          content  => $::osfamily ? {
+          content => $::osfamily ? {
             'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
             default   => $ssl_key,
           },
@@ -231,7 +231,7 @@ class icinga2::feature::api(
       if $ssl_cert {
         file { $_ssl_cert_path:
           ensure  => file,
-          content  => $::osfamily ? {
+          content => $::osfamily ? {
             'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
             default   => $ssl_cert,
           },
@@ -242,7 +242,7 @@ class icinga2::feature::api(
       if $ssl_cacert {
         file { $_ssl_cacert_path:
           ensure  => file,
-          content  => $::osfamily ? {
+          content => $::osfamily ? {
             'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
             default   => $ssl_cacert,
           },
@@ -268,20 +268,20 @@ class icinga2::feature::api(
           mode => '0600';
         $_ssl_cert_path:
       } ->
-    
+
       exec { 'icinga2 pki get trusted-cert':
         command => "icinga2 pki save-cert --host '${ca_host}' --port ${ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
         creates => $trusted_cert,
         notify  => Class['::icinga2::service'],
       } ->
       file { $trusted_cert: } ->
-    
+
       exec { 'icinga2 pki request':
         command => "icinga2 pki request --host '${ca_host}' --port ${ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
         creates => $_ssl_cacert_path,
         notify  => Class['::icinga2::service'],
       } ->
-      file { $_ssl_cacert_path: } 
+      file { $_ssl_cacert_path: }
     } # icinga2    
   } # pki
 
@@ -300,7 +300,7 @@ class icinga2::feature::api(
   create_resources('icinga2::object::zone', $zones)
 
   # create object
-  icinga2::object { "icinga2::object::ApiListener::api":
+  icinga2::object { 'icinga2::object::ApiListener::api':
     object_name => 'api',
     object_type => 'ApiListener',
     attrs       => $attrs,

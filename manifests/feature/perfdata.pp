@@ -79,11 +79,11 @@ class icinga2::feature::perfdata(
   }
 
   # create object
-  icinga2::object { "icinga2::object::PerfdataWriter::perfdata":
+  icinga2::object { 'icinga2::object::PerfdataWriter::perfdata':
     object_name => 'perfdata',
     object_type => 'PerfdataWriter',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/perfdata.conf",
+    target      => "${::conf_dir}/features-available/perfdata.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -93,7 +93,7 @@ class icinga2::feature::perfdata(
 
   # import library 'perfdata'
   concat::fragment { 'icinga2::feature::perfdata':
-    target  => "${conf_dir}/features-available/perfdata.conf",
+    target  => "${::conf_dir}/features-available/perfdata.conf",
     content => "library \"perfdata\"\n\n",
     order   => '05',
   }

@@ -30,11 +30,11 @@ class icinga2::feature::command(
   }
 
   # create object
-  icinga2::object { "icinga2::object::ExternalCommandListener::command":
+  icinga2::object { 'icinga2::object::ExternalCommandListener::command':
     object_name => 'command',
     object_type => 'ExternalCommandListener',
     attrs       => $attrs,
-    target      => "${conf_dir}/features-available/command.conf",
+    target      => "${::conf_dir}/features-available/command.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -44,7 +44,7 @@ class icinga2::feature::command(
 
   # import library 'compat'
   concat::fragment { 'icinga2::feature::command':
-    target  => "${conf_dir}/features-available/command.conf",
+    target  => "${::conf_dir}/features-available/command.conf",
     content => "library \"compat\"\n\n",
     order   => '05',
   }

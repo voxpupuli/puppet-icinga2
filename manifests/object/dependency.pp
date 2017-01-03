@@ -75,6 +75,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::dependency (
+  $target,
   $ensure                = present,
   $dependency_name       = $title,
   $parent_host_name      = undef,
@@ -93,7 +94,6 @@ define icinga2::object::dependency (
   $import                = [],
   $template              = false,
   $order                 = '70',
-  $target,
 ){
   include ::icinga2::params
 
@@ -105,7 +105,7 @@ define icinga2::object::dependency (
   validate_string($dependency_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
-    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
+    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
