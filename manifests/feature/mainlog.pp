@@ -22,7 +22,9 @@ class icinga2::feature::mainlog(
   $ensure   = present,
   $severity = 'information',
   $path     = "${::icinga2::params::log_dir}/icinga2.log",
-) inherits ::icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -37,7 +39,7 @@ class icinga2::feature::mainlog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::FileLogger::mainlog":
+  icinga2::object { 'icinga2::object::FileLogger::mainlog':
     object_name => 'main-log',
     object_type => 'FileLogger',
     attrs       => $attrs,

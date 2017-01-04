@@ -15,16 +15,14 @@ class icinga2::feature::notification(
   $ensure = present,
 ) {
 
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
   # create object
-  icinga2::object { "icinga2::object::NotificationComponent::notification":
+  icinga2::object { 'icinga2::object::NotificationComponent::notification':
     object_name => 'notification',
     object_type => 'NotificationComponent',
     attrs       => {},

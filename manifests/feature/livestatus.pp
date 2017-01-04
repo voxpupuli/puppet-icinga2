@@ -40,7 +40,9 @@ class icinga2::feature::livestatus(
   $bind_port       = '6558',
   $socket_path     = "${::icinga2::params::run_dir}/cmd/livestatus",
   $compat_log_path = "${::icinga2::params::log_dir}/compat",
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -62,7 +64,7 @@ class icinga2::feature::livestatus(
   }
 
   # create object
-  icinga2::object { "icinga2::object::LivestatusListener::livestatus":
+  icinga2::object { 'icinga2::object::LivestatusListener::livestatus':
     object_name => 'livestatus',
     object_type => 'LivestatusListener',
     attrs       => $attrs,

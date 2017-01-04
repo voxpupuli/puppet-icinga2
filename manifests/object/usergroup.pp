@@ -41,6 +41,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::usergroup (
+  $target,
   $ensure         = present,
   $usergroup_name = $title,
   $display_name   = undef,
@@ -50,7 +51,6 @@ define icinga2::object::usergroup (
   $import         = [],
   $template       = false,
   $order          = '80',
-  $target,
 ){
   include ::icinga2::params
 

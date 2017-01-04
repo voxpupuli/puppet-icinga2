@@ -46,6 +46,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::eventcommand (
+  $target,
   $ensure            = present,
   $eventcommand_name = $title,
   $command           = undef,
@@ -55,7 +56,6 @@ define icinga2::object::eventcommand (
   $arguments         = undef,
   $import            = ['plugin-event-command'],
   $order             = '20',
-  $target,
 ){
   include ::icinga2::params
 

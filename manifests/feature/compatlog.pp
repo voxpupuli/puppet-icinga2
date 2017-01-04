@@ -23,7 +23,9 @@ class icinga2::feature::compatlog(
   $ensure          = present,
   $log_dir         = "${::icinga2::params::log_dir}/compat",
   $rotation_method = 'DAILY',
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -38,7 +40,7 @@ class icinga2::feature::compatlog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::CompatLogger::compatlog":
+  icinga2::object { 'icinga2::object::CompatLogger::compatlog':
     object_name => 'compatlog',
     object_type => 'CompatLogger',
     attrs       => $attrs,

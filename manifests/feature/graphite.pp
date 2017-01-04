@@ -39,8 +39,6 @@ class icinga2::feature::graphite(
   $enable_send_metadata   = false,
 ) {
 
-  include ::icinga2::params
-
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
@@ -64,7 +62,7 @@ class icinga2::feature::graphite(
   }
 
   # create object
-  icinga2::object { "icinga2::object::GraphiteWriter::graphite":
+  icinga2::object { 'icinga2::object::GraphiteWriter::graphite':
     object_name => 'graphite',
     object_type => 'GraphiteWriter',
     attrs       => $attrs,

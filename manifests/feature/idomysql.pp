@@ -152,9 +152,18 @@ class icinga2::feature::idomysql(
   $import_schema          = false,
 ) {
 
-  include ::icinga2::params
-
   require ::icinga2::config
+
+  $owner     = $::icinga2::params::user
+  $group     = $::icinga2::params::group
+  $node_name = $::icinga2::_constants['NodeName']
+  $conf_dir  = $::icinga2::params::conf_dir
+  $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
+
+  File {
+    owner   => $owner,
+    group   => $group,
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -177,19 +186,6 @@ class icinga2::feature::idomysql(
   validate_bool($import_schema)
   if $ssl_capath { validate_absolute_path($ssl_capath) }
   if $ssl_cipher { validate_string($ssl_cipher) }
-
-  $owner     = $::icinga2::params::user
-  $group     = $::icinga2::params::group
-  $node_name = $::icinga2::_constants['NodeName']
-
-  $conf_dir  = $::icinga2::params::conf_dir
-
-  $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
-
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
 
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
@@ -250,12 +246,12 @@ class icinga2::feature::idomysql(
       'none': {
         if $ssl_key {
           file { $_ssl_key_path:
-            ensure => file,
-            mode   => $::kernel ? {
+            ensure  => file,
+            mode    => $::kernel ? {
               'windows' => undef,
               default   => '0600',
             },
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
               default   => $ssl_key,
             },
@@ -266,7 +262,7 @@ class icinga2::feature::idomysql(
         if $ssl_cert {
           file { $_ssl_cert_path:
             ensure  => file,
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
               default   => $ssl_cert,
             },
@@ -277,7 +273,7 @@ class icinga2::feature::idomysql(
         if $ssl_cacert {
           file { $_ssl_cacert_path:
             ensure  => file,
-            content  => $::osfamily ? {
+            content => $::osfamily ? {
               'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
               default   => $ssl_cacert,
             },
@@ -323,7 +319,7 @@ class icinga2::feature::idomysql(
   }
 
   # create object
-  icinga2::object { "icinga2::object::IdoMysqlConnection::ido-mysql":
+  icinga2::object { 'icinga2::object::IdoMysqlConnection::ido-mysql':
     object_name => 'ido-mysql',
     object_type => 'IdoMysqlConnection',
     attrs       => merge($attrs, $attrs_ssl),
@@ -343,7 +339,7 @@ class icinga2::feature::idomysql(
   }
 
   icinga2::feature { 'ido-mysql':
-    ensure => $ensure,
+    ensure  => $ensure,
     require => Package['icinga2-ido-mysql']
   }
 }

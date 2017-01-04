@@ -25,12 +25,12 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::compatlogger (
+  $target,
   $ensure            = present,
   $compatlogger_name = $title,
   $log_dir           = undef,
   $rotation_method   = undef,
   $order             = '5',
-  $target,
 ){
   include ::icinga2::params
 

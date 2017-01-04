@@ -15,8 +15,6 @@ class icinga2::feature::checker(
   $ensure = present,
 ) {
 
-  include ::icinga2::params
-
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
@@ -24,7 +22,7 @@ class icinga2::feature::checker(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
   # create object
-  icinga2::object { "icinga2::object::CheckerComponent::checker":
+  icinga2::object { 'icinga2::object::CheckerComponent::checker':
     object_name => 'checker',
     object_type => 'CheckerComponent',
     attrs       => {},

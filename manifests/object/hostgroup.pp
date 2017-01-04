@@ -37,6 +37,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::hostgroup(
+  $target,
   $ensure         = present,
   $hostgroup_name = $title,
   $display_name   = undef,
@@ -44,7 +45,6 @@ define icinga2::object::hostgroup(
   $assign         = [],
   $ignore         = [],
   $order          = '55',
-  $target,
 ) {
 
   # validation

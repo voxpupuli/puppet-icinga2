@@ -56,6 +56,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::scheduleddowntime (
+  $target,
   $ensure                 = present,
   $scheduleddowntime_name = $title,
   $host_name              = undef,
@@ -70,7 +71,6 @@ define icinga2::object::scheduleddowntime (
   $assign                 = [],
   $ignore                 = [],
   $order                  = '90',
-  $target,
 ){
   include ::icinga2::params
 
@@ -82,7 +82,7 @@ define icinga2::object::scheduleddowntime (
   validate_string($scheduleddowntime_name)
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
-    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.")
+    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
   validate_absolute_path($target)
   validate_string($order)
 
@@ -117,7 +117,7 @@ define icinga2::object::scheduleddowntime (
     ignore       => $ignore,
     target       => $target,
     order        => $order,
-    notify      => Class['::icinga2::service'],
+    notify       => Class['::icinga2::service'],
   }
 
 }

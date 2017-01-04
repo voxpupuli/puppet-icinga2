@@ -55,7 +55,7 @@ class icinga2::pki::ca(
         default   => '/bin:/usr/bin:/sbin:/usr/sbin',
       },
       command => 'icinga2 pki new-ca',
-      creates => "$ca_dir/ca.crt",
+      creates => "${ca_dir}/ca.crt",
       notify  => Class['::icinga2::service'],
     }
   } else {
@@ -69,27 +69,27 @@ class icinga2::pki::ca(
         default   => '0700',
       }
     }
-  
-    file { "$ca_dir/ca.crt":
-      ensure => file,
-      content  => $::osfamily ? {
+
+    file { "${ca_dir}/ca.crt":
+      ensure  => file,
+      content => $::osfamily ? {
         'windows' => regsubst($ca_cert, '\n', "\r\n", 'EMG'),
         default   => $ca_cert,
       },
-      tag    => 'icinga2::config::file',
+      tag     => 'icinga2::config::file',
     }
-  
-    file { "$ca_dir/ca.key":
-      ensure => file,
-      mode   => $::kernel ? {
+
+    file { "${ca_dir}/ca.key":
+      ensure  => file,
+      mode    => $::kernel ? {
         'windows' => undef,
         default   => '0600',
       },
-      content  => $::osfamily ? {
+      content => $::osfamily ? {
         'windows' => regsubst($ca_key, '\n', "\r\n", 'EMG'),
         default   => $ca_key,
       },
-      tag    => 'icinga2::config::file',
+      tag     => 'icinga2::config::file',
     }
   }
 }
