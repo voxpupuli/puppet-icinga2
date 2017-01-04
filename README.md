@@ -1123,6 +1123,12 @@ Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeNam
 Hash to configure zone objects. Defaults to `{ 'ZoneName' => {'endpoints' => ['NodeName']} }`. `ZoneName` and `NodeName`
 are Icinga2 constants.
 
+##### `ssl_protocolmin`
+Minimal TLS version to require. Default undef (e.g. `TLSv1.2`)
+
+##### `ssl_cipher_list`
+List of allowed TLS ciphers, to finetune encryption. Default undef (e.g. `HIGH:MEDIUM:!aNULL:!MD5:!RC4`)
+
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.
 
