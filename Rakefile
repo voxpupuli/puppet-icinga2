@@ -8,13 +8,14 @@ PuppetLint.configuration.send('disable_class_inherits_from_params_class')
 PuppetLint.configuration.send('disable_selector_inside_resource')
 PuppetLint.configuration.send('disable_only_variable_string')
 
-exclude_paths = [
-  "spec/**/*.pp",
-  "serverspec/**/*.pp",
-  "pkg/**/*.pp",
-  "examples/**/*.pp",
-  "vendor/**/*.pp"
-]
+exclude_paths = %w(
+  spec/**/*
+  serverspec/**/*
+  pkg/**/*
+  examples/**/*
+  vendor/**/*
+  .vendor/**/*
+)
 
 PuppetLint.configuration.ignore_paths = exclude_paths
 PuppetSyntax.exclude_paths = exclude_paths
