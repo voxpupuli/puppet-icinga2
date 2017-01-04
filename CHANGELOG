@@ -1,5 +1,23 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.8.0
+
+### Bugs
+Bug #13791: change attribute hostname to host_name in object host
+Bug #13793: change attribute endpoint to endpoint_name in object endpoint
+Bug #13795: change attribute zone to zone_name in object zone
+Bug #13797: change attribute apiuser to apiuser_name in object apiuser
+Bug #13799: change attribute checkcommand to checkcommand_name in object checkcommand
+Bug #13863: Make puppet lint happy
+Bug #13867: Travis-CI test with Puppet < 4
+Bug #13871: Remove json, json_pure dependency for Ruby >= 2
+Bug #13877: Fix SUSE repo
+
+### Features
+Feature #13501: Add support for Parallel Spec Tests
+Feature #13873: Get fixtures for specs from Puppet Forge
+Feature #13875: Add TLS options for api feature
+
 ## v0.7.2
 
 ### Bugs
