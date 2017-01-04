@@ -34,7 +34,7 @@ For unit testing we use [RSpec]. All classes, defined resource types and functio
 Run unit tests:
 ```
 cd puppet-icinga2-rewrite
-rake spec
+rake parallel_spec
 ```
 
 ## Integration tests

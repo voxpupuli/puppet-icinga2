@@ -9,3 +9,6 @@ gem 'facterdb', :git => 'https://github.com/jfryman/facterdb', :ref => 'sles-12-
 gem 'rspec-puppet-facts', '>= 1.6.0'
 gem 'json', jsonversion
 gem 'json_pure', jsonversion
+gem 'metadata-json-lint'
+
+gem 'parallel_tests', RUBY_VERSION < '2.0.0' ? '~> 2.9.0' : '>= 2.10.0'
