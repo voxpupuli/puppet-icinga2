@@ -25,7 +25,3 @@ task :validate do
     sh "erb -P -x -T '-' #{template} | ruby -c"
   end
 end
-
-#PuppetLint::RakeTask.new :lint do |config|
-#  config.pattern = 'manifests/*/**.pp'
-#end
