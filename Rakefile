@@ -20,5 +20,5 @@ exclude_paths = %w(
 PuppetLint.configuration.ignore_paths = exclude_paths
 PuppetSyntax.exclude_paths = exclude_paths
 
-desc 'Run validate, spec, lint'
-task test: %w(metadata_lint validate spec lint)
+desc 'Run validate, parallel_spec, lint'
+task test: %w(metadata_lint validate parallel_spec lint)
