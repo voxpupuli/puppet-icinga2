@@ -68,6 +68,12 @@
 #   Hash to configure zone objects. Defaults to { 'ZoneName' => {'endpoints' => ['NodeName']} }.
 #   ZoneName and NodeName are icinga2 constants.
 #
+# [*ssl_protocolmin*]
+#   Minimal TLS version to require. Default undef (e.g. "TLSv1.2")
+#
+# [*ssl_cipher_list*]
+#   List of allowed TLS ciphers, to finetune encryption. Default undef (e.g. "HIGH:MEDIUM:!aNULL:!MD5:!RC4")
+#
 # === Variables
 #
 # [*node_name*]
@@ -138,6 +144,8 @@ class icinga2::feature::api(
   $ssl_key         = undef,
   $ssl_cert        = undef,
   $ssl_cacert      = undef,
+  $ssl_protocolmin = undef,
+  $ssl_cipher_list = undef,
 ) {
 
   $conf_dir  = $::icinga2::params::conf_dir
@@ -183,6 +191,13 @@ class icinga2::feature::api(
     $_ssl_cacert_path = $ssl_cacert_path }
   else {
     $_ssl_cacert_path = "${pki_dir}/ca.crt" }
+
+  if $ssl_protocolmin {
+    validate_string($ssl_protocolmin)
+  }
+  if $ssl_cipher_list {
+    validate_string($ssl_cipher_list)
+  }
 
   # handle the certificate's stuff
   case $pki {
@@ -291,6 +306,8 @@ class icinga2::feature::api(
     accept_commands => $accept_commands,
     accept_config   => $accept_config,
     ticket_salt     => $ticket_salt,
+    tls_protocolmin => $ssl_protocolmin,
+    cipher_list     => $ssl_cipher_list,
   }
 
   # create endpoints and zones
@@ -314,5 +331,4 @@ class icinga2::feature::api(
   icinga2::feature { 'api':
     ensure      => $ensure,
   }
-
 }

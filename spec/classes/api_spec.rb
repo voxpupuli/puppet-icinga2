@@ -260,6 +260,17 @@ describe('icinga2::feature::api', :type => :class) do
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
     end
+
+    context "#{os} with TLS detail settings" do
+      let(:params) { { ssl_protocolmin: 'TLSv1.2', ssl_cipher_list: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4' } }
+
+      it 'should set TLS detail setting' do
+        is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+          .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+          .with_content(/tls_protocolmin = "TLSv1.2"/)
+          .with_content(/cipher_list = "HIGH:MEDIUM:!aNULL:!MD5:!RC4"/)
+      end
+    end
   end
 end
 
