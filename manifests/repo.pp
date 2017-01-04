@@ -90,7 +90,7 @@ class icinga2::repo {
           case $::operatingsystem {
             'SLES': {
               zypprepo { 'icinga-stable-release':
-                baseurl  => "http://packages.icinga.com/SUSE/${::operatingsystemrelease}/release/",
+                baseurl  => "http://packages.icinga.com/SUSE/${::operatingsystemmajrelease}/release/",
                 enabled  => 1,
                 gpgcheck => 1,
                 require  => Exec['import icinga gpg key']
