@@ -48,7 +48,7 @@ class icinga2::pki::ca(
     group => $group,
   }
 
-  if ! $ca_cert or ! $ca_key {
+  if !$ca_cert or !$ca_key {
     exec { 'create-icinga2-ca':
       path    => $::osfamily ? {
         'windows' => 'C:/ProgramFiles/ICINGA2/sbin',
@@ -59,7 +59,6 @@ class icinga2::pki::ca(
       notify  => Class['::icinga2::service'],
     }
   } else {
-
     validate_string($ca_cert)
     validate_string($ca_key)
 
