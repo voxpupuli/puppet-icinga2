@@ -39,8 +39,6 @@ class icinga2::feature::graphite(
   $enable_send_metadata   = false,
 ) {
 
-  include ::icinga2::params
-
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation

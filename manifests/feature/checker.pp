@@ -15,8 +15,6 @@ class icinga2::feature::checker(
   $ensure = present,
 ) {
 
-  include ::icinga2::params
-
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation

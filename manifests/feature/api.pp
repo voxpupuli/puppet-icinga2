@@ -140,8 +140,6 @@ class icinga2::feature::api(
   $ssl_cacert      = undef,
 ) {
 
-  include ::icinga2::params
-
   $conf_dir  = $::icinga2::params::conf_dir
   $pki_dir   = $::icinga2::params::pki_dir
   $user      = $::icinga2::params::user

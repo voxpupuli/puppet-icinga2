@@ -124,7 +124,16 @@ class icinga2::feature::influxdb(
   $flush_threshold        = 1024
 ) {
 
-  include ::icinga2::params
+  $user      = $::icinga2::params::user
+  $group     = $::icinga2::params::group
+  $node_name = $::icinga2::_constants['NodeName']
+  $conf_dir  = $::icinga2::params::conf_dir
+  $ssl_dir   = "${::icinga2::params::pki_dir}/influxdb"
+
+  File {
+    owner   => $user,
+    group   => $group,
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -145,19 +154,8 @@ class icinga2::feature::influxdb(
   validate_re($flush_interval, '^\d+[ms]*$')
   validate_integer($flush_threshold)
 
-  $user      = $::icinga2::params::user
-  $group     = $::icinga2::params::group
-  $node_name = $::icinga2::_constants['NodeName']
-  $conf_dir  = $::icinga2::params::conf_dir
-  $ssl_dir   = "${::icinga2::params::pki_dir}/influxdb"
-
   $host_template = { measurement => "${host_measurement}", tags => $host_tags }
   $service_template = { measurement => "${service_measurement}", tags => $service_tags}
-
-  File {
-    owner   => $user,
-    group   => $group,
-  }
 
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {

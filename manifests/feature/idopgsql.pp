@@ -92,6 +92,8 @@ class icinga2::feature::idopgsql(
 
   require ::icinga2::config
 
+  $conf_dir  = $::icinga2::params::conf_dir
+
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($host)
@@ -107,8 +109,6 @@ class icinga2::feature::idopgsql(
   if $cleanup { validate_hash($cleanup) }
   if $categories { validate_array($categories) }
   validate_bool($import_schema)
-
-  $conf_dir  = $::icinga2::params::conf_dir
 
   package { 'icinga2-ido-pgsql':
     ensure => installed,

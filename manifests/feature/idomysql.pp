@@ -152,9 +152,18 @@ class icinga2::feature::idomysql(
   $import_schema          = false,
 ) {
 
-  include ::icinga2::params
-
   require ::icinga2::config
+
+  $owner     = $::icinga2::params::user
+  $group     = $::icinga2::params::group
+  $node_name = $::icinga2::_constants['NodeName']
+  $conf_dir  = $::icinga2::params::conf_dir
+  $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
+
+  File {
+    owner   => $owner,
+    group   => $group,
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -177,19 +186,6 @@ class icinga2::feature::idomysql(
   validate_bool($import_schema)
   if $ssl_capath { validate_absolute_path($ssl_capath) }
   if $ssl_cipher { validate_string($ssl_cipher) }
-
-  $owner     = $::icinga2::params::user
-  $group     = $::icinga2::params::group
-  $node_name = $::icinga2::_constants['NodeName']
-
-  $conf_dir  = $::icinga2::params::conf_dir
-
-  $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
-
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
 
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {

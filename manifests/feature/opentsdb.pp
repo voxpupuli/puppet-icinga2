@@ -23,9 +23,7 @@ class icinga2::feature::opentsdb(
   $port                 = '4242',
 ) {
 
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],

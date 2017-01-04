@@ -19,7 +19,9 @@
 class icinga2::feature::debuglog(
   $ensure   = present,
   $path     = "${::icinga2::params::log_dir}/debug.log",
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -37,7 +39,7 @@ class icinga2::feature::debuglog(
     object_name => 'debug-file',
     object_type => 'FileLogger',
     attrs       => $attrs,
-    target      => "${::conf_dir}/features-available/debuglog.conf",
+    target      => "${conf_dir}/features-available/debuglog.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],

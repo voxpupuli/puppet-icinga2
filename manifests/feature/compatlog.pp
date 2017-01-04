@@ -23,7 +23,9 @@ class icinga2::feature::compatlog(
   $ensure          = present,
   $log_dir         = "${::icinga2::params::log_dir}/compat",
   $rotation_method = 'DAILY',
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -42,7 +44,7 @@ class icinga2::feature::compatlog(
     object_name => 'compatlog',
     object_type => 'CompatLogger',
     attrs       => $attrs,
-    target      => "${::conf_dir}/features-available/compatlog.conf",
+    target      => "${conf_dir}/features-available/compatlog.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -52,7 +54,7 @@ class icinga2::feature::compatlog(
 
   # import library 'compat'
   concat::fragment { 'icinga2::feature::compatlog':
-    target  => "${::conf_dir}/features-available/compatlog.conf",
+    target  => "${conf_dir}/features-available/compatlog.conf",
     content => "library \"compat\"\n\n",
     order   => '05',
   }

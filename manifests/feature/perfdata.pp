@@ -51,7 +51,9 @@ class icinga2::feature::perfdata(
   $host_format_template    = undef,
   $service_format_template = undef,
   $rotation_interval       = '30s',
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -83,7 +85,7 @@ class icinga2::feature::perfdata(
     object_name => 'perfdata',
     object_type => 'PerfdataWriter',
     attrs       => $attrs,
-    target      => "${::conf_dir}/features-available/perfdata.conf",
+    target      => "${conf_dir}/features-available/perfdata.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -93,7 +95,7 @@ class icinga2::feature::perfdata(
 
   # import library 'perfdata'
   concat::fragment { 'icinga2::feature::perfdata':
-    target  => "${::conf_dir}/features-available/perfdata.conf",
+    target  => "${conf_dir}/features-available/perfdata.conf",
     content => "library \"perfdata\"\n\n",
     order   => '05',
   }

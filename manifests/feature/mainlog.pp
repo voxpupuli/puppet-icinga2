@@ -22,7 +22,9 @@ class icinga2::feature::mainlog(
   $ensure   = present,
   $severity = 'information',
   $path     = "${::icinga2::params::log_dir}/icinga2.log",
-) inherits ::icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -41,7 +43,7 @@ class icinga2::feature::mainlog(
     object_name => 'main-log',
     object_type => 'FileLogger',
     attrs       => $attrs,
-    target      => "${::conf_dir}/features-available/mainlog.conf",
+    target      => "${conf_dir}/features-available/mainlog.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],

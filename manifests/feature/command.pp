@@ -18,7 +18,9 @@
 class icinga2::feature::command(
   $ensure       = present,
   $command_path = "${::icinga2::params::run_dir}/cmd/icinga2.cmd",
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -34,7 +36,7 @@ class icinga2::feature::command(
     object_name => 'command',
     object_type => 'ExternalCommandListener',
     attrs       => $attrs,
-    target      => "${::conf_dir}/features-available/command.conf",
+    target      => "${conf_dir}/features-available/command.conf",
     order       => '10',
     notify      => $ensure ? {
       'present' => Class['::icinga2::service'],
@@ -44,7 +46,7 @@ class icinga2::feature::command(
 
   # import library 'compat'
   concat::fragment { 'icinga2::feature::command':
-    target  => "${::conf_dir}/features-available/command.conf",
+    target  => "${conf_dir}/features-available/command.conf",
     content => "library \"compat\"\n\n",
     order   => '05',
   }
