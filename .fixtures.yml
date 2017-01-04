@@ -1,18 +1,9 @@
 fixtures:
-  repositories:
-    stdlib:
-      repo: "git://github.com/puppetlabs/puppetlabs-stdlib"
-      ref: "4.12.0"
-    concat:
-      repo: "git://github.com/puppetlabs/puppetlabs-concat"
-      ref: "2.0.1"
-    apt:
-      repo: "git://github.com/puppetlabs/puppetlabs-apt"
-      ref: "1.8.0"
-    chocolatey:
-      repo: "git://github.com/puppetlabs/puppetlabs-chocolatey"
-      ref: "1.2.6"
   forge_modules:
+    stdlib: "puppetlabs/stdlib"
+    concat: "puppetlabs/concat"
+    apt: "puppetlabs/apt"
+    chocolatey: "puppetlabs/chocolatey"
     zypprepo: "darin/zypprepo"
   symlinks:
     icinga2: "#{source_dir}"
