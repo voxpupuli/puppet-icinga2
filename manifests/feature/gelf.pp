@@ -31,8 +31,6 @@ class icinga2::feature::gelf(
   $enable_send_perfdata = false,
 ) {
 
-  include ::icinga2::params
-
   $conf_dir = $::icinga2::params::conf_dir
 
   # validation
@@ -52,7 +50,7 @@ class icinga2::feature::gelf(
   }
 
   # create object
-  icinga2::object { "icinga2::object::GelfWriter::gelf":
+  icinga2::object { 'icinga2::object::GelfWriter::gelf':
     object_name => 'gelf',
     object_type => 'GelfWriter',
     attrs       => $attrs,

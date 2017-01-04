@@ -44,6 +44,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::timeperiod (
+  $target,
   $ensure          = present,
   $timeperiod_name = $title,
   $display_name    = undef,
@@ -54,7 +55,6 @@ define icinga2::object::timeperiod (
   $template        = false,
   $import          = ['legacy-timeperiod'],
   $order           = '35',
-  $target,
 ){
   include ::icinga2::params
 

@@ -46,13 +46,6 @@ describe('icinga2::object::zone', :type => :define) do
     end
 
 
-    context "#{os} with order => 4247 (not valid string)" do
-      let(:params) { {:target => '/bar/baz', :order => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with endpoints => [NodeName, Host1]" do
       let(:params) { {:endpoints => ['NodeName','Host1'], :target => '/bar/baz'} }
 
@@ -64,7 +57,7 @@ describe('icinga2::object::zone', :type => :define) do
     context "#{os} with endpoints => foo (not a valid array)" do
       let(:params) { {:endpoints => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -73,13 +66,6 @@ describe('icinga2::object::zone', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
         .with_content(/parent = "foo"/) }
-    end
-
-
-    context "#{os} with parent => 4247 (not a valid string)" do
-      let(:params) { {:parent => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -156,13 +142,6 @@ describe('icinga2::object::zone', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with order => 4247 (not valid string)" do
-    let(:params) { {:target => 'C:/bar/baz', :order => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with endpoints => [NodeName, Host1]" do
     let(:params) { {:endpoints => ['NodeName','Host1'], :target => 'C:/bar/baz'} }
 
@@ -174,7 +153,7 @@ describe('icinga2::object::zone', :type => :define) do
   context "Windows 2012 R2 with endpoints => foo (not a valid array)" do
     let(:params) { {:endpoints => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -183,13 +162,6 @@ describe('icinga2::object::zone', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
                             .with_content(/parent = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with parent => 4247 (not a valid string)" do
-    let(:params) { {:parent => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

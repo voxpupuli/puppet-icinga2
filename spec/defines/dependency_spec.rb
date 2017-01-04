@@ -39,13 +39,6 @@ describe('icinga2::object::dependency', :type => :define) do
     end
 
 
-    context "#{os} with dependency_name => 4247 (not a valid string)" do
-      let(:params) { {:dependency_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with parent_host_name => foo" do
       let(:params) { {
           :parent_host_name => 'foo',
@@ -55,16 +48,6 @@ describe('icinga2::object::dependency', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/parent_host_name = "foo"/) }
-    end
-
-
-    context "#{os} with parent_host_name => 4247 (not a valid string)" do
-      let(:params) { {
-          :parent_host_name => 4247,
-          :target => '/bar/baz',
-          :child_host_name => 'childfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -81,17 +64,6 @@ describe('icinga2::object::dependency', :type => :define) do
     end
 
 
-    context "#{os} with parent_service_name => 4247 (not a valid string)" do
-      let(:params) { {
-          :parent_service_name => 4247,
-          :target => '/bar/baz',
-          :parent_host_name => 'parentfoo',
-          :child_host_name => 'childfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with child_host_name => foo" do
       let(:params) { {
           :child_host_name => 'foo',
@@ -101,16 +73,6 @@ describe('icinga2::object::dependency', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/child_host_name = "foo"/) }
-    end
-
-
-    context "#{os} with child_host_name => 4247 (not a valid string)" do
-      let(:params) { {
-          :child_host_name => 4247,
-          :target => '/bar/baz',
-          :parent_host_name => 'parentfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -124,17 +86,6 @@ describe('icinga2::object::dependency', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/child_service_name = "foo"/) }
-    end
-
-
-    context "#{os} with child_service_name => 4247 (not a valid string)" do
-      let(:params) { {
-          :child_service_name => 4247,
-          :target => '/bar/baz',
-          :parent_host_name => 'parentfoo',
-          :child_host_name => 'childfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -223,17 +174,6 @@ describe('icinga2::object::dependency', :type => :define) do
     end
 
 
-    context "#{os} with period => 4247 (not a valid string)" do
-      let(:params) { {
-          :period => 4247,
-          :target => '/bar/baz',
-          :parent_host_name => 'parentfoo',
-          :child_host_name => 'childfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with states => [foo, bar]" do
       let(:params) { {
           :states => ['foo','bar'],
@@ -254,7 +194,7 @@ describe('icinga2::object::dependency', :type => :define) do
           :parent_host_name => 'parentfoo',
           :child_host_name => 'childfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
   end
 end
@@ -311,13 +251,6 @@ describe('icinga2::object::dependency', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with dependency_name => 4247 (not a valid string)" do
-    let(:params) { {:dependency_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with parent_host_name => foo" do
     let(:params) { {
         :parent_host_name => 'foo',
@@ -327,16 +260,6 @@ describe('icinga2::object::dependency', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/parent_host_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with parent_host_name => 4247 (not a valid string)" do
-    let(:params) { {
-        :parent_host_name => 4247,
-        :target => 'C:/bar/baz',
-        :child_host_name => 'childfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -353,17 +276,6 @@ describe('icinga2::object::dependency', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with parent_service_name => 4247 (not a valid string)" do
-    let(:params) { {
-        :parent_service_name => 4247,
-        :target => 'C:/bar/baz',
-        :parent_host_name => 'parentfoo',
-        :child_host_name => 'childfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with child_host_name => foo" do
     let(:params) { {
         :child_host_name => 'foo',
@@ -373,16 +285,6 @@ describe('icinga2::object::dependency', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/child_host_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with child_host_name => 4247 (not a valid string)" do
-    let(:params) { {
-        :child_host_name => 4247,
-        :target => 'C:/bar/baz',
-        :parent_host_name => 'parentfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -396,17 +298,6 @@ describe('icinga2::object::dependency', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/child_service_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with child_service_name => 4247 (not a valid string)" do
-    let(:params) { {
-        :child_service_name => 4247,
-        :target => 'C:/bar/baz',
-        :parent_host_name => 'parentfoo',
-        :child_host_name => 'childfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -495,17 +386,6 @@ describe('icinga2::object::dependency', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with period => 4247 (not a valid string)" do
-    let(:params) { {
-        :period => 4247,
-        :target => 'C:/bar/baz',
-        :parent_host_name => 'parentfoo',
-        :child_host_name => 'childfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with states => [foo, bar]" do
     let(:params) { {
         :states => ['foo','bar'],
@@ -526,6 +406,6 @@ describe('icinga2::object::dependency', :type => :define) do
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 end

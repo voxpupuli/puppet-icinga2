@@ -39,13 +39,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
     end
 
 
-    context "#{os} with scheduleddowntime_name => 4247 (not a valid string)" do
-      let(:params) { {:scheduleddowntime_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host_name => foo" do
       let(:params) { {:host_name => 'foo', :target => '/bar/baz',
                       :author => 'fooauthor',
@@ -55,16 +48,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/host_name = "foo"/) }
-    end
-
-
-    context "#{os} with host_name => 4247 (not a valid string)" do
-      let(:params) { {:host_name => 4247, :target => '/bar/baz',
-                      :author => 'fooauthor',
-                      :comment => 'foocomment',
-                      :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -81,17 +64,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
     end
 
 
-    context "#{os} with service_name => 4247 (not a valid string)" do
-      let(:params) { {:service_name => 4247, :target => '/bar/baz',
-                      :host_name => 'foohost',
-                      :author => 'fooauthor',
-                      :comment => 'foocomment',
-                      :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with author => foo" do
       let(:params) { {:author => 'foo', :target => '/bar/baz',
                       :host_name => 'foohost',
@@ -101,16 +73,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/author = "foo"/) }
-    end
-
-
-    context "#{os} with author => 4247 (not a valid string)" do
-      let(:params) { {:author => 4247, :target => '/bar/baz',
-                      :host_name => 'foohost',
-                      :comment => 'foocomment',
-                      :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -238,13 +200,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with scheduleddowntime_name => 4247 (not a valid string)" do
-    let(:params) { {:scheduleddowntime_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with host_name => foo" do
     let(:params) { {:host_name => 'foo', :target => 'C:/bar/baz',
                     :author => 'fooauthor',
@@ -254,16 +209,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/host_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
-    let(:params) { {:host_name => 4247, :target => 'C:/bar/baz',
-                    :author => 'fooauthor',
-                    :comment => 'foocomment',
-                    :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -280,17 +225,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
-    let(:params) { {:service_name => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'foohost',
-                    :author => 'fooauthor',
-                    :comment => 'foocomment',
-                    :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with author => foo" do
     let(:params) { {:author => 'foo', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
@@ -300,16 +234,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/author = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with author => 4247 (not a valid string)" do
-    let(:params) { {:author => 4247, :target => 'C:/bar/baz',
-                    :host_name => 'foohost',
-                    :comment => 'foocomment',
-                    :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

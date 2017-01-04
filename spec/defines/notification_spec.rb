@@ -35,13 +35,6 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
-    context "#{os} with notification_name => 4247 (not a valid string)" do
-      let(:params) { {:notification_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host_name => foo" do
       let(:params) { {:host_name => 'foo', :target => '/bar/baz'} }
 
@@ -51,26 +44,12 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
-    context "#{os} with host_name => 4247 (not a valid string)" do
-      let(:params) { {:host_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with service_name => foo" do
       let(:params) { {:service_name => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/service_name = "foo"/) }
-    end
-
-
-    context "#{os} with service_name => 4247 (not a valid string)" do
-      let(:params) { {:service_name => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -102,7 +81,7 @@ describe('icinga2::object::notification', :type => :define) do
     context "#{os} with users => foo (not a valid array)" do
       let(:params) { {:users => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -118,7 +97,7 @@ describe('icinga2::object::notification', :type => :define) do
     context "#{os} with user_groups => foo (not a valid array)" do
       let(:params) { {:user_groups => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -147,13 +126,6 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
-    context "#{os} with command => 4247 (not a valid string)" do
-      let(:params) { {:command => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with interval => 30" do
       let(:params) { {:interval => '30', :target => '/bar/baz', :host_name => 'foohost'} }
 
@@ -179,26 +151,12 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
-    context "#{os} with period => 4247 (not a valid string)" do
-      let(:params) { {:period => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with zone => foo" do
       let(:params) { {:zone => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/zone = "foo"/) }
-    end
-
-
-    context "#{os} with zone => 4247 (not a valid string)" do
-      let(:params) { {:zone => 4247, :target => '/bar/baz', :host_name => 'foohost'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -214,7 +172,7 @@ describe('icinga2::object::notification', :type => :define) do
     context "#{os} with types => foo (not a valid array)" do
       let(:params) { {:types => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -230,7 +188,7 @@ describe('icinga2::object::notification', :type => :define) do
     context "#{os} with states => foo (not a valid array)" do
       let(:params) { {:states => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
     context "#{os} with assign => [] and ignore => [ foo ]" do
@@ -289,14 +247,6 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with notification_name => 4247 (not a valid string)" do
-    let(:params) { {:notification_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
-
   context "Windows 2012 R2 with host_name => foo" do
     let(:params) { {:host_name => 'foo', :target => 'C:/bar/baz'} }
 
@@ -306,26 +256,12 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with host_name => 4247 (not a valid string)" do
-    let(:params) { {:host_name => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with service_name => foo" do
     let(:params) { {:service_name => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/service_name = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with service_name => 4247 (not a valid string)" do
-    let(:params) { {:service_name => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -357,7 +293,7 @@ describe('icinga2::object::notification', :type => :define) do
   context "Windows 2012 R2 with users => foo (not a valid array)" do
     let(:params) { {:users => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -373,7 +309,7 @@ describe('icinga2::object::notification', :type => :define) do
   context "Windows 2012 R2 with user_groups => foo (not a valid array)" do
     let(:params) { {:user_groups => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -402,13 +338,6 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with command => 4247 (not a valid string)" do
-    let(:params) { {:command => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with interval => 30" do
     let(:params) { {:interval => '30', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
@@ -434,26 +363,12 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with period => 4247 (not a valid string)" do
-    let(:params) { {:period => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with zone => foo" do
     let(:params) { {:zone => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/zone = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with zone => 4247 (not a valid string)" do
-    let(:params) { {:zone => 4247, :target => 'C:/bar/baz', :host_name => 'foohost'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 
@@ -469,7 +384,7 @@ describe('icinga2::object::notification', :type => :define) do
   context "Windows 2012 R2 with types => foo (not a valid array)" do
     let(:params) { {:types => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -485,7 +400,7 @@ describe('icinga2::object::notification', :type => :define) do
   context "Windows 2012 R2 with states => foo (not a valid array)" do
     let(:params) { {:states => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
   context "Windows 2012 R2 with assign => [] and ignore => [ foo ]" do

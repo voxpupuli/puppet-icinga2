@@ -25,11 +25,11 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::checkresultreader (
+  $target,
   $ensure                 = present,
   $checkresultreader_name = $title,
   $spool_dir              = undef,
   $order                  = '10',
-  $target,
 ){
   include ::icinga2::params
 

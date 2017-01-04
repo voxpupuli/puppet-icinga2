@@ -19,6 +19,15 @@ cd puppet-icinga2-rewrite
 rake validate
 ```
 
+## Puppet lint
+With puppet-lint we test if our manifests conform to the recommended style guides from Puppet.
+
+Run lint tests:
+```
+cd puppet-icinga2-rewrite
+rake lint
+```
+
 ## Unit tests
 For unit testing we use [RSpec]. All classes, defined resource types and functions should have appropriate unit tests.
 
@@ -66,6 +75,7 @@ rake spec:i2debian7puppet4
 Since we don't want to violate any license of Microsoft, we are not making any Windows virtual box publicly available.
 
 [README.md]: README.md
+[puppet-lint]: http://puppet-lint.com/
 [metadata.json]: metadata.json
 [RSpec]: http://rspec-puppet.com/
 [Serverspec]: http://serverspec.org/

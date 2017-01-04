@@ -61,13 +61,6 @@ describe('icinga2::feature::livestatus', :type => :class) do
     end
 
 
-    context "#{os} with bind_host => 4247" do
-      let(:params) { {:bind_host => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with bind_host => foo.example.com" do
       let(:params) { {:bind_host => 'foo.example.com'} }
 
@@ -196,13 +189,6 @@ describe('icinga2::feature::livestatus', :type => :class) do
     let(:params) { {:socket_type => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./) }
-  end
-
-
-  context "Windows 2012 R2 with bind_host => 4247" do
-    let(:params) { {:bind_host => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

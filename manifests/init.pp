@@ -148,7 +148,7 @@ class icinga2(
 
   # validate confd, boolean or string
   if is_bool($confd) {
-    if $confd { $_confd = "conf.d" } else { $_confd = undef }
+    if $confd { $_confd = 'conf.d' } else { $_confd = undef }
   } elsif is_string($confd) {
     $_confd = $confd
   } else {

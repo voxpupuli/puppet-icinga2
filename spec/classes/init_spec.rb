@@ -1,99 +1,98 @@
 require 'spec_helper'
 
 describe('icinga2', :type => :class) do
-
   before(:all) do
-    @icinga2_conf = "/etc/icinga2/icinga2.conf"
-    @constants_conf = "/etc/icinga2/constants.conf"
+    @icinga2_conf = '/etc/icinga2/icinga2.conf'
+    @constants_conf = '/etc/icinga2/constants.conf'
   end
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
-    end
-
-    context "#{os} with all default parameters" do
-      it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
-
-      it { is_expected.to contain_service('icinga2').with({
-        'ensure' => 'running',
-        'enable' => true
-        })
-      }
-
-      case facts[:osfamily]
-      when 'Debian'
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
-
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
-
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
-      when 'RedHat'
-        let(:facts) { facts.merge({ :osfamily => 'RedHat' }) }
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
-
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
-
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
-      when 'Suse'
-        let(:facts) { facts.merge({ :osfamily => 'Suse' }) }
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
-        it { is_expected.to contain_file(@constants_conf)
-          .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+    context "on #{os}" do
+      let :facts do
+        facts
       end
 
-      it { is_expected.to contain_file(@constants_conf)
-        .with_content %r{^const NodeName = \".+\"\n} }
+      context 'with all default parameters' do
+        it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
 
-      it { is_expected.to contain_file(@constants_conf)
-        .with_content %r{^const ZoneName = \".+\"\n} }
+        it { is_expected.to contain_service('icinga2').with({
+          'ensure' => 'running',
+          'enable' => true
+          })
+        }
 
-      it { is_expected.to contain_file(@constants_conf)
-        .with_content %r{^const TicketSalt = \"\"\n} }
+        case facts[:osfamily]
+        when 'Debian'
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
 
-      it { is_expected.to contain_file(@icinga2_conf)
-        .with_content %r{^// managed by puppet\n} }
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
 
-      it { is_expected.to contain_file(@icinga2_conf)
-        .with_content %r{^include <plugins>\n} }
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
+        when 'RedHat'
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
 
-      it { is_expected.to contain_file(@icinga2_conf)
-        .with_content %r{^include <plugins-contrib>\n} }
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
 
-      it { is_expected.to contain_file(@icinga2_conf)
-        .with_content %r{^include <windows-plugins>\n} }
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+        when 'Suse'
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
+          it { is_expected.to contain_file(@constants_conf)
+            .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+        end
 
-      it { is_expected.to contain_file(@icinga2_conf)
-        .with_content %r{^include <nscp>\n} }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const NodeName = \".+\"\n} }
 
-      it { is_expected.to contain_file(@icinga2_conf)
-        .with_content %r{^include_recursive \"conf.d\"\n} }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const ZoneName = \".+\"\n} }
 
-      it { is_expected.to contain_icinga2__feature('checker')
-        .with({'ensure' => 'present'}) }
+        it { is_expected.to contain_file(@constants_conf)
+          .with_content %r{^const TicketSalt = \"\"\n} }
 
-      it { is_expected.to contain_icinga2__feature('mainlog')
-        .with({'ensure' => 'present'}) }
+        it { is_expected.to contain_file(@icinga2_conf)
+          .with_content %r{^// managed by puppet\n} }
 
-      it { is_expected.to contain_icinga2__feature('notification')
-        .with({'ensure' => 'present'}) }
+        it { is_expected.to contain_file(@icinga2_conf)
+          .with_content %r{^include <plugins>\n} }
 
-      case facts[:osfamily]
-      when 'Debian'
-        it { should_not contain_apt__source('icinga-stable-release') }
-      when 'RedHat'
-        it { should_not contain_yumrepo('icinga-stable-release') }
-      when 'Suse'
-        it { should_not contain_zypprepo('icinga-stable-release') }
+        it { is_expected.to contain_file(@icinga2_conf)
+          .with_content %r{^include <plugins-contrib>\n} }
+
+        it { is_expected.to contain_file(@icinga2_conf)
+          .with_content %r{^include <windows-plugins>\n} }
+
+        it { is_expected.to contain_file(@icinga2_conf)
+          .with_content %r{^include <nscp>\n} }
+
+        it { is_expected.to contain_file(@icinga2_conf)
+          .with_content %r{^include_recursive \"conf.d\"\n} }
+
+        it { is_expected.to contain_icinga2__feature('checker')
+          .with({'ensure' => 'present'}) }
+
+        it { is_expected.to contain_icinga2__feature('mainlog')
+          .with({'ensure' => 'present'}) }
+
+        it { is_expected.to contain_icinga2__feature('notification')
+          .with({'ensure' => 'present'}) }
+
+        case facts[:osfamily]
+        when 'Debian'
+          it { should_not contain_apt__source('icinga-stable-release') }
+        when 'RedHat'
+          it { should_not contain_yumrepo('icinga-stable-release') }
+        when 'Suse'
+          it { should_not contain_zypprepo('icinga-stable-release') }
+        end
       end
     end
   end

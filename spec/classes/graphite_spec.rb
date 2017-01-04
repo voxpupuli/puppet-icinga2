@@ -46,13 +46,6 @@ describe('icinga2::feature::graphite', :type => :class) do
     end
 
 
-    context "#{os} with host => 4247" do
-      let(:params) { {:host => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with host => foo.example.com" do
       let(:params) { {:host => 'foo.example.com'} }
 
@@ -87,26 +80,12 @@ describe('icinga2::feature::graphite', :type => :class) do
     end
 
 
-    context "#{os} with host_name_template => 4247 (not a valid string)" do
-      let(:params) { {:host_name_template => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with service_name_template => foo" do
       let(:params) { {:service_name_template => 'foo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
         .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
         .with_content(/service_name_template = "foo"/) }
-    end
-
-
-    context "#{os} with service_name_template => foo (not a valid string)" do
-      let(:params) { {:service_name_template => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -220,13 +199,6 @@ describe('icinga2::feature::graphite', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with host => 4247" do
-    let(:params) { {:host => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with host => foo.example.com" do
     let(:params) { {:host => 'foo.example.com'} }
 
@@ -261,26 +233,12 @@ describe('icinga2::feature::graphite', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with host_name_template => foo (not a valid string)" do
-    let(:params) { {:host_name_template => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with service_name_template => foo" do
     let(:params) { {:service_name_template => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
                             .with_content(/service_name_template = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with service_name_template => foo (not a valid string)" do
-    let(:params) { {:service_name_template => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

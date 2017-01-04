@@ -41,6 +41,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::servicegroup (
+  $target,
   $ensure            = present,
   $servicegroup_name = $title,
   $display_name      = undef,
@@ -50,7 +51,6 @@ define icinga2::object::servicegroup (
   $template          = false,
   $import            = [],
   $order             = '65',
-  $target,
 ){
   include ::icinga2::params
 

@@ -59,6 +59,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::user (
+  $target,
   $ensure               = present,
   $user_name            = $title,
   $display_name         = undef,
@@ -73,7 +74,6 @@ define icinga2::object::user (
   $import               = [],
   $template             = false,
   $order                = '75',
-  $target,
 ){
   include ::icinga2::params
 

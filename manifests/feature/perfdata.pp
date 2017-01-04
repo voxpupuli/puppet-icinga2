@@ -51,7 +51,9 @@ class icinga2::feature::perfdata(
   $host_format_template    = undef,
   $service_format_template = undef,
   $rotation_interval       = '30s',
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -79,7 +81,7 @@ class icinga2::feature::perfdata(
   }
 
   # create object
-  icinga2::object { "icinga2::object::PerfdataWriter::perfdata":
+  icinga2::object { 'icinga2::object::PerfdataWriter::perfdata':
     object_name => 'perfdata',
     object_type => 'PerfdataWriter',
     attrs       => $attrs,

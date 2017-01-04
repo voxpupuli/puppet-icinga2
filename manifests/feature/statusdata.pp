@@ -30,7 +30,9 @@ class icinga2::feature::statusdata(
   $status_path     = "${::icinga2::params::cache_dir}/status.dat",
   $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
   $update_interval = '15s',
-) inherits icinga2::params {
+) {
+
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -47,7 +49,7 @@ class icinga2::feature::statusdata(
   }
 
   # create object
-  icinga2::object { "icinga2::object::StatusDataWriter::statusdata":
+  icinga2::object { 'icinga2::object::StatusDataWriter::statusdata':
     object_name => 'statusdata',
     object_type => 'StatusDataWriter',
     attrs       => $attrs,

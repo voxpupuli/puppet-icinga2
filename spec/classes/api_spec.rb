@@ -209,13 +209,6 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
-    context "#{os} with ca_host => 4247 (not a valid string)" do
-      let(:params) { {:pki => 'icinga2', :ca_host => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with pki => 'icinga2', ca_port => 1234" do
       let(:params) { {:pki => 'icinga2',:ca_port => '1234'} }
 
@@ -237,13 +230,6 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
         .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/ticket_salt = "foo"/) }
-    end
-
-
-    context "#{os} with ticket_salt => 4247 (not a valid string)" do
-      let(:params) { {:ticket_salt => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
     end
 
 
@@ -507,13 +493,6 @@ describe('icinga2::feature::api', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with ca_host => 4247 (not a valid string)" do
-    let(:params) { {:pki => 'icinga2', :ca_host => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with pki => 'icinga2', ca_port => 1234" do
     let(:params) { {:pki => 'icinga2',:ca_port => '1234'} }
 
@@ -526,13 +505,6 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:pki => 'icinga2',:ca_port => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
-  end
-
-
-  context "Windows 2012 R2 with ticket_salt => 4247 (not a valid string)" do
-    let(:params) { {:ticket_salt => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

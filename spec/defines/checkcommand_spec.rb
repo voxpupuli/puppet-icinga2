@@ -41,13 +41,6 @@ describe('icinga2::object::checkcommand', :type => :define) do
     end
 
 
-    context "#{os} with command => 4247 (not a valid array or string)" do
-      let(:params) { {:command => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with env => foo (not a valid hash)" do
       let(:params) { {:env => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
@@ -145,13 +138,6 @@ describe('icinga2::object::checkcommand', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
       .with({'target' => 'C:/bar/baz'})
       .with_content(/command = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with command => 4247 (not a valid array or string)" do
-    let(:params) { {:command => 4247, :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
   end
 
 

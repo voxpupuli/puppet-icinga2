@@ -133,14 +133,6 @@ describe('icinga2::feature::perfdata', :type => :class) do
         .with_content(/host_format_template = "foo"/) }
     end
 
-
-    context "#{os} with host_format_template => 4247 (not a valid string)" do
-      let(:params) { {:host_format_template => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with service_format_template => foo" do
       let(:params) { {:service_format_template => 'foo'} }
 
@@ -150,11 +142,6 @@ describe('icinga2::feature::perfdata', :type => :class) do
     end
 
 
-    context "#{os} with service_format_template => 4247 (not a valid string)" do
-      let(:params) { {:service_format_template => 4247} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
   end
 end
 
@@ -304,14 +291,6 @@ describe('icinga2::feature::perfdata', :type => :class) do
       .with_content(/host_format_template = "foo"/) }
   end
 
-
-  context "Windows 2012 R2 with host_format_template => 4247 (not a valid string)" do
-    let(:params) { {:host_format_template => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with service_format_template => foo" do
     let(:params) { {:service_format_template => 'foo'} }
 
@@ -321,9 +300,4 @@ describe('icinga2::feature::perfdata', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with service_format_template => 4247 (not a valid string)" do
-    let(:params) { {:service_format_template => 4247} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
 end

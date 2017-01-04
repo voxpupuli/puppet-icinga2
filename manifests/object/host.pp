@@ -110,6 +110,7 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::host(
+  $target,
   $ensure                = present,
   $host_name             = $title,
   $import                = [],
@@ -142,7 +143,6 @@ define icinga2::object::host(
   $icon_image_alt        = undef,
   $template              = false,
   $order                 = '50',
-  $target,
 ) {
 
   include ::icinga2::params

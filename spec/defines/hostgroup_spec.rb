@@ -37,13 +37,6 @@ describe('icinga2::object::hostgroup', :type => :define) do
     end
 
 
-    context "#{os} with display_name => 4247 (not a valid string)" do
-      let(:params) { {:display_name => 4247, :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-    end
-
-
     context "#{os} with groups => [foo, bar]" do
       let(:params) { {:groups => ['foo','bar'], :target => '/bar/baz'} }
 
@@ -56,7 +49,7 @@ describe('icinga2::object::hostgroup', :type => :define) do
     context "#{os} with groups => foo (not a valid array)" do
       let(:params) { {:groups => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -116,13 +109,6 @@ describe('icinga2::object::hostgroup', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with display_name => 4247 (not a valid string)" do
-    let(:params) { {:display_name => 4247, :target => '/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /4247 is not a string/) }
-  end
-
-
   context "Windows 2012 R2 with groups => [foo, bar]" do
     let(:params) { {:groups => ['foo','bar'], :target => '/bar/baz'} }
 
@@ -135,7 +121,7 @@ describe('icinga2::object::hostgroup', :type => :define) do
   context "Windows 2012 R2   with groups => foo (not a valid array)" do
     let(:params) { {:groups => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, / "foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 

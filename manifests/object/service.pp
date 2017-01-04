@@ -131,6 +131,7 @@
 #
 
 define icinga2::object::service (
+  $target,
   $ensure                 = present,
   $service_name           = $title,
   $display_name           = undef,
@@ -165,7 +166,6 @@ define icinga2::object::service (
   $import                 = [],
   $template               = false,
   $order                  = '60',
-  $target,
 ) {
 
   include ::icinga2::params

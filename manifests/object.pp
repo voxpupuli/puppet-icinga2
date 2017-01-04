@@ -49,6 +49,9 @@
 # Icinga Development Team <info@icinga.com>
 #
 define icinga2::object(
+  $object_type,
+  $target,
+  $order,
   $ensure       = present,
   $object_name  = $title,
   $template     = false,
@@ -58,12 +61,9 @@ define icinga2::object(
   $assign       = [],
   $ignore       = [],
   $attrs        = {},
-  $object_type,
-  $target,
-  $order,
 ) {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name {
+  if defined($caller_module_name) and $module_name != $caller_module_name and $caller_module_name != '' {
     fail("icinga2::object is a private define resource of the module icinga2, you're not permitted to use it.")
   }
 
@@ -93,7 +93,7 @@ define icinga2::object(
   validate_bool($template)
   unless is_bool($apply) { validate_re($apply, '^.+\s+(=>\s+.+\s+)?in\s+.+$') }
   if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
-    "$apply_target isn't supported. Valid values are 'Host' and 'Service'.") }
+    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.") }
   validate_array($import)
   validate_array($assign)
   validate_array($ignore)
@@ -103,7 +103,7 @@ define icinga2::object(
   validate_string($order)
 
   if $object_type == $apply_target {
-    fail("The object type must be different from the apply target")
+    fail('The object type must be different from the apply target')
   }
 
   $_attrs = merge($attrs, {
@@ -121,8 +121,8 @@ define icinga2::object(
 
   if $ensure != 'absent' {
     concat::fragment { $title:
-      target   => $target,
-      content  => $::osfamily ? {
+      target  => $target,
+      content => $::osfamily ? {
         'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
         default   => template('icinga2/object.conf.erb'),
       },

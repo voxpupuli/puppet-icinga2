@@ -20,9 +20,7 @@ class icinga2::feature::syslog(
   $severity = 'warning',
 ) {
 
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -35,7 +33,7 @@ class icinga2::feature::syslog(
   }
 
   # create object
-  icinga2::object { "icinga2::object::SyslogLogger::syslog":
+  icinga2::object { 'icinga2::object::SyslogLogger::syslog':
     object_name => 'syslog',
     object_type => 'SyslogLogger',
     attrs       => $attrs,

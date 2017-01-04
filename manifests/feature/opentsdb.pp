@@ -23,9 +23,7 @@ class icinga2::feature::opentsdb(
   $port                 = '4242',
 ) {
 
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
+  $conf_dir  = $::icinga2::params::conf_dir
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -40,7 +38,7 @@ class icinga2::feature::opentsdb(
   }
 
   # create object
-  icinga2::object { "icinga2::object::OpenTsdbWriter::opentsdb":
+  icinga2::object { 'icinga2::object::OpenTsdbWriter::opentsdb':
     object_name => 'opentsdb',
     object_type => 'OpenTsdbWriter',
     attrs       => $attrs,
