@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Icinga/puppet-icinga2-rewrite.svg?branch=master)](https://travis-ci.org/Icinga/puppet-icinga2-rewrite)
+
 # Icinga2 Puppet Module
 
 ![Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
@@ -552,6 +554,15 @@ This module offers following options to create these certificates:
     ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
     ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
     ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
+  }
+```
+
+* Fine tune TLS / SSL settings
+
+``` puppet
+  class { 'icinga2::feature::api':
+    ssl_protocolmin => 'TLSv1.2',
+    ssl_cipher_list => 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
   }
 ```
 
@@ -1111,6 +1122,12 @@ Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeNam
 ##### `zones`
 Hash to configure zone objects. Defaults to `{ 'ZoneName' => {'endpoints' => ['NodeName']} }`. `ZoneName` and `NodeName`
 are Icinga2 constants.
+
+##### `ssl_protocolmin`
+Minimal TLS version to require. Default undef (e.g. `TLSv1.2`)
+
+##### `ssl_cipher_list`
+List of allowed TLS ciphers, to finetune encryption. Default undef (e.g. `HIGH:MEDIUM:!aNULL:!MD5:!RC4`)
 
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.
