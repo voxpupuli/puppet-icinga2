@@ -60,11 +60,7 @@
 #
 # It's not currently possible to use arrays or dictionaries in a string, like
 #
-#   attr => 'array1 + [ item1, item2, ... ]'
-#
-# Assignments other than simple attribution are not currently possible either, e.g. building something like
-#
-#   vars += config
+#   attr => 'array1 + [ item1, item2, ... ]' or attr => 'hash1 + { item1, ... }'
 #
 # === Authors
 #
