@@ -48,13 +48,6 @@ describe('icinga2::object::checkcommand', :type => :define) do
     end
 
 
-    context "#{os} with vars => foo (not a valid hash)" do
-      let(:params) { {:vars => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-    end
-
-
     context "#{os} with timeout => 30" do
       let(:params) { {:timeout => '30', :target => '/bar/baz', :command => ['foocommand']} }
 
@@ -143,13 +136,6 @@ describe('icinga2::object::checkcommand', :type => :define) do
 
   context "Windows 2012 R2 with env => foo (not a valid hash)" do
     let(:params) { {:env => 'foo', :target => 'C:/bar/baz', :command => ['foocommand']} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-  end
-
-
-  context "Windows 2012 R2 with vars => foo (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => 'C:/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end

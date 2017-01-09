@@ -20,7 +20,8 @@
 #   A pager string for this user. Useful for notification commands.
 #
 # [*vars*]
-#   A dictionary containing custom attributes that are specific to this user.
+#   A dictionary containing custom attributes that are specific to this user
+#   or a string to do operations on this dictionary.
 #
 # [*groups*]
 #   An array of group names.
@@ -91,7 +92,6 @@ define icinga2::object::user (
   if $display_name { validate_string ($display_name) }
   if $email { validate_string ($email) }
   if $pager { validate_string ($pager) }
-  if $vars { validate_hash ($vars) }
   if $groups { validate_array ($groups) }
   if $enable_notifications { validate_bool ($enable_notifications) }
   if $period { validate_string ($period) }

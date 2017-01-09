@@ -25,7 +25,8 @@
 #   The service groups this service belongs to.
 #
 # [*vars*]
-#   A dictionary containing custom attributes that are specific to this service.
+#   A dictionary containing custom attributes that are specific to this service
+#   or a string to do operations on this dictionary.
 #
 # [*check_command*]
 #   The name of the check command.
@@ -124,6 +125,33 @@
 # [*order*]
 #   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
 #
+# === Examples
+#
+# A service `ping` is applied to all hosts with a valid ipv4 address.
+#
+#   ::icinga2::object::service { 'ping4':
+#     import        => ['generic-service'],
+#     apply         => true,
+#     check_command => 'ping',
+#     assign        => ['host.address'],
+#     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+#   }
+#
+# A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied
+# to all Linux hosts with an Icinga Agent. Note in this example it's required that
+# the endpoint (see `command_endpoint`) and the host object has the same name!
+#
+#   ::icinga2::object::service { 'linux_disks':
+#     import           => ['generic-service'],
+#     apply            =>  'disk_name =>config in host.vars.disks',
+#     check_command    => 'disk',
+#     command_endpoint => 'host.name',
+#     vars             => 'vars + config',
+#     assign           => ['host.vars.os == Linux'],
+#     ignore           => ['host.vars.noagent'],
+#     target           => '/etc/icinga2/zones.d/global-templates/services.conf',
+#   }
+#
 # === Authors
 #
 # Alessandro Lorenzi <alessandro@lm-net.it>
@@ -137,7 +165,7 @@ define icinga2::object::service (
   $display_name           = undef,
   $host_name              = undef,
   $groups                 = undef,
-  $vars                   = {},
+  $vars                   = undef,
   $check_command          = undef,
   $max_check_attempts     = undef,
   $check_period           = undef,
@@ -185,7 +213,6 @@ define icinga2::object::service (
   if $display_name { validate_string ($display_name) }
   validate_string($host_name)
   if $groups { validate_array ($groups) }
-  if $vars { validate_hash ($vars) }
   validate_string($check_command)
   if $max_check_attempts { validate_integer ($max_check_attempts) }
   if $check_period { validate_string ($check_period) }

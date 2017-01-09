@@ -73,12 +73,6 @@ describe('icinga2::object::user', :type => :define) do
     end
 
 
-    context "#{os} with vars => 'foo' (not a valid hash)" do
-      let(:params) { {:vars => 'foo', :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-    end
-
     context "#{os} with groups => [foo, bar]" do
       let(:params) { {:groups => ['foo','bar'], :target => '/bar/baz'} }
 
@@ -237,12 +231,6 @@ describe('icinga2::object::user', :type => :define) do
                             .with_content(/vars.bar = "foo"/) }
   end
 
-
-  context "Windows 2012 R2 with vars => 'foo' (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-  end
 
   context "Windows 2012 R2 with groups => [foo, bar]" do
     let(:params) { {:groups => ['foo','bar'], :target => 'C:/bar/baz'} }

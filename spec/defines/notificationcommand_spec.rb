@@ -79,13 +79,6 @@ describe('icinga2::object::notificationcommand', :type => :define) do
     end
 
 
-    context "#{os} with vars => 'foo' (not a valid hash)" do
-      let(:params) { {:vars => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-    end
-
-
     context "#{os} with timeout => 30" do
       let(:params) { {:timeout => '30', :target => '/bar/baz', :command => ['foocommand']} }
 
@@ -212,13 +205,6 @@ describe('icinga2::object::notificationcommand', :type => :define) do
                             .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/vars.foo = "bar"/)
                             .with_content(/vars.bar = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with vars => 'foo' (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => 'C:/bar/baz', :command => ['foocommand']} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 
