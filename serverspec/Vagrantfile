@@ -5,7 +5,7 @@ nodes = {
   'i2sles12sp2puppet4' => {
     :box => 'sles-12-sp2-x64-virtualbox.box',
     :url => 'http://boxes.icinga.com/vagrant/sles/sles-12-sp2-x64-virtualbox.box',
-    :md5 => '968efaf15d7d3df7488845a9a1258d24'
+    :md5 => '549ecfa335ba3883e6feb311f81723ef'
   },
   'i2rhel7puppet4' => {
     :box => 'centos-7.3-x64-virtualbox',
