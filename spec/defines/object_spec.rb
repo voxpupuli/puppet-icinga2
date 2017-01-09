@@ -79,10 +79,12 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with apply => foo in host.vars.bar" do
-      let(:params) { {:apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with import => [bar, baz], apply => foo in host.vars.bar" do
+      let(:params) { {:import => ['bar', 'baz'], :apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/import "bar"/)
+        .with_content(/import "baz"/)
         .with_content(/vars = vars \+ foo\n/)
         .with_content(/apply foo for \(foo in host.vars.bar\) to Host/) }
     end
@@ -303,10 +305,12 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with apply => foo in host.vars.bar" do
-    let(:params) { {:apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with import => [bar, baz], apply => foo in host.vars.bar" do
+    let(:params) { {:import => ['bar', 'baz'], :apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/import "bar"/)
+      .with_content(/import "baz"/)
       .with_content(/vars = vars \+ foo\r\n/)
       .with_content(/apply foo for \(foo in host.vars.bar\) to Host/) }
   end
