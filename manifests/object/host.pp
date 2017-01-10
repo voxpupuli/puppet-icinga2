@@ -23,7 +23,8 @@
 #   The host's address v6.
 #
 # [*vars*]
-#   A dictionary containing custom attributes that are specific to this host.
+#   A dictionary containing custom attributes that are specific to this host
+#   or a string to do operations on this dictionary.
 #
 # [*groups*]
 #   A list of host groups this host belongs to.
@@ -160,7 +161,6 @@ define icinga2::object::host(
   if $host_name { validate_string($host_name) }
   if $address { validate_string($address) }
   if $address6 { validate_string($address6) }
-  if $vars { validate_hash($vars) }
   if $groups { validate_array($groups) }
   if $display_name { validate_string($display_name) }
   validate_string($check_command)

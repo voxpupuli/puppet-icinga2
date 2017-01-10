@@ -92,15 +92,6 @@ describe('icinga2::object::service', :type => :define) do
     end
 
 
-    context "#{os} with vars => 'foo' (not a valid hash)" do
-      let(:params) { {:vars => 'foo', :target => '/bar/baz',
-                      :host_name => 'hostfoo',
-                      :check_command => 'commandfoo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-    end
-
-
     context "#{os} with check_command => foo" do
       let(:params) { {:check_command => 'foo', :target => '/bar/baz',
                       :host_name => 'hostfoo'} }
@@ -537,15 +528,6 @@ describe('icinga2::object::service', :type => :define) do
                             .with({ 'target' => 'C:/bar/baz' })
                             .with_content(/vars.foo = "bar"/)
                             .with_content(/vars.bar = "foo"/) }
-  end
-
-
-  context "Windows 2012 R2 with vars => 'foo' (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => 'C:/bar/baz',
-                    :host_name => 'hostfoo',
-                    :check_command => 'commandfoo'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
   end
 
 

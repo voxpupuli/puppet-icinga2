@@ -25,7 +25,8 @@
 #    prior to executing the command.
 #
 # [*vars*]
-# 	 A dictionary containing custom attributes that are specific to this command.
+# 	 A dictionary containing custom attributes that are specific to this command
+#    or a string to do operations on this dictionary.
 #
 # [*timeout*]
 # 	 The command timeout in seconds. Defaults to 60 seconds.
@@ -80,7 +81,6 @@ define icinga2::object::notificationcommand (
   if !is_array($command) { validate_string($command) }
   if !is_string($command) { validate_array($command) }
   if $env { validate_hash ($env) }
-  if $vars { validate_hash ($vars) }
   if $timeout { validate_integer ($timeout) }
   if $arguments { validate_hash ($arguments) }
 

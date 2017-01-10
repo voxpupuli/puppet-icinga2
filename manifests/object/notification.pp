@@ -19,7 +19,7 @@
 #
 # [*vars*]
 # 	A dictionary containing custom attributes that are specific to this
-#   notification object.
+#   notification object or a string to do operations on this dictionary.
 #
 # [*users*]
 # 	A list of user names who should be notified.
@@ -121,7 +121,6 @@ define icinga2::object::notification (
 
   validate_string ($host_name)
   if $service_name { validate_string ($service_name)}
-  if $vars { validate_hash ($vars )}
   if $users { validate_array ($users )}
   if $user_groups { validate_array ($user_groups )}
   if $times { validate_hash ($times )}

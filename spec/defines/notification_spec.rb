@@ -63,12 +63,6 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
-    context "#{os} with vars => 'foo' (not a valid hash)" do
-      let(:params) { {:vars => 'foo', :target => '/bar/baz', :host_name => 'foohost'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-    end
-
     context "#{os} with users => [foo, bar]" do
       let(:params) { {:users => ['foo','bar'], :target => '/bar/baz', :host_name => 'foohost'} }
 
@@ -274,12 +268,6 @@ describe('icinga2::object::notification', :type => :define) do
                             .with_content(/vars.bar = "foo"/) }
   end
 
-
-  context "Windows 2012 R2 with vars => 'foo' (not a valid hash)" do
-    let(:params) { {:vars => 'foo', :target => 'C:/bar/baz', :host_name => 'foohost'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
-  end
 
   context "Windows 2012 R2 with users => [foo, bar]" do
     let(:params) { {:users => ['foo','bar'], :target => 'C:/bar/baz', :host_name => 'foohost'} }
