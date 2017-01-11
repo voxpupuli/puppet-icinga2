@@ -1,5 +1,11 @@
 # Icinga2 Puppet Module CHANGELOG
 
+## v0.8.1
+
+### Bugs
+Bug #13917: Remove hash validation of vars attribut
+Bug #13919: Fix imports object template
+
 ## v0.8.0
 
 ### Bugs
