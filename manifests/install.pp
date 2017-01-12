@@ -1,6 +1,6 @@
 # == Class: icinga2::install
 #
-# This class handles the installation of the Icinga2 package. On Windows only chocolatey is supported as installation
+# This class handles the installation of the Icinga 2 package. On Windows only chocolatey is supported as installation
 # source.
 #
 # === Parameters

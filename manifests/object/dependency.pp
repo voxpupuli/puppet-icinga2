@@ -1,6 +1,6 @@
 # == Define: icinga2::object::dependency
 #
-# Manage Icinga2 dependency objects.
+# Manage Icinga 2 dependency objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*dependency_name*]
-#   Set the Icinga2 name of the dependency object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the dependency object. Defaults to title of the define resource.
 #
 # [*parent_host_name*]
 #   The parent host.

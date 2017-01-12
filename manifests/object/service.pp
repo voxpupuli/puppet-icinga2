@@ -1,6 +1,6 @@
 # == Define: icinga2::object::service
 #
-# Manage Icinga2 service objects.
+# Manage Icinga 2 service objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*service_name*]
-#   Set the Icinga2 name of the service object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the service object. Defaults to title of the define resource.
 #
 # [*display_name*]
 #   A short description of the service.

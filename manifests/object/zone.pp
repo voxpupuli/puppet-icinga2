@@ -1,6 +1,6 @@
 # == Define: icinga2::object::zone
 #
-# Manage Icinga2 zone objects.
+# Manage Icinga 2 zone objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*zone_name*]
-#   Set the Icinga2 name of the zone object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the zone object. Defaults to title of the define resource.
 #
 # [*endpoints*]
 #   List of endpoints belong to this zone.

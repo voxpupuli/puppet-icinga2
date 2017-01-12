@@ -1,6 +1,6 @@
 # == Define: icinga2::object::checkresultreader
 #
-# Manage Icinga2 CheckResultReader objects.
+# Manage Icinga 2 CheckResultReader objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [ceckresultreader_name*]
-#   Set the Icinga2 name of the ceckresultreader object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the ceckresultreader object. Defaults to title of the define resource.
 #
 # [*spool_dir*]
 #   The directory which contains the check result files. Defaults to LocalStateDir + "/lib/icinga2/spool/checkresults/".

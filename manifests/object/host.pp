@@ -1,6 +1,6 @@
 # == Define: icinga2::object::host
 #
-# Manage Icinga2 Host objects.
+# Manage Icinga 2 Host objects.
 #
 # === Parameters
 #

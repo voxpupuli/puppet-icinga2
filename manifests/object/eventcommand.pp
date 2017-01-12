@@ -1,6 +1,6 @@
 # == Define: icinga2::object::eventcommand
 #
-# Manage Icinga2 EventCommand objects.
+# Manage Icinga 2 EventCommand objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*eventcommand_name*]
-#   Set the Icinga2 name of the eventcommand object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the eventcommand object. Defaults to title of the define resource.
 #
 # [*execute*]
 #     The "execute" script method takes care of executing the event handler.

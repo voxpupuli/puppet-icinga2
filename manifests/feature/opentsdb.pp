@@ -1,6 +1,6 @@
 # == Class: icinga2::feature::opentsdb
 #
-# This module configures the Icinga2 feature opentsdb.
+# This module configures the Icinga 2 feature opentsdb.
 #
 # === Parameters
 #

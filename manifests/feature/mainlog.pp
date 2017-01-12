@@ -1,6 +1,6 @@
 # == Class: icinga2::feature::mainlog
 #
-# This module configures the Icinga2 feature mainlog.
+# This module configures the Icinga 2 feature mainlog.
 #
 # === Parameters
 #

@@ -1,6 +1,6 @@
 # == Define: icinga2::object::scheduleddowntime
 #
-# Manage Icinga2 scheduleddowntime objects.
+# Manage Icinga 2 scheduleddowntime objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*scheduleddowntime_name*]
-#   Set the Icinga2 name of the scheduleddowntime object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the scheduleddowntime object. Defaults to title of the define resource.
 #
 # [*host_name*]
 #     The name of the host this comment belongs to.

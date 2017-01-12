@@ -1,6 +1,6 @@
 # == Class: icinga2::feature::idopgsql
 #
-# This module configures the Icinga2 feature ido-pgsql.
+# This module configures the Icinga 2 feature ido-pgsql.
 #
 # === Parameters
 #

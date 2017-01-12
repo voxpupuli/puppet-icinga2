@@ -1,6 +1,6 @@
 # == Define: icinga2::object::timeperiod
 #
-# Manage Icinga2 timeperiod objects.
+# Manage Icinga 2 timeperiod objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*timeperiod_name*]
-#   Set the Icinga2 name of the timeperiod object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the timeperiod object. Defaults to title of the define resource.
 #
 # [*display_name*]
 # 	A short description of the time period.

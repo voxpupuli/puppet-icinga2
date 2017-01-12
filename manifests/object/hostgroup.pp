@@ -1,6 +1,6 @@
 # == Define: icinga2::object::hostgroup
 #
-# Manage Icinga2 HostGroup objects.
+# Manage Icinga 2 HostGroup objects.
 #
 # === Parameters
 #

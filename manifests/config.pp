@@ -1,6 +1,6 @@
 # == Class: icinga2::config
 #
-# This class exists to manage general configuration files needed by Icinga2 to run.
+# This class exists to manage general configuration files needed by Icinga 2 to run.
 #
 # === Parameters
 #

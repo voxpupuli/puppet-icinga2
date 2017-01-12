@@ -1,8 +1,8 @@
 # == Class: icinga2::pki::ca
 #
-# This class provides multiple ways to create the CA used by Icinga2. By default it will create
+# This class provides multiple ways to create the CA used by Icinga 2. By default it will create
 # a CA by using the icinga2 CLI. If you want to use your own CA you will either have to transfer
-# it by using a file ressource or you can set the content of your certificat and key in this class.
+# it by using a file resource or you can set the content of your certificat and key in this class.
 #
 # === Parameters
 #
@@ -15,7 +15,7 @@
 #
 # === Examples
 #
-# Let Icinga2 generate a CA for you:
+# Let Icinga 2 generate a CA for you:
 #
 # include icinga2
 # class { 'icinga2::pki::ca': }

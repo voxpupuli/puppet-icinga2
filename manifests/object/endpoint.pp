@@ -1,6 +1,6 @@
 # == Define: icinga2::object::endpoint
 #
-# Manage Icinga2 endpoint objects.
+# Manage Icinga 2 endpoint objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*endpoint_name*]
-#   Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the endpoint object. Defaults to title of the define resource.
 #
 # [*host*]
 #   Optional. The IP address of the remote Icinga 2 instance.

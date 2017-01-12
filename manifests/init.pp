@@ -1,6 +1,6 @@
 # == Class: icinga2
 #
-# This module installs and configures Icinga2.
+# This module installs and configures Icinga 2.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Manages if the service should be stopped or running. Defaults to running.
 #
 # [*enable*]
-#   If set to true the Icinga2 service will start on boot. Defaults to true.
+#   If set to true the Icinga 2 service will start on boot. Defaults to true.
 #
 # [*manage_repo*]
 #   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
@@ -33,7 +33,7 @@
 #   A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 #
 # [*confd*]
-#   This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
+#   This is the directory where Icinga 2 stores it's object configuration by default. To disable this, set the parameter
 #   to false. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
 #   managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is true.
 #
@@ -51,7 +51,7 @@
 #
 # === Examples
 #
-# Declare icinga2 with all defaults. Keep in mind that your operating system may not have Icinga2 in its package
+# Declare icinga2 with all defaults. Keep in mind that your operating system may not have Icinga 2 in its package
 # repository.
 #
 #  include ::icinga2
@@ -65,7 +65,7 @@
 #    manage_repo => true,
 #  }
 #
-# If you don't want to manage the Icinga2 service with puppet, you can dissable this behaviour with the manage_service
+# If you don't want to manage the Icinga 2 service with puppet, you can dissable this behaviour with the manage_service
 # parameter. When set to false no service refreshes will be triggered.
 #
 #  class { 'icinga2':
@@ -73,8 +73,8 @@
 #  }
 #
 # Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case
-# you can use the icinga2::config::file tag on your file ressource. This module collects all file ressource types with
-# this tag and triggers a reload of Icinga2 on a file change.
+# you can use the icinga2::config::file tag on your file resource. This module collects all file resource types with
+# this tag and triggers a reload of Icinga 2 on a file change.
 #
 #  include ::icinga2
 #  file { '/etc/icinga2/conf.d/foo.conf':

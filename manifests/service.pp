@@ -1,6 +1,6 @@
 # == Class: icinga2::service
 #
-# This class handles the Icinga2 service. By default the service will start on boot and will be restarted if stopped.
+# This class handles the Icinga 2 service. By default the service will start on boot and will be restarted if stopped.
 #
 # === Parameters
 #

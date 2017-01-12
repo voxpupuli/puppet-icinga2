@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Icinga/puppet-icinga2-rewrite.svg?branch=master)](https://travis-ci.org/Icinga/puppet-icinga2-rewrite)
 
-# Icinga2 Puppet Module
+# Icinga 2 Puppet Module
 
 ![Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
@@ -9,7 +9,7 @@
 1. [Overview][Overview]
 2. [Module Description - What the module does and why it is useful][Module description]
 3. [Setup - The basics of getting started with icinga2][Setup]
-    * [What Icinga2 affects][]
+    * [What Icinga 2 affects][]
 4. [Usage - Configuration options and additional functionality][Usage]
 5. [Reference - An under-the-hood peek at what the module is doing and how][Reference]
     * [Public Classes][]
@@ -20,20 +20,20 @@
 
 ## Overview
 
-Icinga2 is a widely used open source monitoring software. This Puppet module helps installing and managing configuration
-of Icinga2 on multiple operating sytems.
+Icinga 2 is a widely used open source monitoring software. This Puppet module helps installing and managing configuration
+of Icinga 2 on multiple operating sytems.
 
 >> This Module is a rewrite of [puppet-icinga2] and will replace it in the future.
 
 ## Module Description
-This module installs and configures Icinga2 on your Linux or Windows hosts. By default it will use packages provided by
+This module installs and configures Icinga 2 on your Linux or Windows hosts. By default it will use packages provided by
 your distributions repository, respectively chocolatey on Windows. The module can be enabled to use [packages.icinga.com]
-as primary repository, which will give you the ability to install the latest Icinga2 release. All features and objects
-available in Icinga2 can be enabled and configured with this module.
+as primary repository, which will give you the ability to install the latest Icinga 2 release. All features and objects
+available in Icinga 2 can be enabled and configured with this module.
 
 ## Setup
 
-### What the Icinga2 Puppet module affects
+### What the Icinga 2 Puppet module affects
 
 * Packages Installation
 * Service
@@ -71,10 +71,10 @@ Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
-### Installing Icinga2
-The default class `icinga2` will install and configure a basic installation of Icinga2 on your system. By default it will
+### Installing Icinga 2
+The default class `icinga2` will install and configure a basic installation of Icinga 2 on your system. By default it will
 enable the features `checker`, `mainlog` and `notification`. As default installation source the distributions repository will
-used. On Windows systems we use chocolatey. To get the latest version of Icinga2 you need to enable the `manage_repo`
+used. On Windows systems we use chocolatey. To get the latest version of Icinga 2 you need to enable the `manage_repo`
 parameter, which will allow the module to add the official [packages.icinga.com] repository to your host.
 
 ``` puppet
@@ -84,7 +84,7 @@ parameter, which will allow the module to add the official [packages.icinga.com]
 ```
 
 ### Enable Features
-Each Icinga2 feature can be enabled or disabled by using the according classes. In addition to that, there is a set of
+Each Icinga 2 feature can be enabled or disabled by using the according classes. In addition to that, there is a set of
 default features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
 
 The default set of features can be changed by setting the `features` parameter:
@@ -136,8 +136,8 @@ class{ 'icinga2::feature::idomysql':
   require       => Mysql::Db['icinga2'],
 }
 ```
-For PostgreSQL we recomment the [puppetlabs/puppetlabs-postgresql] module. You can install the server, create databases
-and manage user permissions with the module. Here's an example on how to use it in combination with Icinga2:
+For PostgreSQL we recommend the [puppetlabs/puppetlabs-postgresql] module. You can install the server, create databases
+and manage user permissions with the module. Here's an example on how to use it in combination with Icinga 2:
 
 ``` puppet
 include icinga2
@@ -173,7 +173,7 @@ sends configurations over the Icinga 2 protocol to Satellites and/or Clients.
 
 More detailed examples can be found in the [examples] directory.
 
-Ths examples creates the coniguration for a Master that has one Satellite connected. A global zone is created for
+Ths examples creates the configuration for a Master that has one Satellite connected. A global zone is created for
 templates and all features of a typical master are enabled.
 
 ``` puppet
@@ -447,11 +447,11 @@ icinga2::object::service { 'HTTP':
 ```
 
 ### CA and Certificates
-Handling the CA and certificates is an important part of Icinga2, because the communication between Icinga processes will
+Handling the CA and certificates is an important part of Icinga 2, because the communication between Icinga processes will
 not work without SSL. This module offers multiple choices to treat this.
 
 #### CA on your Icinga Master
-One of your Icinga master needs to bahave as a CA. With the class `icinga2::pki::ca` you can do following to fullfil
+One of your Icinga master needs to behave as a CA. With the class `icinga2::pki::ca` you can do following to fullfil
 this requiremen:
 
 * Use the ability of the icinga2 CLI to generate a complete new CA
@@ -470,7 +470,7 @@ this requiremen:
   }
 ```
 
-* Transfer a CA certificate and key from an existing CA by using the file ressource:
+* Transfer a CA certificate and key from an existing CA by using the file resource:
 ``` puppet
   include icinga2
   file { '/var/lib/icinga2/ca/ca.crt':
@@ -488,7 +488,7 @@ If you are looking for an option to use your Puppet CA, have a look to the
 [Client/Satellite Certificates](#clientsatellite-certificates) section.
 
 #### Client/Satellite Certificates
-In addition to the Master, each Client and Satellite needs valid certifacates to communicate with other Icinga2 instanzes.
+In addition to the Master, each Client and Satellite needs valid certifacates to communicate with other Icinga 2 instanzes.
 This module offers following options to create these certificates:
 
 * Use te Puppet CA and its client certificatse. This is convinient since you don't need to maintain an additional CA.
@@ -498,7 +498,7 @@ This module offers following options to create these certificates:
 
 * Use a custom function impletemented in this module to generate a certificate. This feature will to the following:
   * Generate a key and certificate based on the FQDN of the host
-  * Save the certificate of another Icinga2 instance, usually the Icinga master where your Icinga CA is located
+  * Save the certificate of another Icinga 2 instance, usually the Icinga master where your Icinga CA is located
   * Generate a ticket based on the TicketSalt
   * Request a signed certificate at your Icinga CA
   
@@ -527,7 +527,7 @@ This module offers following options to create these certificates:
   }
 ```
 
-* Use custom file ressources to transfer your own certificate and key
+* Use custom file resources to transfer your own certificate and key
 ``` puppet
   class { 'icinga2::feature::api':
     pki => 'none',
@@ -568,8 +568,8 @@ This module offers following options to create these certificates:
 
 ### Custom configuration
 Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case you
-can use the `icinga2::config::file` tag on your file ressource. This module collects all file ressource types with this
-tag and triggers a reload of Icinga2 on a file change.
+can use the `icinga2::config::file` tag on your file resource. This module collects all file resource types with this
+tag and triggers a reload of Icinga 2 on a file change.
 
 ``` puppet
   include icinga2
@@ -664,13 +664,13 @@ icinga2::config::fragment { 'load-function':
 ### Public Classes
 
 #### Class: `icinga2`
-The default class of this modoule. It handles the basic installation and configuration of Icinga2. When you declare this
+The default class of this modoule. It handles the basic installation and configuration of Icinga 2. When you declare this
 class, puppet will do the following:
 
-* Install Icinga2
-* Place a default configuration for the Icinga2 daemon
-* Keep the default configuration of the Icinga2 package
-* Start Icinga2 and enable the service
+* Install Icinga 2
+* Place a default configuration for the Icinga 2 daemon
+* Keep the default configuration of the Icinga 2 package
+* Start Icinga 2 and enable the service
 
 This class can be declared without adjusting any parameter:
 
@@ -684,7 +684,7 @@ class { 'icinga2': }
 Defines if the service should be `running` or `stopped`. Defaults to `running`
 
 ##### `enable`
-If set to `true` the Icinga2 service will start on boot. Defaults to `true`.
+If set to `true` the Icinga 2 service will start on boot. Defaults to `true`.
 
 ##### `manage_repo`
 When set to `true` this module will install the [packages.icinga.com] repository. With this official repo
@@ -693,7 +693,7 @@ Project does not offer a Chocolatey repository, you will get a warning if you en
 is `false`
 
 ##### `manage_service`
-Lets you decide if the Icinga2 daemon should be reloaded when configuration files have changed. Defaults to `true`
+Lets you decide if the Icinga 2 daemon should be reloaded when configuration files have changed. Defaults to `true`
 
 ##### `features`
 A list of features to enable by default. Defaults to `[checker, mainlog, notification]`
@@ -708,7 +708,7 @@ Hash of constants. Defaults are set in the params class. Your settings will be m
 A list of the ITL plugins to load. Defaults to `[ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]`.
 
 ##### `confd`
-This is the directory where Icinga2 stores it's object configuration by default. To disable this, set the parameter
+This is the directory where Icinga 2 stores it's object configuration by default. To disable this, set the parameter
 to `false`. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
 managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is `true`.
 
@@ -1121,7 +1121,7 @@ Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeNam
 
 ##### `zones`
 Hash to configure zone objects. Defaults to `{ 'ZoneName' => {'endpoints' => ['NodeName']} }`. `ZoneName` and `NodeName`
-are Icinga2 constants.
+are Icinga 2 constants.
 
 ##### `ssl_protocolmin`
 Minimal TLS version to require. Default undef (e.g. `TLSv1.2`)
@@ -1230,8 +1230,8 @@ Array of information types that should be written to the database.
 Whether to import the MySQL schema or not. Defaults to `false`
 
 #### Class: `icinga2::pki::ca`
-This class provides multiple ways to create the CA used by Icinga2. By default it will create a CA by using the Icinga2
-CLI. If you want to use your own CA you will either have to transfer it by using a file ressource or you can set the
+This class provides multiple ways to create the CA used by Icinga 2. By default it will create a CA by using the Icinga2
+CLI. If you want to use your own CA you will either have to transfer it by using a file resource or you can set the
 content of your certificat and key in this class.
 
 **Parameters of `icinga2::pki::ca`:**
@@ -1249,10 +1249,10 @@ Installs the [packages.icinga.com] repository. Depending on your operating syste
 [puppetlabs/chocolatey] are required.
 
 #### Class: `icinga2::install`
-Handles the installation of the Icinga2 package.
+Handles the installation of the Icinga 2 package.
 
 #### Class: `icinga2::config`
-Installs basic configuration files required to run Icinga2.
+Installs basic configuration files required to run Icinga 2.
 
 #### Class: `icinga2::service`
 Starts/stops and enables/disables the service.
@@ -1265,7 +1265,7 @@ Starts/stops and enables/disables the service.
 Set to present enables the endpoint object, absent disables it. Defaults to present.
 
 ##### `endpoint_name`
-Set the Icinga2 name of the endpoint object. Defaults to title of the define resource.
+Set the Icinga 2 name of the endpoint object. Defaults to title of the define resource.
 
 ##### `host`
 Optional. The IP address of the remote Icinga 2 instance.
@@ -1516,7 +1516,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the dependency object, absent disabled it. Defaults to `present`
 
 ##### `dependency_name`
-Set the Icinga2 name of the dependency object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the dependency object. Defaults to `title` of the define resource.
 
 ##### `parent_host_name`
 The parent host.
@@ -1576,7 +1576,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the timeperiod object, absent disabled it. Defaults to `present`
 
 ##### `timeperiod_name`
-Set the Icinga2 name of the timeperiod object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the timeperiod object. Defaults to `title` of the define resource.
 
 ##### `display_name`
 A short description of the time period.
@@ -1611,10 +1611,10 @@ String to control the position in the target file, sorted alpha numeric.
 Set to present enables the usergroup object, absent disables it. Defaults to `present`
 
 ##### `usergroup_name`
-Set the Icinga2 name of the usergroup object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the usergroup object. Defaults to `title` of the define resource.
 
 ##### `user_name`
-Set the Icinga2 name of the user object. Defaults to title of the define resource.
+Set the Icinga 2 name of the user object. Defaults to title of the define resource.
 
 ##### `display_name`
 A short description of the service group.
@@ -1690,7 +1690,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the notificationcommand object, absent disabled it. Defaults to present.
 
 ##### `notificationcommand_name`
-Set the Icinga2 name of the notificationcommand object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the notificationcommand object. Defaults to `title` of the define resource.
 
 ##### `execute`
 The "execute" script method takes care of executing the notification. The default template "plugin-notification-command"
@@ -1730,7 +1730,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the notification object, absent disables it. Defaults to `present`
 
 ##### `notification_name`
-Set the Icinga2 name of the notification object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the notification object. Defaults to `title` of the define resource.
 
 ##### `host_name`
 The name of the host this notification belongs to.
@@ -1795,7 +1795,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the service object, absent disables it. Defaults to `present`
 
 ##### `service_name`
-Set the Icinga2 name of the service object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the service object. Defaults to `title` of the define resource.
 
 ##### `display_name`
 A short description of the service.
@@ -1909,7 +1909,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the servicegroup object, absent disables it. Defaults to `present`
 
 ##### `servicegroup_name`
-Set the Icinga2 name of the servicegroup object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the servicegroup object. Defaults to `title` of the define resource.
 
 ##### `display_name`
 A short description of the service group.
@@ -1982,7 +1982,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the scheduleddowntime object, absent disables it. Defaults to `present`
 
 ##### `scheduleddowntime_name`
-Set the Icinga2 name of the scheduleddowntime object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the scheduleddowntime object. Defaults to `title` of the define resource.
 
 ##### `host_name`
 The name of the host this comment belongs to.
@@ -2030,7 +2030,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the eventcommand object, absent disables it. Defaults to `present`
 
 ##### `eventcommand_name`
-Set the Icinga2 name of the eventcommand object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the eventcommand object. Defaults to `title` of the define resource.
 
 ##### `execute`
 The "execute" script method takes care of executing the event handler. In virtually all cases you should import the
@@ -2067,7 +2067,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the checkresultreader object, absent disables it. Defaults to `present`
 
 ##### `checkresultreader_name`
-Set the Icinga2 name of the ceckresultreader object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the ceckresultreader object. Defaults to `title` of the define resource.
 
 ##### `spool_dir`
 The directory which contains the check result files. Defaults to `LocalStateDir + "/lib/icinga2/spool/checkresults/"`
@@ -2084,7 +2084,7 @@ String to set the position in the target file, sorted alpha numeric. Defaults to
 Set to present enables the compatlogger object, absent disables it. Defaults to `present`
 
 ##### `compatlogger_name`
-Set the Icinga2 name of the compatlogger object. Defaults to `title` of the define resource.
+Set the Icinga 2 name of the compatlogger object. Defaults to `title` of the define resource.
 
 ##### `spool_dir`
 The directory which contains the check result files. Defaults to `LocalStateDir + "/lib/icinga2/spool/checkresults/"`
@@ -2121,7 +2121,7 @@ Either `present` or `absent`. Defines if the feature should be enabled. Defaults
 Name of the feature. This name is used for the corresponding configuration file.
 
 #### Defined type: `icinga2::object`
-This defined type is used by all object defined types as bases. In can generally create Icinga2 objects.
+This defined type is used by all object defined types as bases. In can generally create Icinga 2 objects.
 
 ##### `ensure`
 Set to present enables the object, absent disabled it. Defaults to present.
@@ -2146,7 +2146,7 @@ A sorted list of templates to import in this object. Defaults to an empty array.
 Hash for the attributes of this object. Keys are the attributes and values are there values. Defaults to an empty Hash.
 
 ##### `object_type`
-Icinga2 object type for this object.
+Icinga 2 object type for this object.
 
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
@@ -2179,7 +2179,7 @@ See also [CHANGELOG.md]
 [Overview]: #overview
 [Module description]: #module-description
 [Setup]: #setup
-[What Icinga2 affects]: #what-icinga2-affects
+[What Icinga 2 affects]: #what-icinga2-affects
 [Usage]: #usage
 [Reference]: #reference
 [Public Classes]: #public-classes

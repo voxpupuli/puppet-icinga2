@@ -1,6 +1,6 @@
 # == Define: icinga2::object::notificationcommand
 #
-# Manage Icinga2 notificationcommand objects.
+# Manage Icinga 2 notificationcommand objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*notificationcommand_name*]
-#   Set the Icinga2 name of the notificationcommand object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the notificationcommand object. Defaults to title of the define resource.
 #
 # [*execute*]
 # 	 The "execute" script method takes care of executing the notification.

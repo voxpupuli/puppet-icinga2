@@ -1,6 +1,6 @@
 # == Define: icinga2::object::notification
 #
-# Manage Icinga2 notification objects.
+# Manage Icinga 2 notification objects.
 #
 # === Parameters
 #
@@ -8,7 +8,7 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*notification_name*]
-#   Set the Icinga2 name of the notification object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the notification object. Defaults to title of the define resource.
 #
 # [*host_name*]
 # 	The name of the host this notification belongs to.

@@ -1,6 +1,6 @@
 # == Define: icinga2::object::apiuser
 #
-# Manage Icinga2 ApiUser objects.
+# Manage Icinga 2 ApiUser objects.
 #
 # === Parameters
 #

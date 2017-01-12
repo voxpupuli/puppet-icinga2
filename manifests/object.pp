@@ -35,7 +35,7 @@
 #   values are there values. Defaults to an empty Hash.
 #
 # [*object_type*]
-#   Icinga2 object type for this object.
+#   Icinga 2 object type for this object.
 #
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
