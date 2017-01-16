@@ -48,7 +48,6 @@ define icinga2::object::zone(
   validate_string($zone_name)
   validate_integer($order)
 
-  if $endpoints { validate_array($endpoints) }
   if $parent { validate_string($parent) }
   if $global { validate_bool($global) }
 
@@ -68,7 +67,7 @@ define icinga2::object::zone(
     }
   } else {
     $attrs = {
-      endpoints => $endpoints,
+      endpoints => any2array($endpoints),
       parent    => $parent,
     }
   }
