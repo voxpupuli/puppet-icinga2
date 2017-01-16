@@ -21,9 +21,6 @@
 #   Interval in seconds to update both status files.
 #   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '15s'
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::statusdata(
   $ensure          = present,

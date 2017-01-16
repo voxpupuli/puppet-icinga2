@@ -7,9 +7,6 @@
 # [*ensure*]
 #   Set to present enables the feature notification, absent disabled it. Defaults to present.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::notification(
   $ensure = present,

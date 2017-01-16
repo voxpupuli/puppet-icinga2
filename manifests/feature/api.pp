@@ -124,9 +124,6 @@
 #     ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
 #   }
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::api(
   $ensure          = present,

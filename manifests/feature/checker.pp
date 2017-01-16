@@ -7,9 +7,6 @@
 # [*ensure*]
 #   Set to present enables the feature checker, absent disabled it. Defaults to present.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::checker(
   $ensure = present,

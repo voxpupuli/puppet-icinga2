@@ -27,9 +27,6 @@
 # [*order*]
 #   String to control the position in the target file, sorted alpha numeric.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::zone(
   $ensure    = present,

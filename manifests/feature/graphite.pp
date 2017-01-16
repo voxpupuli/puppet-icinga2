@@ -25,9 +25,6 @@
 # [*enable_send_metadata*]
 #   Send metadata as metrics. Defaults to false.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::graphite(
   $ensure                 = present,

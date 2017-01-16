@@ -62,9 +62,6 @@
 #
 #   attr => 'array1 + [ item1, item2, ... ]' or attr => 'hash1 + { item1, ... }'
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 require 'puppet'
 

@@ -15,9 +15,6 @@
 #   Sets how often should the log file be rotated. Valid options are: HOURLY, DAILY, WEEKLY or MONTHLY.
 #   Defaults to DAILY.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::compatlog(
   $ensure          = present,

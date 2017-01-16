@@ -14,9 +14,6 @@
 # [*order*]
 #   String to set the position in the target file, sorted in alpha numeric order.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 define icinga2::config::fragment(
   $content,

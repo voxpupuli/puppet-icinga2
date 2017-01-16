@@ -54,10 +54,6 @@
 # [*order*]
 #   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
 #
-# === Authors
-#
-# Alessandro Lorenzi <alessandro@lm-net.it>
-# Icinga Development Team <info@icinga.com>
 #
 define icinga2::object::user (
   $target,

@@ -120,9 +120,6 @@
 #     confd => 'local.d',
 #   }
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2(
   $ensure         = running,

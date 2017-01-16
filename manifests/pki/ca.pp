@@ -28,9 +28,6 @@
 #   ca_key  => '-----BEGIN RSA PRIVATE KEY----- ...',
 # }
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::pki::ca(
   $ca_cert         = undef,

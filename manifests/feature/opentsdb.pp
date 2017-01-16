@@ -13,9 +13,6 @@
 # [*port*]
 #   OpenTSDB port. Defaults to 4242.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::opentsdb(
   $ensure               = present,

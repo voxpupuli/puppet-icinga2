@@ -11,9 +11,6 @@
 #   Absolute path to the command pipe. Default depends on platform, /var/run/icinga2/cmd/icinga2.cmd on Linux
 #   and C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd on Windows.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::command(
   $ensure       = present,

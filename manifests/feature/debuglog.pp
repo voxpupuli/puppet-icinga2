@@ -12,9 +12,6 @@
 #   /var/log/icinga2/debug.log on Linux
 #   C:/ProgramData/icinga2/var/log/icinga2/debug.log on Windows
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::debuglog(
   $ensure   = present,

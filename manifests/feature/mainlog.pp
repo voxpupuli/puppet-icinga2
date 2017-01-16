@@ -14,9 +14,6 @@
 #   Absolute path to the log file. Default depends on platform, '/var/log/icinga2/icinga2.log' on Linux
 #   and 'C:/ProgramData/icinga2/var/log/icinga2/icinga2.log' on Windows.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::mainlog(
   $ensure   = present,

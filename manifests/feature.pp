@@ -2,9 +2,6 @@
 #
 # Private define resource to used by this module only.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 define icinga2::feature(
   $ensure  = present,

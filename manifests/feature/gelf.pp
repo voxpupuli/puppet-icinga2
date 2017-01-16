@@ -19,9 +19,6 @@
 # [*enable_send_perfdata*]
 #   Enable performance data for 'CHECK RESULT' events. Defaults to false.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::gelf(
   $ensure               = present,

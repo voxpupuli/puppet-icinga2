@@ -11,9 +11,6 @@
 #   You can choose the log severity between information, notice, warning or debug.
 #   Defaults to warning.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::syslog(
   $ensure   = present,

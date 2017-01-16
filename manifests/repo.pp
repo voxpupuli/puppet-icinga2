@@ -13,9 +13,6 @@
 #
 # This class is private and should not be called by others than this module.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::repo {
 

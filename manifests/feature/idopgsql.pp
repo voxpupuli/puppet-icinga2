@@ -69,9 +69,6 @@
 #   require       => Postgresql::Server::Db['icinga2']
 # }
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::idopgsql(
   $ensure                 = present,

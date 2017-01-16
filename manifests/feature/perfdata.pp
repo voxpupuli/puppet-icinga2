@@ -38,9 +38,6 @@
 #   Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
 #   i.e. 1m or 15s. Defaults to 30s.
 #
-# === Authors
-#
-# Icinga Development Team <info@icinga.com>
 #
 class icinga2::feature::perfdata(
   $ensure                  = present,
