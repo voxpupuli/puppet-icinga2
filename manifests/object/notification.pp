@@ -110,24 +110,21 @@ define icinga2::object::notification (
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
-  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
-  validate_string ($host_name)
-  if $service_name { validate_string ($service_name)}
-  if $users { validate_array ($users )}
-  if $user_groups { validate_array ($user_groups )}
-  if $times { validate_hash ($times )}
-  if $command { validate_string ($command )}
-  if $interval { validate_integer ($interval )}
-  if $period { validate_string ($period )}
-  if $zone { validate_string ($zone) }
-  if $types { validate_array ($types) }
-  if $states { validate_array ($states) }
-  if $assign { validate_array ($assign) }
-  if $ignore { validate_array ($ignore) }
+  validate_string($host_name)
+  if $service_name { validate_string($service_name) }
+  if $users { $_users = any2array($users) } else { $_users = undef }
+  if $user_groups { $_user_groups = any2array($user_groups) } else { $_user_groups = undef }
+  if $times { validate_hash($times) }
+  if $command { validate_string($command) }
+  if $interval { validate_integer($interval) }
+  if $period { validate_string($period) }
+  if $zone { validate_string($zone) }
+  if $types { $_types = any2array($types) } else { $_types = undef }
+  if $states { $_states = any2array($states) } else { $_states = undef }
 
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -138,15 +135,15 @@ define icinga2::object::notification (
     'host_name' => $host_name,
     'service_name' => $service_name,
     'vars' => $vars,
-    'users' => $users,
-    'user_groups' => $user_groups,
+    'users' => $_users,
+    'user_groups' => $_user_groups,
     'times' => $times,
     'command' => $command,
     'interval' => $interval,
     'period' => $period,
     'zone' => $zone,
-    'types' => $types,
-    'states' => $states,
+    'types' => $_types,
+    'states' => $_states,
   }
 
   # create object
