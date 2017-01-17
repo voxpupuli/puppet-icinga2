@@ -19,6 +19,9 @@ describe('icinga2::object::user', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/object User "bar"/)
+                              .without_content(/groups =/)
+                              .without_content(/types =/)
+                              .without_content(/states =/)
                               .without_content(/assign where/)
                               .without_content(/ignore where/) }
 
@@ -82,10 +85,12 @@ describe('icinga2::object::user', :type => :define) do
     end
 
 
-    context "#{os} with groups => foo (not a valid array)" do
+    context "#{os} with groups => foo" do
       let(:params) { {:groups => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/groups = \[ "foo", \]/) }
     end
 
 
@@ -123,10 +128,12 @@ describe('icinga2::object::user', :type => :define) do
     end
 
 
-    context "#{os} with types => foo (not a valid array)" do
+    context "#{os} with types => foo" do
       let(:params) { {:types => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/types = \[ "foo", \]/) }
     end
 
 
@@ -139,10 +146,12 @@ describe('icinga2::object::user', :type => :define) do
     end
 
 
-    context "#{os} with states => foo (not a valid array)" do
+    context "#{os} with states => foo" do
       let(:params) { {:states => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/states = \[ "foo", \]/) }
     end
   end
 end
@@ -178,6 +187,9 @@ describe('icinga2::object::user', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/object User "bar"/)
+                            .without_content(/groups =/)
+                            .without_content(/types =/)
+                            .without_content(/states =/)
                             .without_content(/assign where/)
                             .without_content(/ignore where/) }
 
@@ -241,10 +253,12 @@ describe('icinga2::object::user', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with groups => foo (not a valid array)" do
+  context "Windows 2012 R2 with groups => foo" do
     let(:params) { {:groups => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/groups = \[ "foo", \]/) }
   end
 
 
@@ -282,10 +296,12 @@ describe('icinga2::object::user', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with types => foo (not a valid array)" do
+  context "Windows 2012 R2 with types => foo" do
     let(:params) { {:types => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/types = \[ "foo", \]/) }
   end
 
 
@@ -298,10 +314,12 @@ describe('icinga2::object::user', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with states => foo (not a valid array)" do
+  context "Windows 2012 R2 with states => foo" do
     let(:params) { {:states => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::User::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/states = \[ "foo", \]/) }
   end
 
 end

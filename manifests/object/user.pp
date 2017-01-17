@@ -80,19 +80,18 @@ define icinga2::object::user (
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($user_name)
-  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
-  if $display_name { validate_string ($display_name) }
-  if $email { validate_string ($email) }
-  if $pager { validate_string ($pager) }
-  if $groups { validate_array ($groups) }
-  if $enable_notifications { validate_bool ($enable_notifications) }
-  if $period { validate_string ($period) }
-  if $types { validate_array ($types) }
-  if $states { validate_array ($states) }
+  if $display_name { validate_string($display_name) }
+  if $email { validate_string($email) }
+  if $pager { validate_string($pager) }
+  if $groups { $_groups = any2array($groups) } else { $_groups = undef }
+  if $enable_notifications { validate_bool($enable_notifications) }
+  if $period { validate_string($period) }
+  if $types { $_types = any2array($types) } else { $_types = undef }
+  if $states { $_states = any2array ($states) } else { $_states = undef }
 
   validate_integer ( $order )
 
@@ -102,11 +101,11 @@ define icinga2::object::user (
     'email'                => $email,
     'pager'                => $pager,
     'vars'                 => $vars,
-    'groups'               => $groups,
+    'groups'               => $_groups,
     'enable_notifications' => $enable_notifications,
     'period'               => $period,
-    'types'                => $types,
-    'states'               => $states,
+    'types'                => $_types,
+    'states'               => $_states,
   }
 
   # create object
