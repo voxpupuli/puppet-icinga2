@@ -114,7 +114,7 @@ define icinga2::object::dependency (
   if $disable_notifications { validate_bool ( $disable_notifications ) }
   if $ignore_soft_states { validate_bool ( $ignore_soft_states ) }
   if $period { validate_string ( $period ) }
-  if $states { validate_array ( $states ) }
+  if $states { $_states = any2array($states) } else { $_states = undef }
 
   # compose attributes
   $attrs = {
@@ -126,7 +126,7 @@ define icinga2::object::dependency (
     'disable_notifications' => $disable_notifications,
     'ignore_soft_states'    => $ignore_soft_states,
     'period'                => $period,
-    'states'                => $states,
+    'states'                => $_states,
   }
 
   # create object
