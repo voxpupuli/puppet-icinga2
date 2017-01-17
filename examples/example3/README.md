@@ -2,9 +2,19 @@
 
 This is an (almost) complete example for a master-agent set-up using virtual resources in Puppet.
 
+__Note:__ If you're getting "_Error 400 on SERVER: "puppet.domain.tld" is not an Array. It looks to be a String at […]/modules/icinga2/manifests/object/zone.pp:51 on node node.domain.tld_" issues while applying this configuration on your nodes, you're most likely running into a [known bug in the Puppet parser](https://tickets.puppetlabs.com/browse/PUP-1299). In order to make this work, you will need to switch to the [Future Parser](https://docs.puppet.com/puppet/3.8/experiments_future.html):
+
+
+```
+# environment.conf
+manifest = site.pp
+modulepath = modules:site
+parser = future
+```
+
 ### Manifests
 
-All nodes that should be monitored inherit from the monitorednode role, thus applying the `profile::icinga::agent` class.
+All nodes that should be monitored inherit from the _monitorednode_ role, thus applying the `profile::icinga::agent` class.
 
 Each monitored node exports itself as an endpoint and a zone. This information is then automatically collected on the master to generate the necessary configuration files.
 
