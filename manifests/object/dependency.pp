@@ -102,7 +102,6 @@ define icinga2::object::dependency (
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
-  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
