@@ -64,13 +64,14 @@ define icinga2::object::checkcommand(
   validate_integer($order)
 
   if $checkcommand_name { validate_string($checkcommand_name) }
+  if $command { $_command = any2array($command) } else { $_command = undef }
   if $env { validate_hash($env) }
   if $timeout { validate_integer($timeout) }
   if $arguments { validate_hash($arguments) }
 
   # compose the attributes
   $attrs = {
-    command   => any2array($command),
+    command   => $_command,
     env       => $env,
     vars      => $vars,
     timeout   => $timeout,

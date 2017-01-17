@@ -19,6 +19,7 @@ describe('icinga2::object::checkcommand', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
         .with({'target' => '/bar/baz'})
+        .without_content(/command =/)
         .with_content(/object CheckCommand "bar"/) }
     end
 
@@ -106,12 +107,13 @@ describe('icinga2::object::checkcommand', :type => :define) do
   ] }
 
   context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
-    let(:params) { {:target => 'C:/bar/baz', :command => ['foocommand']} }
+    let(:params) { {:target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
       .with({'target' => 'C:/bar/baz'})
+      .without_content(/command =/)
       .with_content(/object CheckCommand "bar"/) }
   end
 
