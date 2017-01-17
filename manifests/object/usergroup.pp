@@ -41,7 +41,7 @@ define icinga2::object::usergroup (
   $ensure         = present,
   $usergroup_name = $title,
   $display_name   = undef,
-  $groups         = [],
+  $groups         = undef,
   $assign         = [],
   $ignore         = [],
   $import         = [],
@@ -56,13 +56,12 @@ define icinga2::object::usergroup (
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($usergroup_name)
-  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
-  if $display_name { validate_string ($display_name) }
-  if $groups { validate_array ($groups) }
+  if $display_name { validate_string($display_name) }
+  if $groups { $_groups = any2array($groups) } else { $_groups = undef }
 
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -71,7 +70,7 @@ define icinga2::object::usergroup (
   # compose attributes
   $attrs = {
     'display_name'  => $display_name,
-    'groups'        => $groups,
+    'groups'        => $_groups,
   }
 
   # create object
