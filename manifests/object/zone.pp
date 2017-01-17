@@ -31,7 +31,7 @@
 define icinga2::object::zone(
   $ensure    = present,
   $zone_name = $title,
-  $endpoints = [],
+  $endpoints = undef,
   $parent    = undef,
   $global    = false,
   $target    = undef,
@@ -48,6 +48,7 @@ define icinga2::object::zone(
   validate_string($zone_name)
   validate_integer($order)
 
+  if $endpoints { $_endpoints = any2array($endpoints) } else { $_endpoints = undef }
   if $parent { validate_string($parent) }
   if $global { validate_bool($global) }
 
@@ -67,7 +68,7 @@ define icinga2::object::zone(
     }
   } else {
     $attrs = {
-      endpoints => any2array($endpoints),
+      endpoints => $_endpoints,
       parent    => $parent,
     }
   }

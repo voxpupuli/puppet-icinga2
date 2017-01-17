@@ -19,6 +19,7 @@ describe('icinga2::object::zone', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
         .with({'target' => '/bar/baz'})
+        .without_content(/endpoints =/)
         .with_content(/object Zone "bar"/) }
     end
 
@@ -116,6 +117,7 @@ describe('icinga2::object::zone', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
                             .with({'target' => 'C:/bar/baz'})
+                            .without_content(/endpoints =/)
                             .with_content(/object Zone "bar"/) }
   end
 
