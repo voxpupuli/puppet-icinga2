@@ -60,25 +60,24 @@ define icinga2::object::timeperiod (
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($timeperiod_name)
-  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
 
-  if $display_name { validate_string ($display_name) }
-  if $ranges { validate_hash ($ranges) }
-  if $prefer_includes { validate_bool ($prefer_includes) }
-  if $excludes { validate_array ($excludes) }
-  if $includes { validate_array ($includes) }
+  if $display_name { validate_string($display_name) }
+  if $ranges { validate_hash($ranges) }
+  if $prefer_includes { validate_bool($prefer_includes) }
+  if $excludes { $_excludes = any2array($excludes) } else { $_excludes = undef }
+  if $includes { $_includes = any2array($includes) } else { $_includes = undef }
 
   # compose attributes
   $attrs = {
     'display_name'    => $display_name,
     'ranges'          => $ranges,
     'prefer_includes' => $prefer_includes,
-    'excludes'        => $excludes,
-    'includes'        => $includes,
+    'excludes'        => $_excludes,
+    'includes'        => $_includes,
   }
 
   # create object
