@@ -1,5 +1,7 @@
 class profile::icinga2::master {
 
+  contain ::profile::icinga2::plugins
+
   class { '::icinga2':
     manage_repo    => true,
     purge_features => false,
@@ -8,8 +10,6 @@ class profile::icinga2::master {
       'ZoneName' => 'master',
     }
   }
-
-  package { 'nagios-plugins-all': }
 
   # Feature: api
   class { '::icinga2::feature::api':

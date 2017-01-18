@@ -1,8 +1,10 @@
 class profile::icinga2::agent(
   $parent_endpoints,
   $parent_zone,
-  $agent_ip = $::ipaddress_enp0s8,
+  $agent_ip = $::ipaddress,
 ) {
+
+  contain ::profile::icinga2::plugins
 
   validate_hash($parent_endpoints)
 
@@ -11,8 +13,6 @@ class profile::icinga2::agent(
     confd       => false,
     features  => ['checker','mainlog'],
   }
-
-  package { 'nagios-plugins-all': }
 
   # Feature: api
   class { '::icinga2::feature::api':

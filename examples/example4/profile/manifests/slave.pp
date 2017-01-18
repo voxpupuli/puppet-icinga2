@@ -2,8 +2,10 @@ class profile::icinga2::slave(
   $slave_zone,
   $parent_endpoints,
   $parent_zone = 'master',
-  $slave_ip = $::ipaddress_enp0s8,
+  $slave_ip = $::ipaddress,
 ) {
+
+  contain ::profile::icinga2::plugins
 
   validate_array($parent_endpoints)
 
@@ -15,8 +17,6 @@ class profile::icinga2::slave(
       'ZoneName' => $slave_zone,
     }
   }
-
-  package { 'nagios-plugins-all': }
 
   # Feature: api
   class { '::icinga2::feature::api':
