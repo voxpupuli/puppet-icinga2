@@ -20,25 +20,25 @@
 
 ## Overview
 
-Icinga 2 is a widely used open source monitoring software. This Puppet module helps installing and managing
+Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
->> This Module is a rewrite of [puppet-icinga2] and will replace it in the future.
+>> This module is a rewrite of [puppet-icinga2] and will replace it in the future.
 
 ## Module Description
 
-This module installs and configures Icinga 2 on your Linux or Windows hosts
- 
-By default it will use packages provided by your distributions repository, respectively
+This module installs and configures Icinga 2 on your Linux or Windows hosts.
+
+By default it uses packages provided by your distribution's repository or
 [Chocolatey] on Windows.
 
-The module can be enabled to use [packages.icinga.com] as primary repository, which will give you the ability to install
-the latest Icinga 2 releases. All features and objects available in Icinga 2 can be enabled and configured with this
-module.
+The module can also be configured to use [packages.icinga.com] as the primary repository, which enables you to install
+Icinga 2 versions that are newer than the ones provided by your distribution's vendor. All features and objects
+available in Icinga 2 can be enabled and configured with this module.
 
 ## Setup
 
-### What the Icinga 2 Puppet module affects
+### What the Icinga 2 Puppet module supports
 
 * Installation of packages
 * Configuration of features
