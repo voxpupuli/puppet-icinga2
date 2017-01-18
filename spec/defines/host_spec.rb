@@ -20,7 +20,8 @@ describe('icinga2::object::host', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
         .with({'target' => '/bar/baz'})
         .with_content(/object Host "bar"/)
-        .with_content(/check_command = "foocommand"/)}
+        .with_content(/check_command = "foocommand"/)
+        .without_content(/groups =/)}
     end
 
 
@@ -28,22 +29,6 @@ describe('icinga2::object::host', :type => :define) do
       let(:params) { {:target => 'bar/baz', :check_command => 'foocommand'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
-    end
-
-
-    context "#{os} with import => [foo, bar]" do
-      let(:params) { {:import => ['foo','bar'], :target => '/bar/baz', :check_command => 'foocommand'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
-        .with({'target' => '/bar/baz'})
-        .with_content(/import "foo"\n\s*import "bar"/) }
-    end
-
-
-    context "#{os} with import => foo (not a valid array)" do
-      let(:params) { {:import => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -83,10 +68,12 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
-    context "#{os} with groups => foo (not a valid array)" do
+    context "#{os} with groups => foo" do
       let(:params) { {:groups => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/groups = \[ "foo", \]/) }
     end
 
 
@@ -482,7 +469,8 @@ describe('icinga2::object::host', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
                             .with({'target' => '/bar/baz'})
                             .with_content(/object Host "bar"/)
-                            .with_content(/check_command = "foocommand"/)}
+                            .with_content(/check_command = "foocommand"/)
+                            .without_content(/groups =/)}
   end
 
 
@@ -490,22 +478,6 @@ describe('icinga2::object::host', :type => :define) do
     let(:params) { {:target => 'bar/baz', :check_command => 'foocommand'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
-  end
-
-
-  context "Windows 2012 R2 with import => [foo, bar]" do
-    let(:params) { {:import => ['foo','bar'], :target => '/bar/baz', :check_command => 'foocommand'} }
-
-    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/import "foo"\r\n\s*import "bar"/) }
-  end
-
-
-  context "Windows 2012 R2 with import => foo (not a valid array)" do
-    let(:params) { {:import => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -545,10 +517,12 @@ describe('icinga2::object::host', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with groups => foo (not a valid array)" do
+  context "Windows 2012 R2 with groups => foo" do
     let(:params) { {:groups => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/groups = \[ "foo", \]/) }
   end
 
 

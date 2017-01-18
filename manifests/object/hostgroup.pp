@@ -48,13 +48,11 @@ define icinga2::object::hostgroup(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($hostgroup_name)
-  validate_array($assign)
-  validate_array($ignore)
   validate_string($order)
   validate_absolute_path($target)
 
   if $display_name { validate_string($display_name) }
-  if $groups { validate_array($groups) }
+  if $groups { $_groups = any2array($groups) } else { $_groups = undef }
 
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -63,7 +61,7 @@ define icinga2::object::hostgroup(
   # compose the attributes
   $attrs = {
     display_name   => $display_name,
-    groups         => $groups,
+    groups         => $_groups,
   }
 
   # create object

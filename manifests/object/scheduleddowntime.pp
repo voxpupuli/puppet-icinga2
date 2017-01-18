@@ -8,13 +8,15 @@
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
 # [*scheduleddowntime_name*]
-#   Set the Icinga 2 name of the scheduleddowntime object. Defaults to title of the define resource.
+#   Set the Icinga 2 name of the scheduleddowntime object.
+#   Defaults to title of the define resource.
 #
 # [*host_name*]
 #     The name of the host this comment belongs to.
 #
 # [*service_name*]
-#     The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+#     The short name of the service this comment belongs to. If omitted,
+#     this comment object is treated as host comment.
 #
 # [*author*]
 #     The author's name.
@@ -29,14 +31,16 @@
 #     The duration as number.
 #
 # [*ranges*]
-#     A dictionary containing information which days and durations apply to this timeperiod.
+#     A dictionary containing information which days and durations
+#     apply to this timeperiod.
 #
 # [*apply*]
-#   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#   Dispose an apply instead an object if set to 'true'. Value is taken as
+#   statement, i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
 # [*apply_target*]
-#   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
+#   An object type on which to target the apply rule. Valid values
+#   are `Host` and `Service`. Defaults to `Host`.
 #
 # [*assign*]
 #   Assign user group members using the group assign rules.

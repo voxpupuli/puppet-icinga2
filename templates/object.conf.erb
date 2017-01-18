@@ -10,10 +10,10 @@
  "<%= @object_name %>" <% end -%>
 <% if @apply && @apply_target %>to <%= @apply_target -%><% end -%> {
 <% end -%>
-<% @import.each do |i| -%>
+<% @_import.each do |i| -%>
   import "<%= i %>"
 <% end -%>
-<% unless @import.empty? %><%= "\n" %><% end -%>
+<% unless @_import.empty? %><%= "\n" %><% end -%>
 <% if @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+in\s+.+$/ -%>
 <%= scope.function_icinga2_attributes([@_attrs.merge({$1 => :undef}),2]) -%>
 <% elsif @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ %>

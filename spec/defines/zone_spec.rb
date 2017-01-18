@@ -19,6 +19,7 @@ describe('icinga2::object::zone', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
         .with({'target' => '/bar/baz'})
+        .without_content(/endpoints =/)
         .with_content(/object Zone "bar"/) }
     end
 
@@ -54,10 +55,11 @@ describe('icinga2::object::zone', :type => :define) do
     end
 
 
-    context "#{os} with endpoints => foo (not a valid array)" do
+    context "#{os} with endpoints => foo" do
       let(:params) { {:endpoints => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
+        .with_content(/endpoints = \[ "foo", \]/) }
     end
 
 
@@ -115,6 +117,7 @@ describe('icinga2::object::zone', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
                             .with({'target' => 'C:/bar/baz'})
+                            .without_content(/endpoints =/)
                             .with_content(/object Zone "bar"/) }
   end
 
@@ -150,10 +153,11 @@ describe('icinga2::object::zone', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with endpoints => foo (not a valid array)" do
+  context "Windows 2012 R2 with endpoints => foo" do
     let(:params) { {:endpoints => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::Zone::bar')
+                            .with_content(/endpoints = \[ "foo", \]/) }
   end
 
 

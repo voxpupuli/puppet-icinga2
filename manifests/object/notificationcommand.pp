@@ -69,20 +69,18 @@ define icinga2::object::notificationcommand (
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($notificationcommand_name)
-  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
-  if !is_array($command) { validate_string($command) }
-  if !is_string($command) { validate_array($command) }
+  if $command { $_command = any2array($command) } else { $_command = undef }
   if $env { validate_hash ($env) }
   if $timeout { validate_integer ($timeout) }
   if $arguments { validate_hash ($arguments) }
 
   # compose attributes
   $attrs = {
-    'command'   => $command,
+    'command'   => $_command,
     'env'       => $env,
     'vars'      => $vars,
     'timeout'   => $timeout,

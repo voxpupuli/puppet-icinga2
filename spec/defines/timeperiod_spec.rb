@@ -19,6 +19,8 @@ describe('icinga2::object::timeperiod', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/object TimePeriod "bar"/)
+                              .without_content(/excludes =/)
+                              .without_content(/includes =/)
                               .without_content(/assign where/)
                               .without_content(/ignore where/) }
 
@@ -86,10 +88,12 @@ describe('icinga2::object::timeperiod', :type => :define) do
     end
 
 
-    context "#{os} with excludes => foo (not a valid array)" do
+    context "#{os} with excludes => foo" do
       let(:params) { {:excludes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/excludes = \[ "foo", \]/) }
     end
 
 
@@ -102,10 +106,12 @@ describe('icinga2::object::timeperiod', :type => :define) do
     end
 
 
-    context "#{os} with includes => foo (not a valid array)" do
+    context "#{os} with includes => foo" do
       let(:params) { {:includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/includes = \[ "foo", \]/) }
     end
   end
 end
@@ -141,6 +147,8 @@ describe('icinga2::object::TimePeriod', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/object TimePeriod "bar"/)
+                            .without_content(/excludes =/)
+                            .without_content(/includes =/)
                             .without_content(/assign where/)
                             .without_content(/ignore where/) }
 
@@ -208,10 +216,12 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with excludes => foo (not a valid array)" do
+  context "Windows 2012 R2 with excludes => foo" do
     let(:params) { {:excludes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/excludes = \[ "foo", \]/) }
   end
 
 
@@ -224,10 +234,12 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with includes => foo (not a valid array)" do
+  context "Windows 2012 R2 with includes => foo" do
     let(:params) { {:includes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::TimePeriod::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/includes = \[ "foo", \]/) }
   end
 end
 

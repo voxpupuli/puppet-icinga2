@@ -91,9 +91,6 @@ define icinga2::object(
   unless is_bool($apply) { validate_re($apply, '^.+\s+(=>\s+.+\s+)?in\s+.+$') }
   if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.") }
-  validate_array($import)
-  validate_array($assign)
-  validate_array($ignore)
   validate_hash($attrs)
   validate_string($object_type)
   validate_absolute_path($target)
@@ -103,9 +100,10 @@ define icinga2::object(
     fail('The object type must be different from the apply target')
   }
 
-  $_attrs = merge($attrs, {
-    'assign where' => $assign,
-    'ignore where' => $ignore,
+  $_import = any2array($import)
+  $_attrs  = merge($attrs, {
+    'assign where' => any2array($assign),
+    'ignore where' => any2array($ignore),
   })
 
   if !defined(Concat[$target]) {

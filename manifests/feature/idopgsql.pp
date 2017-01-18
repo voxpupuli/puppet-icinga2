@@ -104,7 +104,7 @@ class icinga2::feature::idopgsql(
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
   if $cleanup { validate_hash($cleanup) }
-  if $categories { validate_array($categories) }
+  if $categories { $_categories = any2array($categories) } else { $_categories = undef }
   validate_bool($import_schema)
 
   package { 'icinga2-ido-pgsql':
@@ -134,7 +134,7 @@ class icinga2::feature::idopgsql(
     enable_ha             => $enable_ha,
     failover_timeout      => $failover_timeout,
     cleanup               => $cleanup,
-    categories            => $categories,
+    categories            => $_categories,
   }
 
   # create object

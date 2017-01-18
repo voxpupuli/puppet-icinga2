@@ -60,20 +60,18 @@ define icinga2::object::checkcommand(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_array($import)
   validate_absolute_path($target)
   validate_integer($order)
 
   if $checkcommand_name { validate_string($checkcommand_name) }
-  if !is_array($command) { validate_string($command) }
-  if !is_string($command) { validate_array($command) }
+  if $command { $_command = any2array($command) } else { $_command = undef }
   if $env { validate_hash($env) }
   if $timeout { validate_integer($timeout) }
   if $arguments { validate_hash($arguments) }
 
   # compose the attributes
   $attrs = {
-    command   => $command,
+    command   => $_command,
     env       => $env,
     vars      => $vars,
     timeout   => $timeout,

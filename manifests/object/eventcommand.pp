@@ -65,7 +65,6 @@ define icinga2::object::eventcommand (
   validate_string($eventcommand_name)
   validate_absolute_path($target)
   validate_string($order)
-  validate_array($import)
 
   if !is_array($command) { validate_string($command) }
   if !is_string($command) { validate_array($command) }

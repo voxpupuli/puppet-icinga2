@@ -63,7 +63,6 @@ define icinga2::object::apiuser(
   validate_string($apiuser_name)
   validate_string($order)
   validate_absolute_path($target)
-  validate_array($permissions)
 
   if $password { validate_string($password) }
   if $client_cn { validate_string($client_cn) }
@@ -72,7 +71,7 @@ define icinga2::object::apiuser(
   $attrs = {
     password    => $password,
     client_cn   => $client_cn,
-    permissions => $permissions,
+    permissions => any2array($permissions),
   }
 
   # create object
