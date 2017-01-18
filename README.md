@@ -21,7 +21,7 @@
 ## Overview
 
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
-configuration of Icinga 2 on multiple operating sytems.
+configuration of Icinga 2 on multiple operating systems.
 
 >> This module is a rewrite of [puppet-icinga2] and will replace it in the future.
 
