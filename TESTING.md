@@ -71,8 +71,8 @@ cd puppet-icinga2-rewrite/serverspec
 rake spec:i2debian7puppet4
 ```
 
-### Windows
-Since we don't want to violate any license of Microsoft, we are not making any Windows virtual box publicly available.
+### Windows / SLES
+Since we don't want to violate any licenses of Microsoft or SUSE, Windows and SELS boxes are not available publicly.
 
 [README.md]: README.md
 [puppet-lint]: http://puppet-lint.com/
