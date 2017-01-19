@@ -72,7 +72,7 @@ rake spec:i2debian7puppet4
 ```
 
 ### Windows / SLES
-Since we don't want to violate any licenses of Microsoft or SUSE, Windows and SELS boxes are not available publicly.
+Since we don't want to violate any licenses of Microsoft or SUSE, Windows and SLES boxes are not available publicly.
 
 [README.md]: README.md
 [puppet-lint]: http://puppet-lint.com/
