@@ -12,11 +12,6 @@ reviewed and merged if they suit some general guidelines:
 * Your change does not handle third party software for which dedicated Puppet modules exist
   * such as creating databases, installing webserver etc.
 
-## Issue Tracker
-If you think your changes need further discussion, you found a bug or have a feature request, login to
-[dev.icinga.com] and create an issue. The issue number should be used in your branch name as reference to a certain bug
-or feature discussion.
-
 ## Branches
 Choosing a proper name for a branch helps us identify its purpose and possibly find an associated bug or feature.
 Generally a branch name should include a topic such as `bug` or `feature` followed by a description and an issue number
@@ -35,7 +30,6 @@ tests as well. A complete guide on how to run tests is described in [TESTING.md]
 
 [fork the project]: https://help.github.com/articles/fork-a-repo/
 [pull request]: https://help.github.com/articles/using-pull-requests/
-[dev.icinga.com]: https://dev.icinga.com/puppet-icinga2-rewrite
 [RSpec]: http://rspec-puppet.com/
 [Serverspec]: http://serverspec.org/
 [TESTING.md]: TESTING.md
