@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the object, absent disables it. Defaults to present.
 #
+# [*endpoint*]
+#   DEPRECATED. Do not use this parameter, use endpoint_name instead.
+#
 # [*endpoint_name*]
 #   Set the Icinga 2 name of the endpoint object. Defaults to title of the define resource.
 #
@@ -32,6 +35,7 @@
 #
 define icinga2::object::endpoint(
   $ensure        = present,
+  $enpoint       = $title,
   $endpoint_name = $title,
   $host          = undef,
   $port          = undef,
@@ -49,7 +53,13 @@ define icinga2::object::endpoint(
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_integer($order)
 
-  if $endpoint_name { validate_string($endpoint_name) }
+  if $endpoint_name {
+    $_endpoint_name = $endpoint_name
+  } else {
+    $_endpoint_name = $endpoint
+  }
+
+  if $_endpoint_name { validate_string($_endpoint_name) }
   if $host { validate_string($host) }
   if $port { validate_integer($port) }
   if $log_duration { validate_re($log_duration, '^\d+\.?\d*[d|h|m|s]?$') }
@@ -70,7 +80,7 @@ define icinga2::object::endpoint(
   # create object
   icinga2::object { "icinga2::object::Endpoint::${title}":
     ensure      => $ensure,
-    object_name => $endpoint_name,
+    object_name => $_endpoint_name,
     object_type => 'Endpoint',
     attrs       => $attrs,
     target      => $_target,
