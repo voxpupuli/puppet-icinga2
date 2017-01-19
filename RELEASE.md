@@ -60,7 +60,6 @@ Upload via webinterface on [forge.puppet.com].
 [github-changelog-generator]: https://github.com/skywinder/github-changelog-generator
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 [CHANGELOG.md]: CHANGELOG.md
-[dev.icinga.com]: https://dev.icinga.com/puppet-icinga2-rewrite
 [AUTHORS]: AUTHORS
 [.mailmap]: .mailmap
 [forge.puppet.com]: https://forge.puppet.com/

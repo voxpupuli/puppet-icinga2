@@ -26,7 +26,7 @@ This set-up does not use any "manually" created `Service` objects, but _applies_
 
 There are two things to note here about `Apply Rules`:
 
-1. We don't use `icinga2::object::service` to define the apply rules, since the current version (0.7.1) of this Puppet module does not yet support the entire range of available functions and macros. Instead, we use `file` resources from a custom, dedicated module, together with the _icinga2::config::file_ tag. The tag makes sure the files will be put in place at the correct point in time and the icinga2 service restarted afterwards (see the module's [README](https://github.com/Icinga/puppet-icinga2-rewrite#custom-configuration) for more information).
+1. We don't use `icinga2::object::service` to define the apply rules, since the current version (0.7.1) of this Puppet module does not yet support the entire range of available functions and macros. Instead, we use `file` resources from a custom, dedicated module, together with the _icinga2::config::file_ tag. The tag makes sure the files will be put in place at the correct point in time and the icinga2 service restarted afterwards (see the module's [README](https://github.com/Icinga/puppet-icinga2#custom-configuration) for more information).
 
 An example for one such apply rule file would be:
 

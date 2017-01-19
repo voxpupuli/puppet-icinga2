@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icinga2-rewrite.svg?branch=master)](https://travis-ci.org/Icinga/puppet-icinga2-rewrite)
+[![Build Status](https://travis-ci.org/Icinga/puppet-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/puppet-icinga2)
 
 # Icinga 2 Puppet Module
 
@@ -2194,7 +2194,7 @@ String to set the position in the target file, sorted alpha numeric.
 
 
 ## Development
-A roadmap of this project is located at https://dev.icinga.com/projects/puppet-icinga2-rewrite/roadmap. Please consider
+A roadmap of this project is located at https://github.com/Icinga/puppet-icinga2/milestones. Please consider
 this roadmap when you start contributing to the project.
 
 ### Contributing
