@@ -13,9 +13,15 @@ git commit -am "Update AUTHORS"
 ```
 
 ## 2. Changelog
-We currently don't have any automation to generate the content of [CHANGELOG]. A possible way to collect all changes made
-since the last version is to look at the merged pull requests. Issue numbers in branch will lead you also to the relevant
-tickets on [dev.icinga.com].
+Install [github-changelog-generator]
+```bash
+gem install github_changelog_generator
+```
+
+Generate [CHANGELOG.md]
+```bash
+github_changelog_generator -t <github-access-token>
+```
 
 ## 3. Version
 Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
@@ -43,10 +49,18 @@ git push --tags
 
 
 ## Puppet Forge
-TODO: Write Puppet Forge workflow.
+Currently, we build and upload the module manually. This may be automated in the future with Travis-CI.
 
+Build module
+```bash
+puppet module build puppet-icinga2
+```
+Upload via webinterface on [forge.puppet.com].
+
+[github-changelog-generator]: https://github.com/skywinder/github-changelog-generator
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
-[CHANGELOG]: CHANGELOG
+[CHANGELOG.md]: CHANGELOG.md
 [dev.icinga.com]: https://dev.icinga.com/puppet-icinga2-rewrite
 [AUTHORS]: AUTHORS
 [.mailmap]: .mailmap
+[forge.puppet.com]: https://forge.puppet.com/
