@@ -23,8 +23,6 @@
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
->> This module is a rewrite of [puppet-icinga2] and will replace it in the future.
-
 ## Module Description
 
 This module installs and configures Icinga 2 on your Linux or Windows hosts.
@@ -79,12 +77,13 @@ Other operating systems or versions may work but have not been tested.
 
 ### Installing Icinga 2
 
-The default class `icinga2` will install and configure a basic installation of Icinga 2 on your system. This will enable
-the features `checker`, `mainlog` and `notification`.
+The default class `icinga2` installs and configures a basic installation of Icinga 2. The features `checker`, `mainlog`
+and `notification` are enabled by default.
 
-Icinga 2 will be installed from packages, by default from your distribution. On Windows systems we use [Chocolatey].
+By default, your distribution's packages are used to install Icinga 2. On Windows systems we use the [Chocolatey]
+package manager.
  
-You can to enable the `manage_repo` parameter, to activate the official package repositories from [packages.icinga.com].
+Use the `manage_repo` parameter to configure the official [packages.icinga.com] repositories.
 
 ``` puppet
 class { '::icinga2':
@@ -94,10 +93,10 @@ class { '::icinga2':
 
 ### Enabling Features
 
-Each Icinga 2 feature can be enabled or disabled by using the according classes. In addition to that, there is a set of
-default features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
+Each Icinga 2 feature can be enabled or disabled by using the according classes. Additionally there is a set of default
+features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
 
-The default set of features can be changed by setting the `features` parameter:
+The default set of features can be changed with the `features` parameter:
 
 ``` puppet
 class { '::icinga2':
@@ -106,7 +105,7 @@ class { '::icinga2':
 }
 ```
 
-You can configure, and enable features by using the features Puppet class:
+Enable and configure features by using the associated classes:
 
 ``` puppet
 class { '::icinga2::feature::graphite':
