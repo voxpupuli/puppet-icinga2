@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.0.1](https://github.com/Icinga/puppet-icinga2/tree/v1.0.1) (2017-01-19)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.0...v1.0.1)
+
+**Closed issues:**
+
+- Fix Puppet version requirement in metadata.json [\#205](https://github.com/Icinga/puppet-icinga2/issues/205)
+
 ## [v1.0.0](https://github.com/Icinga/puppet-icinga2/tree/v1.0.0) (2017-01-19)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.8.1...v1.0.0)
 
