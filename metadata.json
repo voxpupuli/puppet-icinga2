@@ -1,6 +1,6 @@
 {
   "name": "icinga-icinga2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
@@ -9,7 +9,7 @@
   "issues_url": "https://github.com/icinga/puppet-icinga2/issues",
   "tags": ["monitoring"],
   "requirements": [
-    { "name": "puppet", "version_requirement": "3.x" }
+    { "name": "puppet", "version_requirement": ">= 3.8.0 < 5.0.0" }
   ],
   "dependencies": [
     { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.10.0 < 5.0.0" },
