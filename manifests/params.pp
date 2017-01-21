@@ -84,13 +84,15 @@ class icinga2::params {
   case $::kernel {
 
     'linux': {
-      $conf_dir  = '/etc/icinga2'
-      $log_dir   = '/var/log/icinga2'
-      $run_dir   = '/var/run/icinga2'
-      $spool_dir = '/var/spool/icinga2'
-      $cache_dir = '/var/cache/icinga2'
-      $pki_dir   = "${conf_dir}/pki"
-      $ca_dir    = '/var/lib/icinga2/ca'
+      $conf_dir          = '/etc/icinga2'
+      $log_dir           = '/var/log/icinga2'
+      $run_dir           = '/var/run/icinga2'
+      $spool_dir         = '/var/spool/icinga2'
+      $cache_dir         = '/var/cache/icinga2'
+      $pki_dir           = "${conf_dir}/pki"
+      $ca_dir            = '/var/lib/icinga2/ca'
+      $ido_pgsql_package = 'icinga2-ido-pgsql'
+      $ido_mysql_package = 'icinga2-ido-mysql'
 
       case $::osfamily {
         'redhat': {
@@ -133,15 +135,18 @@ class icinga2::params {
     } # Linux
 
     'windows': {
-      $user      = 'SYSTEM'
-      $group     = undef
-      $conf_dir  = 'C:/ProgramData/icinga2/etc/icinga2'
-      $log_dir   = 'C:/ProgramData/icinga2/var/log/icinga2'
-      $run_dir   = 'C:/ProgramData/icinga2/var/run/icinga2'
-      $spool_dir = 'C:/ProgramData/icinga2/var/spool/icinga2'
-      $cache_dir = 'C:/ProgramData/icinga2/var/cache/icinga2'
-      $pki_dir   = "${conf_dir}/pki"
-      $ca_dir    = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
+      $user              = 'SYSTEM'
+      $group             = undef
+      $conf_dir          = 'C:/ProgramData/icinga2/etc/icinga2'
+      $log_dir           = 'C:/ProgramData/icinga2/var/log/icinga2'
+      $run_dir           = 'C:/ProgramData/icinga2/var/run/icinga2'
+      $spool_dir         = 'C:/ProgramData/icinga2/var/spool/icinga2'
+      $cache_dir         = 'C:/ProgramData/icinga2/var/cache/icinga2'
+      $pki_dir           = "${conf_dir}/pki"
+      $ca_dir            = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
+      $ido_pgsql_package = undef
+      $ido_mysql_package = undef
+
       $constants = {
         'PluginDir'          => 'C:/Program Files/ICINGA2/sbin',
         'PluginContribDir'   => 'C:/Program Files/ICINGA2/sbin',
@@ -151,6 +156,30 @@ class icinga2::params {
         'TicketSalt'         => '',
       }
     } # Windows
+
+    'FreeBSD': {
+      $conf_dir          = '/usr/local/etc/icinga2'
+      $log_dir           = '/var/log/icinga2'
+      $run_dir           = '/var/run/icinga2'
+      $spool_dir         = '/var/spool/icinga2'
+      $cache_dir         = '/var/cache/icinga2'
+      $pki_dir           = "${conf_dir}/pki"
+      $ca_dir            = '/var/icinga2/ca'
+      $user              = 'icinga'
+      $group             = 'icinga'
+      $lib_dir           = '/usr/local/lib/icinga2'
+      $ido_pgsql_package = undef
+      $ido_mysql_package = undef
+
+      $constants = {
+        'PluginDir'          => '/usr/local/libexec/nagios',
+        'PluginContribDir'   => '/usr/local/share/icinga2/include/plugins-contrib.d',
+        'ManubulonPluginDir' => '/usr/local/libexec/nagios',
+        'ZoneName'           => $::fqdn,
+        'NodeName'           => $::fqdn,
+        'TicketSalt'         => '',
+      }
+    } # FreeBSD
 
     default: {
       fail("Your plattform ${::osfamily} is not supported, yet.")

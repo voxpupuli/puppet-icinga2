@@ -150,12 +150,14 @@ class icinga2::feature::idomysql(
 ) {
 
   require ::icinga2::config
+  require ::icinga2::params
 
-  $owner     = $::icinga2::params::user
-  $group     = $::icinga2::params::group
-  $node_name = $::icinga2::_constants['NodeName']
-  $conf_dir  = $::icinga2::params::conf_dir
-  $ssl_dir   = "${::icinga2::params::pki_dir}/ido-mysql"
+  $owner             = $::icinga2::params::user
+  $group             = $::icinga2::params::group
+  $node_name         = $::icinga2::_constants['NodeName']
+  $conf_dir          = $::icinga2::params::conf_dir
+  $ssl_dir           = "${::icinga2::params::pki_dir}/ido-mysql"
+  $ido_mysql_package = $::icinga2::params::ido_mysql_package
 
   File {
     owner   => $owner,
@@ -284,8 +286,14 @@ class icinga2::feature::idomysql(
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
-  package { 'icinga2-ido-mysql':
-    ensure => installed,
+  if $ido_mysql_package {
+    package { $ido_mysql_package:
+      ensure => installed,
+      before => [
+        Exec['icinga2-ido-mysql'],
+        Icinga2::Feature['ido-mysql']
+      ]
+    }
   }
 
   if $import_schema {
@@ -294,7 +302,6 @@ class icinga2::feature::idomysql(
       path    => $::path,
       command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '/usr/share/icinga2-ido-mysql/schema/mysql.sql'",
       unless  => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
-      require => Package['icinga2-ido-mysql'],
     }
   }
 
@@ -337,6 +344,5 @@ class icinga2::feature::idomysql(
 
   icinga2::feature { 'ido-mysql':
     ensure  => $ensure,
-    require => Package['icinga2-ido-mysql']
   }
 }

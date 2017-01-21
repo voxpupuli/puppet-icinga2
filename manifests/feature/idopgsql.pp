@@ -88,8 +88,10 @@ class icinga2::feature::idopgsql(
 ) {
 
   require ::icinga2::config
+  require ::icinga2::params
 
-  $conf_dir  = $::icinga2::params::conf_dir
+  $conf_dir          = $::icinga2::params::conf_dir
+  $ido_pgsql_package = $::icinga2::params::ido_pgsql_package
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -107,8 +109,14 @@ class icinga2::feature::idopgsql(
   if $categories { validate_array($categories) }
   validate_bool($import_schema)
 
-  package { 'icinga2-ido-pgsql':
-    ensure => installed,
+  if $ido_pgsql_package {
+    package { $ido_pgsql_package:
+      ensure => installed,
+      before => [
+        Exec['idopgsql_import_schema'],
+        Icinga2::Feature['ido-pgsql'],
+      ]
+    }
   }
 
   if $import_schema {
@@ -118,7 +126,6 @@ class icinga2::feature::idopgsql(
       environment => ["PGPASSWORD=${password}"],
       command     => "psql -h '${host}' -U '${user}' -d '${database}' -w -f /usr/share/icinga2-ido-pgsql/schema/pgsql.sql",
       unless      => "psql -h '${host}' -U '${user}' -d '${database}' -w -c 'select version from icinga_dbversion'",
-      require     => Package['icinga2-ido-pgsql'],
     }
   }
 
@@ -159,6 +166,5 @@ class icinga2::feature::idopgsql(
 
   icinga2::feature { 'ido-pgsql':
     ensure  => $ensure,
-    require => Package['icinga2-ido-pgsql']
   }
 }
