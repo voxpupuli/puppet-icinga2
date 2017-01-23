@@ -207,9 +207,9 @@ define icinga2::object::service (
   validate_string($order)
 
   if $display_name { validate_string ($display_name) }
-  validate_string($host_name)
+  if $host_name { validate_string($host_name) }
   if $groups { validate_array ($groups) }
-  validate_string($check_command)
+  if $check_command { validate_string($check_command) }
   if $max_check_attempts { validate_integer ($max_check_attempts) }
   if $check_period { validate_string ($check_period) }
   if $check_timeout { validate_re($check_timeout, '^\d+\.?\d*[d|h|m|s]?$') }
