@@ -18,9 +18,9 @@ nodes = {
     :md5 => '7fb5b9b1c9dfdaed2da4ecb0d15eea99'
   },
   'i2debian8puppet4' => {
-    :box => 'debian-8.5-amd64-virtualbox',
-    :url => 'http://boxes.icinga.com/vagrant/debian/debian-8.5-amd64-virtualbox.box',
-    :md5 => '4562c14ba044a2a163836bfec3767e63'
+    :box => 'debian-8.7-amd64-virtualbox.box',
+    :url => 'http://boxes.icinga.com/vagrant/debian/debian-8.7-amd64-virtualbox.box',
+    :md5 => '23708d2cad32a96bfb1448be03f9bbc8'
   },
   'i2debian7puppet4' => {
     :box => 'debian-7.11-amd64-virtualbox',
