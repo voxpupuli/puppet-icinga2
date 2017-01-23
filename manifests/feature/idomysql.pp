@@ -179,7 +179,7 @@ class icinga2::feature::idomysql(
   validate_bool($enable_ha)
   validate_re($failover_timeout, '^\d+[ms]*$')
   if $cleanup { validate_hash($cleanup) }
-  if $categories { $_categories = any2array($categories) } else { $_categories = undef }
+  if $categories { validate_array($categories) }
   validate_bool($import_schema)
   if $ssl_capath { validate_absolute_path($ssl_capath) }
   if $ssl_cipher { validate_string($ssl_cipher) }
@@ -311,7 +311,7 @@ class icinga2::feature::idomysql(
     enable_ha             => $enable_ha,
     failover_timeout      => $failover_timeout,
     cleanup               => $cleanup,
-    categories            => $_categories,
+    categories            => $categories,
 
   }
 

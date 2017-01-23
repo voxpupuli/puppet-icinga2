@@ -19,7 +19,6 @@ describe('icinga2::object::checkcommand', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
         .with({'target' => '/bar/baz'})
-        .without_content(/command =/)
         .with_content(/object CheckCommand "bar"/) }
     end
 
@@ -33,12 +32,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
     end
 
 
-    context "#{os} with command => PluginDir + /bar" do
-      let(:params) { {:command => 'PluginDir + /bar', :target => '/bar/baz'} }
+    context "#{os} with command => foo" do
+      let(:params) { {:command => 'foo', :target => '/bar/baz'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
         .with({'target' => '/bar/baz'})
-        .with_content(/command = \[ PluginDir \+ "\/bar", \]/) }
+        .with_content(/command = "foo"/) }
     end
 
 
@@ -107,13 +106,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
   ] }
 
   context "Windows 2012 R2 with all defaults and target => C:/bar/baz" do
-    let(:params) { {:target => 'C:/bar/baz'} }
+    let(:params) { {:target => 'C:/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to contain_concat('C:/bar/baz') }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
       .with({'target' => 'C:/bar/baz'})
-      .without_content(/command =/)
       .with_content(/object CheckCommand "bar"/) }
   end
 
@@ -127,12 +125,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with command => PluginDir + /bar" do
-    let(:params) { {:command => 'PluginDir + /bar', :target => 'C:/bar/baz'} }
+  context "Windows 2012 R2 with command => foo" do
+    let(:params) { {:command => 'foo', :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
       .with({'target' => 'C:/bar/baz'})
-      .with_content(/command = \[ PluginDir \+ "\/bar", \]/) }
+      .with_content(/command = "foo"/) }
   end
 
 

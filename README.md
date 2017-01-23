@@ -73,6 +73,8 @@ This module has been tested on:
 
 Other operating systems or versions may work but have not been tested.
 
+It's recommended to enable the future parser when using this module in combination with exported resources.
+
 ## Usage
 
 ### Installing Icinga 2

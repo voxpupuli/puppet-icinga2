@@ -22,7 +22,6 @@ describe('icinga2::object::dependency', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                               .with({'target' => '/bar/baz'})
                               .with_content(/object Dependency "bar"/)
-                              .without_content(/states =/)
                               .without_content(/assign where/)
                               .without_content(/ignore where/) }
 
@@ -188,16 +187,14 @@ describe('icinga2::object::dependency', :type => :define) do
     end
 
 
-    context "#{os} with states => foo" do
+    context "#{os} with states => foo (not a valid array)" do
       let(:params) { {
           :states => 'foo',
           :target => '/bar/baz',
           :parent_host_name => 'parentfoo',
           :child_host_name => 'childfoo'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/states = \[ "foo", \]/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
   end
 end
@@ -237,7 +234,6 @@ describe('icinga2::object::dependency', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
                             .with({'target' => 'C:/bar/baz'})
                             .with_content(/object Dependency "bar"/)
-                            .without_content(/states =/)
                             .without_content(/assign where/)
                             .without_content(/ignore where/) }
 
@@ -403,15 +399,13 @@ describe('icinga2::object::dependency', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with states => foo" do
+  context "Windows 2012 R2 with states => foo (not a valid array)" do
     let(:params) { {
         :states => 'foo',
         :target => 'C:/bar/baz',
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::Dependency::bar')
-                            .with({'target' => 'C:/bar/baz'})
-                            .with_content(/states = \[ "foo", \]/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 end

@@ -102,6 +102,7 @@ define icinga2::object::dependency (
   unless is_bool($apply) { validate_string($apply) }
   validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
+  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -114,7 +115,7 @@ define icinga2::object::dependency (
   if $disable_notifications { validate_bool ( $disable_notifications ) }
   if $ignore_soft_states { validate_bool ( $ignore_soft_states ) }
   if $period { validate_string ( $period ) }
-  if $states { $_states = any2array($states) } else { $_states = undef }
+  if $states { validate_array ( $states ) }
 
   # compose attributes
   $attrs = {
@@ -126,7 +127,7 @@ define icinga2::object::dependency (
     'disable_notifications' => $disable_notifications,
     'ignore_soft_states'    => $ignore_soft_states,
     'period'                => $period,
-    'states'                => $_states,
+    'states'                => $states,
   }
 
   # create object
