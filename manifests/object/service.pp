@@ -201,42 +201,43 @@ define icinga2::object::service (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($service_name)
   unless is_bool($apply) { validate_string($apply) }
+  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
 
-  if $display_name { validate_string($display_name) }
-  if $host_name { validate_string($host_name) }
-  if $groups { $_groups = any2array($groups) } else { $_groups = undef }
-  if $check_command { validate_string($check_command) }
-  if $max_check_attempts { validate_integer($max_check_attempts) }
-  if $check_period { validate_string($check_period) }
+  if $display_name { validate_string ($display_name) }
+  validate_string($host_name)
+  if $groups { validate_array ($groups) }
+  validate_string($check_command)
+  if $max_check_attempts { validate_integer ($max_check_attempts) }
+  if $check_period { validate_string ($check_period) }
   if $check_timeout { validate_re($check_timeout, '^\d+\.?\d*[d|h|m|s]?$') }
   if $check_interval { validate_re($check_interval, '^\d+\.?\d*[d|h|m|s]?$') }
   if $retry_interval { validate_re($retry_interval, '^\d+\.?\d*[d|h|m|s]?$') }
-  if $enable_notifications { validate_bool($enable_notifications) }
-  if $enable_active_checks { validate_bool($enable_active_checks) }
-  if $enable_passive_checks { validate_bool($enable_passive_checks) }
-  if $enable_event_handler { validate_bool($enable_event_handler) }
-  if $enable_flapping { validate_bool($enable_flapping) }
-  if $enable_perfdata { validate_bool($enable_perfdata) }
-  if $event_command { validate_string($event_command) }
-  if $flapping_threshold { validate_integer($flapping_threshold) }
-  if $volatile { validate_bool($volatile) }
-  if $zone { validate_string($zone) }
-  if $command_endpoint { validate_string($command_endpoint) }
-  if $notes { validate_string($notes) }
-  if $notes_url { validate_string($notes_url) }
-  if $action_url { validate_string($action_url) }
-  if $icon_image { validate_absolute_path($icon_image) }
-  if $icon_image_alt { validate_string($icon_image_alt) }
+  if $enable_notifications { validate_bool ($enable_notifications) }
+  if $enable_active_checks { validate_bool ($enable_active_checks) }
+  if $enable_passive_checks { validate_bool ($enable_passive_checks) }
+  if $enable_event_handler { validate_bool ($enable_event_handler) }
+  if $enable_flapping { validate_bool ($enable_flapping) }
+  if $enable_perfdata { validate_bool ($enable_perfdata) }
+  if $event_command { validate_string ($event_command) }
+  if $flapping_threshold { validate_integer ($flapping_threshold) }
+  if $volatile { validate_bool ($volatile) }
+  if $zone { validate_string ($zone) }
+  if $command_endpoint { validate_string ($command_endpoint) }
+  if $notes { validate_string ($notes) }
+  if $notes_url { validate_string ($notes_url) }
+  if $action_url { validate_string ($action_url) }
+  if $icon_image { validate_absolute_path ($icon_image) }
+  if $icon_image_alt { validate_string ($icon_image_alt) }
 
 
   # compose the attributes
   $attrs = {
     'display_name'          => $display_name ,
     'host_name'             => $host_name ,
-    'groups'                => $_groups ,
+    'groups'                => $groups ,
     'vars'                  => $vars ,
     'check_command'         => $check_command ,
     'max_check_attempts'    => $max_check_attempts ,

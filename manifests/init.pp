@@ -138,6 +138,7 @@ class icinga2(
   validate_bool($enable)
   validate_bool($manage_repo)
   validate_bool($manage_service)
+  validate_array($features)
   validate_bool($purge_features)
   validate_hash($constants)
   validate_array($plugins)
@@ -168,5 +169,5 @@ class icinga2(
     subscribe => Class['::icinga2::config']
   }
 
-  include prefix(any2array($features), '::icinga2::feature::')
+  include prefix($features, '::icinga2::feature::')
 }

@@ -22,11 +22,11 @@
 # [*ignore*]
 #   Exclude users using the group ignore rules.
 #
-# [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
-#
 # [*template*]
 #   Set to true creates a template instead of an object. Defaults to false.
+#
+# [*import*]
+#   Sorted List of templates to include. Defaults to an empty list.
 #
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
@@ -41,11 +41,11 @@ define icinga2::object::servicegroup (
   $ensure            = present,
   $servicegroup_name = $title,
   $display_name      = undef,
-  $groups            = undef,
+  $groups            = [],
   $assign            = [],
   $ignore            = [],
-  $import            = [],
   $template          = false,
+  $import            = [],
   $order             = '65',
 ){
   include ::icinga2::params
@@ -56,18 +56,19 @@ define icinga2::object::servicegroup (
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($servicegroup_name)
+  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
+  validate_array ( $groups )
 
   if $display_name { validate_string ( $display_name ) }
-  if $groups { $_groups = any2array($groups) } else { $_groups = undef }
 
 
   # compose attributes
   $attrs = {
     'display_name'  => $display_name,
-    'groups'        => $_groups,
+    'groups'        => $groups,
   }
 
   # create object

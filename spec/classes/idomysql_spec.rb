@@ -33,7 +33,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
       it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
         .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
-        .without_content(/categories =/)
         .with_content(/host = "127.0.0.1"/)
         .with_content(/port = 3306/)
         .with_content(/user = "icinga"/)
@@ -307,12 +306,10 @@ describe('icinga2::feature::idomysql', :type => :class) do
     end
 
 
-    context "#{os} with categories => 'foo'" do
+    context "#{os} with categories => 'foo' (not a valid array)" do
       let(:params) { {:categories => 'foo'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
-                              .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
-                              .with_content(/categories = \[ "foo", \]/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -376,7 +373,6 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
     it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
-                            .without_content(/categories =/)
                             .with_content(/host = "127.0.0.1"/)
                             .with_content(/port = 3306/)
                             .with_content(/user = "icinga"/)
@@ -649,12 +645,10 @@ describe('icinga2::feature::idomysql', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with categories => 'foo'" do
+  context "Windows 2012 R2 with categories => 'foo' (not a valid array)" do
     let(:params) { {:categories => 'foo'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
-                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-mysql.conf' })
-                            .with_content(/categories = \[ "foo", \]/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 

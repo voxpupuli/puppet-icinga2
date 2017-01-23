@@ -20,7 +20,6 @@ describe('icinga2::object::hostgroup', :type => :define) do
       it { is_expected.to contain_concat__fragment('icinga2::object::HostGroup::bar')
         .with({'target' => '/bar/baz'})
         .with_content(/object HostGroup "bar"/)
-        .without_content(/groups =/)
         .without_content(/assign where/)
         .without_content(/ignore where/) }
 
@@ -47,12 +46,10 @@ describe('icinga2::object::hostgroup', :type => :define) do
     end
 
 
-    context "#{os} with groups => foo" do
+    context "#{os} with groups => foo (not a valid array)" do
       let(:params) { {:groups => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to contain_concat__fragment('icinga2::object::HostGroup::bar')
-                              .with({'target' => '/bar/baz'})
-                              .with_content(/groups = \[ "foo", \]/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -95,7 +92,6 @@ describe('icinga2::object::hostgroup', :type => :define) do
     it { is_expected.to contain_concat__fragment('icinga2::object::HostGroup::bar')
       .with({'target' => 'C:/bar/baz'})
       .with_content(/object HostGroup "bar"/)
-      .without_content(/groups =/)
       .without_content(/assign where/)
       .without_content(/ignore where/) }
 
@@ -122,12 +118,10 @@ describe('icinga2::object::hostgroup', :type => :define) do
   end
 
 
-  context "Windows 2012 R2   with groups => foo" do
+  context "Windows 2012 R2   with groups => foo (not a valid array)" do
     let(:params) { {:groups => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to contain_concat__fragment('icinga2::object::HostGroup::bar')
-                            .with({'target' => '/bar/baz'})
-                            .with_content(/groups = \[ "foo", \]/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 

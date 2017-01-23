@@ -142,11 +142,10 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with import => foo" do
+    context "#{os} with import => foo (not a valid array)" do
       let(:params) { {:import => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('bar')
-        .with_content(/import "foo"/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -159,15 +158,14 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with assign => host.vars.os == bar && host.address" do
-      let(:params) { {:assign => 'host.vars.os == bar && host.address', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with assign => foo (not a valid array)" do
+      let(:params) { {:assign => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('bar')
-        .with_content(/assign where host.vars.os == "bar" && host.address/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
-    context "#{os} with ignore => [ NodeName != baz || !host.display_name ]" do
+    context "#{os} with ignore => [ NodeName != baz || !host.display_name]" do
       let(:params) { {:ignore => ['NodeName != baz || !host.display_name'], :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('bar')
@@ -175,11 +173,10 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with ignore => NodeName != baz || !host.display_name" do
-      let(:params) { {:ignore => 'NodeName != baz || !host.display_name', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with ignore => foo (not a valid array)" do
+      let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to contain_concat__fragment('bar')
-        .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
 
 
@@ -370,11 +367,10 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with import => foo" do
+  context "Windows 2012 R2 with import => foo (not a valid array)" do
     let(:params) { {:import => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('bar')
-      .with_content(/import "foo"/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -387,11 +383,10 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with assign => host.vars.os == bar && host.address" do
-    let(:params) { {:assign => 'host.vars.os == bar && host.address', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with assign => foo (not a valid array)" do
+    let(:params) { {:assign => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('bar')
-      .with_content(/assign where host.vars.os == "bar" && host.address/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 
@@ -403,11 +398,10 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with ignore => NodeName != baz || !host.display_name" do
-    let(:params) { {:ignore => 'NodeName != baz || !host.display_name', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with ignore => foo (not a valid array)" do
+    let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to contain_concat__fragment('bar')
-      .with_content(/ignore where NodeName != "baz" \|{2} !host.display_name/) }
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end
 
 

@@ -150,6 +150,7 @@ define icinga2::object::host(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
   validate_integer($order)
@@ -157,9 +158,8 @@ define icinga2::object::host(
   if $host_name { validate_string($host_name) }
   if $address { validate_string($address) }
   if $address6 { validate_string($address6) }
+  if $groups { validate_array($groups) }
   if $display_name { validate_string($display_name) }
-  if $vars { validate_hash($vars) }
-  if $groups { $_groups = any2array($groups) } else { $_groups = undef }
   validate_string($check_command)
   if $max_check_attempts { validate_integer($max_check_attempts) }
   if $check_period { validate_string($check_period) }
@@ -188,7 +188,7 @@ define icinga2::object::host(
     address               => $address,
     address6              => $address6,
     vars                  => $vars,
-    groups                => $_groups,
+    groups                => $groups,
     display_name          => $display_name,
     check_command         => $check_command,
     max_check_attempts    => $max_check_attempts,
