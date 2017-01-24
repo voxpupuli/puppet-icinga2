@@ -1,26 +1,37 @@
 # Change Log
 
-## [v1.0.1](https://github.com/Icinga/puppet-icinga2/tree/v1.0.1) (2017-01-19)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.0...v1.0.1)
-
-**Closed issues:**
-
-- Fix Puppet version requirement in metadata.json [\#205](https://github.com/Icinga/puppet-icinga2/issues/205)
-
-## [v1.0.0](https://github.com/Icinga/puppet-icinga2/tree/v1.0.0) (2017-01-19)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.8.1...v1.0.0)
+## [v1.0.2](https://github.com/Icinga/puppet-icinga2/tree/v1.0.2) (2017-01-24)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.1...v1.0.2)
 
 **Implemented enhancements:**
 
-- Set default for manage\_repo param to true \(use packages.icinga.com\) [\#202](https://github.com/Icinga/puppet-icinga2/issues/202)
+- Add Oracle Linux Support [\#216](https://github.com/Icinga/puppet-icinga2/issues/216)
+
+**Fixed bugs:**
+
+- add permission alter to idomysql docs [\#214](https://github.com/Icinga/puppet-icinga2/issues/214)
+- Update serverspec vagrantfile to Debian 8.7 [\#212](https://github.com/Icinga/puppet-icinga2/issues/212)
+- Apply Notification "users" and "user\_groups" as variable [\#208](https://github.com/Icinga/puppet-icinga2/issues/208)
+
+**Merged pull requests:**
+
+- Revert "Merge branch 'feature/workaround-for-puppetdb-14031'" [\#215](https://github.com/Icinga/puppet-icinga2/pull/215) ([bobapple](https://github.com/bobapple))
+
+## [v1.0.1](https://github.com/Icinga/puppet-icinga2/tree/v1.0.1) (2017-01-19)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.8.1...v1.0.1)
+
+**Implemented enhancements:**
+
 - \[dev.icinga.com \#14031\] Workaround for PuppetDB [\#198](https://github.com/Icinga/puppet-icinga2/issues/198)
 - \[dev.icinga.com \#13923\] Remove 'Icinga Development Team' as single author from header [\#197](https://github.com/Icinga/puppet-icinga2/issues/197)
 - \[dev.icinga.com \#13921\] Add alternative example of exported resources [\#196](https://github.com/Icinga/puppet-icinga2/issues/196)
 - \[dev.icinga.com \#12659\] Upload module to Puppet Forge [\#100](https://github.com/Icinga/puppet-icinga2/issues/100)
+- Fix Puppet version requirement in metadata.json [\#205](https://github.com/Icinga/puppet-icinga2/issues/205)
 
 **Merged pull requests:**
 
 - Improve wording for a few parts of the README.md file [\#201](https://github.com/Icinga/puppet-icinga2/pull/201) ([gunnarbeutner](https://github.com/gunnarbeutner))
+- Add support for OracleLinux [\#200](https://github.com/Icinga/puppet-icinga2/pull/200) ([TwizzyDizzy](https://github.com/TwizzyDizzy))
 - Extended example 3 README to mention Puppet parser bug [\#45](https://github.com/Icinga/puppet-icinga2/pull/45) ([kwisatz](https://github.com/kwisatz))
 - Improving README [\#44](https://github.com/Icinga/puppet-icinga2/pull/44) ([lazyfrosch](https://github.com/lazyfrosch))
 
