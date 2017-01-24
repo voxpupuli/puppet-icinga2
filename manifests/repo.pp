@@ -25,7 +25,7 @@ class icinga2::repo {
     case $::osfamily {
       'redhat': {
         case $::operatingsystem {
-          'centos', 'redhat': {
+          'centos', 'redhat', 'oraclelinux': {
             yumrepo { 'icinga-stable-release':
               baseurl  => "http://packages.icinga.com/epel/${::operatingsystemmajrelease}/release/",
               descr    => 'ICINGA (stable release for epel)',

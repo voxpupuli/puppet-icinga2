@@ -2,6 +2,11 @@
 # vi: set ft=ruby :
 
 nodes = {
+  'i2oracle7puppet4' => {
+    :box => 'oracle-7.3-x64-virtualbox',
+    :url => 'http://boxes.icinga.com/vagrant/oracle/oracle-7.3-x64-virtualbox.box',
+    :md5 => '930a004ad923495d29123122c143a69f'
+  },
   'i2sles12sp2puppet4' => {
     :box => 'sles-12-sp2-x64-virtualbox.box',
     :url => 'http://boxes.icinga.com/vagrant/sles/sles-12-sp2-x64-virtualbox.box',
