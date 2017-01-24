@@ -166,13 +166,6 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
-    context "#{os} with types => foo (not a valid array)" do
-      let(:params) { {:types => 'foo', :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
-    end
-
-
     context "#{os} with states => [foo, bar]" do
       let(:params) { {:states => ['foo','bar'], :target => '/bar/baz'} }
 
@@ -181,12 +174,6 @@ describe('icinga2::object::notification', :type => :define) do
                               .with_content(/states = \[ "foo", "bar", \]/) }
     end
 
-
-    context "#{os} with states => foo (not a valid array)" do
-      let(:params) { {:states => 'foo', :target => '/bar/baz'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
-    end
 
     context "#{os} with assign => [] and ignore => [ foo ]" do
       let(:params) { {:assign => [], :ignore => ['foo'], :target => '/bar/baz'} }
@@ -375,13 +362,6 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with types => foo (not a valid array)" do
-    let(:params) { {:types => 'foo', :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
-  end
-
-
   context "Windows 2012 R2 with states => [foo, bar]" do
     let(:params) { {:states => ['foo','bar'], :target => 'C:/bar/baz'} }
 
@@ -390,12 +370,6 @@ describe('icinga2::object::notification', :type => :define) do
                             .with_content(/states = \[ "foo", "bar", \]/) }
   end
 
-
-  context "Windows 2012 R2 with states => foo (not a valid array)" do
-    let(:params) { {:states => 'foo', :target => 'C:/bar/baz'} }
-
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
-  end
 
   context "Windows 2012 R2 with assign => [] and ignore => [ foo ]" do
     let(:params) { {:assign => [], :ignore => ['foo'], :target => 'C:/bar/baz'} }

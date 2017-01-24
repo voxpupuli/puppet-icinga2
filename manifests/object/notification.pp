@@ -119,13 +119,17 @@ define icinga2::object::notification (
   if $service_name { validate_string ($service_name)}
   if !is_array($users) { validate_string($users) }
   if !is_string($users) { validate_array($users) }
+  if !is_array($user_groups) { validate_string($user_groups) }
+  if !is_string($user_groups) { validate_array($user_groups) }
   if $times { validate_hash ($times )}
   if $command { validate_string ($command )}
   if $interval { validate_integer ($interval )}
   if $period { validate_string ($period )}
   if $zone { validate_string ($zone) }
-  if $types { validate_array ($types) }
-  if $states { validate_array ($states) }
+  if !is_array($types) { validate_string($types) }
+  if !is_string($types) { validate_array($types) }
+  if !is_array($states) { validate_string($states) }
+  if !is_string($states) { validate_array($states) }
   if $assign { validate_array ($assign) }
   if $ignore { validate_array ($ignore) }
 
