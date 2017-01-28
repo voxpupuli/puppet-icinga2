@@ -123,7 +123,7 @@ define icinga2::object::notification (
   if !is_string($user_groups) { validate_array($user_groups) }
   if $times { validate_hash ($times )}
   if $command { validate_string ($command )}
-  if $interval { validate_integer ($interval )}
+  if $interval { validate_re($interval, '^\d+(\.\d+)?[dhms]?$')}
   if $period { validate_string ($period )}
   if $zone { validate_string ($zone) }
   if !is_array($types) { validate_string($types) }

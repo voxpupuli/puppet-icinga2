@@ -113,15 +113,28 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
     end
 
 
-    context "#{os} with duration => foo (not a valid integer)" do
-      let(:params) { {:duration => 'foo', :target => '/bar/baz',
+    context "#{os} with duration => 30m" do
+      let(:params) { {:duration => '30m', :target => '/bar/baz',
                       :host_name => 'foohost',
                       :author => 'fooauthor',
                       :comment => 'foocomment',
                       :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/duration = 30m/) }
     end
+
+#    See: https://github.com/Icinga/puppet-icinga2/pull/220#issuecomment-275847137
+#    context "#{os} with duration => foo (not a valid integer)" do
+#      let(:params) { {:duration => 'foo', :target => '/bar/baz',
+#                      :host_name => 'foohost',
+#                      :author => 'fooauthor',
+#                      :comment => 'foocomment',
+#                      :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
+#
+#      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+#    end
 
 
     context "#{os} with ranges => { foo => 'bar', bar => 'foo' }" do
