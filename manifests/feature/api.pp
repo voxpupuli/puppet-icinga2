@@ -314,7 +314,7 @@ class icinga2::feature::api(
           mode => '0600';
         $_ssl_cert_path:
       }
-    }
+    } # ca
   } # pki
 
   # compose attributes

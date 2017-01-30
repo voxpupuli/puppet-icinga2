@@ -30,9 +30,6 @@
 #
 #
 class icinga2::pki::ca(
-  $ssl_key_path    = undef,
-  $ssl_cert_path   = undef,
-  $ssl_cacert_path = undef,
   $ca_cert         = undef,
   $ca_key          = undef,
 ) {
