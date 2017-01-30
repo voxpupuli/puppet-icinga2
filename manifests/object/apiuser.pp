@@ -80,7 +80,7 @@ define icinga2::object::apiuser(
     ensure      => $ensure,
     object_name => $apiuser_name,
     object_type => 'ApiUser',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

@@ -71,7 +71,7 @@ define icinga2::object::hostgroup(
     ensure      => $ensure,
     object_name => $hostgroup_name,
     object_type => 'HostGroup',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     assign      => $assign,
     ignore      => $ignore,
     target      => $target,

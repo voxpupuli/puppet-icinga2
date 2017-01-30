@@ -62,7 +62,7 @@ class icinga2::feature::graphite(
   icinga2::object { 'icinga2::object::GraphiteWriter::graphite':
     object_name => 'graphite',
     object_type => 'GraphiteWriter',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/graphite.conf",
     order       => '10',
     notify      => $ensure ? {

@@ -160,7 +160,7 @@ define icinga2::object::notification (
     object_type  => 'Notification',
     import       => $import,
     template     => $template,
-    attrs        => $attrs,
+    attrs        => delete_undef_values($attrs),
     target       => $target,
     order        => $order,
     apply        => $apply,

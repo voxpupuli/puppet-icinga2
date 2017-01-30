@@ -78,7 +78,7 @@ define icinga2::object::zone(
     ensure      => $ensure,
     object_name => $zone_name,
     object_type => 'Zone',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => $_target,
     order       => $order,
     notify      => Class['::icinga2::service'],
