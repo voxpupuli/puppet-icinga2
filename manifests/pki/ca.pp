@@ -30,31 +30,73 @@
 #
 #
 class icinga2::pki::ca(
+  $ssl_key_path    = undef,
+  $ssl_cert_path   = undef,
+  $ssl_cacert_path = undef,
   $ca_cert         = undef,
   $ca_key          = undef,
 ) {
 
   include icinga2::params
 
-  $ca_dir = $::icinga2::params::ca_dir
-  $user   = $::icinga2::params::user
-  $group  = $::icinga2::params::group
-
+  $ca_dir    = $::icinga2::params::ca_dir
+  $pki_dir   = $::icinga2::params::pki_dir
+  $user      = $::icinga2::params::user
+  $group     = $::icinga2::params::group
+  $node_name = $::icinga2::_constants['NodeName']
+ 
   File {
     owner => $user,
     group => $group,
   }
 
+  # Set defaults for certificate stuff and/or do validation
+  if $ssl_key_path {
+    validate_absolute_path($ssl_key_path)
+    $_ssl_key_path = $ssl_key_path }
+  else {
+    $_ssl_key_path = "${pki_dir}/${node_name}.key" }
+  if $ssl_cert_path {
+    validate_absolute_path($ssl_cert_path)
+    $_ssl_cert_path = $ssl_cert_path }
+  else {
+    $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
+  if $ssl_cacert_path {
+    validate_absolute_path($ssl_cacert_path)
+    $_ssl_cacert_path = $ssl_cacert_path }
+  else {
+    $_ssl_cacert_path = "${pki_dir}/ca.crt" }
+
   if !$ca_cert or !$ca_key {
+    $path = $::osfamily ? {
+      'windows' => 'C:/ProgramFiles/ICINGA2/sbin',
+      default   => '/bin:/usr/bin:/sbin:/usr/sbin',
+    }
+
     exec { 'create-icinga2-ca':
-      path    => $::osfamily ? {
-        'windows' => 'C:/ProgramFiles/ICINGA2/sbin',
-        default   => '/bin:/usr/bin:/sbin:/usr/sbin',
-      },
+      path    => $path,
       command => 'icinga2 pki new-ca',
       creates => "${ca_dir}/ca.crt",
       notify  => Class['::icinga2::service'],
+    } ->
+
+    file { "${_ssl_cacert_path}":
+      source => "${ca_dir}/ca.crt",
+    } ->
+
+    exec { 'icinga2 pki create certificate and key':
+      path    => $path,
+      command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
+      creates => $_ssl_key_path,
+      notify  => Class['::icinga2::service'],
+    } ->
+
+    file {
+      $_ssl_key_path:
+        mode => '0600';
+      $_ssl_cert_path:
     }
+
   } else {
     validate_string($ca_cert)
     validate_string($ca_key)
@@ -89,4 +131,6 @@ class icinga2::pki::ca(
       tag     => 'icinga2::config::file',
     }
   }
+
+  
 }
