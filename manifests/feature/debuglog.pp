@@ -35,7 +35,7 @@ class icinga2::feature::debuglog(
   icinga2::object { 'icinga2::object::FileLogger::debuglog':
     object_name => 'debug-file',
     object_type => 'FileLogger',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/debuglog.conf",
     order       => '10',
     notify      => $ensure ? {

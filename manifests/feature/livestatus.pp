@@ -64,7 +64,7 @@ class icinga2::feature::livestatus(
   icinga2::object { 'icinga2::object::LivestatusListener::livestatus':
     object_name => 'livestatus',
     object_type => 'LivestatusListener',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/livestatus.conf",
     order       => '10',
     notify      => $ensure ? {

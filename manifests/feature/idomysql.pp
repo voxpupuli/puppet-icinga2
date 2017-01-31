@@ -319,7 +319,7 @@ class icinga2::feature::idomysql(
   icinga2::object { 'icinga2::object::IdoMysqlConnection::ido-mysql':
     object_name => 'ido-mysql',
     object_type => 'IdoMysqlConnection',
-    attrs       => merge($attrs, $attrs_ssl),
+    attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
     target      => "${conf_dir}/features-available/ido-mysql.conf",
     order       => '10',
     notify      => $ensure ? {

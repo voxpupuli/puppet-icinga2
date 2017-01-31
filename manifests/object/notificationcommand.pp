@@ -96,7 +96,7 @@ define icinga2::object::notificationcommand (
     object_type => 'NotificationCommand',
     template    => $template,
     import      => $import,
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

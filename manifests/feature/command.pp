@@ -32,7 +32,7 @@ class icinga2::feature::command(
   icinga2::object { 'icinga2::object::ExternalCommandListener::command':
     object_name => 'command',
     object_type => 'ExternalCommandListener',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/command.conf",
     order       => '10',
     notify      => $ensure ? {

@@ -141,7 +141,7 @@ class icinga2::feature::idopgsql(
   icinga2::object { 'icinga2::object::IdoPgsqlConnection::ido-pgsql':
     object_name => 'ido-pgsql',
     object_type => 'IdoPgsqlConnection',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/ido-pgsql.conf",
     order       => '10',
     notify      => $ensure ? {

@@ -81,7 +81,7 @@ define icinga2::object::usergroup (
     object_type => 'UserGroup',
     import      => $import,
     template    => $template,
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     assign      => $assign,
     ignore      => $ignore,
     target      => $target,

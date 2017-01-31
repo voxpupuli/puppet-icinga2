@@ -49,7 +49,7 @@ class icinga2::feature::statusdata(
   icinga2::object { 'icinga2::object::StatusDataWriter::statusdata':
     object_name => 'statusdata',
     object_type => 'StatusDataWriter',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/statusdata.conf",
     order       => '10',
     notify      => $ensure ? {

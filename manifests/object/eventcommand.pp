@@ -88,7 +88,7 @@ define icinga2::object::eventcommand (
     object_name => $eventcommand_name,
     object_type => 'EventCommand',
     import      => $import,
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

@@ -50,7 +50,7 @@ class icinga2::feature::gelf(
   icinga2::object { 'icinga2::object::GelfWriter::gelf':
     object_name => 'gelf',
     object_type => 'GelfWriter',
-    attrs       => $attrs,
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/gelf.conf",
     order       => '10',
     notify      => $ensure ? {
