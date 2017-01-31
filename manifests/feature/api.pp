@@ -15,6 +15,8 @@
 #              Puppetmaster by using the configured 'ticket_salt' in a custom function.
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
+#   - ca: Includes the '::icinga2::pki::ca' class to generate a fresh CA and generates an SSL certificate and
+#         key signed by this new CA.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
@@ -26,6 +28,12 @@
 #   Location of the certificate. Default depends on platform:
 #   /etc/icinga2/pki/NodeName.crt on Linux
 #   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
+#   The Value of NodeName comes from the corresponding constant.
+#
+# [*ssl_csr_path*]
+#   Location of the certificate signing request. Default depends on platform:
+#   /etc/icinga2/pki/NodeName.csr on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cacert_path*]
@@ -130,6 +138,7 @@ class icinga2::feature::api(
   $pki             = 'puppet',
   $ssl_key_path    = undef,
   $ssl_cert_path   = undef,
+  $ssl_csr_path    = undef,
   $ssl_cacert_path = undef,
   $accept_config   = false,
   $accept_commands = false,
@@ -147,6 +156,7 @@ class icinga2::feature::api(
 
   $conf_dir  = $::icinga2::params::conf_dir
   $pki_dir   = $::icinga2::params::pki_dir
+  $ca_dir    = $::icinga2::params::ca_dir
   $user      = $::icinga2::params::user
   $group     = $::icinga2::params::group
   $node_name = $::icinga2::_constants['NodeName']
@@ -164,8 +174,8 @@ class icinga2::feature::api(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($pki, [ '^puppet$', '^none$', '^icinga2' ],
-    "${pki} isn't supported. Valid values are 'puppet', 'none' and 'icinga2'.")
+  validate_re($pki, [ '^puppet$', '^none$', '^icinga2', '^ca' ],
+    "${pki} isn't supported. Valid values are 'puppet', 'none', 'icinga2' and 'ca'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
   validate_string($ticket_salt)
@@ -183,6 +193,11 @@ class icinga2::feature::api(
     $_ssl_cert_path = $ssl_cert_path }
   else {
     $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
+  if $ssl_csr_path {
+    validate_absolute_path($ssl_csr_path)
+    $_ssl_csr_path = $ssl_csr_path }
+  else {
+    $_ssl_csr_path = "${pki_dir}/${node_name}.csr" }
   if $ssl_cacert_path {
     validate_absolute_path($ssl_cacert_path)
     $_ssl_cacert_path = $ssl_cacert_path }
@@ -292,7 +307,37 @@ class icinga2::feature::api(
         notify  => Class['::icinga2::service'],
       } ->
       file { $_ssl_cacert_path: }
-    } # icinga2    
+    } # icinga2
+
+    'ca': {
+      class { '::icinga2::pki::ca': } ->
+
+      file { "${_ssl_cacert_path}":
+        source => "${ca_dir}/ca.crt",
+      } ->
+
+      exec { 'icinga2 pki create certificate signing request':
+        path    => $path,
+        command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
+        creates => $_ssl_key_path,
+      } ->
+      file {
+        $_ssl_key_path:
+          mode => '0600';
+      }
+
+      exec { 'icinga2 pki sign certificate':
+        command     => "icinga2 pki sign-csr --csr '${_ssl_csr_path}' --cert '${_ssl_cert_path}'",
+        subscribe   => Exec['icinga2 pki create certificate signing request'],
+        refreshonly => true,
+        notify      => Class['::icinga2::service'],
+      } ->
+      file {
+        $_ssl_cert_path:;
+        $_ssl_csr_path:
+          ensure => absent;
+      }
+    } # ca
   } # pki
 
   # compose attributes
