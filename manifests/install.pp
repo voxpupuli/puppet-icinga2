@@ -45,7 +45,9 @@ class icinga2::install {
   }
   file { $pki_dir:
     ensure  => directory,
+    owner   => $user,
     group   => $group,
+    recurse => true,
     require => Package[$package]
   }
 }
