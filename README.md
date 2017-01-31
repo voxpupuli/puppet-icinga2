@@ -490,7 +490,7 @@ requires SSL/TLS client certificates. This module offers multiple choices to con
 One of your Icinga master needs to behave as a CA. With the class `icinga2::pki::ca` you can do following to fulfil
 this requirement:
 
-* Use the ability of the icinga2 CLI to generate a complete new CA
+* Use the the `icinga2` CLI to generate a complete new CA
 ``` puppet
 include ::icinga2
 class { '::icinga2::pki::ca':
@@ -517,6 +517,30 @@ file { '/var/lib/icinga2/ca/ca.crt':
 file { '/var/lib/icinga2/ca/ca.key':
   source => '...',
   tag    => 'icinga2::config::file',
+}
+```
+
+* Create a new CA with the `icinga2` CLI command and a certificate signed by this new CA. This is especially useful when
+seting up a fresh Icinga 2 master from scratch.
+```
+class { '::icinga2':
+  constants => {
+    'TicketSalt'   => '5a3d695b8aef8f18452fc494593056a4',
+  }
+}
+
+class { '::icinga2::feature::api':
+  pki             => 'ca',
+  endpoints       => {
+    'localhost' => {
+      'host' => 'localhost',
+    }
+  },
+  zones           => {
+    'master' => {
+      'endpoints' => ['localhost']
+    }
+  }
 }
 ```
 
@@ -1116,6 +1140,8 @@ Provides multiple sources for the certificate and key.
 the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
 `ssl_ca` parameters.
+* `ca` Includes the `::icinga2::pki::ca` class to generate a fresh CA and generates an SSL certificate and key signed by
+this new CA.
 
 Defaults to `puppet`
 
