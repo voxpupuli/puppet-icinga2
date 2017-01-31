@@ -28,6 +28,12 @@
 #   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
+# [*ssl_csr_path*]
+#   Location of the certificate signing request. Default depends on platform:
+#   /etc/icinga2/pki/NodeName.csr on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr on Windows
+#   The Value of NodeName comes from the corresponding constant.
+#
 # [*ssl_cacert_path*]
 #   Location of the CA certificate. Default is:
 #   /etc/icinga2/pki/ca.crt on Linux
@@ -130,6 +136,7 @@ class icinga2::feature::api(
   $pki             = 'puppet',
   $ssl_key_path    = undef,
   $ssl_cert_path   = undef,
+  $ssl_csr_path    = undef,
   $ssl_cacert_path = undef,
   $accept_config   = false,
   $accept_commands = false,
@@ -184,6 +191,11 @@ class icinga2::feature::api(
     $_ssl_cert_path = $ssl_cert_path }
   else {
     $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
+  if $ssl_csr_path {
+    validate_absolute_path($ssl_csr_path)
+    $_ssl_csr_path = $ssl_csr_path }
+  else {
+    $_ssl_csr_path = "${pki_dir}/${node_name}.csr" }
   if $ssl_cacert_path {
     validate_absolute_path($ssl_cacert_path)
     $_ssl_cacert_path = $ssl_cacert_path }
@@ -293,26 +305,35 @@ class icinga2::feature::api(
         notify  => Class['::icinga2::service'],
       } ->
       file { $_ssl_cacert_path: }
-    } # icinga2    
+    } # icinga2
 
     'ca': {
-      class { '::icinga2::pki::ca': } ->
+      class { '::icinga2::pki::ca': } ->
 
       file { "${_ssl_cacert_path}":
         source => "${ca_dir}/ca.crt",
       } ->
 
-      exec { 'icinga2 pki create certificate and key':
+      exec { 'icinga2 pki create certificate signing request':
         path    => $path,
-        command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
+        command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
         creates => $_ssl_key_path,
-        notify  => Class['::icinga2::service'],
       } ->
-
       file {
         $_ssl_key_path:
           mode => '0600';
-        $_ssl_cert_path:
+      }
+
+      exec { 'icinga2 pki sign certificate':
+        command     => "icinga2 pki sign-csr --csr '${_ssl_csr_path}' --cert '${_ssl_cert_path}'",
+        subscribe   => Exec['icinga2 pki create certificate signing request'],
+        refreshonly => true,
+        notify      => Class['::icinga2::service'],
+      } ->
+      file {
+        $_ssl_cert_path:;
+        $_ssl_csr_path:
+          ensure => absent;
       }
     } # ca
   } # pki

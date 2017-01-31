@@ -46,6 +46,8 @@ class icinga2::install {
   file { $pki_dir:
     ensure  => directory,
     group   => $group,
+    mode    => '0660',
+    recurse => true,
     require => Package[$package]
   }
 }
