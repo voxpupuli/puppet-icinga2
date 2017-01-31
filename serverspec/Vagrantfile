@@ -43,9 +43,10 @@ nodes = {
     :md5 => '8d2f63885253289bfcad47256146ea02'
   },
   'i2freebsd10puppet4' => {
-    :box => 'freebsd-10.3-x64-virtualbox',
-    :url => 'http://boxes.icinga.com/vagrant/freebsd/freebsd-10.3-amd64-virtualbox.box',
-    :md5 => '68c708200667c6fd075d24a3f8e29061'
+    :box    => 'freebsd-10.3-x64-virtualbox',
+    :url    => 'http://boxes.icinga.com/vagrant/freebsd/freebsd-10.3-amd64-virtualbox.box',
+    :md5    => '68c708200667c6fd075d24a3f8e29061',
+    :kernel => 'bsd'
   },
 }
 
@@ -62,6 +63,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node_config.vm.box_download_checksum = options[:md5]
       node_config.vm.box_download_checksum_type = 'md5'
       node_config.vm.network :private_network, :adapter => 2, ip: options[:ip] if options[:ip]
+
+      if options[:kernel] == "bsd"
+        node_config.vm.synced_folder "./environments", "/tmp/vagrant-puppet/environments", type: "rsync"
+      end
 
       if options[:forwarded]
         options[:forwarded].each_pair do |guest, local|
