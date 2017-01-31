@@ -80,6 +80,16 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
     end
 
+    context "#{os} with pki => ca" do
+      let(:params) { {:pki => 'ca'} }
+
+      it { is_expected.to contain_exec('icinga2 pki create certificate signing request') }
+      it { is_expected.to contain_exec('icinga2 pki sign certificate') }
+
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
+      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
+    end
 
     context "#{os} with pki => foo (not a valid value)" do
       let(:params) { {:pki => 'foo'} }
