@@ -113,14 +113,14 @@ class icinga2::feature::idopgsql(
     package { $ido_pgsql_package:
       ensure => installed,
       before => [
-        Exec['idopgsql_import_schema'],
+        Exec['idopgsql-import-schema'],
         Icinga2::Feature['ido-pgsql'],
       ]
     }
   }
 
   if $import_schema {
-    exec { 'idopgsql_import_schema':
+    exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $::path,
       environment => ["PGPASSWORD=${password}"],

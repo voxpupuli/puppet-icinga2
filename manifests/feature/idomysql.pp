@@ -290,14 +290,14 @@ class icinga2::feature::idomysql(
     package { $ido_mysql_package:
       ensure => installed,
       before => [
-        Exec['icinga2-ido-mysql'],
+        Exec['idomysql-import-schema'],
         Icinga2::Feature['ido-mysql']
       ]
     }
   }
 
   if $import_schema {
-    exec { 'idomysql_import_schema':
+    exec { 'idomysql-import-schema':
       user    => 'root',
       path    => $::path,
       command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '/usr/share/icinga2-ido-mysql/schema/mysql.sql'",
