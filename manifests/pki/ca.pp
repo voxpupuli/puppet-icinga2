@@ -7,7 +7,7 @@
 # === Parameters
 #
 # [*ca_cert*]
-#   Content of the CA certificate. If this is unset, a certificate will be generated with the 
+#   Content of the CA certificate. If this is unset, a certificate will be generated with the
 #   Icinga 2 CLI.
 #
 # [*ca_key*]
@@ -39,7 +39,7 @@ class icinga2::pki::ca(
   $ca_dir    = $::icinga2::params::ca_dir
   $user      = $::icinga2::params::user
   $group     = $::icinga2::params::group
- 
+
   File {
     owner => $user,
     group => $group,
@@ -56,7 +56,7 @@ class icinga2::pki::ca(
       command => 'icinga2 pki new-ca',
       creates => "${ca_dir}/ca.crt",
       notify  => Class['::icinga2::service'],
-    } 
+    }
   } else {
     validate_string($ca_cert)
     validate_string($ca_key)
@@ -91,6 +91,4 @@ class icinga2::pki::ca(
       tag     => 'icinga2::config::file',
     }
   }
-
-  
 }
