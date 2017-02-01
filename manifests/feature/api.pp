@@ -11,7 +11,7 @@
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
 #   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
 #             /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
-#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the 
+#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the
 #              Puppetmaster by using the configured 'ticket_salt' in a custom function.
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
@@ -60,7 +60,7 @@
 #   Accept remote commands. Defaults to false.
 #
 # [*ca_host*]
-#   This host will be connected to request the certificate. Set this if you use the icinga2 pki. 
+#   This host will be connected to request the certificate. Set this if you use the icinga2 pki.
 #
 # [*ca_port*]
 #   Port of the 'ca_host'. Defaults to 5665
@@ -317,7 +317,6 @@ class icinga2::feature::api(
       } ->
 
       exec { 'icinga2 pki create certificate signing request':
-        path    => $path,
         command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
         creates => $_ssl_key_path,
       } ->
