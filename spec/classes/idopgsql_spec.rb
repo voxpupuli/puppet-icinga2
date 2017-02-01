@@ -177,14 +177,14 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with import_schema => true" do
       let(:params) { {:import_schema => true} }
 
-      it { is_expected.to contain_exec('idopgsql_import_schema') }
+      it { is_expected.to contain_exec('idopgsql-import-schema') }
     end
 
 
     context "#{os} with import_schema => false" do
       let(:params) { {:import_schema => false} }
 
-      it { should_not contain_exec('idopgsql_import_schema') }
+      it { should_not contain_exec('idopgsql-import-schema') }
     end
 
 
@@ -379,14 +379,14 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with import_schema => true" do
     let(:params) { {:import_schema => true} }
 
-    it { is_expected.to contain_exec('idopgsql_import_schema') }
+    it { is_expected.to contain_exec('idopgsql-import-schema') }
   end
 
 
   context "Windows 2012 R2 with import_schema => false" do
     let(:params) { {:import_schema => false} }
 
-    it { should_not contain_exec('idopgsql_import_schema') }
+    it { should_not contain_exec('idopgsql-import-schema') }
   end
 
 
