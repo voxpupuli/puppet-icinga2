@@ -1,15 +1,24 @@
 require 'spec_helper'
 
 describe('icinga2', :type => :class) do
-  before(:all) do
-    @icinga2_conf = '/etc/icinga2/icinga2.conf'
-    @constants_conf = '/etc/icinga2/constants.conf'
-  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let :facts do
         facts
+      end
+
+      case facts[:kernel]
+      when 'Linux'
+        before(:all) do
+          @icinga2_conf = '/etc/icinga2/icinga2.conf'
+          @constants_conf = '/etc/icinga2/constants.conf'
+        end
+      when 'FreeBSD'
+        before(:all) do
+          @icinga2_conf = '/usr/local/etc/icinga2/icinga2.conf'
+          @constants_conf = '/usr/local/etc/icinga2/constants.conf'
+        end
       end
 
       context 'with all default parameters' do
