@@ -68,6 +68,8 @@ This module has been tested on:
 * Ubuntu 14.04, 16.04
 * CentOS/RHEL 6, 7
     * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
+* OracleLinux 7
+* FreeBSD 10, 11
 * SLES 12
 * Windows Server 2012
 
