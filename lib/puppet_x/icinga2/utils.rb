@@ -146,7 +146,10 @@ module Puppet
                 else "%s%s = {\n%s%s}\n" % [ prefix, attribute_types(attr), process_hash(value, indent+2), ' ' * indent ]
               end
             elsif value.is_a?(Array)
-              result += "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
+              result += case level
+                when 2 then "%s[\"%s\"] = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
+                else "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
+              end
             else
               if level > 1
                 if level == 3
