@@ -137,15 +137,19 @@ module Puppet
 
         def self.process_hash(attrs, indent=2, level=3, prefix=' '*indent)
           result = ''
-
           attrs.each do |attr, value|
             if value.is_a?(Hash)
-              result += case level
-                when 1 then process_hash(value, indent, 2, "%s%s" % [ prefix, attr ])
-                when 2 then "%s[\"%s\"] = {\n%s%s}\n" % [ prefix, attr, process_hash(value, indent), ' ' * (indent-2) ]
-                else "%s%s = {\n%s%s}\n" % [ prefix, attribute_types(attr), process_hash(value, indent+2), ' ' * indent ]
+              if value.empty?
+                result = "%s%s = {}\n" % [ prefix, attribute_types(attr) ]
+              else
+                result += case level
+                  when 1 then process_hash(value, indent, 2, "%s%s" % [ prefix, attr ])
+                  when 2 then "%s[\"%s\"] = {\n%s%s}\n" % [ prefix, attr, process_hash(value, indent), ' ' * (indent-2) ]
+                  else "%s%s = {\n%s%s}\n" % [ prefix, attribute_types(attr), process_hash(value, indent+2), ' ' * indent ]
+                end
               end
             elsif value.is_a?(Array)
+              #result += "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
               result += case level
                 when 2 then "%s[\"%s\"] = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
                 else "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]

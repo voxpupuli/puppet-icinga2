@@ -180,6 +180,22 @@ describe('icinga2::object', :type => :define) do
     end
 
 
+    context "#{os} with attrs => { vars => { bar => {} } }" do
+      let(:params) { {:attrs => { 'vars' => { 'bar' => {} } }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/vars.bar = \{\}/) }
+    end
+
+
+    context "#{os} with attrs => { vars => { bar => [] } }" do
+      let(:params) { {:attrs => { 'vars' => { 'bar' => [] } }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/vars.bar = \[\s+\]/) }
+    end
+
+
     context "#{os} with attrs => { vars => {key1 => 4247, key2 => value2} }" do
       let(:params) { {:attrs => { 'vars' => {'key1' => '4247', 'key2' => 'value2'} }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
@@ -203,6 +219,14 @@ describe('icinga2::object', :type => :define) do
 
       it { is_expected.to contain_concat__fragment('bar')
         .with_content(/vars.foo\["bar"\] = \{\n\s+key1 = 4247\n\s+key2 = "value2"\n\s+\}\n/) }
+    end
+
+
+    context "#{os} with attrs => { vars => {foo => {bar => [4247, value2]}} }" do
+      let(:params) { {:attrs => { 'vars' => {'foo' => { 'bar' => ['4247', 'value2']}} }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/vars.foo\["bar"\] = \[ 4247, "value2", \]/) }
     end
 
 
@@ -405,6 +429,22 @@ describe('icinga2::object', :type => :define) do
   end
 
 
+  context "Windows 2012 R2 with attrs => { vars => { bar => {} } }" do
+    let(:params) { {:attrs => { 'vars' => { 'bar' => {} } }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/vars.bar = \{\}/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { vars => { bar => [] } }" do
+    let(:params) { {:attrs => { 'vars' => { 'bar' => [] } }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/vars.bar = \[\s+\]/) }
+  end
+
+
   context "Windows 2012 R2 with attrs => { vars => {key1 => 4247, key2 => value2} }" do
     let(:params) { {:attrs => { 'vars' => {'key1' => '4247', 'key2' => 'value2'} }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
@@ -428,6 +468,14 @@ describe('icinga2::object', :type => :define) do
 
     it { is_expected.to contain_concat__fragment('bar')
       .with_content(/vars.foo\["bar"\] = \{\r\n\s+key1 = 4247\r\n\s+key2 = "value2"\r\n\s+\}\r\n/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { vars => {foo => {bar => [4247, value2]}} }" do
+    let(:params) { {:attrs => { 'vars' => {'foo' => { 'bar' => ['4247', 'value2']}} }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/vars.foo\["bar"\] = \[ 4247, "value2", \]/) }
   end
 
 
