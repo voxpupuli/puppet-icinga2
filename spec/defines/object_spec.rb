@@ -79,23 +79,24 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with import => [bar, baz], apply => foo in host.vars.bar" do
-      let(:params) { {:import => ['bar', 'baz'], :apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with import => [bar, baz], apply => desc in host.vars.bar, assign => [desc.bar]" do
+      let(:params) { {:import => ['bar', 'baz'], :apply => 'desc in host.vars.bar', :apply_target => 'Host', :assign => ['desc.bar'], :attrs => {'vars' => 'vars + desc'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('bar')
         .with_content(/import "bar"/)
         .with_content(/import "baz"/)
-        .with_content(/vars = vars \+ foo\n/)
-        .with_content(/apply foo for \(foo in host.vars.bar\) to Host/) }
+        .with_content(/vars = vars \+ desc\n/)
+        .with_content(/apply foo for \(desc in host.vars.bar\) to Host/)
+        .with_content(/assign where desc.bar/) }
     end
 
 
-    context "#{os} with apply => foo => config in host.vars.bar" do
-      let(:params) { {:apply => 'foo => config in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo + config'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with apply => desc => config in host.vars.bar" do
+      let(:params) { {:apply => 'desc => config in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + desc + !config.bar'}, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('bar')
-        .with_content(/vars = vars \+ foo \+ config\n/)
-        .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
+        .with_content(/vars = vars \+ desc \+ !config.bar\n/)
+        .with_content(/apply foo for \(desc => config in host.vars.bar\) to Host/) }
     end
 
 
@@ -329,23 +330,24 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with import => [bar, baz], apply => foo in host.vars.bar" do
-    let(:params) { {:import => ['bar', 'baz'], :apply => 'foo in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows with import => [bar, baz], apply => desc in host.vars.bar, assign => [desc.bar]" do
+    let(:params) { {:import => ['bar', 'baz'], :apply => 'desc in host.vars.bar', :apply_target => 'Host', :assign => ['desc.bar'], :attrs => {'vars' => 'vars + desc'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('bar')
       .with_content(/import "bar"/)
       .with_content(/import "baz"/)
-      .with_content(/vars = vars \+ foo\r\n/)
-      .with_content(/apply foo for \(foo in host.vars.bar\) to Host/) }
+      .with_content(/vars = vars \+ desc\r\n/)
+      .with_content(/apply foo for \(desc in host.vars.bar\) to Host/)
+      .with_content(/assign where desc.bar/) }
   end
 
 
-  context "Windows 2012 R2 with apply => foo => config in host.vars.bar" do
-    let(:params) { {:apply => 'foo => config in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + foo + config'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with apply => desc => config in host.vars.bar" do
+    let(:params) { {:apply => 'desc => config in host.vars.bar', :apply_target => 'Host', :attrs => {'vars' => 'vars + desc + !config.bar'}, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('bar')
-      .with_content(/vars = vars \+ foo \+ config\r\n/)
-      .with_content(/apply foo for \(foo => config in host.vars.bar\) to Host/) }
+      .with_content(/vars = vars \+ desc \+ !config.bar\r\n/)
+      .with_content(/apply foo for \(desc => config in host.vars.bar\) to Host/) }
   end
 
 

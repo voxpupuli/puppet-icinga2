@@ -72,10 +72,11 @@ module Puppet
       def self.attributes(attrs, consts, indent=2)
 
         def self.value_types(value)
+
           if value =~ /^\d+\.?\d*[dhms]?$/ || value =~ /^(true|false)$/
             result = value
           else
-            if $constants.include?(value) || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
+            if $constants.index { |x| value =~ /^!?(#{x})(\..+$|$)/ } || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
               result = value
             else
               result = "\"#{value}\""
@@ -149,7 +150,6 @@ module Puppet
                 end
               end
             elsif value.is_a?(Array)
-              #result += "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
               result += case level
                 when 2 then "%s[\"%s\"] = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
                 else "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
@@ -173,16 +173,15 @@ module Puppet
 
         # globals (params.pp) and all keys of attrs hash itselfs must not quoted
         $constants = consts.concat(attrs.keys) << "name"
-        # also with added not operetor '!'
-        $constants += $constants.map {|x| "!#{x}"}
 
         # initialize returned configuration
         config = ''
 
         attrs.each do |attr, value|
+
           if attr =~ /^(assign|ignore) where$/
             value.each do |x|
-              config += "%s%s %s\n" % [ ' ' * indent, attr, parse(x) ]
+              config += "%s%s %s\n" % [ ' ' * indent, attr, parse(x) ] if x != :undef
             end
           else
             if value.is_a?(Hash)
@@ -194,7 +193,7 @@ module Puppet
             elsif value.is_a?(Array)
               config += "%s%s = [ %s]\n" % [ ' ' * indent, attr, process_array(value) ]
             else
-              config += "%s%s = %s\n" % [ ' ' * indent, attr, parse(value) ] if value != :undef
+              config += "%s%s = %s\n" % [ ' ' * indent, attr, parse(value) ]
             end
           end
         end

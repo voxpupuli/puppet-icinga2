@@ -19,7 +19,6 @@ class icinga2::params {
   $plugins          = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
   $default_features = [ 'checker', 'mainlog', 'notification' ]
   $globals          = [
-    '==', '!=', '!', '||', '&&',
     'Acknowledgement',
     'ApplicationType',
     'AttachDebugger',
