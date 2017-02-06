@@ -1,5 +1,5 @@
 
-<% if @apply.is_a?(String) %>apply <%= @object_type -%> for (<%= @apply %>) to <%= @apply_target -%> {
+<% if @apply.is_a?(String) %>apply <%= @object_type -%> <% if @apply_prefix %>"<%= @apply_prefix %>" <% end %>for (<%= @apply %>) to <%= @apply_target -%> {
 <% else -%>
 <% if @apply %>apply<% else -%>
 <% if @template %>template<% else %>object<% end -%>

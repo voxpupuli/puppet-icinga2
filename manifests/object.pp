@@ -21,6 +21,9 @@
 # [*apply_target*]
 #   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 #
+# [*apply_prefix*]
+#   An optional name prefix to use when using a loop apply statement.
+#
 # [*import*]
 #   A sorted list of templates to import in this object. Defaults to an empty array.
 #
@@ -54,6 +57,7 @@ define icinga2::object(
   $template     = false,
   $apply        = false,
   $apply_target = undef,
+  $apply_prefix = undef,
   $import       = [],
   $assign       = [],
   $ignore       = [],
@@ -91,6 +95,7 @@ define icinga2::object(
   unless is_bool($apply) { validate_re($apply, '^.+\s+(=>\s+.+\s+)?in\s+.+$') }
   if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.") }
+  if $apply_prefix { validate_string($apply_prefix) }
   validate_array($import)
   validate_array($assign)
   validate_array($ignore)
