@@ -34,8 +34,8 @@ matrix:
     env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 1.9.3
     env: PUPPET_VERSION="~> 3.8" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=test
-  allow_failures:
-    - rvm: 2.4.0
+#  allow_failures:
+#    - rvm: 2.4.0
 branches:
   only:
   - master
