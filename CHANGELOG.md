@@ -1,5 +1,26 @@
 # Change Log
 
+## [v1.1.0](https://github.com/Icinga/puppet-icinga2/tree/v1.1.0) (2017-02-20)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.2...v1.1.0)
+
+**Implemented enhancements:**
+
+- Deploy to puppet forge via travis [\#43](https://github.com/Icinga/puppet-icinga2/issues/43)
+
+**Fixed bugs:**
+
+- Add service name to service apply loops [\#227](https://github.com/Icinga/puppet-icinga2/issues/227)
+- Parse issue when attribute is a nested hash with an array value [\#223](https://github.com/Icinga/puppet-icinga2/issues/223)
+- icinga2 feature api fails when pki=icinga2 and ca is the local node [\#218](https://github.com/Icinga/puppet-icinga2/issues/218)
+- Error installing module from forge for non r10k users [\#217](https://github.com/Icinga/puppet-icinga2/issues/217)
+- Apply Notification "users" and "user\_groups" as variable [\#208](https://github.com/Icinga/puppet-icinga2/issues/208)
+
+**Merged pull requests:**
+
+- Fix parse issues when attribute is a nested hash with an array value [\#225](https://github.com/Icinga/puppet-icinga2/pull/225) ([lbetz](https://github.com/lbetz))
+- Remove Puppet 4 Warning - delete :undef symbols in attr hash [\#222](https://github.com/Icinga/puppet-icinga2/pull/222) ([Reamer](https://github.com/Reamer))
+- Add initial FreeBSD support [\#210](https://github.com/Icinga/puppet-icinga2/pull/210) ([xaque208](https://github.com/xaque208))
+
 ## [v1.0.2](https://github.com/Icinga/puppet-icinga2/tree/v1.0.2) (2017-01-24)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.1...v1.0.2)
 
@@ -11,11 +32,12 @@
 
 - add permission alter to idomysql docs [\#214](https://github.com/Icinga/puppet-icinga2/issues/214)
 - Update serverspec vagrantfile to Debian 8.7 [\#212](https://github.com/Icinga/puppet-icinga2/issues/212)
-- Apply Notification "users" and "user\_groups" as variable [\#208](https://github.com/Icinga/puppet-icinga2/issues/208)
 
 **Merged pull requests:**
 
 - Revert "Merge branch 'feature/workaround-for-puppetdb-14031'" [\#215](https://github.com/Icinga/puppet-icinga2/pull/215) ([bobapple](https://github.com/bobapple))
+- travis: Enable deploy to Puppetforge [\#213](https://github.com/Icinga/puppet-icinga2/pull/213) ([lazyfrosch](https://github.com/lazyfrosch))
+- Add support for OracleLinux [\#200](https://github.com/Icinga/puppet-icinga2/pull/200) ([TwizzyDizzy](https://github.com/TwizzyDizzy))
 
 ## [v1.0.1](https://github.com/Icinga/puppet-icinga2/tree/v1.0.1) (2017-01-19)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.8.1...v1.0.1)
@@ -31,7 +53,6 @@
 **Merged pull requests:**
 
 - Improve wording for a few parts of the README.md file [\#201](https://github.com/Icinga/puppet-icinga2/pull/201) ([gunnarbeutner](https://github.com/gunnarbeutner))
-- Add support for OracleLinux [\#200](https://github.com/Icinga/puppet-icinga2/pull/200) ([TwizzyDizzy](https://github.com/TwizzyDizzy))
 - Extended example 3 README to mention Puppet parser bug [\#45](https://github.com/Icinga/puppet-icinga2/pull/45) ([kwisatz](https://github.com/kwisatz))
 - Improving README [\#44](https://github.com/Icinga/puppet-icinga2/pull/44) ([lazyfrosch](https://github.com/lazyfrosch))
 
