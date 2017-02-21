@@ -132,10 +132,19 @@ describe('icinga2::object::notification', :type => :define) do
     end
 
 
+    context "#{os} with interval => 30m" do
+      let(:params) { {:interval => '30m', :target => '/bar/baz'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/interval = 30m/) }
+    end
+
+
     context "#{os} with interval => foo (not a valid integer)" do
       let(:params) { {:interval => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
 
@@ -328,10 +337,19 @@ describe('icinga2::object::notification', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with interval => foo (not a valid integer)" do
-    let(:params) { {:interval => 'foo', :target => 'C:/bar/baz'} }
+  context "Windows 2012 R2 with interval => 30m" do
+    let(:params) { {:interval => '30m', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/interval = 30m/) }
+  end
+
+
+  context "Windows 2012 R2 with interval => foo (not a valid integer)" do
+    let(:params) { {:interval => 'foo', :target => '/bar/baz'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 

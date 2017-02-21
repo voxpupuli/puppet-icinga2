@@ -88,7 +88,7 @@ define icinga2::object::scheduleddowntime (
   if $author { validate_string($author) }
   if $comment { validate_string($comment) }
   if $fixed { validate_bool($fixed) }
-  if $duration { validate_integer($duration) }
+  if $duration { validate_re($duration, '^\d+(\.\d+)?[dhms]?$') }
   if $ranges { validate_hash($ranges) }
 
   # compose attributes
