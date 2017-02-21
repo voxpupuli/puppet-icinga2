@@ -125,16 +125,16 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                               .with_content(/duration = 30m/) }
     end
 
-#    See: https://github.com/Icinga/puppet-icinga2/pull/220#issuecomment-275847137
-#    context "#{os} with duration => foo (not a valid integer)" do
-#      let(:params) { {:duration => 'foo', :target => '/bar/baz',
-#                      :host_name => 'foohost',
-#                      :author => 'fooauthor',
-#                      :comment => 'foocomment',
-#                      :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
-#
-#      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
-#    end
+
+    context "#{os} with duration => foo (not a valid integer)" do
+      let(:params) { {:duration => 'foo', :target => '/bar/baz',
+                      :host_name => 'foohost',
+                      :author => 'fooauthor',
+                      :comment => 'foocomment',
+                      :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    end
 
 
     context "#{os} with ranges => { foo => 'bar', bar => 'foo' }" do
@@ -287,14 +287,27 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with duration => foo (not a valid integer)" do
-    let(:params) { {:duration => 'foo', :target => 'C:/bar/baz',
+  context "Windows 2012 R2 with duration => 30m" do
+    let(:params) { {:duration => '30m', :target => 'C:/bar/baz',
                     :host_name => 'foohost',
                     :author => 'fooauthor',
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to contain_concat__fragment('icinga2::object::ScheduledDowntime::bar')
+                            .with({'target' => 'C:/bar/baz'})
+                            .with_content(/duration = 30m/) }
+  end
+
+
+  context "Windows 2012 R2 with duration => foo (not a valid integer)" do
+    let(:params) { {:duration => 'foo', :target => '/bar/baz',
+                    :host_name => 'foohost',
+                    :author => 'fooauthor',
+                    :comment => 'foocomment',
+                    :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
   end
 
 
