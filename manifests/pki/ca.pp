@@ -34,7 +34,8 @@ class icinga2::pki::ca(
   $ca_key          = undef,
 ) {
 
-  include icinga2::params
+  include ::icinga2::params
+  require ::icinga2::config
 
   $ca_dir    = $::icinga2::params::ca_dir
   $user      = $::icinga2::params::user
