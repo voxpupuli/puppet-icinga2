@@ -97,10 +97,9 @@ class { '::icinga2':
 
 ### Enabling Features
 
-Each Icinga 2 feature can be enabled or disabled by using the according classes. Additionally there is a set of default
-features that are enabled by default: `[ 'checker', 'mainlog', 'notification' ]`
+There are two options how you can enable features:
 
-The default set of features can be changed with the `features` parameter:
+A default set of features is set with the `features` parameter in the `::icinga2` class:
 
 ``` puppet
 class { '::icinga2':
@@ -109,7 +108,7 @@ class { '::icinga2':
 }
 ```
 
-Enable and configure features by using the associated classes:
+To enable a feature and change its configuration, declare the specified feature class:
 
 ``` puppet
 class { '::icinga2::feature::graphite':
@@ -119,6 +118,8 @@ class { '::icinga2::feature::graphite':
   enable_send_metadata   => true,
 }
 ```
+
+Make sure that you enable features **either** in the `::icinga2` class **or** by declaring the feature class.
 
 ### Setting up Icinga IDO
 

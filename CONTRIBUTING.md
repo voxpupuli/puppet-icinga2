@@ -14,11 +14,11 @@ reviewed and merged if they suit some general guidelines:
 
 ## Branches
 Choosing a proper name for a branch helps us identify its purpose and possibly find an associated bug or feature.
-Generally a branch name should include a topic such as `bug` or `feature` followed by a description and an issue number
+Generally a branch name should include a topic such as `fix` or `feature` followed by a description and an issue number
 if applicable. Branches should have only changes relevant to a specific issue.
 
 ```
-git checkout -b bug/service-template-typo-1234
+git checkout -b fix/service-template-typo-1234
 git checkout -b feature/config-handling-1235
 ```
 

@@ -49,13 +49,7 @@ git push --tags
 
 
 ## Puppet Forge
-Currently, we build and upload the module manually. This may be automated in the future with Travis-CI.
-
-Build module
-```bash
-puppet module build puppet-icinga2
-```
-Upload via webinterface on [forge.puppet.com].
+The module is uploaded automatically to Puppet Forge by TravisCI when a new tag is set.
 
 [github-changelog-generator]: https://github.com/skywinder/github-changelog-generator
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
