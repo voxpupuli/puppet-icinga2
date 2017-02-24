@@ -109,26 +109,6 @@ class icinga2::feature::idopgsql(
   if $categories { validate_array($categories) }
   validate_bool($import_schema)
 
-  if $ido_pgsql_package {
-    package { $ido_pgsql_package:
-      ensure => installed,
-      before => [
-        Exec['idopgsql-import-schema'],
-        Icinga2::Feature['ido-pgsql'],
-      ]
-    }
-  }
-
-  if $import_schema {
-    exec { 'idopgsql-import-schema':
-      user        => 'root',
-      path        => $::path,
-      environment => ["PGPASSWORD=${password}"],
-      command     => "psql -h '${host}' -U '${user}' -d '${database}' -w -f /usr/share/icinga2-ido-pgsql/schema/pgsql.sql",
-      unless      => "psql -h '${host}' -U '${user}' -d '${database}' -w -c 'select version from icinga_dbversion'",
-    }
-  }
-
   $attrs = {
     host                  => $host,
     port                  => $port,
@@ -142,6 +122,28 @@ class icinga2::feature::idopgsql(
     failover_timeout      => $failover_timeout,
     cleanup               => $cleanup,
     categories            => $categories,
+  }
+
+  # install additional package
+  if $ido_pgsql_package {
+    package { $ido_pgsql_package:
+      ensure => installed,
+      before => Icinga2::Feature['ido-pgsql'],
+    }
+  }
+
+  # import db schema
+  if $import_schema {
+    if $ido_pgsql_package {
+      Package[$ido_pgsql_package] -> Exec['idopgsql-import-schema']
+    }
+    exec { 'idopgsql-import-schema':
+      user        => 'root',
+      path        => $::path,
+      environment => ["PGPASSWORD=${password}"],
+      command     => "psql -h '${host}' -U '${user}' -d '${database}' -w -f /usr/share/icinga2-ido-pgsql/schema/pgsql.sql",
+      unless      => "psql -h '${host}' -U '${user}' -d '${database}' -w -c 'select version from icinga_dbversion'",
+    }
   }
 
   # create object

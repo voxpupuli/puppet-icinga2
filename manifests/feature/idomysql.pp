@@ -286,25 +286,6 @@ class icinga2::feature::idomysql(
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
-  if $ido_mysql_package {
-    package { $ido_mysql_package:
-      ensure => installed,
-      before => [
-        Exec['idomysql-import-schema'],
-        Icinga2::Feature['ido-mysql']
-      ]
-    }
-  }
-
-  if $import_schema {
-    exec { 'idomysql-import-schema':
-      user    => 'root',
-      path    => $::path,
-      command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '/usr/share/icinga2-ido-mysql/schema/mysql.sql'",
-      unless  => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
-    }
-  }
-
   $attrs = {
     host                  => $host,
     port                  => $port,
@@ -320,6 +301,27 @@ class icinga2::feature::idomysql(
     cleanup               => $cleanup,
     categories            => $categories,
 
+  }
+
+  # install additional package
+  if $ido_mysql_package {
+    package { $ido_mysql_package:
+      ensure => installed,
+      before => Icinga2::Feature['ido-mysql'],
+    }
+  }
+
+  # import db schema
+  if $import_schema {
+    if $ido_mysql_package {
+      Package[$ido_mysql_package] -> Exec['idomysql-import-schema']
+    }
+    exec { 'idomysql-import-schema':
+      user    => 'root',
+      path    => $::path,
+      command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '/usr/share/icinga2-ido-mysql/schema/mysql.sql'",
+      unless  => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
+    }
   }
 
   # create object
