@@ -101,7 +101,14 @@ module Puppet
         def self.parse(row)
           result = ''
 
-          if row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
+          # scan function
+          if row =~ /^\{{2}(.+)\}{2}$/
+            result += "{{%s}}" % [ $1 ]
+          # scan expression + function (function should contain expressions, but we donno parse it)
+          elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$/
+            result += "%s %s {{%s}}" % [ parse($1), $2, $3 ]
+          # scan expression
+          elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
             if row =~ /^(.+)\((.*)$/

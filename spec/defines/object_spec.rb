@@ -231,11 +231,27 @@ describe('icinga2::object', :type => :define) do
     end
 
 
-    context "#{os} with attrs => { foo => {{ unparsed string }} }" do
-      let(:params) { {:attrs => { 'foo' => '{{ unparsed string }}' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+    context "#{os} with attrs => { foo => {{ 0.8 * macro($bar$) }} }" do
+      let(:params) { {:attrs => { 'foo' => '{{ 0.8 * macro($bar$) }}' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
       it { is_expected.to contain_concat__fragment('bar')
-        .with_content(/foo = \{{2} unparsed string \}{2}\n/) }
+        .with_content(/foo = \{{2} 0.8 \* macro\(\$bar\$\) \}{2}/) }
+    end
+
+
+    context "#{os} with attrs => { foo => 6 + {{ 0.8 * macro($bar$) }} }" do
+      let(:params) { {:attrs => { 'foo' => '6 + {{ 0.8 * macro($bar$) }}' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/foo = 6 \+ \{{2} 0.8 \* macro\(\$bar\$\) \}{2}/) }
+    end
+
+
+    context "#{os} with attrs => { foo => {{ 0.8 * macro($bar$) }} / 2 }" do
+      let(:params) { {:attrs => { 'foo' => '{{ 0.8 * macro($bar$) }} / 2' }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/foo = \{{2} 0.8 \* macro\(\$bar\$\) \}{2} \/ 2/) }
     end
   end
 end
@@ -481,10 +497,26 @@ describe('icinga2::object', :type => :define) do
   end
 
 
-  context "Windows 2012 R2 with attrs => { foo => {{ unparsed string }} }" do
-    let(:params) { {:attrs => { 'foo' => '{{ unparsed string }}' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+  context "Windows 2012 R2 with attrs => { foo => {{ 0.8 * macro($bar$) }} }" do
+    let(:params) { {:attrs => { 'foo' => '{{ 0.8 * macro($bar$) }}' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to contain_concat__fragment('bar')
-      .with_content(/foo = \{{2} unparsed string \}{2}\r\n/) }
+      .with_content(/foo = \{{2} 0.8 \* macro\(\$bar\$\) \}{2}/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { foo => 6 + {{ 0.8 * macro($bar$) }} }" do
+    let(:params) { {:attrs => { 'foo' => '6 + {{ 0.8 * macro($bar$) }}' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/foo = 6 \+ \{{2} 0.8 \* macro\(\$bar\$\) \}{2}/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { foo => {{ 0.8 * macro($bar$) }} / 2 }" do
+    let(:params) { {:attrs => { 'foo' => '{{ 0.8 * macro($bar$) }} / 2' }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/foo = \{{2} 0.8 \* macro\(\$bar\$\) \}{2} \/ 2/) }
   end
 end
