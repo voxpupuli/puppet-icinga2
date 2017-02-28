@@ -312,7 +312,7 @@ class icinga2::feature::api(
     'ca': {
       class { '::icinga2::pki::ca': }
 
-      notice("This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead")
+      notice('This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead')
     } # ca
   } # pki
 
