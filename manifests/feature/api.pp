@@ -175,7 +175,7 @@ class icinga2::feature::api(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_re($pki, [ '^puppet$', '^none$', '^icinga2', '^ca' ],
-    "${pki} isn't supported. Valid values are 'puppet', 'none', 'icinga2' and 'ca'.")
+    "${pki} isn't supported. Valid values are 'puppet', 'none', 'icinga2' and 'ca (deprecated)'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
   validate_string($ticket_salt)
@@ -310,32 +310,9 @@ class icinga2::feature::api(
     } # icinga2
 
     'ca': {
-      class { '::icinga2::pki::ca': } ->
+      class { '::icinga2::pki::ca': }
 
-      file { "${_ssl_cacert_path}":
-        source => "${ca_dir}/ca.crt",
-      } ->
-
-      exec { 'icinga2 pki create certificate signing request':
-        command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
-        creates => $_ssl_key_path,
-      } ->
-      file {
-        $_ssl_key_path:
-          mode => '0600';
-      }
-
-      exec { 'icinga2 pki sign certificate':
-        command     => "icinga2 pki sign-csr --csr '${_ssl_csr_path}' --cert '${_ssl_cert_path}'",
-        subscribe   => Exec['icinga2 pki create certificate signing request'],
-        refreshonly => true,
-        notify      => Class['::icinga2::service'],
-      } ->
-      file {
-        $_ssl_cert_path:;
-        $_ssl_csr_path:
-          ensure => absent;
-      }
+      notice("This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead")
     } # ca
   } # pki
 
