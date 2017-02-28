@@ -523,17 +523,19 @@ file { '/var/lib/icinga2/ca/ca.key':
 }
 ```
 
-* Create a new CA with the `icinga2` CLI command and a certificate signed by this new CA. This is especially useful when
-seting up a fresh Icinga 2 master from scratch.
-```
+* Create a new CA with the `icinga2` CLI command and a certificate signed by this new CA. This is useful especially when
+seting up a new Icinga 2 master.
+```puppet
 class { '::icinga2':
   constants => {
     'TicketSalt'   => '5a3d695b8aef8f18452fc494593056a4',
   }
 }
 
+class { '::icinga2::pki::ca': }
+
 class { '::icinga2::feature::api':
-  pki             => 'ca',
+  pki             => 'none',
   endpoints       => {
     'localhost' => {
       'host' => 'localhost',
@@ -1143,13 +1145,13 @@ Provides multiple sources for the certificate and key.
 the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
 `ssl_ca` parameters.
-* `ca` Includes the `::icinga2::pki::ca` class to generate a fresh CA and generates an SSL certificate and key signed by
+* `ca` (**deprecated**) Includes the `::icinga2::pki::ca` class to generate a fresh CA and generates an SSL certificate and key signed by
 this new CA.
 
 Defaults to `puppet`
 
 ##### `ssl_key_path`
-Location of the private key. Default depends on platform:
+Location of the private key. Default depends on your platform:
 
 * Linux `/etc/icinga2/pki/NodeName.key`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key`
@@ -1157,17 +1159,25 @@ Location of the private key. Default depends on platform:
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_cert_path`
-Location of the certificate. Default depends on platform:
+Location of the certificate. Default depends on your platform:
 
 * Linux `/etc/icinga2/pki/NodeName.crt`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt`
 
 The Value of `NodeName` comes from the corresponding constant.
 
-##### `ssl_ca_path`
-Location of the CA certificate. Default depends on platform:
+##### `ssl_csr_path`
+Location of the certificate signing request. Default depends on your platform:
 
-* Linux `/etc/icinga2/pki/ca.crt`
+* Linux: `/etc/icinga2/pki/NodeName.csr`
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr`
+
+The Value of `NodeName` comes from the corresponding constant.
+
+##### `ssl_cacert_path`
+Location of the CA certificate. Default depends on your platform:
+
+* Linux: `/etc/icinga2/pki/ca.crt`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
 
 ##### `accept_config`
@@ -1310,6 +1320,36 @@ Content of the CA certificate. If this is unset, a certificate will be generated
 
 ##### `ca_key`
 Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
+
+##### `ssl_key_path`
+Location of the private key. Default depends on your platform:
+
+* Linux `/etc/icinga2/pki/NodeName.key`
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key`
+
+The Value of `NodeName` comes from the corresponding constant.
+
+##### `ssl_cert_path`
+Location of the certificate. Default depends on your platform:
+
+* Linux `/etc/icinga2/pki/NodeName.crt`
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt`
+
+The Value of `NodeName` comes from the corresponding constant.
+
+##### `ssl_csr_path`
+Location of the certificate signing request. Default depends on your platform:
+
+* Linux: `/etc/icinga2/pki/NodeName.csr`
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr`
+
+The Value of `NodeName` comes from the corresponding constant.
+
+##### `ssl_cacert_path`
+Location of the CA certificate. Default depends on your platform:
+
+* Linux: `/etc/icinga2/pki/ca.crt`
+* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
 
 ### Private Classes
 
