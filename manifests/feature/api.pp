@@ -82,6 +82,12 @@
 # [*ssl_cipher_list*]
 #   List of allowed TLS ciphers, to finetune encryption. Default undef (e.g. "HIGH:MEDIUM:!aNULL:!MD5:!RC4")
 #
+# [*bind_host*]
+#   The IP address the api listener will be bound to. (e.g. 0.0.0.0)
+#
+# [*bind_port*]
+#   The port the api listener will be bound to. (e.g. 5665)
+#
 # === Variables
 #
 # [*node_name*]
@@ -152,6 +158,8 @@ class icinga2::feature::api(
   $ssl_cacert      = undef,
   $ssl_protocolmin = undef,
   $ssl_cipher_list = undef,
+  $bind_host       = undef,
+  $bind_port       = undef,
 ) {
 
   $conf_dir  = $::icinga2::params::conf_dir
@@ -210,6 +218,14 @@ class icinga2::feature::api(
   if $ssl_cipher_list {
     validate_string($ssl_cipher_list)
   }
+  if $bind_host {
+    validate_string($bind_host)
+  }
+  if $bind_port {
+    validate_integer($bind_port)
+  }
+
+
 
   # handle the certificate's stuff
   case $pki {
@@ -326,6 +342,8 @@ class icinga2::feature::api(
     ticket_salt     => $ticket_salt,
     tls_protocolmin => $ssl_protocolmin,
     cipher_list     => $ssl_cipher_list,
+    bind_host       => $bind_host,
+    bind_port       => $bind_port,
   }
 
   # create endpoints and zones
