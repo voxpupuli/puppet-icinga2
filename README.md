@@ -821,6 +821,9 @@ Enables or disables the `notification` feature.
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `notification` should be enabled. Defaults to `present`.
 
+##### `enable_ha`
+Notifications are load-balanced amongst all nodes in a zone. By default this functionality is enabled. If your nodes should send out notifications independently from any other nodes (this will cause duplicated notifications if not properly handled!), you can set enable_ha to false.
+
 #### Class: `icinga2::feature::command`
 Enables or disables the `command` feature.
 

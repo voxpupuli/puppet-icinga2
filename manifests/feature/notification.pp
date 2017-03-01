@@ -7,9 +7,16 @@
 # [*ensure*]
 #   Set to present enables the feature notification, absent disabled it. Defaults to present.
 #
+# [*enable_ha*]
+#   Notifications are load-balanced amongst all nodes in a zone. By default this
+#   functionality is enabled. If your nodes should send out notifications independently
+#   from any other nodes (this will cause duplicated notifications if not properly
+#   handled!), you can set enable_ha to false.
+#
 #
 class icinga2::feature::notification(
-  $ensure = present,
+  $ensure    = present,
+  $enable_ha = undef,
 ) {
 
   $conf_dir  = $::icinga2::params::conf_dir
@@ -17,12 +24,20 @@ class icinga2::feature::notification(
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  if $enable_ha {
+    validate_bool($enable_ha)
+  }
+
+  # compose attributes
+  $attrs = {
+    enable_ha => $enable_ha,
+  }
 
   # create object
   icinga2::object { 'icinga2::object::NotificationComponent::notification':
     object_name => 'notification',
     object_type => 'NotificationComponent',
-    attrs       => {},
+    attrs       => delete_undef_values($attrs),
     target      => "${conf_dir}/features-available/notification.conf",
     order       => '10',
     notify      => $ensure ? {
