@@ -111,6 +111,7 @@ class icinga2::pki::ca(
       path    => $path,
       command => 'icinga2 pki new-ca',
       creates => "${ca_dir}/ca.crt",
+      before  => File[$_ssl_cacert_path],
       notify  => Class['::icinga2::service'],
     }
   } else {
@@ -132,6 +133,7 @@ class icinga2::pki::ca(
         default   => $ca_cert,
       },
       tag     => 'icinga2::config::file',
+      before  => File[$_ssl_cacert_path],
     }
 
     file { "${ca_dir}/ca.key":
@@ -146,9 +148,9 @@ class icinga2::pki::ca(
       },
       tag     => 'icinga2::config::file',
     }
-  } ->
+  }
 
-  file { "${_ssl_cacert_path}":
+  file { $_ssl_cacert_path:
     source => "${ca_dir}/ca.crt",
   }
 
