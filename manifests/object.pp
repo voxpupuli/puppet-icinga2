@@ -44,6 +44,9 @@
 # [*order*]
 #   String to set the position in the target file, sorted alpha numeric.
 #
+# [*attrs_list*]
+#   Array of all possible attributes for this object type.
+#
 # === Variables
 #
 # [*_constants*]
@@ -58,6 +61,7 @@ define icinga2::object(
   $object_type,
   $target,
   $order,
+  $attrs_list,
   $ensure       = present,
   $object_name  = $title,
   $template     = false,
@@ -107,16 +111,17 @@ define icinga2::object(
   validate_string($object_type)
   validate_absolute_path($target)
   validate_string($order)
+  validate_array($attrs_list)
 
   if $object_type == $apply_target {
     fail('The object type must be different from the apply target')
   }
 
-  $_constants = concat(keys($::icinga2::_constants), $::icinga2::params::globals, keys($attrs))
-  $_attrs = delete_undef_values(merge($attrs, {
+  $_constants = concat(keys($::icinga2::_constants), $::icinga2::params::globals, $attrs_list)
+  $_attrs = merge($attrs, {
     'assign where' => $assign,
     'ignore where' => $ignore,
-  }))
+  })
 
   if !defined(Concat[$target]) {
     concat { $target:

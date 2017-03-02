@@ -355,6 +355,7 @@ class icinga2::feature::api(
     object_name => 'api',
     object_type => 'ApiListener',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/api.conf",
     order       => '10',
     notify      => $ensure ? {
