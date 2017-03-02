@@ -46,7 +46,9 @@ describe('icinga2::feature::api', :type => :class) do
         .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_config = false/)
         .with_content(/accept_commands = false/)
-        .with_content(/ticket_salt = TicketSalt/) }
+        .with_content(/ticket_salt = TicketSalt/)
+        .without_content(/bind_\w+ =/)
+      }
 
       it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
       it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
@@ -279,6 +281,17 @@ describe('icinga2::feature::api', :type => :class) do
           .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
           .with_content(/tls_protocolmin = "TLSv1.2"/)
           .with_content(/cipher_list = "HIGH:MEDIUM:!aNULL:!MD5:!RC4"/)
+      end
+    end
+
+    context "#{os} with bind settings" do
+      let(:params) { { bind_host: '::', bind_port: 1234 } }
+
+      it 'should set bind_* settings' do
+        is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+          .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+          .with_content(/bind_host = "::"/)
+          .with_content(/bind_port = 1234/)
       end
     end
   end
@@ -555,5 +568,16 @@ describe('icinga2::feature::api', :type => :class) do
     let(:params) { {:zones => 'foo'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+  end
+
+  context 'Windows 2012 R2 with bind settings' do
+    let(:params) { { bind_host: '::', bind_port: 1234 } }
+
+    it 'should set bind_* settings' do
+      is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
+        .with_content(/bind_host = "::"/)
+        .with_content(/bind_port = 1234/)
+    end
   end
 end
