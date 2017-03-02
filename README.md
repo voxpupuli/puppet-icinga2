@@ -1208,6 +1208,12 @@ Minimal TLS version to require. Default undef (e.g. `TLSv1.2`)
 ##### `ssl_cipher_list`
 List of allowed TLS ciphers, to fine tune encryption. Default undef (e.g. `HIGH:MEDIUM:!aNULL:!MD5:!RC4`)
 
+##### `bind_host`
+The IP address the api listener will be bound to. (e.g. 0.0.0.0)
+
+##### `bind_port`
+The port the api listener will be bound to. (e.g. 5665)
+
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.
 
