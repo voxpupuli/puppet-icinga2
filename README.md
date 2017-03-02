@@ -1667,6 +1667,9 @@ A list of state filters when this dependency should be OK. Defaults to [ OK, War
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 
+##### `prefix`
+Set dependency_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+
 ##### `apply_target`
 An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 
@@ -1892,6 +1895,9 @@ A list of state filters when this notification should be triggered. By default e
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 
+##### `prefix`
+Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+
 ##### `apply_target`
 An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 
@@ -2002,6 +2008,9 @@ Icon image description for the service. Used by external interface only.
 ##### `apply`
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `prefix`
+Set service_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
 
 ##### `assign`
 Assign user group members using the group assign rules.
@@ -2126,6 +2135,9 @@ A dictionary containing information which days and durations apply to this timep
 ##### `apply`
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+
+##### `prefix`
+Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
 
 ##### `apply_target`
 An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.

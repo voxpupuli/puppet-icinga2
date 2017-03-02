@@ -109,6 +109,9 @@
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
+# [*prefix*]
+#   Set service_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+#
 # [*assign*]
 #   Assign user group members using the group assign rules.
 #
@@ -185,6 +188,7 @@ define icinga2::object::service (
   $icon_image             = undef,
   $icon_image_alt         = undef,
   $apply                  = false,
+  $prefix                 = false,
   $assign                 = [],
   $ignore                 = [],
   $import                 = [],
@@ -201,6 +205,7 @@ define icinga2::object::service (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($service_name)
   unless is_bool($apply) { validate_string($apply) }
+  validate_bool($prefix)
   validate_array($import)
   validate_bool($template)
   validate_absolute_path($target)
@@ -270,6 +275,7 @@ define icinga2::object::service (
     object_type  => 'Service',
     import       => $import,
     apply        => $apply,
+    prefix       => $prefix,
     apply_target => 'Host',
     assign       => $assign,
     ignore       => $ignore,
