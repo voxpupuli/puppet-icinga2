@@ -21,6 +21,8 @@ class icinga2::config {
   $conf_dir  = $::icinga2::params::conf_dir
   $plugins   = $::icinga2::plugins
   $confd     = $::icinga2::_confd
+  $user           = $::icinga2::params::user
+  $group          = $::icinga2::params::group
 
   if $::kernel != 'windows' {
     $template_constants  = icinga2_attributes($constants)
@@ -32,11 +34,15 @@ class icinga2::config {
 
   file { "${conf_dir}/constants.conf":
     ensure  => file,
+    owner   => $user,
+    group   => $group,
     content => $template_constants,
   }
 
   file { "${conf_dir}/icinga2.conf":
     ensure  => file,
+    owner   => $user,
+    group   => $group,
     content => $template_mainconfig,
   }
 

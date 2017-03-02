@@ -33,6 +33,8 @@ class icinga2::install {
 
   file { "${conf_dir}/features-enabled":
     ensure  => directory,
+    owner   => $user,
+    group   => $group,
     purge   => $purge_features,
     recurse => $purge_features,
     require => Package[$package],
@@ -41,6 +43,8 @@ class icinga2::install {
   # anchor, i.e. for config directory set by confd parameter
   file { $conf_dir:
     ensure  => directory,
+    owner   => $user,
+    group   => $group,
     require => Package[$package]
   }
   file { $pki_dir:
