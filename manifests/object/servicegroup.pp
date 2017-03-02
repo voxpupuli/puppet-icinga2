@@ -78,7 +78,7 @@ define icinga2::object::servicegroup (
     object_type => 'ServiceGroup',
     import      => $import,
     template    => $template,
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     assign      => $assign,
     ignore      => $ignore,
     target      => $target,

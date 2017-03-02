@@ -57,7 +57,7 @@ define icinga2::object::compatlogger (
     ensure      => $ensure,
     object_name => $compatlogger_name,
     object_type => 'CompatLogger',
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

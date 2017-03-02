@@ -141,7 +141,6 @@ define icinga2::object::notification (
   $attrs = {
     'host_name' => $host_name,
     'service_name' => $service_name,
-    'vars' => $vars,
     'users' => $users,
     'user_groups' => $user_groups,
     'times' => $times,
@@ -151,6 +150,7 @@ define icinga2::object::notification (
     'zone' => $zone,
     'types' => $types,
     'states' => $states,
+    'vars' => $vars,
   }
 
   # create object
@@ -160,7 +160,7 @@ define icinga2::object::notification (
     object_type  => 'Notification',
     import       => $import,
     template     => $template,
-    attrs        => delete_undef_values($attrs),
+    attrs        => $attrs,
     target       => $target,
     order        => $order,
     apply        => $apply,

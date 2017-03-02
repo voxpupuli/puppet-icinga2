@@ -107,7 +107,7 @@ define icinga2::object::scheduleddowntime (
     ensure       => $ensure,
     object_name  => $scheduleddowntime_name,
     object_type  => 'ScheduledDowntime',
-    attrs        => delete_undef_values($attrs),
+    attrs        => $attrs,
     apply        => $apply,
     apply_target => $apply_target,
     assign       => $assign,

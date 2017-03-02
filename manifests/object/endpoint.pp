@@ -72,7 +72,7 @@ define icinga2::object::endpoint(
     ensure      => $ensure,
     object_name => $endpoint_name,
     object_type => 'Endpoint',
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $_target,
     order       => $order,
     notify      => Class['::icinga2::service'],

@@ -187,7 +187,6 @@ define icinga2::object::host(
   $attrs = {
     address               => $address,
     address6              => $address6,
-    vars                  => $vars,
     groups                => $groups,
     display_name          => $display_name,
     check_command         => $check_command,
@@ -212,6 +211,7 @@ define icinga2::object::host(
     action_url            => $action_url,
     icon_image            => $icon_image,
     icon_image_alt        => $icon_image_alt,
+    vars                  => $vars,
   }
 
   # create object
@@ -221,7 +221,7 @@ define icinga2::object::host(
     object_type => 'Host',
     template    => $template,
     import      => $import,
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

@@ -135,7 +135,7 @@ module Puppet
             elsif value.is_a?(Array)
               result += "[ %s], " % [ process_array(value, indent+2) ]
             else
-              result += "%s, " % [ parse(value) ] if value != :undef
+              result += "%s, " % [ parse(value) ] if value
             end
           end
 
@@ -164,12 +164,12 @@ module Puppet
             else
               if level > 1
                 if level == 3
-                  result += "%s%s = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :undef
+                  result += "%s%s = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value
                 else
-                  result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :undef
+                  result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value
                 end
               else
-                result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :undef
+                result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value
               end
             end
           end
@@ -188,7 +188,7 @@ module Puppet
 
           if attr =~ /^(assign|ignore) where$/
             value.each do |x|
-              config += "%s%s %s\n" % [ ' ' * indent, attr, parse(x) ] if x != :undef
+              config += "%s%s %s\n" % [ ' ' * indent, attr, parse(x) ] if x
             end
           else
             if value.is_a?(Hash)

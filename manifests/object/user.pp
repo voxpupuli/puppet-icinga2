@@ -101,12 +101,12 @@ define icinga2::object::user (
     'display_name'         => $display_name,
     'email'                => $email,
     'pager'                => $pager,
-    'vars'                 => $vars,
     'groups'               => $groups,
     'enable_notifications' => $enable_notifications,
     'period'               => $period,
     'types'                => $types,
     'states'               => $states,
+    'vars'                 => $vars,
   }
 
   # create object
@@ -116,7 +116,7 @@ define icinga2::object::user (
     object_type => 'User',
     template    => $template,
     import      => $import,
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

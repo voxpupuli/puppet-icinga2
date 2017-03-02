@@ -16,7 +16,7 @@
 <% unless @import.empty? %><%= "\n" %><% end -%>
 <% if @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+in\s+.+$/ -%>
 <%= scope.function_icinga2_attributes([@_attrs.merge({$1 => :undef}),2]) -%>
-<% elsif @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ %>
+<% elsif @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ -%>
 <%= scope.function_icinga2_attributes([@_attrs.merge({$1 => :undef, $2 => :undef}),2]) -%>
 <% else -%>
 <%= scope.function_icinga2_attributes([@_attrs,2]) -%>

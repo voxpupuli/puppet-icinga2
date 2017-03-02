@@ -77,9 +77,9 @@ define icinga2::object::eventcommand (
   $attrs = {
     'command'   => $command,
     'env'       => $env,
-    'vars'      => $vars,
     'timeout'   => $timeout,
     'arguments' => $arguments,
+    'vars'      => $vars,
   }
 
   # create object
@@ -88,7 +88,7 @@ define icinga2::object::eventcommand (
     object_name => $eventcommand_name,
     object_type => 'EventCommand',
     import      => $import,
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

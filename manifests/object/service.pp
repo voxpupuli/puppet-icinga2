@@ -237,14 +237,13 @@ define icinga2::object::service (
   $attrs = {
     'display_name'          => $display_name ,
     'host_name'             => $host_name ,
-    'groups'                => $groups ,
-    'vars'                  => $vars ,
     'check_command'         => $check_command ,
-    'max_check_attempts'    => $max_check_attempts ,
-    'check_period'          => $check_period ,
     'check_timeout'         => $check_timeout ,
     'check_interval'        => $check_interval ,
+    'check_period'          => $check_period ,
     'retry_interval'        => $retry_interval ,
+    'max_check_attempts'    => $max_check_attempts ,
+    'groups'                => $groups ,
     'enable_notifications'  => $enable_notifications ,
     'enable_active_checks'  => $enable_active_checks ,
     'enable_passive_checks' => $enable_passive_checks ,
@@ -261,6 +260,7 @@ define icinga2::object::service (
     'action_url'            => $action_url ,
     'icon_image'            => $icon_image ,
     'icon_image_alt'        => $icon_image_alt ,
+    'vars'                  => $vars ,
   }
 
   # create object
@@ -274,7 +274,7 @@ define icinga2::object::service (
     assign       => $assign,
     ignore       => $ignore,
     template     => $template,
-    attrs        => delete_undef_values($attrs),
+    attrs        => $attrs,
     target       => $target,
     order        => $order,
     notify       => Class['::icinga2::service'],

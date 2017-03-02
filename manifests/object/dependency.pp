@@ -137,7 +137,7 @@ define icinga2::object::dependency (
     object_type  => 'Dependency',
     import       => $import,
     template     => $template,
-    attrs        => delete_undef_values($attrs),
+    attrs        => $attrs,
     apply        => $apply,
     apply_target => $apply_target,
     assign       => $assign,

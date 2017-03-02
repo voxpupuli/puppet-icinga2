@@ -88,7 +88,7 @@ define icinga2::object::timeperiod (
     object_type => 'TimePeriod',
     template    => $template,
     import      => $import,
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],

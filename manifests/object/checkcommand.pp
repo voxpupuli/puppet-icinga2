@@ -75,9 +75,9 @@ define icinga2::object::checkcommand(
   $attrs = {
     command   => $command,
     env       => $env,
-    vars      => $vars,
     timeout   => $timeout,
     arguments => $arguments,
+    vars      => $vars,
   }
 
   # create object
@@ -87,7 +87,7 @@ define icinga2::object::checkcommand(
     object_type => 'CheckCommand',
     template    => $template,
     import      => $import,
-    attrs       => delete_undef_values($attrs),
+    attrs       => $attrs,
     target      => $target,
     order       => $order,
     notify      => Class['::icinga2::service'],
