@@ -50,6 +50,7 @@ class icinga2::feature::statusdata(
     object_name => 'statusdata',
     object_type => 'StatusDataWriter',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/statusdata.conf",
     order       => '10',
     notify      => $ensure ? {

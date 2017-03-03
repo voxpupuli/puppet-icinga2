@@ -38,6 +38,7 @@ class icinga2::feature::notification(
     object_name => 'notification',
     object_type => 'NotificationComponent',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/notification.conf",
     order       => '10',
     notify      => $ensure ? {

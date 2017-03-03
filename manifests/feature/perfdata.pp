@@ -82,6 +82,7 @@ class icinga2::feature::perfdata(
     object_name => 'perfdata',
     object_type => 'PerfdataWriter',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/perfdata.conf",
     order       => '10',
     notify      => $ensure ? {

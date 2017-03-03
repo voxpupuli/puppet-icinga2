@@ -23,6 +23,7 @@ class icinga2::feature::checker(
     object_name => 'checker',
     object_type => 'CheckerComponent',
     attrs       => {},
+    attrs_list  => [],
     target      => "${conf_dir}/features-available/checker.conf",
     order       => '10',
     notify      => $ensure ? {

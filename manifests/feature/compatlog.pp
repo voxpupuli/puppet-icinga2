@@ -41,6 +41,7 @@ class icinga2::feature::compatlog(
     object_name => 'compatlog',
     object_type => 'CompatLogger',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/compatlog.conf",
     order       => '10',
     notify      => $ensure ? {

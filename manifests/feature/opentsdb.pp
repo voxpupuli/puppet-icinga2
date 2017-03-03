@@ -39,6 +39,7 @@ class icinga2::feature::opentsdb(
     object_name => 'opentsdb',
     object_type => 'OpenTsdbWriter',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/opentsdb.conf",
     order       => '10',
     notify      => $ensure ? {

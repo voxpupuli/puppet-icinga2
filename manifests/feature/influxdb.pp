@@ -271,6 +271,7 @@ class icinga2::feature::influxdb(
     object_name => 'influxdb',
     object_type => 'InfluxdbWriter',
     attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/influxdb.conf",
     order       => '10',
     notify      => $ensure ? {

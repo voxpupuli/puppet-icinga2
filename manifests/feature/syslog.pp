@@ -34,6 +34,7 @@ class icinga2::feature::syslog(
     object_name => 'syslog',
     object_type => 'SyslogLogger',
     attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/syslog.conf",
     order       => '10',
     notify      => $ensure ? {
