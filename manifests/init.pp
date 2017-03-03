@@ -10,6 +10,10 @@
 # [*enable*]
 #   If set to true the Icinga 2 service will start on boot. Defaults to true.
 #
+# [*package_ensure*]
+#   Specifies the package version to install. Can be 'installed', 'absent',
+#   'latest' or a version string. Default: 'installed'
+#
 # [*manage_repo*]
 #   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
 #   the latest version of Icinga. When set to false the operating systems default will be used. As the Icinga Project
@@ -124,6 +128,7 @@
 class icinga2(
   $ensure         = running,
   $enable         = true,
+  $package_ensure = $icinga2::params::package_ensure,
   $manage_repo    = false,
   $manage_service = true,
   $features       = $icinga2::params::default_features,
@@ -136,6 +141,7 @@ class icinga2(
   validate_re($ensure, [ '^running$', '^stopped$' ],
     "${ensure} isn't supported. Valid values are 'running' and 'stopped'.")
   validate_bool($enable)
+  validate_string($package_ensure)
   validate_bool($manage_repo)
   validate_bool($manage_service)
   validate_array($features)
