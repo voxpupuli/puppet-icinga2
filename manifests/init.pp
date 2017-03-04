@@ -20,6 +20,10 @@
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed. Defaults to true.
 #
+# [*service_restart*]
+#   If set this command will be used to restart the service, rather than stopping and starting it.
+#   Defaults to undef.
+#
 # [*features*]
 #   List of features to activate. Defaults to [checker, mainlog, notification].
 #
@@ -122,15 +126,16 @@
 #
 #
 class icinga2(
-  $ensure         = running,
-  $enable         = true,
-  $manage_repo    = false,
-  $manage_service = true,
-  $features       = $icinga2::params::default_features,
-  $purge_features = true,
-  $constants      = {},
-  $plugins        = $icinga2::params::plugins,
-  $confd          = true,
+  $ensure          = running,
+  $enable          = true,
+  $manage_repo     = false,
+  $manage_service  = true,
+  $service_restart = undef,
+  $features        = $icinga2::params::default_features,
+  $purge_features  = true,
+  $constants       = {},
+  $plugins         = $icinga2::params::plugins,
+  $confd           = true,
 ) inherits ::icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
