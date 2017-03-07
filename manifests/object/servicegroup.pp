@@ -41,7 +41,7 @@ define icinga2::object::servicegroup (
   $ensure            = present,
   $servicegroup_name = $title,
   $display_name      = undef,
-  $groups            = [],
+  $groups            = undef,
   $assign            = [],
   $ignore            = [],
   $template          = false,
@@ -60,9 +60,9 @@ define icinga2::object::servicegroup (
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
-  validate_array ( $groups )
 
   if $display_name { validate_string ( $display_name ) }
+  if $groups { validate_array ( $groups ) }
 
 
   # compose attributes
