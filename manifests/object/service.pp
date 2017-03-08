@@ -109,6 +109,9 @@
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
+# [*apply_prefix*]
+#   An optional name prefix to use when using a loop apply statement.
+#
 # [*assign*]
 #   Assign user group members using the group assign rules.
 #
@@ -185,6 +188,7 @@ define icinga2::object::service (
   $icon_image             = undef,
   $icon_image_alt         = undef,
   $apply                  = false,
+  $apply_prefix           = undef,
   $assign                 = [],
   $ignore                 = [],
   $import                 = [],
@@ -231,6 +235,7 @@ define icinga2::object::service (
   if $action_url { validate_string ($action_url) }
   if $icon_image { validate_absolute_path ($icon_image) }
   if $icon_image_alt { validate_string ($icon_image_alt) }
+  if $apply_prefix { validate_string($apply_prefix) }
 
 
   # compose the attributes
@@ -271,6 +276,7 @@ define icinga2::object::service (
     import       => $import,
     apply        => $apply,
     apply_target => 'Host',
+    apply_prefix => $apply_prefix,
     assign       => $assign,
     ignore       => $ignore,
     template     => $template,
