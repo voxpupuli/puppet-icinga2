@@ -1,5 +1,28 @@
 # Change Log
 
+## [v1.1.1](https://github.com/Icinga/puppet-icinga2/tree/v1.1.1) (2017-03-08)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.1.0...v1.1.1)
+
+**Implemented enhancements:**
+
+- add example of the whole example config [\#252](https://github.com/Icinga/puppet-icinga2/issues/252)
+- enable\_ha for notification feature [\#242](https://github.com/Icinga/puppet-icinga2/issues/242)
+- Enhance docs on how to enable and use features [\#235](https://github.com/Icinga/puppet-icinga2/issues/235)
+
+**Fixed bugs:**
+
+- set groups default to undef for object servicegroup [\#251](https://github.com/Icinga/puppet-icinga2/issues/251)
+- hash key with empty hash as value is parsed wrong [\#247](https://github.com/Icinga/puppet-icinga2/issues/247)
+- attribute keys are missed for parsing [\#246](https://github.com/Icinga/puppet-icinga2/issues/246)
+- Create signed certificate with custom CA [\#239](https://github.com/Icinga/puppet-icinga2/issues/239)
+- Can't pass function via variable [\#238](https://github.com/Icinga/puppet-icinga2/issues/238)
+- ido schema import dependency [\#237](https://github.com/Icinga/puppet-icinga2/issues/237)
+- Using pki =\> "ca" can either cause incomplete deps or circular reference [\#236](https://github.com/Icinga/puppet-icinga2/issues/236)
+
+**Merged pull requests:**
+
+- enable setting of bind\_host and bind\_port for feature::api [\#243](https://github.com/Icinga/puppet-icinga2/pull/243) ([aschaber1](https://github.com/aschaber1))
+
 ## [v1.1.0](https://github.com/Icinga/puppet-icinga2/tree/v1.1.0) (2017-02-20)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.2...v1.1.0)
 
@@ -9,7 +32,6 @@
 
 **Fixed bugs:**
 
-- Add service name to service apply loops [\#227](https://github.com/Icinga/puppet-icinga2/issues/227)
 - Parse issue when attribute is a nested hash with an array value [\#223](https://github.com/Icinga/puppet-icinga2/issues/223)
 - icinga2 feature api fails when pki=icinga2 and ca is the local node [\#218](https://github.com/Icinga/puppet-icinga2/issues/218)
 - Error installing module from forge for non r10k users [\#217](https://github.com/Icinga/puppet-icinga2/issues/217)
@@ -19,6 +41,7 @@
 
 - Fix parse issues when attribute is a nested hash with an array value [\#225](https://github.com/Icinga/puppet-icinga2/pull/225) ([lbetz](https://github.com/lbetz))
 - Remove Puppet 4 Warning - delete :undef symbols in attr hash [\#222](https://github.com/Icinga/puppet-icinga2/pull/222) ([Reamer](https://github.com/Reamer))
+- Allow other time units in notification and scheduleddowntime [\#220](https://github.com/Icinga/puppet-icinga2/pull/220) ([jkroepke](https://github.com/jkroepke))
 - Add initial FreeBSD support [\#210](https://github.com/Icinga/puppet-icinga2/pull/210) ([xaque208](https://github.com/xaque208))
 
 ## [v1.0.2](https://github.com/Icinga/puppet-icinga2/tree/v1.0.2) (2017-01-24)
