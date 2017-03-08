@@ -101,6 +101,11 @@ module Puppet
         def self.parse(row)
           result = ''
 
+          # parser is disabled
+          if row =~ /^-:(.*)$/
+            return $1
+          end
+
           # scan function
           if row =~ /^\{{2}(.+)\}{2}$/
             result += "{{%s}}" % [ $1 ]
