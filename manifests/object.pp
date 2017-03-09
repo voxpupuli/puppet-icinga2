@@ -18,6 +18,9 @@
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
+# [*prefix*]
+#   Set object_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+#
 # [*apply_target*]
 #   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 #
@@ -67,6 +70,7 @@ define icinga2::object(
   $apply        = false,
   $attrs_list   = [],
   $apply_target = undef,
+  $prefix       = false,
   $import       = [],
   $assign       = [],
   $ignore       = [],
@@ -102,6 +106,7 @@ define icinga2::object(
   validate_string($object_name)
   validate_bool($template)
   unless is_bool($apply) { validate_re($apply, '^.+\s+(=>\s+.+\s+)?in\s+.+$') }
+  validate_bool($prefix)
   if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.") }
   validate_array($import)

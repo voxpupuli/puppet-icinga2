@@ -61,6 +61,9 @@
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 #
+# [*prefix*]
+#   Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+#
 # [*apply_target*]
 #   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 #
@@ -92,6 +95,7 @@ define icinga2::object::notification (
   $types             = undef,
   $states            = undef,
   $apply             = false,
+  $prefix            = false,
   $apply_target      = 'Host',
   $assign            = [],
   $ignore            = [],
@@ -108,6 +112,7 @@ define icinga2::object::notification (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($notification_name)
   unless is_bool($apply) { validate_string($apply) }
+  validate_bool($prefix)
   validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
@@ -165,6 +170,7 @@ define icinga2::object::notification (
     target       => $target,
     order        => $order,
     apply        => $apply,
+    prefix       => $prefix,
     apply_target => $apply_target,
     assign       => $assign,
     ignore       => $ignore,
