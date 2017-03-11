@@ -54,7 +54,7 @@ nodes = {
     :kernel => 'bsd'
   },
   'i2freebsd11puppet4' => {
-    :box    => 'freebsd-10.3-amd64-virtualbox',
+    :box    => 'freebsd-11.0-amd64-virtualbox',
     :url    => 'http://boxes.icinga.com/vagrant/freebsd/freebsd-11.0-amd64-virtualbox.box',
     :md5    => '3ee3583815214a7443e9a0d288241cc4',
     :kernel => 'bsd'
