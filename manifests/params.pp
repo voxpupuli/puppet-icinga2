@@ -92,12 +92,13 @@ class icinga2::params {
       $ca_dir            = '/var/lib/icinga2/ca'
       $ido_pgsql_package = 'icinga2-ido-pgsql'
       $ido_mysql_package = 'icinga2-ido-mysql'
+      $service_reload    = "service ${service} reload"
 
       case $::osfamily {
         'redhat': {
-          $user     = 'icinga'
-          $group    = 'icinga'
-          $lib_dir  = $::architecture ? {
+          $user    = 'icinga'
+          $group   = 'icinga'
+          $lib_dir = $::architecture ? {
             'x86_64' => '/usr/lib64',
             default  => '/usr/lib',
           }
@@ -169,6 +170,7 @@ class icinga2::params {
       $lib_dir           = '/usr/local/lib/icinga2'
       $ido_pgsql_package = undef
       $ido_mysql_package = undef
+      $service_reload    = "service ${service} reload"
 
       $constants = {
         'PluginDir'          => '/usr/local/libexec/nagios',
