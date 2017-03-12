@@ -8,6 +8,11 @@
 # simple parsing algorithm takes a decision for each attribute, whether part of the
 # string is to be quoted or not, and how an array or dictionary is to be formatted.
 #
+# Parsing of a single attribute can be disabled by tagging it with -: at the front
+# of the string.
+#
+#   attr => '-:"unparsed string with quotes"'
+#
 # An array, a hash or a string can be assigned to an object attribute. True and false
 # are also valid values.
 #
@@ -61,6 +66,10 @@
 # It's not currently possible to use arrays or dictionaries in a string, like
 #
 #   attr => 'array1 + [ item1, item2, ... ]' or attr => 'hash1 + { item1, ... }'
+#
+# Assignments other than simple attribution are not currently possible either, e.g. building something like
+#
+#   vars += config
 #
 #
 require 'puppet'

@@ -366,6 +366,10 @@ To generate a valid Icinga 2 configuration all object attributes are parsed. Thi
 decision for each attribute, whether part of the string is to be quoted or not, and how an array or dictionary is to be
 formatted.
 
+Parsing of a single attribute can be disabled by tagging it with -: at the front of the string.
+```
+   attr => '-:"unparsed string with quotes"'
+```
 An array, a hash or a string can be assigned to an object attribute. True and false are also valid values.
 
 Hashes and arrays are created recursively, and all parts – such as single items of an array, keys and its values
