@@ -1,3 +1,4 @@
+# Notice: this code contains Puppet 4 syntax! It doesn't run on Puppet 3.
 class profile::icinga2::agent(
   $parent_endpoints,
   $parent_zone,
@@ -48,6 +49,7 @@ class profile::icinga2::agent(
   }
 
   @@::icinga2::object::host { $::fqdn:
+    # Puppet 4 syntax
     * => merge({
       display_name => $::hostname,
       address      => $agent_ip,

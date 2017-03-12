@@ -1,3 +1,4 @@
+# Notice: this code contains Puppet 4 syntax! It doesn't run on Puppet 3.
 class profile::icinga2::slave(
   $slave_zone,
   $parent_endpoints,
@@ -64,6 +65,7 @@ class profile::icinga2::slave(
   ::Icinga2::Object::Zone <<| tag == "icinga2::parent::${slave_zone}" |>>
 
   @@::icinga2::object::host { $::fqdn:
+    # Puppet 4 syntax
     * => deep_merge({
       display_name => $::hostname,
       address      => $slave_ip,
