@@ -181,6 +181,14 @@ describe('icinga2::object', :type => :define) do
     end
 
 
+    context "#{os} with attrs => { vars => { bar => unparsed string } }" do
+      let(:params) { {:attrs => { 'vars' => { 'bar' => '-:"unparsed string"' } }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
+
+      it { is_expected.to contain_concat__fragment('bar')
+        .with_content(/vars.bar = "unparsed string"/) }
+    end
+
+
     context "#{os} with attrs => { vars => { bar => {} } }" do
       let(:params) { {:attrs => { 'vars' => { 'bar' => {} } }, :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
@@ -444,6 +452,14 @@ describe('icinga2::object', :type => :define) do
     let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+  end
+
+
+  context "Windows 2012 R2 with attrs => { vars => { bar => unparsed string } }" do
+    let(:params) { {:attrs => { 'vars' => { 'bar' => '-:"unparsed string"' } }, :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
+
+    it { is_expected.to contain_concat__fragment('bar')
+      .with_content(/vars.bar = "unparsed string"/) }
   end
 
 
