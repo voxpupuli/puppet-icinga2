@@ -86,7 +86,7 @@ and `notification` are enabled by default.
 
 By default, your distribution's packages are used to install Icinga 2. On Windows systems we use the [Chocolatey]
 package manager.
- 
+
 Use the `manage_repo` parameter to configure the official [packages.icinga.com] repositories.
 
 ``` puppet
@@ -94,6 +94,21 @@ class { '::icinga2':
   manage_repo => true,
 }
 ```
+
+If you wanna manage the version of Icinga 2 binaries you can do it by disable package management.
+
+``` puppet
+package { 'icinga2':
+  ensure => latest,
+  notifiy => Class['icinga2'],
+}
+
+class { '::icinga2':
+  manage_package => false,
+}
+```
+
+Set `manage_package` to false means that all package aren't handeld by the module included the IDO packages.
 
 ### Enabling Features
 
@@ -763,7 +778,10 @@ If set to `true` the Icinga 2 service will start on boot. Defaults to `true`.
 When set to `true` this module will install the [packages.icinga.com] repository. With this official repo
 you can get the latest version of Icinga. When set to `false` the operating systems default will be used. As the Icinga
 Project does not offer a [Chocolatey] repository, you will get a warning if you enable this parameter on Windows.
-Default is `false`
+Default is `false`. NOTE: will be ignored if manage_package is set to false.
+
+##### `manage_package`
+If set to false packages aren't managed. Defaults to true.
 
 ##### `manage_service`
 Lets you decide if the Icinga 2 daemon should be reloaded when configuration files have changed. Defaults to `true`

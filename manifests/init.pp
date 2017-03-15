@@ -14,7 +14,10 @@
 #   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
 #   the latest version of Icinga. When set to false the operating systems default will be used. As the Icinga Project
 #   does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows.
-#   Defaults to false
+#   Defaults to false. NOTE: will be ignored if manage_package is set to false.
+#
+# [*manage_package*]
+#   If set to false packages aren't managed. Defaults to true.
 #
 # [*manage_service*]
 #   If set to true the service is managed otherwise the service also
@@ -125,6 +128,7 @@ class icinga2(
   $ensure         = running,
   $enable         = true,
   $manage_repo    = false,
+  $manage_package = true,
   $manage_service = true,
   $features       = $icinga2::params::default_features,
   $purge_features = true,
@@ -137,6 +141,7 @@ class icinga2(
     "${ensure} isn't supported. Valid values are 'running' and 'stopped'.")
   validate_bool($enable)
   validate_bool($manage_repo)
+  validate_bool($manage_package)
   validate_bool($manage_service)
   validate_array($features)
   validate_bool($purge_features)

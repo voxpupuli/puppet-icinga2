@@ -158,6 +158,7 @@ class icinga2::feature::idomysql(
   $conf_dir          = $::icinga2::params::conf_dir
   $ssl_dir           = "${::icinga2::params::pki_dir}/ido-mysql"
   $ido_mysql_package = $::icinga2::params::ido_mysql_package
+  $manage_package    = $::icinga2::manage_package
 
   File {
     owner   => $owner,
@@ -304,7 +305,7 @@ class icinga2::feature::idomysql(
   }
 
   # install additional package
-  if $ido_mysql_package {
+  if $ido_mysql_package and $manage_package {
     package { $ido_mysql_package:
       ensure => installed,
       before => Icinga2::Feature['ido-mysql'],
@@ -313,7 +314,7 @@ class icinga2::feature::idomysql(
 
   # import db schema
   if $import_schema {
-    if $ido_mysql_package {
+    if $ido_mysql_package and $manage_package {
       Package[$ido_mysql_package] -> Exec['idomysql-import-schema']
     }
     exec { 'idomysql-import-schema':

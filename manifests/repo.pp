@@ -20,7 +20,7 @@ class icinga2::repo {
     fail("icinga2::repo is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  if $::icinga2::manage_repo {
+  if $::icinga2::manage_repo and $::icinga2::manage_package {
 
     case $::osfamily {
       'redhat': {

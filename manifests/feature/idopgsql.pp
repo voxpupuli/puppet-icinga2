@@ -92,6 +92,7 @@ class icinga2::feature::idopgsql(
 
   $conf_dir          = $::icinga2::params::conf_dir
   $ido_pgsql_package = $::icinga2::params::ido_pgsql_package
+  $manage_package    = $::icinga2::manage_package
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -125,7 +126,7 @@ class icinga2::feature::idopgsql(
   }
 
   # install additional package
-  if $ido_pgsql_package {
+  if $ido_pgsql_package and $manage_package {
     package { $ido_pgsql_package:
       ensure => installed,
       before => Icinga2::Feature['ido-pgsql'],
@@ -134,7 +135,7 @@ class icinga2::feature::idopgsql(
 
   # import db schema
   if $import_schema {
-    if $ido_pgsql_package {
+    if $ido_pgsql_package and $manage_package {
       Package[$ido_pgsql_package] -> Exec['idopgsql-import-schema']
     }
     exec { 'idopgsql-import-schema':
