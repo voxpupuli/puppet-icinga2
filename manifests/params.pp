@@ -146,6 +146,7 @@ class icinga2::params {
       $ca_dir            = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
       $ido_pgsql_package = undef
       $ido_mysql_package = undef
+      $service_reload    = undef
 
       $constants = {
         'PluginDir'          => 'C:/Program Files/ICINGA2/sbin',
