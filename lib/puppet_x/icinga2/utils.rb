@@ -78,14 +78,14 @@ module Puppet
   module Icinga2
     module Utils
 
-      def self.attributes(attrs, consts, indent=2)
+      def self.attributes(attrs, globals, consts, indent=2)
 
         def self.value_types(value)
 
-          if value =~ /^\d+\.?\d*[dhms]?$/ || value =~ /^(true|false)$/
+          if value =~ /^\d+\.?\d*[dhms]?$/ || value =~ /^(true|false)$/ || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
             result = value
           else
-            if $constants.index { |x| value =~ /^!?(#{x})(\..+$|$)/ } || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
+            if $constants.index { |x| if $hash_attrs.include?(x) then value =~ /^!?(#{x})(\..+$|$)/ else value =~ /^!?#{x}$/ end }
               result = value
             else
               result = "\"#{value}\""
@@ -197,7 +197,10 @@ module Puppet
 
 
         # globals (params.pp) and all keys of attrs hash itselfs must not quoted
-        $constants = consts.concat(attrs.keys) << "name"
+        $constants = globals.concat(consts.keys) << "name"
+
+        # select all attributes and constants if there value is a hash
+        $hash_attrs = attrs.merge(consts).select { |x,y| y.is_a?(Hash) }.keys
 
         # initialize returned configuration
         config = ''
