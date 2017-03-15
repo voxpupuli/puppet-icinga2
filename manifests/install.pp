@@ -31,7 +31,7 @@ class icinga2::install {
 
     package { $package:
       ensure => installed,
-      before => File["${conf_dir}/features-enabled", $pkidir],
+      before => File["${conf_dir}/features-enabled", $pki_dir],
     }
   }
 
