@@ -7,6 +7,10 @@
 # [*ensure*]
 #   Set to present enables the feature ido-mysql, absent disables it. Defaults to present.
 #
+# [*package_ensure*]
+#   Specifies the package version to install. Can be 'installed', 'absent',
+#   'latest' or a version string. Default: 'installed'
+#
 # [*host*]
 #    MySQL database host address. Defaults to '127.0.0.1'.
 #
@@ -122,31 +126,32 @@
 #
 #
 class icinga2::feature::idomysql(
-  $ensure                 = present,
-  $host                   = '127.0.0.1',
-  $port                   = 3306,
-  $socket_path            = undef,
-  $user                   = 'icinga',
-  $password               = 'icinga',
-  $database               = 'icinga',
-  $enable_ssl             = false,
-  $pki                    = 'puppet',
-  $ssl_key_path           = undef,
-  $ssl_cert_path          = undef,
-  $ssl_cacert_path        = undef,
-  $ssl_key                = undef,
-  $ssl_cert               = undef,
-  $ssl_cacert             = undef,
-  $ssl_capath             = undef,
-  $ssl_cipher             = undef,
-  $table_prefix           = 'icinga_',
-  $instance_name          = 'default',
-  $instance_description   = undef,
-  $enable_ha              = true,
-  $failover_timeout       = '60s',
-  $cleanup                = undef,
-  $categories             = undef,
-  $import_schema          = false,
+  $ensure               = present,
+  $package_ensure       = $icinga2::params::ido_mysql_package_ensure,
+  $host                 = '127.0.0.1',
+  $port                 = 3306,
+  $socket_path          = undef,
+  $user                 = 'icinga',
+  $password             = 'icinga',
+  $database             = 'icinga',
+  $enable_ssl           = false,
+  $pki                  = 'puppet',
+  $ssl_key_path         = undef,
+  $ssl_cert_path        = undef,
+  $ssl_cacert_path      = undef,
+  $ssl_key              = undef,
+  $ssl_cert             = undef,
+  $ssl_cacert           = undef,
+  $ssl_capath           = undef,
+  $ssl_cipher           = undef,
+  $table_prefix         = 'icinga_',
+  $instance_name        = 'default',
+  $instance_description = undef,
+  $enable_ha            = true,
+  $failover_timeout     = '60s',
+  $cleanup              = undef,
+  $categories           = undef,
+  $import_schema        = false,
 ) {
 
   require ::icinga2::config
@@ -166,6 +171,7 @@ class icinga2::feature::idomysql(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($package_ensure)
   validate_string($host)
   validate_integer($port)
   if $socket_path { validate_absolute_path($socket_path) }
@@ -306,7 +312,7 @@ class icinga2::feature::idomysql(
   # install additional package
   if $ido_mysql_package {
     package { $ido_mysql_package:
-      ensure => installed,
+      ensure => $package_ensure,
       before => Icinga2::Feature['ido-mysql'],
     }
   }

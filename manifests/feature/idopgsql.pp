@@ -7,6 +7,10 @@
 # [*ensure*]
 #   Set to present enables the feature ido-pgsql, absent disables it. Defaults to present.
 #
+# [*package_ensure*]
+#   Specifies the package version to install. Can be 'installed', 'absent',
+#   'latest' or a version string. Default: 'installed'
+#
 # [*host*]
 #    PostgreSQL database host address. Defaults to '127.0.0.1'.
 #
@@ -71,20 +75,21 @@
 #
 #
 class icinga2::feature::idopgsql(
-  $ensure                 = present,
-  $host                   = '127.0.0.1',
-  $port                   = 5432,
-  $user                   = 'icinga',
-  $password               = 'icinga',
-  $database               = 'icinga',
-  $table_prefix           = 'icinga_',
-  $instance_name          = 'default',
-  $instance_description   = undef,
-  $enable_ha              = true,
-  $failover_timeout       = '60s',
-  $cleanup                = undef,
-  $categories             = undef,
-  $import_schema          = false,
+  $ensure               = present,
+  $package_ensure       = $::icinga2::params::ido_pgsql_package_ensure,
+  $host                 = '127.0.0.1',
+  $port                 = 5432,
+  $user                 = 'icinga',
+  $password             = 'icinga',
+  $database             = 'icinga',
+  $table_prefix         = 'icinga_',
+  $instance_name        = 'default',
+  $instance_description = undef,
+  $enable_ha            = true,
+  $failover_timeout     = '60s',
+  $cleanup              = undef,
+  $categories           = undef,
+  $import_schema        = false,
 ) {
 
   require ::icinga2::config
@@ -95,6 +100,7 @@ class icinga2::feature::idopgsql(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($package_ensure)
   validate_string($host)
   validate_integer($port)
   validate_string($user)
@@ -127,7 +133,7 @@ class icinga2::feature::idopgsql(
   # install additional package
   if $ido_pgsql_package {
     package { $ido_pgsql_package:
-      ensure => installed,
+      ensure => $package_ensure,
       before => Icinga2::Feature['ido-pgsql'],
     }
   }

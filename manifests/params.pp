@@ -14,11 +14,14 @@
 #
 class icinga2::params {
 
-  $package          = 'icinga2'
-  $service          = 'icinga2'
-  $plugins          = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
-  $default_features = [ 'checker', 'mainlog', 'notification' ]
-  $globals          = [
+  $package                  = 'icinga2'
+  $package_ensure           = 'installed'
+  $ido_pgsql_package_ensure = 'installed'
+  $ido_mysql_package_ensure = 'installed'
+  $service                  = 'icinga2'
+  $plugins                  = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
+  $default_features         = [ 'checker', 'mainlog', 'notification' ]
+  $globals                  = [
     'Acknowledgement',
     'ApplicationType',
     'AttachDebugger',
