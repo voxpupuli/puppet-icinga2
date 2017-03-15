@@ -75,6 +75,19 @@
 #    manage_service => false,
 #  }
 #
+# To manage the version of Icinga 2 binaries you can do it by disable package management.
+#
+#  package { 'icinga2':
+#    ensure    => latest,
+#    notifiy => Class['icinga2'],
+#  }
+#
+#  class { '::icinga2':
+#    manage_package => false,
+#  }
+#
+# Setting manage_package to false means that all package aren't handeld by the module included the IDO packages.
+#
 # Sometimes it's necessary to cover very special configurations that you cannot handle with this module. In this case
 # you can use the icinga2::config::file tag on your file resource. This module collects all file resource types with
 # this tag and triggers a reload of Icinga 2 on a file change.

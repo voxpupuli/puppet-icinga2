@@ -108,7 +108,7 @@ class { '::icinga2':
 }
 ```
 
-Set `manage_package` to false means that all package aren't handeld by the module included the IDO packages.
+Setting `manage_package` to false means that all package aren't handeld by the module included the IDO packages.
 
 ### Enabling Features
 
