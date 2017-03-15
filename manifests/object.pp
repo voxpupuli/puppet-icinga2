@@ -122,7 +122,6 @@ define icinga2::object(
     fail('The object type must be different from the apply target')
   }
 
-  $_constants = concat(keys($::icinga2::_constants), $::icinga2::params::globals, $attrs_list)
   $_attrs = merge($attrs, {
     'assign where' => $assign,
     'ignore where' => $ignore,
