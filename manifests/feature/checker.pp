@@ -9,7 +9,8 @@
 #
 #
 class icinga2::feature::checker(
-  $ensure = present,
+  $ensure            = present,
+  $concurrent_checks = undef,
 ) {
 
   $conf_dir = $::icinga2::params::conf_dir
@@ -18,12 +19,19 @@ class icinga2::feature::checker(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
+  if $concurrent_checks { validate_integer($concurrent_checks) }
+
+  # compose attributes
+  $attrs = {
+    concurrent_checks => $concurrent_checks,
+  }
+
   # create object
   icinga2::object { 'icinga2::object::CheckerComponent::checker':
     object_name => 'checker',
     object_type => 'CheckerComponent',
-    attrs       => {},
-    attrs_list  => [],
+    attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/checker.conf",
     order       => '10',
     notify      => $ensure ? {
