@@ -7,6 +7,9 @@
 # [*ensure*]
 #   Set to present enables the feature checker, absent disabled it. Defaults to present.
 #
+# [*concurrent_checks*]
+#   The maximum number of concurrent checks. Defaults to 512.
+#
 #
 class icinga2::feature::checker(
   $ensure            = present,
