@@ -29,6 +29,12 @@ describe('icinga2::feature::checker', :type => :class) do
       it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
         .with({ 'target' => '/etc/icinga2/features-available/checker.conf' }) }
     end
+
+    context "#{os} with concurrent_checks => foo (not a valid integer)" do
+      let(:params) { {:concurrent_checks => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    end
   end
 end
 
