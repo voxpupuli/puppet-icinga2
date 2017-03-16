@@ -783,7 +783,7 @@ Project does not offer a [Chocolatey] repository, you will get a warning if you 
 Default is `false`. NOTE: will be ignored if manage_package is set to false.
 
 ##### `manage_package`
-If set to false packages aren't managed. Defaults to true.
+If set to false packages aren't managed. Defaults to `true`.
 
 ##### `manage_service`
 Lets you decide if the Icinga 2 daemon should be reloaded when configuration files have changed. Defaults to `true`

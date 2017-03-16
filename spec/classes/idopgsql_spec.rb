@@ -194,8 +194,22 @@ describe('icinga2::feature::idopgsql', :type => :class) do
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
     end
 
-  end
+    context "#{os} with icinga2::manage_package => true" do
+      let(:pre_condition) { [
+          "class { 'icinga2': features => [], manage_package => true }"
+      ] }
 
+      it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+    end
+
+    context "#{os} with icinga2::manage_package => false" do
+      let(:pre_condition) { [
+          "class { 'icinga2': features => [], manage_package => false }"
+      ] }
+
+      it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+    end
+  end
 end
 
 describe('icinga2::feature::idopgsql', :type => :class) do
@@ -396,4 +410,19 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
   end
 
+  context "Windows 2012 R2 with icinga2::manage_package => true" do
+    let(:pre_condition) { [
+        "class { 'icinga2': features => [], manage_package => true }"
+    ] }
+
+    it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+  end
+
+  context "Windows 2012 R2 with icinga2::manage_package => false" do
+    let(:pre_condition) { [
+        "class { 'icinga2': features => [], manage_package => false }"
+    ] }
+
+    it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+  end
 end

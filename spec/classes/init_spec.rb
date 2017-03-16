@@ -102,6 +102,12 @@ describe('icinga2', :type => :class) do
         when 'Suse'
           it { should_not contain_zypprepo('icinga-stable-release') }
         end
+
+        context "#{os} with manage_package => false" do
+          let(:params) { {:manage_package => false} }
+
+          it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+        end
       end
     end
   end
@@ -189,6 +195,12 @@ describe('icinga2', :type => :class) do
 
     it { is_expected.to contain_icinga2__feature('notification')
                             .with({'ensure' => 'present'}) }
+  end
+
+  context "Windows 2012 R2 with manage_package => false" do
+    let(:params) { {:manage_package => false} }
+
+    it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
   end
 end
 
