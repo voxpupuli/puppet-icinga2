@@ -29,6 +29,23 @@ describe('icinga2::feature::checker', :type => :class) do
       it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
         .with({ 'target' => '/etc/icinga2/features-available/checker.conf' }) }
     end
+
+
+    context "#{os} with concurrent_checks => 100" do
+      let(:params) { {:concurrent_checks => 100} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::CheckerComponent::checker')
+        .with({ 'target' => '/etc/icinga2/features-available/checker.conf' })
+        .with_content(/concurrent_checks = 100/) }
+    end
+
+
+    context "#{os} with concurrent_checks => foo (not a valid integer)" do
+      let(:params) { {:concurrent_checks => 'foo'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    end
+
   end
 end
 
@@ -73,5 +90,21 @@ describe('icinga2::feature::checker', :type => :class) do
 
     it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/checker.conf' }) }
+  end
+
+
+  context "Windows 2012 R2 with concurrent_checks => 100" do
+    let(:params) { {:concurrent_checks => 100} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::CheckerComponent::checker')
+                            .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/checker.conf' })
+                            .with_content(/concurrent_checks = 100/) }
+  end
+
+
+  context "Windows 2012 R2 with concurrent_checks => foo (not a valid integer)" do
+    let(:params) { {:concurrent_checks => 'foo'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
   end
 end
