@@ -813,6 +813,9 @@ Enables or disables the `checker` feature.
 ##### `ensure`
 Either `present` or `absent`. Defines if the feature `checker` should be enabled. Defaults to `present`.
 
+##### `concurrent_checks`
+The maximum number of concurrent checks. Defaults to `512`.
+
 #### Class: `icinga2::feature::mainlog`
 Enables or disables the `mainlog` feature.
 
