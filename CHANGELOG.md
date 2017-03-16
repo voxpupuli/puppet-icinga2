@@ -1,5 +1,21 @@
 # Change Log
 
+## [v1.2.0](https://github.com/Icinga/puppet-icinga2/tree/v1.2.0) (2017-03-16)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.1.1...v1.2.0)
+
+**Implemented enhancements:**
+
+- Add concurrent check parameter to checker object [\#260](https://github.com/Icinga/puppet-icinga2/issues/260)
+- use a tag to disable parsing for a single attribute value [\#254](https://github.com/Icinga/puppet-icinga2/issues/254)
+- replace service restart with reload [\#250](https://github.com/Icinga/puppet-icinga2/issues/250)
+- specific version for icinga2-\* [\#244](https://github.com/Icinga/puppet-icinga2/issues/244)
+- Update docs of example4 with hint for Puppet 4 [\#234](https://github.com/Icinga/puppet-icinga2/issues/234)
+- Add service name to service apply loops [\#227](https://github.com/Icinga/puppet-icinga2/issues/227)
+
+**Fixed bugs:**
+
+- consider-type-of-attribute [\#256](https://github.com/Icinga/puppet-icinga2/issues/256)
+
 ## [v1.1.1](https://github.com/Icinga/puppet-icinga2/tree/v1.1.1) (2017-03-08)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.1.0...v1.1.1)
 
