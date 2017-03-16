@@ -95,7 +95,8 @@ class { '::icinga2':
 }
 ```
 
-If you wanna manage the version of Icinga 2 binaries you can do it by disable package management.
+If you want to manage the version of Icinga 2, you have to disable the package management of this module and handle
+packages in your own Puppet code.
 
 ``` puppet
 package { 'icinga2':
@@ -108,7 +109,8 @@ class { '::icinga2':
 }
 ```
 
-Setting `manage_package` to false means that all package aren't handeld by the module included the IDO packages.
+Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
+all, including IDO packages.
 
 ### Enabling Features
 
