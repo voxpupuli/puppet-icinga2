@@ -29,7 +29,11 @@ class icinga2::feature::statusdata(
   $update_interval = '15s',
 ) {
 
-  $conf_dir  = $::icinga2::params::conf_dir
+  $conf_dir = $::icinga2::params::conf_dir
+  $_notify  = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -53,10 +57,7 @@ class icinga2::feature::statusdata(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/statusdata.conf",
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
+    notify      => $_notify,
   }
 
   # import library 'compat'

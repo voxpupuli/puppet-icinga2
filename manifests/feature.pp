@@ -21,11 +21,13 @@ define icinga2::feature(
   $conf_dir = $::icinga2::params::conf_dir
 
   if $::osfamily != 'windows' {
+    $_ensure = $ensure ? {
+      'present' => link,
+      default   => absent,
+    }
+
     file { "${conf_dir}/features-enabled/${feature}.conf":
-      ensure  => $ensure ? {
-        'present' => link,
-        default   => absent,
-      },
+      ensure  => $_ensure,
       owner   => $user,
       group   => $group,
       target  => "../features-available/${feature}.conf",
@@ -33,11 +35,13 @@ define icinga2::feature(
       notify  => Class['::icinga2::service'],
     }
   } else {
+    $_ensure = $ensure ? {
+      'present' => file,
+      default   => absent,
+    }
+
     file { "${conf_dir}/features-enabled/${feature}.conf":
-      ensure  => $ensure ? {
-        'present' => file,
-        default   => absent,
-      },
+      ensure  => $_ensure,
       owner   => $user,
       group   => $group,
       content => "include \"../features-available/${feature}.conf\"\r\n",

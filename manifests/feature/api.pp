@@ -162,12 +162,20 @@ class icinga2::feature::api(
   $bind_port       = undef,
 ) {
 
-  $conf_dir  = $::icinga2::params::conf_dir
-  $pki_dir   = $::icinga2::params::pki_dir
-  $ca_dir    = $::icinga2::params::ca_dir
-  $user      = $::icinga2::params::user
-  $group     = $::icinga2::params::group
-  $node_name = $::icinga2::_constants['NodeName']
+  $conf_dir      = $::icinga2::params::conf_dir
+  $pki_dir       = $::icinga2::params::pki_dir
+  $ca_dir        = $::icinga2::params::ca_dir
+  $user          = $::icinga2::params::user
+  $group         = $::icinga2::params::group
+  $node_name     = $::icinga2::_constants['NodeName']
+  $_ssl_key_mode = $::osfamily ? {
+    'windows' => undef,
+    default   => '0600',
+  }
+  $_notify       = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   File {
     owner => $user,
@@ -232,10 +240,7 @@ class icinga2::feature::api(
     'puppet': {
       file { $_ssl_key_path:
         ensure => file,
-        mode   => $::kernel ? {
-          'windows' => undef,
-          default   => '0600',
-        },
+        mode   => $_ssl_key_mode,
         source => $::icinga2_puppet_hostprivkey,
         tag    => 'icinga2::config::file',
       }
@@ -255,38 +260,41 @@ class icinga2::feature::api(
 
     'none': {
       if $ssl_key {
+        $_ssl_key = $::osfamily ? {
+          'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
+          default   => $ssl_key,
+        }
+
         file { $_ssl_key_path:
           ensure  => file,
-          mode    => $::kernel ? {
-            'windows' => undef,
-            default   => '0600',
-          },
-          content => $::osfamily ? {
-            'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-            default   => $ssl_key,
-          },
+          mode    => $_ssl_key_mode,
+          content => $_ssl_key,
           tag     => 'icinga2::config::file',
         }
       }
 
       if $ssl_cert {
+        $_ssl_cert = $::osfamily ? {
+          'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
+          default   => $ssl_cert,
+        }
+
         file { $_ssl_cert_path:
           ensure  => file,
-          content => $::osfamily ? {
-            'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-            default   => $ssl_cert,
-          },
+          content => $_ssl_cert,
           tag     => 'icinga2::config::file',
         }
       }
 
       if $ssl_cacert {
+        $_ssl_cacert = $::osfamily ? {
+          'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
+          default   => $ssl_cacert,
+        }
+
         file { $_ssl_cacert_path:
           ensure  => file,
-          content => $::osfamily ? {
-            'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-            default   => $ssl_cacert,
-          },
+          content => $_ssl_cacert,
           tag     => 'icinga2::config::file',
         }
       }
@@ -330,7 +338,7 @@ class icinga2::feature::api(
 
       notice('This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead')
     } # ca
-  } # pki
+  } # case pki
 
   # compose attributes
   $attrs = {
@@ -358,10 +366,7 @@ class icinga2::feature::api(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/api.conf",
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
+    notify      => $_notify,
   }
 
   # manage feature

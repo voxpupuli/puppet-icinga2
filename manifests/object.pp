@@ -127,6 +127,11 @@ define icinga2::object(
     'ignore where' => $ignore,
   })
 
+  $_content = $::osfamily ? {
+    'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
+    default   => template('icinga2/object.conf.erb'),
+  }
+
   if !defined(Concat[$target]) {
     concat { $target:
       ensure => present,
@@ -138,10 +143,7 @@ define icinga2::object(
   if $ensure != 'absent' {
     concat::fragment { $title:
       target  => $target,
-      content => $::osfamily ? {
-        'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
-        default   => template('icinga2/object.conf.erb'),
-      },
+      content => $_content,
       order   => $order,
     }
   }

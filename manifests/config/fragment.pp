@@ -32,6 +32,7 @@ define icinga2::config::fragment(
         group => 'NETWORK SERVICE',
         mode  => '0770',
       }
+      $_content = regsubst($content, '\n', "\r\n", 'EMG')
     } # windows
     default: {
       Concat {
@@ -39,6 +40,7 @@ define icinga2::config::fragment(
         group => $::icinga2::params::group,
         mode  => '0640',
       }
+      $_content = $content
     } # default
   }
 
@@ -56,10 +58,7 @@ define icinga2::config::fragment(
 
   concat::fragment { "icinga2::config::${code_name}":
     target  => $target,
-    content => $::osfamily ? {
-      'windows' => regsubst($content, '\n', "\r\n", 'EMG'),
-      default   => $content,
-    },
+    content => $_content,
     order   => $order,
     notify  => Class['::icinga2::service'],
   }

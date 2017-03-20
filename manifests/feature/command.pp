@@ -17,7 +17,11 @@ class icinga2::feature::command(
   $command_path = "${::icinga2::params::run_dir}/cmd/icinga2.cmd",
 ) {
 
-  $conf_dir  = $::icinga2::params::conf_dir
+  $conf_dir = $::icinga2::params::conf_dir
+  $_notify  = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -36,10 +40,7 @@ class icinga2::feature::command(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/command.conf",
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
+    notify      => $_notify,
   }
 
   # import library 'compat'

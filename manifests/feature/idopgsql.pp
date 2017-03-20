@@ -93,6 +93,10 @@ class icinga2::feature::idopgsql(
   $conf_dir          = $::icinga2::params::conf_dir
   $ido_pgsql_package = $::icinga2::params::ido_pgsql_package
   $manage_package    = $::icinga2::manage_package
+  $_notify           = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
@@ -155,10 +159,7 @@ class icinga2::feature::idopgsql(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/ido-pgsql.conf",
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
+    notify      => $_notify,
   }
 
   # import library
