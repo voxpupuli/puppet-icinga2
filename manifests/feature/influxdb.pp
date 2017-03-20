@@ -121,11 +121,19 @@ class icinga2::feature::influxdb(
   $flush_threshold        = 1024
 ) {
 
-  $user      = $::icinga2::params::user
-  $group     = $::icinga2::params::group
-  $node_name = $::icinga2::_constants['NodeName']
-  $conf_dir  = $::icinga2::params::conf_dir
-  $ssl_dir   = "${::icinga2::params::pki_dir}/influxdb"
+  $user          = $::icinga2::params::user
+  $group         = $::icinga2::params::group
+  $node_name     = $::icinga2::_constants['NodeName']
+  $conf_dir      = $::icinga2::params::conf_dir
+  $ssl_dir       = "${::icinga2::params::pki_dir}/influxdb"
+  $_ssl_key_mode = $::kernel ? {
+    'windows' => undef,
+    default   => '0600',
+  }
+  $_notify       = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   File {
     owner   => $user,
@@ -187,10 +195,7 @@ class icinga2::feature::influxdb(
       'puppet': {
         file { $_ssl_key_path:
           ensure => file,
-          mode   => $::kernel ? {
-            'windows' => undef,
-            default   => '0600',
-          },
+          mode   => $_ssl_key_mode,
           source => $::icinga2_puppet_hostprivkey,
           tag    => 'icinga2::config::file',
         }
@@ -209,17 +214,21 @@ class icinga2::feature::influxdb(
       } # puppet
 
       'none': {
+        if $::osfamily == 'windows' {
+          $_ssl_key      = regsubst($ssl_key, '\n', "\r\n", 'EMG')
+          $_ssl_cert     = regsubst($ssl_cert, '\n', "\r\n", 'EMG')
+          $_ssl_cacert   = regsubst($ssl_cacert, '\n', "\r\n", 'EMG')
+        } else {
+          $_ssl_key      = $ssl_key
+          $_ssl_cert     = $ssl_cert
+          $_ssl_cacert   = $ssl_cacert
+        }
+
         if $ssl_key {
           file { $_ssl_key_path:
             ensure  => file,
-            mode    => $::kernel ? {
-              'windows' => undef,
-              default   => '0600',
-            },
-            content => $::osfamily ? {
-              'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-              default   => $ssl_key,
-            },
+            mode    => $_ssl_key_mode,
+            content => $_ssl_key,
             tag     => 'icinga2::config::file',
           }
         }
@@ -227,10 +236,7 @@ class icinga2::feature::influxdb(
         if $ssl_cert {
           file { $_ssl_cert_path:
             ensure  => file,
-            content => $::osfamily ? {
-              'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-              default   => $ssl_cert,
-            },
+            content => $_ssl_cert,
             tag     => 'icinga2::config::file',
           }
         }
@@ -238,15 +244,12 @@ class icinga2::feature::influxdb(
         if $ssl_cacert {
           file { $_ssl_cacert_path:
             ensure  => file,
-            content => $::osfamily ? {
-              'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-              default   => $ssl_cacert,
-            },
+            content => $_ssl_cacert,
             tag     => 'icinga2::config::file',
           }
         }
       } # none
-    } # pki
+    } # case pki
   } # enable_ssl
   else {
     $attrs_ssl = { ssl_enable  => $enable_ssl }
@@ -273,11 +276,8 @@ class icinga2::feature::influxdb(
     attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/influxdb.conf",
+    notify      => $_notify,
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
   }
 
   # import library 'perfdata'

@@ -159,6 +159,14 @@ class icinga2::feature::idomysql(
   $ssl_dir           = "${::icinga2::params::pki_dir}/ido-mysql"
   $ido_mysql_package = $::icinga2::params::ido_mysql_package
   $manage_package    = $::icinga2::manage_package
+  $_ssl_key_mode     = $::osfamily ? {
+    'windows' => undef,
+    default   => '0600',
+  }
+  $_notify           = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   File {
     owner   => $owner,
@@ -222,10 +230,7 @@ class icinga2::feature::idomysql(
       'puppet': {
         file { $_ssl_key_path:
           ensure => file,
-          mode   => $::kernel ? {
-            'windows' => undef,
-            default   => '0600',
-          },
+          mode   => $_ssl_key_mode,
           source => $::icinga2_puppet_hostprivkey,
           tag    => 'icinga2::config::file',
         }
@@ -244,17 +249,21 @@ class icinga2::feature::idomysql(
       } # puppet
 
       'none': {
+        if $::osfamily == 'windows' {
+          $_ssl_key    = regsubst($ssl_key, '\n', "\r\n", 'EMG')
+          $_ssl_cert   = regsubst($ssl_cert, '\n', "\r\n", 'EMG')
+          $_ssl_cacert = regsubst($ssl_cacert, '\n', "\r\n", 'EMG')
+        } else {
+          $_ssl_key    = $ssl_key
+          $_ssl_cert   = $ssl_cert
+          $_ssl_cacert = $ssl_cacert
+        }
+
         if $ssl_key {
           file { $_ssl_key_path:
             ensure  => file,
-            mode    => $::kernel ? {
-              'windows' => undef,
-              default   => '0600',
-            },
-            content => $::osfamily ? {
-              'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-              default   => $ssl_key,
-            },
+            mode    => $_ssl_key_mode,
+            content => $_ssl_key,
             tag     => 'icinga2::config::file',
           }
         }
@@ -262,10 +271,7 @@ class icinga2::feature::idomysql(
         if $ssl_cert {
           file { $_ssl_cert_path:
             ensure  => file,
-            content => $::osfamily ? {
-              'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-              default   => $ssl_cert,
-            },
+            content => $_ssl_cert,
             tag     => 'icinga2::config::file',
           }
         }
@@ -273,15 +279,12 @@ class icinga2::feature::idomysql(
         if $ssl_cacert {
           file { $_ssl_cacert_path:
             ensure  => file,
-            content => $::osfamily ? {
-              'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-              default   => $ssl_cacert,
-            },
+            content => $_ssl_cacert,
             tag     => 'icinga2::config::file',
           }
         }
       } # none
-    } # pki
+    } # case pki
   } # enable_ssl
   else {
     $attrs_ssl = { enable_ssl  => $enable_ssl }
@@ -333,10 +336,7 @@ class icinga2::feature::idomysql(
     attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/ido-mysql.conf",
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
+    notify      => $_notify,
   }
 
   # import library

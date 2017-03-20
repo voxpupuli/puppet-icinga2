@@ -50,7 +50,11 @@ class icinga2::feature::perfdata(
   $rotation_interval       = '30s',
 ) {
 
-  $conf_dir  = $::icinga2::params::conf_dir
+  $conf_dir = $::icinga2::params::conf_dir
+  $_notify  = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -85,10 +89,7 @@ class icinga2::feature::perfdata(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/perfdata.conf",
     order       => '10',
-    notify      => $ensure ? {
-      'present' => Class['::icinga2::service'],
-      default   => undef,
-    },
+    notify      => $_notify,
   }
 
   # import library 'perfdata'

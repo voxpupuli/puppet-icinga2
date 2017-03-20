@@ -118,34 +118,34 @@ class icinga2::pki::ca(
     validate_string($ca_cert)
     validate_string($ca_key)
 
+    if $::osfamily == 'windows' {
+      $_ca_dir_mode = undef
+      $_ca_cert      = regsubst($ca_cert, '\n', "\r\n", 'EMG')
+      $_ca_key_mode = undef
+      $_ca_key      = regsubst($ca_key, '\n', "\r\n", 'EMG')
+    } else {
+      $_ca_dir_mode = '0700'
+      $_ca_cert     = $ca_cert
+      $_ca_key_mode = '0600'
+      $_ca_key      = $ca_key
+    }
+
     file { $ca_dir:
       ensure => directory,
-      mode   => $::kernel ? {
-        'windows' => undef,
-        default   => '0700',
-      }
+      mode   => $_ca_dir_mode,
     }
 
     file { "${ca_dir}/ca.crt":
       ensure  => file,
-      content => $::osfamily ? {
-        'windows' => regsubst($ca_cert, '\n', "\r\n", 'EMG'),
-        default   => $ca_cert,
-      },
+      content => $_ca_cert,
       tag     => 'icinga2::config::file',
       before  => File[$_ssl_cacert_path],
     }
 
     file { "${ca_dir}/ca.key":
       ensure  => file,
-      mode    => $::kernel ? {
-        'windows' => undef,
-        default   => '0600',
-      },
-      content => $::osfamily ? {
-        'windows' => regsubst($ca_key, '\n', "\r\n", 'EMG'),
-        default   => $ca_key,
-      },
+      mode    => $_ca_key_mode,
+      content => $_ca_key,
       tag     => 'icinga2::config::file',
     }
   }
