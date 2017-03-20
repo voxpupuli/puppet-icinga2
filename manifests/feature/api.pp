@@ -259,17 +259,12 @@ class icinga2::feature::api(
     } # puppet
 
     'none': {
-      if $::osfamily == 'windows' {
-        $_ssl_key    = regsubst($ssl_key, '\n', "\r\n", 'EMG')
-        $_ssl_cert   = regsubst($ssl_cert, '\n', "\r\n", 'EMG')
-        $_ssl_cacert = regsubst($ssl_cacert, '\n', "\r\n", 'EMG')
-      } else {
-        $_ssl_key    = $ssl_key
-        $_ssl_cert   = $ssl_cert
-        $_ssl_cacert = $ssl_cacert
-      }
-
       if $ssl_key {
+        $_ssl_key = $::osfamily ? {
+          'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
+          default   => $ssl_key,
+        }
+
         file { $_ssl_key_path:
           ensure  => file,
           mode    => $_ssl_key_mode,
@@ -279,6 +274,11 @@ class icinga2::feature::api(
       }
 
       if $ssl_cert {
+        $_ssl_cert = $::osfamily ? {
+          'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
+          default   => $ssl_cert,
+        }
+
         file { $_ssl_cert_path:
           ensure  => file,
           content => $_ssl_cert,
@@ -287,6 +287,11 @@ class icinga2::feature::api(
       }
 
       if $ssl_cacert {
+        $_ssl_cacert = $::osfamily ? {
+          'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
+          default   => $ssl_cacert,
+        }
+
         file { $_ssl_cacert_path:
           ensure  => file,
           content => $_ssl_cacert,

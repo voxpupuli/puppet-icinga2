@@ -20,7 +20,7 @@ class icinga2::feature::checker(
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
-  },
+  }
 
   # validation
   validate_re($ensure, [ '^present$', '^absent$' ],
