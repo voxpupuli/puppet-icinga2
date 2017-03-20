@@ -151,8 +151,8 @@ class icinga2::feature::influxdb(
   validate_re($flush_interval, '^\d+[ms]*$')
   validate_integer($flush_threshold)
 
-  $host_template = { measurement => "${host_measurement}", tags => $host_tags }
-  $service_template = { measurement => "${service_measurement}", tags => $service_tags}
+  $host_template = { measurement => $host_measurement, tags => $host_tags }
+  $service_template = { measurement => $service_measurement, tags => $service_tags}
 
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
