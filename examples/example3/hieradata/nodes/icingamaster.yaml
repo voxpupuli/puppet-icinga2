@@ -27,5 +27,5 @@ icinga2::feature::graphite::enable_send_metadata: true
 
 icinga2::feature::idomysql::database: icinga2
 icinga2::feature::idomysql::user: icinga2
-icinga2::feature::idomysql::password: *************
+icinga2::feature::idomysql::password: "*************"
 icinga2::feature::idomysql::import_schema: true
