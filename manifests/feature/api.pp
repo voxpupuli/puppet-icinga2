@@ -311,26 +311,33 @@ class icinga2::feature::api(
         command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
         creates => $_ssl_key_path,
         notify  => Class['::icinga2::service'],
-      } ->
-      file {
+      }
+
+      -> file {
         $_ssl_key_path:
           mode => '0600';
         $_ssl_cert_path:
-      } ->
+      }
 
-      exec { 'icinga2 pki get trusted-cert':
+      -> exec { 'icinga2 pki get trusted-cert':
         command => "icinga2 pki save-cert --host '${ca_host}' --port ${ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
         creates => $trusted_cert,
         notify  => Class['::icinga2::service'],
-      } ->
-      file { $trusted_cert: } ->
+      }
 
-      exec { 'icinga2 pki request':
+      -> file { $trusted_cert:
+        ensure => file,
+      }
+
+      -> exec { 'icinga2 pki request':
         command => "icinga2 pki request --host '${ca_host}' --port ${ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
         creates => $_ssl_cacert_path,
         notify  => Class['::icinga2::service'],
-      } ->
-      file { $_ssl_cacert_path: }
+      }
+
+      -> file { $_ssl_cacert_path:
+        ensure => file,
+      }
     } # icinga2
 
     'ca': {

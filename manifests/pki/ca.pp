@@ -151,6 +151,7 @@ class icinga2::pki::ca(
   }
 
   file { $_ssl_cacert_path:
+    ensure => file,
     source => "${ca_dir}/ca.crt",
   }
 
@@ -158,21 +159,24 @@ class icinga2::pki::ca(
     command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
     creates => $_ssl_key_path,
     require => File[$_ssl_cacert_path]
-  } ->
-    file {
-      $_ssl_key_path:
-        mode => '0600';
-    }
+  }
+
+  -> file { $_ssl_key_path:
+    ensure => file,
+    mode   => '0600',
+  }
 
   exec { 'icinga2 pki sign certificate':
     command     => "icinga2 pki sign-csr --csr '${_ssl_csr_path}' --cert '${_ssl_cert_path}'",
     subscribe   => Exec['icinga2 pki create certificate signing request'],
     refreshonly => true,
     notify      => Class['::icinga2::service'],
-  } ->
-    file {
-      $_ssl_cert_path:;
-      $_ssl_csr_path:
-        ensure => absent;
-    }
+  }
+
+  -> file {
+    $_ssl_cert_path:
+      ensure => file;
+    $_ssl_csr_path:
+      ensure => absent;
+  }
 }
