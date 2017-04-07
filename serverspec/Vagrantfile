@@ -110,6 +110,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.environment = "production"
         puppet.environment_path = "environments"
         puppet.hiera_config_path = "hiera.yaml"
+        #puppet.options = "--debug"
       end
 
     end
