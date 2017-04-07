@@ -165,7 +165,7 @@ class icinga2::params {
       $spool_dir         = '/var/spool/icinga2'
       $cache_dir         = '/var/cache/icinga2'
       $pki_dir           = "${conf_dir}/pki"
-      $ca_dir            = '/var/icinga2/ca'
+      $ca_dir            = '/var/lib/icinga2/ca'
       $user              = 'icinga'
       $group             = 'icinga'
       $lib_dir           = '/usr/local/lib/icinga2'

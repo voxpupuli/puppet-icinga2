@@ -108,7 +108,6 @@ class icinga2::pki::ca(
     }
 
     exec { 'create-icinga2-ca':
-      path    => $path,
       command => 'icinga2 pki new-ca',
       creates => "${ca_dir}/ca.crt",
       before  => File[$_ssl_cacert_path],
