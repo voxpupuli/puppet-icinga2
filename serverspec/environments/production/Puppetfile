@@ -2,7 +2,7 @@ forge "http://forge.puppetlabs.com"
 
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/concat', :latest
-mod 'puppetlabs/apt', '1.8.0'
+mod 'puppetlabs/apt', :latest
 mod 'puppetlabs/chocolatey', :latest
 mod 'puppetlabs/powershell', :latest
 mod 'badgerious/windows_env', :latest
