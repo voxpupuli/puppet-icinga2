@@ -90,10 +90,11 @@ class icinga2::feature::idopgsql(
   require ::icinga2::config
   require ::icinga2::params
 
-  $conf_dir          = $::icinga2::params::conf_dir
-  $ido_pgsql_package = $::icinga2::params::ido_pgsql_package
-  $manage_package    = $::icinga2::manage_package
-  $_notify           = $ensure ? {
+  $conf_dir             = $::icinga2::params::conf_dir
+  $ido_pgsql_package    = $::icinga2::params::ido_pgsql_package
+  $ido_pgsql_schema_dir = $::icinga2::params::ido_pgsql_schema_dir
+  $manage_package       = $::icinga2::manage_package
+  $_notify              = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
@@ -146,7 +147,7 @@ class icinga2::feature::idopgsql(
       user        => 'root',
       path        => $::path,
       environment => ["PGPASSWORD=${password}"],
-      command     => "psql -h '${host}' -U '${user}' -d '${database}' -w -f /usr/share/icinga2-ido-pgsql/schema/pgsql.sql",
+      command     => "psql -h '${host}' -U '${user}' -d '${database}' -w -f ${ido_pgsql_schema_dir}/pgsql.sql",
       unless      => "psql -h '${host}' -U '${user}' -d '${database}' -w -c 'select version from icinga_dbversion'",
     }
   }
