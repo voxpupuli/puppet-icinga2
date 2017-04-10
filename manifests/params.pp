@@ -83,16 +83,18 @@ class icinga2::params {
   case $::kernel {
 
     'linux': {
-      $conf_dir          = '/etc/icinga2'
-      $log_dir           = '/var/log/icinga2'
-      $run_dir           = '/var/run/icinga2'
-      $spool_dir         = '/var/spool/icinga2'
-      $cache_dir         = '/var/cache/icinga2'
-      $pki_dir           = "${conf_dir}/pki"
-      $ca_dir            = '/var/lib/icinga2/ca'
-      $ido_pgsql_package = 'icinga2-ido-pgsql'
-      $ido_mysql_package = 'icinga2-ido-mysql'
-      $service_reload    = "service ${service} reload"
+      $conf_dir             = '/etc/icinga2'
+      $log_dir              = '/var/log/icinga2'
+      $run_dir              = '/var/run/icinga2'
+      $spool_dir            = '/var/spool/icinga2'
+      $cache_dir            = '/var/cache/icinga2'
+      $pki_dir              = "${conf_dir}/pki"
+      $ca_dir               = '/var/lib/icinga2/ca'
+      $ido_pgsql_package    = 'icinga2-ido-pgsql'
+      $ido_pgsql_schema_dir = '/usr/share/icinga2-ido-pgsql/schema'
+      $ido_mysql_package    = 'icinga2-ido-mysql'
+      $ido_mysql_schema_dir = '/usr/share/icinga2-ido-mysql/schema'
+      $service_reload       = "service ${service} reload"
 
       case $::osfamily {
         'redhat': {
@@ -135,18 +137,20 @@ class icinga2::params {
     } # Linux
 
     'windows': {
-      $user              = 'SYSTEM'
-      $group             = undef
-      $conf_dir          = 'C:/ProgramData/icinga2/etc/icinga2'
-      $log_dir           = 'C:/ProgramData/icinga2/var/log/icinga2'
-      $run_dir           = 'C:/ProgramData/icinga2/var/run/icinga2'
-      $spool_dir         = 'C:/ProgramData/icinga2/var/spool/icinga2'
-      $cache_dir         = 'C:/ProgramData/icinga2/var/cache/icinga2'
-      $pki_dir           = "${conf_dir}/pki"
-      $ca_dir            = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
-      $ido_pgsql_package = undef
-      $ido_mysql_package = undef
-      $service_reload    = undef
+      $user                 = 'SYSTEM'
+      $group                = undef
+      $conf_dir             = 'C:/ProgramData/icinga2/etc/icinga2'
+      $log_dir              = 'C:/ProgramData/icinga2/var/log/icinga2'
+      $run_dir              = 'C:/ProgramData/icinga2/var/run/icinga2'
+      $spool_dir            = 'C:/ProgramData/icinga2/var/spool/icinga2'
+      $cache_dir            = 'C:/ProgramData/icinga2/var/cache/icinga2'
+      $pki_dir              = "${conf_dir}/pki"
+      $ca_dir               = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
+      $ido_pgsql_package    = undef
+      $ido_pgsql_schema_dir = undef
+      $ido_mysql_package    = undef
+      $ido_mysql_schema_dir = undef
+      $service_reload       = undef
 
       $constants = {
         'PluginDir'          => 'C:/Program Files/ICINGA2/sbin',
@@ -159,19 +163,21 @@ class icinga2::params {
     } # Windows
 
     'FreeBSD': {
-      $conf_dir          = '/usr/local/etc/icinga2'
-      $log_dir           = '/var/log/icinga2'
-      $run_dir           = '/var/run/icinga2'
-      $spool_dir         = '/var/spool/icinga2'
-      $cache_dir         = '/var/cache/icinga2'
-      $pki_dir           = "${conf_dir}/pki"
-      $ca_dir            = '/var/lib/icinga2/ca'
-      $user              = 'icinga'
-      $group             = 'icinga'
-      $lib_dir           = '/usr/local/lib/icinga2'
-      $ido_pgsql_package = undef
-      $ido_mysql_package = undef
-      $service_reload    = "service ${service} reload"
+      $conf_dir             = '/usr/local/etc/icinga2'
+      $log_dir              = '/var/log/icinga2'
+      $run_dir              = '/var/run/icinga2'
+      $spool_dir            = '/var/spool/icinga2'
+      $cache_dir            = '/var/cache/icinga2'
+      $pki_dir              = "${conf_dir}/pki"
+      $ca_dir               = '/var/lib/icinga2/ca'
+      $user                 = 'icinga'
+      $group                = 'icinga'
+      $lib_dir              = '/usr/local/lib/icinga2'
+      $ido_pgsql_package    = undef
+      $ido_pgsql_schema_dir = '/usr/local/share/icinga2-ido-pgsql/schema'
+      $ido_mysql_package    = undef
+      $ido_mysql_schema_dir = '/usr/local/share/icinga2-ido-mysql/schema'
+      $service_reload       = "service ${service} reload"
 
       $constants = {
         'PluginDir'          => '/usr/local/libexec/nagios',

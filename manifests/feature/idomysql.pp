@@ -152,14 +152,15 @@ class icinga2::feature::idomysql(
   require ::icinga2::config
   require ::icinga2::params
 
-  $owner             = $::icinga2::params::user
-  $group             = $::icinga2::params::group
-  $node_name         = $::icinga2::_constants['NodeName']
-  $conf_dir          = $::icinga2::params::conf_dir
-  $ssl_dir           = "${::icinga2::params::pki_dir}/ido-mysql"
-  $ido_mysql_package = $::icinga2::params::ido_mysql_package
-  $manage_package    = $::icinga2::manage_package
-  $_ssl_key_mode     = $::osfamily ? {
+  $owner                = $::icinga2::params::user
+  $group                = $::icinga2::params::group
+  $node_name            = $::icinga2::_constants['NodeName']
+  $conf_dir             = $::icinga2::params::conf_dir
+  $ssl_dir              = "${::icinga2::params::pki_dir}/ido-mysql"
+  $ido_mysql_package    = $::icinga2::params::ido_mysql_package
+  $ido_mysql_schema_dir = $::icinga2::params::ido_mysql_schema_dir
+  $manage_package       = $::icinga2::manage_package
+  $_ssl_key_mode        = $::osfamily ? {
     'windows' => undef,
     default   => '0600',
   }
@@ -328,7 +329,7 @@ class icinga2::feature::idomysql(
     exec { 'idomysql-import-schema':
       user    => 'root',
       path    => $::path,
-      command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '/usr/share/icinga2-ido-mysql/schema/mysql.sql'",
+      command => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' < '${ido_mysql_schema_dir}/mysql.sql'",
       unless  => "mysql -h '${host}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
     }
   }
