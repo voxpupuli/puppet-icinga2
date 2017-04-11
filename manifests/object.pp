@@ -82,7 +82,6 @@ define icinga2::object(
   }
 
   include ::icinga2::params
-  require ::icinga2::config
 
   case $::osfamily {
     'windows': {

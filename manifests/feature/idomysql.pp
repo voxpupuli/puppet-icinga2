@@ -149,8 +149,9 @@ class icinga2::feature::idomysql(
   $import_schema          = false,
 ) {
 
-  require ::icinga2::config
-  require ::icinga2::params
+  if ! defined(Class['::icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 feature class!')
+  }
 
   $owner                = $::icinga2::params::user
   $group                = $::icinga2::params::group
