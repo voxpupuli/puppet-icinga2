@@ -14,6 +14,10 @@
 #
 class icinga2::params {
 
+  if ! defined(Class['::icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 feature class or any define resource!')
+  }
+
   $package          = 'icinga2'
   $service          = 'icinga2'
   $plugins          = [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]

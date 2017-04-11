@@ -50,6 +50,8 @@ class icinga2::feature::perfdata(
   $rotation_interval       = '30s',
 ) {
 
+  include ::icinga2::params
+
   $conf_dir = $::icinga2::params::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],

@@ -17,6 +17,8 @@ class icinga2::feature::syslog(
   $severity = 'warning',
 ) {
 
+  include ::icinga2::params
+
   $conf_dir  = $::icinga2::params::conf_dir
   $_notify   = $ensure ? {
     'present' => Class['::icinga2::service'],

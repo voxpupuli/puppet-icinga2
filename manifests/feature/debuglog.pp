@@ -18,6 +18,8 @@ class icinga2::feature::debuglog(
   $path     = "${::icinga2::params::log_dir}/debug.log",
 ) {
 
+  include ::icinga2::params
+
   $conf_dir = $::icinga2::params::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],

@@ -22,6 +22,8 @@ class icinga2::feature::compatlog(
   $rotation_method = 'DAILY',
 ) {
 
+  include ::icinga2::params
+
   $conf_dir = $::icinga2::params::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],

@@ -87,8 +87,7 @@ class icinga2::feature::idopgsql(
   $import_schema          = false,
 ) {
 
-  require ::icinga2::config
-  require ::icinga2::params
+  include ::icinga2::params
 
   $conf_dir             = $::icinga2::params::conf_dir
   $ido_pgsql_package    = $::icinga2::params::ido_pgsql_package

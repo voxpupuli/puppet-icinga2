@@ -149,8 +149,7 @@ class icinga2::feature::idomysql(
   $import_schema          = false,
 ) {
 
-  require ::icinga2::config
-  require ::icinga2::params
+  include ::icinga2::params
 
   $owner                = $::icinga2::params::user
   $group                = $::icinga2::params::group

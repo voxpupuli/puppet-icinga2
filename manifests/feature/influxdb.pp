@@ -121,6 +121,8 @@ class icinga2::feature::influxdb(
   $flush_threshold        = 1024
 ) {
 
+  include ::icinga2::params
+
   $user          = $::icinga2::params::user
   $group         = $::icinga2::params::group
   $node_name     = $::icinga2::_constants['NodeName']

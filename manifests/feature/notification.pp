@@ -19,6 +19,8 @@ class icinga2::feature::notification(
   $enable_ha = undef,
 ) {
 
+  include ::icinga2::params
+
   $conf_dir = $::icinga2::params::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],

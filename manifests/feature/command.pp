@@ -17,6 +17,8 @@ class icinga2::feature::command(
   $command_path = "${::icinga2::params::run_dir}/cmd/icinga2.cmd",
 ) {
 
+  include ::icinga2::params
+
   $conf_dir = $::icinga2::params::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],
