@@ -12,7 +12,7 @@ class profile::icinga2::agent(
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
-    features  => ['checker','mainlog'],
+    features  => ['mainlog'],
   }
 
   # Feature: api

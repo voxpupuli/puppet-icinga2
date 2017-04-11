@@ -6,7 +6,7 @@ class profile::icinga2::agent(
 
   class { 'icinga2':
     confd     => false,
-    features  => ['checker','mainlog'],
+    features  => ['mainlog'],
   }
 
   # Feature: api

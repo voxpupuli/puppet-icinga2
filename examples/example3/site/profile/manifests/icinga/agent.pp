@@ -13,7 +13,7 @@ class profile::icinga::agent {
     class { '::icinga2':
         manage_repo => true,
         confd       => false,
-        features    => [ 'checker','mainlog' ],
+        features    => [ 'mainlog' ],
     }
 
     # Leave this here or put it in a yaml file common

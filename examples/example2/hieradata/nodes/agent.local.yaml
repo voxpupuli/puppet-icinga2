@@ -3,7 +3,6 @@ icinga2::manage_repo: true
 icinga2::confd: false
 icinga2::features:
   - 'api'
-  - 'checker'
   - 'mainlog'
 icinga2::constants:
   NodeName: "%{::fqdn}"
