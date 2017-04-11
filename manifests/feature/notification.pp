@@ -19,7 +19,9 @@ class icinga2::feature::notification(
   $enable_ha = undef,
 ) {
 
-  include ::icinga2::params
+  if ! defined(Class['::icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 feature class!')
+  }
 
   $conf_dir = $::icinga2::params::conf_dir
   $_notify  = $ensure ? {

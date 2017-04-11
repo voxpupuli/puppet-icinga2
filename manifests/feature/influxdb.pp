@@ -121,7 +121,9 @@ class icinga2::feature::influxdb(
   $flush_threshold        = 1024
 ) {
 
-  include ::icinga2::params
+  if ! defined(Class['::icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 feature class!')
+  }
 
   $user          = $::icinga2::params::user
   $group         = $::icinga2::params::group

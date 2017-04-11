@@ -12,7 +12,9 @@ define icinga2::feature(
     fail("icinga2::feature is a private define resource of the module icinga2, you're not permitted to use it.")
   }
 
-  include ::icinga2::params
+  if ! defined(Class['::icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 feature class!')
+  }
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
