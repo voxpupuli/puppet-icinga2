@@ -1,5 +1,33 @@
 # Change Log
 
+## [v1.2.1](https://github.com/Icinga/puppet-icinga2/tree/v1.2.1) (2017-04-12)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.2.0...v1.2.1)
+
+**Implemented enhancements:**
+
+- Add condition to be sure that icinga2 base class is parsed first [\#280](https://github.com/Icinga/puppet-icinga2/issues/280)
+- Remove checker feature from examples for agents [\#279](https://github.com/Icinga/puppet-icinga2/issues/279)
+- Remove sles-12 reference from Gemfile [\#274](https://github.com/Icinga/puppet-icinga2/issues/274)
+- Add tests for custom facts [\#273](https://github.com/Icinga/puppet-icinga2/issues/273)
+- Create integration tests for MySQL IDO feature [\#207](https://github.com/Icinga/puppet-icinga2/issues/207)
+- Create integration tests for API feature [\#206](https://github.com/Icinga/puppet-icinga2/issues/206)
+
+**Fixed bugs:**
+
+- Fix schema import for FreeBSD [\#277](https://github.com/Icinga/puppet-icinga2/issues/277)
+- Fix ::icinga2::pki::ca for FreeBSD [\#276](https://github.com/Icinga/puppet-icinga2/issues/276)
+- Fix arrow\_on\_right\_operand\_line lint [\#272](https://github.com/Icinga/puppet-icinga2/issues/272)
+- case statement without default in feature api [\#266](https://github.com/Icinga/puppet-icinga2/issues/266)
+- case statement without default in idomysql feature [\#265](https://github.com/Icinga/puppet-icinga2/issues/265)
+- case statement without default in influx feature [\#264](https://github.com/Icinga/puppet-icinga2/issues/264)
+- Fix strings containing only a variable [\#263](https://github.com/Icinga/puppet-icinga2/issues/263)
+- Replace selectors inside resource blocks [\#262](https://github.com/Icinga/puppet-icinga2/issues/262)
+
+**Merged pull requests:**
+
+- fix time periods example [\#271](https://github.com/Icinga/puppet-icinga2/pull/271) ([deric](https://github.com/deric))
+- Update icingamaster.yaml because yaml-lint failes [\#270](https://github.com/Icinga/puppet-icinga2/pull/270) ([matthiasritter](https://github.com/matthiasritter))
+
 ## [v1.2.0](https://github.com/Icinga/puppet-icinga2/tree/v1.2.0) (2017-03-16)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.1.1...v1.2.0)
 
@@ -8,7 +36,6 @@
 - Add concurrent check parameter to checker object [\#260](https://github.com/Icinga/puppet-icinga2/issues/260)
 - use a tag to disable parsing for a single attribute value [\#254](https://github.com/Icinga/puppet-icinga2/issues/254)
 - replace service restart with reload [\#250](https://github.com/Icinga/puppet-icinga2/issues/250)
-- specific version for icinga2-\* [\#244](https://github.com/Icinga/puppet-icinga2/issues/244)
 - Update docs of example4 with hint for Puppet 4 [\#234](https://github.com/Icinga/puppet-icinga2/issues/234)
 - Add service name to service apply loops [\#227](https://github.com/Icinga/puppet-icinga2/issues/227)
 
