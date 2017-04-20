@@ -115,10 +115,7 @@ class icinga2::params {
         'suse': {
           $user     = 'icinga'
           $group    = 'icinga'
-          $lib_dir  = $::architecture ? {
-            'x86_64' => '/usr/lib64',
-            default  => '/usr/lib',
-          }
+          $lib_dir  = '/usr/lib'
         } # Suse
 
         default: {
