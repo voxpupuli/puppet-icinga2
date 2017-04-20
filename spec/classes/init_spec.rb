@@ -51,11 +51,11 @@ describe('icinga2', :type => :class) do
             .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
         when 'Suse'
           it { is_expected.to contain_file(@constants_conf)
-            .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+            .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"\n} }
           it { is_expected.to contain_file(@constants_conf)
-            .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"\n} }
+            .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"\n} }
           it { is_expected.to contain_file(@constants_conf)
-            .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"\n} }
+            .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
         end
 
         it { is_expected.to contain_file(@constants_conf)
