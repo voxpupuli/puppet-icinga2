@@ -17,10 +17,11 @@ class icinga2::config {
     fail("icinga2::config is a private class of the module icinga2, you're not permitted to use it.")
   }
 
-  $constants = prefix($::icinga2::_constants, 'const ')
-  $conf_dir  = $::icinga2::params::conf_dir
-  $plugins   = $::icinga2::plugins
-  $confd     = $::icinga2::_confd
+  $constants      = prefix($::icinga2::_constants, 'const ')
+  $conf_dir       = $::icinga2::params::conf_dir
+  $plugins        = $::icinga2::plugins
+  $confd          = $::icinga2::_confd
+  $purge_features = $::icinga2::purge_features
 
   if $::kernel != 'windows' {
     $template_constants  = icinga2_attributes($constants)
@@ -38,6 +39,12 @@ class icinga2::config {
   file { "${conf_dir}/icinga2.conf":
     ensure  => file,
     content => $template_mainconfig,
+  }
+
+  file { "${conf_dir}/features-enabled":
+    ensure  => directory,
+    purge   => $purge_features,
+    recurse => $purge_features,
   }
 
 }

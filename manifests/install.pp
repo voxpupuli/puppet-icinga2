@@ -35,12 +35,6 @@ class icinga2::install {
     }
   }
 
-  file { "${conf_dir}/features-enabled":
-    ensure  => directory,
-    purge   => $purge_features,
-    recurse => $purge_features,
-  }
-
   # anchor, i.e. for config directory set by confd parameter
   file { $conf_dir:
     ensure  => directory,
