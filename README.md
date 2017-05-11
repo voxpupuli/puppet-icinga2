@@ -55,7 +55,7 @@ This module depends on:
 
 Depending on your setup following modules may also be required:
 
-* [puppetlabs/apt] >= 1.8.0
+* [puppetlabs/apt] >= 2.0.0
 * [puppetlabs/chocolatey] >= 0.7.0
 * [darin/zypprepo] >= 1.0.2
 
