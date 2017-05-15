@@ -173,6 +173,10 @@ class icinga2(
   # merge constants with defaults
   $_constants = merge($::icinga2::params::constants, $constants)
 
+  Class['::icinga2::config']
+  -> Concat <| tag == 'icinga2::config::file' |>
+  ~> Class['::icinga2::service']
+
   anchor { '::icinga2::begin':
     notify => Class['::icinga2::service']
   }
@@ -180,7 +184,6 @@ class icinga2(
   -> class { '::icinga2::install': }
   -> File <| ensure == 'directory' and tag == 'icinga2::config::file' |>
   -> class { '::icinga2::config': notify => Class['::icinga2::service'] }
-  -> Concat <| tag == 'icinga2::config::file' |>
   -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
   ~> class { '::icinga2::service': }
   -> anchor { '::icinga2::end':
