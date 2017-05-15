@@ -40,6 +40,9 @@ class icinga2::repo {
         }
       }
       'debian': {
+        # handle icinga stable repo before all package resources
+        # contain class problem!
+        Apt::Source['icinga-stable-release'] -> Package <||>
         case $::operatingsystem {
           'debian': {
             include ::apt, ::apt::backports
@@ -50,7 +53,8 @@ class icinga2::repo {
               key      => {
                 id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
                 source => 'http://packages.icinga.com/icinga.key',
-              };
+              },
+              require  => Class['::apt::backports'],
             }
           }
           'ubuntu': {
