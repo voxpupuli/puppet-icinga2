@@ -4,6 +4,6 @@ fixtures:
     concat: "puppetlabs/concat"
     apt: "puppetlabs/apt"
     chocolatey: "puppetlabs/chocolatey"
-    zypprepo: "darin/zypprepo"
+    zypprepo: "puppet/zypprepo"
   symlinks:
     icinga2: "#{source_dir}"

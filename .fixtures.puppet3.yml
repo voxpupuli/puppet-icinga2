@@ -9,6 +9,6 @@ fixtures:
       repo: "puppetlabs/apt"
       ref: "2.4.0"
     chocolatey: "puppetlabs/chocolatey"
-    zypprepo: "darin/zypprepo"
+    zypprepo: "puppet/zypprepo"
   symlinks:
     icinga2: "#{source_dir}"
