@@ -57,7 +57,7 @@ Depending on your setup following modules may also be required:
 
 * [puppetlabs/apt] >= 2.0.0
 * [puppetlabs/chocolatey] >= 0.7.0
-* [darin/zypprepo] >= 1.0.2
+* [puppet/zypprepo] >= 2.0.0
 
 ### Limitations
 
@@ -143,7 +143,7 @@ Make sure that you enable features **either** in the `::icinga2` class **or** by
 The IDO feature can be enabled either in combination with MySQL or PostgreSQL.
 
 Depending on your database you need to enable the feature `icinga2::feature::idomysql` or `icinga2::feature::idopgsql`.
- 
+
 Both features are capable of importing the base schema into the database, however this is disabled by default.
 Updating the database schema to another version is currently not supported.
 
@@ -588,7 +588,7 @@ include ::icinga2::feature::api
   * Save the certificate of another Icinga 2 instance, usually the Icinga master where your Icinga CA is located
   * Generate a ticket based on the TicketSalt
   * Request a signed certificate at your Icinga CA
-  
+
 ``` puppet
 class { '::icinga2::feature::api':
   pki             => 'icinga2',
@@ -1217,7 +1217,7 @@ Accept zone configuration. Defaults to `false`
 Accept remote commands. Defaults to `false`
 
 ##### `ca_host`
-This host will be connected to request the certificate. Set this if you use the `icinga2` pki. 
+This host will be connected to request the certificate. Set this if you use the `icinga2` pki.
 
 ##### `ca_port`
 Port of the 'ca_host'. Defaults to `5665`
@@ -2352,7 +2352,7 @@ See also [CHANGELOG.md]
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
 [puppetlabs/chocolatey]: https://github.com/puppetlabs/puppetlabs-chocolatey
-[darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
+[puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
 [puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
