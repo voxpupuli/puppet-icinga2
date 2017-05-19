@@ -8,6 +8,8 @@ gem 'facter', '>= 1.7.0'
 gem 'facterdb', '>= 0.3.10'
 gem 'rspec-puppet-facts', '>= 1.6.0'
 gem 'metadata-json-lint'
+gem 'serverspec'
+gem 'r10k'
 
 gem 'parallel_tests', RUBY_VERSION < '2.0.0' ? '~> 2.9.0' : '>= 2.10.0'
 
