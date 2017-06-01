@@ -162,7 +162,7 @@ module Puppet
           attrs.each do |attr, value|
             if value.is_a?(Hash)
               if value.empty?
-                result = case level
+                result += case level
                   when 1 then "%s%s = {}\n" % [ prefix, attribute_types(attr) ]
                   when 2 then "%s[\"%s\"] = {}\n" % [ prefix, attr ]
                   else "%s%s = {}\n" % [ prefix, attribute_types(attr) ]
