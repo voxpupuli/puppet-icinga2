@@ -34,11 +34,15 @@ class icinga2::config {
   file { "${conf_dir}/constants.conf":
     ensure  => file,
     content => $template_constants,
+    owner   => $::icinga2::params::user,
+    group   => $::icinga2::params::group,
   }
 
   file { "${conf_dir}/icinga2.conf":
     ensure  => file,
     content => $template_mainconfig,
+    owner   => $::icinga2::params::user,
+    group   => $::icinga2::params::group,
   }
 
   file { "${conf_dir}/features-enabled":

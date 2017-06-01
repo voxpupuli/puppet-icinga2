@@ -37,7 +37,8 @@ class icinga2::install {
 
   # anchor, i.e. for config directory set by confd parameter
   file { $conf_dir:
-    ensure  => directory,
+    ensure => directory,
+    mode   => '0755',
   }
   file { $pki_dir:
     ensure  => directory,
