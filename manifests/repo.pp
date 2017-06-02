@@ -112,6 +112,6 @@ class icinga2::repo {
       }
     }
 
-  } # if $::icinga::manage_repo
+  }
 
 }
