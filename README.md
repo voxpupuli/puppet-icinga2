@@ -101,7 +101,7 @@ packages in your own Puppet code.
 ``` puppet
 package { 'icinga2':
   ensure => latest,
-  notifiy => Class['icinga2'],
+  notify => Class['icinga2'],
 }
 
 class { '::icinga2':
