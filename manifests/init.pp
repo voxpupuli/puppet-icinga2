@@ -36,10 +36,10 @@
 #   A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 #
 # [*confd*]
-#   This is the directory where Icinga 2 stores it's object configuration by default. To disable this, set the parameter
-#   to false. It's also possible to assign your own directory. This directory is relative to etc/icinga2 and must be
-#   managed outside of this module as file resource with tag icinga2::config::file. By default this parameter is true.
-#
+#   `conf.d` is the directory where Icinga 2 stores its object configuration by default. To disable it,
+#   set this parameter to `false`. By default this parameter is `true`. It's also possible to assign your
+#   own directory. This directory must be managed outside of this module as file resource
+#   with tag icinga2::config::file.
 #
 # All default parameters are set in the icinga2::params class. To get more technical information have a look into the
 # params.pp manifest.

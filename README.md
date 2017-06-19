@@ -801,9 +801,10 @@ Hash of constants. Defaults are set in the params class. Your settings will be m
 A list of the ITL plugins to load. Defaults to `[ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]`.
 
 ##### `confd`
-`conf.d` is the directory where Icinga 2 stores its object configuration by default. To disable it, set this parameter
-to `false`. By default this parameter is `true`. It's also possible to assign your own directory. This directory is
-relative to /etc/icinga2 and must be managed outside of this module as file resource with tag icinga2::config::file. 
+`conf.d` is the directory where Icinga 2 stores its object configuration by default. To disable it,
+set this parameter to `false`. By default this parameter is `true`. It's also possible to assign your
+own directory. This directory and must be managed outside of this module as file resource
+with tag icinga2::config::file.
 
 #### Class: `icinga2::feature::checker`
 Enables or disables the `checker` feature.
