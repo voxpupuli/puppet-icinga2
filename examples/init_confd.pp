@@ -3,6 +3,7 @@ class { 'icinga2':
   confd       => '/etc/icinga/local.d',
 }
 
-file { '/etc/icinga2/conf.d/local.d':
+file { '/etc/icinga2/local.d':
   ensure => directory,
+  tag    => 'icinga2::config::file',
 }
