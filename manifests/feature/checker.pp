@@ -57,7 +57,7 @@ class icinga2::feature::checker(
 
   # manage feature
   icinga2::feature { 'checker':
-    ensure      => $ensure,
+    ensure => $ensure,
   }
 
 }
