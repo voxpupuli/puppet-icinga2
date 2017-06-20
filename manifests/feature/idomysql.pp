@@ -320,6 +320,52 @@ class icinga2::feature::idomysql(
       ensure => installed,
       before => Icinga2::Feature['ido-mysql'],
     }
+
+    # dbconfig config for Debian or Ubuntu
+    if $::osfamily == 'debian' {
+      file_line { "dbc-${ido_mysql_package}-install":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line  => "dbc_install='false'",
+        match => '^dbc_install\s*=',
+        require => Package[$ido_mysql_package];
+      }
+      file_line { "dbc-${ido_mysql_package}-dbtype":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line  => "dbc_dbtype='mysql'",
+        match => '^dbc_dbtype\s*=',
+        require => Package[$ido_mysql_package];
+      }
+      file_line { "dbc-${ido_mysql_package}-dbuser":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line  => "dbc_dbuser='${user}'",
+        match => '^dbc_dbuser\s*=',
+        require => Package[$ido_mysql_package];
+      }
+      file_line { "dbc-${ido_mysql_package}-dbpass":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line  => "dbc_dbpass='${password}'",
+        match => '^dbc_dbpass\s*=',
+        require => Package[$ido_mysql_package];
+      }
+      file_line { "dbc-${ido_mysql_package}-dbname":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line  => "dbc_dbname='${database}'",
+        match => '^dbc_dbname\s*=',
+        require => Package[$ido_mysql_package];
+      }
+      file_line { "dbc-${ido_mysql_package}-dbserver":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line  => "dbc_dbserver='${host}'",
+        match => '^dbc_dbserver\s*=',
+        require => Package[$ido_mysql_package];
+      }
+      file_line { "dbc-${ido_mysql_package}-dbport":
+        path    => "/etc/dbconfig-common/${ido_mysql_package}.conf",
+        line    => "dbc_dbport='${port}'",
+        match   => '^dbc_dbport\s*=',
+        require => Package[$ido_mysql_package];
+      }
+    } # debian dbconfig
   }
 
   # import db schema
