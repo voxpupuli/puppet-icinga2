@@ -166,6 +166,9 @@ class icinga2::feature::api(
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
+  # pki directory must exists and icinga binary is required for icinga2 pki
+  require ::icinga2::install
+
   $conf_dir      = $::icinga2::params::conf_dir
   $pki_dir       = $::icinga2::params::pki_dir
   $ca_dir        = $::icinga2::params::ca_dir
