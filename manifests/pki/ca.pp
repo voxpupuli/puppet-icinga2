@@ -101,6 +101,8 @@ class icinga2::pki::ca(
   else {
     $_ssl_cacert_path = "${pki_dir}/ca.crt" }
 
+  $cert_cn=$node_name
+
   if !$ca_cert or !$ca_key {
     $path = $::osfamily ? {
       'windows' => 'C:/ProgramFiles/ICINGA2/sbin',
@@ -155,7 +157,7 @@ class icinga2::pki::ca(
   }
 
   exec { 'icinga2 pki create certificate signing request':
-    command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
+    command => "icinga2 pki new-cert --cn '${cert_cn}' --key '${_ssl_key_path}' --csr '${_ssl_csr_path}'",
     creates => $_ssl_key_path,
     require => File[$_ssl_cacert_path]
   }
