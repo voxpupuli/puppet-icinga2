@@ -1,8 +1,11 @@
-$master_cert = 'centos7.localdomain'
+$master_cert = 'master.localdomain'
 $master_ip   = '192.168.5.16'
 
 class { '::icinga2':
-  manage_repo => true,
+  manage_repo  => true,
+  constants    => {
+    'NodeName' => 'slave.localdomain',
+  },
 }
 
 class { '::icinga2::feature::api':

@@ -311,11 +311,11 @@ class icinga2::feature::api(
       validate_string($ca_host)
       validate_integer($ca_port)
 
-      $ticket_id = icinga2_ticket_id($::fqdn, $ticket_salt)
+      $ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
       exec { 'icinga2 pki create key':
-        command => "icinga2 pki new-cert --cn '${::fqdn}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
+        command => "icinga2 pki new-cert --cn '${node_name}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
         creates => $_ssl_key_path,
         notify  => Class['::icinga2::service'],
       }
