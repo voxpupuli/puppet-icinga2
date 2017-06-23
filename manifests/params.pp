@@ -119,7 +119,7 @@ class icinga2::params {
         } # Suse
 
         default: {
-          fail("Your plattform ${::osfamily} is not supported, yet.")
+          fail("Your platform ${::osfamily} is not supported, yet.")
         }
       } # case $::osfamily
 
@@ -187,7 +187,7 @@ class icinga2::params {
     } # FreeBSD
 
     default: {
-      fail("Your plattform ${::osfamily} is not supported, yet.")
+      fail("Your kernel ${::kernel} is not supported, yet.")
     }
 
   } # case $::kernel
