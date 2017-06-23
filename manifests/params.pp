@@ -80,7 +80,7 @@ class icinga2::params {
     'ZonesDir',
   ]
 
-  case $::kernel {
+  case downcase($::kernel) {
 
     'linux': {
       $conf_dir             = '/etc/icinga2'
@@ -96,7 +96,7 @@ class icinga2::params {
       $ido_mysql_schema_dir = '/usr/share/icinga2-ido-mysql/schema'
       $service_reload       = "service ${service} reload"
 
-      case $::osfamily {
+      case downcase($::osfamily) {
         'redhat': {
           $user    = 'icinga'
           $group   = 'icinga'
@@ -119,7 +119,7 @@ class icinga2::params {
         } # Suse
 
         default: {
-          fail("Your plattform ${::osfamily} is not supported, yet.")
+          fail("Your platform ${::osfamily} is not supported, yet.")
         }
       } # case $::osfamily
 
@@ -159,7 +159,7 @@ class icinga2::params {
       }
     } # Windows
 
-    'FreeBSD': {
+    'freebsd': {
       $conf_dir             = '/usr/local/etc/icinga2'
       $log_dir              = '/var/log/icinga2'
       $run_dir              = '/var/run/icinga2'
@@ -187,7 +187,7 @@ class icinga2::params {
     } # FreeBSD
 
     default: {
-      fail("Your plattform ${::osfamily} is not supported, yet.")
+      fail("Your kernel ${::kernel} is not supported, yet.")
     }
 
   } # case $::kernel
