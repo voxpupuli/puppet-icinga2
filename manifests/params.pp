@@ -80,7 +80,7 @@ class icinga2::params {
     'ZonesDir',
   ]
 
-  case $::kernel {
+  case downcase($::kernel) {
 
     'linux': {
       $conf_dir             = '/etc/icinga2'
@@ -96,7 +96,7 @@ class icinga2::params {
       $ido_mysql_schema_dir = '/usr/share/icinga2-ido-mysql/schema'
       $service_reload       = "service ${service} reload"
 
-      case $::osfamily {
+      case downcase($::osfamily) {
         'redhat': {
           $user    = 'icinga'
           $group   = 'icinga'
