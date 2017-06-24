@@ -320,8 +320,7 @@ class icinga2::feature::idomysql(
       ensure => installed,
       before => Icinga2::Feature['ido-mysql'],
     }
-    ->
-    class { '::icinga2::debian::dbconfig':
+    -> class { '::icinga2::debian::dbconfig':
       dbtype   => 'mysql',
       dbserver => $host,
       dbport   => $port,
