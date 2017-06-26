@@ -24,18 +24,21 @@ class icinga2::debian::dbconfig(
   # dbconfig config for Debian or Ubuntu
   if $::osfamily == 'debian' {
 
-			include ::icinga2::params
+      include ::icinga2::params
 
-			case $dbtype {
-				'mysql': {
-					$default_port = 3306
-					$path         = "/etc/dbconfig-common/${::icinga2::params::ido_mysql_package}.conf"
-				}
-				'pgsql': {
-					$default_port = 5432
-					$path         = "/etc/dbconfig-common/${::icinga2::params::ido_pgsql_package}.conf"
-				}
-			}
+      case $dbtype {
+        'mysql': {
+          $default_port = 3306
+          $path         = "/etc/dbconfig-common/${::icinga2::params::ido_mysql_package}.conf"
+        }
+        'pgsql': {
+          $default_port = 5432
+          $path         = "/etc/dbconfig-common/${::icinga2::params::ido_pgsql_package}.conf"
+        }
+        default: {
+          fail("Unsupported dbtype: ${dbtype}")
+        }
+      }
 
       file_line { "dbc-${dbtype}-dbuser":
         path  => $path,
@@ -63,20 +66,18 @@ class icinga2::debian::dbconfig(
       # only set port if isn't the default
       if $dbport != $default_port {
         file_line { "dbc-${dbtype}-dbport":
-          path    => $path,
-          line    => "dbc_dbport='${dbport}'",
-          match   => '^dbc_dbport\s*=',
+          path  => $path,
+          line  => "dbc_dbport='${dbport}'",
+          match => '^dbc_dbport\s*=',
         }
       }
       # set ssl
       if $ssl {
         file_line { "dbc-${dbtype}-ssl":
-          path    => $path,
-          line    => "dbc_ssl='true'",
-          match   => '^dbc_ssl\s*=',
+          path  => $path,
+          line  => "dbc_ssl='true'",
+          match => '^dbc_ssl\s*=',
         }
       }
-
   } # debian dbconfig
-
 }

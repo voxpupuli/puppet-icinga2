@@ -137,8 +137,7 @@ class icinga2::feature::idopgsql(
       ensure => installed,
       before => Icinga2::Feature['ido-pgsql'],
     }
-    ->
-    class { '::icinga2::debian::dbconfig':
+    -> class { '::icinga2::debian::dbconfig':
       dbtype   => 'pgsql',
       dbserver => $host,
       dbport   => $port,

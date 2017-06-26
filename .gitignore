@@ -1,10 +1,17 @@
-.vagrant
-.idea
+## editors
+/.idea/
+*~
 *.swp
+.DS_Store
+
+## puppet
+.vagrant
 modules/
 spec/fixtures/
-.DS_Store
+pkg/
+
+## ruby
 Gemfile.lock
+/.ruby-*
 .bundle
 vendor/
-pkg/
