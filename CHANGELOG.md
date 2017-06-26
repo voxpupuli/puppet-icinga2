@@ -1,15 +1,49 @@
 # Change Log
 
+## [v1.3.0](https://github.com/Icinga/puppet-icinga2/tree/v1.3.0) (2017-06-26)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.2.1...v1.3.0)
+
+**Implemented enhancements:**
+
+- README.md: clarify meaning of `confd=\>true` [\#314](https://github.com/Icinga/puppet-icinga2/pull/314) ([sourcejedi](https://github.com/sourcejedi))
+
+**Fixed bugs:**
+
+- fix certname in api and pki::ca class to constant NodeName [\#319](https://github.com/Icinga/puppet-icinga2/issues/319)
+- ordering-api-with-pki-after-package [\#311](https://github.com/Icinga/puppet-icinga2/issues/311)
+- Only last empty hash is stored [\#308](https://github.com/Icinga/puppet-icinga2/issues/308)
+- module requirements broken. [\#305](https://github.com/Icinga/puppet-icinga2/issues/305)
+- PR \#293 does not work correctly [\#304](https://github.com/Icinga/puppet-icinga2/issues/304)
+- ido-mysql install fails while using official icinga packages [\#302](https://github.com/Icinga/puppet-icinga2/issues/302)
+- concat resource with tag does not trigger a refresh [\#300](https://github.com/Icinga/puppet-icinga2/issues/300)
+- ido packages are managed before repository [\#299](https://github.com/Icinga/puppet-icinga2/issues/299)
+- RSpec Puppetlabs modules incompatible to Puppet 3 [\#286](https://github.com/Icinga/puppet-icinga2/issues/286)
+- Disable feature checker doesn't trigger a refresh [\#285](https://github.com/Icinga/puppet-icinga2/issues/285)
+- SLES Lib directory is not architecture specific [\#283](https://github.com/Icinga/puppet-icinga2/issues/283)
+- debian::dbconfig: Move to autoload location and lint it [\#322](https://github.com/Icinga/puppet-icinga2/pull/322) ([lazyfrosch](https://github.com/lazyfrosch))
+- Fix examples/init\_confd.pp [\#313](https://github.com/Icinga/puppet-icinga2/pull/313) ([sourcejedi](https://github.com/sourcejedi))
+- README.md: fix typo `notifiy` [\#312](https://github.com/Icinga/puppet-icinga2/pull/312) ([sourcejedi](https://github.com/sourcejedi))
+
+**Merged pull requests:**
+
+- Update checker.pp, arrow alignment [\#316](https://github.com/Icinga/puppet-icinga2/pull/316) ([rowanruseler](https://github.com/rowanruseler))
+- Update fragment.pp [\#315](https://github.com/Icinga/puppet-icinga2/pull/315) ([rowanruseler](https://github.com/rowanruseler))
+- Add GitHub issue template [\#310](https://github.com/Icinga/puppet-icinga2/pull/310) ([dnsmichi](https://github.com/dnsmichi))
+- Replace darin/zypprepo with puppet/zypprepo [\#306](https://github.com/Icinga/puppet-icinga2/pull/306) ([noqqe](https://github.com/noqqe))
+- Remove deprecated apt options [\#293](https://github.com/Icinga/puppet-icinga2/pull/293) ([jkroepke](https://github.com/jkroepke))
+- Specify older fixtures for Puppet 3 tests [\#287](https://github.com/Icinga/puppet-icinga2/pull/287) ([lazyfrosch](https://github.com/lazyfrosch))
+- Update SLES lib directory [\#284](https://github.com/Icinga/puppet-icinga2/pull/284) ([dgoetz](https://github.com/dgoetz))
+
 ## [v1.2.1](https://github.com/Icinga/puppet-icinga2/tree/v1.2.1) (2017-04-12)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.2.0...v1.2.1)
 
 **Implemented enhancements:**
 
+- Create integration tests for MySQL IDO feature [\#207](https://github.com/Icinga/puppet-icinga2/issues/207)
 - Add condition to be sure that icinga2 base class is parsed first [\#280](https://github.com/Icinga/puppet-icinga2/issues/280)
 - Remove checker feature from examples for agents [\#279](https://github.com/Icinga/puppet-icinga2/issues/279)
 - Remove sles-12 reference from Gemfile [\#274](https://github.com/Icinga/puppet-icinga2/issues/274)
 - Add tests for custom facts [\#273](https://github.com/Icinga/puppet-icinga2/issues/273)
-- Create integration tests for MySQL IDO feature [\#207](https://github.com/Icinga/puppet-icinga2/issues/207)
 - Create integration tests for API feature [\#206](https://github.com/Icinga/puppet-icinga2/issues/206)
 
 **Fixed bugs:**
