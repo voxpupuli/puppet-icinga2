@@ -221,7 +221,11 @@ module Puppet
             elsif value.is_a?(Array)
               config += "%s%s = [ %s]\n" % [ ' ' * indent, attr, process_array(value) ]
             else
-              config += "%s%s = %s\n" % [ ' ' * indent, attr, parse(value) ]
+              if parse(value) == '+config'
+                config += "%s%s += config\n" % [ ' ' * indent, attr ]
+              else
+                config += "%s%s = %s\n" % [ ' ' * indent, attr, parse(value) ]
+              end
             end
           end
         end
