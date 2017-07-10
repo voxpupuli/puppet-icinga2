@@ -1,4 +1,3 @@
-#require File.join(File.dirname(__FILE__), '../../..', 'puppet_x/icinga2/pbkdf2.rb')
 
 module Puppet::Parser::Functions
   newfunction(:icinga2_ticket_custom_id, :type => :rvalue) do |args|
@@ -12,12 +11,8 @@ module Puppet::Parser::Functions
     end
   
     File.write('/tmp/testinggggg', "/usr/sbin/icinga2 pki ticket --cn #{args[0]}")
-    %x( "/usr/sbin/icinga2 pki ticket --cn #{args[0]}" ) 
-    #PBKDF2.new(
-    #  :password => args[0],
-    #  :salt => args[1],
-    #  :iterations => 50000,
-    #  :hash_function => OpenSSL::Digest.new("sha1")
-    #).hex_string
+    value = %x( "/usr/sbin/icinga2 pki ticket --cn #{args[0]} 2>&1" ) 
+    File.write('/tmp/testingggggg', "#{value}")
+    value
   end
 end
