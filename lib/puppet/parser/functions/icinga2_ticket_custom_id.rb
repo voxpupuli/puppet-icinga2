@@ -1,7 +1,7 @@
 #require File.join(File.dirname(__FILE__), '../../..', 'puppet_x/icinga2/pbkdf2.rb')
 
 module Puppet::Parser::Functions
-  newfunction(:icinga2_ticket_id, :type => :rvalue) do |args|
+  newfunction(:icinga2_ticket_custom_id, :type => :rvalue) do |args|
     raise Puppet::ParseError, 'Must provide exactly two arguments to icinga2_ticket_id' if args.length != 2
 
     if !args[0] or args[0] == ''
