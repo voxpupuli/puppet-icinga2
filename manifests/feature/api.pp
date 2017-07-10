@@ -311,7 +311,7 @@ class icinga2::feature::api(
       validate_string($ca_host)
       validate_integer($ca_port)
 
-      $ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
+      $ticket_id = icinga2_ticket_custom_id($node_name, $ticket_salt)
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
       exec { 'icinga2 pki create key':
