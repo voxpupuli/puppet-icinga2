@@ -16,9 +16,7 @@
 #
 class icinga2::repo {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name {
-    fail("icinga2::repo is a private class of the module icinga2, you're not permitted to use it.")
-  }
+  assert_private()
 
   if $::icinga2::manage_repo and $::icinga2::manage_package {
 
