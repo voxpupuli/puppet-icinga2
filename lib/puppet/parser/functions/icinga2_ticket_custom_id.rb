@@ -10,11 +10,7 @@ module Puppet::Parser::Functions
       raise Puppet::ParseError, 'second argument (salt) can not be empty for icinga2_ticket_id'
     end
   
-    File.write('/tmp/testinggggg', "/usr/sbin/icinga2 pki ticket --cn #{args[0]}")
-    v = %x[ id ] 
-    File.write('/tmp/testingggggggg', "#{v}")
     value = %x[ sudo /usr/sbin/icinga2 pki ticket --cn #{args[0]} 2>&1 ] 
-    File.write('/tmp/testingggggg', "#{value}")
-    value
+    value.chomp()
   end
 end
