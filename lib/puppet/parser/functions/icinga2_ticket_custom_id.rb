@@ -11,6 +11,8 @@ module Puppet::Parser::Functions
     end
   
     File.write('/tmp/testinggggg', "/usr/sbin/icinga2 pki ticket --cn #{args[0]}")
+    v = %x[ id ] 
+    File.write('/tmp/testingggggggg', "#{v}")
     value = %x[ /usr/sbin/icinga2 pki ticket --cn #{args[0]} ] 
     File.write('/tmp/testingggggg', "#{value}")
     value
