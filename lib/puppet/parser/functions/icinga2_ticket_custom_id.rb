@@ -11,7 +11,7 @@ module Puppet::Parser::Functions
     end
   
     File.write('/tmp/testinggggg', "/usr/sbin/icinga2 pki ticket --cn #{args[0]}")
-    value = %x( "/usr/sbin/icinga2 pki ticket --cn #{args[0]} 2>&1" ) 
+    value = %x[ /usr/sbin/icinga2 pki ticket --cn #{args[0]} ] 
     File.write('/tmp/testingggggg', "#{value}")
     value
   end
