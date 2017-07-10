@@ -10,7 +10,8 @@ module Puppet::Parser::Functions
     if !args[1] or args[1] == ''
       raise Puppet::ParseError, 'second argument (salt) can not be empty for icinga2_ticket_id'
     end
-
+  
+    File.write('/tmp/testinggggg', "/usr/sbin/icinga2 pki ticket --cn #{args[0]}")
     %x( "/usr/sbin/icinga2 pki ticket --cn #{args[0]}" ) 
     #PBKDF2.new(
     #  :password => args[0],
