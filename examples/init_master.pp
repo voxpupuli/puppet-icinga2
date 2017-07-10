@@ -7,8 +7,6 @@ class { '::icinga2':
   }
 }
 
-class { '::icinga2::pki::ca': }
-
 class { '::icinga2::feature::api':
   pki             => 'none',
   zones           => {
@@ -17,3 +15,5 @@ class { '::icinga2::feature::api':
     },
   }
 }
+
+class { '::icinga2::pki::ca': }

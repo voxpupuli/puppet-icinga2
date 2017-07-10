@@ -66,7 +66,9 @@
 #   Port of the 'ca_host'. Defaults to 5665
 #
 # [*ticket_salt*]
-#   Salt to use for ticket generation. Defaults to icinga2 constant TicketSalt.
+#   Salt to use for ticket generation. Will only be used if pki is 'none'. For all other
+#   cases the value is the constant TicketSalt and TicketSalt should be set on host with
+#   an icinga2 pki only.
 #
 # [*endpoints*]
 #   Hash to configure endpoint objects. Defaults to { 'NodeName' => {} }.
@@ -201,10 +203,25 @@ class icinga2::feature::api(
     "${pki} isn't supported. Valid values are 'puppet', 'none', 'icinga2' and 'ca (deprecated)'.")
   validate_bool($accept_config)
   validate_bool($accept_commands)
-  validate_string($ticket_salt)
   validate_hash($endpoints)
   validate_hash($zones)
+  validate_string($ticket_salt)
 
+  if defined(Class['::icinga2::pki::ca']) {
+    # if a master ca on this host leave ticket_salt untouched 
+    $_ticket_salt = $ticket_salt
+  } else {
+    # host is not a master ca
+    if $::icinga2::_constants[$ticket_salt] {
+      # if ticket_salt is a constant use the value for signing
+      $_ticket_salt_signing = $::icinga2::_constants[$ticket_salt]
+    } else {
+      $_ticket_salt_signing = $ticket_salt
+    }
+    # on a non master ca host always set the attribute ticket_salt to constant TicketSalt
+    $_ticket_salt = 'TicketSalt'
+  }
+ 
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
     validate_absolute_path($ssl_key_path)
@@ -311,7 +328,7 @@ class icinga2::feature::api(
       validate_string($ca_host)
       validate_integer($ca_port)
 
-      $ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
+      $ticket_id = icinga2_ticket_id($node_name, $_ticket_salt_signing)
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
       exec { 'icinga2 pki create key':
@@ -361,7 +378,7 @@ class icinga2::feature::api(
     ca_path         => $_ssl_cacert_path,
     accept_commands => $accept_commands,
     accept_config   => $accept_config,
-    ticket_salt     => $ticket_salt,
+    ticket_salt     => $_ticket_salt,
     tls_protocolmin => $ssl_protocolmin,
     cipher_list     => $ssl_cipher_list,
     bind_host       => $bind_host,
