@@ -794,6 +794,9 @@ A list of features to enable by default. Defaults to `[checker, mainlog, notific
 ##### `purge_features`
 Define if configuration files for features not managed by Puppet should be purged. Defaults to true.
 
+##### `purge_conf_dir`
+Define if files within the central configuration dir (e.g. /etc/icinga2/) which aren't managed by Puppet should be purged. Defaults to false.
+
 ##### `constants`
 Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 

@@ -13,11 +13,13 @@ describe('icinga2', :type => :class) do
         before(:all) do
           @icinga2_conf = '/etc/icinga2/icinga2.conf'
           @constants_conf = '/etc/icinga2/constants.conf'
+					@conf_dir = '/etc/icinga2'
         end
       when 'FreeBSD'
         before(:all) do
           @icinga2_conf = '/usr/local/etc/icinga2/icinga2.conf'
           @constants_conf = '/usr/local/etc/icinga2/constants.conf'
+					@conf_dir = '/usr/local/etc/icinga2'
         end
       end
 
@@ -94,6 +96,9 @@ describe('icinga2', :type => :class) do
         it { is_expected.to contain_icinga2__feature('notification')
           .with({'ensure' => 'present'}) }
 
+        it { is_expected.to contain_file(@conf_dir)
+					.with({'ensure'  => 'directory',})}
+
         case facts[:osfamily]
         when 'Debian'
           it { should_not contain_apt__source('icinga-stable-release') }
@@ -107,6 +112,16 @@ describe('icinga2', :type => :class) do
           let(:params) { {:manage_package => false} }
 
           it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+        end
+
+        context "#{os} with purge_conf_dir => true" do
+          let(:params) { {:purge_conf_dir => true} }
+
+          it { should contain_file(@conf_dir).with({
+						'ensure'  => 'directory',
+						'purge'   => true,
+						'recurse' => true,
+						'force'   => true })}
         end
       end
     end
@@ -135,6 +150,7 @@ describe('icinga2', :type => :class) do
   before(:all) do
     @icinga2_conf = "C:/ProgramData/icinga2/etc/icinga2/icinga2.conf"
     @constants_conf = "C:/ProgramData/icinga2/etc/icinga2/constants.conf"
+		@conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
   end
 
   context 'Windows 2012 R2 with all default parameters' do
@@ -195,12 +211,25 @@ describe('icinga2', :type => :class) do
 
     it { is_expected.to contain_icinga2__feature('notification')
                             .with({'ensure' => 'present'}) }
+
+    it { is_expected.to contain_file(@conf_dir)
+														.with({'ensure'  => 'directory',})}
   end
 
   context "Windows 2012 R2 with manage_package => false" do
     let(:params) { {:manage_package => false} }
 
     it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+  end
+
+  context "Windows 2012 R2 with purge_conf_dir => true" do
+    let(:params) { {:purge_conf_dir => true} }
+
+    it { should contain_file(@conf_dir).with({
+			'ensure'  => 'directory',
+			'purge'   => true,
+			'recurse' => true,
+			'force'   => true })}
   end
 end
 
