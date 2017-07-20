@@ -47,6 +47,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -69,6 +72,7 @@ define icinga2::object::user (
   $types                = undef,
   $states               = undef,
   $import               = [],
+  $include              = [],
   $template             = false,
   $order                = '75',
 ){
@@ -81,6 +85,7 @@ define icinga2::object::user (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($user_name)
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -116,6 +121,7 @@ define icinga2::object::user (
     object_type => 'User',
     template    => $template,
     import      => $import,
+    include     => $include,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => $target,

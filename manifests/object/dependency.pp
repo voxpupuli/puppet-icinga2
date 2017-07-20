@@ -65,6 +65,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -92,6 +95,7 @@ define icinga2::object::dependency (
   $assign                = [],
   $ignore                = [],
   $import                = [],
+  $include               = [],
   $template              = false,
   $order                 = '70',
 ){
@@ -108,6 +112,7 @@ define icinga2::object::dependency (
   validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -141,6 +146,7 @@ define icinga2::object::dependency (
     object_name  => $dependency_name,
     object_type  => 'Dependency',
     import       => $import,
+    include      => $include,
     template     => $template,
     attrs        => delete_undef_values($attrs),
     attrs_list   => keys($attrs),

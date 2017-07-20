@@ -21,6 +21,10 @@
   import "<%= i %>"
 <% end -%>
 <% unless @import.empty? %><%= "\n" %><% end -%>
+<% @include.each do |i| -%>
+  include "<%= i %>"
+<% end -%>
+<% unless @include.empty? %><%= "\n" %><% end -%>
 <% if @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+in\s+.+$/ -%>
 <%= scope.function_icinga2_attributes([@_attrs,2,@attrs_list,{$1=>{}}]) -%>
 <% elsif @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ -%>

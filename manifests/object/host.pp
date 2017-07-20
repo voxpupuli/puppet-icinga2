@@ -11,7 +11,10 @@
 #   Hostname of the Host object.
 #
 # [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
+#   Sorted List of templates to import. Defaults to an empty list.
+#
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 #
 # [*display_name*]
 #   A short description of the host (e.g. displayed by external interfaces instead of the name if set).
@@ -112,6 +115,7 @@ define icinga2::object::host(
   $ensure                = present,
   $host_name             = $title,
   $import                = [],
+  $include               = [],
   $address               = undef,
   $address6              = undef,
   $vars                  = undef,
@@ -151,6 +155,7 @@ define icinga2::object::host(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_integer($order)
@@ -221,6 +226,7 @@ define icinga2::object::host(
     object_type => 'Host',
     template    => $template,
     import      => $import,
+    include     => $include,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => $target,

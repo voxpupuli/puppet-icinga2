@@ -16,6 +16,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to [ "legacy-timeperiod" ].
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*ranges*]
 # 	A dictionary containing information which days and durations apply to this
 #   timeperiod.
@@ -50,6 +53,7 @@ define icinga2::object::timeperiod (
   $includes        = undef,
   $template        = false,
   $import          = ['legacy-timeperiod'],
+  $include         = [],
   $order           = '35',
 ){
   include ::icinga2::params
@@ -61,6 +65,7 @@ define icinga2::object::timeperiod (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($timeperiod_name)
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -88,6 +93,7 @@ define icinga2::object::timeperiod (
     object_type => 'TimePeriod',
     template    => $template,
     import      => $import,
+    include     => $include,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => $target,

@@ -13,6 +13,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*command*]
 #   The command. This can either be an array of individual command arguments.
 #   Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh) takes care of parsing the command.
@@ -44,6 +47,7 @@ define icinga2::object::checkcommand(
   $ensure            = present,
   $checkcommand_name = $title,
   $import            = ['plugin-check-command'],
+  $include           = [],
   $command           = undef,
   $env               = undef,
   $vars              = undef,
@@ -61,6 +65,7 @@ define icinga2::object::checkcommand(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_array($import)
+  validate_array($include)
   validate_absolute_path($target)
   validate_integer($order)
 
@@ -87,6 +92,7 @@ define icinga2::object::checkcommand(
     object_type => 'CheckCommand',
     template    => $template,
     import      => $import,
+    include     => $include,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => $target,

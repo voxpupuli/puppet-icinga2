@@ -1511,6 +1511,9 @@ Title of the CheckCommand object.
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+
 ##### `command`
 The command. This can either be an array of individual command arguments. Alternatively a string can be specified in
 which case the shell interpreter (usually /bin/sh) takes care of parsing the command. When using the `arguments`
@@ -1545,6 +1548,9 @@ Hostname of the Host object.
 
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
+
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 
 ##### `display_name`
 A short description of the host (e.g. displayed by external interfaces instead of the name if set).
@@ -1713,6 +1719,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
 
@@ -1732,6 +1741,9 @@ A short description of the time period.
 
 ##### `import`
 Sorted List of templates to include. Defaults to [ "legacy-timeperiod" ].
+
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 
 ##### `ranges`
 A dictionary containing information which days and durations apply to this timeperiod.
@@ -1783,6 +1795,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
 
@@ -1827,6 +1842,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
 
@@ -1866,6 +1884,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
+
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
@@ -1934,6 +1955,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
+
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
@@ -2052,6 +2076,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
 
@@ -2083,6 +2110,9 @@ Set to true creates a template instead of an object. Defaults to `false`
 
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
+
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 
 ##### `target`
 Destination config file to store in this object. File will be declared the first time.
@@ -2216,6 +2246,9 @@ Destination config file to store in this object. File will be declared the first
 ##### `import`
 Sorted List of templates to include. Defaults to an empty list.
 
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+
 ##### `order`
 String to set the position in the target file, sorted alpha numeric. Defaults to `30`
 
@@ -2299,6 +2332,9 @@ An object type on which to target the apply rule. Valid values are `Host` and `S
 
 ##### `import`
 A sorted list of templates to import in this object. Defaults to an empty array.
+
+##### `include`
+Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
 
 ##### `attrs`
 Hash for the attributes of this object. Keys are the attributes and values are there values. Defaults to an empty Hash.
