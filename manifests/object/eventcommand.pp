@@ -39,6 +39,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*order*]
 #   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
 #
@@ -53,6 +56,7 @@ define icinga2::object::eventcommand (
   $timeout           = undef,
   $arguments         = undef,
   $import            = ['plugin-event-command'],
+  $include           = [],
   $order             = '20',
 ){
   include ::icinga2::params
@@ -66,6 +70,7 @@ define icinga2::object::eventcommand (
   validate_absolute_path($target)
   validate_string($order)
   validate_array($import)
+  validate_array($include)
 
   if !is_array($command) { validate_string($command) }
   if !is_string($command) { validate_array($command) }
@@ -88,6 +93,7 @@ define icinga2::object::eventcommand (
     object_name => $eventcommand_name,
     object_type => 'EventCommand',
     import      => $import,
+    include     => $include,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => $target,

@@ -121,6 +121,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -192,6 +195,7 @@ define icinga2::object::service (
   $assign                 = [],
   $ignore                 = [],
   $import                 = [],
+  $include                = [],
   $template               = false,
   $order                  = '60',
 ) {
@@ -207,6 +211,7 @@ define icinga2::object::service (
   unless is_bool($apply) { validate_string($apply) }
   validate_bool($prefix)
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -274,6 +279,7 @@ define icinga2::object::service (
     object_name  => $service_name,
     object_type  => 'Service',
     import       => $import,
+    include      => $include,
     apply        => $apply,
     prefix       => $prefix,
     apply_target => 'Host',

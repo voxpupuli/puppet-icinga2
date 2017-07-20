@@ -27,6 +27,9 @@
 # [*import*]
 #   A sorted list of templates to import in this object. Defaults to an empty array.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*assign*]
 #   Array of assign rules.
 #
@@ -72,6 +75,7 @@ define icinga2::object(
   $apply_target = undef,
   $prefix       = false,
   $import       = [],
+  $include      = [],
   $assign       = [],
   $ignore       = [],
   $attrs        = {},
@@ -109,6 +113,7 @@ define icinga2::object(
   if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.") }
   validate_array($import)
+  validate_array($include)
   validate_array($assign)
   validate_array($ignore)
   validate_hash($attrs)

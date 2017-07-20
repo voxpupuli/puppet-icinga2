@@ -40,8 +40,24 @@ describe('icinga2::object::host', :type => :define) do
     end
 
 
+    context "#{os} with include => [foo, bar]" do
+      let(:params) { {:include => ['foo','bar'], :target => '/bar/baz', :check_command => 'foocommand'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+        .with({'target' => '/bar/baz'})
+        .with_content(/include "foo"\n\s*include "bar"/) }
+    end
+
+
     context "#{os} with import => foo (not a valid array)" do
       let(:params) { {:import => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    end
+
+
+    context "#{os} with include => foo (not a valid array)" do
+      let(:params) { {:include => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
       it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
     end
@@ -502,8 +518,24 @@ describe('icinga2::object::host', :type => :define) do
   end
 
 
+  context "Windows 2012 R2 with include => [foo, bar]" do
+    let(:params) { {:include => ['foo','bar'], :target => '/bar/baz', :check_command => 'foocommand'} }
+
+    it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
+                            .with({'target' => '/bar/baz'})
+                            .with_content(/include "foo"\r\n\s*include "bar"/) }
+  end
+
+
   context "Windows 2012 R2 with import => foo (not a valid array)" do
     let(:params) { {:import => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
+
+    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+  end
+
+
+  context "Windows 2012 R2 with include => foo (not a valid array)" do
+    let(:params) { {:include => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
     it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
   end

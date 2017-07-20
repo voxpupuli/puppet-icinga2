@@ -70,6 +70,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -100,6 +103,7 @@ define icinga2::object::notification (
   $assign            = [],
   $ignore            = [],
   $import            = [],
+  $include           = [],
   $template          = false,
   $order             = '85',
 ){
@@ -116,6 +120,7 @@ define icinga2::object::notification (
   validate_re($apply_target, ['^Host$', '^Service$'],
     "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -164,6 +169,7 @@ define icinga2::object::notification (
     object_name  => $notification_name,
     object_type  => 'Notification',
     import       => $import,
+    include      => $include,
     template     => $template,
     attrs        => delete_undef_values($attrs),
     attrs_list   => keys($attrs),

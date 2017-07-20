@@ -40,6 +40,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -59,6 +62,7 @@ define icinga2::object::notificationcommand (
   $arguments                = undef,
   $template                 = false,
   $import                   = ['plugin-notification-command'],
+  $include                  = [],
   $order                    = '25',
 ){
   include ::icinga2::params
@@ -70,6 +74,7 @@ define icinga2::object::notificationcommand (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($notificationcommand_name)
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -96,6 +101,7 @@ define icinga2::object::notificationcommand (
     object_type => 'NotificationCommand',
     template    => $template,
     import      => $import,
+    include     => $include,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => $target,

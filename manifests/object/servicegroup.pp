@@ -28,6 +28,9 @@
 # [*import*]
 #   Sorted List of templates to include. Defaults to an empty list.
 #
+# [*include*]
+#   Sorted List of file to include. Each file must be relativ to the target parameter. Defaults to an empty list.
+#
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
 #   first time.
@@ -46,6 +49,7 @@ define icinga2::object::servicegroup (
   $ignore            = [],
   $template          = false,
   $import            = [],
+  $include           = [],
   $order             = '65',
 ){
   include ::icinga2::params
@@ -57,6 +61,7 @@ define icinga2::object::servicegroup (
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($servicegroup_name)
   validate_array($import)
+  validate_array($include)
   validate_bool($template)
   validate_absolute_path($target)
   validate_string($order)
@@ -77,6 +82,7 @@ define icinga2::object::servicegroup (
     object_name => $servicegroup_name,
     object_type => 'ServiceGroup',
     import      => $import,
+    include     => $include,
     template    => $template,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
