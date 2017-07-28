@@ -30,7 +30,7 @@ describe('icinga2::object::apiuser', :type => :define) do
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz', :permissions => ['*']} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -64,7 +64,7 @@ describe('icinga2::object::apiuser', :type => :define) do
     context "#{os} with permissions => foo (not a valid array)" do
       let(:params) { {:permissions => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
     end
   end
 end
@@ -110,7 +110,7 @@ describe('icinga2::object::apiuser', :type => :define) do
   context "Windows 2012 R2  with target => C:bar/baz (not valid absolute path)" do
     let(:params) { {:target => 'C:bar/baz', :permissions => ['*']} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"C:bar\/baz" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -144,6 +144,6 @@ describe('icinga2::object::apiuser', :type => :define) do
   context "Windows 2012 R2  with permissions => foo (not a valid array)" do
     let(:params) { {:permissions => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
   end
 end

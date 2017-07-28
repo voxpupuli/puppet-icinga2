@@ -15,6 +15,11 @@ describe('icinga2::feature', :type => :define) do
     ]
   end
 
+	before(:each) do
+		# Fake assert_private function from stdlib to not fail within this test
+		Puppet::Parser::Functions.newfunction(:assert_private, :type => :rvalue) { |args|
+		}
+	end
 
   on_supported_os.each do |os, facts|
     let :facts do
@@ -28,7 +33,7 @@ describe('icinga2::feature', :type => :define) do
       it do
         expect {
           should contain_icinga2__feature('foo')
-        }.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'present' and 'absent'./)
+        }.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/)
       end
     end
 
@@ -87,6 +92,12 @@ describe('icinga2::feature', :type => :define) do
       }"
     ]
   end
+
+	before(:each) do
+		# Fake assert_private function from stdlib to not fail within this test
+		Puppet::Parser::Functions.newfunction(:assert_private, :type => :rvalue) { |args|
+		}
+	end
 
   context 'Windows 2012 R2 with ensure => present, feature => foo' do
     let(:params) { {:ensure => 'present', 'feature' => 'foo'} }

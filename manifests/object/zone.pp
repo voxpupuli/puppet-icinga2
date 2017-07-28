@@ -29,37 +29,25 @@
 #
 #
 define icinga2::object::zone(
-  $ensure    = present,
-  $zone_name = $title,
-  $endpoints = [],
-  $parent    = undef,
-  $global    = false,
-  $target    = undef,
-  $order     = '45',
+  Enum['absent', 'present']      $ensure    = present,
+  String                         $zone_name = $title,
+  Optional[Array]                $endpoints = [],
+  Optional[String]               $parent    = undef,
+  Optional[Boolean]              $global    = false,
+  Optional[Stdlib::Absolutepath] $target    = undef,
+  Pattern[/^\d+$/]               $order     = '45',
 ) {
 
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
 
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($zone_name)
-  validate_integer($order)
-
-  if $endpoints { validate_array($endpoints) }
-  if $parent { validate_string($parent) }
-  if $global { validate_bool($global) }
-
-  # set defaults and validate
+  # set defaults
   if $target {
-    validate_absolute_path($target)
-    $_target = $target }
-  else {
-    $_target = "${conf_dir}/zones.conf" }
-
-  validate_string($order)
+    $_target = $target
+  } else {
+    $_target = "${conf_dir}/zones.conf"
+  }
 
   # compose the attributes
   if $global {

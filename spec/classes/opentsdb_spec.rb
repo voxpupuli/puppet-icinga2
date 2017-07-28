@@ -52,7 +52,7 @@ describe('icinga2::feature::opentsdb', :type => :class) do
 
 
     context "#{os} with port => 4247" do
-      let(:params) { {:port => '4247'} }
+      let(:params) { {:port => 4247} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
         .with({ 'target' => '/etc/icinga2/features-available/opentsdb.conf' })
@@ -63,7 +63,7 @@ describe('icinga2::feature::opentsdb', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
   end
 end
@@ -133,7 +133,7 @@ describe('icinga2::feature::opentsdb', :type => :class) do
 
 
   context "Windows 2012 R2 with port => 4247" do
-    let(:params) { {:port => '4247'} }
+    let(:params) { {:port => 4247} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::OpenTsdbWriter::opentsdb')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/opentsdb.conf' })
@@ -144,6 +144,6 @@ describe('icinga2::feature::opentsdb', :type => :class) do
   context "Windows 2012 R2 with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 end

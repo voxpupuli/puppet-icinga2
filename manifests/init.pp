@@ -141,39 +141,25 @@
 #   }
 #
 #
-class icinga2(
-  $ensure         = running,
-  $enable         = true,
-  $manage_repo    = false,
-  $manage_package = true,
-  $manage_service = true,
-  $features       = $icinga2::params::default_features,
-  $purge_features = true,
-  $constants      = {},
-  $plugins        = $icinga2::params::plugins,
-  $confd          = true,
-  $repositoryd    = true,
+class icinga2 (
+  Enum['running', 'stopped'] $ensure         = running,
+  Boolean                    $enable         = true,
+  Boolean                    $manage_repo    = false,
+  Boolean                    $manage_package = true,
+  Boolean                    $manage_service = true,
+  Array                      $features       = $icinga2::params::default_features,
+  Boolean                    $purge_features = true,
+  Hash                       $constants      = {},
+  Array                      $plugins        = $icinga2::params::plugins,
+  Variant[Boolean, String]   $confd          = true,
+  Boolean                    $repositoryd    = true,
 ) inherits ::icinga2::params {
 
-  validate_re($ensure, [ '^running$', '^stopped$' ],
-    "${ensure} isn't supported. Valid values are 'running' and 'stopped'.")
-  validate_bool($enable)
-  validate_bool($manage_repo)
-  validate_bool($manage_package)
-  validate_bool($manage_service)
-  validate_array($features)
-  validate_bool($purge_features)
-  validate_hash($constants)
-  validate_array($plugins)
-  validate_bool($repositoryd)
-
   # validate confd, boolean or string
-  if is_bool($confd) {
+  if $confd =~ Boolean {
     if $confd { $_confd = 'conf.d' } else { $_confd = undef }
-  } elsif is_string($confd) {
-    $_confd = $confd
   } else {
-    fail('confd has to be a boolean or string')
+    $_confd = $confd
   }
 
   # merge constants with defaults
@@ -184,7 +170,7 @@ class icinga2(
   ~> Class['::icinga2::service']
 
   anchor { '::icinga2::begin':
-    notify => Class['::icinga2::service']
+    notify => Class['::icinga2::service'],
   }
   -> class { '::icinga2::repo': }
   -> class { '::icinga2::install': }
@@ -193,7 +179,7 @@ class icinga2(
   -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
   ~> class { '::icinga2::service': }
   -> anchor { '::icinga2::end':
-    subscribe => Class['::icinga2::config']
+    subscribe => Class['::icinga2::config'],
   }
 
   include prefix($features, '::icinga2::feature::')

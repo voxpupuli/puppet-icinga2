@@ -96,7 +96,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                       :comment => 'foocomment',
                       :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -133,7 +133,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                       :comment => 'foocomment',
                       :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\(\\\.\\d\+\)\?\[dhms\]\?\$\/\]/) }
     end
 
 
@@ -155,7 +155,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                       :author => 'fooauthor',
                       :comment => 'foocomment'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
   end
 end
@@ -270,7 +270,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -307,7 +307,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\(\\\.\\d\+\)\?\[dhms\]\?\$\/\]/) }
   end
 
 
@@ -329,6 +329,6 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                     :author => 'fooauthor',
                     :comment => 'foocomment'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 end

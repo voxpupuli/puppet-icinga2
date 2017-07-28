@@ -56,7 +56,7 @@ describe('icinga2::feature::graphite', :type => :class) do
 
 
     context "#{os} with port => 4247" do
-      let(:params) { {:port => '4247'} }
+      let(:params) { {:port => 4247} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
         .with({ 'target' => '/etc/icinga2/features-available/graphite.conf' })
@@ -67,7 +67,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
 
 
@@ -110,7 +110,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_thresholds => foo (not a valid boolean)" do
       let(:params) { {:enable_send_thresholds => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
 
@@ -135,7 +135,7 @@ describe('icinga2::feature::graphite', :type => :class) do
     context "#{os} with enable_send_metadata => foo (not a valid boolean)" do
       let(:params) { {:enable_send_metadata => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
   end
 end
@@ -209,7 +209,7 @@ describe('icinga2::feature::graphite', :type => :class) do
 
 
   context "Windows 2012 R2 with port => 4247" do
-    let(:params) { {:port => '4247'} }
+    let(:params) { {:port => 4247} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::GraphiteWriter::graphite')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/graphite.conf' })
@@ -220,7 +220,7 @@ describe('icinga2::feature::graphite', :type => :class) do
   context "Windows 2012 R2 with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 
 
@@ -263,7 +263,7 @@ describe('icinga2::feature::graphite', :type => :class) do
   context "Windows 2012 R2 with enable_send_thresholds => foo (not a valid boolean)" do
     let(:params) { {:enable_send_thresholds => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
 
@@ -288,6 +288,6 @@ describe('icinga2::feature::graphite', :type => :class) do
   context "Windows 2012 R2 with enable_send_metadata => foo (not a valid boolean)" do
     let(:params) { {:enable_send_metadata => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 end

@@ -6,6 +6,12 @@ describe('icinga2::object', :type => :define) do
     "class { 'icinga2': }"
   ] }
 
+	before(:each) do
+		# Fake assert_private function from stdlib to not fail within this test
+		Puppet::Parser::Functions.newfunction(:assert_private, :type => :rvalue) { |args|
+		}
+	end
+
   on_supported_os.each do |os, facts|
     let :facts do
       facts
@@ -37,14 +43,14 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with ensure => foo (not a valid value)" do
       let(:params) { {:ensure => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
     end
 
 
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -67,7 +73,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with template => foo (not a valid boolean)" do
       let(:params) { {:template => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
 
@@ -103,14 +109,14 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with apply => foo (not valid expression or boolean)" do
       let(:params) { {:apply => 'foo', :apply_target => 'Host', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Boolean or Pattern\[\/\^\.\+\\s\+\(=>\\s\+\.\+\\s\+\)\?in\\s\+\.\+\$\/\]/) }
     end
 
 
     context "#{os} with apply_target => 'foo' (not a valid value)" do
       let(:params) { {:apply_target => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['Host', 'Service'\]/) }
     end
 
 
@@ -146,7 +152,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with import => foo (not a valid array)" do
       let(:params) { {:import => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
     end
 
 
@@ -162,7 +168,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with assign => foo (not a valid array)" do
       let(:params) { {:assign => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
     end
 
 
@@ -177,7 +183,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with ignore => foo (not a valid array)" do
       let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
     end
 
 
@@ -287,6 +293,12 @@ describe('icinga2::object', :type => :define) do
       "class { 'icinga2': }"
   ] }
 
+	before(:each) do
+		# Fake assert_private function from stdlib to not fail within this test
+		Puppet::Parser::Functions.newfunction(:assert_private, :type => :rvalue) { |args|
+		}
+	end
+
   context "Windows 2012 R2 with all defaults and object_type => foo, target => C:/bar/baz, order => 10" do
     let(:params) { {:object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
@@ -312,14 +324,14 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with ensure => foo (not a valid value)" do
     let(:params) { {:ensure => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
   end
 
 
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -342,7 +354,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with template => foo (not a valid boolean)" do
     let(:params) { {:template => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
 
@@ -378,14 +390,14 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with apply => foo (not valid expression or boolean)" do
     let(:params) { {:apply => 'foo', :apply_target => 'Host', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Boolean or Pattern\[\/\^\.\+\\s\+\(=>\\s\+\.\+\\s\+\)\?in\\s\+\.\+\$\/\]/) }
   end
 
 
   context "Windows 2012 R2 with apply_target => 'foo' (not a valid value)" do
     let(:params) { {:apply_target => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['Host', 'Service'\]/) }
   end
 
 
@@ -420,7 +432,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with import => foo (not a valid array)" do
     let(:params) { {:import => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
   end
 
 
@@ -436,7 +448,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with assign => foo (not a valid array)" do
     let(:params) { {:assign => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
   end
 
 
@@ -451,7 +463,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with ignore => foo (not a valid array)" do
     let(:params) { {:ignore => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
   end
 
 

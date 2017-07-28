@@ -40,14 +40,14 @@
 #
 #
 class icinga2::feature::perfdata(
-  $ensure                  = present,
-  $host_perfdata_path      = "${::icinga2::params::spool_dir}/perfdata/host-perfdata",
-  $service_perfdata_path   = "${::icinga2::params::spool_dir}/perfdata/service-perfdata",
-  $host_temp_path          = "${::icinga2::params::spool_dir}/tmp/host-perfdata",
-  $service_temp_path       = "${::icinga2::params::spool_dir}/tmp/service-perfdata",
-  $host_format_template    = undef,
-  $service_format_template = undef,
-  $rotation_interval       = '30s',
+  Enum['absent', 'present'] $ensure                  = present,
+  Stdlib::Absolutepath      $host_perfdata_path      = "${::icinga2::params::spool_dir}/perfdata/host-perfdata",
+  Stdlib::Absolutepath      $service_perfdata_path   = "${::icinga2::params::spool_dir}/perfdata/service-perfdata",
+  Stdlib::Absolutepath      $host_temp_path          = "${::icinga2::params::spool_dir}/tmp/host-perfdata",
+  Stdlib::Absolutepath      $service_temp_path       = "${::icinga2::params::spool_dir}/tmp/service-perfdata",
+  Optional[String]          $host_format_template    = undef,
+  Optional[String]          $service_format_template = undef,
+  Pattern[/^\d+[ms]*$/]     $rotation_interval       = '30s',
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -59,20 +59,6 @@ class icinga2::feature::perfdata(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_absolute_path($host_perfdata_path)
-  validate_absolute_path($service_perfdata_path)
-  validate_absolute_path($host_temp_path)
-  validate_absolute_path($service_temp_path)
-  validate_re($rotation_interval, '^\d+[ms]*$')
-  if $host_format_template { validate_string($host_format_template) }
-  if $service_format_template { validate_string($service_format_template) }
-
-  if $host_format_template { validate_string($host_format_template) }
-  if $service_format_template { validate_string($service_format_template) }
 
   # compose attributes
   $attrs = {

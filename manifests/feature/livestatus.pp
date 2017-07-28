@@ -31,12 +31,12 @@
 #
 #
 class icinga2::feature::livestatus(
-  $ensure          = present,
-  $socket_type     = 'unix',
-  $bind_host       = '127.0.0.1',
-  $bind_port       = '6558',
-  $socket_path     = "${::icinga2::params::run_dir}/cmd/livestatus",
-  $compat_log_path = "${::icinga2::params::log_dir}/compat",
+  Enum['absent', 'present'] $ensure          = present,
+  Enum['tcp', 'unix']       $socket_type     = 'unix',
+  String                    $bind_host       = '127.0.0.1',
+  Integer[1,65535]          $bind_port       = 6558,
+  Stdlib::Absolutepath      $socket_path     = "${::icinga2::params::run_dir}/cmd/livestatus",
+  Stdlib::Absolutepath      $compat_log_path = "${::icinga2::params::log_dir}/compat",
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -48,16 +48,6 @@ class icinga2::feature::livestatus(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($socket_type, [ '^unix$', '^tcp$' ],
-    "${socket_type} isn't supported. Valid values are 'unix' and 'tcp'.")
-  validate_string($bind_host)
-  validate_integer($bind_port)
-  validate_absolute_path($socket_path)
-  validate_absolute_path($compat_log_path)
 
   # compose attributes
   $attrs = {

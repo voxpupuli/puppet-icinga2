@@ -13,8 +13,8 @@
 #
 #
 class icinga2::feature::syslog(
-  $ensure   = present,
-  $severity = 'warning',
+  Enum['absent', 'present']                         $ensure   = present,
+  Enum['debug', 'information', 'notice', 'warning'] $severity = 'warning',
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -26,11 +26,6 @@ class icinga2::feature::syslog(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($severity, ['^information$','^notice$','^warning$','^debug$'])
 
   # compose attributes
   $attrs = {

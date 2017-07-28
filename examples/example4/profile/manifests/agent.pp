@@ -1,18 +1,16 @@
 # Notice: this code contains Puppet 4 syntax! It doesn't run on Puppet 3.
 class profile::icinga2::agent(
-  $parent_endpoints,
-  $parent_zone,
-  $agent_ip = $::ipaddress,
+  Hash                       $parent_endpoints,
+  String                     $parent_zone,
+  Stdlib::Compat::Ip_address $agent_ip = $::ipaddress,
 ) {
 
   contain ::profile::icinga2::plugins
 
-  validate_hash($parent_endpoints)
-
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
-    features  => ['mainlog'],
+    features    => ['mainlog'],
   }
 
   # Feature: api
@@ -23,8 +21,8 @@ class profile::icinga2::agent(
       'ZoneName' => {
         'endpoints' => [ 'NodeName' ],
         'parent'    => $parent_zone,
-      }
-    }
+      },
+    },
   }
 
   ::icinga2::object::zone { 'linux-commands':

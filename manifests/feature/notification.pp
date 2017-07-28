@@ -15,8 +15,8 @@
 #
 #
 class icinga2::feature::notification(
-  $ensure    = present,
-  $enable_ha = undef,
+  Enum['absent', 'present'] $ensure    = present,
+  Optional[Boolean]         $enable_ha = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -27,13 +27,6 @@ class icinga2::feature::notification(
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
-  }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  if $enable_ha {
-    validate_bool($enable_ha)
   }
 
   # compose attributes

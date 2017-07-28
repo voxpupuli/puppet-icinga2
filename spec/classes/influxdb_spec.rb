@@ -70,7 +70,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
 
 
@@ -126,7 +126,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with pki => foo (not a valid value)" do
       let(:params) { {:pki => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['none', 'puppet'\]/) }
     end
 
 
@@ -157,7 +157,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -173,7 +173,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -189,7 +189,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -214,7 +214,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with host_tags => 'foo' (not a valid hash)" do
       let(:params) { {:host_tags => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
     end
 
 
@@ -239,7 +239,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with service_tags => 'foo' (not a valid hash)" do
       let(:params) { {:service_tags => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
     end
 
 
@@ -264,7 +264,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_send_thresholds => foo (not a valid boolean)" do
       let(:params) { {:enable_send_thresholds => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
 
@@ -289,7 +289,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_send_metadata => foo (not a valid boolean)" do
       let(:params) { {:enable_send_metadata => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
     context "#{os} with flush_interval => 50s" do
@@ -304,12 +304,12 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with flush_interval => foo (not a valid value)" do
       let(:params) { {:flush_interval => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
     end
 
 
     context "#{os} with flush_threshold => 2048" do
-      let(:params) { {:flush_threshold => '2048'} }
+      let(:params) { {:flush_threshold => 2048} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
                               .with({ 'target' => '/etc/icinga2/features-available/influxdb.conf' })
@@ -320,7 +320,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with flush_threshold => foo (not a valid integer)" do
       let(:params) { {:flush_threshold => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
   end
 end
@@ -409,7 +409,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 
 
@@ -465,7 +465,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with pki => foo (not a valid value)" do
     let(:params) { {:pki => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['none', 'puppet'\]/) }
   end
 
 
@@ -495,7 +495,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -511,7 +511,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -527,7 +527,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -552,7 +552,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with host_tags => 'foo' (not a valid hash)" do
     let(:params) { {:host_tags => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
   end
 
 
@@ -577,7 +577,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with service_tags => 'foo' (not a valid hash)" do
     let(:params) { {:service_tags => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
   end
 
 
@@ -602,7 +602,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_send_thresholds => foo (not a valid boolean)" do
     let(:params) { {:enable_send_thresholds => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
 
@@ -627,7 +627,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_send_metadata => foo (not a valid boolean)" do
     let(:params) { {:enable_send_metadata => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
   context "Windows 2012 R2 with flush_interval => 50s" do
@@ -642,12 +642,12 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with flush_interval => foo (not a valid value)" do
     let(:params) { {:flush_interval => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
   end
 
 
   context "Windows 2012 R2 with flush_threshold => 2048" do
-    let(:params) { {:flush_threshold => '2048'} }
+    let(:params) { {:flush_threshold => 2048} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/influxdb.conf' })
@@ -658,7 +658,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with flush_threshold => foo (not a valid integer)" do
     let(:params) { {:flush_threshold => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 
 end

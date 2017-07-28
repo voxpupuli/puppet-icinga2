@@ -50,7 +50,7 @@ describe('icinga2::object::checkresultreader', :type => :define) do
     context "#{os} with spool_dir = foo/bar (not a valid absolute path)" do
       let(:params) { {:spool_dir => 'foo/bar', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
   end
 end
@@ -119,6 +119,6 @@ describe('icinga2::object::checkresultreader', :type => :define) do
   context "Windows 2012 R2 with spool_dir = foo/bar (not a valid absolute path)" do
     let(:params) { {:spool_dir => 'foo/bar', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 end

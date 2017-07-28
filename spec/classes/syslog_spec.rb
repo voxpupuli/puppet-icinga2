@@ -53,7 +53,7 @@ describe('icinga2::feature::syslog', :type => :class) do
     context "#{os} with severity => foo (not a valid value)" do
       let(:params) { {:severity => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['debug', 'information', 'notice', 'warning'\]/) }
     end
   end
 
@@ -125,6 +125,6 @@ describe('icinga2::feature::syslog', :type => :class) do
   context 'Windows 2012 R2 with severity => foo (not a valid value)' do
     let(:params) { {:severity => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['debug', 'information', 'notice', 'warning'\]/) }
   end
 end

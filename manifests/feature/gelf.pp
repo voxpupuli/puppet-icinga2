@@ -21,11 +21,11 @@
 #
 #
 class icinga2::feature::gelf(
-  $ensure               = present,
-  $host                 = '127.0.0.1',
-  $port                 = '12201',
-  $source               = 'icinga2',
-  $enable_send_perfdata = false,
+  Enum['absent', 'present'] $ensure               = present,
+  String                    $host                 = '127.0.0.1',
+  Integer[1,65535]          $port                 = 12201,
+  String                    $source               = 'icinga2',
+  Boolean                   $enable_send_perfdata = false,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -37,14 +37,6 @@ class icinga2::feature::gelf(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($host)
-  validate_integer($port)
-  validate_string($source)
-  validate_bool($enable_send_perfdata)
 
   # compose attributes
   $attrs = {

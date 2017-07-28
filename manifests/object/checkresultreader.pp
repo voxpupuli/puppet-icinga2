@@ -22,24 +22,12 @@
 #
 #
 define icinga2::object::checkresultreader (
-  $target,
-  $ensure                 = present,
-  $checkresultreader_name = $title,
-  $spool_dir              = undef,
-  $order                  = '10',
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure                 = present,
+  String                         $checkresultreader_name = $title,
+  Optional[Stdlib::Absolutepath] $spool_dir              = undef,
+  Pattern[/^\d+$/]               $order                  = '10',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($checkresultreader_name)
-  validate_absolute_path($target)
-  validate_string($order)
-
-  if $spool_dir { validate_absolute_path($spool_dir) }
 
   # compose the attributes
   $attrs = {

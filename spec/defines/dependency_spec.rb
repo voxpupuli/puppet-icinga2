@@ -109,7 +109,7 @@ describe('icinga2::object::dependency', :type => :define) do
           :parent_host_name => 'parentfoo',
           :child_host_name => 'childfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -133,7 +133,7 @@ describe('icinga2::object::dependency', :type => :define) do
           :parent_host_name => 'parentfoo',
           :child_host_name => 'childfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -157,7 +157,7 @@ describe('icinga2::object::dependency', :type => :define) do
           :parent_host_name => 'parentfoo',
           :child_host_name => 'childfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -194,7 +194,7 @@ describe('icinga2::object::dependency', :type => :define) do
           :parent_host_name => 'parentfoo',
           :child_host_name => 'childfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
   end
 end
@@ -321,7 +321,7 @@ describe('icinga2::object::dependency', :type => :define) do
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -345,7 +345,7 @@ describe('icinga2::object::dependency', :type => :define) do
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -369,7 +369,7 @@ describe('icinga2::object::dependency', :type => :define) do
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -406,6 +406,6 @@ describe('icinga2::object::dependency', :type => :define) do
         :parent_host_name => 'parentfoo',
         :child_host_name => 'childfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 end

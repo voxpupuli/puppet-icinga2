@@ -50,7 +50,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
 
 
     context "#{os} with port => 4247" do
-      let(:params) { {:port => '4247'} }
+      let(:params) { {:port => 4247} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
                               .with({ 'target' => '/etc/icinga2/features-available/ido-pgsql.conf' })
@@ -61,7 +61,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
 
 
@@ -122,7 +122,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with enable_ha => foo (not a valid boolean)" do
       let(:params) { {:enable_ha => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
 
@@ -138,7 +138,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with failover_timeout => foo (not a valid value)" do
       let(:params) { {:failover_timeout => "foo"} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
     end
 
 
@@ -154,7 +154,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with cleanup => 'foo' (not a valid hash)" do
       let(:params) { {:cleanup => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
 
 
@@ -170,7 +170,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with categories => 'foo' (not a valid array)" do
       let(:params) { {:categories => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -191,7 +191,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with import_schema => foo (not a valid boolean)" do
       let(:params) { {:import_schema => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
     context "#{os} with icinga2::manage_package => true" do
@@ -266,7 +266,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
 
 
   context "Windows 2012 R2 with port => 4247" do
-    let(:params) { {:port => '4247'} }
+    let(:params) { {:port => 4247} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/ido-pgsql.conf' })
@@ -277,7 +277,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 
 
@@ -338,7 +338,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with enable_ha => foo (not a valid boolean)" do
     let(:params) { {:enable_ha => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
 
@@ -354,7 +354,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with failover_timeout => foo (not a valid value)" do
     let(:params) { {:failover_timeout => "foo"} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
   end
 
 
@@ -370,7 +370,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with cleanup => 'foo' (not a valid hash)" do
     let(:params) { {:cleanup => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 
 
@@ -386,7 +386,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with categories => 'foo' (not a valid array)" do
     let(:params) { {:categories => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -407,7 +407,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with import_schema => foo (not a valid boolean)" do
     let(:params) { {:import_schema => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
   context "Windows 2012 R2 with icinga2::manage_package => true" do
