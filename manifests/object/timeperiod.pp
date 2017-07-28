@@ -40,37 +40,18 @@
 #
 #
 define icinga2::object::timeperiod (
-  $target,
-  $ensure          = present,
-  $timeperiod_name = $title,
-  $display_name    = undef,
-  $ranges          = undef,
-  $prefer_includes = undef,
-  $excludes        = undef,
-  $includes        = undef,
-  $template        = false,
-  $import          = ['legacy-timeperiod'],
-  $order           = '35',
+  Stdlib::Absolutepath      $target,
+  Enum['absent', 'present'] $ensure          = present,
+  String                    $timeperiod_name = $title,
+  Optional[String]          $display_name    = undef,
+  Optional[Hash]            $ranges          = undef,
+  Optional[Boolean]         $prefer_includes = undef,
+  Optional[Array]           $excludes        = undef,
+  Optional[Array]           $includes        = undef,
+  Boolean                   $template        = false,
+  Array                     $import          = ['legacy-timeperiod'],
+  Pattern[/^\d+$/]          $order           = '35',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($timeperiod_name)
-  validate_array($import)
-  validate_bool($template)
-  validate_absolute_path($target)
-  validate_string($order)
-
-
-  if $display_name { validate_string ($display_name) }
-  if $ranges { validate_hash ($ranges) }
-  if $prefer_includes { validate_bool ($prefer_includes) }
-  if $excludes { validate_array ($excludes) }
-  if $includes { validate_array ($includes) }
 
   # compose attributes
   $attrs = {

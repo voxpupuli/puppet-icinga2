@@ -57,7 +57,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with rotation_interval => foo (not a valid value)" do
       let(:params) { {:rotation_interval => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
     end
 
 
@@ -73,7 +73,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with host_perfdata_path => foo/bar (not an absolute path)" do
       let(:params) { {:host_perfdata_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -89,7 +89,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with service_perfdata_path => foo/bar (not an absolute path)" do
       let(:params) { {:service_perfdata_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -105,7 +105,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with host_temp_path => foo/bar (not an absolute path)" do
       let(:params) { {:host_temp_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -121,7 +121,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
     context "#{os} with service_temp_path => foo/bar (not an absolute path)" do
       let(:params) { {:service_temp_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -215,7 +215,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
   context 'Windows 2012 R2 with rotation_interval => foo (not a valid value)' do
     let(:params) { {:rotation_interval => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
   end
 
 
@@ -231,7 +231,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
   context 'Windows 2012 R2 with host_perfdata_path => foo/bar (not an absolute path)' do
     let(:params) { {:host_perfdata_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -247,7 +247,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
   context 'Windows 2012 R2 with service_perfdata_path => foo/bar (not an absolute path)' do
     let(:params) { {:service_perfdata_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -263,7 +263,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
   context 'Windows 2012 R2 with host_temp_path => foo/bar (not an absolute path)' do
     let(:params) { {:host_temp_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -279,7 +279,7 @@ describe('icinga2::feature::perfdata', :type => :class) do
   context 'Windows 2012 R2 with service_temp_path => foo/bar (not an absolute path)' do
     let(:params) { {:service_temp_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 

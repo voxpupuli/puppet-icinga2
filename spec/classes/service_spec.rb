@@ -29,13 +29,13 @@ describe('icinga2', :type => :class) do
     context "#{os} with ensure => foo (not a valid boolean)" do
       let(:params) { {:ensure => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'running' and 'stopped'./) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['running', 'stopped'\]/) }
     end
 
     context "#{os} with enable => foo (not a valid boolean)" do
       let(:params) { {:enable => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
     context "#{os} with manage_service => true" do
@@ -51,7 +51,7 @@ describe('icinga2', :type => :class) do
     context "#{os} with manage_service => foo (not a valid boolean)" do
       let(:params) { {:manage_service => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
   end
 end
@@ -90,13 +90,13 @@ describe('icinga2', :type => :class) do
   context "windows with ensure => foo (not a valid boolean)" do
     let(:params) { {:ensure => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'running' and 'stopped'./) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['running', 'stopped'\]/) }
   end
 
   context "windows with enable => foo (not a valid boolean)" do
     let(:params) { {:enable => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
   context "windows with manage_service => true" do
@@ -114,6 +114,6 @@ describe('icinga2', :type => :class) do
   context "windows with manage_service => foo (not a valid boolean)" do
     let(:params) { {:manage_service => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 end

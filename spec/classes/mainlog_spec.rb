@@ -58,7 +58,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
     context "#{os} with severity => foo (not a valid value)" do
       let(:params) { {:severity => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['debug', 'information', 'notice', 'warning'\]/) }
     end
 
 
@@ -74,7 +74,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
     context "#{os} with path => foo/bar (not an absolute path)" do
       let(:params) { {:path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
   end
 
@@ -152,7 +152,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
   context 'Windows 2012 R2 with severity => foo (not a valid value)' do
     let(:params) { {:severity => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['debug', 'information', 'notice', 'warning'\]/) }
   end
 
 
@@ -168,6 +168,6 @@ describe('icinga2::feature::mainlog', :type => :class) do
   context 'Windows 2012 R2 with path => foo/bar (not an absolute path)' do
     let(:params) { {:path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 end

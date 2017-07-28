@@ -57,7 +57,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with ranges => 'foo' (not a valid hash)" do
       let(:params) { {:ranges => 'foo', :target => '/bar/baz' } }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
 
 
@@ -73,7 +73,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with prefer_includes => foo (not a valid boolean)" do
       let(:params) { {:prefer_includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -89,7 +89,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with excludes => foo (not a valid array)" do
       let(:params) { {:excludes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -105,7 +105,7 @@ describe('icinga2::object::timeperiod', :type => :define) do
     context "#{os} with includes => foo (not a valid array)" do
       let(:params) { {:includes => 'foo', :target => '/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
   end
 end
@@ -179,7 +179,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   context "Windows 2012 R2 with ranges => 'foo' (not a valid hash)" do
     let(:params) { {:ranges => 'foo', :target => 'C:/bar/baz' } }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 
 
@@ -195,7 +195,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   context "Windows 2012 R2 with prefer_includes => foo (not a valid boolean)" do
     let(:params) { {:prefer_includes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -211,7 +211,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   context "Windows 2012 R2 with excludes => foo (not a valid array)" do
     let(:params) { {:excludes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -227,7 +227,7 @@ describe('icinga2::object::TimePeriod', :type => :define) do
   context "Windows 2012 R2 with includes => foo (not a valid array)" do
     let(:params) { {:includes => 'foo', :target => 'C:/bar/baz', :ranges => { 'foo' => "bar", 'bar' => "foo"} }}
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 end
 

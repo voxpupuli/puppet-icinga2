@@ -44,12 +44,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
     context "#{os} with env => foo (not a valid hash)" do
       let(:params) { {:env => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
 
 
     context "#{os} with timeout => 30" do
-      let(:params) { {:timeout => '30', :target => '/bar/baz', :command => ['foocommand']} }
+      let(:params) { {:timeout => 30, :target => '/bar/baz', :command => ['foocommand']} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
         .with({'target' => '/bar/baz'})
@@ -60,7 +60,7 @@ describe('icinga2::object::checkcommand', :type => :define) do
     context "#{os} with timeout => foo (not a valid integer)" do
       let(:params) { {:timeout => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
      end
 
 
@@ -76,7 +76,7 @@ describe('icinga2::object::checkcommand', :type => :define) do
     context "#{os} with arguments => foo (not a valid hash)" do
       let(:params) { {:arguments => 'foo', :target => '/bar/baz', :command => ['foocommand']} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
   end
 end
@@ -137,12 +137,12 @@ describe('icinga2::object::checkcommand', :type => :define) do
   context "Windows 2012 R2 with env => foo (not a valid hash)" do
     let(:params) { {:env => 'foo', :target => 'C:/bar/baz', :command => ['foocommand']} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 
 
   context "Windows 2012 R2 with timeout => 30" do
-    let(:params) { {:timeout => '30', :target => 'C:/bar/baz', :command => ['foocommand']} }
+    let(:params) { {:timeout => 30, :target => 'C:/bar/baz', :command => ['foocommand']} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::CheckCommand::bar')
       .with({'target' => 'C:/bar/baz'})
@@ -153,7 +153,7 @@ describe('icinga2::object::checkcommand', :type => :define) do
   context "Windows 2012 R2 with timeout => foo (not a valid integer)" do
     let(:params) { {:timeout => 'foo', :target => 'C:/bar/baz', :command => ['foocommand']} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 
 
@@ -169,6 +169,6 @@ describe('icinga2::object::checkcommand', :type => :define) do
   context "Windows 2012 R2 with arguments => foo (not a valid hash)" do
     let(:params) { {:arguments => 'foo', :target => 'C:/bar/baz', :command => ['foocommand']} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 end

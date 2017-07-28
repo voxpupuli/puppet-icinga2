@@ -22,7 +22,7 @@ describe('icinga2', :type => :class) do
 
     context "#{os} with constants => foo (not a valid hash)" do
       let(:params) { {:constants => 'foo'} }
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
     end
 
 

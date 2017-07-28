@@ -110,7 +110,7 @@ describe('icinga2::object::notification', :type => :define) do
     context "#{os} with times => 'foo' (not a valid hash)" do
       let(:params) { {:times => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
 
 
@@ -144,7 +144,7 @@ describe('icinga2::object::notification', :type => :define) do
     context "#{os} with interval => foo (not a valid integer)" do
       let(:params) { {:interval => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
 
 
@@ -315,7 +315,7 @@ describe('icinga2::object::notification', :type => :define) do
   context "Windows 2012 R2 with times => 'foo' (not a valid hash)" do
     let(:params) { {:times => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 
 
@@ -349,7 +349,7 @@ describe('icinga2::object::notification', :type => :define) do
   context "Windows 2012 R2 with interval => foo (not a valid integer)" do
     let(:params) { {:interval => 'foo', :target => '/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 
 

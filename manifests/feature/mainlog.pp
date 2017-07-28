@@ -16,9 +16,9 @@
 #
 #
 class icinga2::feature::mainlog(
-  $ensure   = present,
-  $severity = 'information',
-  $path     = "${::icinga2::params::log_dir}/icinga2.log",
+  Enum['absent', 'present']                         $ensure   = present,
+  Enum['debug', 'information', 'notice', 'warning'] $severity = 'information',
+  Stdlib::Absolutepath                              $path     = "${::icinga2::params::log_dir}/icinga2.log",
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -30,12 +30,6 @@ class icinga2::feature::mainlog(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($severity, ['^information$','^notice$','^warning$','^debug$'])
-  validate_absolute_path($path)
 
   # compose attributes
   $attrs = {

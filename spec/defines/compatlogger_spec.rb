@@ -51,7 +51,7 @@ describe('icinga2::object::compatlogger', :type => :define) do
     context "#{os} with log_dir = foo/bar (not a valid absolute path)" do
       let(:params) { {:log_dir => 'foo/bar', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -66,7 +66,7 @@ describe('icinga2::object::compatlogger', :type => :define) do
     context "#{os} with rotation_method = 'foo' (not a valid absolute path)" do
       let(:params) { {:rotation_method => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    	it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY'\]/) }
     end
   end
 end
@@ -135,7 +135,7 @@ describe('icinga2::object::compatlogger', :type => :define) do
   context "Windows 2012 R2 with log_dir = foo/bar (not a valid absolute path)" do
     let(:params) { {:log_dir => 'foo/bar', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -150,6 +150,6 @@ describe('icinga2::object::compatlogger', :type => :define) do
   context "Windows 2012 R2 with rotation_method = 'foo' (not a valid absolute path)" do
     let(:params) { {:rotation_method => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY'\]/) }
   end
 end

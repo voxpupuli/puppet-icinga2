@@ -122,31 +122,31 @@
 #
 #
 class icinga2::feature::idomysql(
-  $ensure                 = present,
-  $host                   = '127.0.0.1',
-  $port                   = 3306,
-  $socket_path            = undef,
-  $user                   = 'icinga',
-  $password               = 'icinga',
-  $database               = 'icinga',
-  $enable_ssl             = false,
-  $pki                    = 'puppet',
-  $ssl_key_path           = undef,
-  $ssl_cert_path          = undef,
-  $ssl_cacert_path        = undef,
-  $ssl_key                = undef,
-  $ssl_cert               = undef,
-  $ssl_cacert             = undef,
-  $ssl_capath             = undef,
-  $ssl_cipher             = undef,
-  $table_prefix           = 'icinga_',
-  $instance_name          = 'default',
-  $instance_description   = undef,
-  $enable_ha              = true,
-  $failover_timeout       = '60s',
-  $cleanup                = undef,
-  $categories             = undef,
-  $import_schema          = false,
+  Enum['absent', 'present']      $ensure                 = present,
+  String                         $host                   = '127.0.0.1',
+  Integer[1,65535]               $port                   = 3306,
+  Optional[Stdlib::Absolutepath] $socket_path            = undef,
+  String                         $user                   = 'icinga',
+  String                         $password               = 'icinga',
+  String                         $database               = 'icinga',
+  Boolean                        $enable_ssl             = false,
+  Enum['none', 'puppet']         $pki                    = 'puppet',
+  Optional[Stdlib::Absolutepath] $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path        = undef,
+  Optional[String]               $ssl_key                = undef,
+  Optional[String]               $ssl_cert               = undef,
+  Optional[String]               $ssl_cacert             = undef,
+  Optional[Stdlib::Absolutepath] $ssl_capath             = undef,
+  Optional[String]               $ssl_cipher             = undef,
+  String                         $table_prefix           = 'icinga_',
+  String                         $instance_name          = 'default',
+  Optional[String]               $instance_description   = undef,
+  Boolean                        $enable_ha              = true,
+  Pattern[/^\d+[ms]*$/]          $failover_timeout       = '60s',
+  Optional[Hash]                 $cleanup                = undef,
+  Optional[Array]                $categories             = undef,
+  Boolean                        $import_schema          = false,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -175,41 +175,16 @@ class icinga2::feature::idomysql(
     group   => $group,
   }
 
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($host)
-  validate_integer($port)
-  if $socket_path { validate_absolute_path($socket_path) }
-  validate_string($user)
-  validate_string($password)
-  validate_string($database)
-  validate_bool($enable_ssl)
-  validate_re($pki, [ '^puppet$', '^none$' ],
-    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
-  validate_string($table_prefix)
-  validate_string($instance_name)
-  if $instance_description { validate_string($instance_description) }
-  validate_bool($enable_ha)
-  validate_re($failover_timeout, '^\d+[ms]*$')
-  if $cleanup { validate_hash($cleanup) }
-  if $categories { validate_array($categories) }
-  validate_bool($import_schema)
-  if $ssl_capath { validate_absolute_path($ssl_capath) }
-  if $ssl_cipher { validate_string($ssl_cipher) }
-
-  # Set defaults for certificate stuff and/or do validation
+  # Set defaults for certificate stuff
   if $ssl_key_path {
-    validate_absolute_path($ssl_key_path)
-    $_ssl_key_path = $ssl_key_path }
+    $_ssl_key_path = $ssl_key_path}
   else {
     $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
   if $ssl_cert_path {
-    validate_absolute_path($ssl_cert_path)
     $_ssl_cert_path = $ssl_cert_path }
   else {
     $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
   if $ssl_cacert_path {
-    validate_absolute_path($ssl_cacert_path)
     $_ssl_cacert_path = $ssl_cacert_path }
   else {
     $_ssl_cacert_path = "${ssl_dir}/ca.crt" }

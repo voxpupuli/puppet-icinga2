@@ -22,29 +22,13 @@
 #
 #
 define icinga2::object::compatlogger (
-  $target,
-  $ensure            = present,
-  $compatlogger_name = $title,
-  $log_dir           = undef,
-  $rotation_method   = undef,
-  $order             = '5',
+  Stdlib::Absolutepath                                   $target,
+  Enum['absent', 'present']                              $ensure            = present,
+  String                                                 $compatlogger_name = $title,
+  Optional[Stdlib::Absolutepath]                         $log_dir           = undef,
+  Optional[Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY']] $rotation_method   = undef,
+  Pattern[/^\d+$/]                                       $order             = '5',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($compatlogger_name)
-  validate_absolute_path($target)
-  validate_string($order)
-
-  if $log_dir { validate_absolute_path($log_dir) }
-  if $rotation_method {
-    validate_re($rotation_method, [ '^HOURLY$', '^DAILY$', '^WEEKLY$', '^MONTHLY$' ],
-      "${rotation_method} isn't supported. Valid values are 'HOURLY', 'DAILY', 'WEEKLY' and 'MONTHLY'.")
-  }
 
   # compose the attributes
   $attrs = {

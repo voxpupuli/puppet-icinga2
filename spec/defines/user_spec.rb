@@ -85,7 +85,7 @@ describe('icinga2::object::user', :type => :define) do
     context "#{os} with groups => foo (not a valid array)" do
       let(:params) { {:groups => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -101,7 +101,7 @@ describe('icinga2::object::user', :type => :define) do
     context "#{os} with enable_notifications => foo (not a valid boolean)" do
       let(:params) { {:enable_notifications => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -126,7 +126,7 @@ describe('icinga2::object::user', :type => :define) do
     context "#{os} with types => foo (not a valid array)" do
       let(:params) { {:types => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -142,7 +142,7 @@ describe('icinga2::object::user', :type => :define) do
     context "#{os} with states => foo (not a valid array)" do
       let(:params) { {:states => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
   end
 end
@@ -244,7 +244,7 @@ describe('icinga2::object::user', :type => :define) do
   context "Windows 2012 R2 with groups => foo (not a valid array)" do
     let(:params) { {:groups => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -260,7 +260,7 @@ describe('icinga2::object::user', :type => :define) do
   context "Windows 2012 R2 with enable_notifications => foo (not a valid boolean)" do
     let(:params) { {:enable_notifications => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -285,7 +285,7 @@ describe('icinga2::object::user', :type => :define) do
   context "Windows 2012 R2 with types => foo (not a valid array)" do
     let(:params) { {:types => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -301,7 +301,7 @@ describe('icinga2::object::user', :type => :define) do
   context "Windows 2012 R2 with states => foo (not a valid array)" do
     let(:params) { {:states => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 end

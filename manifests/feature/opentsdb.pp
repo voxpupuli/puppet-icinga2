@@ -15,9 +15,9 @@
 #
 #
 class icinga2::feature::opentsdb(
-  $ensure               = present,
-  $host                 = '127.0.0.1',
-  $port                 = '4242',
+  Enum['absent', 'present'] $ensure               = present,
+  String                    $host                 = '127.0.0.1',
+  Integer[1,65535]          $port                 = 4242,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -29,12 +29,6 @@ class icinga2::feature::opentsdb(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($host)
-  validate_integer($port)
 
   # compose attributes
   $attrs = {

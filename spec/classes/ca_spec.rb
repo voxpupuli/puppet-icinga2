@@ -41,7 +41,7 @@ describe('icinga2::pki::ca', :type => :class) do
     context "#{os} with ssl_key_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:ssl_key_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -55,7 +55,7 @@ describe('icinga2::pki::ca', :type => :class) do
     context "#{os} with ssl_cert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:ssl_cert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -69,7 +69,7 @@ describe('icinga2::pki::ca', :type => :class) do
     context "#{os} with ssl_csr_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:ssl_csr_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -83,7 +83,7 @@ describe('icinga2::pki::ca', :type => :class) do
     context "#{os} with ssl_cacert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:ssl_cacert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
   end
 end
@@ -142,7 +142,7 @@ describe('icinga2::pki::ca', :type => :class) do
   context "Windows 2012 R2 with ssl_key_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:ssl_key_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -156,7 +156,7 @@ describe('icinga2::pki::ca', :type => :class) do
   context "Windows 2012 R2 with ssl_cert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:ssl_cert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -170,7 +170,7 @@ describe('icinga2::pki::ca', :type => :class) do
   context "Windows 2012 R2 with ssl_csr_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:ssl_csr_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -184,7 +184,7 @@ describe('icinga2::pki::ca', :type => :class) do
   context "Windows 2012 R2 with ssl_cacert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:ssl_cacert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 

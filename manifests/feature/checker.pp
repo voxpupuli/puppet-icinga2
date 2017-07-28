@@ -12,8 +12,8 @@
 #
 #
 class icinga2::feature::checker(
-  $ensure            = present,
-  $concurrent_checks = undef,
+  Enum['absent', 'present'] $ensure            = present,
+  Optional[Integer[1]]      $concurrent_checks = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -25,12 +25,6 @@ class icinga2::feature::checker(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-
-  if $concurrent_checks { validate_integer($concurrent_checks) }
 
   # compose attributes
   $attrs = {

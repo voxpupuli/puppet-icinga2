@@ -35,14 +35,14 @@ describe('icinga2::object::zone', :type => :define) do
     context "#{os} with ensure => foo (not a valid value)" do
       let(:params) { {:ensure => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
     end
 
 
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -57,7 +57,7 @@ describe('icinga2::object::zone', :type => :define) do
     context "#{os} with endpoints => foo (not a valid array)" do
       let(:params) { {:endpoints => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -80,7 +80,7 @@ describe('icinga2::object::zone', :type => :define) do
     context "#{os} with global => foo (not a valid boolean)" do
       let(:params) { {:global => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
   end
 end
@@ -131,14 +131,14 @@ describe('icinga2::object::zone', :type => :define) do
   context "Windows 2012 R2 with ensure => foo (not a valid value)" do
     let(:params) { {:ensure => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
   end
 
 
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:target => 'bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -153,7 +153,7 @@ describe('icinga2::object::zone', :type => :define) do
   context "Windows 2012 R2 with endpoints => foo (not a valid array)" do
     let(:params) { {:endpoints => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -176,6 +176,6 @@ describe('icinga2::object::zone', :type => :define) do
   context "ws 2012 R2 with global => foo (not a valid boolean)" do
     let(:params) { {:global => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 end

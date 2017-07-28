@@ -27,7 +27,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -43,7 +43,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with import => foo (not a valid array)" do
       let(:params) { {:import => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
     end
 
 
@@ -86,7 +86,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with groups => foo (not a valid array)" do
       let(:params) { {:groups => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -113,7 +113,7 @@ describe('icinga2::object::host', :type => :define) do
 
 
     context "#{os} with max_check_attempts => 3" do
-      let(:params) { {:max_check_attempts => '3', :target => '/bar/baz', :check_command => 'foocommand'} }
+      let(:params) { {:max_check_attempts => 3, :target => '/bar/baz', :check_command => 'foocommand'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
         .with({'target' => '/bar/baz'})
@@ -124,7 +124,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with max_check_attempts => foo (not a valid integer)" do
       let(:params) { {:max_check_attempts => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
     end
 
 
@@ -149,7 +149,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with check_timeout => foo (not a valid value)" do
       let(:params) { {:check_timeout => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
 
 
@@ -165,7 +165,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with check_interval => foo (not a valid value)" do
       let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
 
 
@@ -181,7 +181,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with retry_interval => foo (not a valid value)" do
       let(:params) { {:retry_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
 
 
@@ -206,7 +206,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with enable_notifications => foo (not a valid boolean)" do
       let(:params) { {:enable_notifications => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -231,7 +231,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with enable_active_checks => foo (not a valid boolean)" do
       let(:params) { {:enable_active_checks => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -256,7 +256,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with enable_passive_checks => foo (not a valid boolean)" do
       let(:params) { {:enable_passive_checks => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -281,7 +281,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with enable_event_handler => foo (not a valid boolean)" do
       let(:params) { {:enable_event_handler => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -306,7 +306,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with enable_flapping => foo (not a valid boolean)" do
       let(:params) { {:enable_flapping => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -331,7 +331,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with enable_perfdata => foo (not a valid boolean)" do
       let(:params) { {:enable_perfdata => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -345,7 +345,7 @@ describe('icinga2::object::host', :type => :define) do
 
 
     context "#{os} with flapping_threshold => 30" do
-      let(:params) { {:flapping_threshold => '30', :target => '/bar/baz', :check_command => 'foocommand'} }
+      let(:params) { {:flapping_threshold => 30, :target => '/bar/baz', :check_command => 'foocommand'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
         .with({'target' => '/bar/baz'})
@@ -356,7 +356,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with flapping_threshold => foo (not a valid integer)" do
       let(:params) { {:flapping_threshold => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
     end
 
 
@@ -372,7 +372,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with volatile => foo (not a valid boolean)" do
       let(:params) { {:volatile => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -433,7 +433,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with icon_image => foo/foobar (not valid absolute path)" do
       let(:params) { {:icon_image => 'foo/foobar', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/foobar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -489,7 +489,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:target => 'bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -505,7 +505,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with import => foo (not a valid array)" do
     let(:params) { {:import => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Array value/) }
   end
 
 
@@ -548,7 +548,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with groups => foo (not a valid array)" do
     let(:params) { {:groups => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -575,7 +575,7 @@ describe('icinga2::object::host', :type => :define) do
 
 
   context "Windows 2012 R2 with max_check_attempts => 3" do
-    let(:params) { {:max_check_attempts => '3', :target => '/bar/baz', :check_command => 'foocommand'} }
+    let(:params) { {:max_check_attempts => 3, :target => '/bar/baz', :check_command => 'foocommand'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
                             .with({'target' => '/bar/baz'})
@@ -586,7 +586,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with max_check_attempts => foo (not a valid integer)" do
     let(:params) { {:max_check_attempts => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 
 
@@ -611,7 +611,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with check_timeout => foo (not a valid value)" do
     let(:params) { {:check_timeout => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 
 
@@ -627,7 +627,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with check_interval => foo (not a valid value)" do
     let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 
 
@@ -643,7 +643,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with retry_interval => foo (not a valid value)" do
     let(:params) { {:retry_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 
 
@@ -668,7 +668,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with enable_notifications => foo (not a valid boolean)" do
     let(:params) { {:enable_notifications => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -693,7 +693,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with enable_active_checks => foo (not a valid boolean)" do
     let(:params) { {:enable_active_checks => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -718,7 +718,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with enable_passive_checks => foo (not a valid boolean)" do
     let(:params) { {:enable_passive_checks => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -743,7 +743,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with enable_event_handler => foo (not a valid boolean)" do
     let(:params) { {:enable_event_handler => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -768,7 +768,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with enable_flapping => foo (not a valid boolean)" do
     let(:params) { {:enable_flapping => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -793,7 +793,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with enable_perfdata => foo (not a valid boolean)" do
     let(:params) { {:enable_perfdata => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -807,7 +807,7 @@ describe('icinga2::object::host', :type => :define) do
 
 
   context "Windows 2012 R2 with flapping_threshold => 30" do
-    let(:params) { {:flapping_threshold => '30', :target => '/bar/baz', :check_command => 'foocommand'} }
+    let(:params) { {:flapping_threshold => 30, :target => '/bar/baz', :check_command => 'foocommand'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Host::bar')
                             .with({'target' => '/bar/baz'})
@@ -818,7 +818,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with flapping_threshold => foo (not a valid integer)" do
     let(:params) { {:flapping_threshold => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 
 
@@ -834,7 +834,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with volatile => foo (not a valid boolean)" do
     let(:params) { {:volatile => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -895,7 +895,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with icon_image => foo/foobar (not valid absolute path)" do
     let(:params) { {:icon_image => 'foo/foobar', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/foobar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 

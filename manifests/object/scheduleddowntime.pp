@@ -56,45 +56,23 @@
 #
 #
 define icinga2::object::scheduleddowntime (
-  $target,
-  $ensure                 = present,
-  $scheduleddowntime_name = $title,
-  $host_name              = undef,
-  $service_name           = undef,
-  $author                 = undef,
-  $comment                = undef,
-  $fixed                  = undef,
-  $duration               = undef,
-  $ranges                 = undef,
-  $apply                  = false,
-  $prefix                 = false,
-  $apply_target           = 'Host',
-  $assign                 = [],
-  $ignore                 = [],
-  $order                  = '90',
+  Stdlib::Absolutepath                      $target,
+  Enum['absent', 'present']                 $ensure                 = present,
+  String                                    $scheduleddowntime_name = $title,
+  Optional[String]                          $host_name              = undef,
+  Optional[String]                          $service_name           = undef,
+  Optional[String]                          $author                 = undef,
+  Optional[String]                          $comment                = undef,
+  Optional[Boolean]                         $fixed                  = undef,
+  Optional[Pattern[/^\d+(\.\d+)?[dhms]?$/]] $duration               = undef,
+  Optional[Hash]                            $ranges                 = undef,
+  Variant[Boolean, String]                  $apply                  = false,
+  Boolean                                   $prefix                 = false,
+  Enum['Host', 'Service']                   $apply_target           = 'Host',
+  Array                                     $assign                 = [],
+  Array                                     $ignore                 = [],
+  Pattern[/^\d+$/]                          $order                  = '90',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($scheduleddowntime_name)
-  unless is_bool($apply) { validate_string($apply) }
-  validate_bool($prefix)
-  validate_re($apply_target, ['^Host$', '^Service$'],
-    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
-  validate_absolute_path($target)
-  validate_string($order)
-
-  if $host_name { validate_string($host_name) }
-  if $service_name { validate_string ($service_name) }
-  if $author { validate_string($author) }
-  if $comment { validate_string($comment) }
-  if $fixed { validate_bool($fixed) }
-  if $duration { validate_re($duration, '^\d+(\.\d+)?[dhms]?$') }
-  if $ranges { validate_hash($ranges) }
 
   # compose attributes
   $attrs = {

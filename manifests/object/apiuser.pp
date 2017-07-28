@@ -46,27 +46,14 @@
 #
 #
 define icinga2::object::apiuser(
-  $target,
-  $permissions,
-  $ensure       = present,
-  $apiuser_name = $title,
-  $password     = undef,
-  $client_cn    = undef,
-  $order        = '30',
+  Stdlib::Absolutepath      $target,
+  Array                     $permissions,
+  Enum['absent', 'present'] $ensure       = present,
+  String                    $apiuser_name = $title,
+  Optional[String]          $password     = undef,
+  Optional[String]          $client_cn    = undef,
+  Pattern[/^\d+$/]          $order        = '30',
 ) {
-
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_string($apiuser_name)
-  validate_string($order)
-  validate_absolute_path($target)
-  validate_array($permissions)
-
-  if $password { validate_string($password) }
-  if $client_cn { validate_string($client_cn) }
 
   # compose the attributes
   $attrs = {

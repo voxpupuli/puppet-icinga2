@@ -77,7 +77,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
     context "#{os} with vars => { foo => 'bar', bar => 'foo' }" do
@@ -103,7 +103,7 @@ describe('icinga2::object::service', :type => :define) do
 
 
     context "#{os} with max_check_attempts => 30" do
-      let(:params) { {:max_check_attempts => '30', :target => '/bar/baz',
+      let(:params) { {:max_check_attempts => 30, :target => '/bar/baz',
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
@@ -118,7 +118,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
     end
 
 
@@ -145,7 +145,7 @@ describe('icinga2::object::service', :type => :define) do
     context "#{os} with check_interval => foo (not a valid value)" do
       let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
 
 
@@ -165,7 +165,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
 
 
@@ -185,7 +185,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -205,7 +205,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -225,7 +225,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -245,7 +245,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -265,7 +265,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -285,7 +285,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -301,7 +301,7 @@ describe('icinga2::object::service', :type => :define) do
 
 
     context "#{os} with flapping_threshold => 30" do
-      let(:params) { {:flapping_threshold => '30', :target => '/bar/baz',
+      let(:params) { {:flapping_threshold => 30, :target => '/bar/baz',
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
@@ -316,7 +316,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
     end
 
 
@@ -336,7 +336,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
 
 
@@ -411,7 +411,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -516,7 +516,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
   context "Windows 2012 R2 with vars => { foo => 'bar', bar => 'foo' }" do
@@ -542,7 +542,7 @@ describe('icinga2::object::service', :type => :define) do
 
 
   context "Windows 2012 R2 with max_check_attempts => 30" do
-    let(:params) { {:max_check_attempts => '30', :target => 'C:/bar/baz',
+    let(:params) { {:max_check_attempts => 30, :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
@@ -557,7 +557,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 
 
@@ -583,7 +583,7 @@ describe('icinga2::object::service', :type => :define) do
   context "Windows 2012 R2 with check_interval => foo (not a valid value)" do
     let(:params) { {:check_interval => 'foo', :target => 'C:/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 
 
@@ -603,7 +603,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 
 
@@ -623,7 +623,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -643,7 +643,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -663,7 +663,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -683,7 +683,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -703,7 +703,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -723,7 +723,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -739,7 +739,7 @@ describe('icinga2::object::service', :type => :define) do
 
 
   context "Windows 2012 R2 with flapping_threshold => 30" do
-    let(:params) { {:flapping_threshold => '30', :target => 'C:/bar/baz',
+    let(:params) { {:flapping_threshold => 30, :target => 'C:/bar/baz',
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
@@ -754,7 +754,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 
 
@@ -774,7 +774,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 
 
@@ -848,7 +848,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
