@@ -13,6 +13,9 @@ before_install:
   - bundle -v
 script:
   - 'bundle exec rake $CHECK'
+env:
+  global:
+    - PARALLEL_TEST_PROCESSORS=16
 matrix:
   fast_finish: true
   include:
