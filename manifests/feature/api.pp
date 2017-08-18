@@ -43,15 +43,15 @@
 #
 # [*ssl_key*]
 #   The private key in a base64 encoded string to store in pki directory, file is stored to
-#   path spicified in ssl_key_path. This parameter requires pki to be set to 'none'.
+#   path specified in ssl_key_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cert*]
 #   The certificate in a base64 encoded string to store in pki directory, file is  stored to
-#   path spicified in ssl_cert_path. This parameter requires pki to be set to 'none'.
+#   path specified in ssl_cert_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cacert*]
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
-#   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
+#   to path specified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*accept_config*]
 #   Accept zone configuration. Defaults to false.
