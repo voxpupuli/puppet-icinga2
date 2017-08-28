@@ -2,9 +2,18 @@ require 'spec_helper'
 
 describe('icinga2::feature', :type => :define) do
   let(:title) { 'bar' }
-  let(:pre_condition) { [
-    "class { 'icinga2': features => [], }"
-  ] }
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], }",
+      # config file will be created by any feature class
+      "icinga2::object { 'icinga2::feature::foo':
+        object_name => 'foo',
+        object_type => 'FooComponent',
+        target      => '/etc/icinga2/features-available/foo.conf',
+        order       => '10',
+      }"
+    ]
+  end
 
 
   on_supported_os.each do |os, facts|
@@ -66,9 +75,18 @@ describe('icinga2::feature', :type => :define) do
                C:\ProgramData\chocolatey\bin;',
   } }
   let(:title) { 'bar' }
-  let(:pre_condition) { [
-      "class { 'icinga2': features => [], }"
-  ] }
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], }",
+      # config file will be created by any feature class
+      "icinga2::object { 'icinga2::feature::foo':
+        object_name => 'foo',
+        object_type => 'FooComponent',
+        target      => 'C:/ProgramData/icinga2/etc/icinga2/features-available/foo.conf',
+        order       => '10',
+      }"
+    ]
+  end
 
   context 'Windows 2012 R2 with ensure => present, feature => foo' do
     let(:params) { {:ensure => 'present', 'feature' => 'foo'} }
