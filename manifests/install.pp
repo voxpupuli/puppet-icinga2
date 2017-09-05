@@ -32,8 +32,8 @@ class icinga2::install {
   }
 
   file { $pki_dir:
-    ensure  => directory,
-    owner   => $user,
-    group   => $group,
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
   }
 }
