@@ -169,6 +169,8 @@ class icinga2::feature::api(
   # pki directory must exists and icinga binary is required for icinga2 pki
   require ::icinga2::install
 
+  $icinga2_bin   = $::icinga2::params::icinga2_bin
+  $bin_dir       = $::icinga2::params::bin_dir
   $conf_dir      = $::icinga2::params::conf_dir
   $pki_dir       = $::icinga2::params::pki_dir
   $ca_dir        = $::icinga2::params::ca_dir
@@ -187,11 +189,6 @@ class icinga2::feature::api(
   File {
     owner => $user,
     group => $group,
-  }
-
-  Exec {
-    user => 'root',
-    path => $::path,
   }
 
   # validation
@@ -314,43 +311,31 @@ class icinga2::feature::api(
       $ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
-      exec { 'icinga2 pki create key':
-        command => "icinga2 pki new-cert --cn '${node_name}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}'",
-        creates => $_ssl_key_path,
+      Exec {
+        path => $bin_dir,
         notify  => Class['::icinga2::service'],
       }
 
-      -> file {
-        $_ssl_key_path:
-          mode => '0600';
-        $_ssl_cert_path:
+      exec { 'icinga2 pki create key':
+        command => "${icinga2_bin} pki new-cert --cn ${node_name} --key ${_ssl_key_path} --cert ${_ssl_cert_path}",
+        creates => $_ssl_key_path,
       }
 
       -> exec { 'icinga2 pki get trusted-cert':
-        command => "icinga2 pki save-cert --host '${ca_host}' --port ${ca_port} --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}'",
+        command => "${icinga2_bin} pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}",
         creates => $trusted_cert,
-        notify  => Class['::icinga2::service'],
-      }
-
-      -> file { $trusted_cert:
-        ensure => file,
       }
 
       -> exec { 'icinga2 pki request':
-        command => "icinga2 pki request --host '${ca_host}' --port ${ca_port} --ca '${_ssl_cacert_path}' --key '${_ssl_key_path}' --cert '${_ssl_cert_path}' --trustedcert '${trusted_cert}' --ticket '${ticket_id}'",
+        command => "${icinga2_bin} pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${ticket_id}",
         creates => $_ssl_cacert_path,
-        notify  => Class['::icinga2::service'],
-      }
-
-      -> file { $_ssl_cacert_path:
-        ensure => file,
       }
     } # icinga2
 
     'ca': {
       class { '::icinga2::pki::ca': }
 
-      notice('This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead')
+      warning('This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead')
     } # ca
   } # case pki
 

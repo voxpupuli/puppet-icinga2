@@ -83,6 +83,8 @@ class icinga2::params {
   case $::kernel {
 
     'linux': {
+      $icinga2_bin          = 'icinga2'
+      $bin_dir              = '/sbin'
       $conf_dir             = '/etc/icinga2'
       $log_dir              = '/var/log/icinga2'
       $run_dir              = '/var/run/icinga2'
@@ -134,8 +136,11 @@ class icinga2::params {
     } # Linux
 
     'windows': {
-      $user                 = 'SYSTEM'
+      #$user                 = 'SYSTEM'
+      $user                 = undef
       $group                = undef
+      $icinga2_bin          = 'icinga2.exe'
+      $bin_dir              = 'C:/Program Files/icinga2/sbin'
       $conf_dir             = 'C:/ProgramData/icinga2/etc/icinga2'
       $log_dir              = 'C:/ProgramData/icinga2/var/log/icinga2'
       $run_dir              = 'C:/ProgramData/icinga2/var/run/icinga2'
