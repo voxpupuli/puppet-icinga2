@@ -24,6 +24,11 @@ class icinga2::install {
   $user           = $::icinga2::params::user
   $group          = $::icinga2::params::group
 
+  File {
+    owner => $user,
+    group => $group,
+  }
+
   if $manage_package {
     if $::osfamily == 'windows' { Package { provider => chocolatey, } }
 
@@ -35,12 +40,11 @@ class icinga2::install {
 
   # anchor, i.e. for config directory set by confd parameter
   file { $conf_dir:
-    ensure  => directory,
+    ensure => directory,
+    mode   => '0755',
   }
   file { $pki_dir:
     ensure  => directory,
-    owner   => $user,
-    group   => $group,
     recurse => true,
   }
 }

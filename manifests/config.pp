@@ -20,6 +20,13 @@ class icinga2::config {
   $plugins        = $::icinga2::plugins
   $confd          = $::icinga2::_confd
   $purge_features = $::icinga2::purge_features
+  $user           = $::icinga2::params::user
+  $group          = $::icinga2::params::group
+
+  File {
+    owner => $user,
+    group => $group,
+  }
 
   if $::kernel != 'windows' {
     $template_constants  = icinga2_attributes($constants)

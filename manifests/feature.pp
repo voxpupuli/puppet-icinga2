@@ -17,6 +17,11 @@ define icinga2::feature(
   $group    = $::icinga2::params::group
   $conf_dir = $::icinga2::params::conf_dir
 
+  File {
+    owner => $user,
+    group => $group,
+  }
+
   if $::osfamily != 'windows' {
     $_ensure = $ensure ? {
       'present' => link,
@@ -25,8 +30,6 @@ define icinga2::feature(
 
     file { "${conf_dir}/features-enabled/${feature}.conf":
       ensure  => $_ensure,
-      owner   => $user,
-      group   => $group,
       target  => "../features-available/${feature}.conf",
       require => Concat["${conf_dir}/features-available/${feature}.conf"],
       notify  => Class['::icinga2::service'],
@@ -39,8 +42,6 @@ define icinga2::feature(
 
     file { "${conf_dir}/features-enabled/${feature}.conf":
       ensure  => $_ensure,
-      owner   => $user,
-      group   => $group,
       content => "include \"../features-available/${feature}.conf\"\r\n",
       require => Concat["${conf_dir}/features-available/${feature}.conf"],
       notify  => Class['::icinga2::service'],
