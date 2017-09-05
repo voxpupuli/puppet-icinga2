@@ -16,9 +16,7 @@
 #
 class icinga2::service {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name {
-    fail("icinga2::service is a private class of the module icinga2, you're not permitted to use it.")
-  }
+  assert_private()
 
   $ensure         = $::icinga2::ensure
   $enable         = $::icinga2::enable

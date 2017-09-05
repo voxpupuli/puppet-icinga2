@@ -8,9 +8,7 @@ class icinga2::debian::dbconfig(
   $ssl = false,
 ) {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name and $caller_module_name != '' {
-    fail("icinga2::debian::dbconfig is a private define resource of the module icinga2, you're not permitted to use it.")
-  }
+  assert_private()
 
   validate_re($dbtype, [ '^mysql$', '^pgsql$' ],
     "${dbtype} isn't supported. Valid values are 'mysql' and 'pgsql'.")

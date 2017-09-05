@@ -8,13 +8,7 @@ define icinga2::feature(
   $feature = $title,
 ) {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name and $caller_module_name != '' {
-    fail("icinga2::feature is a private define resource of the module icinga2, you're not permitted to use it.")
-  }
-
-  if ! defined(Class['::icinga2']) {
-    fail('You must include the icinga2 base class before using any icinga2 feature class!')
-  }
+  assert_private()
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
