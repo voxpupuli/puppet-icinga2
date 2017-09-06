@@ -76,10 +76,6 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to contain_exec('icinga2 pki create key') }
       it { is_expected.to contain_exec('icinga2 pki get trusted-cert') }
       it { is_expected.to contain_exec('icinga2 pki request') }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
     end
 
     context "#{os} with pki => ca" do
@@ -87,10 +83,6 @@ describe('icinga2::feature::api', :type => :class) do
 
       it { is_expected.to contain_exec('icinga2 pki create certificate signing request') }
       it { is_expected.to contain_exec('icinga2 pki sign certificate') }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
     end
 
     context "#{os} with pki => foo (not a valid value)" do
@@ -384,10 +376,6 @@ describe('icinga2::feature::api', :type => :class) do
     it { is_expected.to contain_exec('icinga2 pki create key') }
     it { is_expected.to contain_exec('icinga2 pki get trusted-cert') }
     it { is_expected.to contain_exec('icinga2 pki request') }
-
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key')  }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt')  }
-    it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt')  }
   end
 
 
