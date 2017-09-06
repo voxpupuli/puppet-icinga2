@@ -46,7 +46,6 @@ describe('icinga2::feature::api', :type => :class) do
         .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
         .with_content(/accept_config = false/)
         .with_content(/accept_commands = false/)
-        .with_content(/ticket_salt = TicketSalt/)
         .without_content(/bind_\w+ =/)
       }
 
@@ -228,8 +227,8 @@ describe('icinga2::feature::api', :type => :class) do
     end
 
 
-    context "#{os} with ticket_salt => foo" do
-      let(:params) { {:ticket_salt => 'foo'} }
+    context "#{os} with pki => none, ticket_salt => foo" do
+      let(:params) { {:pki => 'none', :ticket_salt => 'foo'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
         .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
@@ -347,8 +346,7 @@ describe('icinga2::feature::api', :type => :class) do
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
       .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
       .with_content(/accept_config = false/)
-      .with_content(/accept_commands = false/)
-      .with_content(/ticket_salt = TicketSalt/) }
+      .with_content(/accept_commands = false/) }
 
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.key') }
     it { is_expected.to contain_file('C:/ProgramData/icinga2/etc/icinga2/pki/host.example.org.crt') }
@@ -498,8 +496,8 @@ describe('icinga2::feature::api', :type => :class) do
   end
 
 
-  context "Windows 2012 R2 with ticket_salt => foo" do
-    let(:params) { {:ticket_salt => 'foo'} }
+  context "Windows 2012 R2 with pki => none, ticket_salt => foo" do
+    let(:params) { {:pki => 'none', :ticket_salt => 'foo'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
       .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/api.conf' })
