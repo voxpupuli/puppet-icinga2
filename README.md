@@ -1224,7 +1224,8 @@ This host will be connected to request the certificate. Set this if you use the 
 Port of the 'ca_host'. Defaults to `5665`
 
 ##### `ticket_salt`
-Salt to use for ticket generation. Defaults to icinga2 constant `TicketSalt`.
+Salt to use for ticket generation. The salt is stored to api.conf if `none` or `ca` is chosen for `pki`.
+Defaults to constant `TicketSalt`.
 
 ##### `endpoints`
 Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeName` is a Icinga 2 constant.

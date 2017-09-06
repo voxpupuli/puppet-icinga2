@@ -66,7 +66,8 @@
 #   Port of the 'ca_host'. Defaults to 5665
 #
 # [*ticket_salt*]
-#   Salt to use for ticket generation. Defaults to icinga2 constant TicketSalt.
+#   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
+#   Defaults to constant TicketSalt.
 #
 # [*endpoints*]
 #   Hash to configure endpoint objects. Defaults to { 'NodeName' => {} }.
@@ -242,6 +243,8 @@ class icinga2::feature::api(
   # handle the certificate's stuff
   case $pki {
     'puppet': {
+      $_ticket_salt = undef
+
       file { $_ssl_key_path:
         ensure => file,
         mode   => $_ssl_key_mode,
@@ -263,6 +266,10 @@ class icinga2::feature::api(
     } # puppet
 
     'none': {
+      # non means you manage the CA on your own and so
+      # the salt has to be stored in api.conf
+      $_ticket_salt = $ticket_salt
+
       if $ssl_key {
         $_ssl_key = $::osfamily ? {
           'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
@@ -305,6 +312,8 @@ class icinga2::feature::api(
     } # none
 
     'icinga2': {
+      $_ticket_salt = undef
+
       validate_string($ca_host)
       validate_integer($ca_port)
 
@@ -333,6 +342,7 @@ class icinga2::feature::api(
     } # icinga2
 
     'ca': {
+      $_ticket_salt = $ticket_salt
       class { '::icinga2::pki::ca': }
 
       warning('This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead')
@@ -346,7 +356,7 @@ class icinga2::feature::api(
     ca_path         => $_ssl_cacert_path,
     accept_commands => $accept_commands,
     accept_config   => $accept_config,
-    ticket_salt     => $ticket_salt,
+    ticket_salt     => $_ticket_salt,
     tls_protocolmin => $ssl_protocolmin,
     cipher_list     => $ssl_cipher_list,
     bind_host       => $bind_host,

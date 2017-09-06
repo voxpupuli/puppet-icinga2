@@ -64,6 +64,7 @@ class icinga2::pki::ca(
   include ::icinga2::params
   require ::icinga2::config
 
+  $bin_dir   = $::icinga2::params::bin_dir
   $ca_dir    = $::icinga2::params::ca_dir
   $pki_dir   = $::icinga2::params::pki_dir
   $user      = $::icinga2::params::user
@@ -76,8 +77,7 @@ class icinga2::pki::ca(
   }
 
   Exec {
-    user => 'root',
-    path => $::path,
+    path => $bin_dir,
   }
 
   if $ssl_key_path {
