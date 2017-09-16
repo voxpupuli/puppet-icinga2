@@ -40,7 +40,7 @@ class icinga2::repo {
       'debian': {
         # handle icinga stable repo before all package resources
         # contain class problem!
-        Apt::Source['icinga-stable-release'] -> Package <||>
+        Apt::Source['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
         case $::operatingsystem {
           'debian': {
             include ::apt, ::apt::backports
