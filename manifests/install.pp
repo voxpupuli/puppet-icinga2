@@ -20,6 +20,7 @@ class icinga2::install {
   $manage_package = $::icinga2::manage_package
   $pki_dir        = $::icinga2::params::pki_dir
   $conf_dir       = $::icinga2::params::conf_dir
+  $purge_conf_dir = $::icinga2::purge_conf_dir
   $user           = $::icinga2::params::user
   $group          = $::icinga2::params::group
 
@@ -33,9 +34,12 @@ class icinga2::install {
   }
 
   file { [$pki_dir, $conf_dir]:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    purge   => $purge_conf_dir,
+    recurse => $purge_conf_dir,
+    force   => $purge_conf_dir,
   }
 }
 
