@@ -460,6 +460,10 @@ Assignments other than simple attribution are not currently possible either, e.g
 ```
   vars += config
 ```
+but you can use the following instead:
+```
+  vars = vars + config
+```
 
 ### Apply Rules
 

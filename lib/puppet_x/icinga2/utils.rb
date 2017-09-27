@@ -71,6 +71,10 @@
 #
 #   vars += config
 #
+# but you can use the following instead:
+#
+#   vars = vars + config
+#
 #
 require 'puppet'
 
