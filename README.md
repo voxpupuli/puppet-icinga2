@@ -96,9 +96,19 @@ class { '::icinga2':
 ```
 
 If you want to manage the version of Icinga 2, you have to disable the package management of this module and handle
-packages in your own Puppet code.
+packages in your own Puppet code. The attribute manage_repo is also disabled automattically and you have to manage
+a repository within icinga in front of the package resource, i.e. for a RedHat system:
 
 ``` puppet
+yumrepo { 'icinga-stable-release':
+  baseurl  => "http://packages.icinga.com/epel/${::operatingsystemmajrelease}/release/",
+  descr    => 'ICINGA (stable release for epel)',
+  enabled  => 1,
+  gpgcheck => 1,
+  gpgkey   => 'http://packages.icinga.com/icinga.key',
+  before   => Package['icinga2'],
+}
+
 package { 'icinga2':
   ensure => latest,
   notify => Class['icinga2'],
@@ -109,8 +119,8 @@ class { '::icinga2':
 }
 ```
 
-Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
-all, including IDO packages.
+Note: Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
+all, including IDO packages!
 
 ### Enabling Features
 
