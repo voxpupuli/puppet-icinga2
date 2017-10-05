@@ -24,7 +24,7 @@
  */
 class { '::icinga2':
   manage_repo => true,
-  confd       => 'example.d'
+  confd       => 'example.d',
 }
 
 file { '/etc/icinga2/example.d':
@@ -63,7 +63,7 @@ mysq::db { 'icinga2':
 }
 
 ::icinga2::object::host { 'NodeName':
-  target   => '/etc/icinga2/example.d/hosts.conf'
+  target   => '/etc/icinga2/example.d/hosts.conf',
   import   => ['generic-host'],
   address  => '127.0.0.1',
   address6 => '::1',
