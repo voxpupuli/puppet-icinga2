@@ -1,3 +1,5 @@
+# == Class: icinga2::debian::dbconfig
+#
 class icinga2::debian::dbconfig(
   $dbtype,
   $dbserver,
