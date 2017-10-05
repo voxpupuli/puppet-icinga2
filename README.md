@@ -95,6 +95,9 @@ class { '::icinga2':
 }
 ```
 
+*Info:* If you are using the [Icinga Web 2](https://github.com/Icinga/puppet-icingaweb2/) Puppet module on the same
+server, make sure to disable the repository management for one of the modules!
+
 If you want to manage the version of Icinga 2, you have to disable the package management of this module and handle
 packages in your own Puppet code. The attribute manage_repo is also disabled automattically and you have to manage
 a repository within icinga in front of the package resource, i.e. for a RedHat system:
