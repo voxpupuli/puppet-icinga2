@@ -79,7 +79,7 @@ mysq::db { 'icinga2':
     mysql_health    => {
       db_size => {
         mysql_health_mode     => 'sql',
-        mysql_health_name     => '-:"SELECT SUM(date_length + index_length) / 1024 / 1024 AS 'db size' FROM information_schema.tables WHERE table_schema = '\" + db_name + \"';"',
+        mysql_health_name     => '-:"SELECT SUM(date_length + index_length) / 1024 / 1024 AS \'db size\' FROM information_schema.tables WHERE table_schema = \'+ db_name +\';"',
         mysql_health_name2    => 'db_size',
         mysql_health_units    => 'MB',
         mysql_health_username => 'icinga2',
