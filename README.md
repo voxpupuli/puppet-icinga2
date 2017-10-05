@@ -501,7 +501,7 @@ monitoring::objects:
     ping4:
       check_command: ping4
       apply: true
-      assign: 
+      assign:
         - host.address
     ssh:
       check_command: ssh
