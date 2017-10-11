@@ -1,37 +1,48 @@
 # Change Log
 
+## [v1.3.2](https://github.com/Icinga/puppet-icinga2/tree/v1.3.2) (2017-10-11)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.1...v1.3.2)
+
+**Fixed bugs:**
+
+- SLES should use service pack repository [\#386](https://github.com/Icinga/puppet-icinga2/issues/386)
+
+**Closed issues:**
+
+- Update docs how to pass package version [\#388](https://github.com/Icinga/puppet-icinga2/issues/388)
+
 ## [v1.3.1](https://github.com/Icinga/puppet-icinga2/tree/v1.3.1) (2017-10-05)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.0...v1.3.1)
 
 **Implemented enhancements:**
 
 - Fix small typos [\#358](https://github.com/Icinga/puppet-icinga2/issues/358)
-- Align documentation for duplicate repository [\#353](https://github.com/Icinga/puppet-icinga2/issues/353)
-- Update documentation about += operator [\#352](https://github.com/Icinga/puppet-icinga2/issues/352)
 - Review and update puppetlabs-concat dependency [\#351](https://github.com/Icinga/puppet-icinga2/issues/351)
 - Documentation to set up mysql grants is incorrect. [\#347](https://github.com/Icinga/puppet-icinga2/issues/347)
+- Check attributes of all objects [\#219](https://github.com/Icinga/puppet-icinga2/issues/219)
+- Align documentation for duplicate repository [\#353](https://github.com/Icinga/puppet-icinga2/issues/353)
+- Update documentation about += operator [\#352](https://github.com/Icinga/puppet-icinga2/issues/352)
 - Example and documentation for syncing hiera data to icinga objects [\#342](https://github.com/Icinga/puppet-icinga2/issues/342)
 - Add owner-, groupship and permissions to file resources [\#291](https://github.com/Icinga/puppet-icinga2/issues/291)
-- Check attributes of all objects [\#219](https://github.com/Icinga/puppet-icinga2/issues/219)
 - Support Puppet 5 and test it in travis [\#330](https://github.com/Icinga/puppet-icinga2/pull/330) ([lazyfrosch](https://github.com/lazyfrosch))
 
 **Fixed bugs:**
 
-- Install package before creating config files [\#378](https://github.com/Icinga/puppet-icinga2/issues/378)
 - Error: Could not find command 'icinga2' on SLES-11 [\#374](https://github.com/Icinga/puppet-icinga2/issues/374)
+- When passing non-fqdn name for the NodeName the certificate is still generated with cn set to fqdn [\#328](https://github.com/Icinga/puppet-icinga2/issues/328)
+- Install package before creating config files [\#378](https://github.com/Icinga/puppet-icinga2/issues/378)
 - Icinga2 binary not found on Debian and FreeBSD [\#371](https://github.com/Icinga/puppet-icinga2/issues/371)
 - Could not find command Icinga2 on windows [\#367](https://github.com/Icinga/puppet-icinga2/issues/367)
 - Error: Parameter user failed on Exec\[icinga2 pki create key\]: Unable to execute commands as other users on Windows at manifestsfeature/api.pp:317 [\#366](https://github.com/Icinga/puppet-icinga2/issues/366)
 - Unit tests broken for facter 2.5 [\#338](https://github.com/Icinga/puppet-icinga2/issues/338)
 - protection of private classes is wrong [\#333](https://github.com/Icinga/puppet-icinga2/issues/333)
-- When passing non-fqdn name for the NodeName the certificate is still generated with cn set to fqdn [\#328](https://github.com/Icinga/puppet-icinga2/issues/328)
 - ticketsalt only should be stored on ca nodes [\#325](https://github.com/Icinga/puppet-icinga2/issues/325)
 - key and cert permissions on windows [\#282](https://github.com/Icinga/puppet-icinga2/issues/282)
 
 **Closed issues:**
 
-- document manage\_package with manage\_repo [\#381](https://github.com/Icinga/puppet-icinga2/issues/381)
 - Implement conditional statements/loops parameter for icinga2::object::\* [\#354](https://github.com/Icinga/puppet-icinga2/issues/354)
+- document manage\_package with manage\_repo [\#381](https://github.com/Icinga/puppet-icinga2/issues/381)
 
 **Merged pull requests:**
 
@@ -43,8 +54,8 @@
 - Examples: Fix notification commands for 2.7 [\#368](https://github.com/Icinga/puppet-icinga2/pull/368) ([dnsmichi](https://github.com/dnsmichi))
 - Fixed typos [\#357](https://github.com/Icinga/puppet-icinga2/pull/357) ([rgevaert](https://github.com/rgevaert))
 - fix \#338 update facterdb dependency to 0.3.12 [\#349](https://github.com/Icinga/puppet-icinga2/pull/349) ([lbetz](https://github.com/lbetz))
-- Update documentation examples for mysql::db [\#346](https://github.com/Icinga/puppet-icinga2/pull/346) ([rgevaert](https://github.com/rgevaert))
 - Update protection of private classes from direct use [\#336](https://github.com/Icinga/puppet-icinga2/pull/336) ([lbetz](https://github.com/lbetz))
+- Update documentation examples for mysql::db [\#346](https://github.com/Icinga/puppet-icinga2/pull/346) ([rgevaert](https://github.com/rgevaert))
 
 ## [v1.3.0](https://github.com/Icinga/puppet-icinga2/tree/v1.3.0) (2017-06-26)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.2.1...v1.3.0)
