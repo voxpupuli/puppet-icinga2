@@ -95,10 +95,23 @@ class { '::icinga2':
 }
 ```
 
+*Info:* If you are using the [Icinga Web 2](https://github.com/Icinga/puppet-icingaweb2/) Puppet module on the same
+server, make sure to disable the repository management for one of the modules!
+
 If you want to manage the version of Icinga 2, you have to disable the package management of this module and handle
-packages in your own Puppet code.
+packages in your own Puppet code. The attribute manage_repo is also disabled automattically and you have to manage
+a repository within icinga in front of the package resource, i.e. for a RedHat system:
 
 ``` puppet
+yumrepo { 'icinga-stable-release':
+  baseurl  => "http://packages.icinga.com/epel/${::operatingsystemmajrelease}/release/",
+  descr    => 'ICINGA (stable release for epel)',
+  enabled  => 1,
+  gpgcheck => 1,
+  gpgkey   => 'http://packages.icinga.com/icinga.key',
+  before   => Package['icinga2'],
+}
+
 package { 'icinga2':
   ensure => latest,
   notify => Class['icinga2'],
@@ -109,8 +122,8 @@ class { '::icinga2':
 }
 ```
 
-Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
-all, including IDO packages.
+Note: Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
+all, including IDO packages!
 
 ### Enabling Features
 
@@ -162,7 +175,7 @@ include ::mysql::server
 mysql::db { 'icinga2':
   user     => 'icinga2',
   password => 'supersecret',
-  host     => 'localhost',
+  host     => '127.0.0.1',
   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
 }
 
@@ -450,6 +463,66 @@ Assignments other than simple attribution are not currently possible either, e.g
 ```
   vars += config
 ```
+but you can use the following instead:
+```
+  vars = vars + config
+```
+
+#### Reading objects from hiera data
+
+The following example is for puppet 4 and higher. It shows how icinga2 objects can be read from
+a hiera datastore. See also examples/objects_from_hiera.pp.
+
+```
+class { 'icinga2':
+  manage_repo => true,
+}
+
+$defaults = lookup('monitoring::defaults')
+
+lookup('monitoring::objects').each |String $object_type, Hash $content| {
+  $content.each |String $object_name, Hash $object_config| {
+    ensure_resource(
+      $object_type,
+      $object_name,
+      deep_merge($defaults[$object_type], $object_config))
+  }
+}
+```
+
+The datastore could be like:
+
+```
+---
+monitoring::objects:
+  'icinga2::object::host':
+    centos7.localdomain:
+      address: 127.0.0.1
+      vars:
+        os: Linux
+  'icinga2::object::service':
+    ping4:
+      check_command: ping4
+      apply: true
+      assign:
+        - host.address
+    ssh:
+      check_command: ssh
+      apply: true
+      assign:
+        - host.address && host.vars.os == Linux
+
+monitoring::defaults:
+  'icinga2::object::host':
+    import:
+      - generic-host
+    target: /etc/icinga2/conf.d/hosts.conf
+  'icinga2::object::service':
+    import:
+      - generic-service
+    target: /etc/icinga2/conf.d/services.conf
+```
+
 
 ### Apply Rules
 
@@ -1224,7 +1297,8 @@ This host will be connected to request the certificate. Set this if you use the 
 Port of the 'ca_host'. Defaults to `5665`
 
 ##### `ticket_salt`
-Salt to use for ticket generation. Defaults to icinga2 constant `TicketSalt`.
+Salt to use for ticket generation. The salt is stored to api.conf if `none` or `ca` is chosen for `pki`.
+Defaults to constant `TicketSalt`.
 
 ##### `endpoints`
 Hash to configure endpoint objects. Defaults to `{ 'NodeName' => {} }`. `NodeName` is a Icinga 2 constant.

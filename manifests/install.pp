@@ -14,15 +14,12 @@
 #
 class icinga2::install {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name {
-    fail("icinga2::install is a private class of the module icinga2, you're not permitted to use it.")
-  }
+  assert_private()
 
   $package        = $::icinga2::params::package
-  $conf_dir       = $::icinga2::params::conf_dir
-  $purge_features = $::icinga2::purge_features
   $manage_package = $::icinga2::manage_package
   $pki_dir        = $::icinga2::params::pki_dir
+  $conf_dir       = $::icinga2::params::conf_dir
   $user           = $::icinga2::params::user
   $group          = $::icinga2::params::group
 
@@ -31,18 +28,14 @@ class icinga2::install {
 
     package { $package:
       ensure => installed,
-      before => File["${conf_dir}/features-enabled", $pki_dir, $conf_dir],
+      before => File[$pki_dir, $conf_dir],
     }
   }
 
-  # anchor, i.e. for config directory set by confd parameter
-  file { $conf_dir:
-    ensure  => directory,
-  }
-  file { $pki_dir:
-    ensure  => directory,
-    owner   => $user,
-    group   => $group,
-    recurse => true,
+  file { [$pki_dir, $conf_dir]:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
   }
 }
+

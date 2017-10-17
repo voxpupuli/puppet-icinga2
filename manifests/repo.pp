@@ -16,9 +16,7 @@
 #
 class icinga2::repo {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name {
-    fail("icinga2::repo is a private class of the module icinga2, you're not permitted to use it.")
-  }
+  assert_private()
 
   if $::icinga2::manage_repo and $::icinga2::manage_package {
 
@@ -42,7 +40,7 @@ class icinga2::repo {
       'debian': {
         # handle icinga stable repo before all package resources
         # contain class problem!
-        Apt::Source['icinga-stable-release'] -> Package <||>
+        Apt::Source['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
         case $::operatingsystem {
           'debian': {
             include ::apt, ::apt::backports
@@ -93,7 +91,7 @@ class icinga2::repo {
         case $::operatingsystem {
           'SLES': {
             zypprepo { 'icinga-stable-release':
-              baseurl  => "http://packages.icinga.com/SUSE/${::operatingsystemmajrelease}/release/",
+              baseurl  => "http://packages.icinga.com/SUSE/${::operatingsystemrelease}/release/",
               enabled  => 1,
               gpgcheck => 1,
               require  => Exec['import icinga gpg key']

@@ -83,6 +83,7 @@ class icinga2::params {
   case $::kernel {
 
     'linux': {
+      $icinga2_bin          = 'icinga2'
       $conf_dir             = '/etc/icinga2'
       $log_dir              = '/var/log/icinga2'
       $run_dir              = '/var/run/icinga2'
@@ -100,6 +101,7 @@ class icinga2::params {
         'redhat': {
           $user    = 'icinga'
           $group   = 'icinga'
+          $bin_dir = '/sbin'
           $lib_dir = $::architecture ? {
             'x86_64' => '/usr/lib64',
             default  => '/usr/lib',
@@ -107,15 +109,17 @@ class icinga2::params {
         } # RedHat
 
         'debian': {
-          $user     = 'nagios'
-          $group    = 'nagios'
-          $lib_dir  = '/usr/lib'
+          $user    = 'nagios'
+          $group   = 'nagios'
+          $bin_dir = '/usr/sbin'
+          $lib_dir = '/usr/lib'
         } # Debian
 
         'suse': {
-          $user     = 'icinga'
-          $group    = 'icinga'
-          $lib_dir  = '/usr/lib'
+          $user    = 'icinga'
+          $group   = 'icinga'
+          $bin_dir = '/usr/sbin'
+          $lib_dir = '/usr/lib'
         } # Suse
 
         default: {
@@ -134,8 +138,10 @@ class icinga2::params {
     } # Linux
 
     'windows': {
-      $user                 = 'SYSTEM'
+      $user                 = undef
       $group                = undef
+      $icinga2_bin          = 'icinga2.exe'
+      $bin_dir              = 'C:/Program Files/icinga2/sbin'
       $conf_dir             = 'C:/ProgramData/icinga2/etc/icinga2'
       $log_dir              = 'C:/ProgramData/icinga2/var/log/icinga2'
       $run_dir              = 'C:/ProgramData/icinga2/var/run/icinga2'
@@ -160,6 +166,7 @@ class icinga2::params {
     } # Windows
 
     'FreeBSD': {
+      $bin_dir              = '/usr/local/sbin/icinga2'
       $conf_dir             = '/usr/local/etc/icinga2'
       $log_dir              = '/var/log/icinga2'
       $run_dir              = '/var/run/icinga2'
@@ -169,6 +176,7 @@ class icinga2::params {
       $ca_dir               = '/var/lib/icinga2/ca'
       $user                 = 'icinga'
       $group                = 'icinga'
+      $icinga2_bin          = 'icinga2'
       $lib_dir              = '/usr/local/lib/icinga2'
       $ido_pgsql_package    = undef
       $ido_pgsql_schema_dir = '/usr/local/share/icinga2-ido-pgsql/schema'

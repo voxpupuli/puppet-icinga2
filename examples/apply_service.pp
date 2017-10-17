@@ -19,7 +19,7 @@ icinga2::object::service { 'testservice2':
   check_command => 'mysql',
 }
 
-icinga2::object::notification { 'testnotification': 
+icinga2::object::notification { 'testnotification':
   target       => '/etc/icinga2/conf.d/test.conf',
   apply        => true,
   apply_target => 'Service',

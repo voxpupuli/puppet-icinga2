@@ -77,9 +77,7 @@ define icinga2::object(
   $attrs        = {},
 ) {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name and $caller_module_name != '' {
-    fail("icinga2::object is a private define resource of the module icinga2, you're not permitted to use it.")
-  }
+  assert_private()
 
   include ::icinga2::params
 

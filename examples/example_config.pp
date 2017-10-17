@@ -220,7 +220,8 @@ file { '/etc/icinga2/example.d':
   command => [ 'SysconfDir + /icinga2/scripts/mail-host-notification.sh' ],
   env     => {
     'NOTIFICATIONTYPE'       => '$notification.type$',
-    'HOSTALIAS'              => '$host.display_name$',
+    'HOSTNAME'               => '$host.name$',
+    'HOSTDISPLAYNAME'        => '$host.display_name$',
     'HOSTADDRESS'            => '$address$',
     'HOSTSTATE'              => '$host.state$',
     'LONGDATETIME'           => '$icinga.long_date_time$',
@@ -237,8 +238,9 @@ file { '/etc/icinga2/example.d':
   command => [ 'SysconfDir + /icinga2/scripts/mail-service-notification.sh' ],
   env     => {
     'NOTIFICATIONTYPE'       => '$notification.type$',
-    'SERVICEDESC'            => '$service.name$',
-    'HOSTALIAS'              => '$host.display_name$',
+    'SERVICENAME'            => '$service.name$',
+    'HOSTNAME'               => '$host.name$',
+    'HOSTDISPLAYNAME'        => '$host.display_name$',
     'HOSTADDRESS'            => '$address$',
     'SERVICESTATE'           => '$service.state$',
     'LONGDATETIME'           => '$icinga.long_date_time$',
