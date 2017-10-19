@@ -101,7 +101,10 @@ class icinga2::params {
         'redhat': {
           $user    = 'icinga'
           $group   = 'icinga'
-          $bin_dir = '/sbin'
+          $bin_dir = $::operatingsystemmajrelease ? {
+            '6'     => '/usr/sbin',
+            default => '/sbin',
+          }
           $lib_dir = $::architecture ? {
             'x86_64' => '/usr/lib64',
             default  => '/usr/lib',
