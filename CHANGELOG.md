@@ -1,5 +1,16 @@
 # Change Log
 
+## [v1.3.3](https://github.com/Icinga/puppet-icinga2/tree/v1.3.3) (2017-10-24)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.2...v1.3.3)
+
+**Fixed bugs:**
+
+- Icinga2 binary not found on Redhat/Centos 6 family [\#390](https://github.com/Icinga/puppet-icinga2/issues/390)
+
+**Merged pull requests:**
+
+- fix \#390 icinga2 binary not found on rhel6 [\#391](https://github.com/Icinga/puppet-icinga2/pull/391) ([lbetz](https://github.com/lbetz))
+
 ## [v1.3.2](https://github.com/Icinga/puppet-icinga2/tree/v1.3.2) (2017-10-11)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.1...v1.3.2)
 
