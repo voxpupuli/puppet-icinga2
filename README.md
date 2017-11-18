@@ -25,7 +25,8 @@ configuration of Icinga 2 on multiple operating systems.
 
 ### Notices
 
-For Icinga 2 v2.8.0 and higher version v1.3.4 and above is needed. See issue #403.
+For Icinga 2 v2.8.0 and higher version v1.3.4 and above is needed and the parameter repositoryd
+can set to false. See issue #403.
 
 ## Module Description
 
