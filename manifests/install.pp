@@ -42,9 +42,10 @@ class icinga2::install {
   # deprecated, removed in Icinga 2 v2.8.0
   if $repositoryd {
     file { "${conf_dir}/repository.d":
-      ensure => directoy,
-      owner  => $user,
-      group  => $group,
+      ensure  => directoy,
+      owner   => $user,
+      group   => $group,
+      require => File[$conf_dir],
     }
   }
 
