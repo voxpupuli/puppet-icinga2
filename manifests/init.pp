@@ -41,6 +41,10 @@
 #   own directory. This directory must be managed outside of this module as file resource
 #   with tag icinga2::config::file.
 #
+# [*repositoryd*]
+#   `repository.d` is removed since Icinga 2 2.8.0, set to true (default) will handle the directory.
+#   This Parameter will change to false by default in v2.0.0 and will be removed in the future.
+#
 # All default parameters are set in the icinga2::params class. To get more technical information have a look into the
 # params.pp manifest.
 #
@@ -148,6 +152,7 @@ class icinga2(
   $constants      = {},
   $plugins        = $icinga2::params::plugins,
   $confd          = true,
+  $repositoryd    = true,
 ) inherits ::icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],
@@ -160,6 +165,7 @@ class icinga2(
   validate_bool($purge_features)
   validate_hash($constants)
   validate_array($plugins)
+  validate_bool($repositoryd)
 
   # validate confd, boolean or string
   if is_bool($confd) {

@@ -38,12 +38,14 @@ include <<%= p %>>
  * the features-enabled directory.
  */
 include "features-enabled/*.conf"
+<% if @repositoryd -%>
 
 /**
  * The repository.d directory contains all configuration objects
  * managed by the 'icinga2 repository' CLI commands.
  */
 include_recursive "repository.d"
+<% end -%>
 
 <% if @confd -%>
 /**
