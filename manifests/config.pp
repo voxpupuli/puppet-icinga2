@@ -19,7 +19,10 @@ class icinga2::config {
   $conf_dir       = $::icinga2::params::conf_dir
   $plugins        = $::icinga2::plugins
   $confd          = $::icinga2::_confd
+  $repositoryd    = $::icinga2::repositoryd
   $purge_features = $::icinga2::purge_features
+  $user           = $::icinga2::params::user
+  $group          = $::icinga2::params::group
 
   if $::kernel != 'windows' {
     $template_constants  = icinga2_attributes($constants)
@@ -27,6 +30,15 @@ class icinga2::config {
   } else {
     $template_constants  = regsubst(icinga2_attributes($constants), '\n', "\r\n", 'EMG')
     $template_mainconfig = regsubst(template('icinga2/icinga2.conf.erb'), '\n', "\r\n", 'EMG')
+  }
+
+  # deprecated, removed in Icinga 2 v2.8.0
+  if $repositoryd {
+    file { "${conf_dir}/repository.d":
+      ensure => directoy,
+      owner  => $user,
+      group  => $group,
+    }
   }
 
   file { "${conf_dir}/constants.conf":
