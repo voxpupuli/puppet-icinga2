@@ -186,12 +186,14 @@ module Puppet
             else
               if level > 1
                 if level == 3
-                  result += "%s%s = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value
+                  result += "%s%s = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
+                  #result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
                 else
-                  result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value
+                  result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
+                  #result += "%s[\"%s\"] = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
                 end
               else
-                result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value
+                result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
               end
             end
           end
