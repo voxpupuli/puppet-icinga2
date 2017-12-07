@@ -102,6 +102,7 @@ class icinga2::params {
           $user    = 'icinga'
           $group   = 'icinga'
           $bin_dir = $::operatingsystemmajrelease ? {
+            '5'     => '/usr/sbin',
             '6'     => '/usr/sbin',
             default => '/sbin',
           }
