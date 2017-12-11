@@ -156,8 +156,8 @@ class icinga2::feature::idopgsql(
       user        => 'root',
       path        => $::path,
       environment => ["PGPASSWORD=${password}"],
-      command     => "psql -h '${host}' -U '${user}' -d '${database}' -w -f ${ido_pgsql_schema_dir}/pgsql.sql",
-      unless      => "psql -h '${host}' -U '${user}' -d '${database}' -w -c 'select version from icinga_dbversion'",
+      command     => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -f ${ido_pgsql_schema_dir}/pgsql.sql",
+      unless      => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -c 'select version from icinga_dbversion'",
     }
   }
 
