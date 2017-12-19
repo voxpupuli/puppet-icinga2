@@ -1,6 +1,6 @@
 class { 'icinga2':
   manage_repo => true,
-  confd       => '/etc/icinga/local.d',
+  confd       => '/etc/icinga2/local.d',
 }
 
 file { '/etc/icinga2/local.d':
