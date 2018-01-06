@@ -165,7 +165,7 @@ Depending on your database you need to enable the feature `icinga2::feature::ido
 Both features are capable of importing the base schema into the database, however this is disabled by default.
 Updating the database schema to another version is currently not supported.
 
-The IDO features require a pre-existing database and an user with permissions to create schema, and edit data
+The IDO features require a pre-existing database and a user with permissions to create schema and edit data.
 
 #### MySQL
 
@@ -234,7 +234,7 @@ sends configurations over the Icinga 2 protocol to satellites and/or clients.
 
 More detailed examples can be found in the [examples] directory.
 
-Ths examples creates the configuration for a master that has one satellite connected. A global zone is created for
+This example creates the configuration for a master that has one satellite connected. A global zone is created for
 templates, and all features of a typical master are enabled.
 
 ``` puppet
@@ -278,8 +278,8 @@ A satellite has a parent zone and one or multiple child zones. Satellites are us
 monitoring load or to reach delimited zones in the network. A satellite either executes checks itself or delegates them
 to a client.
 
-The satellite has less features enabled, but executes checks similar to a master. It connects to a master zone, and to
-and satellite or client below in the hierarchy. As parent acts either the master zone, or another satellite zone.
+The satellite has fewer features enabled, but executes checks similar to a master. It connects to a master zone, and to
+a satellite or client below in the hierarchy. As parent acts either the master zone, or another satellite zone.
 
 ``` puppet
 class { '::icinga2':
@@ -531,9 +531,11 @@ monitoring::defaults:
 
 ### Apply Rules
 
-Some objects support to be applied to other objects. To create a simple apply rule you must set the `apply` parameter to
-`true`. If this parameter is set to a string, this string will be used to build an `apply for` loop. A service object
-always targets a host object. All other objects need to explicitly set an `apply_target`
+Some objects can be applied to other objects. To create a simple apply rule you
+must set the `apply` parameter to `true`. If this parameter is set to a string,
+this string will be used to build an `apply for` loop. A service object always
+targets a host object. All other objects need to explicitly set an
+`apply_target`
 
 Apply a SSH service to all Linux hosts:
 
@@ -589,8 +591,8 @@ requires SSL/TLS client certificates. This module offers multiple choices to con
 
 #### CA on your Icinga Master
 
-One of your Icinga master needs to behave as a CA. With the class `icinga2::pki::ca` you can do following to fulfil
-this requirement:
+One of your Icinga masters needs to behave as a CA. With the class
+`icinga2::pki::ca` you can do the following to fulfill this requirement:
 
 * Use the the `icinga2` CLI to generate a complete new CA
 ``` puppet
@@ -623,7 +625,7 @@ file { '/var/lib/icinga2/ca/ca.key':
 ```
 
 * Create a new CA with the `icinga2` CLI command and a certificate signed by this new CA. This is useful especially when
-seting up a new Icinga 2 master.
+setting up a new Icinga 2 master.
 ```puppet
 class { '::icinga2':
   constants => {
@@ -648,7 +650,7 @@ class { '::icinga2::feature::api':
 }
 ```
 
-If you are looking for an option to use your Puppet CA, have a look to the
+If you are looking for an option to use your Puppet CA, have a look at the
 [Client/Satellite Certificates](#clientsatellite-certificates) section.
 
 #### Client/Satellite Certificates
@@ -661,7 +663,7 @@ instances. This module offers following options to create these certificates:
 include ::icinga2::feature::api
 ```
 
-* Use a custom function implemented in this module to generate a certificate. This feature will to the following:
+* Use a custom function implemented in this module to generate a certificate. This feature will do the following:
   * Generate a key and certificate based on the FQDN of the host
   * Save the certificate of another Icinga 2 instance, usually the Icinga master where your Icinga CA is located
   * Generate a ticket based on the TicketSalt
