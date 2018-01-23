@@ -53,6 +53,9 @@
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
 #   to path specified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
+# [*ssl_crl_path*]
+#   Location of the certificate revocation list. Defaults to undef.
+#
 # [*accept_config*]
 #   Accept zone configuration. Defaults to false.
 #
@@ -147,6 +150,7 @@ class icinga2::feature::api(
   $ssl_cert_path   = undef,
   $ssl_csr_path    = undef,
   $ssl_cacert_path = undef,
+  $ssl_crl_path    = undef,
   $accept_config   = false,
   $accept_commands = false,
   $ca_host         = undef,
@@ -224,6 +228,9 @@ class icinga2::feature::api(
     $_ssl_cacert_path = $ssl_cacert_path }
   else {
     $_ssl_cacert_path = "${pki_dir}/ca.crt" }
+  if $ssl_crl_path {
+    validate_absolute_path($ssl_crl_path)
+  }
 
   if $ssl_protocolmin {
     validate_string($ssl_protocolmin)
@@ -354,6 +361,7 @@ class icinga2::feature::api(
     cert_path       => $_ssl_cert_path,
     key_path        => $_ssl_key_path,
     ca_path         => $_ssl_cacert_path,
+    crl_path        => $ssl_crl_path,
     accept_commands => $accept_commands,
     accept_config   => $accept_config,
     ticket_salt     => $_ticket_salt,

@@ -153,6 +153,20 @@ describe('icinga2::feature::api', :type => :class) do
       it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
     end
 
+    context "#{os} with ssl_crl_path = /foo/bar" do
+      let(:params) { {:ssl_crl_path => '/foo/bar'} }
+
+      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
+        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
+        .with_content(/crl_path = "\/foo\/bar"/) }
+    end
+
+
+    context "#{os} with ssl_crl_path = foo/bar (not a valid absolute path)" do
+      let(:params) { {:ssl_crl_path => 'foo/bar'} }
+
+      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    end
 
     context "#{os} with accept_config => true" do
       let(:params) { {:accept_config => true} }
