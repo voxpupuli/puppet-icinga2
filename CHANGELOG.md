@@ -1,5 +1,34 @@
 # Change Log
 
+## [v1.3.5](https://github.com/Icinga/puppet-icinga2/tree/v1.3.5) (2018-01-24)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.4...v1.3.5)
+
+**Implemented enhancements:**
+
+- icinga2 binary is wrong on rhel5 [\#409](https://github.com/Icinga/puppet-icinga2/issues/409)
+- Add feature Elasticsearch [\#408](https://github.com/Icinga/puppet-icinga2/issues/408)
+- Add feature elasticsearch [\#399](https://github.com/Icinga/puppet-icinga2/issues/399)
+- Added cloudlinux to supported operating systems. Is nearly identical … [\#424](https://github.com/Icinga/puppet-icinga2/pull/424) ([koma85](https://github.com/koma85))
+
+**Fixed bugs:**
+
+- Setting up icinga2 with a different port than default for idodb leads to an error  [\#411](https://github.com/Icinga/puppet-icinga2/issues/411)
+- fix \#411 Setting up Icinga 2 with a different port than default for i… [\#413](https://github.com/Icinga/puppet-icinga2/pull/413) ([lbetz](https://github.com/lbetz))
+- fix for repository.d directory on master-systems [\#412](https://github.com/Icinga/puppet-icinga2/pull/412) ([matthiasritter](https://github.com/matthiasritter))
+
+**Closed issues:**
+
+- escaping broken with double quotes? [\#416](https://github.com/Icinga/puppet-icinga2/issues/416)
+- Icinga resource doesn't create ca directory and required files [\#415](https://github.com/Icinga/puppet-icinga2/issues/415)
+- icinga2 option generates self signed certificates that are rejected by master [\#405](https://github.com/Icinga/puppet-icinga2/issues/405)
+- manage repo trough proxy [\#394](https://github.com/Icinga/puppet-icinga2/issues/394)
+
+**Merged pull requests:**
+
+- trivial copy edits [\#420](https://github.com/Icinga/puppet-icinga2/pull/420) ([wkalt](https://github.com/wkalt))
+- Fix confd example path [\#417](https://github.com/Icinga/puppet-icinga2/pull/417) ([dnsmichi](https://github.com/dnsmichi))
+- fix \#409 icinga2 binary is wrong on rhel5 [\#410](https://github.com/Icinga/puppet-icinga2/pull/410) ([lbetz](https://github.com/lbetz))
+
 ## [v1.3.4](https://github.com/Icinga/puppet-icinga2/tree/v1.3.4) (2017-11-22)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.3...v1.3.4)
 
