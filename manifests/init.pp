@@ -45,6 +45,14 @@
 #   `repository.d` is removed since Icinga 2 2.8.0, set to true (default) will handle the directory.
 #   This Parameter will change to false by default in v2.0.0 and will be removed in the future.
 #
+# [*user*]
+#   User is set by default for each OS in params.pp, but, with some localized 
+#   version of OS you can specify another user
+#
+# [*group*]
+#   Group is set by default for each OS in params.pp, but, with some localized 
+#   version of OS you may have to specify another group.
+#
 # All default parameters are set in the icinga2::params class. To get more technical information have a look into the
 # params.pp manifest.
 #
@@ -139,6 +147,17 @@
 #     ...
 #     confd => 'local.d',
 #   }
+#  
+# To manage a French windows agent 
+# 
+# class { '::icinga2':
+#     manage_repo    => false,
+#     manage_package => false,
+#     confd          => false,
+#     user           => 'Administrateurs',
+#     group          => 'Service Réseau',
+#     features       => [ 'checker','mainlog' ],
+# }
 #
 #
 class icinga2(
@@ -153,6 +172,8 @@ class icinga2(
   $plugins        = $icinga2::params::plugins,
   $confd          = true,
   $repositoryd    = true,
+  $user           = $icinga2::params::user,
+  $group          = $icinga2::params::group,
 ) inherits ::icinga2::params {
 
   validate_re($ensure, [ '^running$', '^stopped$' ],

@@ -142,8 +142,8 @@ class icinga2::params {
     } # Linux
 
     'windows': {
-      $user                 = undef
-      $group                = undef
+      $user                 = 'Administrators'
+      $group                = 'NETWORK SERVICE'
       $icinga2_bin          = 'icinga2.exe'
       $bin_dir              = 'C:/Program Files/icinga2/sbin'
       $conf_dir             = 'C:/ProgramData/icinga2/etc/icinga2'
