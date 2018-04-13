@@ -1295,6 +1295,9 @@ Location of the CA certificate. Default depends on your platform:
 * Linux: `/etc/icinga2/pki/ca.crt`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
 
+##### `ssl_crl_path`
+Location of the certificate revocation list. Defaults to `undef`.
+
 ##### `accept_config`
 Accept zone configuration. Defaults to `false`
 
