@@ -175,8 +175,8 @@ class icinga2::feature::api(
   $conf_dir      = $::icinga2::params::conf_dir
   $pki_dir       = $::icinga2::params::pki_dir
   $ca_dir        = $::icinga2::params::ca_dir
-  $user          = $::icinga2::params::user
-  $group         = $::icinga2::params::group
+  $user          = $::icinga2::user
+  $group         = $::icinga2::group
   $node_name     = $::icinga2::_constants['NodeName']
   $_ssl_key_mode = $::osfamily ? {
     'windows' => undef,

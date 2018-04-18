@@ -20,8 +20,8 @@ class icinga2::install {
   $manage_package = $::icinga2::manage_package
   $pki_dir        = $::icinga2::params::pki_dir
   $conf_dir       = $::icinga2::params::conf_dir
-  $user           = $::icinga2::params::user
-  $group          = $::icinga2::params::group
+  $user           = $::icinga2::user
+  $group          = $::icinga2::group
   $repositoryd    = $::icinga2::repositoryd
 
   if $manage_package {
