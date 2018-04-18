@@ -13,8 +13,8 @@ define icinga2::feature(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
-  $user     = $::icinga2::params::user
-  $group    = $::icinga2::params::group
+  $user     = $::icinga2::user
+  $group    = $::icinga2::group
   $conf_dir = $::icinga2::params::conf_dir
 
   if $::osfamily != 'windows' {

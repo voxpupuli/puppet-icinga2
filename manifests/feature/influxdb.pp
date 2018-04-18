@@ -125,8 +125,8 @@ class icinga2::feature::influxdb(
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user          = $::icinga2::params::user
-  $group         = $::icinga2::params::group
+  $user          = $::icinga2::user
+  $group         = $::icinga2::group
   $node_name     = $::icinga2::_constants['NodeName']
   $conf_dir      = $::icinga2::params::conf_dir
   $ssl_dir       = "${::icinga2::params::pki_dir}/influxdb"
