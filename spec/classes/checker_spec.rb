@@ -43,7 +43,7 @@ describe('icinga2::feature::checker', :type => :class) do
     context "#{os} with concurrent_checks => foo (not a valid integer)" do
       let(:params) { {:concurrent_checks => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
     end
 
   end
@@ -105,6 +105,6 @@ describe('icinga2::feature::checker', :type => :class) do
   context "Windows 2012 R2 with concurrent_checks => foo (not a valid integer)" do
     let(:params) { {:concurrent_checks => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 end

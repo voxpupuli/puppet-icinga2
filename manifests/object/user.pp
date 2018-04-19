@@ -56,45 +56,22 @@
 #
 #
 define icinga2::object::user (
-  $target,
-  $ensure               = present,
-  $user_name            = $title,
-  $display_name         = undef,
-  $email                = undef,
-  $pager                = undef,
-  $vars                 = undef,
-  $groups               = undef,
-  $enable_notifications = undef,
-  $period               = undef,
-  $types                = undef,
-  $states               = undef,
-  $import               = [],
-  $template             = false,
-  $order                = '75',
+  Stdlib::Absolutepath      $target,
+  Enum['absent', 'present'] $ensure               = present,
+  String                    $user_name            = $title,
+  Optional[String]          $display_name         = undef,
+  Optional[String]          $email                = undef,
+  Optional[String]          $pager                = undef,
+  Optional[Hash]            $vars                 = undef,
+  Optional[Array]           $groups               = undef,
+  Optional[Boolean]         $enable_notifications = undef,
+  Optional[String]          $period               = undef,
+  Optional[Array]           $types                = undef,
+  Optional[Array]           $states               = undef,
+  Array                     $import               = [],
+  Boolean                   $template             = false,
+  Pattern[/^\d+$/]          $order                = '75',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($user_name)
-  validate_array($import)
-  validate_bool($template)
-  validate_absolute_path($target)
-  validate_string($order)
-
-  if $display_name { validate_string ($display_name) }
-  if $email { validate_string ($email) }
-  if $pager { validate_string ($pager) }
-  if $groups { validate_array ($groups) }
-  if $enable_notifications { validate_bool ($enable_notifications) }
-  if $period { validate_string ($period) }
-  if $types { validate_array ($types) }
-  if $states { validate_array ($states) }
-
-  validate_integer ( $order )
 
   # compose attributes
   $attrs = {

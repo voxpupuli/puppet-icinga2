@@ -17,9 +17,9 @@
 #
 #
 class icinga2::feature::compatlog(
-  $ensure          = present,
-  $log_dir         = "${::icinga2::params::log_dir}/compat",
-  $rotation_method = 'DAILY',
+  Enum['absent', 'present']                    $ensure          = present,
+  Stdlib::Absolutepath                         $log_dir         = "${::icinga2::params::log_dir}/compat",
+  Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY'] $rotation_method = 'DAILY',
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -31,12 +31,6 @@ class icinga2::feature::compatlog(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_absolute_path($log_dir)
-  validate_re($rotation_method, ['^HOURLY$','^DAILY$','^WEEKLY$','^MONTHLY$'])
 
   # compose attributes
   $attrs = {

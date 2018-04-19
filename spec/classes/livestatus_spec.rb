@@ -57,7 +57,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_type => foo (not a valid value)" do
       let(:params) { {:socket_type => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['tcp', 'unix'\]/) }
     end
 
 
@@ -71,7 +71,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
 
 
     context "#{os} with bind_port => 4247" do
-      let(:params) { {:bind_port => '4247'} }
+      let(:params) { {:bind_port => 4247} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
         .with({ 'target' => '/etc/icinga2/features-available/livestatus.conf' })
@@ -82,7 +82,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with bind_port => foo (not a valid integer)" do
       let(:params) { {:bind_port => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
 
 
@@ -98,7 +98,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_path => foo/bar (not an absolute path)" do
       let(:params) { {:socket_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -114,7 +114,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with compat_log_path => foo/bar (not an absolute path)" do
       let(:params) { {:compat_log_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
   end
 end
@@ -188,7 +188,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
   context 'Windows 2012 R2 with socket_type => foo (not a valid value)' do
     let(:params) { {:socket_type => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported. Valid values are 'unix' and 'tcp'./) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['tcp', 'unix'\]/) }
   end
 
 
@@ -202,7 +202,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
 
 
   context "Windows 2012 R2 with bind_port => 4247" do
-    let(:params) { {:bind_port => '4247'} }
+    let(:params) { {:bind_port => 4247} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
                             .with({ 'target' => 'C:/ProgramData/icinga2/etc/icinga2/features-available/livestatus.conf' })
@@ -213,7 +213,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
   context "Windows 2012 R2 with bind_port => foo (not a valid integer)" do
     let(:params) { {:bind_port => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 
 
@@ -229,7 +229,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
   context 'Windows 2012 R2 with socket_path => foo/bar (not an absolute path)' do
     let(:params) { {:socket_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -245,6 +245,6 @@ describe('icinga2::feature::livestatus', :type => :class) do
   context 'Windows 2012 R2 with compat_log_path => foo/bar (not an absolute path)' do
     let(:params) { {:compat_log_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 end

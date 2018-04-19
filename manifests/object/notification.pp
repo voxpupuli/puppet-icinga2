@@ -79,64 +79,30 @@
 #
 #
 define icinga2::object::notification (
-  $target,
-  $ensure            = present,
-  $notification_name = $title,
-  $host_name         = undef,
-  $service_name      = undef,
-  $vars              = undef,
-  $users             = undef,
-  $user_groups       = undef,
-  $times             = undef,
-  $command           = undef,
-  $interval          = undef,
-  $period            = undef,
-  $zone              = undef,
-  $types             = undef,
-  $states            = undef,
-  $apply             = false,
-  $prefix            = false,
-  $apply_target      = 'Host',
-  $assign            = [],
-  $ignore            = [],
-  $import            = [],
-  $template          = false,
-  $order             = '85',
+  Stdlib::Absolutepath                       $target,
+  Enum['absent', 'present']                  $ensure            = present,
+  String                                     $notification_name = $title,
+  Optional[String]                           $host_name         = undef,
+  Optional[String]                           $service_name      = undef,
+  Optional[Hash]                             $vars              = undef,
+  Optional[Variant[Array, String]]           $users             = undef,
+  Optional[Variant[Array, String]]           $user_groups       = undef,
+  Optional[Hash]                             $times             = undef,
+  Optional[String]                           $command           = undef,
+  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]] $interval          = undef,
+  Optional[String]                           $period            = undef,
+  Optional[String]                           $zone              = undef,
+  Optional[Variant[Array, String]]           $types             = undef,
+  Optional[Variant[Array, String]]           $states            = undef,
+  Variant[Boolean, String]                   $apply             = false,
+  Boolean                                    $prefix            = false,
+  Enum['Host', 'Service']                    $apply_target      = 'Host',
+  Array                                      $assign            = [],
+  Array                                      $ignore            = [],
+  Array                                      $import            = [],
+  Boolean                                    $template          = false,
+  Pattern[/^\d+$/]                           $order             = '85',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($notification_name)
-  unless is_bool($apply) { validate_string($apply) }
-  validate_bool($prefix)
-  validate_re($apply_target, ['^Host$', '^Service$'],
-    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
-  validate_array($import)
-  validate_bool($template)
-  validate_absolute_path($target)
-  validate_string($order)
-
-  validate_string ($host_name)
-  if $service_name { validate_string ($service_name)}
-  if !is_array($users) { validate_string($users) }
-  if !is_string($users) { validate_array($users) }
-  if !is_array($user_groups) { validate_string($user_groups) }
-  if !is_string($user_groups) { validate_array($user_groups) }
-  if $times { validate_hash ($times )}
-  if $command { validate_string ($command )}
-  if $interval { validate_re($interval, '^\d+(\.\d+)?[dhms]?$')}
-  if $period { validate_string ($period )}
-  if $zone { validate_string ($zone) }
-  if !is_array($types) { validate_string($types) }
-  if !is_string($types) { validate_array($types) }
-  if !is_array($states) { validate_string($states) }
-  if !is_string($states) { validate_array($states) }
-  if $assign { validate_array ($assign) }
-  if $ignore { validate_array ($ignore) }
 
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -144,18 +110,18 @@ define icinga2::object::notification (
 
   # compose attributes
   $attrs = {
-    'host_name' => $host_name,
+    'host_name'    => $host_name,
     'service_name' => $service_name,
-    'users' => $users,
-    'user_groups' => $user_groups,
-    'times' => $times,
-    'command' => $command,
-    'interval' => $interval,
-    'period' => $period,
-    'zone' => $zone,
-    'types' => $types,
-    'states' => $states,
-    'vars' => $vars,
+    'users'        => $users,
+    'user_groups'  => $user_groups,
+    'times'        => $times,
+    'command'      => $command,
+    'interval'     => $interval,
+    'period'       => $period,
+    'zone'         => $zone,
+    'types'        => $types,
+    'states'       => $states,
+    'vars'         => $vars,
   }
 
   # create object

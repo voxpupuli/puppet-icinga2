@@ -13,8 +13,8 @@
 #
 #
 class icinga2::feature::command(
-  $ensure       = present,
-  $command_path = "${::icinga2::params::run_dir}/cmd/icinga2.cmd",
+  Enum['absent', 'present'] $ensure       = present,
+  Stdlib::Absolutepath      $command_path = "${::icinga2::params::run_dir}/cmd/icinga2.cmd",
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -26,10 +26,6 @@ class icinga2::feature::command(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_absolute_path($command_path)
 
   # compose attributes
   $attrs = {

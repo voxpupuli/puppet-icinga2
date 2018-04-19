@@ -35,14 +35,14 @@ describe('icinga2::object::endpoint', :type => :define) do
     context "#{os} with ensure => foo (not a valid value)" do
       let(:params) { {:ensure => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
     end
 
 
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -55,7 +55,7 @@ describe('icinga2::object::endpoint', :type => :define) do
 
 
     context "#{os} with port => 4247" do
-      let(:params) { {:port => '4247', :target => '/bar/baz'} }
+      let(:params) { {:port => 4247, :target => '/bar/baz'} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
         .with_content(/port = 4247/) }
@@ -65,7 +65,7 @@ describe('icinga2::object::endpoint', :type => :define) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
     end
 
 
@@ -80,7 +80,7 @@ describe('icinga2::object::endpoint', :type => :define) do
     context "#{os} with log_duration => foo (not a valid value)" do
       let(:params) { {:log_duration => 'foo', :target => '/bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
     end
   end
 end
@@ -132,14 +132,14 @@ describe('icinga2::object::endpoint', :type => :define) do
   context "Windows 2012 R2 with ensure => foo (not a valid value)" do
     let(:params) { {:ensure => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
   end
 
 
   context "Windows 2012 R2  with target => bar/baz (not valid absolute path)" do
     let(:params) { {:target => 'bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"bar\/baz" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -152,7 +152,7 @@ describe('icinga2::object::endpoint', :type => :define) do
 
 
   context "Windows 2012 R2  with port => 4247" do
-    let(:params) { {:port => '4247', :target => 'C:/bar/baz'} }
+    let(:params) { {:port => 4247, :target => 'C:/bar/baz'} }
 
     it { is_expected.to contain_concat__fragment('icinga2::object::Endpoint::bar')
                             .with_content(/port = 4247/) }
@@ -162,7 +162,7 @@ describe('icinga2::object::endpoint', :type => :define) do
   context "Windows 2012 R2  with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
   end
 
 
@@ -177,6 +177,6 @@ describe('icinga2::object::endpoint', :type => :define) do
   context "Windows 2012 R2  with log_duration => foo (not a valid value)" do
     let(:params) { {:log_duration => 'foo', :target => 'C:/bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
   end
 end

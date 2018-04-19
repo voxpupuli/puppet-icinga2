@@ -108,80 +108,40 @@
 #
 #
 define icinga2::object::host(
-  $target,
-  $ensure                = present,
-  $host_name             = $title,
-  $import                = [],
-  $address               = undef,
-  $address6              = undef,
-  $vars                  = undef,
-  $groups                = undef,
-  $display_name          = undef,
-  $check_command         = undef,
-  $max_check_attempts    = undef,
-  $check_period          = undef,
-  $check_timeout         = undef,
-  $check_interval        = undef,
-  $retry_interval        = undef,
-  $enable_notifications  = undef,
-  $enable_active_checks  = undef,
-  $enable_passive_checks = undef,
-  $enable_event_handler  = undef,
-  $enable_flapping       = undef,
-  $enable_perfdata       = undef,
-  $event_command         = undef,
-  $flapping_threshold    = undef,
-  $volatile              = undef,
-  $zone                  = undef,
-  $command_endpoint      = undef,
-  $notes                 = undef,
-  $notes_url             = undef,
-  $action_url            = undef,
-  $icon_image            = undef,
-  $icon_image_alt        = undef,
-  $template              = false,
-  $order                 = '50',
+  Stdlib::Absolutepath                       $target,
+  Enum['absent', 'present']                  $ensure                = present,
+  Optional[String]                           $host_name             = $title,
+  Array                                      $import                = [],
+  Optional[String]                           $address               = undef,
+  Optional[String]                           $address6              = undef,
+  Optional[Hash]                             $vars                  = undef,
+  Optional[Array]                            $groups                = undef,
+  Optional[String]                           $display_name          = undef,
+  Optional[String]                           $check_command         = undef,
+  Optional[Integer[1]]                       $max_check_attempts    = undef,
+  Optional[String]                           $check_period          = undef,
+  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]] $check_timeout         = undef,
+  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]] $check_interval        = undef,
+  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]] $retry_interval        = undef,
+  Optional[Boolean]                          $enable_notifications  = undef,
+  Optional[Boolean]                          $enable_active_checks  = undef,
+  Optional[Boolean]                          $enable_passive_checks = undef,
+  Optional[Boolean]                          $enable_event_handler  = undef,
+  Optional[Boolean]                          $enable_flapping       = undef,
+  Optional[Boolean]                          $enable_perfdata       = undef,
+  Optional[String]                           $event_command         = undef,
+  Optional[Integer[1]]                       $flapping_threshold    = undef,
+  Optional[Boolean]                          $volatile              = undef,
+  Optional[String]                           $zone                  = undef,
+  Optional[String]                           $command_endpoint      = undef,
+  Optional[String]                           $notes                 = undef,
+  Optional[String]                           $notes_url             = undef,
+  Optional[String]                           $action_url            = undef,
+  Optional[Stdlib::Absolutepath]             $icon_image            = undef,
+  Optional[String]                           $icon_image_alt        = undef,
+  Boolean                                    $template              = false,
+  Pattern[/^\d+$/]                           $order                 = '50',
 ) {
-
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_array($import)
-  validate_bool($template)
-  validate_absolute_path($target)
-  validate_integer($order)
-
-  if $host_name { validate_string($host_name) }
-  if $address { validate_string($address) }
-  if $address6 { validate_string($address6) }
-  if $groups { validate_array($groups) }
-  if $display_name { validate_string($display_name) }
-  if $check_command { validate_string($check_command) }
-  if $max_check_attempts { validate_integer($max_check_attempts) }
-  if $check_period { validate_string($check_period) }
-  if $check_timeout { validate_re($check_timeout, '^\d+\.?\d*[d|h|m|s]?$') }
-  if $check_interval { validate_re($check_interval, '^\d+\.?\d*[d|h|m|s]?$') }
-  if $retry_interval { validate_re($retry_interval, '^\d+\.?\d*[d|h|m|s]?$') }
-  if $enable_notifications { validate_bool($enable_notifications) }
-  if $enable_active_checks { validate_bool($enable_active_checks) }
-  if $enable_passive_checks { validate_bool($enable_passive_checks) }
-  if $enable_event_handler { validate_bool($enable_event_handler) }
-  if $enable_flapping { validate_bool($enable_flapping) }
-  if $enable_perfdata { validate_bool($enable_perfdata) }
-  if $event_command { validate_string($event_command) }
-  if $flapping_threshold { validate_integer($flapping_threshold) }
-  if $volatile { validate_bool($volatile) }
-  if $zone { validate_string($zone) }
-  if $command_endpoint { validate_string($command_endpoint) }
-  if $notes { validate_string($notes) }
-  if $notes_url { validate_string($notes_url) }
-  if $action_url { validate_string($action_url) }
-  if $icon_image { validate_absolute_path($icon_image) }
-  if $icon_image_alt { validate_string($icon_image_alt) }
 
   # compose the attributes
   $attrs = {

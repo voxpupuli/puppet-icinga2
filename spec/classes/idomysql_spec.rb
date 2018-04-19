@@ -55,7 +55,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
 
     context "#{os} with port => 4247" do
-      let(:params) { {:port => '4247'} }
+      let(:params) { {:port => 4247} }
 
       it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
                               .with({ 'target' => '/etc/icinga2/features-available/ido-mysql.conf' })
@@ -66,7 +66,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with port => foo (not a valid integer)" do
       let(:params) { {:port => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
     end
 
 
@@ -82,7 +82,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with socket_path => foo/bar (not an absolute path)" do
       let(:params) { {:socket_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -128,7 +128,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with pki => foo (not a valid value)" do
       let(:params) { {:pki => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['none', 'puppet'\]/) }
     end
 
 
@@ -159,7 +159,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -175,7 +175,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -191,7 +191,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -218,7 +218,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enabl_ssl = true, pki = none, ssl_capath = foo" do
       let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
     end
 
 
@@ -261,7 +261,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ha => foo (not a valid boolean)" do
       let(:params) { {:enable_ha => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
 
@@ -277,7 +277,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with failover_timeout => foo (not a valid value)" do
       let(:params) { {:failover_timeout => "foo"} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
     end
 
 
@@ -293,7 +293,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with cleanup => 'foo' (not a valid hash)" do
       let(:params) { {:cleanup => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
     end
 
 
@@ -309,7 +309,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with categories => 'foo' (not a valid array)" do
       let(:params) { {:categories => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
     end
 
 
@@ -330,7 +330,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with import_schema => foo (not a valid boolean)" do
       let(:params) { {:import_schema => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
     end
 
 
@@ -412,7 +412,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
 
   context "Windows 2012 R2 with port => 4247" do
-    let(:params) { {:port => '4247'} }
+    let(:params) { {:port => 4247} }
 
 
     it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
@@ -424,7 +424,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with port => foo (not a valid integer)" do
     let(:params) { {:port => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /first argument to be an Integer/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
   end
 
 
@@ -440,7 +440,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with socket_path => foo/bar (not an absolute path)" do
     let(:params) { {:socket_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -486,7 +486,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with pki => foo (not a valid value)" do
     let(:params) { {:pki => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /Valid values are 'puppet' and 'none'/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['none', 'puppet'\]/) }
   end
 
 
@@ -515,7 +515,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -531,7 +531,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -547,7 +547,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -574,7 +574,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_capath = foo" do
     let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an absolute path/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
   end
 
 
@@ -617,7 +617,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ha => foo (not a valid boolean)" do
     let(:params) { {:enable_ha => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
 
@@ -633,7 +633,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with failover_timeout => foo (not a valid value)" do
     let(:params) { {:failover_timeout => "foo"} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
   end
 
 
@@ -649,7 +649,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with cleanup => 'foo' (not a valid hash)" do
     let(:params) { {:cleanup => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a Hash/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Hash/) }
   end
 
 
@@ -665,7 +665,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with categories => 'foo' (not a valid array)" do
     let(:params) { {:categories => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not an Array/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Array/) }
   end
 
 
@@ -686,7 +686,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with import_schema => foo (not a valid boolean)" do
     let(:params) { {:import_schema => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
   end
 
   context "Windows 2012 R2 with icinga2::manage_package => true" do

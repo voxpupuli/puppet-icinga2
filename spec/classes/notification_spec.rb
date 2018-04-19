@@ -52,7 +52,7 @@ describe('icinga2::feature::notification', :type => :class) do
     context "#{os} with enable_ha = foo (not a valid boolean)" do
       let(:params) { {:enable_ha => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
     end
   end
 end
@@ -123,6 +123,6 @@ describe('icinga2::feature::notification', :type => :class) do
   context "Windows 2012 R2 with enable_ha = foo (not a valid boolean)" do
     let(:params) { {:enable_ha => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /"foo" is not a boolean/) }
+    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Boolean/) }
   end
 end

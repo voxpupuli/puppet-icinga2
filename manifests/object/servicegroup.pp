@@ -37,33 +37,17 @@
 #
 #
 define icinga2::object::servicegroup (
-  $target,
-  $ensure            = present,
-  $servicegroup_name = $title,
-  $display_name      = undef,
-  $groups            = undef,
-  $assign            = [],
-  $ignore            = [],
-  $template          = false,
-  $import            = [],
-  $order             = '65',
+  Stdlib::Absolutepath      $target,
+  Enum['absent', 'present'] $ensure            = present,
+  String                    $servicegroup_name = $title,
+  Optional[String]          $display_name      = undef,
+  Optional[Array]           $groups            = undef,
+  Array                     $assign            = [],
+  Array                     $ignore            = [],
+  Boolean                   $template          = false,
+  Array                     $import            = [],
+  Pattern[/^\d+$/]          $order             = '65',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($servicegroup_name)
-  validate_array($import)
-  validate_bool($template)
-  validate_absolute_path($target)
-  validate_string($order)
-
-  if $display_name { validate_string ( $display_name ) }
-  if $groups { validate_array ( $groups ) }
-
 
   # compose attributes
   $attrs = {
