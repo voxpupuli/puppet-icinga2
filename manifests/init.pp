@@ -183,17 +183,19 @@ class icinga2(
   -> Concat <| tag == 'icinga2::config::file' |>
   ~> Class['::icinga2::service']
 
+  # Put ::icinga2::repo outside to work around dependency cycle issues with the apt module
+  include '::icinga2::repo'
+
   anchor { '::icinga2::begin':
-    notify => Class['::icinga2::service']
+    notify => Class['::icinga2::service'],
   }
-  -> class { '::icinga2::repo': }
   -> class { '::icinga2::install': }
   -> File <| ensure == 'directory' and tag == 'icinga2::config::file' |>
   -> class { '::icinga2::config': notify => Class['::icinga2::service'] }
   -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
   ~> class { '::icinga2::service': }
   -> anchor { '::icinga2::end':
-    subscribe => Class['::icinga2::config']
+    subscribe => Class['::icinga2::config'],
   }
 
   include prefix($features, '::icinga2::feature::')
