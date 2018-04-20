@@ -55,7 +55,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with update_interval => foo (not a valid value)" do
       let(:params) { {:update_interval => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -71,7 +71,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with status_path => foo/bar (not an absolute path)" do
       let(:params) { {:status_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -87,7 +87,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
     context "#{os} with objects_path => foo/bar (not an absolute path)" do
       let(:params) { {:objects_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
   end
 
@@ -163,7 +163,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
   context 'Windows 2012 R2 with update_interval => foo (not a valid value)' do
     let(:params) { {:update_interval => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -179,7 +179,7 @@ describe('icinga2::feature::statusdata', :type => :class) do
   context 'Windows 2012 R2 with status_path => foo/bar (not an absolute path)' do
     let(:params) { {:status_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -195,6 +195,6 @@ describe('icinga2::feature::statusdata', :type => :class) do
   context 'Windows 2012 R2 with objects_path => foo/bar (not an absolute path)' do
     let(:params) { {:objects_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 end

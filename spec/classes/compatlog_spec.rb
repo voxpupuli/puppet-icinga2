@@ -53,7 +53,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
     context "#{os} with rotation_method => foo (not a valid value)" do
       let(:params) { {:rotation_method => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY'\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -69,7 +69,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
     context "#{os} with log_dir => foo/bar (not an absolute path)" do
       let(:params) { {:log_dir => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
   end
 end
@@ -141,7 +141,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
   context 'Windows 2012 R2 with rotation_method => foo (not a valid value)' do
     let(:params) { {:rotation_method => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY'\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -157,7 +157,7 @@ describe('icinga2::feature::compatlog', :type => :class) do
   context 'Windows 2012 R2 with path => foo/bar (not an absolute path)' do
     let(:params) { {:log_dir => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 end

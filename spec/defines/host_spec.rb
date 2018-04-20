@@ -27,7 +27,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -149,7 +149,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with check_timeout => foo (not a valid value)" do
       let(:params) { {:check_timeout => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -165,7 +165,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with check_interval => foo (not a valid value)" do
       let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -181,7 +181,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with retry_interval => foo (not a valid value)" do
       let(:params) { {:retry_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -433,7 +433,7 @@ describe('icinga2::object::host', :type => :define) do
     context "#{os} with icon_image => foo/foobar (not valid absolute path)" do
       let(:params) { {:icon_image => 'foo/foobar', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -489,7 +489,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:target => 'bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -611,7 +611,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with check_timeout => foo (not a valid value)" do
     let(:params) { {:check_timeout => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -627,7 +627,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with check_interval => foo (not a valid value)" do
     let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -643,7 +643,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with retry_interval => foo (not a valid value)" do
     let(:params) { {:retry_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -895,7 +895,7 @@ describe('icinga2::object::host', :type => :define) do
   context "Windows 2012 R2 with icon_image => foo/foobar (not valid absolute path)" do
     let(:params) { {:icon_image => 'foo/foobar', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 

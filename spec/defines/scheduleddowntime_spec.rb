@@ -133,7 +133,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                       :comment => 'foocomment',
                       :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\(\\\.\\d\+\)\?\[dhms\]\?\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -307,7 +307,7 @@ describe('icinga2::object::scheduleddowntime', :type => :define) do
                     :comment => 'foocomment',
                     :ranges => { 'foo' => "bar", 'bar' => "foo"}} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\(\\\.\\d\+\)\?\[dhms\]\?\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 

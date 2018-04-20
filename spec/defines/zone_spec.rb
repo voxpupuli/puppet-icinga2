@@ -42,7 +42,7 @@ describe('icinga2::object::zone', :type => :define) do
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:target => 'bar/baz'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -138,7 +138,7 @@ describe('icinga2::object::zone', :type => :define) do
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:target => 'bar/baz'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 

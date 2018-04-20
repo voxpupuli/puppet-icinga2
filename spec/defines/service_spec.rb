@@ -145,7 +145,7 @@ describe('icinga2::object::service', :type => :define) do
     context "#{os} with check_interval => foo (not a valid value)" do
       let(:params) { {:check_interval => 'foo', :target => '/bar/baz', :check_command => 'foocommand'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -165,7 +165,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -411,7 +411,7 @@ describe('icinga2::object::service', :type => :define) do
                       :host_name => 'hostfoo',
                       :check_command => 'commandfoo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -583,7 +583,7 @@ describe('icinga2::object::service', :type => :define) do
   context "Windows 2012 R2 with check_interval => foo (not a valid value)" do
     let(:params) { {:check_interval => 'foo', :target => 'C:/bar/baz', :check_command => 'foocommand'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -603,7 +603,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\\\.\?\\d\*\[d\|h\|m\|s\]\?\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -848,7 +848,7 @@ describe('icinga2::object::service', :type => :define) do
                     :host_name => 'hostfoo',
                     :check_command => 'commandfoo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 

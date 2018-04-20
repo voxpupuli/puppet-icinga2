@@ -98,7 +98,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with socket_path => foo/bar (not an absolute path)" do
       let(:params) { {:socket_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -114,7 +114,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
     context "#{os} with compat_log_path => foo/bar (not an absolute path)" do
       let(:params) { {:compat_log_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
   end
 end
@@ -229,7 +229,7 @@ describe('icinga2::feature::livestatus', :type => :class) do
   context 'Windows 2012 R2 with socket_path => foo/bar (not an absolute path)' do
     let(:params) { {:socket_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -245,6 +245,6 @@ describe('icinga2::feature::livestatus', :type => :class) do
   context 'Windows 2012 R2 with compat_log_path => foo/bar (not an absolute path)' do
     let(:params) { {:compat_log_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 end

@@ -50,7 +50,7 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with target => bar/baz (not valid absolute path)" do
       let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -109,14 +109,14 @@ describe('icinga2::object', :type => :define) do
     context "#{os} with apply => foo (not valid expression or boolean)" do
       let(:params) { {:apply => 'foo', :apply_target => 'Host', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Boolean or Pattern\[\/\^\.\+\\s\+\(=>\\s\+\.\+\\s\+\)\?in\\s\+\.\+\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
     context "#{os} with apply_target => 'foo' (not a valid value)" do
       let(:params) { {:apply_target => 'foo', :object_type => 'foo', :target => '/bar/baz', :order => '10'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['Host', 'Service'\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -331,7 +331,7 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with target => bar/baz (not valid absolute path)" do
     let(:params) { {:object_type => 'foo', :target => 'bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -390,14 +390,14 @@ describe('icinga2::object', :type => :define) do
   context "Windows 2012 R2 with apply => foo (not valid expression or boolean)" do
     let(:params) { {:apply => 'foo', :apply_target => 'Host', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a value of type Boolean or Pattern\[\/\^\.\+\\s\+\(=>\\s\+\.\+\\s\+\)\?in\\s\+\.\+\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
   context "Windows 2012 R2 with apply_target => 'foo' (not a valid value)" do
     let(:params) { {:apply_target => 'foo', :object_type => 'foo', :target => 'C:/bar/baz', :order => '10'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['Host', 'Service'\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
