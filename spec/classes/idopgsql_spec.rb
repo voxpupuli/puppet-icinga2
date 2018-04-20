@@ -138,7 +138,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
     context "#{os} with failover_timeout => foo (not a valid value)" do
       let(:params) { {:failover_timeout => "foo"} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -354,7 +354,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
   context "Windows 2012 R2 with failover_timeout => foo (not a valid value)" do
     let(:params) { {:failover_timeout => "foo"} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 

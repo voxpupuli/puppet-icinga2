@@ -52,7 +52,7 @@ describe('icinga2::feature::command', :type => :class) do
     context "#{os} with command_path => foo/bar (not an absolute path)" do
       let(:params) { {:command_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
   end
 end
@@ -123,6 +123,6 @@ describe('icinga2::feature::command', :type => :class) do
   context 'Windows 2012 R2 with path => foo/bar (not an absolute path)' do
     let(:params) { {:command_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 end

@@ -82,7 +82,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with socket_path => foo/bar (not an absolute path)" do
       let(:params) { {:socket_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -159,7 +159,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -175,7 +175,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -191,7 +191,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -218,7 +218,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with enabl_ssl = true, pki = none, ssl_capath = foo" do
       let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -277,7 +277,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
     context "#{os} with failover_timeout => foo (not a valid value)" do
       let(:params) { {:failover_timeout => "foo"} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -440,7 +440,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with socket_path => foo/bar (not an absolute path)" do
     let(:params) { {:socket_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -515,7 +515,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -531,7 +531,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -547,7 +547,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -574,7 +574,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with enabl_ssl = true, pki = none, ssl_capath = foo" do
     let(:params) { {:enable_ssl => true,:pki => 'none', :ssl_capath => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -633,7 +633,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
   context "Windows 2012 R2 with failover_timeout => foo (not a valid value)" do
     let(:params) { {:failover_timeout => "foo"} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 

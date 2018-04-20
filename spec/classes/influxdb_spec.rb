@@ -157,7 +157,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -173,7 +173,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -189,7 +189,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
       let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -304,7 +304,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
     context "#{os} with flush_interval => foo (not a valid value)" do
       let(:params) { {:flush_interval => 'foo'} }
 
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
     end
 
 
@@ -495,7 +495,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_key_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_key_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -511,7 +511,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -527,7 +527,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with enable_ssl = true, ssl_cacert_path = foo/bar (not a valid absolute path)" do
     let(:params) { {:enable_ssl => true, :ssl_cacert_path => 'foo/bar'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Variant\[Stdlib::Windowspath = Pattern\[\/.*\/\], Stdlib::Unixpath = Pattern\[\/.*\/\]\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
@@ -642,7 +642,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
   context "Windows 2012 R2 with flush_interval => foo (not a valid value)" do
     let(:params) { {:flush_interval => 'foo'} }
 
-    it { is_expected.to raise_error(Puppet::Error, /expects a match for Pattern\[\/\^\\d\+\[ms\]\*\$\/\]/) }
+    it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
   end
 
 
