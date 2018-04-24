@@ -1350,6 +1350,9 @@ Location of the CA certificate. Default depends on your platform:
 * Linux: `/etc/icinga2/pki/ca.crt`
 * Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
 
+##### `ssl_crl_path`
+Location of the certificate revocation list. Defaults to `undef`.
+
 ##### `accept_config`
 Accept zone configuration. Defaults to `false`
 
@@ -1384,6 +1387,20 @@ The IP address the api listener will be bound to. (e.g. 0.0.0.0)
 
 ##### `bind_port`
 The port the api listener will be bound to. (e.g. 5665)
+
+##### `access_control_allow_origin`
+Specifies an array of origin URLs that may access the API.
+
+##### `access_control_allow_credentials`
+Indicates whether or not the actual request can be made using credentials. Defaults to `true`.
+
+##### `access_control_allow_headers`
+Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
+Defaults to `Authorization`.
+
+##### `access_control_allow_methods`
+Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
+Defaults to `GET, POST, PUT, DELETE`.
 
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.
