@@ -187,7 +187,7 @@ class icinga2::feature::elasticsearch(
 
         if $ssl_cert {
           $_ssl_cert = $::osfamily ? {
-            'windows' => regsubst($cert_path, '\n', "\r\n", 'EMG'),
+            'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
             default   => $ssl_cert,
           }
 
@@ -200,7 +200,7 @@ class icinga2::feature::elasticsearch(
 
         if $ssl_cacert {
           $_ssl_cacert = $::osfamily ? {
-            'windows' => regsubst($ca_path, '\n', "\r\n", 'EMG'),
+            'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
             default   => $ssl_cacert,
           }
 
