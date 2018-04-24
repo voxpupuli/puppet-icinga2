@@ -80,23 +80,23 @@
 #
 #
 class icinga2::feature::elasticsearch(
-  $ensure                 = present,
-  $host                   = '127.0.0.1',
-  $port                   = 9200,
-  $index                  = 'icinga2',
-  $username               = undef,
-  $password               = undef,
-  $enable_ssl             = false,
-  $pki                    = 'puppet',
-  $ssl_key_path           = undef,
-  $ssl_cert_path          = undef,
-  $ssl_cacert_path        = undef,
-  $ssl_key                = undef,
-  $ssl_cert               = undef,
-  $ssl_cacert             = undef,
-  $enable_send_perfdata   = false,
-  $flush_interval         = '10s',
-  $flush_threshold        = 1024
+  Enum['absent', 'present']      $ensure               = present,
+  String                         $host                 = '127.0.0.1',
+  Integer[1,65535]               $port                 = 9200,
+  String                         $index                = 'icinga2',
+  Optional[String]               $username             = undef,
+  Optional[String]               $password             = undef,
+  Boolean                        $enable_ssl           = false,
+  Enum['none', 'puppet']         $pki                  = 'puppet',
+  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
+  Optional[String]               $ssl_key              = undef,
+  Optional[String]               $ssl_cert             = undef,
+  Optional[String]               $ssl_cacert           = undef,
+  Boolean                        $enable_send_perfdata = false,
+  Pattern[/^\d+[ms]*$/]          $flush_interval       = '10s',
+  Integer                        $flush_threshold      = 1024
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -122,33 +122,16 @@ class icinga2::feature::elasticsearch(
     group   => $group,
   }
 
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($host)
-  validate_integer($port)
-  validate_string($index)
-  validate_string($username)
-  validate_string($password)
-  validate_bool($enable_ssl)
-  validate_re($pki, [ '^puppet$', '^none$' ],
-    "${pki} isn't supported. Valid values are 'puppet' and 'none'.")
-  validate_bool($enable_send_perfdata)
-  validate_re($flush_interval, '^\d+[ms]*$')
-  validate_integer($flush_threshold)
-
   # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
-    validate_absolute_path($ssl_key_path)
     $_ssl_key_path = $ssl_key_path }
   else {
     $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
   if $ssl_cert_path {
-    validate_absolute_path($ssl_cert_path)
     $_ssl_cert_path = $ssl_cert_path }
   else {
     $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
   if $ssl_cacert_path {
-    validate_absolute_path($ssl_cacert_path)
     $_ssl_cacert_path = $ssl_cacert_path }
   else {
     $_ssl_cacert_path = "${ssl_dir}/ca.crt" }
@@ -188,42 +171,42 @@ class icinga2::feature::elasticsearch(
       } # puppet
 
       'none': {
-        if $key_path {
-          $_key_path = $::osfamily ? {
+        if $ssl_key {
+          $_ssl_key = $::osfamily ? {
             'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-            default   => $key_path,
+            default   => $ssl_key,
           }
 
           file { $_ssl_key_path:
             ensure  => file,
             mode    => $_ssl_key_mode,
-            content => $_key_path,
+            content => $_ssl_key,
             tag     => 'icinga2::config::file',
           }
         }
 
-        if $cert_path {
-          $_cert_path = $::osfamily ? {
+        if $ssl_cert {
+          $_ssl_cert = $::osfamily ? {
             'windows' => regsubst($cert_path, '\n', "\r\n", 'EMG'),
-            default   => $cert_path,
+            default   => $ssl_cert,
           }
 
           file { $_ssl_cert_path:
             ensure  => file,
-            content => $_cert_path,
+            content => $_ssl_cert,
             tag     => 'icinga2::config::file',
           }
         }
 
         if $ssl_cacert {
-          $_ca_path = $::osfamily ? {
+          $_ssl_cacert = $::osfamily ? {
             'windows' => regsubst($ca_path, '\n', "\r\n", 'EMG'),
-            default   => $ca_path,
+            default   => $ssl_cacert,
           }
 
           file { $_ssl_cacert_path:
             ensure  => file,
-            content => $_ca_path,
+            content => $_ssl_cacert,
             tag     => 'icinga2::config::file',
           }
         }
