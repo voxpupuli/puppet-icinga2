@@ -1,5 +1,27 @@
 # Change Log
 
+## [v1.3.6](https://github.com/Icinga/puppet-icinga2/tree/v1.3.6) (2018-04-25)
+[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.5...v1.3.6)
+
+**Implemented enhancements:**
+
+- Add support for SLC6 Linux [\#441](https://github.com/Icinga/puppet-icinga2/pull/441) ([HristoMohamed](https://github.com/HristoMohamed))
+- Support manage\_repo on XenServer [\#436](https://github.com/Icinga/puppet-icinga2/pull/436) ([jcharaoui](https://github.com/jcharaoui))
+
+**Fixed bugs:**
+
+- Changes on concat resource for objects does not trigger a refresh on puppet3 [\#434](https://github.com/Icinga/puppet-icinga2/issues/434)
+- don't quote null  [\#433](https://github.com/Icinga/puppet-icinga2/issues/433)
+
+**Closed issues:**
+
+- Using apply in a service causes service\_name not to be applied to service leading to duplicate resource issues [\#429](https://github.com/Icinga/puppet-icinga2/issues/429)
+- Applying services to hostgroups [\#427](https://github.com/Icinga/puppet-icinga2/issues/427)
+
+**Merged pull requests:**
+
+- Bug/do not quote null 433 [\#435](https://github.com/Icinga/puppet-icinga2/pull/435) ([lbetz](https://github.com/lbetz))
+
 ## [v1.3.5](https://github.com/Icinga/puppet-icinga2/tree/v1.3.5) (2018-01-24)
 [Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.4...v1.3.5)
 
