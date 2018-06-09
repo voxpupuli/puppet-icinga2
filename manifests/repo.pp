@@ -41,6 +41,8 @@ class icinga2::repo {
         # handle icinga stable repo before all package resources
         # contain class problem!
         Apt::Source['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
+        Class['apt::update'] -> Package <| tag == 'icinga2' |>
+
         case $::operatingsystem {
           'debian': {
             include ::apt, ::apt::backports
