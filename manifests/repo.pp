@@ -40,7 +40,9 @@ class icinga2::repo {
       'debian': {
         # handle icinga stable repo before all package resources
         # contain class problem!
-        Apt::Source['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
+        Apt::Source['icinga-stable-release'] -> Class['icinga2::install']
+        Class['apt::update'] -> Class['icinga2::install']
+
         case $::operatingsystem {
           'debian': {
             include ::apt, ::apt::backports
@@ -71,7 +73,6 @@ class icinga2::repo {
             fail('Your plattform is not supported to manage a repository.')
           }
         }
-        contain ::apt::update
       }
       'suse': {
 
