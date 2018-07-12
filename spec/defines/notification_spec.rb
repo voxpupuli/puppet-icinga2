@@ -147,6 +147,12 @@ describe('icinga2::object::notification', :type => :define) do
       it { is_expected.to raise_error(Puppet::Error, /"foo" does not match/) }
     end
 
+    context "#{os} with interval => service.vars.notification.interval" do
+      let(:params) { {:interval => 'service.vars.notification.interval', :target => '/bar/baz'} }
+      it { is_expected.to contain_concat__fragment('icinga2::object::Notification::bar')
+                              .with({'target' => '/bar/baz'})
+                              .with_content(/interval = service.vars.notification.interval/) }
+    end
 
     context "#{os} with period => foo" do
       let(:params) { {:period => 'foo', :target => '/bar/baz'} }

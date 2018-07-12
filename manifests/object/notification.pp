@@ -37,7 +37,7 @@
 # [*interval*]
 # 	The notification interval (in seconds). This interval is used for active
 #   notifications. Defaults to 30 minutes. If set to 0, re-notifications are
-#   disabled.
+#   disabled. Also supports using vars.
 #
 # [*period*]
 # 	The name of a time period which determines when this notification should be
@@ -128,7 +128,7 @@ define icinga2::object::notification (
   if !is_string($user_groups) { validate_array($user_groups) }
   if $times { validate_hash ($times )}
   if $command { validate_string ($command )}
-  if $interval { validate_re($interval, '^\d+(\.\d+)?[dhms]?$')}
+  if $interval { validate_re($interval, '(^\d+(\.\d+)?[dhms]?$|(service|host)\.vars\..*)')}
   if $period { validate_string ($period )}
   if $zone { validate_string ($zone) }
   if !is_array($types) { validate_string($types) }
