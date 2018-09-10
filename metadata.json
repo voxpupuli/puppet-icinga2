@@ -71,6 +71,12 @@
         "11",
         "10"
       ]
+    },
+    {
+      "operatingsystem": "OpenBSD",
+      "operatingsystemrelease": [
+        "6.3"
+      ]
     }
   ]
 }

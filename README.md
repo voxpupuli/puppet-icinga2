@@ -93,6 +93,7 @@ This module has been tested on:
     * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
 * OracleLinux 7
 * FreeBSD 10, 11
+* OpenBSD 6.3
 * SLES 12
 * Windows Server 2012
 

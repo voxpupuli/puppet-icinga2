@@ -198,6 +198,35 @@ class icinga2::params {
       }
     } # FreeBSD
 
+    'OpenBSD': {
+      $bin_dir              = '/usr/local/sbin'
+      $conf_dir             = '/etc/icinga2'
+      $log_dir              = '/var/log/icinga2'
+      $run_dir              = '/var/run/icinga2'
+      $spool_dir            = '/var/spool/icinga2'
+      $cache_dir            = '/var/cache/icinga2'
+      $pki_dir              = "${conf_dir}/pki"
+      $ca_dir               = '/var/lib/icinga2/ca'
+      $user                 = '_icinga'
+      $group                = '_icinga'
+      $icinga2_bin          = 'icinga2'
+      $lib_dir              = '/usr/local/lib/icinga2'
+      $ido_pgsql_package    = 'icinga2-ido-pgsql'
+      $ido_pgsql_schema_dir = '/usr/local/share/icinga2-ido-pgsql/schema'
+      $ido_mysql_package    = 'icinga2-ido-mysql'
+      $ido_mysql_schema_dir = '/usr/local/share/icinga2-ido-mysql/schema'
+      $service_reload       = 'rcctl restart icinga2'
+
+      $constants = {
+        'PluginDir'          => '/usr/local/libexec/nagios',
+        'PluginContribDir'   => '/usr/local/share/icinga2/include/plugins-contrib.d',
+        'ManubulonPluginDir' => '/usr/local/libexec/nagios',
+        'ZoneName'           => $::fqdn,
+        'NodeName'           => $::fqdn,
+        'TicketSalt'         => '',
+      }
+    } # OpenBSD
+
     default: {
       fail("Your plattform ${::osfamily} is not supported, yet.")
     }
