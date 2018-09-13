@@ -164,7 +164,7 @@ define icinga2::object::service (
   Optional[String]                           $display_name           = undef,
   Optional[String]                           $host_name              = undef,
   Optional[Array]                            $groups                 = undef,
-  Optional[Hash]                             $vars                   = undef,
+  Optional[Variant[String, Hash]]            $vars                   = undef,
   Optional[String]                           $check_command          = undef,
   Optional[Integer[1]]                       $max_check_attempts     = undef,
   Optional[String]                           $check_period           = undef,
