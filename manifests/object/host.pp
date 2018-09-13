@@ -114,7 +114,7 @@ define icinga2::object::host(
   Array                                      $import                = [],
   Optional[String]                           $address               = undef,
   Optional[String]                           $address6              = undef,
-  Optional[Hash]                             $vars                  = undef,
+  Optional[Variant[String, Hash]]            $vars                  = undef,
   Optional[Array]                            $groups                = undef,
   Optional[String]                           $display_name          = undef,
   Optional[String]                           $check_command         = undef,

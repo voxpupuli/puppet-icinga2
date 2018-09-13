@@ -56,21 +56,21 @@
 #
 #
 define icinga2::object::user (
-  Stdlib::Absolutepath      $target,
-  Enum['absent', 'present'] $ensure               = present,
-  String                    $user_name            = $title,
-  Optional[String]          $display_name         = undef,
-  Optional[String]          $email                = undef,
-  Optional[String]          $pager                = undef,
-  Optional[Hash]            $vars                 = undef,
-  Optional[Array]           $groups               = undef,
-  Optional[Boolean]         $enable_notifications = undef,
-  Optional[String]          $period               = undef,
-  Optional[Array]           $types                = undef,
-  Optional[Array]           $states               = undef,
-  Array                     $import               = [],
-  Boolean                   $template             = false,
-  Pattern[/^\d+$/]          $order                = '75',
+  Stdlib::Absolutepath                $target,
+  Enum['absent', 'present']           $ensure               = present,
+  String                              $user_name            = $title,
+  Optional[String]                    $display_name         = undef,
+  Optional[String]                    $email                = undef,
+  Optional[String]                    $pager                = undef,
+  Optional[Variant[String, Hash]]     $vars                 = undef,
+  Optional[Array]                     $groups               = undef,
+  Optional[Boolean]                   $enable_notifications = undef,
+  Optional[String]                    $period               = undef,
+  Optional[Array]                     $types                = undef,
+  Optional[Array]                     $states               = undef,
+  Array                               $import               = [],
+  Boolean                             $template             = false,
+  Pattern[/^\d+$/]                    $order                = '75',
 ){
 
   # compose attributes

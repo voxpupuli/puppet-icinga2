@@ -40,17 +40,17 @@
 #
 #
 define icinga2::object::checkcommand(
-  Stdlib::Absolutepath             $target,
-  Enum['absent', 'present']        $ensure            = present,
-  Optional[String]                 $checkcommand_name = $title,
-  Array                            $import            = ['plugin-check-command'],
-  Optional[Variant[Array, String]] $command           = undef,
-  Optional[Hash]                   $env               = undef,
-  Optional[Hash]                   $vars              = undef,
-  Optional[Integer[1]]             $timeout           = undef,
-  Optional[Hash]                   $arguments         = undef,
-  Boolean                          $template          = false,
-  Pattern[/^\d+$/]                 $order             = '15',
+  Stdlib::Absolutepath                $target,
+  Enum['absent', 'present']           $ensure            = present,
+  Optional[String]                    $checkcommand_name = $title,
+  Array                               $import            = ['plugin-check-command'],
+  Optional[Variant[Array, String]]    $command           = undef,
+  Optional[Hash]                      $env               = undef,
+  Optional[Variant[String, Hash]]     $vars              = undef,
+  Optional[Integer[1]]                $timeout           = undef,
+  Optional[Hash]                      $arguments         = undef,
+  Boolean                             $template          = false,
+  Pattern[/^\d+$/]                    $order             = '15',
 ) {
 
   # compose the attributes

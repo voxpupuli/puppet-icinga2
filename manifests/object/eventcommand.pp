@@ -44,16 +44,16 @@
 #
 #
 define icinga2::object::eventcommand (
-  Stdlib::Absolutepath            $target,
-  Enum['absent', 'present']       $ensure            = present,
-  String                          $eventcommand_name = $title,
-  Optional[Variant[Array,String]] $command           = undef,
-  Optional[Hash]                  $env               = undef,
-  Optional[Hash]                  $vars              = undef,
-  Optional[Integer[1]]            $timeout           = undef,
-  Optional[Hash]                  $arguments         = undef,
-  Array                           $import            = ['plugin-event-command'],
-  Pattern[/^\d+$/]                $order             = '20',
+  Stdlib::Absolutepath                $target,
+  Enum['absent', 'present']           $ensure            = present,
+  String                              $eventcommand_name = $title,
+  Optional[Variant[Array, String]]    $command           = undef,
+  Optional[Hash]                      $env               = undef,
+  Optional[Variant[String, Hash]]     $vars              = undef,
+  Optional[Integer[1]]                $timeout           = undef,
+  Optional[Hash]                      $arguments         = undef,
+  Array                               $import            = ['plugin-event-command'],
+  Pattern[/^\d+$/]                    $order             = '20',
 ){
 
   # compose the attributes
