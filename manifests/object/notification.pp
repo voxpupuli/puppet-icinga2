@@ -95,7 +95,7 @@ define icinga2::object::notification (
   Optional[Variant[Array, String]]           $types             = undef,
   Optional[Variant[Array, String]]           $states            = undef,
   Variant[Boolean, String]                   $apply             = false,
-  Boolean                                    $prefix            = false,
+  Variant[Boolean, String] i                 $prefix            = false,
   Enum['Host', 'Service']                    $apply_target      = 'Host',
   Array                                      $assign            = [],
   Array                                      $ignore            = [],
