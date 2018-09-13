@@ -188,7 +188,7 @@ define icinga2::object::service (
   Optional[Stdlib::Absolutepath]             $icon_image             = undef,
   Optional[String]                           $icon_image_alt         = undef,
   Variant[Boolean, String]                   $apply                  = false,
-  Boolean                                    $prefix                 = false,
+  Variant[Boolean, String]                   $prefix                 = false,
   Array                                      $assign                 = [],
   Array                                      $ignore                 = [],
   Array                                      $import                 = [],
