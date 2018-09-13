@@ -2411,7 +2411,7 @@ Dispose an apply instead an object if set to 'true'. Value is taken as statement
 i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
 
 ##### `apply_target`
-An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
+Optional fo an object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
 
 ##### `import`
 A sorted list of templates to import in this object. Defaults to an empty array.

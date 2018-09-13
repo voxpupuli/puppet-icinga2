@@ -4,9 +4,9 @@
 <% if scope.lookupvar('icinga2::_constants').include?(@object_name) -%>
  <%= @object_name -%>
 <% else -%>
-  "<%= @object_name %>" <% end -%>
+ "<%= @object_name %>"<% end -%>
 <% end -%>
- for (<%= @apply %>) to <%= @apply_target -%> {
+ for (<%= @apply %>)<%if @apply_target %>to <%=apply_target %><% end %> {
 <% else -%>
 <% if @apply %>apply<% else -%>
 <% if @template %>template<% else %>object<% end -%>
@@ -14,8 +14,8 @@
 <% if scope.lookupvar('icinga2::_constants').include?(@object_name) -%>
  <%= @object_name -%>
 <% else -%>
- "<%= @object_name %>" <% end -%>
-<% if @apply && @apply_target %>to <%= @apply_target -%><% end -%> {
+ "<%= @object_name %>"<% end -%>
+<% if @apply && @apply_target %>to <%= @apply_target %><% end -%> {
 <% end -%>
 <% @import.each do |i| -%>
   import "<%= i %>"

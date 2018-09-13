@@ -234,7 +234,6 @@ define icinga2::object::service (
     import       => $import,
     apply        => $apply,
     prefix       => $prefix,
-    apply_target => 'Host',
     assign       => $assign,
     ignore       => $ignore,
     template     => $template,

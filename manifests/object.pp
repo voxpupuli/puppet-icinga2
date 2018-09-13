@@ -22,7 +22,7 @@
 #   Set object_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
 #
 # [*apply_target*]
-#   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
+#   Optional for an object type on which to target the apply rule. Valid values are `Host` and `Service`.
 #
 # [*import*]
 #   A sorted list of templates to import in this object. Defaults to an empty array.
