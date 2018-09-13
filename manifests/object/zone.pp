@@ -25,17 +25,17 @@
 #   first time.
 #
 # [*order*]
-#   String to control the position in the target file, sorted alpha numeric.
+#   String or integer to control the position in the target file, sorted alpha numeric. Defaults to 45.
 #
 #
 define icinga2::object::zone(
-  Enum['absent', 'present']      $ensure    = present,
-  String                         $zone_name = $title,
-  Optional[Array]                $endpoints = [],
-  Optional[String]               $parent    = undef,
-  Optional[Boolean]              $global    = false,
-  Optional[Stdlib::Absolutepath] $target    = undef,
-  Pattern[/^\d+$/]               $order     = '45',
+  Enum['absent', 'present']          $ensure    = present,
+  String                             $zone_name = $title,
+  Optional[Array]                    $endpoints = [],
+  Optional[String]                   $parent    = undef,
+  Optional[Boolean]                  $global    = false,
+  Optional[Stdlib::Absolutepath]     $target    = undef,
+  Variant[String, Integer]           $order     = 45,
 ) {
 
   include ::icinga2::params

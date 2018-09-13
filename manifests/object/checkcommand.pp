@@ -36,7 +36,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 10.
 #
 #
 define icinga2::object::checkcommand(
@@ -50,7 +50,7 @@ define icinga2::object::checkcommand(
   Optional[Integer[1]]                $timeout           = undef,
   Optional[Hash]                      $arguments         = undef,
   Boolean                             $template          = false,
-  Pattern[/^\d+$/]                    $order             = '15',
+  Variant[String, Integer]            $order             = 15,
 ) {
 
   # compose the attributes

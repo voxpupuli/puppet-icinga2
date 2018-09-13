@@ -104,7 +104,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 50.
 #
 #
 define icinga2::object::host(
@@ -140,7 +140,7 @@ define icinga2::object::host(
   Optional[Stdlib::Absolutepath]             $icon_image            = undef,
   Optional[String]                           $icon_image_alt        = undef,
   Boolean                                    $template              = false,
-  Pattern[/^\d+$/]                           $order                 = '50',
+  Variant[String, Integer]                   $order                 = 50,
 ) {
 
   # compose the attributes

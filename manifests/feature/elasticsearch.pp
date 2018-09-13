@@ -236,7 +236,7 @@ class icinga2::feature::elasticsearch(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/elasticsearch.conf",
     notify      => $_notify,
-    order       => '10',
+    order       => 10,
   }
 
   # import library 'perfdata'

@@ -33,20 +33,20 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 65.
 #
 #
 define icinga2::object::servicegroup (
   Stdlib::Absolutepath      $target,
-  Enum['absent', 'present'] $ensure            = present,
-  String                    $servicegroup_name = $title,
-  Optional[String]          $display_name      = undef,
-  Optional[Array]           $groups            = undef,
-  Array                     $assign            = [],
-  Array                     $ignore            = [],
-  Boolean                   $template          = false,
-  Array                     $import            = [],
-  Pattern[/^\d+$/]          $order             = '65',
+  Enum['absent', 'present']     $ensure            = present,
+  String                        $servicegroup_name = $title,
+  Optional[String]              $display_name      = undef,
+  Optional[Array]               $groups            = undef,
+  Array                         $assign            = [],
+  Array                         $ignore            = [],
+  Boolean                       $template          = false,
+  Array                         $import            = [],
+  Variant[String, Integer]      $order             = 65,
 ){
 
   # compose attributes

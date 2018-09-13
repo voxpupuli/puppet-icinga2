@@ -27,17 +27,17 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 40.
 #
 #
 define icinga2::object::endpoint(
-  Enum['absent', 'present']                  $ensure        = present,
-  Optional[String]                           $endpoint_name = $title,
-  Optional[String]                           $host          = undef,
-  Optional[Integer[1,65535]]                 $port          = undef,
-  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]] $log_duration  = undef,
-  Optional[Stdlib::Absolutepath]             $target        = undef,
-  Pattern[/^\d+$/]                           $order         = '40',
+  Enum['absent', 'present']                      $ensure        = present,
+  Optional[String]                               $endpoint_name = $title,
+  Optional[String]                               $host          = undef,
+  Optional[Integer[1,65535]]                     $port          = undef,
+  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]]     $log_duration  = undef,
+  Optional[Stdlib::Absolutepath]                 $target        = undef,
+  Variant[String, Integer]                       $order         = 40,
 ) {
 
   include ::icinga2::params

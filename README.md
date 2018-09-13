@@ -763,12 +763,12 @@ icinga2::object::service { 'load':
   check_command => 'load',
   assign        => ['vars.os == Linux'],
   target        => '/etc/icinga2/conf.d/service_load.conf',
-  order         => '30',
+  order         => 30,
 }
 
 icinga2::config::fragment { 'load-function':
   target => '/etc/icinga2/conf.d/service_load.conf',
-  order => '10',
+  order => 10,
   content => 'vars.load_wload1 = {{
     if (get_time_period("backup").is_inside) {
       return 20
@@ -817,11 +817,11 @@ icinga2::config::fragment { 'load-function':
     - [Defined type: icinga2::object::dependency](#defined-type-icinga2objectdependency)
     - [Defined type: icinga2::object::timeperiod](#defined-type-icinga2objecttimeperiod)
     - [Defined type: icinga2::object::usergroup](#defined-type-icinga2objectusergroup)
+    - [Defined type: icinga2::object::user](#defined-type-icinga2objectuser)
     - [Defined type: icinga2::object::notificationcommand](#defined-type-icinga2objectnotificationcommand)
     - [Defined type: icinga2::object::notification](#defined-type-icinga2objectnotification)
     - [Defined type: icinga2::object::service](#defined-type-icinga2objectservice)
     - [Defined type: icinga2::object::servicegroup](#defined-type-icinga2objectservicegroup)
-    - [Defined type: icinga2::object::downtime](#defined-type-icinga2objectdowntime)
     - [Defined type: icinga2::object::scheduleddowntime](#defined-type-icinga2objectscheduleddowntime)
     - [Defined type: icinga2::object::eventcommand](#defined-type-icinga2objecteventcommand)
     - [Defined type: icinga2::object::checkresultreader](#defined-type-icinga2objectcheckresultreader)
@@ -1585,7 +1585,7 @@ like `10m` for 10 minutes or `1h` for one hour.
 Destination config file to store in this object. File will be declared at the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`.
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 40.
 
 #### Defined type: `icinga2::object::zone`
 
@@ -1608,7 +1608,7 @@ If set to `true`, a global zone is defined and the parameter endpoints and paren
 Destination config file to store in this object. File will be declared at the first time.
 
 ##### `order`
-String to control the position in the target file, sorted alpha numeric.
+String or integer to control the position in the target file, sorted alpha numeric. Defauts to 45.
 
 #### Defined type: `icinga2::object::apiuser`
 
@@ -1632,7 +1632,7 @@ as function.
 Destination config file to store in this object. File will be declared at the first time.
 
 ##### `order`
-String to control the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to control the position in the target file, sorted alpha numeric. Defaults to 30.
 
 ###### Examples
 
@@ -1690,7 +1690,7 @@ Destination config file to store in this object. File will be declared the
 first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 15.
 
 #### Defined type: `icinga2::object::host`
 
@@ -1791,7 +1791,7 @@ Set to true creates a template instead of an object. Defaults to `false`
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 50.
 
 #### Defined type: `icinga2::object::hostgroup`
 
@@ -1811,7 +1811,7 @@ Assign host group members using the group assign rules.
 Destination config file to store in this object. File will be declared at the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 55.
 
 #### Defined type: `icinga2::object::dependency`
 
@@ -1874,7 +1874,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `35`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 70.
 
 #### Defined type: `icinga2::object::timeperiod`
 
@@ -1909,7 +1909,7 @@ Set to true creates a template instead of an object. Defaults to `false`
 Destination config file to store this object in. File will be declared on the first run.
 
 ##### `order`
-String to control the position in the target file, sorted alpha numeric.
+String or integer to control the position in the target file, sorted alpha numeric. Defaults to 35.
 
 #### Defined type: `icinga2::object::usergroup`
 
@@ -1944,7 +1944,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 80.
 
 #### Defined type: `icinga2::object::user`
 
@@ -1988,7 +1988,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 75.
 
 #### Defined type: `icinga2::object::notificationcommand`
 
@@ -2028,7 +2028,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 25.
 
 #### Defined type: `icinga2::object::notification`
 
@@ -2096,7 +2096,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 85.
 
 #### Defined type: `icinga2::object::service`
 
@@ -2213,7 +2213,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `10`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 60.
 
 #### Defined type: `icinga2::object::servicegroup`
 
@@ -2245,48 +2245,7 @@ Sorted List of templates to include. Defaults to an empty list.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
-
-#### Defined type: `icinga2::object::downtime`
-
-##### `ensure`
-Set to present enables the downtime object, absent disables it. Defaults to `present`
-
-##### `host_name`
-The name of the host this comment belongs to.
-
-##### `service_name`
-The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
-
-##### `author`
-The author's name.
-
-##### `comment`
-The comment text.
-
-##### `start_time`
-The start time as unix timestamp.
-
-##### `end_time`
-The end time as unix timestamp.
-
-##### `duration`
-The duration as number.
-
-##### `entry_time`
-The unix timestamp when this downtime was added.
-
-##### `fixed`
-Whether the downtime is fixed (`true`) or flexible (`false`). Defaults to flexible.
-
-##### `triggers`
-List of downtimes which should be triggered by this downtime.
-
-##### `target`
-Destination config file to store in this object. File will be declared the first time.
-
-##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 55.
 
 #### Defined type: `icinga2::object::scheduleddowntime`
 
@@ -2337,7 +2296,7 @@ Exclude users using the group ignore rules.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 90.
 
 #### Defined type: `icinga2::object::eventcommand`
 
@@ -2374,7 +2333,7 @@ Destination config file to store in this object. File will be declared the first
 Sorted List of templates to include. Defaults to an empty list.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 20.
 
 #### Defined type: `icinga2::object::checkresultreader`
 
@@ -2391,7 +2350,7 @@ The directory which contains the check result files. Defaults to `LocalStateDir 
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. Defaults to `30`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to `05`.
 
 #### Defined type: `icinga2::object::compatlogger`
 
@@ -2408,7 +2367,7 @@ The directory which contains the check result files. Defaults to `LocalStateDir 
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric. `Defaults to 30`
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to `05`.
 
 #### Defined type: `icinga2::config::fragment`
 
@@ -2419,7 +2378,7 @@ Content to insert in file specified in target.
 Destination config file to store in this fragment. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted in alpha numeric order.
+String or integer to set the position in the target file, sorted in alpha numeric order. Defailts to `05`.
 
 
 ### Private defined types
@@ -2467,7 +2426,7 @@ Icinga 2 object type for this object.
 Destination config file to store in this object. File will be declared the first time.
 
 ##### `order`
-String to set the position in the target file, sorted alpha numeric.
+String or integer to set the position in the target file, sorted alpha numeric. Defaults to 10.
 
 
 ## Development

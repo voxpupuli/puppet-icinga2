@@ -52,7 +52,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 75.
 #
 #
 define icinga2::object::user (
@@ -70,7 +70,7 @@ define icinga2::object::user (
   Optional[Array]                     $states               = undef,
   Array                               $import               = [],
   Boolean                             $template             = false,
-  Pattern[/^\d+$/]                    $order                = '75',
+  Variant[String, Integer]            $order                = 75,
 ){
 
   # compose attributes

@@ -52,26 +52,26 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 90.
 #
 #
 define icinga2::object::scheduleddowntime (
-  Stdlib::Absolutepath                      $target,
-  Enum['absent', 'present']                 $ensure                 = present,
-  String                                    $scheduleddowntime_name = $title,
-  Optional[String]                          $host_name              = undef,
-  Optional[String]                          $service_name           = undef,
-  Optional[String]                          $author                 = undef,
-  Optional[String]                          $comment                = undef,
-  Optional[Boolean]                         $fixed                  = undef,
-  Optional[Pattern[/^\d+(\.\d+)?[dhms]?$/]] $duration               = undef,
-  Optional[Hash]                            $ranges                 = undef,
-  Variant[Boolean, String]                  $apply                  = false,
-  Boolean                                   $prefix                 = false,
-  Enum['Host', 'Service']                   $apply_target           = 'Host',
-  Array                                     $assign                 = [],
-  Array                                     $ignore                 = [],
-  Pattern[/^\d+$/]                          $order                  = '90',
+  Stdlib::Absolutepath                          $target,
+  Enum['absent', 'present']                     $ensure                 = present,
+  String                                        $scheduleddowntime_name = $title,
+  Optional[String]                              $host_name              = undef,
+  Optional[String]                              $service_name           = undef,
+  Optional[String]                              $author                 = undef,
+  Optional[String]                              $comment                = undef,
+  Optional[Boolean]                             $fixed                  = undef,
+  Optional[Pattern[/^\d+(\.\d+)?[dhms]?$/]]     $duration               = undef,
+  Optional[Hash]                                $ranges                 = undef,
+  Variant[Boolean, String]                      $apply                  = false,
+  Variant[String, Boolean]                      $prefix                 = false,
+  Enum['Host', 'Service']                       $apply_target           = 'Host',
+  Array                                         $assign                 = [],
+  Array                                         $ignore                 = [],
+  Variant[String, Integer]                      $order                  = 90,
 ){
 
   # compose attributes

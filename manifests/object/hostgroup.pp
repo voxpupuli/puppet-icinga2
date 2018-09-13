@@ -21,7 +21,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 55.
 #
 # === Examples
 #
@@ -34,14 +34,14 @@
 #
 #
 define icinga2::object::hostgroup(
-  Stdlib::Absolutepath      $target,
-  Enum['absent', 'present'] $ensure         = present,
-  String                    $hostgroup_name = $title,
-  Optional[String]          $display_name   = undef,
-  Optional[Array]           $groups         = undef,
-  Array                     $assign         = [],
-  Array                     $ignore         = [],
-  Pattern[/^\d+$/]          $order          = '55',
+  Stdlib::Absolutepath        $target,
+  Enum['absent', 'present']   $ensure         = present,
+  String                      $hostgroup_name = $title,
+  Optional[String]            $display_name   = undef,
+  Optional[Array]             $groups         = undef,
+  Array                       $assign         = [],
+  Array                       $ignore         = [],
+  Variant[String, Integer]    $order          = 55,
 ) {
 
   if $ignore != [] and $assign == [] {

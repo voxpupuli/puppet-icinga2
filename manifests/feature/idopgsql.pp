@@ -152,7 +152,7 @@ class icinga2::feature::idopgsql(
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/ido-pgsql.conf",
-    order       => '10',
+    order       => 10,
     notify      => $_notify,
   }
 

@@ -45,7 +45,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 25.
 #
 #
 define icinga2::object::notificationcommand (
@@ -59,7 +59,7 @@ define icinga2::object::notificationcommand (
   Optional[Hash]                       $arguments                = undef,
   Boolean                              $template                 = false,
   Array                                $import                   = ['plugin-notification-command'],
-  Pattern[/^\d+$/]                     $order                    = '25',
+  Variant[String, Integer]             $order                    = 25,
 ){
 
   # compose attributes

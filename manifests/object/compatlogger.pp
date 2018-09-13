@@ -22,12 +22,12 @@
 #
 #
 define icinga2::object::compatlogger (
-  Stdlib::Absolutepath                                   $target,
-  Enum['absent', 'present']                              $ensure            = present,
-  String                                                 $compatlogger_name = $title,
-  Optional[Stdlib::Absolutepath]                         $log_dir           = undef,
-  Optional[Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY']] $rotation_method   = undef,
-  Pattern[/^\d+$/]                                       $order             = '5',
+  Stdlib::Absolutepath                                       $target,
+  Enum['absent', 'present']                                  $ensure            = present,
+  String                                                     $compatlogger_name = $title,
+  Optional[Stdlib::Absolutepath]                             $log_dir           = undef,
+  Optional[Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY']]     $rotation_method   = undef,
+  Variant[String, Integer]                                   $order             = '05',
 ){
 
   # compose the attributes
@@ -52,6 +52,6 @@ define icinga2::object::compatlogger (
   concat::fragment { "icinga2::object::CompatLogger::${title}-library":
     target  => $target,
     content => "library \"compat\"\n\n",
-    order   => '05',
+    order   => $order,
   }
 }

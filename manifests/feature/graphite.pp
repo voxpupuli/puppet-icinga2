@@ -63,7 +63,7 @@ class icinga2::feature::graphite(
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/graphite.conf",
-    order       => '10',
+    order       => 10,
     notify      => $_notify,
   }
 

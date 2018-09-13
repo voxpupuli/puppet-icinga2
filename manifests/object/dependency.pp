@@ -70,30 +70,30 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 35.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 70.
 #
 #
 define icinga2::object::dependency (
-  Stdlib::Absolutepath      $target,
-  Enum['absent', 'present'] $ensure                = present,
-  String                    $dependency_name       = $title,
-  Optional[String]          $parent_host_name      = undef,
-  Optional[String]          $parent_service_name   = undef,
-  Optional[String]          $child_host_name       = undef,
-  Optional[String]          $child_service_name    = undef,
-  Optional[Boolean]         $disable_checks        = undef,
-  Optional[Boolean]         $disable_notifications = undef,
-  Optional[Boolean]         $ignore_soft_states    = undef,
-  Optional[String]          $period                = undef,
-  Optional[Array]           $states                = undef,
-  Variant[Boolean, String]  $apply                 = false,
-  Boolean                   $prefix                = false,
-  Enum['Host', 'Service']   $apply_target          = 'Host',
-  Array                     $assign                = [],
-  Array                     $ignore                = [],
-  Array                     $import                = [],
-  Boolean                   $template              = false,
-  Pattern[/^\d+$/]          $order                 = '70',
+  Stdlib::Absolutepath          $target,
+  Enum['absent', 'present']     $ensure                = present,
+  String                        $dependency_name       = $title,
+  Optional[String]              $parent_host_name      = undef,
+  Optional[String]              $parent_service_name   = undef,
+  Optional[String]              $child_host_name       = undef,
+  Optional[String]              $child_service_name    = undef,
+  Optional[Boolean]             $disable_checks        = undef,
+  Optional[Boolean]             $disable_notifications = undef,
+  Optional[Boolean]             $ignore_soft_states    = undef,
+  Optional[String]              $period                = undef,
+  Optional[Array]               $states                = undef,
+  Variant[Boolean, String]      $apply                 = false,
+  Variant[String, Boolean]      $prefix                = false,
+  Enum['Host', 'Service']       $apply_target          = 'Host',
+  Array                         $assign                = [],
+  Array                         $ignore                = [],
+  Array                         $import                = [],
+  Boolean                       $template              = false,
+  Variant[String, Integer]      $order                 = 70,
 ){
 
   # compose attributes

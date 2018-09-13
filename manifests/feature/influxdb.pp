@@ -264,7 +264,7 @@ class icinga2::feature::influxdb(
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/influxdb.conf",
     notify      => $_notify,
-    order       => '10',
+    order       => 10,
   }
 
   # import library 'perfdata'

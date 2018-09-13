@@ -325,7 +325,7 @@ class icinga2::feature::idomysql(
     attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
     attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/ido-mysql.conf",
-    order       => '10',
+    order       => 10,
     notify      => $_notify,
   }
 

@@ -53,7 +53,7 @@ class icinga2::feature::gelf(
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/gelf.conf",
-    order       => '10',
+    order       => 10,
     notify      => $_notify,
   }
 

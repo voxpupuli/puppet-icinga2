@@ -25,7 +25,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 10.
 #
 # === Examples
 #
@@ -46,13 +46,13 @@
 #
 #
 define icinga2::object::apiuser(
-  Stdlib::Absolutepath      $target,
-  Array                     $permissions,
-  Enum['absent', 'present'] $ensure       = present,
-  String                    $apiuser_name = $title,
-  Optional[String]          $password     = undef,
-  Optional[String]          $client_cn    = undef,
-  Pattern[/^\d+$/]          $order        = '30',
+  Stdlib::Absolutepath        $target,
+  Array                       $permissions,
+  Enum['absent', 'present']   $ensure       = present,
+  String                      $apiuser_name = $title,
+  Optional[String]            $password     = undef,
+  Optional[String]            $client_cn    = undef,
+  Variant[String, Integer]    $order        = 30,
 ) {
 
   # compose the attributes

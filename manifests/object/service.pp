@@ -126,7 +126,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 10.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 60.
 #
 # === Examples
 #
@@ -193,7 +193,7 @@ define icinga2::object::service (
   Array                                      $ignore                 = [],
   Array                                      $import                 = [],
   Boolean                                    $template               = false,
-  Pattern[/^\d+$/]                           $order                  = '60',
+  Variant[String, Integer]                   $order                  = 60,
 ) {
 
   # compose the attributes

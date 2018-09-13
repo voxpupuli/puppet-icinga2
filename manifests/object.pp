@@ -45,7 +45,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric.
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 # [*attrs_list*]
 #   Array of all possible attributes for this object type.
@@ -61,20 +61,20 @@
 #
 #
 define icinga2::object(
-  String                                                   $object_type,
-  Stdlib::Absolutepath                                     $target,
-  String                                                   $order,
-  Enum['present', 'absent']                                $ensure       = present,
-  String                                                   $object_name  = $title,
-  Boolean                                                  $template     = false,
-  Variant[Boolean, Pattern[/^.+\s+(=>\s+.+\s+)?in\s+.+$/]] $apply        = false,
-  Array                                                    $attrs_list   = [],
-  Optional[Enum['Host', 'Service']]                        $apply_target = undef,
-  Boolean                                                  $prefix       = false,
-  Array                                                    $import       = [],
-  Array                                                    $assign       = [],
-  Array                                                    $ignore       = [],
-  Hash                                                     $attrs        = {},
+  String                                                      $object_type,
+  Stdlib::Absolutepath                                        $target,
+  Variant[String, Integer]                                    $order,
+  Enum['present', 'absent']                                   $ensure       = present,
+  String                                                      $object_name  = $title,
+  Boolean                                                     $template     = false,
+  Variant[Boolean, Pattern[/^.+\s+(=>\s+.+\s+)?in\s+.+$/]]    $apply        = false,
+  Array                                                       $attrs_list   = [],
+  Optional[Enum['Host', 'Service']]                           $apply_target = undef,
+  Variant[Boolean, String]                                    $prefix       = false,
+  Array                                                       $import       = [],
+  Array                                                       $assign       = [],
+  Array                                                       $ignore       = [],
+  Hash                                                        $attrs        = {},
 ) {
 
   assert_private()

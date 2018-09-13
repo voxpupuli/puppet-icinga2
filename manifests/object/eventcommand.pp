@@ -40,7 +40,7 @@
 #   Sorted List of templates to include. Defaults to an empty list.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 20.
 #
 #
 define icinga2::object::eventcommand (
@@ -53,7 +53,7 @@ define icinga2::object::eventcommand (
   Optional[Integer[1]]                $timeout           = undef,
   Optional[Hash]                      $arguments         = undef,
   Array                               $import            = ['plugin-event-command'],
-  Pattern[/^\d+$/]                    $order             = '20',
+  Variant[String, Integer]            $order             = 20,
 ){
 
   # compose the attributes

@@ -53,7 +53,7 @@ class icinga2::feature::statusdata(
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
     target      => "${conf_dir}/features-available/statusdata.conf",
-    order       => '10',
+    order       => 10,
     notify      => $_notify,
   }
 

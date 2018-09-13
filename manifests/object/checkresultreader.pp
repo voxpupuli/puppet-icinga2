@@ -18,15 +18,15 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
+#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 10.
 #
 #
 define icinga2::object::checkresultreader (
-  Stdlib::Absolutepath           $target,
-  Enum['absent', 'present']      $ensure                 = present,
-  String                         $checkresultreader_name = $title,
-  Optional[Stdlib::Absolutepath] $spool_dir              = undef,
-  Pattern[/^\d+$/]               $order                  = '10',
+  Stdlib::Absolutepath               $target,
+  Enum['absent', 'present']          $ensure                 = present,
+  String                             $checkresultreader_name = $title,
+  Optional[Stdlib::Absolutepath]     $spool_dir              = undef,
+  Variant[String, Integer]           $order                  = '05',
 ){
 
   # compose the attributes
@@ -50,6 +50,6 @@ define icinga2::object::checkresultreader (
   concat::fragment { "icinga2::object::CheckResultReader::${title}-library":
     target  => $target,
     content => "library \"compat\"\n\n",
-    order   => '05',
+    order   => $order,
   }
 }
