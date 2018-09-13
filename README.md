@@ -28,7 +28,11 @@ configuration of Icinga 2 on multiple operating systems.
 For Icinga 2 v2.8.0 and higher version v1.3.4 and above is needed and the parameter repositoryd
 can set to false. See issue #403.
 
-As from version 2.0 of this module only supports Icinga 2 v2.8.0 or higher.
+### v2.0.0
+
+* Requires Icinga 2 v2.8.0 or higher.
+* Feature `api`:
+ * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
 
 ## Module Description
 

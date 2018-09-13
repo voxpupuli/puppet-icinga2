@@ -89,7 +89,7 @@ class icinga2::params {
       $run_dir              = '/var/run/icinga2'
       $spool_dir            = '/var/spool/icinga2'
       $cache_dir            = '/var/cache/icinga2'
-      $pki_dir              = "${conf_dir}/pki"
+      $pki_dir              = '/var/lib/icinga2/certs'
       $ca_dir               = '/var/lib/icinga2/ca'
       $ido_pgsql_package    = 'icinga2-ido-pgsql'
       $ido_pgsql_schema_dir = '/usr/share/icinga2-ido-pgsql/schema'
@@ -151,7 +151,7 @@ class icinga2::params {
       $run_dir              = 'C:/ProgramData/icinga2/var/run/icinga2'
       $spool_dir            = 'C:/ProgramData/icinga2/var/spool/icinga2'
       $cache_dir            = 'C:/ProgramData/icinga2/var/cache/icinga2'
-      $pki_dir              = "${conf_dir}/pki"
+      $pki_dir              = 'C:/ProgramData/icinga2/var/lib/icinga2/certs'
       $ca_dir               = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
       $ido_pgsql_package    = undef
       $ido_pgsql_schema_dir = undef
@@ -176,7 +176,7 @@ class icinga2::params {
       $run_dir              = '/var/run/icinga2'
       $spool_dir            = '/var/spool/icinga2'
       $cache_dir            = '/var/cache/icinga2'
-      $pki_dir              = "${conf_dir}/pki"
+      $pki_dir              = '/var/lib/icinga2/certs'
       $ca_dir               = '/var/lib/icinga2/ca'
       $user                 = 'icinga'
       $group                = 'icinga'

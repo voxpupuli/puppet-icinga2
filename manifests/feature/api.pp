@@ -159,31 +159,27 @@
 #
 #
 class icinga2::feature::api(
-  Enum['absent', 'present']               $ensure                           = present,
-  Enum['ca', 'icinga2', 'none', 'puppet'] $pki                              = 'puppet',
-  Optional[Stdlib::Absolutepath]          $ssl_key_path                     = undef,
-  Optional[Stdlib::Absolutepath]          $ssl_cert_path                    = undef,
-  Optional[Stdlib::Absolutepath]          $ssl_csr_path                     = undef,
-  Optional[Stdlib::Absolutepath]          $ssl_cacert_path                  = undef,
-  Optional[Stdlib::Absolutepath]          $ssl_crl_path                     = undef,
-  Boolean                                 $accept_config                    = false,
-  Boolean                                 $accept_commands                  = false,
-  Optional[String]                        $ca_host                          = undef,
-  Integer[1,65535]                        $ca_port                          = 5665,
-  String                                  $ticket_salt                      = 'TicketSalt',
-  Hash                                    $endpoints                        = { 'NodeName' => {} },
-  Hash                                    $zones                            = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
-  Optional[String]                        $ssl_key                          = undef,
-  Optional[String]                        $ssl_cert                         = undef,
-  Optional[String]                        $ssl_cacert                       = undef,
-  Optional[String]                        $ssl_protocolmin                  = undef,
-  Optional[String]                        $ssl_cipher_list                  = undef,
-  Optional[String]                        $bind_host                        = undef,
-  Optional[Integer[1,65535]]              $bind_port                        = undef,
-  Optional[Array[String]]                 $access_control_allow_origin      = undef,
-  Boolean                                 $access_control_allow_credentials = true,
-  String                                  $access_control_allow_headers     = 'Authorization',
-  Array[String]                           $access_control_allow_methods     = ['GET', 'POST', 'PUT', 'DELETE'],
+  Enum['absent', 'present']                               $ensure                           = present,
+  Enum['ca', 'icinga2', 'none', 'puppet']                 $pki                              = 'puppet',
+  Optional[Stdlib::Absolutepath]                          $ssl_crl_path                     = undef,
+  Optional[Boolean]                                       $accept_config                    = undef,
+  Optional[Boolean]                                       $accept_commands                  = undef,
+  Optional[String]                                        $ca_host                          = undef,
+  Integer[1,65535]                                        $ca_port                          = 5665,
+  String                                                  $ticket_salt                      = 'TicketSalt',
+  Hash[String, Hash]                                      $endpoints                        = { 'NodeName' => {} },
+  Hash[String, Hash]                                      $zones                            = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
+  Optional[String]                                        $ssl_key                          = undef,
+  Optional[String]                                        $ssl_cert                         = undef,
+  Optional[String]                                        $ssl_cacert                       = undef,
+  Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2']]           $ssl_protocolmin                  = undef,
+  Optional[String]                                        $ssl_cipher_list                  = undef,
+  Optional[String]                                        $bind_host                        = undef,
+  Optional[Integer[1,65535]]                              $bind_port                        = undef,
+  Optional[Array[Enum['GET', 'POST', 'PUT', 'DELETE']]]   $access_control_allow_methods     = undef,
+  Optional[Array[String]]                                 $access_control_allow_origin      = undef,
+  Optional[Boolean]                                       $access_control_allow_credentials = undef,
+  Optional[String]                                        $access_control_allow_headers     = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -216,22 +212,10 @@ class icinga2::feature::api(
   }
 
   # Set defaults for certificate stuff
-  if $ssl_key_path {
-    $_ssl_key_path = $ssl_key_path }
-  else {
-    $_ssl_key_path = "${pki_dir}/${node_name}.key" }
-  if $ssl_cert_path {
-    $_ssl_cert_path = $ssl_cert_path }
-  else {
-    $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
-  if $ssl_csr_path {
-    $_ssl_csr_path = $ssl_csr_path }
-  else {
-    $_ssl_csr_path = "${pki_dir}/${node_name}.csr" }
-  if $ssl_cacert_path {
-    $_ssl_cacert_path = $ssl_cacert_path }
-  else {
-    $_ssl_cacert_path = "${pki_dir}/ca.crt" }
+  $_ssl_key_path = "${pki_dir}/${node_name}.key"
+  $_ssl_cert_path = "${pki_dir}/${node_name}.crt"
+  $_ssl_csr_path = "${pki_dir}/${node_name}.csr"
+  $_ssl_cacert_path = "${pki_dir}/ca.crt"
 
   # handle the certificate's stuff
   case $pki {
@@ -340,9 +324,6 @@ class icinga2::feature::api(
 
   # compose attributes
   $attrs = {
-    cert_path                        => $_ssl_cert_path,
-    key_path                         => $_ssl_key_path,
-    ca_path                          => $_ssl_cacert_path,
     crl_path                         => $ssl_crl_path,
     accept_commands                  => $accept_commands,
     accept_config                    => $accept_config,
