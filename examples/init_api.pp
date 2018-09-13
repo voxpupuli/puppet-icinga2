@@ -21,3 +21,19 @@ include ::icinga2::pki::ca
   permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
   target      => '/etc/icinga2/conf.d/api-users.conf',
 }
+
+::icinga2::object::apiuser { 'read':
+  ensure      => present,
+  password    => 'read',
+  permissions => [
+    {
+      permission => 'objects/query/Host',
+      filter     => '{{ regex("^Linux", host.vars.os) }}'
+    },
+    {
+      permission => 'objects/query/Service',
+      filter     => '{{ regex("^Linux", host.vars.os) }}'
+    },
+  ],
+  target      => '/etc/icinga2/conf.d/api-users.conf',
+}
