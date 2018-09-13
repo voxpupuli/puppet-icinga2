@@ -54,7 +54,7 @@
 #   to path specified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_crl_path*]
-#   Location of the certificate revocation list. Defaults to undef.
+#   Optional location of the certificate revocation list.
 #
 # [*accept_config*]
 #   Accept zone configuration. Defaults to false.
