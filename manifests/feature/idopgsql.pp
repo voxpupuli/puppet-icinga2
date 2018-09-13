@@ -71,20 +71,20 @@
 #
 #
 class icinga2::feature::idopgsql(
-  $ensure                 = present,
-  $host                   = '127.0.0.1',
-  $port                   = 5432,
-  $user                   = 'icinga',
-  $password               = 'icinga',
-  $database               = 'icinga',
-  $table_prefix           = 'icinga_',
-  $instance_name          = 'default',
-  $instance_description   = undef,
-  $enable_ha              = true,
-  $failover_timeout       = '60s',
-  $cleanup                = undef,
-  $categories             = undef,
-  $import_schema          = false,
+  Enum['absent', 'present'] $ensure                 = present,
+  String                    $host                   = '127.0.0.1',
+  Integer[1,65535]          $port                   = 5432,
+  String                    $user                   = 'icinga',
+  String                    $password               = 'icinga',
+  String                    $database               = 'icinga',
+  String                    $table_prefix           = 'icinga_',
+  String                    $instance_name          = 'default',
+  Optional[String]          $instance_description   = undef,
+  Boolean                   $enable_ha              = true,
+  Pattern[/^\d+[ms]*$/]     $failover_timeout       = '60s',
+  Optional[Hash]            $cleanup                = undef,
+  Optional[Array]           $categories             = undef,
+  Boolean                   $import_schema          = false,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -99,22 +99,6 @@ class icinga2::feature::idopgsql(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($host)
-  validate_integer($port)
-  validate_string($user)
-  validate_string($password)
-  validate_string($database)
-  validate_string($table_prefix)
-  validate_string($instance_name)
-  if $instance_description { validate_string($instance_description) }
-  validate_bool($enable_ha)
-  validate_re($failover_timeout, '^\d+[ms]*$')
-  if $cleanup { validate_hash($cleanup) }
-  if $categories { validate_array($categories) }
-  validate_bool($import_schema)
 
   $attrs = {
     host                  => $host,

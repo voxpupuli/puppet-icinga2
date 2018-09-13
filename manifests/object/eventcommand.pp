@@ -44,34 +44,17 @@
 #
 #
 define icinga2::object::eventcommand (
-  $target,
-  $ensure            = present,
-  $eventcommand_name = $title,
-  $command           = undef,
-  $env               = undef,
-  $vars              = undef,
-  $timeout           = undef,
-  $arguments         = undef,
-  $import            = ['plugin-event-command'],
-  $order             = '20',
+  Stdlib::Absolutepath            $target,
+  Enum['absent', 'present']       $ensure            = present,
+  String                          $eventcommand_name = $title,
+  Optional[Variant[Array,String]] $command           = undef,
+  Optional[Hash]                  $env               = undef,
+  Optional[Hash]                  $vars              = undef,
+  Optional[Integer[1]]            $timeout           = undef,
+  Optional[Hash]                  $arguments         = undef,
+  Array                           $import            = ['plugin-event-command'],
+  Pattern[/^\d+$/]                $order             = '20',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($eventcommand_name)
-  validate_absolute_path($target)
-  validate_string($order)
-  validate_array($import)
-
-  if !is_array($command) { validate_string($command) }
-  if !is_string($command) { validate_array($command) }
-  if $env { validate_hash($env) }
-  if $timeout { validate_integer($timeout) }
-  if $arguments { validate_hash($arguments) }
 
   # compose the attributes
   $attrs = {

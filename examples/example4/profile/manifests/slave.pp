@@ -1,22 +1,20 @@
 # Notice: this code contains Puppet 4 syntax! It doesn't run on Puppet 3.
 class profile::icinga2::slave(
-  $slave_zone,
-  $parent_endpoints,
-  $parent_zone = 'master',
-  $slave_ip = $::ipaddress,
+  String                     $slave_zone,
+  Array                      $parent_endpoints,
+  String                     $parent_zone = 'master',
+  Stdlib::Compat::Ip_address $slave_ip = $::ipaddress,
 ) {
 
   contain ::profile::icinga2::plugins
 
-  validate_array($parent_endpoints)
-
   class { '::icinga2':
     manage_repo => true,
     confd       => false,
-    features  => ['checker','mainlog'],
+    features    => ['checker','mainlog'],
     constants   => {
       'ZoneName' => $slave_zone,
-    }
+    },
   }
 
   # Feature: api
@@ -27,8 +25,8 @@ class profile::icinga2::slave(
       'ZoneName' => {
         'endpoints' => [ 'NodeName' ],
         'parent'    => $parent_zone,
-      }
-    }
+      },
+    },
   }
 
   ::icinga2::object::endpoint { $parent_endpoints: }

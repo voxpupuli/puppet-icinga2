@@ -53,6 +53,9 @@
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
 #   to path specified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
+# [*ssl_crl_path*]
+#   Location of the certificate revocation list. Defaults to undef.
+#
 # [*accept_config*]
 #   Accept zone configuration. Defaults to false.
 #
@@ -88,6 +91,21 @@
 #
 # [*bind_port*]
 #   The port the api listener will be bound to. (e.g. 5665)
+#
+# [*access_control_allow_origin]
+#  Specifies an array of origin URLs that may access the API.
+#
+# [*access_control_allow_credentials]
+#  Indicates whether or not the actual request can be made using credentials. Defaults to `true`.
+#
+# [*access_control_allow_headers]
+#  Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
+#  Defaults to `Authorization`.
+#
+# [*access_control_allow_methods]
+#  Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
+#  Defaults to `GET, POST, PUT, DELETE`.
+#
 #
 # === Variables
 #
@@ -141,26 +159,31 @@
 #
 #
 class icinga2::feature::api(
-  $ensure          = present,
-  $pki             = 'puppet',
-  $ssl_key_path    = undef,
-  $ssl_cert_path   = undef,
-  $ssl_csr_path    = undef,
-  $ssl_cacert_path = undef,
-  $accept_config   = false,
-  $accept_commands = false,
-  $ca_host         = undef,
-  $ca_port         = 5665,
-  $ticket_salt     = 'TicketSalt',
-  $endpoints       = { 'NodeName' => {} },
-  $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
-  $ssl_key         = undef,
-  $ssl_cert        = undef,
-  $ssl_cacert      = undef,
-  $ssl_protocolmin = undef,
-  $ssl_cipher_list = undef,
-  $bind_host       = undef,
-  $bind_port       = undef,
+  Enum['absent', 'present']               $ensure                           = present,
+  Enum['ca', 'icinga2', 'none', 'puppet'] $pki                              = 'puppet',
+  Optional[Stdlib::Absolutepath]          $ssl_key_path                     = undef,
+  Optional[Stdlib::Absolutepath]          $ssl_cert_path                    = undef,
+  Optional[Stdlib::Absolutepath]          $ssl_csr_path                     = undef,
+  Optional[Stdlib::Absolutepath]          $ssl_cacert_path                  = undef,
+  Optional[Stdlib::Absolutepath]          $ssl_crl_path                     = undef,
+  Boolean                                 $accept_config                    = false,
+  Boolean                                 $accept_commands                  = false,
+  Optional[String]                        $ca_host                          = undef,
+  Integer[1,65535]                        $ca_port                          = 5665,
+  String                                  $ticket_salt                      = 'TicketSalt',
+  Hash                                    $endpoints                        = { 'NodeName' => {} },
+  Hash                                    $zones                            = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
+  Optional[String]                        $ssl_key                          = undef,
+  Optional[String]                        $ssl_cert                         = undef,
+  Optional[String]                        $ssl_cacert                       = undef,
+  Optional[String]                        $ssl_protocolmin                  = undef,
+  Optional[String]                        $ssl_cipher_list                  = undef,
+  Optional[String]                        $bind_host                        = undef,
+  Optional[Integer[1,65535]]              $bind_port                        = undef,
+  Optional[Array[String]]                 $access_control_allow_origin      = undef,
+  Boolean                                 $access_control_allow_credentials = true,
+  String                                  $access_control_allow_headers     = 'Authorization',
+  Array[String]                           $access_control_allow_methods     = ['GET', 'POST', 'PUT', 'DELETE'],
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -192,53 +215,23 @@ class icinga2::feature::api(
     group => $group,
   }
 
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_re($pki, [ '^puppet$', '^none$', '^icinga2', '^ca' ],
-    "${pki} isn't supported. Valid values are 'puppet', 'none', 'icinga2' and 'ca (deprecated)'.")
-  validate_bool($accept_config)
-  validate_bool($accept_commands)
-  validate_string($ticket_salt)
-  validate_hash($endpoints)
-  validate_hash($zones)
-
-  # Set defaults for certificate stuff and/or do validation
+  # Set defaults for certificate stuff
   if $ssl_key_path {
-    validate_absolute_path($ssl_key_path)
     $_ssl_key_path = $ssl_key_path }
   else {
     $_ssl_key_path = "${pki_dir}/${node_name}.key" }
   if $ssl_cert_path {
-    validate_absolute_path($ssl_cert_path)
     $_ssl_cert_path = $ssl_cert_path }
   else {
     $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
   if $ssl_csr_path {
-    validate_absolute_path($ssl_csr_path)
     $_ssl_csr_path = $ssl_csr_path }
   else {
     $_ssl_csr_path = "${pki_dir}/${node_name}.csr" }
   if $ssl_cacert_path {
-    validate_absolute_path($ssl_cacert_path)
     $_ssl_cacert_path = $ssl_cacert_path }
   else {
     $_ssl_cacert_path = "${pki_dir}/ca.crt" }
-
-  if $ssl_protocolmin {
-    validate_string($ssl_protocolmin)
-  }
-  if $ssl_cipher_list {
-    validate_string($ssl_cipher_list)
-  }
-  if $bind_host {
-    validate_string($bind_host)
-  }
-  if $bind_port {
-    validate_integer($bind_port)
-  }
-
-
 
   # handle the certificate's stuff
   case $pki {
@@ -313,10 +306,6 @@ class icinga2::feature::api(
 
     'icinga2': {
       $_ticket_salt = undef
-
-      validate_string($ca_host)
-      validate_integer($ca_port)
-
       $ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
@@ -351,16 +340,21 @@ class icinga2::feature::api(
 
   # compose attributes
   $attrs = {
-    cert_path       => $_ssl_cert_path,
-    key_path        => $_ssl_key_path,
-    ca_path         => $_ssl_cacert_path,
-    accept_commands => $accept_commands,
-    accept_config   => $accept_config,
-    ticket_salt     => $_ticket_salt,
-    tls_protocolmin => $ssl_protocolmin,
-    cipher_list     => $ssl_cipher_list,
-    bind_host       => $bind_host,
-    bind_port       => $bind_port,
+    cert_path                        => $_ssl_cert_path,
+    key_path                         => $_ssl_key_path,
+    ca_path                          => $_ssl_cacert_path,
+    crl_path                         => $ssl_crl_path,
+    accept_commands                  => $accept_commands,
+    accept_config                    => $accept_config,
+    ticket_salt                      => $_ticket_salt,
+    tls_protocolmin                  => $ssl_protocolmin,
+    cipher_list                      => $ssl_cipher_list,
+    bind_host                        => $bind_host,
+    bind_port                        => $bind_port,
+    access_control_allow_origin      => $access_control_allow_origin,
+    access_control_allow_credentials => $access_control_allow_credentials,
+    access_control_allow_headers     => $access_control_allow_headers,
+    access_control_allow_methods     => $access_control_allow_methods,
   }
 
   # create endpoints and zones

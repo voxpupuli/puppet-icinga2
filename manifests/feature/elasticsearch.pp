@@ -1,26 +1,26 @@
-# == Class: icinga2::feature::influxdb
+# == Class: icinga2::feature::elasticsearch
 #
-# This module configures the Icinga 2 feature influxdb.
+# This module configures the Icinga 2 feature elasticsearch.
 #
 # === Parameters
 #
 # [*ensure*]
-#   Set to present enables the feature influxdb, absent disables it. Defaults to present.
+#   Set to present enables the feature elasticsearch, absent disables it. Defaults to present.
 #
 # [*host*]
-#    InfluxDB host address. Defaults to 127.0.0.1.
+#    Elasticsearch host address. Defaults to 127.0.0.1.
 #
 # [*port*]
-#    InfluxDB HTTP port. Defaults to 8086.
+#    Elasticsearch HTTP port. Defaults to 9200.
 #
-# [*database*]
-#    InfluxDB database name. Defaults to icinga2.
+# [*index*]
+#    Elasticsearch index name. Defaults to icinga2.
 #
 # [*username*]
-#    InfluxDB user name. Defaults to undef.
+#    Elasticsearch user name. Defaults to undef.
 #
 # [*password*]
-#    InfluxDB user password. Defaults to undef.
+#    Elasticsearch user password. Defaults to undef.
 #
 # [*enable_ssl*]
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
@@ -62,63 +62,41 @@
 #   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
 #   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
-# [*host_measurement*]
-#    The value of this is used for the measurement setting in host_template. Defaults to  '$host.check_command$'
-#
-# [*host_tags*]
-#    Tags defined in this hash will be set in the host_template.
-#
-#  [*service_measurement*]
-#    The value of this is used for the measurement setting in host_template. Defaults to  '$service.check_command$'
-#
-# [*service_tags*]
-#    Tags defined in this hash will be set in the service_template.
-#
-# [*enable_send_thresholds*]
-#    Whether to send warn, crit, min & max tagged data. Defaults to false.
-#
-# [*enable_send_metadata*]
-#    Whether to send check metadata e.g. states, execution time, latency etc. Defaults to false.
+# [*enable_send_perfdata*]
+#    Whether to send check performance data metrics. Defaults to false.
 #
 # [*flush_interval*]
-#    How long to buffer data points before transfering to InfluxDB. Defaults to 10s.
+#    How long to buffer data points before transferring to Elasticsearch. Defaults to 10s.
 #
 # [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to InfluxDB. Defaults to 1024.
+#    How many data points to buffer before forcing a transfer to Elasticsearch. Defaults to 1024.
 #
 # === Example
 #
-# class { 'icinga2::feature::influxdb':
+# class { 'icinga2::feature::elasticsearch':
 #   host     => "10.10.0.15",
-#   username => "icinga2",
-#   password => "supersecret",
-#   database => "icinga2"
+#   index    => "icinga2"
 # }
 #
 #
-class icinga2::feature::influxdb(
-  Enum['absent', 'present']      $ensure                 = present,
-  String                         $host                   = '127.0.0.1',
-  Integer[1,65535]               $port                   = 8086,
-  String                         $database               = 'icinga2',
-  Optional[String]               $username               = undef,
-  Optional[String]               $password               = undef,
-  Boolean                        $enable_ssl             = false,
-  Enum['none', 'puppet']         $pki                    = 'puppet',
-  Optional[Stdlib::Absolutepath] $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cacert_path        = undef,
-  Optional[String]               $ssl_key                = undef,
-  Optional[String]               $ssl_cert               = undef,
-  Optional[String]               $ssl_cacert             = undef,
-  String                         $host_measurement       = '$host.check_command$',
-  Hash                           $host_tags              = { hostname => '$host.name$' },
-  String                         $service_measurement    = '$service.check_command$',
-  Hash                           $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
-  Boolean                        $enable_send_thresholds = false,
-  Boolean                        $enable_send_metadata   = false,
-  Pattern[/^\d+[ms]*$/]          $flush_interval         = '10s',
-  Integer[1]                     $flush_threshold        = 1024
+class icinga2::feature::elasticsearch(
+  Enum['absent', 'present']      $ensure               = present,
+  String                         $host                 = '127.0.0.1',
+  Integer[1,65535]               $port                 = 9200,
+  String                         $index                = 'icinga2',
+  Optional[String]               $username             = undef,
+  Optional[String]               $password             = undef,
+  Boolean                        $enable_ssl           = false,
+  Enum['none', 'puppet']         $pki                  = 'puppet',
+  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
+  Optional[String]               $ssl_key              = undef,
+  Optional[String]               $ssl_cert             = undef,
+  Optional[String]               $ssl_cacert           = undef,
+  Boolean                        $enable_send_perfdata = false,
+  Pattern[/^\d+[ms]*$/]          $flush_interval       = '10s',
+  Integer                        $flush_threshold      = 1024
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -129,7 +107,7 @@ class icinga2::feature::influxdb(
   $group         = $::icinga2::params::group
   $node_name     = $::icinga2::_constants['NodeName']
   $conf_dir      = $::icinga2::params::conf_dir
-  $ssl_dir       = "${::icinga2::params::pki_dir}/influxdb"
+  $ssl_dir       = "${::icinga2::params::pki_dir}/elasticsearch"
   $_ssl_key_mode = $::kernel ? {
     'windows' => undef,
     default   => '0600',
@@ -144,10 +122,7 @@ class icinga2::feature::influxdb(
     group   => $group,
   }
 
-  $host_template = { measurement => $host_measurement, tags => $host_tags }
-  $service_template = { measurement => $service_measurement, tags => $service_tags}
-
-  # Set defaults for certificate stuff
+  # Set defaults for certificate stuff and/or do validation
   if $ssl_key_path {
     $_ssl_key_path = $ssl_key_path }
   else {
@@ -163,10 +138,10 @@ class icinga2::feature::influxdb(
 
   if $enable_ssl {
     $attrs_ssl = {
-      ssl_enable  => $enable_ssl,
-      ssl_ca_cert => $_ssl_cacert_path,
-      ssl_cert    => $_ssl_cert_path,
-      ssl_key     => $_ssl_key_path,
+      enable_tls  => $enable_ssl,
+      ca_path     => $_ssl_cacert_path,
+      cert_path   => $_ssl_cert_path,
+      key_path    => $_ssl_key_path,
     }
 
     file { $ssl_dir:
@@ -239,42 +214,39 @@ class icinga2::feature::influxdb(
     } # case pki
   } # enable_ssl
   else {
-    $attrs_ssl = { ssl_enable  => $enable_ssl }
+    $attrs_ssl = { enable_tls  => $enable_ssl }
   }
 
   $attrs = {
     host                   => $host,
     port                   => $port,
-    database               => $database,
+    index                  => $index,
     username               => $username,
     password               => $password,
-    host_template          => $host_template,
-    service_template       => $service_template,
-    enable_send_thresholds => $enable_send_thresholds,
-    enable_send_metadata   => $enable_send_metadata,
+    enable_send_perfdata   => $enable_send_perfdata,
     flush_interval         => $flush_interval,
     flush_threshold        => $flush_threshold,
   }
 
   # create object
-  icinga2::object { 'icinga2::object::InfluxdbWriter::influxdb':
-    object_name => 'influxdb',
-    object_type => 'InfluxdbWriter',
+  icinga2::object { 'icinga2::object::ElasticsearchWriter::elasticsearch':
+    object_name => 'elasticsearch',
+    object_type => 'ElasticsearchWriter',
     attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
     attrs_list  => keys($attrs),
-    target      => "${conf_dir}/features-available/influxdb.conf",
+    target      => "${conf_dir}/features-available/elasticsearch.conf",
     notify      => $_notify,
     order       => '10',
   }
 
   # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::influxdb':
-    target  => "${conf_dir}/features-available/influxdb.conf",
+  concat::fragment { 'icinga2::feature::elasticsearch':
+    target  => "${conf_dir}/features-available/elasticsearch.conf",
     content => "library \"perfdata\"\n\n",
     order   => '05',
   }
 
-  icinga2::feature { 'influxdb':
+  icinga2::feature { 'elasticsearch':
     ensure => $ensure,
   }
 }

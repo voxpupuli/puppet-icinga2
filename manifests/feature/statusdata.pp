@@ -23,10 +23,10 @@
 #
 #
 class icinga2::feature::statusdata(
-  $ensure          = present,
-  $status_path     = "${::icinga2::params::cache_dir}/status.dat",
-  $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
-  $update_interval = '15s',
+  Enum['absent', 'present'] $ensure          = present,
+  Stdlib::Absolutepath      $status_path     = "${::icinga2::params::cache_dir}/status.dat",
+  Stdlib::Absolutepath      $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
+  Pattern[/^\d+[ms]*$/]     $update_interval = '15s',
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -38,13 +38,6 @@ class icinga2::feature::statusdata(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_absolute_path($status_path)
-  validate_absolute_path($objects_path)
-  validate_re($update_interval, '^\d+[ms]*$')
 
   # compose attributes
   $attrs = {

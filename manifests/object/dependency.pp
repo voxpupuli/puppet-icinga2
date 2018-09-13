@@ -74,53 +74,27 @@
 #
 #
 define icinga2::object::dependency (
-  $target,
-  $ensure                = present,
-  $dependency_name       = $title,
-  $parent_host_name      = undef,
-  $parent_service_name   = undef,
-  $child_host_name       = undef,
-  $child_service_name    = undef,
-  $disable_checks        = undef,
-  $disable_notifications = undef,
-  $ignore_soft_states    = undef,
-  $period                = undef,
-  $states                = undef,
-  $apply                 = false,
-  $prefix                = false,
-  $apply_target          = 'Host',
-  $assign                = [],
-  $ignore                = [],
-  $import                = [],
-  $template              = false,
-  $order                 = '70',
+  Stdlib::Absolutepath      $target,
+  Enum['absent', 'present'] $ensure                = present,
+  String                    $dependency_name       = $title,
+  Optional[String]          $parent_host_name      = undef,
+  Optional[String]          $parent_service_name   = undef,
+  Optional[String]          $child_host_name       = undef,
+  Optional[String]          $child_service_name    = undef,
+  Optional[Boolean]         $disable_checks        = undef,
+  Optional[Boolean]         $disable_notifications = undef,
+  Optional[Boolean]         $ignore_soft_states    = undef,
+  Optional[String]          $period                = undef,
+  Optional[Array]           $states                = undef,
+  Variant[Boolean, String]  $apply                 = false,
+  Boolean                   $prefix                = false,
+  Enum['Host', 'Service']   $apply_target          = 'Host',
+  Array                     $assign                = [],
+  Array                     $ignore                = [],
+  Array                     $import                = [],
+  Boolean                   $template              = false,
+  Pattern[/^\d+$/]          $order                 = '70',
 ){
-  include ::icinga2::params
-
-  $conf_dir = $::icinga2::params::conf_dir
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($dependency_name)
-  unless is_bool($apply) { validate_string($apply) }
-  validate_bool($prefix)
-  validate_re($apply_target, ['^Host$', '^Service$'],
-    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.")
-  validate_array($import)
-  validate_bool($template)
-  validate_absolute_path($target)
-  validate_string($order)
-
-  if $parent_host_name { validate_string ($parent_host_name) }
-  if $parent_service_name { validate_string ( $parent_service_name ) }
-  if $child_host_name { validate_string ($child_host_name) }
-  if $child_service_name { validate_string ( $child_service_name ) }
-  if $disable_checks { validate_bool ( $disable_checks ) }
-  if $disable_notifications { validate_bool ( $disable_notifications ) }
-  if $ignore_soft_states { validate_bool ( $ignore_soft_states ) }
-  if $period { validate_string ( $period ) }
-  if $states { validate_array ( $states ) }
 
   # compose attributes
   $attrs = {

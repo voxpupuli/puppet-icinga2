@@ -31,34 +31,24 @@
 #
 #
 define icinga2::object::endpoint(
-  $ensure        = present,
-  $endpoint_name = $title,
-  $host          = undef,
-  $port          = undef,
-  $log_duration  = undef,
-  $target        = undef,
-  $order         = '40',
+  Enum['absent', 'present']                  $ensure        = present,
+  Optional[String]                           $endpoint_name = $title,
+  Optional[String]                           $host          = undef,
+  Optional[Integer[1,65535]]                 $port          = undef,
+  Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]] $log_duration  = undef,
+  Optional[Stdlib::Absolutepath]             $target        = undef,
+  Pattern[/^\d+$/]                           $order         = '40',
 ) {
 
   include ::icinga2::params
 
   $conf_dir = $::icinga2::params::conf_dir
 
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_integer($order)
-
-  if $endpoint_name { validate_string($endpoint_name) }
-  if $host { validate_string($host) }
-  if $port { validate_integer($port) }
-  if $log_duration { validate_re($log_duration, '^\d+\.?\d*[d|h|m|s]?$') }
-
   if $target {
-    validate_absolute_path($target)
-    $_target = $target }
-  else {
-    $_target = "${conf_dir}/zones.conf" }
+    $_target = $target
+  } else {
+    $_target = "${conf_dir}/zones.conf"
+  }
 
   # compose the attributes
   $attrs = {

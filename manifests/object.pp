@@ -61,20 +61,20 @@
 #
 #
 define icinga2::object(
-  $object_type,
-  $target,
-  $order,
-  $ensure       = present,
-  $object_name  = $title,
-  $template     = false,
-  $apply        = false,
-  $attrs_list   = [],
-  $apply_target = undef,
-  $prefix       = false,
-  $import       = [],
-  $assign       = [],
-  $ignore       = [],
-  $attrs        = {},
+  String                                                   $object_type,
+  Stdlib::Absolutepath                                     $target,
+  String                                                   $order,
+  Enum['present', 'absent']                                $ensure       = present,
+  String                                                   $object_name  = $title,
+  Boolean                                                  $template     = false,
+  Variant[Boolean, Pattern[/^.+\s+(=>\s+.+\s+)?in\s+.+$/]] $apply        = false,
+  Array                                                    $attrs_list   = [],
+  Optional[Enum['Host', 'Service']]                        $apply_target = undef,
+  Boolean                                                  $prefix       = false,
+  Array                                                    $import       = [],
+  Array                                                    $assign       = [],
+  Array                                                    $ignore       = [],
+  Hash                                                     $attrs        = {},
 ) {
 
   assert_private()
@@ -97,23 +97,6 @@ define icinga2::object(
       }
     } # default
   }
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($object_name)
-  validate_bool($template)
-  unless is_bool($apply) { validate_re($apply, '^.+\s+(=>\s+.+\s+)?in\s+.+$') }
-  validate_bool($prefix)
-  if $apply_target { validate_re($apply_target, ['^Host$', '^Service$'],
-    "${apply_target} isn't supported. Valid values are 'Host' and 'Service'.") }
-  validate_array($import)
-  validate_array($assign)
-  validate_array($ignore)
-  validate_hash($attrs)
-  validate_string($object_type)
-  validate_absolute_path($target)
-  validate_string($order)
-  validate_array($attrs_list)
 
   if $object_type == $apply_target {
     fail('The object type must be different from the apply target')

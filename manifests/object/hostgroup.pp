@@ -34,27 +34,15 @@
 #
 #
 define icinga2::object::hostgroup(
-  $target,
-  $ensure         = present,
-  $hostgroup_name = $title,
-  $display_name   = undef,
-  $groups         = undef,
-  $assign         = [],
-  $ignore         = [],
-  $order          = '55',
+  Stdlib::Absolutepath      $target,
+  Enum['absent', 'present'] $ensure         = present,
+  String                    $hostgroup_name = $title,
+  Optional[String]          $display_name   = undef,
+  Optional[Array]           $groups         = undef,
+  Array                     $assign         = [],
+  Array                     $ignore         = [],
+  Pattern[/^\d+$/]          $order          = '55',
 ) {
-
-  # validation
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($hostgroup_name)
-  validate_array($assign)
-  validate_array($ignore)
-  validate_string($order)
-  validate_absolute_path($target)
-
-  if $display_name { validate_string($display_name) }
-  if $groups { validate_array($groups) }
 
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
