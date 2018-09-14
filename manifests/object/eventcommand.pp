@@ -12,7 +12,6 @@
 #
 # [*execute*]
 #     The "execute" script method takes care of executing the event handler.
-#     In virtually all cases you should import the "plugin-event-command" template to take care of this setting.
 #
 # [*command*]
 #     The command. This can either be an array of individual command arguments.
@@ -52,7 +51,7 @@ define icinga2::object::eventcommand (
   Optional[Variant[String, Hash]]     $vars              = undef,
   Optional[Integer[1]]                $timeout           = undef,
   Optional[Hash]                      $arguments         = undef,
-  Array                               $import            = ['plugin-event-command'],
+  Array                               $import            = [],
   Variant[String, Integer]            $order             = 20,
 ){
 
