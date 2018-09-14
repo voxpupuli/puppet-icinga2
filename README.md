@@ -994,22 +994,22 @@ Enables or disables the `graphite` feature.
 Either `present` or `absent`. Defines if the feature `graphite` should be enabled. Defaults to `present`.
 
 ##### `host`
-Graphite Carbon host address. Defaults to `127.0.0.1`.
+Graphite Carbon host address. Icinga defaults to `127.0.0.1`.
 
 ##### `port`
-Graphite Carbon port. Defaults to `2003`.
+Graphite Carbon port. Icinga defaults to `2003`.
 
 ##### `host_name_template`
-Template for metric path of hosts. Defaults to `icinga2.$host.name$.host.$host.check_command$`.
+Template for metric path of hosts. Icinga defaults to `icinga2.$host.name$.host.$host.check_command$`.
 
 ##### `service_name_template`
-Template for metric path of services. Defaults to `icinga2.$host.name$.services.$service.name$.$service.check_command$`.
+Template for metric path of services. Icinga defaults to `icinga2.$host.name$.services.$service.name$.$service.check_command$`.
 
 ##### `enable_send_thresholds`
-Send thresholds as metrics. Defaults to false.
+Send thresholds as metrics. Icinga defaults to false.
 
 ##### `enable_send_metadata`
-Send metadata as metrics. Defaults to false.
+Send metadata as metrics. Icinga defaults to false.
 
 #### Class: `icinga2::feature::livestatus`
 Enables or disables the `livestatus` feature.

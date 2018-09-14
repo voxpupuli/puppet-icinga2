@@ -8,32 +8,34 @@
 #   Set to present enables the feature graphite, absent disabled it. Defaults to present.
 #
 # [*host*]
-#   Graphite Carbon host address. Defaults to '127.0.0.1'.
+#   Graphite Carbon host address. Icinga defaults to '127.0.0.1'.
 #
 # [*port*]
-#   Graphite Carbon port. Defaults to 2003.
+#   Graphite Carbon port. Icinga defaults to 2003.
 #
 # [*host_name_template*]
-#   Template for metric path of hosts. Defaults to 'icinga2.$host.name$.host.$host.check_command$'.
+#   Template for metric path of hosts.
+#   Icinga defaults to 'icinga2.$host.name$.host.$host.check_command$'.
 #
 # [*service_name_template*]
-#   Template for metric path of services. Defaults to 'icinga2.$host.name$.services.$service.name$.$service.check_command$'.
+#   Template for metric path of services.
+#   Icinga defaults to 'icinga2.$host.name$.services.$service.name$.$service.check_command$'.
 #
 # [*enable_send_thresholds*]
-#   Send threholds as metrics. Defaults to false.
+#   Send threholds as metrics. Icinga defaults to false.
 #
 # [*enable_send_metadata*]
-#   Send metadata as metrics. Defaults to false.
+#   Send metadata as metrics. Icinga defaults to false.
 #
 #
 class icinga2::feature::graphite(
-  Enum['absent', 'present'] $ensure                 = present,
-  String                    $host                   = '127.0.0.1',
-  Integer[1,65535]          $port                   = 2003,
-  String                    $host_name_template     = 'icinga2.$host.name$.host.$host.check_command$',
-  String                    $service_name_template  = 'icinga2.$host.name$.services.$service.name$.$service.check_command$',
-  Boolean                   $enable_send_thresholds = false,
-  Boolean                   $enable_send_metadata   = false,
+  Enum['absent', 'present']      $ensure                 = present,
+  Optional[String]               $host                   = undef,
+  Optional[Integer[1,65535]]     $port                   = undef,
+  Optional[String]               $host_name_template     = undef,
+  Optional[String]               $service_name_template  = undef,
+  Optional[Boolean]              $enable_send_thresholds = undef,
+  Optional[Boolean]              $enable_send_metadata   = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
