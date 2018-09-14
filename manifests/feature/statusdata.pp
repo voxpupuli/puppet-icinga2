@@ -8,25 +8,26 @@
 #   Set to present enables the feature statusdata, absent disables it. Defaults to present.
 #
 # [*status_path*]
-#   Absolute path to the status.dat file. Default depends on platform:
+#   Absolute path to the status.dat file. Defaults depend on platform:
 #   /var/cache/icinga2/status.dat on Linux
 #   C:/ProgramData/icinga2/var/cache/icinga2/status.dat on Windows
 #
 # [*object_path*]
-#   Absolute path to the object.cache file. Default depends on platform:
+#   Absolute path to the object.cache file. Defaults depend on platform:
 #   /var/cache/icinga2/object.cache on Linux
 #   C:/ProgramData/icinga2/var/cache/icinga2/object.cache on Windows
 #
 # [*update_interval*]
-#   Interval in seconds to update both status files.
-#   You can also specify it in minutes with the letter m or in seconds with s. Defaults to '15s'
+#   Interval in seconds to update both status files. You can also specify
+#   it in minutes with the letter m or in seconds with s.
+#   Icinga defaults to '15s'
 #
 #
 class icinga2::feature::statusdata(
-  Enum['absent', 'present'] $ensure          = present,
-  Stdlib::Absolutepath      $status_path     = "${::icinga2::params::cache_dir}/status.dat",
-  Stdlib::Absolutepath      $objects_path    = "${::icinga2::params::cache_dir}/objects.cache",
-  Pattern[/^\d+[ms]*$/]     $update_interval = '15s',
+  Enum['absent', 'present']          $ensure          = present,
+  Optional[Stdlib::Absolutepath]     $status_path     = undef,
+  Optiona[Stdlib::Absolutepath]      $objects_path    = undef,
+  Optiona[Pattern[/^\d+[ms]*$/]]     $update_interval = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
