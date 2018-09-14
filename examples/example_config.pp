@@ -228,7 +228,6 @@ file { '/etc/icinga2/example.d':
     'HOSTOUTPUT'             => '$host.output$',
     'NOTIFICATIONAUTHORNAME' => '$notification.author$',
     'NOTIFICATIONCOMMENT'    => '$notification.comment$',
-    'HOSTDISPLAYNAME'        => '$host.display_name$',
     'USEREMAIL'              => '$user.email$',
   },
 }
@@ -247,7 +246,6 @@ file { '/etc/icinga2/example.d':
     'SERVICEOUTPUT'          => '$service.output$',
     'NOTIFICATIONAUTHORNAME' => '$notification.author$',
     'NOTIFICATIONCOMMENT'    => '$notification.comment$',
-    'HOSTDISPLAYNAME'        => '$host.display_name$',
     'SERVICEDISPLAYNAME'     => '$service.display_name$',
     'USEREMAIL'              => '$user.email$',
   },
