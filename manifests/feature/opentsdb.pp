@@ -8,16 +8,16 @@
 #   Set to present enables the feature opentsdb, absent disables it. Defaults to present.
 #
 # [*host*]
-#   OpenTSDB host address. Defaults to '127.0.0.1'.
+#   OpenTSDB host address. Icinga defaults to '127.0.0.1'.
 #
 # [*port*]
-#   OpenTSDB port. Defaults to 4242.
+#   OpenTSDB port. Icinga defaults to 4242.
 #
 #
 class icinga2::feature::opentsdb(
-  Enum['absent', 'present'] $ensure               = present,
-  String                    $host                 = '127.0.0.1',
-  Integer[1,65535]          $port                 = 4242,
+  Enum['absent', 'present']     $ensure = present,
+  Optional[String]              $host   = undef,
+  Optional[Integer[1,65535]]    $port   = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {

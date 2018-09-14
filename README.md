@@ -1049,10 +1049,10 @@ Enables or disables the `opentsdb` feature.
 Either `present` or `absent`. Defines if the feature `opentsdb` should be enabled. Defaults to `present`.
 
 ##### `host`
-OpenTSDB host address. Defaults to `127.0.0.1`
+OpenTSDB host address. Icinga defaults to `127.0.0.1`
 
 ##### `port`
-OpenTSDB port. Defaults to `4242`
+OpenTSDB port. Icinga defaults to `4242`
 
 #### Class: `icinga2::feature::perfdata`
 Enables or disables the `perfdata` feature.
