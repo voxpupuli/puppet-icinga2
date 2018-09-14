@@ -1020,13 +1020,13 @@ Enables or disables the `livestatus` feature.
 Either `present` or `absent`. Defines if the feature `livestatus` should be enabled. Defaults to `present`.
 
 ##### `socket_type`
-Specifies the socket type. Can be either 'tcp' or 'unix'. Defaults to 'unix'
+Specifies the socket type. Can be either 'tcp' or 'unix'. Icinga defaults to 'unix'
 
 ##### `bind_host`
-IP address to listen for connections. Only valid when socket_type is `tcp`. Defaults to `127.0.0.1`
+IP address to listen for connections. Only valid when socket_type is `tcp`. Icinga defaults to `127.0.0.1`
 
 ##### `bind_port`
-Port to listen for connections. Only valid when socket_type is `tcp`. Defaults to `6558`
+Port to listen for connections. Only valid when socket_type is `tcp`. Icinga defaults to `6558`
 
 ##### `socket_path`
 Specifies the path to the UNIX socket file. Only valid when socket_type is `unix`. Default depends on platform:
