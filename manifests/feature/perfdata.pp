@@ -28,26 +28,27 @@
 #   C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata on Windows.
 #
 # [*host_format_template*]
-#   Host Format template for the performance data file. Defaults to a template that's suitable for use with PNP4Nagios.
+#   Host Format template for the performance data file.
+#   Icinga defaults to a template that's suitable for use with PNP4Nagios.
 #
 # [*service_format_template*]
-#   Service Format template for the performance data file. Defaults to a template that's suitable for use with
-#   PNP4Nagios.
+#   Service Format template for the performance data file.
+#   Icinga defaults to a template that's suitable for use with PNP4Nagios.
 #
 # [*rotation_interval*]
 #   Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
-#   i.e. 1m or 15s. Defaults to 30s.
+#   i.e. 1m or 15s. Icinga defaults to 30s.
 #
 #
 class icinga2::feature::perfdata(
-  Enum['absent', 'present'] $ensure                  = present,
-  Stdlib::Absolutepath      $host_perfdata_path      = "${::icinga2::params::spool_dir}/perfdata/host-perfdata",
-  Stdlib::Absolutepath      $service_perfdata_path   = "${::icinga2::params::spool_dir}/perfdata/service-perfdata",
-  Stdlib::Absolutepath      $host_temp_path          = "${::icinga2::params::spool_dir}/tmp/host-perfdata",
-  Stdlib::Absolutepath      $service_temp_path       = "${::icinga2::params::spool_dir}/tmp/service-perfdata",
-  Optional[String]          $host_format_template    = undef,
-  Optional[String]          $service_format_template = undef,
-  Pattern[/^\d+[ms]*$/]     $rotation_interval       = '30s',
+  Enum['absent', 'present']           $ensure                  = present,
+  Optional[Stdlib::Absolutepath]      $host_perfdata_path      = undef,
+  Optional[Stdlib::Absolutepath]      $service_perfdata_path   = undef,
+  Optional[Stdlib::Absolutepath]      $host_temp_path          = undef,
+  Optional[Stdlib::Absolutepath]      $service_temp_path       = undef,
+  Optional[String]                    $host_format_template    = undef,
+  Optional[String]                    $service_format_template = undef,
+  Optional[Pattern[/^\d+[ms]*$/]      $rotation_interval       = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
