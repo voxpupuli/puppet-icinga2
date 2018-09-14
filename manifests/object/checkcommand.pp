@@ -43,7 +43,7 @@ define icinga2::object::checkcommand(
   Stdlib::Absolutepath                $target,
   Enum['absent', 'present']           $ensure            = present,
   Optional[String]                    $checkcommand_name = $title,
-  Array                               $import            = ['plugin-check-command'],
+  Array                               $import            = [],
   Optional[Variant[Array, String]]    $command           = undef,
   Optional[Hash]                      $env               = undef,
   Optional[Variant[String, Hash]]     $vars              = undef,
