@@ -981,11 +981,9 @@ Absolute path to the log directory. Default depends on platform:
 Sets how often should the log file be rotated. Valid options are:
 
 * `HOURLY`
-* `DAILY`
+* `DAILY` (Icinga default)
 * `WEEKLY`
 * `MONTHLY`
-
-Defaults to `DAILY`
 
 #### Class: `icinga2::feature::graphite`
 Enables or disables the `graphite` feature.
