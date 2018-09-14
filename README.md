@@ -33,6 +33,8 @@ can set to false. See issue #403.
 * Requires Icinga 2 v2.8.0 or higher.
 * Feature `api`:
  * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
+* Feature `idopgsql`
+ * Parameter `password` is required now.
 
 ## Module Description
 
@@ -1436,22 +1438,22 @@ Enables or disables the `ido-pgsql` feature.
 Either `present` or `absent`. Defines if the feature `ido-pgsql` should be enabled. Defaults to `present`.
 
 ##### `host`
-PostgreSQL database host address. Defaults to `127.0.0.1`
+PostgreSQL database host address. Icinga defaults to `localhost`.
 
 ##### `port`
-PostgreSQL database port. Defaults to `3306`
+PostgreSQL database port. Icinga defaults to `3306`.
 
 ##### `user`
-PostgreSQL database user with read/write permission to the icinga database. Defaults to `icinga`
+PostgreSQL database user with read/write permission to the icinga database. Icinga defaults to `icinga`.
 
 ##### `password`
-PostgreSQL database user's password. Defaults to `icinga`
+PostgreSQL database user's password.
 
 ##### `database`
-PostgreSQL database name. Defaults to `icinga`
+PostgreSQL database name. Icinga defaults to `icinga`
 
 ##### `table_prefix`
-PostgreSQL database table prefix. Defaults to `icinga_`
+PostgreSQL database table prefix. Icinga defaults to `icinga_`
 
 ##### `import_schema`
 Whether to import the PostgreSQL schema or not. Defaults to `false`
