@@ -11,9 +11,7 @@
 #   Set the Icinga 2 name of the notificationcommand object. Defaults to title of the define resource.
 #
 # [*execute*]
-# 	 The "execute" script method takes care of executing the notification.
-#    The default template "plugin-notification-command" which is imported into
-#    all CheckCommand objects takes care of this setting.
+#   The "execute" script method takes care of executing the notification.
 #
 # [*command*]
 # 	 The command. This can either be an array of individual command arguments.
@@ -58,7 +56,7 @@ define icinga2::object::notificationcommand (
   Optional[Integer[1]]                 $timeout                  = undef,
   Optional[Hash]                       $arguments                = undef,
   Boolean                              $template                 = false,
-  Array                                $import                   = ['plugin-notification-command'],
+  Array                                $import                   = [],
   Variant[String, Integer]             $order                    = 25,
 ){
 
