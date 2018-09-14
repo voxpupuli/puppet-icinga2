@@ -1231,16 +1231,16 @@ Enables or disables the `gelf` feature.
 Either `present` or `absent`. Defines if the feature `gelf` should be enabled. Defaults to `present`.
 
 ##### `host`
-GELF receiver host address. Defaults to `127.0.0.1`
+GELF receiver host address. Icinga defaults to `127.0.0.1`
 
 ##### `port`
-GELF receiver port. Defaults to `12201`
+GELF receiver port. Icinga defaults to `12201`
 
 ##### `source`
-Source name for this instance. Defaults to `icinga2`
+Source name for this instance. Icinga defaults to `icinga2`
 
 ##### `enable_send_perfdata`
-Enable performance data for *CHECK RESULT* events. Defaults to `false`.
+Enable performance data for *CHECK RESULT* events. Icinga defaults to `false`.
 
 #### Class: `icinga2::feature::influxdb`
 Enables or disables the `influxdb` feature.

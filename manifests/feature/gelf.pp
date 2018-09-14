@@ -8,24 +8,24 @@
 #   Set to present enables the feature gelf, absent disables it. Defaults to present.
 #
 # [*host*]
-#   GELF receiver host address. Defaults to '127.0.0.1'.
+#   GELF receiver host address. Icinga defaults to '127.0.0.1'.
 #
 # [*port*]
-#   GELF receiver port. Defaults to 12201.
+#   GELF receiver port. Icinga defaults to '12201'.
 #
 # [*source*]
-#   Source name for this instance. Defaults to icinga2.
+#   Source name for this instance. Icinga defaults to 'icinga2'.
 #
 # [*enable_send_perfdata*]
-#   Enable performance data for 'CHECK RESULT' events. Defaults to false.
+#   Enable performance data for 'CHECK RESULT' events. Icinga defaults to false.
 #
 #
 class icinga2::feature::gelf(
-  Enum['absent', 'present'] $ensure               = present,
-  String                    $host                 = '127.0.0.1',
-  Integer[1,65535]          $port                 = 12201,
-  String                    $source               = 'icinga2',
-  Boolean                   $enable_send_perfdata = false,
+  Enum['absent', 'present']      $ensure               = present,
+  Optional[String]               $host                 = undef,
+  Optional[Integer[1,65535]]     $port                 = undef,
+  Optional[String]               $source               = undef,
+  Optional[Boolean]              $enable_send_perfdata = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
