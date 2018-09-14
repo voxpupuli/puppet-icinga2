@@ -9,12 +9,16 @@
 #
 # [*severity*]
 #   You can choose the log severity between information, notice, warning or debug.
-#   Defaults to warning.
+#
+# [*facility*]
+#   Defines the facility to use for syslog entries. This can be a facility constant
+#   like FacilityDaemon.
 #
 #
 class icinga2::feature::syslog(
-  Enum['absent', 'present']                         $ensure   = present,
-  Enum['debug', 'information', 'notice', 'warning'] $severity = 'warning',
+  Enum['absent', 'present']                                     $ensure   = present,
+  Optional[Enum['debug', 'information', 'notice', 'warning']]   $severity = undef,
+  Optional[String]                                              $facility = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -30,6 +34,7 @@ class icinga2::feature::syslog(
   # compose attributes
   $attrs = {
     severity => $severity,
+    facility => $facility,
   }
 
   # create object

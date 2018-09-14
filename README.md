@@ -1129,10 +1129,33 @@ Set severity level for logging to syslog. Available options are:
 
 * `information`
 * `notice`
-* `warning`
+* `warning` (Icinga default)
 * `debug`
 
-Defaults to `warning`
+##### `facility`
+Defines the facility to use for syslog entries. This can be a facility constant like FacilityDaemon.
+Available options are:
+
+* `FacilityAuth`
+* `FacilityAuthPriv`
+* `FacilityCron`
+* `FacilityDaemon`
+* `FacilityFtp`
+* `FacilityKern`
+* `FacilityLocal0`
+* `FacilityLocal1`
+* `FacilityLocal2`
+* `FacilityLocal3`
+* `FacilityLocal4`
+* `FacilityLocal5`
+* `FacilityLocal6`
+* `FacilityLocal7`
+* `FacilityLpr`
+* `FacilityMail`
+* `FacilityNews`
+* `FacilitySyslog`
+* `FacilityUser` (Icinga default)
+* `FacilityUucp`
 
 #### Class: `icinga2::feature::debuglog`
 Enables or disables the `debuglog` feature.
