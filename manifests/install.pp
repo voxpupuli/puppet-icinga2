@@ -38,14 +38,4 @@ class icinga2::install {
     group  => $group,
   }
 
-  file { "${conf_dir}/repository.d":
-    ensure  => $_ensure,
-    owner   => $user,
-    group   => $group,
-    recurse => true,
-    purge   => true,
-    force   => true,
-    require => File[$pki_dir, $conf_dir],
-  }
-
 }
