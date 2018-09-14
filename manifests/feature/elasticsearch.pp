@@ -8,23 +8,23 @@
 #   Set to present enables the feature elasticsearch, absent disables it. Defaults to present.
 #
 # [*host*]
-#    Elasticsearch host address. Defaults to 127.0.0.1.
+#    Elasticsearch host address. Icinga defaults to '127.0.0.1'.
 #
 # [*port*]
-#    Elasticsearch HTTP port. Defaults to 9200.
+#    Elasticsearch HTTP port. Icinga defaults to '9200'.
 #
 # [*index*]
-#    Elasticsearch index name. Defaults to icinga2.
+#    Elasticsearch index name. Icinga defaults to 'icinga2'.
 #
 # [*username*]
-#    Elasticsearch user name. Defaults to undef.
+#    Elasticsearch user name.
 #
 # [*password*]
-#    Elasticsearch user password. Defaults to undef.
+#    Elasticsearch user password.
 #
 # [*enable_ssl*]
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
-#    Defaults to 'false'.
+#    Icinga defaults to 'false'.
 #
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
@@ -46,7 +46,7 @@
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cacert_path*]
-#   Location of the CA certificate. Default is:
+#   Location of the CA certificate. Default depends on platform:
 #   /etc/icinga2/pki/ca.crt on Linux
 #   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
 #
@@ -63,13 +63,13 @@
 #   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*enable_send_perfdata*]
-#    Whether to send check performance data metrics. Defaults to false.
+#    Whether to send check performance data metrics. Icinga defaults to 'false'.
 #
 # [*flush_interval*]
-#    How long to buffer data points before transferring to Elasticsearch. Defaults to 10s.
+#    How long to buffer data points before transferring to Elasticsearch. Icinga defaults to '10s'.
 #
 # [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to Elasticsearch. Defaults to 1024.
+#    How many data points to buffer before forcing a transfer to Elasticsearch. Icinga defaults to '1024'.
 #
 # === Example
 #
@@ -80,23 +80,23 @@
 #
 #
 class icinga2::feature::elasticsearch(
-  Enum['absent', 'present']      $ensure               = present,
-  String                         $host                 = '127.0.0.1',
-  Integer[1,65535]               $port                 = 9200,
-  String                         $index                = 'icinga2',
-  Optional[String]               $username             = undef,
-  Optional[String]               $password             = undef,
-  Boolean                        $enable_ssl           = false,
-  Enum['none', 'puppet']         $pki                  = 'puppet',
-  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
-  Optional[String]               $ssl_key              = undef,
-  Optional[String]               $ssl_cert             = undef,
-  Optional[String]               $ssl_cacert           = undef,
-  Boolean                        $enable_send_perfdata = false,
-  Pattern[/^\d+[ms]*$/]          $flush_interval       = '10s',
-  Integer                        $flush_threshold      = 1024
+  Enum['absent', 'present']           $ensure               = present,
+  Optional[String]                    $host                 = undef,
+  Optional[Integer[1,65535]]          $port                 = undef,
+  Optional[String]                    $index                = undef,
+  Optional[String]]                   $username             = undef,
+  Optional[String]]                   $password             = undef,
+  Optional[Boolean]                   $enable_ssl           = undef,
+  Enum['none', 'puppet']              $pki                  = 'puppet',
+  Optional[Stdlib::Absolutepath]      $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_cacert_path      = undef,
+  Optional[String]                    $ssl_key              = undef,
+  Optional[String]                    $ssl_cert             = undef,
+  Optional[String]                    $ssl_cacert           = undef,
+  Optional[Boolean]                   $enable_send_perfdata = undef,
+  Optional[Pattern[/^\d+[ms]*$/]]     $flush_interval       = undef,
+  Optional[Integer]                   $flush_threshold      = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -107,11 +107,6 @@ class icinga2::feature::elasticsearch(
   $group         = $::icinga2::params::group
   $node_name     = $::icinga2::_constants['NodeName']
   $conf_dir      = $::icinga2::params::conf_dir
-  $ssl_dir       = "${::icinga2::params::pki_dir}/elasticsearch"
-  $_ssl_key_mode = $::kernel ? {
-    'windows' => undef,
-    default   => '0600',
-  }
   $_notify       = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
@@ -122,21 +117,28 @@ class icinga2::feature::elasticsearch(
     group   => $group,
   }
 
-  # Set defaults for certificate stuff and/or do validation
-  if $ssl_key_path {
-    $_ssl_key_path = $ssl_key_path }
-  else {
-    $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
-  if $ssl_cert_path {
-    $_ssl_cert_path = $ssl_cert_path }
-  else {
-    $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
-  if $ssl_cacert_path {
-    $_ssl_cacert_path = $ssl_cacert_path }
-  else {
-    $_ssl_cacert_path = "${ssl_dir}/ca.crt" }
-
   if $enable_ssl {
+
+    $ssl_dir       = "${::icinga2::params::pki_dir}/elasticsearch"
+    $_ssl_key_mode = $::kernel ? {
+      'windows' => undef,
+      default   => '0600',
+    }
+
+    # Set defaults for certificate stuff and/or do validation
+    if $ssl_key_path {
+      $_ssl_key_path = $ssl_key_path }
+    else {
+      $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
+    if $ssl_cert_path {
+      $_ssl_cert_path = $ssl_cert_path }
+    else {
+      $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
+    if $ssl_cacert_path {
+      $_ssl_cacert_path = $ssl_cacert_path }
+    else {
+      $_ssl_cacert_path = "${ssl_dir}/ca.crt" }
+
     $attrs_ssl = {
       enable_tls  => $enable_ssl,
       ca_path     => $_ssl_cacert_path,
