@@ -8,20 +8,20 @@
 #   Set to present enables the feature ido-pgsql, absent disables it. Defaults to present.
 #
 # [*host*]
-#    PostgreSQL database host address. Icinga defaults to 'localhost'.
+#    PostgreSQL database host address. Defaults to '127.0.0.1'.
 #
 # [*port*]
-#    PostgreSQL database port. Icinga defaults to '5432'.
+#    PostgreSQL database port. Defaults to '5432'.
 #
 # [*user*]
 #    PostgreSQL database user with read/write permission to the icinga database.
-#    Icinga defaults to 'icinga'
+#    Defaults to 'icinga'.
 #
 # [*password*]
 #    PostgreSQL database user's password.
 #
 # [*database*]
-#    PostgreSQL database name. Icinga defaults to 'icinga'.
+#    PostgreSQL database name. Defaults to 'icinga'.
 #
 # [*table_prefix*]
 #   PostgreSQL database table prefix. Icinga defaults to "icinga_".
@@ -74,10 +74,10 @@
 class icinga2::feature::idopgsql(
   String                              $password,
   Enum['absent', 'present']           $ensure               = present,
-  Optional[String]                    $host                 = undef,
-  Optional[Integer[1,65535]]          $port                 = undef,
-  Optional[String]                    $user                 = undef,
-  Optional[String]                    $database             = undef,
+  String                              $host                 = '127.0.0.1',
+  Integer[1,65535]                    $port                 = 5432,
+  String                              $user                 = 'icinga',
+  String                              $database             = 'icinga',
   Optional[String]                    $table_prefix         = undef,
   Optional[String]                    $instance_name        = undef,
   Optional[String]                    $instance_description = undef,
