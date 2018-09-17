@@ -35,6 +35,9 @@ can set to false. See issue #403.
  * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
 * Feature `idopgsql`
  * Parameter `password` is required now.
+* Feature `idomysql`
+ * Parameter `password` is required now.
+ * Key and certs now are stored into the certs directory named IdoMysqlConnection_ido-mysql by default.
 
 ## Module Description
 
@@ -1467,37 +1470,36 @@ Enables or disables the `gelf` feature.
 Either `present` or `absent`. Defines if the feature `ido-mysql` should be enabled. Defaults to `present`.
 
 ##### `host`
-MySQL database host address. Defaults to `127.0.0.1`
+MySQL database host address. Icinga defaults to `localhost`.
 
 ##### `port`
-MySQL database port. Defaults to `3306`
+MySQL database port. Icinga defaults to `3306`.
 
 ##### `socket_path`
 MySQL socket path.
 
 ##### `user`
-MySQL database user with read/write permission to the icinga database. Defaults to `icinga`
+MySQL database user with read/write permission to the icinga database. Icinga defaults to `icinga`.
 
 ##### `password`
-MySQL database user's password. Defaults to `icinga`
+MySQL database user's password.
 
 ##### `database`
-MySQL database name. Defaults to `icinga`
+MySQL database name. Icinga defaults to `icinga`.
 
 ##### `ssl`
 SSL settings will be set depending on this parameter:
 * `puppet` Use puppet certificates
-* `custom` Set custom paths for certificate, key and CA
-* `false` Disable SSL (default)
+* `none` Set custom paths for certificate, key and CA
 
 ##### `ssl_key`
-MySQL SSL client key file path. Only valid if ssl is set to `custom`.
+MySQL SSL client key file path. Only valid if ssl is set to `none`.
 
 ##### `ssl_cert`
-MySQL SSL certificate file path. Only valid if ssl is set to `custom`.
+MySQL SSL certificate file path. Only valid if ssl is set to `none`.
 
 ##### `ssl_ca`
-MySQL SSL certificate authority certificate file path. Only valid if ssl is set to `custom`.
+MySQL SSL certificate authority certificate file path. Only valid if ssl is set to `none`.
 
 ##### `ssl_capath`
 MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
@@ -1506,19 +1508,19 @@ MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid i
 MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 
 ##### `table_prefix`
-MySQL database table prefix. Defaults to `icinga_`
+MySQL database table prefix. Icinga defaults to `icinga_`.
 
 ##### `instance_name`
-Unique identifier for the local Icinga 2 instance. Defaults to `default`
+Unique identifier for the local Icinga 2 instance. Icinga defaults to `default`.
 
 ##### `instance_description`
 Description for the Icinga 2 instance.
 
 ##### `enable_ha`
-Enable the high availability functionality. Only valid in a cluster setup. Defaults to `true`
+Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to `true`.
 
 ##### `failover_timeout`
-Set the fail-over timeout in a HA cluster. Must not be lower than 60s. Defaults to `60s`
+Set the fail-over timeout in a HA cluster. Must not be lower than 60s. Icinga defaults to `60s`.
 
 ##### `cleanup`
 Hash with items for historical table cleanup.
@@ -1527,7 +1529,7 @@ Hash with items for historical table cleanup.
 Array of information types that should be written to the database.
 
 ##### `import_schema`
-Whether to import the MySQL schema or not. Defaults to `false`
+Whether to import the MySQL schema or not. Defaults to `false`.
 
 #### Class: `icinga2::pki::ca`
 This class provides multiple ways to create the CA used by Icinga 2. By default it will create a CA by using the

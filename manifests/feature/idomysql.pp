@@ -11,47 +11,45 @@
 #    MySQL database host address. Defaults to '127.0.0.1'.
 #
 # [*port*]
-#    MySQL database port. Defaults to 3306.
+#    MySQL database port. Defaults to '3306'.
 #
 # [*socket_path*]
 #    MySQL socket path.
 #
 # [*user*]
-#    MySQL database user with read/write permission to the icinga database. Defaults to "icinga".
+#    MySQL database user with read/write permission to the icinga database. Defaults to 'icinga'.
 #
 # [*password*]
-#    MySQL database user's password. Defaults to "icinga".
+#    MySQL database user's password.
 #
 # [*database*]
-#    MySQL database name. Defaults to "icinga".
+#    MySQL database name. Defaults to 'icinga'.
 #
 # [*enable_ssl*]
-#    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+#    Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 #    Defaults to 'false'.
 #
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
-#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
-#   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the certs directory
+#   /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
 #   'none' does nothing and you either have to manage the files yourself as file resources
 #   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.key on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key on Windows
-#   The Value of NodeName comes from the corresponding constant.
+#   /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Linux
+#   C:/ProgramData/icinga2/etc/icinga2/pki/IdoMysqlConnection_ido-mysql.key on Windows
 #
 # [*ssl_cert_path*]
 #   Location of the certificate. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.crt on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
-#   The Value of NodeName comes from the corresponding constant.
+#   /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Windows
 #
 # [*ssl_cacert_path*]
 #   Location of the CA certificate. Default is:
-#   /etc/icinga2/pki/ca.crt on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
+#   /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Windows
 #
 # [*ssl_key*]
 #   The private key in a base64 encoded string to store in pki directory, file is stored to
@@ -72,19 +70,19 @@
 #    MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 #
 # [*table_prefix*]
-#   MySQL database table prefix. Defaults to "icinga_".
+#   MySQL database table prefix. Icinga defaults to 'icinga_'.
 #
 # [*instance_name*]
-#   Unique identifier for the local Icinga 2 instance. Defaults to "default".
+#   Unique identifier for the local Icinga 2 instance. Icinga defaults to 'default'.
 #
 # [*instance_description*]
 #   Description for the Icinga 2 instance.
 #
 # [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Defaults to "true".
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to 'true'.
 #
 # [*failover_timeout*]
-#   Set the failover timeout in a HA cluster. Must not be lower than 60s. Defaults to "60s".
+#   Set the failover timeout in a HA cluster. Must not be lower than 60s. Icinga defaults to '60s'.
 #
 # [*cleanup*]
 #   Hash with items for historical table cleanup.
@@ -93,7 +91,7 @@
 #   Array of information types that should be written to the database.
 #
 # [*import_schema*]
-#   Whether to import the MySQL schema or not. Defaults to false.
+#   Whether to import the MySQL schema or not. Defaults to 'false'.
 #
 # === Examples
 #
@@ -122,31 +120,31 @@
 #
 #
 class icinga2::feature::idomysql(
-  Enum['absent', 'present']      $ensure                 = present,
-  String                         $host                   = '127.0.0.1',
-  Integer[1,65535]               $port                   = 3306,
-  Optional[Stdlib::Absolutepath] $socket_path            = undef,
-  String                         $user                   = 'icinga',
-  String                         $password               = 'icinga',
-  String                         $database               = 'icinga',
-  Boolean                        $enable_ssl             = false,
-  Enum['none', 'puppet']         $pki                    = 'puppet',
-  Optional[Stdlib::Absolutepath] $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cacert_path        = undef,
-  Optional[String]               $ssl_key                = undef,
-  Optional[String]               $ssl_cert               = undef,
-  Optional[String]               $ssl_cacert             = undef,
-  Optional[Stdlib::Absolutepath] $ssl_capath             = undef,
-  Optional[String]               $ssl_cipher             = undef,
-  String                         $table_prefix           = 'icinga_',
-  String                         $instance_name          = 'default',
-  Optional[String]               $instance_description   = undef,
-  Boolean                        $enable_ha              = true,
-  Pattern[/^\d+[ms]*$/]          $failover_timeout       = '60s',
-  Optional[Hash]                 $cleanup                = undef,
-  Optional[Array]                $categories             = undef,
-  Boolean                        $import_schema          = false,
+  String                                           $password,
+  Enum['absent', 'present']                        $ensure                 = present,
+  String                                           $host                   = '127.0.0.1',
+  Integer[1,65535]                                 $port                   = 3306,
+  Optional[Stdlib::Absolutepath]                   $socket_path            = undef,
+  String                                           $user                   = 'icinga',
+  String                                           $database               = 'icinga',
+  Boolean                                          $enable_ssl             = false,
+  Enum['none', 'puppet']                           $pki                    = 'puppet',
+  Optional[Stdlib::Absolutepath]                   $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]                   $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]                   $ssl_cacert_path        = undef,
+  Optional[String]                                 $ssl_key                = undef,
+  Optional[String]                                 $ssl_cert               = undef,
+  Optional[String]                                 $ssl_cacert             = undef,
+  Optional[Stdlib::Absolutepath]                   $ssl_capath             = undef,
+  Optional[String]                                 $ssl_cipher             = undef,
+  Optional[String]                                 $table_prefix           = undef,
+  Optional[String]                                 $instance_name          = undef,
+  Optional[String]                                 $instance_description   = undef,
+  Optional[Boolean]                                $enable_ha              = undef,
+  Optional[Pattern[/^\d+[ms]*$/]]                  $failover_timeout       = undef,
+  Optional[Hash[String,Pattern[/^\d+[dhms]*$/]]]   $cleanup                = undef,
+  Optional[Array]                                  $categories             = undef,
+  Boolean                                          $import_schema          = false,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -157,7 +155,7 @@ class icinga2::feature::idomysql(
   $group                = $::icinga2::params::group
   $node_name            = $::icinga2::_constants['NodeName']
   $conf_dir             = $::icinga2::params::conf_dir
-  $ssl_dir              = "${::icinga2::params::pki_dir}/ido-mysql"
+  $ssl_dir              = $::icinga2::params::pki_dir
   $ido_mysql_package    = $::icinga2::params::ido_mysql_package
   $ido_mysql_schema_dir = $::icinga2::params::ido_mysql_schema_dir
   $manage_package       = $::icinga2::manage_package
@@ -175,21 +173,22 @@ class icinga2::feature::idomysql(
     group   => $group,
   }
 
-  # Set defaults for certificate stuff
-  if $ssl_key_path {
-    $_ssl_key_path = $ssl_key_path}
-  else {
-    $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
-  if $ssl_cert_path {
-    $_ssl_cert_path = $ssl_cert_path }
-  else {
-    $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
-  if $ssl_cacert_path {
-    $_ssl_cacert_path = $ssl_cacert_path }
-  else {
-    $_ssl_cacert_path = "${ssl_dir}/ca.crt" }
-
   if $enable_ssl {
+
+    # Set defaults for certificate stuff
+    if $ssl_key_path {
+      $_ssl_key_path = $ssl_key_path}
+    else {
+      $_ssl_key_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.key" }
+    if $ssl_cert_path {
+      $_ssl_cert_path = $ssl_cert_path }
+    else {
+      $_ssl_cert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.crt" }
+    if $ssl_cacert_path {
+      $_ssl_cacert_path = $ssl_cacert_path }
+    else {
+      $_ssl_cacert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql_ca.crt" }
+
     $attrs_ssl = {
       enable_ssl => $enable_ssl,
       ssl_ca     => $_ssl_cacert_path,
@@ -197,10 +196,6 @@ class icinga2::feature::idomysql(
       ssl_key    => $_ssl_key_path,
       ssl_capath => $ssl_capath,
       ssl_cipher => $ssl_cipher,
-    }
-
-    file { $ssl_dir:
-      ensure => directory,
     }
 
     case $pki {
