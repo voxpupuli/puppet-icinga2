@@ -8,23 +8,23 @@
 #   Set to present enables the feature influxdb, absent disables it. Defaults to present.
 #
 # [*host*]
-#    InfluxDB host address. Defaults to 127.0.0.1.
+#    InfluxDB host address. Icinga defaults to 127.0.0.1.
 #
 # [*port*]
-#    InfluxDB HTTP port. Defaults to 8086.
+#    InfluxDB HTTP port. Icinga defaults to 8086.
 #
 # [*database*]
-#    InfluxDB database name. Defaults to icinga2.
+#    InfluxDB database name. Icinga defaults to icinga2.
 #
 # [*username*]
-#    InfluxDB user name. Defaults to undef.
+#    InfluxDB user name.
 #
 # [*password*]
-#    InfluxDB user password. Defaults to undef.
+#    InfluxDB user password.
 #
 # [*enable_ssl*]
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
-#    Defaults to 'false'.
+#    Icinga defaults to 'false'.
 #
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
@@ -63,28 +63,28 @@
 #   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*host_measurement*]
-#    The value of this is used for the measurement setting in host_template. Defaults to  '$host.check_command$'
+#    The value of this is used for the measurement setting in host_template. Icinga defaults to '$host.check_command$'.
 #
 # [*host_tags*]
 #    Tags defined in this hash will be set in the host_template.
 #
 #  [*service_measurement*]
-#    The value of this is used for the measurement setting in host_template. Defaults to  '$service.check_command$'
+#    The value of this is used for the measurement setting in host_template. Icinga defaults to '$service.check_command$'.
 #
 # [*service_tags*]
 #    Tags defined in this hash will be set in the service_template.
 #
 # [*enable_send_thresholds*]
-#    Whether to send warn, crit, min & max tagged data. Defaults to false.
+#    Whether to send warn, crit, min & max tagged data. Icinga defaults to 'false'.
 #
 # [*enable_send_metadata*]
-#    Whether to send check metadata e.g. states, execution time, latency etc. Defaults to false.
+#    Whether to send check metadata e.g. states, execution time, latency etc. Icinga defaults to 'false'.
 #
 # [*flush_interval*]
-#    How long to buffer data points before transfering to InfluxDB. Defaults to 10s.
+#    How long to buffer data points before transfering to InfluxDB. Icinga defaults to '10s'.
 #
 # [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to InfluxDB. Defaults to 1024.
+#    How many data points to buffer before forcing a transfer to InfluxDB. Icinga defaults to '1024'.
 #
 # === Example
 #
@@ -97,28 +97,28 @@
 #
 #
 class icinga2::feature::influxdb(
-  Enum['absent', 'present']      $ensure                 = present,
-  String                         $host                   = '127.0.0.1',
-  Integer[1,65535]               $port                   = 8086,
-  String                         $database               = 'icinga2',
-  Optional[String]               $username               = undef,
-  Optional[String]               $password               = undef,
-  Boolean                        $enable_ssl             = false,
-  Enum['none', 'puppet']         $pki                    = 'puppet',
-  Optional[Stdlib::Absolutepath] $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cacert_path        = undef,
-  Optional[String]               $ssl_key                = undef,
-  Optional[String]               $ssl_cert               = undef,
-  Optional[String]               $ssl_cacert             = undef,
-  String                         $host_measurement       = '$host.check_command$',
-  Hash                           $host_tags              = { hostname => '$host.name$' },
-  String                         $service_measurement    = '$service.check_command$',
-  Hash                           $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
-  Boolean                        $enable_send_thresholds = false,
-  Boolean                        $enable_send_metadata   = false,
-  Pattern[/^\d+[ms]*$/]          $flush_interval         = '10s',
-  Integer[1]                     $flush_threshold        = 1024
+  Enum['absent', 'present']          $ensure                 = present,
+  Optional[String]                   $host                   = undef,
+  Optional[Integer[1,65535]          $port                   = undef,
+  Optional[String]                   $database               = undef,
+  Optional[String]                   $username               = undef,
+  Optional[String]                   $password               = undef,
+  Optional[Boolean]                  $enable_ssl             = undef,
+  Enum['none', 'puppet']             $pki                    = 'puppet',
+  Optional[Stdlib::Absolutepath]     $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]     $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]     $ssl_cacert_path        = undef,
+  Optional[String]                   $ssl_key                = undef,
+  Optional[String]                   $ssl_cert               = undef,
+  Optional[String]                   $ssl_cacert             = undef,
+  Optional[String]                   $host_measurement       = undef,
+  Optional[Hash]                     $host_tags              = undef,
+  Optional[String]                   $service_measurement    = undef,
+  Optional[Hash]                     $service_tags           = undef,
+  Optional[Boolean]                  $enable_send_thresholds = undef,
+  Optional[Boolean]                  $enable_send_metadata   = undef,
+  Optional[Pattern[/^\d+[ms]*$/]]    $flush_interval         = undef,
+  Optional[Integer[1]]               $flush_threshold        = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
