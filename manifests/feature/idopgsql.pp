@@ -81,7 +81,7 @@ class icinga2::feature::idopgsql(
   Optional[String]                    $table_prefix         = undef,
   Optional[String]                    $instance_name        = undef,
   Optional[String]                    $instance_description = undef,
-  Optional[Boolean                    $enable_ha            = undef,
+  Optional[Boolean]                   $enable_ha            = undef,
   Optional[Pattern[/^\d+[ms]*$/]]     $failover_timeout     = undef,
   Optional[Hash]                      $cleanup              = undef,
   Optional[Array]                     $categories           = undef,
