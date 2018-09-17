@@ -153,7 +153,6 @@ class icinga2::feature::idomysql(
 
   $owner                = $::icinga2::params::user
   $group                = $::icinga2::params::group
-  $node_name            = $::icinga2::_constants['NodeName']
   $conf_dir             = $::icinga2::params::conf_dir
   $ssl_dir              = $::icinga2::params::pki_dir
   $ido_mysql_package    = $::icinga2::params::ido_mysql_package

@@ -29,26 +29,26 @@
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
 #   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
-#   /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
+#   /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
 #   'none' does nothing and you either have to manage the files yourself as file resources
 #   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.key on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key on Windows
+#   /var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch.key on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch.key on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cert_path*]
 #   Location of the certificate. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.crt on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
+#   /var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch.crt on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch.crt on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cacert_path*]
 #   Location of the CA certificate. Default depends on platform:
-#   /etc/icinga2/pki/ca.crt on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
+#   /var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch_ca.crt on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch_ca.crt on Windows
 #
 # [*ssl_key*]
 #   The private key in a base64 encoded string to store in pki directory, file is stored to
@@ -105,7 +105,6 @@ class icinga2::feature::elasticsearch(
 
   $user          = $::icinga2::params::user
   $group         = $::icinga2::params::group
-  $node_name     = $::icinga2::_constants['NodeName']
   $conf_dir      = $::icinga2::params::conf_dir
   $_notify       = $ensure ? {
     'present' => Class['::icinga2::service'],
@@ -119,7 +118,7 @@ class icinga2::feature::elasticsearch(
 
   if $enable_ssl {
 
-    $ssl_dir       = "${::icinga2::params::pki_dir}/elasticsearch"
+    $ssl_dir       = $::icinga2::params::pki_dir
     $_ssl_key_mode = $::kernel ? {
       'windows' => undef,
       default   => '0600',
@@ -129,25 +128,21 @@ class icinga2::feature::elasticsearch(
     if $ssl_key_path {
       $_ssl_key_path = $ssl_key_path }
     else {
-      $_ssl_key_path = "${ssl_dir}/${node_name}.key" }
+      $_ssl_key_path = "${ssl_dir}/ElasticsearchWriter_elasticsearch.key" }
     if $ssl_cert_path {
       $_ssl_cert_path = $ssl_cert_path }
     else {
-      $_ssl_cert_path = "${ssl_dir}/${node_name}.crt" }
+      $_ssl_cert_path = "${ssl_dir}/ElasticsearchWriter_elasticsearch.crt" }
     if $ssl_cacert_path {
       $_ssl_cacert_path = $ssl_cacert_path }
     else {
-      $_ssl_cacert_path = "${ssl_dir}/ca.crt" }
+      $_ssl_cacert_path = "${ssl_dir}/ElasticsearchWriter_elasticsearch_ca.crt" }
 
     $attrs_ssl = {
       enable_tls  => $enable_ssl,
       ca_path     => $_ssl_cacert_path,
       cert_path   => $_ssl_cert_path,
       key_path    => $_ssl_key_path,
-    }
-
-    file { $ssl_dir:
-      ensure => directory,
     }
 
     case $pki {
