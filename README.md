@@ -38,6 +38,10 @@ can set to false. See issue #403.
 * Feature `idomysql`
  * Parameter `password` is required now.
  * Key and certs now are stored into the certs directory named IdoMysqlConnection_ido-mysql by default.
+* Feature `elasticsearch`
+ * Key and certs now are stored into the certs directory named ElasticsearchWriter_elasticsearch by default.
+* Feature `influxdb`
+ * Key and certs now are stored into the certs directory named InfluxdbWriter_influxdb by default.
 
 ## Module Description
 
