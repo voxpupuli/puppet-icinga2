@@ -1547,32 +1547,32 @@ Content of the CA key. If this is unset, a key will be generated with the Icinga
 ##### `ssl_key_path`
 Location of the private key. Default depends on your platform:
 
-* Linux `/etc/icinga2/pki/NodeName.key`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key`
+* Linux `/var/lib/icinga2/certs/NodeName.key`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.key`
 
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_cert_path`
 Location of the certificate. Default depends on your platform:
 
-* Linux `/etc/icinga2/pki/NodeName.crt`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt`
+* Linux `/var/lib/icinga2/certs/NodeName.crt`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.crt`
 
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_csr_path`
 Location of the certificate signing request. Default depends on your platform:
 
-* Linux: `/etc/icinga2/pki/NodeName.csr`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr`
+* Linux: `/var/lib/icinga2/certs/NodeName.csr`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.csr`
 
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_cacert_path`
 Location of the CA certificate. Default depends on your platform:
 
-* Linux: `/etc/icinga2/pki/ca.crt`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
+* Linux: `/var/lib/icinga2/certs/ca.crt`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/ca.crt`
 
 ### Private Classes
 

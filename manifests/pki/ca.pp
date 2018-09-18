@@ -15,26 +15,26 @@
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.key on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key on Windows
+#   /var/lib/icinga2/certs/NodeName.key on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.key on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cert_path*]
 #   Location of the certificate. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.crt on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt on Windows
+#   /var/lib/icinga2/certs/NodeName.crt on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.crt on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_csr_path*]
 #   Location of the certificate signing request. Default depends on platform:
-#   /etc/icinga2/pki/NodeName.csr on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr on Windows
+#   /var/lib/icinga2/certs/NodeName.csr on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.csr on Windows
 #   The Value of NodeName comes from the corresponding constant.
 #
 # [*ssl_cacert_path*]
 #   Location of the CA certificate. Default is:
-#   /etc/icinga2/pki/ca.crt on Linux
-#   C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt on Windows
+#   /var/lib/icinga2/certs/ca.crt on Linux
+#   C:/ProgramData/icinga2/var/lib/icinga2/certs/ca.crt on Windows
 #
 # === Examples
 #
