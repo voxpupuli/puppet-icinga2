@@ -18,7 +18,7 @@
 #   first time.
 #
 # [*order*]
-#   String to set the position in the target file, sorted alpha numeric. Defaults to 30.
+#   String to set the position in the target file, sorted alpha numeric. Defaults to '05'.
 #
 #
 define icinga2::object::compatlogger (

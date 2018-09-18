@@ -79,8 +79,6 @@ define icinga2::object(
 
   assert_private()
 
-  include ::icinga2::params
-
   case $::osfamily {
     'windows': {
       Concat {
