@@ -33,6 +33,7 @@ can set to false. See issue #403.
 * Requires Icinga 2 v2.8.0 or higher.
 * Feature `api`:
  * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
+ * Deprecated value `ca` of parameter `pki` is removed.
 * Feature `idopgsql`
  * Parameter `password` is required now.
 * Feature `idomysql`
@@ -1345,10 +1346,7 @@ Provides multiple sources for the certificate and key.
   * Windows: `C:/ProgramData/icinga2/etc/icinga2/pki`
 * `icinga2` Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the Puppet master by using
 the configured 'ticket_salt' in a custom function.
-* `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`,
-`ssl_ca` parameters.
-* `ca` (**deprecated**) Includes the `::icinga2::pki::ca` class to generate a fresh CA and generates an SSL certificate and key signed by
-this new CA.
+* `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`, `ssl_ca` parameters.
 
 Defaults to `puppet`
 

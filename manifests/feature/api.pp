@@ -15,8 +15,6 @@
 #              Puppetmaster by using the configured 'ticket_salt' in a custom function.
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
-#   - ca: Includes the '::icinga2::pki::ca' class to generate a fresh CA and generates an SSL certificate and
-#         key signed by this new CA.
 #
 # [*ssl_key_path*]
 #   Location of the private key. Default depends on platform:
@@ -313,13 +311,6 @@ class icinga2::feature::api(
         creates => $_ssl_cacert_path,
       }
     } # icinga2
-
-    'ca': {
-      $_ticket_salt = $ticket_salt
-      class { '::icinga2::pki::ca': }
-
-      warning('This parameter is deprecated and will be removed in future versions! Please use ::icinga2::pki::ca instead')
-    } # ca
   } # case pki
 
   # compose attributes
