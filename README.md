@@ -85,7 +85,7 @@ Depending on your setup following modules may also be required:
 This module has been tested on:
 
 * Ruby >= 1.9
-* Debian 7, 8
+* Debian 7, 8, 9
 * Ubuntu 14.04, 16.04
 * CentOS/RHEL 6, 7
     * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
