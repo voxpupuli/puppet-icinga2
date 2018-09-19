@@ -84,7 +84,7 @@ class icinga2::feature::elasticsearch(
   Optional[String]                    $host                 = undef,
   Optional[Integer[1,65535]]          $port                 = undef,
   Optional[String]                    $index                = undef,
-  Optional[String]]                   $username             = undef,
+  Optional[String]                    $username             = undef,
   Optional[String]]                   $password             = undef,
   Optional[Boolean]                   $enable_ssl           = undef,
   Enum['none', 'puppet']              $pki                  = 'puppet',
