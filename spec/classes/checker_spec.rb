@@ -6,44 +6,41 @@ describe('icinga2::feature::checker', :type => :class) do
   ] }
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
-    end
+    context "on #{os}" do
+      let :facts { facts }
 
-    context "#{os} with ensure => present" do
-      let(:params) { {:ensure => 'present'} }
+      before(:each) do
+        case facts[:kernel]
+        when 'windows'
+          @icinga2_conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
+        when 'FreeBSD'
+          @icinga2_conf_dir = '/usr/local/etc/icinga2'
+        else
+          @icinga2_conf_dir = '/etc/icinga2'
+        end
+      end
 
-      it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'present'}) }
+      context "with defaults" do
+        it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'present'}) }
 
-      it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
-        .with({ 'target' => '/etc/icinga2/features-available/checker.conf' })
-        .that_notifies('Class[icinga2::service]') }
-    end
+        it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
+          .with({
+            'target' => "#{@icinga2_conf_dir}/features-available/checker.conf", })
+          .that_notifies('Class[icinga2::service]') }
 
+        it { is_expected.to contain_concat__fragment('icinga2::feature::checker')
+          .with({
+            'target' => "#{@icinga2_conf_dir}/features-available/checker.conf",
+            'order'  => '05', })
+          .with_content(/library \"checker\"$/) }
+      end
 
-    context "#{os} with ensure => absent" do
-      let(:params) { {:ensure => 'absent'} }
+      context "with ensure => absent" do
+        let(:params) { {:ensure => 'absent'} }
 
-      it { is_expected.to contain_icinga2__feature('checker').with({'ensure' => 'absent'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::CheckerComponent::checker')
-        .with({ 'target' => '/etc/icinga2/features-available/checker.conf' }) }
-    end
-
-
-    context "#{os} with concurrent_checks => 100" do
-      let(:params) { {:concurrent_checks => 100} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::CheckerComponent::checker')
-        .with({ 'target' => '/etc/icinga2/features-available/checker.conf' })
-        .with_content(/concurrent_checks = 100/) }
-    end
-
-
-    context "#{os} with concurrent_checks => foo (not a valid integer)" do
-      let(:params) { {:concurrent_checks => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a value of type Undef or Integer/) }
+        it { is_expected.to contain_icinga2__feature('checker')
+          .with({ 'ensure' => 'absent' }) }
+      end
     end
 
   end

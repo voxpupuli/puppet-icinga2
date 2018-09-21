@@ -74,6 +74,5 @@ define icinga2::object::eventcommand (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 }

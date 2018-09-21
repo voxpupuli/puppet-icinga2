@@ -65,6 +65,5 @@ define icinga2::object::hostgroup(
     ignore      => $ignore,
     target      => $target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 }

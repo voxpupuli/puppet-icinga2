@@ -99,7 +99,6 @@ define icinga2::object::scheduleddowntime (
     ignore       => $ignore,
     target       => $target,
     order        => $order,
-    notify       => Class['::icinga2::service'],
   }
 
 }

@@ -1,80 +1,40 @@
 require 'spec_helper'
 
 describe('icinga2::feature::mainlog', :type => :class) do
-  let(:pre_condition) { [
-    "class { 'icinga2': features => [], }"
-  ] }
+  let(:pre_condition) {[
+    "class { 'icinga2': features => [], }" ]}
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
+    context "on #{os}" do
+      let :facts { facts }
+
+      before(:each) do
+        case facts[:kernel]
+        when 'windows'
+          @icinga2_conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
+        when 'FreeBSD'
+          @icinga2_conf_dir = '/usr/local/etc/icinga2'
+        else
+          @icinga2_conf_dir = '/etc/icinga2'
+        end
+      end
+
+      context "with defaults" do
+        let(:params) { {:ensure => 'present'} }
+
+        it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'present'}) }
+
+        it { is_expected.to contain_icinga2__object('icinga2::object::FileLogger::mainlog')
+          .with({ 'target' => "#{@icinga2_conf_dir}/features-available/mainlog.conf" })
+          .that_notifies('Class[icinga2::service]') }
+      end
+
+      context "#{os} with ensure => absent" do
+        let(:params) { {:ensure => 'absent'} }
+
+        it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'absent'}) }
+      end
     end
 
-
-    context "#{os} with ensure => present" do
-      let(:params) { {:ensure => 'present'} }
-
-      it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'present'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::FileLogger::mainlog')
-        .with({ 'target' => '/etc/icinga2/features-available/mainlog.conf' })
-        .that_notifies('Class[icinga2::service]') }
-    end
-
-
-    context "#{os} with ensure => absent" do
-      let(:params) { {:ensure => 'absent'} }
-
-      it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'absent'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::FileLogger::mainlog')
-        .with({ 'target' => '/etc/icinga2/features-available/mainlog.conf' }) }
-    end
-
-
-    context "#{os} with all defaults" do
-      it { is_expected.to contain_icinga2__feature('mainlog').with({'ensure' => 'present'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::FileLogger::mainlog')
-        .with({ 'target' => '/etc/icinga2/features-available/mainlog.conf' })
-        .that_notifies('Class[icinga2::service]') }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::FileLogger::mainlog')
-        .with({ 'target' => '/etc/icinga2/features-available/mainlog.conf' })
-        .with_content(/severity = "information"/)
-        .with_content(/path = "\/var\/log\/icinga2\/icinga2.log"/) }
-    end
-
-
-    context "#{os} with severity => notice" do
-      let(:params) { {:severity => 'notice'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::FileLogger::mainlog')
-        .with({ 'target' => '/etc/icinga2/features-available/mainlog.conf' })
-        .with_content(/severity = "notice"/) }
-    end
-
-
-    context "#{os} with severity => foo (not a valid value)" do
-      let(:params) { {:severity => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['debug', 'information', 'notice', 'warning'\]/) }
-    end
-
-
-    context "#{os} with path => /foo/bar" do
-      let(:params) { {:path => '/foo/bar'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::FileLogger::mainlog')
-        .with({ 'target' => '/etc/icinga2/features-available/mainlog.conf' })
-        .with_content(/path = "\/foo\/bar"/) }
-    end
-
-
-    context "#{os} with path => foo/bar (not an absolute path)" do
-      let(:params) { {:path => 'foo/bar'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
-    end
   end
 end

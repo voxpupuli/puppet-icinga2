@@ -140,7 +140,6 @@ define icinga2::object::notification (
     apply_target => $apply_target,
     assign       => $assign,
     ignore       => $ignore,
-    notify       => Class['::icinga2::service'],
   }
 
 }

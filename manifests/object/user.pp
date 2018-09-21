@@ -97,7 +97,6 @@ define icinga2::object::user (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 
 }

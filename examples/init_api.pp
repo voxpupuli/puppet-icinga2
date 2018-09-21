@@ -8,12 +8,12 @@ class { '::icinga2::feature::api':
 
 include ::icinga2::pki::ca
 
-::icinga2::object::apiuser { 'director':
-  ensure      => present,
-  password    => 'Eih5Weefoo2oa8sh', 
-  permissions => [ "*" ],
-  target      => '/etc/icinga2/conf.d/api-users.conf',
-}
+#::icinga2::object::apiuser { 'director':
+#  ensure      => present,
+#  password    => 'Eih5Weefoo2oa8sh', 
+#  permissions => [ "*" ],
+#  target      => '/etc/icinga2/conf.d/api-users.conf',
+#}
 
 ::icinga2::object::apiuser { 'icingaweb2':
   ensure      => present,

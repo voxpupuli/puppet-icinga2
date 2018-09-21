@@ -70,6 +70,5 @@ define icinga2::object::zone(
     attrs_list  => keys($attrs),
     target      => $_target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 }

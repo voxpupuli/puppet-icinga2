@@ -307,8 +307,8 @@ class icinga2::feature::idomysql(
     exec { 'idomysql-import-schema':
       user    => 'root',
       path    => $::path,
-      command => "mysql -h '${host}' -P '${port}' -u '${user}' -p'${password}' '${database}' < '${ido_mysql_schema_dir}/mysql.sql'",
-      unless  => "mysql -h '${host}' -P '${port}' -u '${user}' -p'${password}' '${database}' -Ns -e 'select version from icinga_dbversion'",
+      command => "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${database} < ${ido_mysql_schema_dir}/mysql.sql",
+      unless  => "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${database} -Ns -e 'select version from icinga_dbversion'",
     }
   }
 
