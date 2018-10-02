@@ -159,6 +159,9 @@
 class icinga2::feature::api(
   Enum['absent', 'present']                               $ensure                           = present,
   Enum['ca', 'icinga2', 'none', 'puppet']                 $pki                              = 'puppet',
+  Optional[Stdlib::Absolutepath]                          $ssl_key_path                     = undef,
+  Optional[Stdlib::Absolutepath]                          $ssl_cert_path                    = undef,
+  Optional[Stdlib::Absolutepath]                          $ssl_cacert_path                  = undef,
   Optional[Stdlib::Absolutepath]                          $ssl_crl_path                     = undef,
   Optional[Boolean]                                       $accept_config                    = undef,
   Optional[Boolean]                                       $accept_commands                  = undef,
@@ -343,7 +346,7 @@ class icinga2::feature::api(
     order       => 10,
     notify      => $_notify,
   }
-
+ 
   # manage feature
   icinga2::feature { 'api':
     ensure      => $ensure,

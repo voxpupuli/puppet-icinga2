@@ -185,6 +185,5 @@ define icinga2::object::host(
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 }

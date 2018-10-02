@@ -125,7 +125,6 @@ define icinga2::object::dependency (
     ignore       => $ignore,
     target       => $target,
     order        => $order,
-    notify       => Class['::icinga2::service'],
   }
 
 }

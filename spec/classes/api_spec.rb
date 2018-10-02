@@ -1,303 +1,169 @@
 require 'spec_helper'
 
 describe('icinga2::feature::api', :type => :class) do
-  let(:pre_condition) { [
-    "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
-  ] }
+  let(:pre_condition) {[
+    "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }" ]}
+
 
   on_supported_os.each do |os, facts|
-    let(:facts) do
-      facts.merge({
-                      :icinga2_puppet_hostcert => '/var/lib/puppet/ssl/certs/host.example.org.pem',
-                      :icinga2_puppet_hostprivkey => '/var/lib/puppet/ssl/private_keys/host.example.org.pem',
-                      :icinga2_puppet_localcacert => '/var/lib/puppet/ssl/certs/ca.pem',
-                  })
-    end
-
-    context "#{os} with ensure => present" do
-      let(:params) { {:ensure => 'present'} }
-
-      it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .that_notifies('Class[icinga2::service]') }
-    end
-
-
-    context "#{os} with ensure => absent" do
-      let(:params) { {:ensure => 'absent'} }
-
-      it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'absent'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' }) }
-    end
-
-
-    context "#{os} with all defaults" do
-      it { is_expected.to contain_icinga2__feature('api').with({'ensure' => 'present'}) }
-
-      it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .that_notifies('Class[icinga2::service]') }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/accept_config = false/)
-        .with_content(/accept_commands = false/)
-        .without_content(/bind_\w+ =/)
-      }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
-
-      it { is_expected.to contain_icinga2__object__endpoint('NodeName') }
-
-      it { is_expected.to contain_icinga2__object__zone('ZoneName')
-        .with({ 'endpoints' => [ 'NodeName' ] }) }
-    end
-
-
-    context "#{os} with pki => puppet" do
-      let(:params) { {:pki => 'puppet'} }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')  }
-      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')  }
-    end
-
-
-    context "#{os} with pki => icinga2" do
-      let(:params) { {:pki => 'icinga2'} }
-
-      it { is_expected.to contain_exec('icinga2 pki create key') }
-      it { is_expected.to contain_exec('icinga2 pki get trusted-cert') }
-      it { is_expected.to contain_exec('icinga2 pki request') }
-    end
-
-    context "#{os} with pki => ca" do
-      let(:params) { {:pki => 'ca'} }
-
-      it { is_expected.to contain_exec('icinga2 pki create certificate signing request') }
-      it { is_expected.to contain_exec('icinga2 pki sign certificate') }
-    end
-
-    context "#{os} with pki => foo (not a valid value)" do
-      let(:params) { {:pki => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['ca', 'icinga2', 'none', 'puppet'\]/) }
-    end
-
-
-    context "#{os} with pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
-      let(:params) { {:pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.key').with({
-        'mode'  => '0600',
-      }).with_content(/^foo/) }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/host.example.org.crt')
-        .with_content(/^bar/) }
-
-      it { is_expected.to contain_file('/etc/icinga2/pki/ca.crt')
-        .with_content(/^baz/) }
-    end
-
-
-    context "#{os} with ssl_key_path = /foo/bar" do
-      let(:params) { {:ssl_key_path => '/foo/bar'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/key_path = "\/foo\/bar"/) }
-    end
-
-
-    context "#{os} with ssl_key_path = foo/bar (not a valid absolute path)" do
-      let(:params) { {:ssl_key_path => 'foo/bar'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
-      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
-    end
-
-
-    context "#{os} with ssl_cert_path = /foo/bar" do
-      let(:params) { {:ssl_cert_path => '/foo/bar'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/cert_path = "\/foo\/bar"/) }
-    end
-
-
-    context "#{os} with ssl_cert_path = foo/bar (not a valid absolute path)" do
-      let(:params) { {:ssl_cert_path => 'foo/bar'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
-    end
-
-
-    context "#{os} with ssl_cacert_path = /foo/bar" do
-      let(:params) { {:ssl_cacert_path => '/foo/bar'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/ca_path = "\/foo\/bar"/) }
-    end
-
-
-    context "#{os} with ssl_cacert_path = foo/bar (not a valid absolute path)" do
-      let(:params) { {:ssl_cacert_path => 'foo/bar'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
-    end
-
-    context "#{os} with ssl_crl_path = /foo/bar" do
-      let(:params) { {:ssl_crl_path => '/foo/bar'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/crl_path = "\/foo\/bar"/) }
-    end
-
-    context "#{os} with ssl_crl_path = foo/bar (not a valid absolute path)" do
-      let(:params) { {:ssl_crl_path => 'foo/bar'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /Evaluation Error: Error while evaluating a Resource Statement/) }
-    end
-
-    context "#{os} with accept_config => true" do
-      let(:params) { {:accept_config => true} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/accept_config = true/) }
-    end
-
-
-    context "#{os} with accept_config => false" do
-      let(:params) { {:accept_config => false} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/accept_config = false/) }
-    end
-
-
-    context "#{os} with accept_config => foo (not a valid boolean)" do
-      let(:params) { {:accept_config => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
-    end
-
-
-    context "#{os} with accept_commands => true" do
-      let(:params) { {:accept_commands => true} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/accept_commands = true/) }
-    end
-
-
-    context "#{os} with accept_commands => false" do
-      let(:params) { {:accept_commands => false} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/accept_commands = false/) }
-    end
-
-
-    context "#{os} with accept_commands => foo (not a valid boolean)" do
-      let(:params) { {:accept_commands => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a Boolean value/) }
-    end
-
-
-    context "#{os} with pki => 'icinga2', ca_host => foo" do
-      let(:params) { {:pki => 'icinga2', :ca_host => 'foo'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-                              .with({ 'target' => '/etc/icinga2/features-available/api.conf' }) }
-    end
-
-
-    context "#{os} with pki => 'icinga2', ca_port => 1234" do
-      let(:params) { {:pki => 'icinga2',:ca_port => 1234} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-                              .with({ 'target' => '/etc/icinga2/features-available/api.conf' }) }
-    end
-
-
-    context "#{os} with pki => 'icinga2', ca_port => foo (not a valid integer)" do
-      let(:params) { {:pki => 'icinga2',:ca_port => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects an Integer value/) }
-    end
-
-
-    context "#{os} with pki => none, ticket_salt => foo" do
-      let(:params) { {:pki => 'none', :ticket_salt => 'foo'} }
-
-      it { is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-        .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-        .with_content(/ticket_salt = "foo"/) }
-    end
-
-
-    context "#{os} with endpoints => { foo => {} }" do
-      let(:params) { {:endpoints => { 'foo' => {}} }}
-
-      it { is_expected.to contain_icinga2__object__endpoint('foo') }
-    end
-
-
-    context "#{os} with endpoints => foo (not a valid hash)" do
-      let(:params) { {:endpoints => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
-    end
-
-
-    context "#{os} with zones => { foo => {endpoints => ['bar']} } }" do
-      let(:params) { {:zones => { 'foo' => {'endpoints' => ['bar']}} }}
-
-      it { is_expected.to contain_icinga2__object__zone('foo')
-        .with({ 'endpoints' => [ 'bar' ] }) }
-    end
-
-
-    context "#{os} with zones => foo (not a valid hash)" do
-      let(:params) { {:zones => 'foo'} }
-
-      it { is_expected.to raise_error(Puppet::Error, /expects a Hash value/) }
-    end
-
-    context "#{os} with TLS detail settings" do
-      let(:params) { { ssl_protocolmin: 'TLSv1.2', ssl_cipher_list: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4' } }
-
-      it 'should set TLS detail setting' do
-        is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-          .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-          .with_content(/tls_protocolmin = "TLSv1.2"/)
-          .with_content(/cipher_list = "HIGH:MEDIUM:!aNULL:!MD5:!RC4"/)
+    context "on #{os}" do
+
+      let(:facts) do
+        case facts[:kernel]
+        when 'windows'
+          facts.merge({
+            :icinga2_puppet_hostcert => 'C:/ProgramData/PuppetLabs/puppet/ssl/certs/host.example.org.pem',
+            :icinga2_puppet_hostprivkey => 'C:/ProgramData/PuppetLabs/puppet/ssl/private_keys/host.example.org.pem',
+            :icinga2_puppet_localcacert => 'C:/ProgramData/PuppetLabs/var/lib/puppet/ssl/certs/ca.pem',
+          })
+        else
+          facts.merge({
+            :icinga2_puppet_hostcert => '/etc/puppetlabs/puppet/ssl/certs/host.example.org.pem',
+            :icinga2_puppet_hostprivkey => '/etc/puppetlabs/puppet/ssl/private_keys/host.example.org.pem',
+            :icinga2_puppet_localcacert => '/etc/lib/puppetlabs/puppet/ssl/certs/ca.pem',
+          })
+        end
       end
-    end
 
-    context "#{os} with bind settings" do
-      let(:params) { { bind_host: '::', bind_port: 1234 } }
-
-      it 'should set bind_* settings' do
-        is_expected.to contain_concat__fragment('icinga2::object::ApiListener::api')
-          .with({ 'target' => '/etc/icinga2/features-available/api.conf' })
-          .with_content(/bind_host = "::"/)
-          .with_content(/bind_port = 1234/)
+      before(:each) do
+        case facts[:kernel]
+        when 'windows'
+          @icinga2_bin_dir = 'C:/Program Files/icinga2/sbin'
+          @icinga2_bin = 'icinga2.exe'
+          @icinga2_conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
+          @icinga2_pki_dir = 'C:/ProgramData/icinga2/var/lib/icinga2/certs'
+          @icinga2_sslkey_mode = nil
+          @icinga2_user = nil
+          @icinga2_group = nil
+        when 'FreeBSD'
+          @icinga2_bin_dir = '/usr/local/sbin'
+          @icinga2_bin = 'icinga2'
+          @icinga2_conf_dir = '/usr/local/etc/icinga2'
+          @icinga2_pki_dir = '/var/lib/icinga2/certs'
+          @icinga2_sslkey_mode = '0600'
+          @icinga2_user = 'icinga'
+          @icinga2_group = 'icinga'
+        else
+          @icinga2_bin = 'icinga2'
+          @icinga2_conf_dir = '/etc/icinga2'
+          @icinga2_pki_dir = '/var/lib/icinga2/certs'
+          @icinga2_sslkey_mode = '0600'
+          case facts[:osfamily]
+          when 'Debian'
+            @icinga2_user = 'nagios'
+            @icinga2_group = 'nagios'
+            @icinga2_bin_dir = '/usr/sbin'
+          else
+            @icinga2_user = 'icinga'
+            @icinga2_group = 'icinga'
+            if facts[:osfamily] != 'RedHat'
+              @icinga2_bin_dir = '/usr/sbin'
+            else
+              case facts[:operatingsystemmajrelease]
+              when '5'
+                @icinga2_bin_dir = '/usr/sbin'
+              when '6'
+                @icinga2_bin_dir = '/usr/sbin'
+              else
+                @icinga2_bin_dir = '/sbin'
+              end
+            end
+          end
+        end
       end
+
+      context "with all defaults" do
+        it { is_expected.to contain_icinga2__feature('api').with({
+          'ensure' => 'present',
+        }) }
+
+        it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
+          .with({ 'target' => "#{@icinga2_conf_dir}/features-available/api.conf" })
+          .that_notifies('Class[icinga2::service]') }
+
+        it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.key")
+         .with({
+            'ensure' => 'file',
+            'owner'  => @icinga2_user,
+            'group'  => @icinga2_group,
+            'mode'   => @icinga2_sslkey_mode, }) }
+
+        it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.crt")
+         .with({
+            'ensure' => 'file',
+            'owner'  => @icinga2_user,
+            'group'  => @icinga2_group, }) }
+
+        it { is_expected.to contain_file("#{@icinga2_pki_dir}/ca.crt")
+         .with({
+            'ensure' => 'file',
+            'owner'  => @icinga2_user,
+            'group'  => @icinga2_group, }) }
+
+        it { is_expected.to contain_icinga2__object__endpoint('NodeName') }
+
+        it { is_expected.to contain_icinga2__object__zone('ZoneName')
+          .with({ 'endpoints' => [ 'NodeName' ] }) }
+      end
+
+      context "with ensure => absent" do
+        let(:params) { {:ensure => 'absent'} }
+
+        it { is_expected.to contain_icinga2__feature('api').with({
+          'ensure' => 'absent', }) }
+      end
+
+      context "with pki => 'none', ssl_key => 'foo', ssl_cert => 'bar', ssl_cacert => 'baz'" do
+        let(:params) { {:pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
+
+        it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.key")
+          .with({
+            'ensure' => 'file',
+            'owner'  => @icinga2_user,
+            'group'  => @icinga2_group,
+            'mode'   => @icinga2_sslkey_mode, })
+          .with_content(/^foo$/) }
+
+        it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.crt")
+         .with({
+            'ensure' => 'file',
+            'owner'  => @icinga2_user,
+            'group'  => @icinga2_group, })
+          .with_content(/^bar$/) }
+
+        it { is_expected.to contain_file("#{@icinga2_pki_dir}/ca.crt")
+         .with({
+            'ensure' => 'file',
+            'owner'  => @icinga2_user,
+            'group'  => @icinga2_group, })
+          .with_content(/^baz$/) }
+      end
+
+      context "with pki => 'icinga2', ca_host => 'foo', ca_port => 1234, ticket_salt => 'bar'" do
+        let(:params) { {:pki => 'icinga2', :ca_host => 'foo', :ca_port => 1234, :ticket_salt => 'bar'} }
+
+        it { is_expected.to contain_exec('icinga2 pki create key')
+          .with({
+            'path'    => @icinga2_bin_dir,
+            'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
+            'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
+          .that_notifies('Class[icinga2::service]') }
+
+        it { is_expected.to contain_exec('icinga2 pki get trusted-cert')
+          .with({
+            'path'    => @icinga2_bin_dir,
+            'command' => "#{@icinga2_bin} pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
+            'creates' => "#{@icinga2_pki_dir}/trusted-cert.crt", })
+          .that_notifies('Class[icinga2::service]') }
+
+        it { is_expected.to contain_exec('icinga2 pki request')
+          .with({
+            'path'    => @icinga2_bin_dir,
+            'command' => "#{@icinga2_bin} pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket ac5cb0d8c98f3f50ceff399b3cfedbb03782c117",
+            'creates' => "#{@icinga2_pki_dir}/ca.crt", })
+          .that_notifies('Class[icinga2::service]') }
+      end
+
     end
   end
 end

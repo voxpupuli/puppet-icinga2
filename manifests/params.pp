@@ -154,9 +154,9 @@ class icinga2::params {
       $pki_dir              = 'C:/ProgramData/icinga2/var/lib/icinga2/certs'
       $ca_dir               = 'C:/ProgramData/icinga2/var/lib/icinga2/ca'
       $ido_pgsql_package    = undef
-      $ido_pgsql_schema_dir = undef
+      $ido_pgsql_schema_dir = 'C:/Program Files/icinga2/usr/share/icinga2-ido-gqsql/schema'
       $ido_mysql_package    = undef
-      $ido_mysql_schema_dir = undef
+      $ido_mysql_schema_dir = 'C:/Program Files/icinga2/usr/share/icinga2-ido-mysql/schema'
       $service_reload       = undef
 
       $constants = {

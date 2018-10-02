@@ -72,7 +72,6 @@ define icinga2::object::usergroup (
     ignore      => $ignore,
     target      => $target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 
 }

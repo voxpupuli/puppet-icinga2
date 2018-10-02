@@ -32,7 +32,7 @@
 # ::icinga2::object::apiuser { 'director':
 #   ensure      => present,
 #   password    => 'Eih5Weefoo2oa8sh',
-#   permissions => [ "*" ],
+#   permissions => [ '*' ],
 #   target      => '/etc/icinga2/conf.d/api-users.conf',
 # }
 #
@@ -62,9 +62,9 @@
 #
 define icinga2::object::apiuser(
   Stdlib::Absolutepath        $target,
-  Array                       $permissions,
   Enum['absent', 'present']   $ensure       = present,
   String                      $apiuser_name = $title,
+  Optional[Array]             $permissions  = undef,
   Optional[String]            $password     = undef,
   Optional[String]            $client_cn    = undef,
   Variant[String, Integer]    $order        = 30,
@@ -86,6 +86,5 @@ define icinga2::object::apiuser(
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
-    notify      => Class['::icinga2::service'],
   }
 }

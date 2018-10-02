@@ -86,7 +86,7 @@ module Puppet
 
         def self.value_types(value)
 
-          if value =~ /^\d+\.?\d*[dhms]?$/ || value =~ /^(true|false|null)$/ || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
+          if value =~ /^-?\d+\.?\d*[dhms]?$/ || value =~ /^(true|false|null)$/ || value =~ /^!?(host|service|user)\./ || value =~ /^\{{2}.*\}{2}$/
             result = value
           else
             if $constants.index { |x| if $hash_attrs.include?(x) then value =~ /^!?(#{x})(\..+$|$)/ else value =~ /^!?#{x}$/ end }

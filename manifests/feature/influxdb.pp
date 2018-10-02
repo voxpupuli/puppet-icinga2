@@ -145,7 +145,7 @@ class icinga2::feature::influxdb(
   $service_template = { measurement => $service_measurement, tags => $service_tags}
 
   if $enable_ssl {
-  
+
     # Set defaults for certificate stuff
     if $ssl_key_path {
       $_ssl_key_path = $ssl_key_path }
