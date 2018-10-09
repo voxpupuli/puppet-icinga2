@@ -311,4 +311,25 @@ describe 'icinga2_attributes' do
     }).and_return("ignore where get_object(\"Endpoint\", host.name) || host.vars.os != \"Windows\"\n")
   end
 
+  it 'disable parsing' do
+
+    # result = "unparsed string NodeName with quotes"
+    is_expected.to run.with_params({
+      'result' => '-:"unparsed string NodeName with quotes"'
+    }).and_return("result = \"unparsed string NodeName with quotes\"\n")
+
+    # result = "unparsed string NodeName with quotes", ]
+    is_expected.to run.with_params({
+      'result' => [ '-:"unparsed string NodeName with quotes"' ]
+    }).and_return("result = [ \"unparsed string NodeName with quotes\", ]\n")
+
+    # result = {
+    #   string = "unparsed string NodeName with quotes",
+    # }
+    is_expected.to run.with_params({
+      'result' => { 'string' =>  '-:"unparsed string NodeName with quotes"' }
+    }).and_return("result = {\n  string = \"unparsed string NodeName with quotes\"\n}\n")
+
+  end
+
 end
