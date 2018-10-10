@@ -1,0 +1,2 @@
+---
+icinga2::globals::icinga2_bin: /usr/sbin/icinga2

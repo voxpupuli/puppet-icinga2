@@ -26,6 +26,19 @@ describe('icinga2::feature::debuglog', :type => :class) do
         it { is_expected.to contain_icinga2__object('icinga2::object::FileLogger::debuglog')
           .with({ 'target' => "#{@icinga2_conf_dir}/features-available/debuglog.conf" })
           .that_notifies('Class[icinga2::service]') }
+
+        case facts[:osfamily]
+        when 'windows'
+          it { is_expected.to contain_concat__fragment('icinga2::object::FileLogger::debuglog')
+            .with({
+              'target' => "#{@icinga2_conf_dir}/features-available/debuglog.conf", })
+            .with_content(/path = \"C:\/ProgramData\/icinga2\/var\/log\/icinga2\/debug.log\"/) }
+        else
+          it { is_expected.to contain_concat__fragment('icinga2::object::FileLogger::debuglog')
+            .with({
+              'target' => "#{@icinga2_conf_dir}/features-available/debuglog.conf", })
+            .with_content(/path = \"\/var\/log\/icinga2\/debug.log\"/) }
+        end
       end
 
       context "with ensure => absent" do

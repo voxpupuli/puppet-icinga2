@@ -1,0 +1,4 @@
+---
+icinga2::globals::user: nagios
+icinga2::globals::group: nagios
+icinga2::globals::icnga2_bin: /usr/sbin/icinga2

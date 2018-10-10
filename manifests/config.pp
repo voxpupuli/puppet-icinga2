@@ -16,7 +16,7 @@ class icinga2::config {
   assert_private()
 
   $constants      = prefix($::icinga2::_constants, 'const ')
-  $conf_dir       = $::icinga2::params::conf_dir
+  $conf_dir       = $::icinga2::globals::conf_dir
   $plugins        = $::icinga2::plugins
   $confd          = $::icinga2::_confd
   $purge_features = $::icinga2::purge_features

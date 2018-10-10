@@ -22,9 +22,6 @@ define icinga2::config::fragment(
   Variant[String, Integer]     $order     = '00',
 ) {
 
-  include ::icinga2::params
-  require ::icinga2::config
-
   case $::osfamily {
     'windows': {
       Concat {
@@ -36,8 +33,8 @@ define icinga2::config::fragment(
     } # windows
     default: {
       Concat {
-        owner => $::icinga2::params::user,
-        group => $::icinga2::params::group,
+        owner => $::icinga2::globals::user,
+        group => $::icinga2::globals::group,
         mode  => '0640',
       }
       $_content = $content
@@ -56,7 +53,6 @@ define icinga2::config::fragment(
     target  => $target,
     content => $_content,
     order   => $order,
-    notify  => Class['::icinga2::service'],
   }
 
 }

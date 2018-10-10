@@ -15,14 +15,14 @@
 #
 class icinga2::feature::debuglog(
   Enum['absent', 'present'] $ensure   = present,
-  Stdlib::Absolutepath      $path     = "${::icinga2::params::log_dir}/debug.log",
+  Stdlib::Absolutepath      $path     = "${::icinga2::globals::log_dir}/debug.log",
 ) {
 
   if ! defined(Class['::icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::params::conf_dir
+  $conf_dir = $::icinga2::globals::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,

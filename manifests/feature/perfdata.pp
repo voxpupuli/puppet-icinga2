@@ -55,7 +55,7 @@ class icinga2::feature::perfdata(
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::params::conf_dir
+  $conf_dir = $::icinga2::globals::conf_dir
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,

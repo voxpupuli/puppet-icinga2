@@ -61,41 +61,33 @@ class icinga2::pki::ca(
   Optional[Stdlib::Absolutepath] $ssl_cacert_path = undef,
 ) {
 
-  include ::icinga2::params
-  require ::icinga2::config
-
-  $icinga2_bin = $::icinga2::params::icinga2_bin
-  $bin_dir     = $::icinga2::params::bin_dir
-  $ca_dir      = $::icinga2::params::ca_dir
-  $pki_dir     = $::icinga2::params::pki_dir
-  $user        = $::icinga2::params::user
-  $group       = $::icinga2::params::group
+  $icinga2_bin = $::icinga2::globals::icinga2_bin
+  $ca_dir      = $::icinga2::globals::ca_dir
+  $cert_dir    = $::icinga2::globals::cert_dir
+  $user        = $::icinga2::globals::user
+  $group       = $::icinga2::globals::group
   $node_name   = $::icinga2::_constants['NodeName']
 
   if $ssl_key_path {
     $_ssl_key_path = $ssl_key_path }
   else {
-    $_ssl_key_path = "${pki_dir}/${node_name}.key" }
+    $_ssl_key_path = "${cert_dir}/${node_name}.key" }
   if $ssl_cert_path {
     $_ssl_cert_path = $ssl_cert_path }
   else {
-    $_ssl_cert_path = "${pki_dir}/${node_name}.crt" }
+    $_ssl_cert_path = "${cert_dir}/${node_name}.crt" }
   if $ssl_csr_path {
     $_ssl_csr_path = $ssl_csr_path }
   else {
-    $_ssl_csr_path = "${pki_dir}/${node_name}.csr" }
+    $_ssl_csr_path = "${cert_dir}/${node_name}.csr" }
   if $ssl_cacert_path {
     $_ssl_cacert_path = $ssl_cacert_path }
   else {
-    $_ssl_cacert_path = "${pki_dir}/ca.crt" }
+    $_ssl_cacert_path = "${cert_dir}/ca.crt" }
 
   File {
     owner => $user,
     group => $group,
-  }
-
-  Exec {
-    path => $bin_dir,
   }
 
   if $::osfamily != 'windows' {

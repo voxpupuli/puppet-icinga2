@@ -11,9 +11,9 @@ module Puppet::Parser::Functions
     end
 
     if args[2]
-      globals = args[2].concat(lookupvar('::icinga2::params::globals'))
+      globals = args[2].concat(lookupvar('::icinga2::_reserved'))
     else
-      globals = lookupvar('::icinga2::params::globals')
+      globals = lookupvar('::icinga2::_reserved')
     end
 
     if args[3]

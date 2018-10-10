@@ -718,13 +718,13 @@ class { '::icinga2::feature::api':
   pki => 'none',
 }
 
-file { "/etc/icinga2/pki/${::fqdn}.crt":
+file { "/var/lib/icinga2/certs/${::fqdn}.crt":
   ensure => file,
   tag    => 'icinga2::config::file,
   source => "puppet:///modules/profiles/certificates/${::fqdn}.crt",
 }
 
-file { "/etc/icinga2/pki/${::fqdn}.key":
+file { "/var/lib/icinga2/certs/${::fqdn}.key":
   ensure => file,
   tag    => 'icinga2::config::file,
   source => "puppet:///modules/profiles/private_keys/${::fqdn}.key",
@@ -1342,9 +1342,9 @@ Either `present` or `absent`. Defines if the feature `api` should be enabled. De
 ##### `pki`
 Provides multiple sources for the certificate and key.
 
-* `puppet` Copies the key, cert and CA cert from the Puppet ssl directory to the Icinga pki directory.
-  * Linux: `/etc/icinga2/pki`
-  * Windows: `C:/ProgramData/icinga2/etc/icinga2/pki`
+* `puppet` Copies the key, cert and CA cert from the Puppet ssl directory to the Icinga cert directory.
+  * Linux: `/var/lib/icinga2/certs`
+  * Windows: `C:/ProgramData/icinga2/var/lib/icinga2/certs`
 * `icinga2` Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the Puppet master by using
 the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`, `ssl_ca` parameters.
@@ -1354,32 +1354,32 @@ Defaults to `puppet`
 ##### `ssl_key_path`
 Location of the private key. Default depends on your platform:
 
-* Linux `/etc/icinga2/pki/NodeName.key`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.key`
+* Linux `/var/lib/icinga2/certs/NodeName.key`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.key`
 
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_cert_path`
 Location of the certificate. Default depends on your platform:
 
-* Linux `/etc/icinga2/pki/NodeName.crt`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.crt`
+* Linux `/var/lib/icinga2/certs/NodeName.crt`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.crt`
 
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_csr_path`
 Location of the certificate signing request. Default depends on your platform:
 
-* Linux: `/etc/icinga2/pki/NodeName.csr`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/NodeName.csr`
+* Linux: `/var/lib/icinga2/certs/NodeName.csr`
+* Windows `C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.csr`
 
 The Value of `NodeName` comes from the corresponding constant.
 
 ##### `ssl_cacert_path`
 Location of the CA certificate. Default depends on your platform:
 
-* Linux: `/etc/icinga2/pki/ca.crt`
-* Windows `C:/ProgramData/icinga2/etc/icinga2/pki/ca.crt`
+* Linux: `/var/lib/icinga2/certs/ca.crt`
+* Windows `C:/ProgramData/icinga2/certs/icinga2/pki/ca.crt`
 
 ##### `ssl_crl_path`
 Optional location of the certificate revocation list.

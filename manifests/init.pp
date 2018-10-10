@@ -138,17 +138,25 @@
 #
 #
 class icinga2 (
+  Array                      $features,
+  Array                      $plugins,
   Enum['running', 'stopped'] $ensure         = running,
   Boolean                    $enable         = true,
   Boolean                    $manage_repo    = false,
   Boolean                    $manage_package = true,
   Boolean                    $manage_service = true,
-  Array                      $features       = $icinga2::params::default_features,
   Boolean                    $purge_features = true,
   Hash                       $constants      = {},
-  Array                      $plugins        = $icinga2::params::plugins,
   Variant[Boolean, String]   $confd          = true,
-) inherits ::icinga2::params {
+) {
+
+  require ::icinga2::globals
+
+  # load reserved words
+  $_reserved = $::icinga2::globals::reserved
+
+  # merge constants with defaults
+  $_constants = merge($::icinga2::globals::constants, $constants)
 
   # validate confd, boolean or string
   if $confd =~ Boolean {
@@ -156,9 +164,6 @@ class icinga2 (
   } else {
     $_confd = $confd
   }
-
-  # merge constants with defaults
-  $_constants = merge($::icinga2::params::constants, $constants)
 
   Class['::icinga2::config']
   -> Concat <| tag == 'icinga2::config::file' |>

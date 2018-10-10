@@ -28,7 +28,7 @@
 #
 # [*pki*]
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
-#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
+#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
 #   /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
 #   'none' does nothing and you either have to manage the files yourself as file resources
 #   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
@@ -49,15 +49,15 @@
 #   C:/ProgramData/icinga2/var/lib/icinga2/certs/InfluxdbWriter_influxdb_ca.crt on Windows
 #
 # [*ssl_key*]
-#   The private key in a base64 encoded string to store in pki directory, file is stored to
+#   The private key in a base64 encoded string to store in cert directory, file is stored to
 #   path spicified in ssl_key_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cert*]
-#   The certificate in a base64 encoded string to store in pki directory, file is  stored to
+#   The certificate in a base64 encoded string to store in cert directory, file is  stored to
 #   path spicified in ssl_cert_path. This parameter requires pki to be set to 'none'.
 #
 # [*ssl_cacert*]
-#   The CA root certificate in a base64 encoded string to store in pki directory, file is stored
+#   The CA root certificate in a base64 encoded string to store in cert directory, file is stored
 #   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
 # [*host_measurement*]
@@ -123,10 +123,10 @@ class icinga2::feature::influxdb(
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user          = $::icinga2::params::user
-  $group         = $::icinga2::params::group
-  $conf_dir      = $::icinga2::params::conf_dir
-  $ssl_dir       = $::icinga2::params::pki_dir
+  $user          = $::icinga2::globals::user
+  $group         = $::icinga2::globals::group
+  $conf_dir      = $::icinga2::globals::conf_dir
+  $ssl_dir       = $::icinga2::globals::cert_dir
   $_ssl_key_mode = $::kernel ? {
     'windows' => undef,
     default   => '0600',

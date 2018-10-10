@@ -21,15 +21,15 @@ class icinga2::service {
   $ensure         = $::icinga2::ensure
   $enable         = $::icinga2::enable
   $manage_service = $::icinga2::manage_service
-  $service        = $::icinga2::params::service
-  $reload         = $::icinga2::params::service_reload
+  $service_name   = $::icinga2::globals::service_name
+  $reload         = $::icinga2::globals::service_reload
   $hasrestart     = $reload ? {
     undef   => false,
     default => true,
   }
 
   if $manage_service {
-    service { $service:
+    service { $service_name:
       ensure     => $ensure,
       enable     => $enable,
       hasrestart => $hasrestart,

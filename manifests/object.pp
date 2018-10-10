@@ -89,8 +89,8 @@ define icinga2::object(
     } # windows
     default: {
       Concat {
-        owner => $::icinga2::params::user,
-        group => $::icinga2::params::group,
+        owner => $::icinga2::globals::user,
+        group => $::icinga2::globals::group,
         mode  => '0640',
       }
     } # default

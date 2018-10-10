@@ -92,11 +92,11 @@ class icinga2::feature::idopgsql(
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir             = $::icinga2::params::conf_dir
-  $ido_pgsql_package    = $::icinga2::params::ido_pgsql_package
-  $ido_pgsql_schema_dir = $::icinga2::params::ido_pgsql_schema_dir
-  $manage_package       = $::icinga2::manage_package
-  $_notify              = $ensure ? {
+  $conf_dir               = $::icinga2::globals::conf_dir
+  $ido_pgsql_package_name = $::icinga2::globals::ido_pgsql_package_name
+  $ido_pgsql_schema       = $::icinga2::globals::ido_pgsql_schema
+  $manage_package         = $::icinga2::manage_package
+  $_notify                = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
@@ -117,8 +117,8 @@ class icinga2::feature::idopgsql(
   }
 
   # install additional package
-  if $ido_pgsql_package and $manage_package {
-    package { $ido_pgsql_package:
+  if $ido_pgsql_package_name and $manage_package {
+    package { $ido_pgsql_package_name:
       ensure => installed,
       before => Icinga2::Feature['ido-pgsql'],
     }
@@ -134,14 +134,14 @@ class icinga2::feature::idopgsql(
 
   # import db schema
   if $import_schema {
-    if $ido_pgsql_package and $manage_package {
-      Package[$ido_pgsql_package] -> Exec['idopgsql-import-schema']
+    if $ido_pgsql_package_name and $manage_package {
+      Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $::path,
       environment => ["PGPASSWORD=${password}"],
-      command     => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -f ${ido_pgsql_schema_dir}/pgsql.sql",
+      command     => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -f ${ido_pgsql_schema}",
       unless      => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -c 'select version from icinga_dbversion'",
     }
   }

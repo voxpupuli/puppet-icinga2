@@ -1,0 +1,20 @@
+---
+icinga2::globals::package_name: icinga2
+icinga2::globals::service_name: icinga2
+icinga2::globals::service_reload: service icinga2 reload
+icinga2::globals::ido_mysql_package_name: icinga2-ido-mysql
+icinga2::globals::ido_mysql_schema: /usr/share/icinga2-ido-mysql/schema/mysql.sql
+icinga2::globals::ido_pgsql_package_name: icinga2-ido-pgsql
+icinga2::globals::ido_pgsql_schema: /usr/share/icinga2-ido-pgsql/schema/pgsql.sql
+icinga2::globals::conf_dir: /etc/icinga2
+icinga2::globals::lib_dir: /usr/lib
+icinga2::globals::log_dir: /var/log/icinga2
+icinga2::globals::run_dir: /var/run/icinga2
+icinga2::globals::spool_dir: /var/spool/icinga2
+icinga2::globals::cache_dir: /var/cache/icinga2
+icinga2::globals::cert_dir: /var/lib/icinga2/certs
+icinga2::globals::ca_dir: /var/lib/icinga2/ca
+icinga2::globals::constants:
+  PluginDir: /usr/lib/nagios/plugins
+  PluginContribDir: /usr/lib/nagios/plugins
+  ManubulonPluginDir: /usr/lib/nagios/plugins

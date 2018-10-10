@@ -32,55 +32,6 @@ describe('icinga2', :type => :class) do
             'purge'   => true,
             'recurse' => true, }) }
 
-        case facts[:osfamily]
-        when 'windows'
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginDir = \"C:/Program Files/ICINGA2/sbin\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginContribDir = \"C:/Program Files/ICINGA2/sbin\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const ManubulonPluginDir = \"C:/Program Files/ICINGA2/sbin\"} }
-        when 'FreeBSD'
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginDir = \"/usr/local/libexec/nagios\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginContribDir = \"\/usr/local/share/icinga2/include/plugins-contrib.d\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const ManubulonPluginDir = \"/usr/local/libexec/nagios\"} }
-        when 'RedHat'
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginDir = \"/usr/lib64/nagios/plugins\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginContribDir = \"/usr/lib64/nagios/plugins\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const ManubulonPluginDir = \"/usr/lib64/nagios/plugins\"} }
-        else
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginDir = \"/usr/lib/nagios/plugins\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const PluginContribDir = \"/usr/lib/nagios/plugins\"} }
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-            .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"} }
-        end
-
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-          .with_content %r{^const NodeName = \".+\"} }
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-          .with_content %r{^const ZoneName = \".+\"} }
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-          .with_content %r{^const TicketSalt = \"\"} }
-
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .with_content %r{^include <plugins>} }
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .with_content %r{^include <plugins-contrib>} }
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .with_content %r{^include <windows-plugins>} }
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .with_content %r{^include <nscp>} }
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .with_content %r{^include_recursive \"conf.d\"} }
-
         it { is_expected.to contain_icinga2__feature('checker')
           .with({'ensure' => 'present'}) }
         it { is_expected.to contain_icinga2__feature('mainlog')

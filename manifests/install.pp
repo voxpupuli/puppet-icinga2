@@ -16,23 +16,23 @@ class icinga2::install {
 
   assert_private()
 
-  $package        = $::icinga2::params::package
+  $package_name   = $::icinga2::globals::package_name
   $manage_package = $::icinga2::manage_package
-  $pki_dir        = $::icinga2::params::pki_dir
-  $conf_dir       = $::icinga2::params::conf_dir
-  $user           = $::icinga2::params::user
-  $group          = $::icinga2::params::group
+  $cert_dir       = $::icinga2::globals::cert_dir
+  $conf_dir       = $::icinga2::globals::conf_dir
+  $user           = $::icinga2::globals::user
+  $group          = $::icinga2::globals::group
 
   if $manage_package {
     if $::osfamily == 'windows' { Package { provider => chocolatey, } }
 
-    package { $package:
+    package { $package_name:
       ensure => installed,
-      before => File[$pki_dir, $conf_dir],
+      before => File[$cert_dir, $conf_dir],
     }
   }
 
-  file { [$pki_dir, $conf_dir]:
+  file { [$cert_dir, $conf_dir]:
     ensure => directory,
     owner  => $user,
     group  => $group,
