@@ -9,11 +9,11 @@
   "issues_url": "https://github.com/icinga/puppet-icinga2/issues",
   "tags": ["monitoring"],
   "requirements": [
-    { "name": "puppet", "version_requirement": ">= 3.8.0 < 6.0.0" }
+    { "name": "puppet", "version_requirement": ">= 4.10.0 < 6.0.0" }
   ],
   "dependencies": [
-    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.16.0 < 5.0.0" },
-    { "name": "puppetlabs/concat", "version_requirement": ">= 2.1.0 < 5.0.0" }
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.16.0 < 6.0.0" },
+    { "name": "puppetlabs/concat", "version_requirement": ">= 5.1.0 < 6.0.0" }
   ],
   "operatingsystem_support": [
     {

@@ -77,14 +77,14 @@ available in Icinga 2 can be enabled and configured with this module.
 
 This module depends on:
 
-* [puppetlabs/stdlib] >= 4.16.0
-* [puppetlabs/concat] >= 2.1.0
+* [puppetlabs/stdlib] >= 4.16.0 < 6.0.0
+* [puppetlabs/concat] >= 5.1.0 < 6.0.0
 
 Depending on your setup following modules may also be required:
 
-* [puppetlabs/apt] >= 2.0.0
-* [puppetlabs/chocolatey] >= 0.7.0
-* [puppet/zypprepo] >= 2.0.0
+* [puppetlabs/apt] >= 6.0.0
+* [puppetlabs/chocolatey] >= 3.1.0
+* [puppet/zypprepo] >= 2.2.1
 
 ### Limitations
 
