@@ -11,33 +11,10 @@
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
 #   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
 #             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
-#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the
+#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key. The ticket is generated on the
 #              Puppetmaster by using the configured 'ticket_salt' in a custom function.
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
-#
-# [*ssl_key_path*]
-#   Location of the private key. Default depends on platform:
-#   /var/lib/icinga2/certs/NodeName.key on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.key on Windows
-#   The Value of NodeName comes from the corresponding constant.
-#
-# [*ssl_cert_path*]
-#   Location of the certificate. Default depends on platform:
-#   /var/lib/icinga2/certs/NodeName.crt on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.crt on Windows
-#   The Value of NodeName comes from the corresponding constant.
-#
-# [*ssl_csr_path*]
-#   Location of the certificate signing request. Default depends on platform:
-#   /var/lib/icinga2/certs/NodeName.csr on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/NodeName.csr on Windows
-#   The Value of NodeName comes from the corresponding constant.
-#
-# [*ssl_cacert_path*]
-#   Location of the CA certificate. Default is:
-#   /var/lib/icinga2/certs/ca.crt on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/ca.crt on Windows
 #
 # [*ssl_key*]
 #   The private key in a base64 encoded string to store in cert directory, file is stored to
@@ -51,7 +28,7 @@
 #   The CA root certificate in a base64 encoded string to store in cert directory, file is stored
 #   to path specified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
 #
-# [*ssl_crl_path*]
+# [*ssl_crl*]
 #   Optional location of the certificate revocation list.
 #
 # [*accept_config*]
@@ -104,21 +81,6 @@
 #  Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
 #  Defaults to `GET, POST, PUT, DELETE`.
 #
-#
-# === Variables
-#
-# [*node_name*]
-#   Certname and Keyname based on constant NodeName.
-#
-# [*_ssl_key_path*]
-#   Validated path to private key file.
-#
-# [*_ssl_cert_path*]
-#   Validated path to certificate file.
-#
-# [*_ssl_casert_path*]
-#   Validated path to root CA certificate file.
-#
 # === Examples
 #
 # Use the puppet certificates and key copy these files to the cert directory
@@ -159,10 +121,7 @@
 class icinga2::feature::api(
   Enum['absent', 'present']                               $ensure                           = present,
   Enum['ca', 'icinga2', 'none', 'puppet']                 $pki                              = 'puppet',
-  Optional[Stdlib::Absolutepath]                          $ssl_key_path                     = undef,
-  Optional[Stdlib::Absolutepath]                          $ssl_cert_path                    = undef,
-  Optional[Stdlib::Absolutepath]                          $ssl_cacert_path                  = undef,
-  Optional[Stdlib::Absolutepath]                          $ssl_crl_path                     = undef,
+  Optional[Stdlib::Absolutepath]                          $ssl_crl                          = undef,
   Optional[Boolean]                                       $accept_config                    = undef,
   Optional[Boolean]                                       $accept_commands                  = undef,
   Optional[String]                                        $ca_host                          = undef,
@@ -316,7 +275,7 @@ class icinga2::feature::api(
 
   # compose attributes
   $attrs = {
-    crl_path                         => $ssl_crl_path,
+    crl_path                         => $ssl_crl,
     accept_commands                  => $accept_commands,
     accept_config                    => $accept_config,
     ticket_salt                      => $_ticket_salt,
