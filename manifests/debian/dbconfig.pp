@@ -18,11 +18,11 @@ class icinga2::debian::dbconfig(
       case $dbtype {
         'mysql': {
           $default_port = 3306
-          $path         = "/etc/dbconfig-common/${::icinga2::globals::ido_mysql_package}.conf"
+          $path         = "/etc/dbconfig-common/${::icinga2::globals::ido_mysql_package_name}.conf"
         }
         'pgsql': {
           $default_port = 5432
-          $path         = "/etc/dbconfig-common/${::icinga2::globals::ido_pgsql_package}.conf"
+          $path         = "/etc/dbconfig-common/${::icinga2::globals::ido_pgsql_package_name}.conf"
         }
         default: {
           fail("Unsupported dbtype: ${dbtype}")
