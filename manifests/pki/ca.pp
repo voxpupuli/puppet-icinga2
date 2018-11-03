@@ -37,6 +37,8 @@ class icinga2::pki::ca(
   Optional[String]               $ca_key          = undef,
 ) {
 
+  require ::icinga2::config
+
   $icinga2_bin = $::icinga2::globals::icinga2_bin
   $ca_dir      = $::icinga2::globals::ca_dir
   $cert_dir    = $::icinga2::globals::cert_dir
