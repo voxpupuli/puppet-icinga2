@@ -102,7 +102,7 @@ class icinga2::pki::ca(
 
   exec { 'icinga2 pki create certificate signing request':
     command => "${icinga2_bin} pki new-cert --cn ${node_name} --key ${_ssl_key_path} --csr ${_ssl_csr_path}",
-    creates => $_ssl_key,
+    creates => $_ssl_key_path,
     require => File[$_ssl_cacert_path],
   }
 
