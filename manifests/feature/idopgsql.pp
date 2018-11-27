@@ -133,17 +133,19 @@ class icinga2::feature::idopgsql(
 
   # install additional package
   if $ido_pgsql_package and $manage_package {
+    if $::osfamily == 'debian' {
+      ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory } })
+      file { "/etc/dbconfig-common/${ido_pgsql_package}.conf":
+        ensure  => file,
+        content => "dbc_install='false'\ndbc_upgrade='false'\ndbc_remove='false'\n",
+        mode    => '0600',
+        before  => Package[$ido_pgsql_package],
+      }
+    } # Debian
+
     package { $ido_pgsql_package:
       ensure => installed,
       before => Icinga2::Feature['ido-pgsql'],
-    }
-    -> class { '::icinga2::debian::dbconfig':
-      dbtype   => 'pgsql',
-      dbserver => $host,
-      dbport   => $port,
-      dbname   => $database,
-      dbuser   => $user,
-      dbpass   => $password,
     }
   }
 
