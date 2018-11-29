@@ -1123,9 +1123,13 @@ Set severity level for logging to syslog. Available options are:
 * `information`
 * `notice`
 * `warning`
+* `critical`
 * `debug`
 
 Defaults to `warning`
+
+##### `facility`
+Defines the facility to use for syslog entries. This can be a facility constant like `FacilityDaemon`. Defaults to `FacilityUser`.
 
 #### Class: `icinga2::feature::debuglog`
 Enables or disables the `debuglog` feature.
