@@ -6,7 +6,9 @@ describe('icinga2::config::fragment', :type => :define) do
     "class { 'icinga2': }" ]}
 
   on_supported_os.each do |os, facts|
-    let :facts { facts } 
+    let :facts do
+      facts
+    end
 
     context "#{os} with content => foo, target => /bar/baz, order => 10" do
       let(:params) {{
