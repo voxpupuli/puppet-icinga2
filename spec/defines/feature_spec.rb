@@ -10,7 +10,9 @@ describe('icinga2::feature', :type => :define) do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let :facts do
+        facts
+      end
 
       case facts[:kernel]
         when 'Linux'
