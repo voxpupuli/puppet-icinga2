@@ -9,6 +9,7 @@ describe('icinga2::feature::command', :type => :class) do
     context "on #{os}" do
       let :facts do
         facts
+      end
 
       before(:each) do
         case facts[:kernel]
@@ -44,6 +45,5 @@ describe('icinga2::feature::command', :type => :class) do
         it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'absent'}) }
       end
     end
-
   end
 end
