@@ -1143,6 +1143,7 @@ Set severity level for logging to syslog. Available options are:
 * `information`
 * `notice`
 * `warning` (Icinga default)
+* `critical`
 * `debug`
 
 ##### `facility`
