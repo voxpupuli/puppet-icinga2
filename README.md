@@ -2113,7 +2113,7 @@ Defaults to `5` minutes.
 
 ##### `retry_interval`
 The retry interval (in seconds). This interval is used for checks when the service is in a SOFT state.
-Defaults to `1 minute.
+Defaults to `1` minute.
 
 ##### `enable_notifications`
 Whether notifications are enabled. Defaults to `true`
