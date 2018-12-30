@@ -115,15 +115,15 @@ module Puppet
           result = ''
 
           # parser is disabled
-          if row =~ /^-:(.*)$/
+          if row =~ /^-:(.*)$/m
             return $1
           end
 
           # scan function
-          if row =~ /^\{{2}(.+)\}{2}$/
+          if row =~ /^\{{2}(.+)\}{2}$/m
             result += "{{%s}}" % [ $1 ]
           # scan expression + function (function should contain expressions, but we donno parse it)
-          elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$/
+          elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$/m
             result += "%s %s {{%s}}" % [ parse($1), $2, $3 ]
           # scan expression
           elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
