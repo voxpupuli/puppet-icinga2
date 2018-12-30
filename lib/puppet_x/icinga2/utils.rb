@@ -92,7 +92,7 @@ module Puppet
             if $constants.index { |x| if $hash_attrs.include?(x) then value =~ /^!?(#{x})(\..+$|$)/ else value =~ /^!?#{x}$/ end }
               result = value
             else
-              result = "\"#{value}\""
+              result = value.dump
             end
           end
 
