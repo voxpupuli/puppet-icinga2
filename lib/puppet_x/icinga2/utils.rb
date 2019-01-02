@@ -189,8 +189,8 @@ module Puppet
                   result += "%s%s = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
                   #result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
                 else
-                  result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
-                  #result += "%s[\"%s\"] = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
+                  #result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
+                  result += "%s[\"%s\"] = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
                 end
               else
                 result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
