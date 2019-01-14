@@ -27,11 +27,6 @@ define icinga2::config::fragment(
 
   case $::osfamily {
     'windows': {
-      Concat {
-        owner => 'Administrators',
-        group => 'NETWORK SERVICE',
-        mode  => '0770',
-      }
       $_content = regsubst($content, '\n', "\r\n", 'EMG')
     } # windows
     default: {
