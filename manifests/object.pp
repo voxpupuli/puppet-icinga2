@@ -81,10 +81,6 @@ define icinga2::object(
 
   case $::osfamily {
     'windows': {
-      Concat {
-        owner => 'Administrators',
-        group => 'NETWORK SERVICE',
-        mode  => '0770',
       }
     } # windows
     default: {
