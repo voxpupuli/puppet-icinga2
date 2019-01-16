@@ -74,7 +74,49 @@ describe('icinga2::feature::api', :type => :class) do
 
       it { is_expected.to contain_exec('icinga2 pki create key') }
       it { is_expected.to contain_exec('icinga2 pki get trusted-cert') }
-      it { is_expected.to contain_exec('icinga2 pki request') }
+      it { is_expected.to contain_exec('icinga2 pki request').with_command(
+        /--ticket empty/
+      ) }
+    end
+
+    context "#{os} with pki => icinga2 and ticket_id" do
+      let(:params) do
+        {
+          pki: 'icinga2',
+          ticket_id: 'myticket'
+        }
+      end
+
+      it { is_expected.to contain_exec('icinga2 pki request').with_command(
+        /--ticket myticket/
+      ) }
+    end
+
+    context "#{os} with pki => icinga2 and ticket_salt" do
+      let(:params) do
+        {
+          pki: 'icinga2',
+          ticket_salt: 'mysalt'
+        }
+      end
+
+      it { is_expected.to contain_exec('icinga2 pki request').with_command(
+        /--ticket 794379e801444b2ccca46eb619d8473686532d8c/
+      ) }
+    end
+
+    context "#{os} with pki => icinga2, ticket_salt and ticket_id" do
+      let(:params) do
+        {
+          pki: 'icinga2',
+          ticket_salt: 'mysalt',
+          ticket_id: 'myticket'
+        }
+      end
+
+      it { is_expected.to contain_exec('icinga2 pki request').with_command(
+        /--ticket myticket/
+      ) }
     end
 
     context "#{os} with pki => ca" do
