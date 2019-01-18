@@ -58,6 +58,9 @@ describe('icinga2', :type => :class) do
             .with_content %r{^const ManubulonPluginDir = \"/usr/lib/nagios/plugins\"\n} }
         end
 
+
+        case facts[:kernel]
+        when 'Linux'
         it { is_expected.to contain_file(@constants_conf)
           .with_content %r{^const NodeName = \".+\"\n} }
 
@@ -93,6 +96,7 @@ describe('icinga2', :type => :class) do
 
         it { is_expected.to contain_icinga2__feature('notification')
           .with({'ensure' => 'present'}) }
+         end
 
         case facts[:osfamily]
         when 'Debian'
