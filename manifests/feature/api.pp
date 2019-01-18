@@ -11,8 +11,13 @@
 #   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
 #   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the pki directory
 #             /etc/icinga2/pki on Linux and C:/ProgramData/icinga2/etc/icinga2/pki on Windows.
-#   - icinga2: Uses the icinga2 CLI to generate a Certificate and Key The ticket is generated on the
-#              Puppetmaster by using the configured 'ticket_salt' in a custom function.
+#   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
+#              Certificate from 'ca_host' using the icinga2 ticket mechanism.
+#
+#              In case the 'ticket_salt' has been configured the ticket_id will be generated
+#              by the module in a custom function that imitates the icinga ticket generation.
+#
+#              The 'ticket_id' parameter can be used to directly set an ticket_id.
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
 #   - ca: Includes the '::icinga2::pki::ca' class to generate a fresh CA and generates an SSL certificate and
@@ -68,6 +73,12 @@
 # [*ticket_salt*]
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 #   Defaults to constant TicketSalt.
+#
+# [*ticket_id*]
+#   If a ticket_id is give it will be used instead of generating an ticket_id using the
+#   ticket_salt option.
+#   The ticket_id will only be used when requesting a certificate from the ca_host in case
+#   the pki is set to 'icinga2'.
 #
 # [*endpoints*]
 #   Hash to configure endpoint objects. Defaults to { 'NodeName' => {} }.
@@ -152,6 +163,7 @@ class icinga2::feature::api(
   $ca_host         = undef,
   $ca_port         = 5665,
   $ticket_salt     = 'TicketSalt',
+  $ticket_id       = undef,
   $endpoints       = { 'NodeName' => {} },
   $zones           = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
   $ssl_key         = undef,
@@ -317,7 +329,15 @@ class icinga2::feature::api(
       validate_string($ca_host)
       validate_integer($ca_port)
 
-      $ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
+      if($ticket_id) {
+        validate_string($ticket_id)
+        $_ticket_id = $ticket_id
+      } elsif($ticket_salt != 'TicketSalt') {
+        $_ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
+      } else {
+        $_ticket_id = 'empty'
+        warning("Parameter ticket_salt or ticket_id should be set when using pki='icinga2'")
+      }
       $trusted_cert = "${pki_dir}/trusted-cert.crt"
 
       Exec {
@@ -336,7 +356,7 @@ class icinga2::feature::api(
       }
 
       -> exec { 'icinga2 pki request':
-        command => "${icinga2_bin} pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${ticket_id}",
+        command => "${icinga2_bin} pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${_ticket_id}",
         creates => $_ssl_cacert_path,
       }
     } # icinga2
