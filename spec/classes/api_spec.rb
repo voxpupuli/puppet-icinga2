@@ -28,23 +28,20 @@ describe('icinga2::feature::api', :type => :class) do
       before(:each) do
         case facts[:kernel]
         when 'windows'
-          @icinga2_bin_dir = 'C:/Program Files/icinga2/sbin'
-          @icinga2_bin = 'icinga2.exe'
+          @icinga2_bin = 'C:/Program Files/icinga2/sbin/icinga2.exe'
           @icinga2_conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
           @icinga2_pki_dir = 'C:/ProgramData/icinga2/var/lib/icinga2/certs'
           @icinga2_sslkey_mode = nil
           @icinga2_user = nil
           @icinga2_group = nil
         when 'FreeBSD'
-          @icinga2_bin_dir = '/usr/local/sbin'
-          @icinga2_bin = 'icinga2'
+          @icinga2_bin = '/usr/local/sbin/icinga2'
           @icinga2_conf_dir = '/usr/local/etc/icinga2'
           @icinga2_pki_dir = '/var/lib/icinga2/certs'
           @icinga2_sslkey_mode = '0600'
           @icinga2_user = 'icinga'
           @icinga2_group = 'icinga'
         else
-          @icinga2_bin = 'icinga2'
           @icinga2_conf_dir = '/etc/icinga2'
           @icinga2_pki_dir = '/var/lib/icinga2/certs'
           @icinga2_sslkey_mode = '0600'
@@ -52,20 +49,20 @@ describe('icinga2::feature::api', :type => :class) do
           when 'Debian'
             @icinga2_user = 'nagios'
             @icinga2_group = 'nagios'
-            @icinga2_bin_dir = '/usr/sbin'
+            @icinga2_bin = '/usr/sbin/icinga2'
           else
             @icinga2_user = 'icinga'
             @icinga2_group = 'icinga'
             if facts[:osfamily] != 'RedHat'
-              @icinga2_bin_dir = '/usr/sbin'
+              @icinga2_bin = '/usr/sbin/icinga2'
             else
               case facts[:operatingsystemmajrelease]
               when '5'
-                @icinga2_bin_dir = '/usr/sbin'
+                @icinga2_bin = '/usr/sbin/icinga2'
               when '6'
-                @icinga2_bin_dir = '/usr/sbin'
+                @icinga2_bin = '/usr/sbin/icinga2'
               else
-                @icinga2_bin_dir = '/sbin'
+                @icinga2_bin = '/sbin/icinga2'
               end
             end
           end
@@ -144,22 +141,41 @@ describe('icinga2::feature::api', :type => :class) do
 
         it { is_expected.to contain_exec('icinga2 pki create key')
           .with({
-            'path'    => @icinga2_bin_dir,
             'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
             'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
           .that_notifies('Class[icinga2::service]') }
 
         it { is_expected.to contain_exec('icinga2 pki get trusted-cert')
           .with({
-            'path'    => @icinga2_bin_dir,
             'command' => "#{@icinga2_bin} pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
             'creates' => "#{@icinga2_pki_dir}/trusted-cert.crt", })
           .that_notifies('Class[icinga2::service]') }
 
         it { is_expected.to contain_exec('icinga2 pki request')
           .with({
-            'path'    => @icinga2_bin_dir,
             'command' => "#{@icinga2_bin} pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket ac5cb0d8c98f3f50ceff399b3cfedbb03782c117",
+            'creates' => "#{@icinga2_pki_dir}/ca.crt", })
+          .that_notifies('Class[icinga2::service]') }
+      end
+
+      context "with pki => 'icinga2', ca_host => 'foo', ca_port => 1234, ticket_id => 'bar'" do
+        let(:params) { {:pki => 'icinga2', :ca_host => 'foo', :ca_port => 1234, :ticket_id => 'bar'} }
+
+        it { is_expected.to contain_exec('icinga2 pki create key')
+          .with({
+            'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
+            'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
+          .that_notifies('Class[icinga2::service]') }
+
+        it { is_expected.to contain_exec('icinga2 pki get trusted-cert')
+          .with({
+            'command' => "#{@icinga2_bin} pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
+            'creates' => "#{@icinga2_pki_dir}/trusted-cert.crt", })
+          .that_notifies('Class[icinga2::service]') }
+
+        it { is_expected.to contain_exec('icinga2 pki request')
+          .with({
+            'command' => "#{@icinga2_bin} pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket bar",
             'creates' => "#{@icinga2_pki_dir}/ca.crt", })
           .that_notifies('Class[icinga2::service]') }
       end

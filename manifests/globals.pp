@@ -98,7 +98,7 @@ class icinga2::globals(
   Stdlib::Absolutepath   $cert_dir,
   Stdlib::Absolutepath   $ca_dir,
   Array[String]          $reserved,
-  String                 $service_reload,
+  Optional[String]       $service_reload,
 ) {
 
   assert_private()

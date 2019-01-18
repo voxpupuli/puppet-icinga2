@@ -81,7 +81,6 @@ define icinga2::object(
 
   case $::osfamily {
     'windows': {
-      }
     } # windows
     default: {
       Concat {
