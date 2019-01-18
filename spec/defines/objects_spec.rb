@@ -2,6 +2,7 @@ require 'spec_helper'
 
 facts = {
   :kernel   => 'Linux',
+  :os => {:family => 'Debian', :name => 'Debian'},
   :osfamily => 'Debian' }
 
 
