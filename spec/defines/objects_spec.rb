@@ -32,8 +32,8 @@ describe('icinga2::object', :type => :define) do
         end
       when 'Windows'
         before(:each) do
-          @icinga2_user = 'Administrators'
-          @icinga2_group = 'NETWORK SERVICE'
+          @icinga2_user = null
+          @icinga2_group = null
         end
       else
         before(:each) do
