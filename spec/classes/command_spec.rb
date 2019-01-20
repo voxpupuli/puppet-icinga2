@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 describe('icinga2::feature::command', :type => :class) do
-  let(:pre_condition) {[
-    "class { 'icinga2': features => [], }"
-  ]}
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], }"
+    ]
+  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let(:facts) do
+        facts
+      end
 
       before(:each) do
         case facts[:kernel]
@@ -21,7 +25,11 @@ describe('icinga2::feature::command', :type => :class) do
       end
 
       context "with defaults" do
-        let(:params) { {:ensure => 'present'} }
+        let(:params) do
+          {
+            :ensure => 'present'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'present'}) }
 
@@ -38,7 +46,11 @@ describe('icinga2::feature::command', :type => :class) do
 
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent'} }
+        let(:params) do
+          {
+            :ensure => 'absent'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('command').with({'ensure' => 'absent'}) }
       end

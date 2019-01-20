@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe('icinga2::feature', :type => :define) do
-  let(:title) { 'bar' }
+  let(:title) do
+    'bar'
+  end
 
   before(:each) do
     # Fake assert_private function from stdlib to not fail within this test
@@ -10,7 +12,9 @@ describe('icinga2::feature', :type => :define) do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let(:facts) do
+        facts
+      end
 
       case facts[:kernel]
         when 'Linux'
@@ -55,7 +59,12 @@ describe('icinga2::feature', :type => :define) do
       case facts[:kernel]
         when 'windows'
           context "with ensure => present" do
-            let(:params) { {:ensure => 'present', :feature => 'foo'} }
+            let(:params) do
+              {
+                :ensure  => 'present',
+                :feature => 'foo'
+              }
+            end
 
             it { is_expected.to contain_file("#{@icinga2_config_dir}/features-enabled/foo.conf")
               .with({ 'ensure' => 'file' })
@@ -65,7 +74,12 @@ describe('icinga2::feature', :type => :define) do
           end
         else
           context "with ensure => present" do
-            let(:params) { {:ensure => 'present', :feature => 'foo'} }
+            let(:params) do
+              {
+                :ensure  => 'present',
+                :feature => 'foo'
+              }
+            end
 
             it { is_expected.to contain_file("#{@icinga2_config_dir}/features-enabled/foo.conf")
               .with({
@@ -79,7 +93,12 @@ describe('icinga2::feature', :type => :define) do
       end
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent', :feature => 'foo'} }
+        let(:params) do
+          {
+            :ensure  => 'absent',
+            :feature => 'foo'
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_config_dir}/features-enabled/foo.conf")
           .with({ 'ensure' => 'absent'})

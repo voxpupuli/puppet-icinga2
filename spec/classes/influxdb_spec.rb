@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe('icinga2::feature::influxdb', :type => :class) do
-  let(:pre_condition) {[
-      "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }" ]}
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
+    ]
+  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
@@ -67,13 +70,22 @@ describe('icinga2::feature::influxdb', :type => :class) do
       end
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent'} }
+        let(:params) do
+          {
+            :ensure => 'absent'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('influxdb').with({'ensure' => 'absent'}) }
       end
 
       context "with enable_ssl => true, pki => puppet" do
-        let(:params) { {:enable_ssl => true, :pki => 'puppet'} }
+        let(:params) do
+          {
+            :enable_ssl => true,
+            :pki        => 'puppet'
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.key")  }
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.crt")  }
@@ -81,7 +93,15 @@ describe('icinga2::feature::influxdb', :type => :class) do
       end
 
       context "with enable_ssl = true, pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
-        let(:params) { {:enable_ssl => true, :pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
+        let(:params) do
+          {
+            :enable_ssl => true,
+            :pki        => 'none',
+            :ssl_key    => 'foo',
+            :ssl_cert   => 'bar',
+            :ssl_cacert => 'baz'
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.key")
           .with({

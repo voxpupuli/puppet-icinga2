@@ -1,12 +1,17 @@
 require 'spec_helper'
 
 describe('icinga2::feature::perfdata', :type => :class) do
-  let(:pre_condition) {[
-    "class { 'icinga2': features => [], }" ]}
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], }"
+    ]
+  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let(:facts) do
+        facts
+      end
 
       before(:each) do
         case facts[:kernel]
@@ -34,7 +39,11 @@ describe('icinga2::feature::perfdata', :type => :class) do
       end
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent'} }
+        let(:params) do
+          {
+            :ensure => 'absent'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('perfdata').with({'ensure' => 'absent'}) }
       end

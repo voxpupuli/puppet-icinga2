@@ -1,10 +1,22 @@
 require 'spec_helper'
 
 describe 'icinga2_attributes' do
-  let(:pre_condition) { [
-    "class { 'icinga2': }"
-  ] }
-  let(:facts) { {:kernel => 'Linux', :os => {:family => 'Debian', :name => 'Debian'}, :osfamily => 'Debian',} }
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': }"
+    ]
+  end
+
+  let(:facts) do
+    {
+      :kernel => 'Linux',
+      :os     => {
+        :family => 'Debian',
+        :name => 'Debian'
+      },
+      :osfamily => 'Debian',
+    }
+  end
 
   it 'raises a ArgumentError if there is less than 1 arguments' do
     is_expected.to run.with_params.and_raise_error(Puppet::ParseError)

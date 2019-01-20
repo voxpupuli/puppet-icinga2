@@ -13,7 +13,8 @@ describe Facter::Util::Fact do
 end
 
 describe('icinga2::feature::gelf', :type => :class) do
-  let(:facts) { {
+  let(:facts) do
+    {
       :kernel => 'Windows',
       :architecture => 'x86_64',
       :osfamily => 'Windows',
@@ -29,7 +30,8 @@ describe('icinga2::feature::gelf', :type => :class) do
                C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;
                C:\Windows\System32\WindowsPowerShell\v1.0\;
                C:\ProgramData\chocolatey\bin;',
-  } }
+    }
+  end
 
   context "Windows 2012 R2 icinga2_puppet_localcacert fact" do
     it { expect(Facter.fact(:icinga2_puppet_localcacert).value).to match(/\/ssl\/certs\/.*.pem/) }

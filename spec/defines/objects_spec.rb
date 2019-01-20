@@ -7,9 +7,15 @@ facts = {
 
 
 describe('icinga2::object', :type => :define) do
-  let(:title) { 'foo' }
-  let(:pre_condition) {[
-    "class { 'icinga2': }" ]}
+  let(:title) do
+    'foo'
+  end
+
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': }"
+    ]
+  end
 
   before(:each) do
     # Fake assert_private function from stdlib to not fail within this test
@@ -17,13 +23,18 @@ describe('icinga2::object', :type => :define) do
   end
 
   on_supported_os.each do |os, complete_facts|
-    let(:facts) { complete_facts }
+    let(:facts) do
+      complete_facts
+    end
 
     context "#{os} with object_type => 'foobar'" do
-      let(:params) {{
-        :object_type => 'foobar',
-        :target      => '/bar/baz',
-        :order       => '10' }}
+      let(:params) do
+        {
+          :object_type => 'foobar',
+          :target      => '/bar/baz',
+          :order       => '10'
+        }
+      end
 
       case facts[:osfamily]
       when 'Debian'
@@ -59,63 +70,106 @@ describe('icinga2::object', :type => :define) do
     end
   end
 
-  let(:facts) { facts }
+  let(:facts) do
+    facts
+  end
 
   context "with template => true" do
-    let(:params) {{
-      :template    => true,
-      :object_type => 'foobar',
-      :target      => '/bar/baz',
-      :order       => '10' }}
+    let(:params) do
+      {
+        :template    => true,
+        :object_type => 'foobar',
+        :target      => '/bar/baz',
+        :order       => '10'
+      }
+    end
 
     it { is_expected.to contain_concat__fragment('foo')
       .with_content(/template foobar "foo" \{/) }
   end
 
   context "with import => ['bar', 'baz']" do
-    let(:params) {{
-      :import      => ['bar', 'baz'],
-      :object_type => 'foobar',
-      :target      => '/bar/baz',
-      :order       => '10' }}
+    let(:params) do
+      {
+        :import      => ['bar', 'baz'],
+        :object_type => 'foobar',
+        :target      => '/bar/baz',
+        :order       => '10'
+      }
+    end
 
     it { is_expected.to contain_concat__fragment('foo')
       .with_content(/import "bar"\n  import "baz"\n/) }
   end
 
   context "with apply_target => 'Service', object_type => 'Service' (same value)" do
-    let(:params) {{
-      :apply_target => 'Service',
-      :object_type  => 'Service',
-      :target       => '/bar/baz',
-      :order        => '10' }}
+    let(:params) do
+      {
+        :apply_target => 'Service',
+        :object_type  => 'Service',
+        :target       => '/bar/baz',
+        :order        => '10'
+      }
+    end
 
     it { is_expected.to raise_error(Puppet::Error, /must be different/) }
   end
 
   context "with apply => true, apply_target => 'Host'" do
-    let(:params) { {:apply => true, :apply_target => 'Host', :object_type => 'foobar', :target =>  '/bar/baz', :order => '10'} }
+    let(:params) do
+      {
+        :apply        => true,
+        :apply_target => 'Host',
+        :object_type  => 'foobar',
+        :target       =>  '/bar/baz',
+        :order        => '10'
+      }
+    end
 
     it { is_expected.to contain_concat__fragment('foo')
       .with_content(/apply foobar \"foo\" to Host \{/) }
   end
 
   context "with apply => true, apply_target => 'Service'" do
-    let(:params) { {:apply => true, :apply_target => 'Service', :object_type => 'foobar', :target =>  '/bar/baz', :order => '10'} }
+    let(:params) do
+      {
+        :apply        => true,
+        :apply_target => 'Service',
+        :object_type  => 'foobar',
+        :target       =>  '/bar/baz',
+        :order        => '10'
+      }
+    end
 
     it { is_expected.to contain_concat__fragment('foo')
       .with_content(/apply foobar \"foo\" to Service \{/) }
   end
 
   context "with apply => 'item in array', prefix => true" do
-    let(:params) { {:apply => 'item in array', :prefix => true, :object_type => 'foobar', :target =>  '/bar/baz', :order => '10'} }
+    let(:params) do
+      {
+        :apply       => 'item in array',
+        :prefix      => true,
+        :object_type => 'foobar',
+        :target      =>  '/bar/baz',
+        :order       => '10'
+      }
+    end
 
     it { is_expected.to contain_concat__fragment('foo')
       .with_content(/apply foobar \"foo\" for \(item in array\) \{/) }
   end
 
   context "with apply => 'key => value in hash', prefix => 'some string'" do
-    let(:params) { {:apply => 'key => value in hash', :prefix => 'some string', :object_type => 'foobar', :target =>  '/bar/baz', :order => '10'} }
+    let(:params) do
+      {
+        :apply       => 'key => value in hash',
+        :prefix      => 'some string',
+        :object_type => 'foobar',
+        :target      =>  '/bar/baz',
+        :order       => '10'
+      }
+    end
 
     it { is_expected.to contain_concat__fragment('foo')
       .with_content(/apply foobar \"some string\" for \(key => value in hash\) \{/) }
@@ -144,14 +198,26 @@ on_icinga_objects = {
 
 on_icinga_objects.each do |otype, rtype|
   describe(rtype, :type => :define) do
-    let(:title) { 'foo' }
-    let(:pre_condition) {[
-      "class { 'icinga2': }" ]}
-    let(:facts) { facts }
+    let(:title) do
+      'foo'
+    end
+
+    let(:pre_condition) do
+      [
+        "class { 'icinga2': }"
+      ]
+    end
+
+    let(:facts) do
+      facts
+    end
 
     context "with all defaults" do
-      let(:params) {{
-        :target =>  '/bar/baz' }}
+      let(:params) do
+        {
+          :target =>  '/bar/baz'
+        }
+      end
 
       it { is_expected.to contain_icinga2__object("icinga2::object::#{otype}::foo")
         .with_object_type(otype) }

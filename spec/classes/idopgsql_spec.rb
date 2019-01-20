@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 describe('icinga2::feature::idopgsql', :type => :class) do
-  let(:pre_condition) { [
+  let(:pre_condition) do
+    [
       "class { 'icinga2': features => [], }"
-  ] }
+    ]
+  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let(:facts) do
+        facts
+      end
 
       before(:each) do
         case facts[:kernel]
@@ -42,7 +46,11 @@ describe('icinga2::feature::idopgsql', :type => :class) do
       end
 
       context "with defaults" do
-        let(:params) { {:password => 'foo'} }
+        let(:params) do
+          {
+            :password => 'foo'
+          }
+        end
 
         if facts[:kernel] == 'Linux'
           it { is_expected.to contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }
@@ -55,22 +63,40 @@ describe('icinga2::feature::idopgsql', :type => :class) do
       end
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent', :password => 'foo'} }
+        let(:params) do
+          {
+            :ensure   => 'absent',
+            :password => 'foo'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('ido-pgsql').with({'ensure' => 'absent'}) }
       end
 
       context "with import_schema => true" do
-        let(:params) { {:import_schema => true, :password => 'foo'} }
+        let(:params) do
+          {
+            :import_schema => true,
+            :password      => 'foo'
+          }
+        end
 
         it { is_expected.to contain_exec('idopgsql-import-schema') }
       end
 
       if facts[:kernel] == 'Linux'
         context "with icinga2::manage_package => false" do
-          let(:params) { {:password => 'foo'} }
-          let(:pre_condition) {[
-            "class { 'icinga2': features => [], manage_package => false }" ]}
+          let(:params) do
+            {
+              :password => 'foo'
+            }
+          end
+
+          let(:pre_condition) do
+            [
+              "class { 'icinga2': features => [], manage_package => false }"
+            ]
+          end
 
           it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
           it { should_not contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }

@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe('icinga2::feature::api', :type => :class) do
-  let(:pre_condition) {[
-    "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }" ]}
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
+    ]
+  end
 
 
   on_supported_os.each do |os, facts|
@@ -104,14 +107,25 @@ describe('icinga2::feature::api', :type => :class) do
       end
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent'} }
+        let(:params) do
+          {
+            :ensure => 'absent'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('api').with({
           'ensure' => 'absent', }) }
       end
 
       context "with pki => 'none', ssl_key => 'foo', ssl_cert => 'bar', ssl_cacert => 'baz'" do
-        let(:params) { {:pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz'} }
+        let(:params) do
+          {
+            :pki        => 'none',
+            :ssl_key    => 'foo',
+            :ssl_cert   => 'bar',
+            :ssl_cacert => 'baz'
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.key")
           .with({
@@ -137,7 +151,14 @@ describe('icinga2::feature::api', :type => :class) do
       end
 
       context "with pki => 'icinga2', ca_host => 'foo', ca_port => 1234, ticket_salt => 'bar'" do
-        let(:params) { {:pki => 'icinga2', :ca_host => 'foo', :ca_port => 1234, :ticket_salt => 'bar'} }
+        let(:params) do
+          {
+            :pki         => 'icinga2',
+            :ca_host     => 'foo',
+            :ca_port     => 1234,
+            :ticket_salt => 'bar'
+          }
+        end
 
         it { is_expected.to contain_exec('icinga2 pki create key')
           .with({
@@ -159,7 +180,14 @@ describe('icinga2::feature::api', :type => :class) do
       end
 
       context "with pki => 'icinga2', ca_host => 'foo', ca_port => 1234, ticket_id => 'bar'" do
-        let(:params) { {:pki => 'icinga2', :ca_host => 'foo', :ca_port => 1234, :ticket_id => 'bar'} }
+        let(:params) do
+          {
+            :pki       => 'icinga2',
+            :ca_host   => 'foo',
+            :ca_port   => 1234,
+            :ticket_id => 'bar'
+          }
+        end
 
         it { is_expected.to contain_exec('icinga2 pki create key')
           .with({

@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe('icinga2::pki::ca', :type => :class) do
-  let(:pre_condition) { [
+  let(:pre_condition) do
+    [
       "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
-  ] }
+    ]
+  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
@@ -121,7 +123,12 @@ describe('icinga2::pki::ca', :type => :class) do
 
 
       context "with ca_cert => 'foo', ca_key => 'bar'" do
-        let(:params) {{:ca_cert => 'foo', :ca_key => 'bar'}}
+        let(:params) do
+          {
+            :ca_cert => 'foo',
+            :ca_key  => 'bar'
+          }
+        end
 
         it { is_expected.to contain_exec('icinga2 pki create certificate signing request')
          .with({

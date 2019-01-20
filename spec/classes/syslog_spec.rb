@@ -1,12 +1,17 @@
 require 'spec_helper'
 
 describe('icinga2::feature::syslog', :type => :class) do
-  let(:pre_condition) {[
-    "class { 'icinga2': features => [], }" ]}
+  let(:pre_condition) do
+    [
+      "class { 'icinga2': features => [], }"
+    ]
+  end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let(:facts) do
+        facts
+      end
 
       before(:each) do
         case facts[:kernel]
@@ -27,8 +32,12 @@ describe('icinga2::feature::syslog', :type => :class) do
           .that_notifies('Class[icinga2::service]') }
       end
 
-      context "#{os} with ensure => absent" do
-        let(:params) { {:ensure => 'absent'} }
+      context "with ensure => absent" do
+        let(:params) do
+          {
+            :ensure => 'absent'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('syslog').with({'ensure' => 'absent'}) }
       end

@@ -4,7 +4,9 @@ describe('icinga2', :type => :class) do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts { facts }
+      let(:facts) do
+        facts
+      end
 
       before(:each) do
         case facts[:kernel]
@@ -50,43 +52,55 @@ describe('icinga2', :type => :class) do
       end
 
       context "with manage_package => false" do
-        let(:params) { {:manage_package => false} }
+        let(:params) do
+          {:manage_package => false}
+        end
 
         it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
       end
 
       context "with confd => false" do
-        let(:params) { {:confd => false} }
+        let(:params) do
+          {:confd => false}
+        end
 
         it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
           .without_content %r{^include_recursive \"conf.d\"} }
       end
 
       context "with confd => example.d" do
-        let(:params) { {:confd => "#{@icinga2_conf_dir}/example.d"} }
+        let(:params) do
+          {:confd => "#{@icinga2_conf_dir}/example.d"}
+        end
 
         case facts[:kernel]
         when 'windows'
-          let(:pre_condition) {[
-            "file { 'C:/ProgramData/icinga2/etc/icinga2/example.d': ensure => directory, tag => 'icinga2::config::file' }",
-            "file { 'C:/ProgramData/icinga2/etc/icinga2/example.d/foo': ensure => file, tag => 'icinga2::config::file' }",
-          ]}
+          let(:pre_condition) do
+            [
+              "file { 'C:/ProgramData/icinga2/etc/icinga2/example.d': ensure => directory, tag => 'icinga2::config::file' }",
+              "file { 'C:/ProgramData/icinga2/etc/icinga2/example.d/foo': ensure => file, tag => 'icinga2::config::file' }",
+            ]
+          end
 
           it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
             .with_content %r{^include_recursive \"C:/ProgramData/icinga2/etc/icinga2/example.d\"} }
         when 'FreeBSD'
-          let(:pre_condition) {[
-            "file { '/usr/local/etc/icinga2/example.d': ensure => directory, tag => 'icinga2::config::file' }",
-            "file { '/usr/local/etc/icinga2/example.d/foo': ensure => file, tag => 'icinga2::config::file' }",
-          ]}
+          let(:pre_condition) do
+            [
+              "file { '/usr/local/etc/icinga2/example.d': ensure => directory, tag => 'icinga2::config::file' }",
+              "file { '/usr/local/etc/icinga2/example.d/foo': ensure => file, tag => 'icinga2::config::file' }",
+            ]
+          end
 
           it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
             .with_content %r{^include_recursive \"/usr/local/etc/icinga2/example.d\"} }
         else
-          let(:pre_condition) {[
-            "file { '/etc/icinga2/example.d': ensure => directory, tag => 'icinga2::config::file' }",
-            "file { '/etc/icinga2/example.d/foo': ensure => file, tag => 'icinga2::config::file' }",
-          ]}
+          let(:pre_condition) do
+            [
+              "file { '/etc/icinga2/example.d': ensure => directory, tag => 'icinga2::config::file' }",
+              "file { '/etc/icinga2/example.d/foo': ensure => file, tag => 'icinga2::config::file' }",
+            ]
+          end
 
           it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
             .with_content %r{^include_recursive \"/etc/icinga2/example.d\"} }
@@ -105,14 +119,22 @@ describe('icinga2', :type => :class) do
       end
 
       context "with constants => { foo => bar }" do
-        let(:params) { {:constants => {'foo' => 'bar'}} }
+        let(:params) do
+          {
+            :constants => {'foo' => 'bar'}
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
           .with_content(/^const foo = \"bar\"/) }
       end
 
       context "with plugins => [ foo, bar ]" do
-        let(:params) { {:plugins => ['foo', 'bar']} }
+        let(:params) do
+          {
+            :plugins => ['foo', 'bar']
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
           .with_content(/^include <foo>/)
@@ -120,7 +142,11 @@ describe('icinga2', :type => :class) do
       end
 
       context "with ensure => stopped, enable => false" do
-        let(:params) { {:ensure => 'stopped', :enable => false} }
+        let(:params) do
+          {
+            :ensure => 'stopped', :enable => false
+          }
+        end
 
         it { is_expected.to contain_service('icinga2')
           .with({
@@ -129,7 +155,12 @@ describe('icinga2', :type => :class) do
       end
 
       context 'with manage_repo => true' do
-        let(:params) { {:manage_repo => true} }
+        let(:params) do
+          {
+            :manage_repo => true
+          }
+        end
+
         case facts[:osfamily]
           when 'Debian'
             it { should contain_apt__source('icinga-stable-release') }
@@ -141,7 +172,11 @@ describe('icinga2', :type => :class) do
       end
 
       context "with manage_service => false" do
-        let(:params) { {:manage_service => false} }
+        let(:params) do
+          {
+            :manage_service => false
+          }
+        end
 
         it { should_not contain_service('icinga2') }
       end

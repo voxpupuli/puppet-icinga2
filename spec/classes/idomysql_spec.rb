@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe('icinga2::feature::idomysql', :type => :class) do
-  let(:pre_condition) { [
+  let(:pre_condition) do
+    [
       "class { 'icinga2': features => [], constants => {'NodeName' => 'host.example.org'} }"
-  ] }
+    ]
+  end
 
   on_supported_os.each do |os, facts|
    context "on #{os}" do
@@ -57,7 +59,11 @@ describe('icinga2::feature::idomysql', :type => :class) do
       end
 
       context "with defaults" do
-        let(:params) { {:password => 'foo'} }
+        let(:params) do
+          {
+            :password => 'foo'
+          }
+        end
 
         if facts[:kernel] == 'Linux'
           it { is_expected.to contain_package('icinga2-ido-mysql').with({ 'ensure' => 'installed' }) }
@@ -77,13 +83,23 @@ describe('icinga2::feature::idomysql', :type => :class) do
       end
 
       context "with ensure => absent" do
-        let(:params) { {:ensure => 'absent', :password => 'foo'} }
+        let(:params) do
+          {
+            :ensure   => 'absent',
+            :password => 'foo'
+          }
+        end
 
         it { is_expected.to contain_icinga2__feature('ido-mysql').with({'ensure' => 'absent'}) }
       end
 
       context "with import_schema => true" do
-        let(:params) { {:import_schema => true, :password => 'foo'} }
+        let(:params) do
+          {
+            :import_schema => true,
+            :password      => 'foo'
+          }
+        end
 
         it { is_expected.to contain_exec('idomysql-import-schema')
           .with({
@@ -93,9 +109,17 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
       if facts[:kernel] == 'Linux'
         context "with icinga2::manage_package => false" do
-          let(:params) { {:password => 'foo'} }
-          let(:pre_condition) {[
-            "class { 'icinga2': features => [], manage_package => false }" ]}
+          let(:params) do
+            {
+              :password => 'foo'
+            }
+          end
+
+          let(:pre_condition) do
+            [
+              "class { 'icinga2': features => [], manage_package => false }"
+            ]
+          end
 
           it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
           it { should_not contain_package('icinga2-ido-mysql').with({ 'ensure' => 'installed' }) }
@@ -103,7 +127,13 @@ describe('icinga2::feature::idomysql', :type => :class) do
       end
 
       context "with enable_ssl => true, pki => puppet" do
-        let(:params) { {:enable_ssl => true, :pki => 'puppet', :password => 'foo'} }
+        let(:params) do
+          {
+            :enable_ssl => true,
+            :pki        => 'puppet',
+            :password   => 'foo'
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key")
           .with({
@@ -129,7 +159,16 @@ describe('icinga2::feature::idomysql', :type => :class) do
       end
 
       context "with enable_ssl = true, pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
-        let(:params) { {:enable_ssl => true, :pki => 'none', 'ssl_key' => 'foo', 'ssl_cert' => 'bar', 'ssl_cacert' => 'baz', :password => 'foo'} }
+        let(:params) do
+          {
+            :enable_ssl => true,
+            :pki        => 'none',
+            :ssl_key    => 'foo',
+            :ssl_cert   => 'bar',
+            :ssl_cacert => 'baz',
+            :password   => 'foo'
+          }
+        end
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key")
           .with({
