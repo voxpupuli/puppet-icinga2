@@ -31,12 +31,12 @@
 #
 #
 class icinga2::feature::livestatus(
-  Enum['absent', 'present']           $ensure          = present,
-  Optional[Enum['tcp', 'unix']]       $socket_type     = undef,
-  Optional[String]                    $bind_host       = undef,
-  Optional[Integer[1,65535]]          $bind_port       = undef,
-  Optional[Stdlib::Absolutepath]      $socket_path     = undef,
-  Optional[Stdlib::Absolutepath]      $compat_log_path = undef,
+  Enum['absent', 'present']                $ensure          = present,
+  Optional[Enum['tcp', 'unix']]            $socket_type     = undef,
+  Optional[Stdlib::Host]                   $bind_host       = undef,
+  Optional[Stdlib::Port::Unprivileged]     $bind_port       = undef,
+  Optional[Stdlib::Absolutepath]           $socket_path     = undef,
+  Optional[Stdlib::Absolutepath]           $compat_log_path = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {

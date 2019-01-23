@@ -122,8 +122,8 @@
 class icinga2::feature::idomysql(
   String                                           $password,
   Enum['absent', 'present']                        $ensure                 = present,
-  String                                           $host                   = '127.0.0.1',
-  Integer[1,65535]                                 $port                   = 3306,
+  Stdlib::Host                                     $host                   = '127.0.0.1',
+  Stdlib::Port::Unprivileged                       $port                   = 3306,
   Optional[Stdlib::Absolutepath]                   $socket_path            = undef,
   String                                           $user                   = 'icinga',
   String                                           $database               = 'icinga',

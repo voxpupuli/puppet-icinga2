@@ -21,11 +21,11 @@
 #
 #
 class icinga2::feature::gelf(
-  Enum['absent', 'present']      $ensure               = present,
-  Optional[String]               $host                 = undef,
-  Optional[Integer[1,65535]]     $port                 = undef,
-  Optional[String]               $source               = undef,
-  Optional[Boolean]              $enable_send_perfdata = undef,
+  Enum['absent', 'present']                $ensure               = present,
+  Optional[Stdlib::Host]                   $host                 = undef,
+  Optional[Stdlib::Port::Unprivileged]     $port                 = undef,
+  Optional[String]                         $source               = undef,
+  Optional[Boolean]                        $enable_send_perfdata = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {

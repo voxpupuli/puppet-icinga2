@@ -33,8 +33,8 @@
 define icinga2::object::endpoint(
   Enum['absent', 'present']                      $ensure        = present,
   Optional[String]                               $endpoint_name = $title,
-  Optional[String]                               $host          = undef,
-  Optional[Integer[1,65535]]                     $port          = undef,
+  Optional[Stdlib::Host]                         $host          = undef,
+  Optional[Stdlib::Ensure::Service]              $port          = undef,
   Optional[Pattern[/^\d+\.?\d*[d|h|m|s]?$/]]     $log_duration  = undef,
   Optional[Stdlib::Absolutepath]                 $target        = undef,
   Variant[String, Integer]                       $order         = 40,

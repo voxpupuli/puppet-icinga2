@@ -140,7 +140,7 @@
 class icinga2 (
   Array                      $features,
   Array                      $plugins,
-  Enum['running', 'stopped'] $ensure         = running,
+  Stdlib::Ensure::Service    $ensure         = running,
   Boolean                    $enable         = true,
   Boolean                    $manage_repo    = false,
   Boolean                    $manage_package = true,
