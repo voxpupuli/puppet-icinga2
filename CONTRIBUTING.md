@@ -12,6 +12,10 @@ reviewed and merged if they suit some general guidelines:
 * Your change does not handle third party software for which dedicated Puppet modules exist
   * such as creating databases, installing webserver etc.
 
+## Notes
+
+* The master branch now is moved to v2.x
+
 ## Branches
 Choosing a proper name for a branch helps us identify its purpose and possibly find an associated bug or feature.
 Generally a branch name should include a topic such as `fix` or `feature` followed by a description and an issue number
