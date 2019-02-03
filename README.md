@@ -32,23 +32,23 @@ can set to false. See issue #403.
 
 * Requires Icinga 2 v2.8.0 or higher.
 * Feature `api`:
- * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
- * Deprecated value `ca` of parameter `pki` is removed.
- * Parameter ssl_crl_path was renamed to ssl_crl.
+    * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
+    * Deprecated value `ca` of parameter `pki` is removed.
+    * Parameter ssl_crl_path was renamed to ssl_crl.
 * Feature `idopgsql`
- * Parameter `password` is required now.
+    * Parameter `password` is required now.
 * Feature `idomysql`
- * Parameter `password` is required now.
- * Key and certs now are stored into the certs directory named `IdoMysqlConnection_ido-mysql` by default.
+    * Parameter `password` is required now.
+    * Key and certs now are stored into the certs directory named `IdoMysqlConnection_ido-mysql` by default.
 * Feature `elasticsearch`
- * Key and certs now are stored into the certs directory named `ElasticsearchWriter_elasticsearch` by default.
+    * Key and certs now are stored into the certs directory named `ElasticsearchWriter_elasticsearch` by default.
 * Feature `influxdb`
- * Key and certs now are stored into the certs directory named `InfluxdbWriter_influxdb` by default.
+    * Key and certs now are stored into the certs directory named `InfluxdbWriter_influxdb` by default.
 * compatlogger
- * Object removed
+    * Object removed
 * Class `icinga2::pki::ca`
- * Parameters `ssl_key_path`, `ssl_csr_path` and `ssl_cacert_path` removed. Now the location is at `/var/lib/icinga2/certs`
-   on Linux hosts and `C:/ProgramData/icinga2/var/lib/icinga2/certs`.
+    * Parameters `ssl_key_path`, `ssl_csr_path` and `ssl_cacert_path` removed. Now the location is at `/var/lib/icinga2/certs` on Linux hosts and `C:/ProgramData/icinga2/var/lib/icinga2/certs`.
+
 
 ## Module Description
 
@@ -124,6 +124,22 @@ class { '::icinga2':
 
 *Info:* If you are using the [Icinga Web 2](https://github.com/Icinga/puppet-icingaweb2/) Puppet module on the same
 server, make sure to disable the repository management for one of the modules!
+
+Since version 2.0.0 you're able via hiera to overload which repository will be used for installation, e.g. for icinga on YUM based operating systems:
+
+``` puppet
+---
+icinga2::repo:
+  baseurl: 'http://myhost.example.org/epel/%{facts.os.release.major}/release/'
+  proxy: http://proxy.example.org:3128
+```
+
+You can also change or set every other parameter of the underlying resources, supported for operating system families:
+
+* RedHat, resource type: yumrepo
+* Debian, define resource: apt::source
+* SuSE, resource type: zypprepo
+    * a workaround is implemented to use a parameter proxy also to download the gpg key thru a proxy, see https://github.com/Icinga/puppet-icinga2/issues/397.
 
 If you want to manage the version of Icinga 2, you have to disable the package management of this module and handle
 packages in your own Puppet code. The attribute manage_repo is also disabled automattically and you have to manage
