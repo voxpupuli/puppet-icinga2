@@ -20,96 +20,50 @@ class icinga2::repo {
 
   if $::icinga2::manage_repo and $::icinga2::manage_package {
 
+    $repo =  lookup('icinga2::repo', Hash, 'deep', {})
+
     case $::osfamily {
       'redhat': {
-        case $::operatingsystem {
-          'centos', 'redhat', 'oraclelinux', 'cloudlinux', 'xenserver', 'slc': {
-            yumrepo { 'icinga-stable-release':
-              baseurl  => "http://packages.icinga.com/epel/${::operatingsystemmajrelease}/release/",
-              descr    => 'ICINGA (stable release for epel)',
-              enabled  => 1,
-              gpgcheck => 1,
-              gpgkey   => 'http://packages.icinga.com/icinga.key',
-            }
-
-            Yumrepo['icinga-stable-release'] -> Package<|tag == 'icinga2'|>
-          }
-          default: {
-            fail('Your plattform is not supported to manage a repository.')
-          }
+        yumrepo { 'icinga-stable-release':
+          * => $repo,
         }
+        Yumrepo['icinga-stable-release'] -> Package<|tag == 'icinga2'|>
       }
+
       'debian': {
         # handle icinga stable repo before all package resources
         # contain class problem!
         Apt::Source['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
         Class['Apt::Update'] -> Package<|tag == 'icinga2'|>
-        case $::operatingsystem {
-          'debian': {
-            include ::apt, ::apt::backports
-            apt::source { 'icinga-stable-release':
-              location => 'http://packages.icinga.com/debian',
-              release  => "icinga-${::lsbdistcodename}",
-              repos    => 'main',
-              key      => {
-                id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
-                source => 'http://packages.icinga.com/icinga.key',
-              },
-              require  => Class['::apt::backports'],
-            }
-          }
-          'ubuntu': {
-            include ::apt
-            apt::source { 'icinga-stable-release':
-              location => 'http://packages.icinga.com/ubuntu',
-              release  => "icinga-${::lsbdistcodename}",
-              repos    => 'main',
-              key      => {
-                id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
-                source => 'http://packages.icinga.com/icinga.key',
-              };
-            }
-          }
-          default: {
-            fail('Your plattform is not supported to manage a repository.')
-          }
+
+        include ::apt
+
+        apt::source { 'icinga-stable-release':
+          * => $repo,
         }
-        contain ::apt::update
       }
+
       'suse': {
 
-        file { '/etc/pki/GPG-KEY-icinga':
-          ensure => file,
-          source => 'http://packages.icinga.com/icinga.key',
-        }
+        Zypprepo['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
 
         exec { 'import icinga gpg key':
           path      => '/bin:/usr/bin:/sbin:/usr/sbin',
-          command   => 'rpm --import /etc/pki/GPG-KEY-icinga',
-          unless    => "rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/GPG-KEY-icinga) | cut --characters=11-18 | tr [A-Z] [a-z]`",
-          require   => File['/etc/pki/GPG-KEY-icinga'],
+          command   => "rpm --import ${repo['gpgkey']}",
+          unless    => 'rpm -q gpg-pubkey-34410682',
           logoutput => 'on_failure',
+          before    => Zypprepo['icinga-stable-release'],
         }
 
-        case $::operatingsystem {
-          'SLES': {
-            zypprepo { 'icinga-stable-release':
-              baseurl  => "http://packages.icinga.com/SUSE/${::operatingsystemrelease}/release/",
-              enabled  => 1,
-              gpgcheck => 1,
-              require  => Exec['import icinga gpg key'],
-            }
-
-            Zypprepo['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
-          }
-          default: {
-            fail('Your plattform is not supported to manage a repository.')
-          }
+        zypprepo { 'icinga-stable-release':
+          * => $repo,
         }
       }
+
       'windows': {
         warning("The Icinga Project doesn't offer chocolaty packages at the moment.")
       }
+
       default: {
         fail('Your plattform is not supported to manage a repository.')
       }

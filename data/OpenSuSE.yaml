@@ -1,0 +1,3 @@
+---
+icinga2::repo:
+  baseurl: 'http://packages.icinga.com/openSUSE/%{facts.os.release.full}/release/'
