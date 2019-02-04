@@ -47,16 +47,24 @@ class icinga2::repo {
 
         Zypprepo['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
 
-        exec { 'import icinga gpg key':
-          path      => '/bin:/usr/bin:/sbin:/usr/sbin',
-          command   => "rpm --import ${repo['gpgkey']}",
-          unless    => 'rpm -q gpg-pubkey-34410682',
-          logoutput => 'on_failure',
-          before    => Zypprepo['icinga-stable-release'],
+        if $repo['proxy'] {
+          $_proxy = "--httpproxy ${repo['proxy']}"
         }
 
-        zypprepo { 'icinga-stable-release':
-          * => $repo,
+        exec { 'import icinga gpg key':
+          path      => '/bin:/usr/bin:/sbin:/usr/sbin',
+          command   => "rpm ${_proxy} --import ${repo['gpgkey']}",
+          unless    => 'rpm -q gpg-pubkey-34410682',
+          logoutput => 'on_failure',
+        }
+
+        -> zypprepo { 'icinga-stable-release':
+          * => delete($repo, 'proxy'),
+        }
+
+        -> file_line { 'add proxy settings to icinga repo':
+          path => '/etc/zypp/repos.d/icinga-stable-release.repo',
+          line => "proxy=${repo['proxy']}",
         }
       }
 
