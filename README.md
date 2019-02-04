@@ -23,11 +23,6 @@
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
-### Notices
-
-For Icinga 2 v2.8.0 and higher version v1.3.4 and above is needed and the parameter repositoryd
-can set to false. See https://github.com/Icinga/puppet-icinga2/issues/403.
-
 ### v2.0.0
 
 * Requires Icinga 2 v2.8.0 or higher.
@@ -910,10 +905,6 @@ A list of the ITL plugins to load. Defaults to `[ 'plugins', 'plugins-contrib', 
 set this parameter to `false`. By default this parameter is `true`. It's also possible to assign your
 own directory. This directory and must be managed outside of this module as file resource
 with tag icinga2::config::file.
-
-##### `repositoryd`
-`repository.d` is removed since Icinga 2 2.8.0, set to true (default) will handle the directory.
-This Parameter will change to false by default in v2.0.0 and will be removed in the future.
 
 #### Class: `icinga2::feature::checker`
 Enables or disables the `checker` feature.
