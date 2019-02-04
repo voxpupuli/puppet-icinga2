@@ -953,7 +953,7 @@ Either `present` or `absent`. Defines if the feature `notification` should be en
 Notifications are load-balanced amongst all nodes in a zone. By default this functionality is enabled. If your nodes should send out notifications independently from any other nodes (this will cause duplicated notifications if not properly handled!), you can set enable_ha to false.
 
 #### Class: `icinga2::feature::command`
-Enables or disables the `command` feature.
+Enables or disables the `command` feature. Notice: The feature is deprecated and will be removed in Icinga 2 2.11.0.
 
 **Parameters of `icinga2::feature::command`:**
 
@@ -1102,7 +1102,7 @@ Rotation interval for the files specified in `{host,service}_perfdata_path`. Can
 i.e. `1m` or `15s`. Icinga defaults to `30s`
 
 #### Class: `icinga2::feature::statusdata`
-Enables or disables the `statusdata` feature.
+Enables or disables the `statusdata` feature. The feature is deprecated and will be removed in Icinga 2 2.11.0.
 
 **Parameters of `icinga2::feature::statusdata`:**
 
