@@ -72,9 +72,16 @@ describe('icinga2::feature::api', :type => :class) do
         end
       end
 
-      context "with all defaults" do
+      context "with pki => 'puppet'" do
+        let(:params) do
+          {
+            :ensure => 'present',
+            :pki    => 'puppet'
+          }
+        end
+
         it { is_expected.to contain_icinga2__feature('api').with({
-          'ensure' => 'present',
+          'ensure' => 'present'
         }) }
 
         it { is_expected.to contain_icinga2__object('icinga2::object::ApiListener::api')
@@ -106,10 +113,11 @@ describe('icinga2::feature::api', :type => :class) do
           .with({ 'endpoints' => [ 'NodeName' ] }) }
       end
 
-      context "with ensure => absent" do
+      context "with ensure => absent, pki => 'puppet'" do
         let(:params) do
           {
-            :ensure => 'absent'
+            :ensure => 'absent',
+            :pki    => 'puppet'
           }
         end
 

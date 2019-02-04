@@ -49,6 +49,8 @@ class icinga2::repo {
 
         if $repo['proxy'] {
           $_proxy = "--httpproxy ${repo['proxy']}"
+        } else {
+          $_proxy = undef
         }
 
         exec { 'import icinga gpg key':
