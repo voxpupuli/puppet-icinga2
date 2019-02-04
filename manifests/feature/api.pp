@@ -8,7 +8,7 @@
 #   Set to present enables the feature api, absent disabled it. Defaults to present.
 #
 # [*pki*]
-#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
+#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet', 'icinga2'  or 'none'.
 #   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
 #             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
 #   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
@@ -17,7 +17,8 @@
 #              by the module in a custom function that imitates the icinga ticket generation.
 #              The 'ticket_id' parameter can be used to directly set an ticket_id.
 #   - none: Does nothing and you either have to manage the files yourself as file resources
-#           or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
+#           or use the ssl_key, ssl_cert, ssl_cacert parameters.
+#   Defaults to 'icinga2'.
 #
 # [*ssl_key*]
 #   The private key in a base64 encoded string to store in cert directory, file is stored to
@@ -128,7 +129,7 @@
 #
 class icinga2::feature::api(
   Enum['absent', 'present']                               $ensure                           = present,
-  Enum['ca', 'icinga2', 'none', 'puppet']                 $pki                              = 'puppet',
+  Enum['ca', 'icinga2', 'none', 'puppet']                 $pki                              = 'icinga2',
   Optional[Stdlib::Absolutepath]                          $ssl_crl                          = undef,
   Optional[Boolean]                                       $accept_config                    = undef,
   Optional[Boolean]                                       $accept_commands                  = undef,

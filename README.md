@@ -27,6 +27,7 @@ configuration of Icinga 2 on multiple operating systems.
 
 * Requires Icinga 2 v2.8.0 or higher.
 * Feature `api`:
+ * Default for parameter `pki` was changed to `icinga2`.
  * Parameters `ssl_key_path`, `ssl_cert_path`, `ssl_csr_path` and `ssl_ca_path` removed.
  * Deprecated value `ca` of parameter `pki` is removed.
  * Parameter ssl_crl_path was renamed to ssl_crl.
@@ -1348,7 +1349,7 @@ Provides multiple sources for the certificate and key.
 the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`, `ssl_cacert` parameters.
 
-Defaults to `puppet`
+Defaults to `icinga2`
 
 ##### `ssl_crl`
 Optional location of the certificate revocation list.
