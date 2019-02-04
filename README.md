@@ -26,7 +26,7 @@ configuration of Icinga 2 on multiple operating systems.
 ### Notices
 
 For Icinga 2 v2.8.0 and higher version v1.3.4 and above is needed and the parameter repositoryd
-can set to false. See issue #403.
+can set to false. See https://github.com/Icinga/puppet-icinga2/issues/403.
 
 ### v2.0.0
 
@@ -75,10 +75,15 @@ available in Icinga 2 can be enabled and configured with this module.
 
 ### Dependencies
 
-This module depends on:
+This module supports:
+
+* [puppet] >= 4.10 < 7.0.0
+
+And depends on:
 
 * [puppetlabs/stdlib] >= 4.16.0 < 6.0.0
-* [puppetlabs/concat] >= 5.1.0 < 6.0.0
+    * If Puppet 6 is used a stdlib 5.1 or higher is required, see https://github.com/Icinga/puppet-icinga2/issues/505
+* [puppetlabs/concat] >= 2.1.0 < 6.0.0
 
 Depending on your setup following modules may also be required:
 
@@ -91,18 +96,16 @@ Depending on your setup following modules may also be required:
 This module has been tested on:
 
 * Ruby >= 1.9
-* Debian 7, 8, 9
-* Ubuntu 14.04, 16.04
+* Debian 8, 9
+* Ubuntu 16.04, 18.04
 * CentOS/RHEL 6, 7
     * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
 * OracleLinux 7
 * FreeBSD 10, 11
 * SLES 12
-* Windows Server 2012
+* Windows Server 2012 R2, 2016
 
 Other operating systems or versions may work but have not been tested.
-
-It's recommended to enable the future parser when using this module in combination with exported resources.
 
 ## Usage
 
