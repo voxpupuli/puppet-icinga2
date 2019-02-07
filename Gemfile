@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'puppet', ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'].to_s : '>= 4.9'
+gem 'puppet', ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'].to_s : '>= 4.10', '< 6.0.0'
 
+gem 'github_changelog_generator'
 gem 'puppetlabs_spec_helper', '>= 2.0'
 gem 'puppet-lint', '>= 2.0.0'
 gem 'facter', '>= 2.4.0'
@@ -11,3 +12,6 @@ gem 'serverspec'
 gem 'r10k'
 gem 'parallel_tests', '>= 2.10.0'
 gem 'metadata-json-lint'
+gem 'beaker-rspec'
+gem 'beaker-vagrant'
+gem 'beaker-puppet_install_helper'
