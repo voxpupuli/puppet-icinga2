@@ -9,21 +9,8 @@ describe('icinga2::feature::influxdb', :type => :class) do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-     let(:facts) do
-        case facts[:kernel]
-        when 'windows'
-          facts.merge({
-            :icinga2_puppet_hostcert => 'C:/ProgramData/PuppetLabs/puppet/ssl/certs/host.example.org.pem',
-            :icinga2_puppet_hostprivkey => 'C:/ProgramData/PuppetLabs/puppet/ssl/private_keys/host.example.org.pem',
-            :icinga2_puppet_localcacert => 'C:/ProgramData/PuppetLabs/var/lib/puppet/ssl/certs/ca.pem',
-          })
-        else
-          facts.merge({
-            :icinga2_puppet_hostcert => '/etc/puppetlabs/puppet/ssl/certs/host.example.org.pem',
-            :icinga2_puppet_hostprivkey => '/etc/puppetlabs/puppet/ssl/private_keys/host.example.org.pem',
-            :icinga2_puppet_localcacert => '/etc/lib/puppetlabs/puppet/ssl/certs/ca.pem',
-          })
-        end
+      let(:facts) do
+        facts
       end
 
       before(:each) do
@@ -79,24 +66,10 @@ describe('icinga2::feature::influxdb', :type => :class) do
         it { is_expected.to contain_icinga2__feature('influxdb').with({'ensure' => 'absent'}) }
       end
 
-      context "with enable_ssl => true, pki => puppet" do
+      context "with enable_ssl = true, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
         let(:params) do
           {
             :enable_ssl => true,
-            :pki        => 'puppet'
-          }
-        end
-
-        it { is_expected.to contain_file("#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.key")  }
-        it { is_expected.to contain_file("#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.crt")  }
-        it { is_expected.to contain_file("#{@icinga2_pki_dir}/InfluxdbWriter_influxdb_ca.crt")  }
-      end
-
-      context "with enable_ssl = true, pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
-        let(:params) do
-          {
-            :enable_ssl => true,
-            :pki        => 'none',
             :ssl_key    => 'foo',
             :ssl_cert   => 'bar',
             :ssl_cacert => 'baz'
@@ -121,6 +94,26 @@ describe('icinga2::feature::influxdb', :type => :class) do
             'owner' => @icinga2_user,
             'group' => @icinga2_group, })
           .with_content(/^baz$/) }
+      end
+
+      context "with enable_ssl = true, ssl_key_path, ssl_cert_path and ssl_cacert_path set" do
+        let(:params) do
+          {
+            :enable_ssl => true,
+            :ssl_key_path => "#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.key",
+            :ssl_cert_path => "#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.crt",
+            :ssl_cacert_path => "#{@icinga2_pki_dir}/InfluxdbWriter_influxdb_ca.crt"
+          }
+        end
+
+        it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
+          .with_content %r{ssl_key = "#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.key"} }
+
+        it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
+          .with_content %r{ssl_cert = "#{@icinga2_pki_dir}/InfluxdbWriter_influxdb.crt"} }
+
+        it { is_expected.to contain_concat__fragment('icinga2::object::InfluxdbWriter::influxdb')
+          .with_content %r{ssl_ca_cert = "#{@icinga2_pki_dir}/InfluxdbWriter_influxdb_ca.crt"} }
       end
     end
 
