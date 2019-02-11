@@ -16,9 +16,9 @@
 #
 #
 class icinga2::feature::syslog(
-  Enum['absent', 'present']                                                 $ensure   = present,
-  Optional[Enum['debug', 'information', 'notice', 'warning', 'critical']]   $severity = undef,
-  Optional[Variant[Enum['LOG_AUTH', 'LOG_AUTHPRIV', 'LOG_CRON', 'LOG_DAEMON', 'LOG_FTP', 'LOG_KERN', 'LOG_LPR', 'LOG_MAIL', 'LOG_NEWS', 'LOG_SYSLOG', 'LOG_USER', 'LOG_UUCP'], Pattern[/^LOG_LOCAL[0-7]$/]]]   $facility = undef,
+  Enum['absent', 'present']        $ensure   = present,
+  Optional[Icinga2::LogSeverity]   $severity = undef,
+  Optional[Icinga2::LogFacility]   $facility = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {

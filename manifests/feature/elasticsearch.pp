@@ -95,7 +95,7 @@ class icinga2::feature::elasticsearch(
   Optional[String]                       $ssl_cert             = undef,
   Optional[String]                       $ssl_cacert           = undef,
   Optional[Boolean]                      $enable_send_perfdata = undef,
-  Optional[Pattern[/^\d+[ms]*$/]]        $flush_interval       = undef,
+  Optional[Icinga2::Interval]            $flush_interval       = undef,
   Optional[Integer]                      $flush_threshold      = undef,
 ) {
 

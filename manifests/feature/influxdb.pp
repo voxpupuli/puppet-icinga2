@@ -115,7 +115,7 @@ class icinga2::feature::influxdb(
   Optional[Hash]                           $service_tags           = undef,
   Optional[Boolean]                        $enable_send_thresholds = undef,
   Optional[Boolean]                        $enable_send_metadata   = undef,
-  Optional[Pattern[/^\d+[ms]*$/]]          $flush_interval         = undef,
+  Optional[Icinga2::Interval]              $flush_interval         = undef,
   Optional[Integer[1]]                     $flush_threshold        = undef,
 ) {
 

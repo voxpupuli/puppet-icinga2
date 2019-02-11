@@ -48,7 +48,7 @@ class icinga2::feature::perfdata(
   Optional[Stdlib::Absolutepath]      $service_temp_path       = undef,
   Optional[String]                    $host_format_template    = undef,
   Optional[String]                    $service_format_template = undef,
-  Optional[Pattern[/^\d+[ms]*$/]]     $rotation_interval       = undef,
+  Optional[Icinga2::Interval]         $rotation_interval       = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {

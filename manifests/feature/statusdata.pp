@@ -27,7 +27,7 @@ class icinga2::feature::statusdata(
   Enum['absent', 'present']          $ensure          = present,
   Optional[Stdlib::Absolutepath]     $status_path     = undef,
   Optional[Stdlib::Absolutepath]     $objects_path    = undef,
-  Optional[Pattern[/^\d+[ms]*$/]]    $update_interval = undef,
+  Optional[Icinga2::Interval]        $update_interval = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {

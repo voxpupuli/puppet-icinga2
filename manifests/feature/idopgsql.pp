@@ -72,20 +72,20 @@
 #
 #
 class icinga2::feature::idopgsql(
-  String                              $password,
-  Enum['absent', 'present']           $ensure               = present,
-  Stdlib::Host                        $host                 = '127.0.0.1',
-  Stdlib::Port::Unprivileged          $port                 = 5432,
-  String                              $user                 = 'icinga',
-  String                              $database             = 'icinga',
-  Optional[String]                    $table_prefix         = undef,
-  Optional[String]                    $instance_name        = undef,
-  Optional[String]                    $instance_description = undef,
-  Optional[Boolean]                   $enable_ha            = undef,
-  Optional[Pattern[/^\d+[ms]*$/]]     $failover_timeout     = undef,
-  Optional[Hash]                      $cleanup              = undef,
-  Optional[Array]                     $categories           = undef,
-  Boolean                             $import_schema        = false,
+  String                         $password,
+  Enum['absent', 'present']      $ensure               = present,
+  Stdlib::Host                   $host                 = '127.0.0.1',
+  Stdlib::Port::Unprivileged     $port                 = 5432,
+  String                         $user                 = 'icinga',
+  String                         $database             = 'icinga',
+  Optional[String]               $table_prefix         = undef,
+  Optional[String]               $instance_name        = undef,
+  Optional[String]               $instance_description = undef,
+  Optional[Boolean]              $enable_ha            = undef,
+  Optional[Icinga2::Interval]    $failover_timeout     = undef,
+  Optional[Hash]                 $cleanup              = undef,
+  Optional[Array]                $categories           = undef,
+  Boolean                        $import_schema        = false,
 ) {
 
   if ! defined(Class['::icinga2']) {

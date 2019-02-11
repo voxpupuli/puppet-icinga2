@@ -16,9 +16,9 @@
 #
 #
 class icinga2::feature::mainlog(
-  Enum['absent', 'present']                         $ensure   = present,
-  Enum['debug', 'information', 'notice', 'warning'] $severity = 'information',
-  Stdlib::Absolutepath                              $path     = "${::icinga2::globals::log_dir}/icinga2.log",
+  Enum['absent', 'present']    $ensure   = present,
+  Icinga2::LogSeverity         $severity = 'information',
+  Stdlib::Absolutepath         $path     = "${::icinga2::globals::log_dir}/icinga2.log",
 ) {
 
   if ! defined(Class['::icinga2']) {
