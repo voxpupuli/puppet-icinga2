@@ -1,7 +1,127 @@
 # Change Log
 
-## [v1.3.6](https://github.com/Icinga/puppet-icinga2/tree/v1.3.6) (2018-04-25)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.5...v1.3.6)
+## [v2.0.0](https://github.com/icinga/puppet-icinga2/tree/v2.0.0) (2019-02-12)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.4.0...v2.0.0)
+
+**Implemented enhancements:**
+
+- Set default of host to localhost for feature idopgsql [\#526](https://github.com/Icinga/puppet-icinga2/issues/526)
+- Add an example for idomysql via SSL [\#524](https://github.com/Icinga/puppet-icinga2/issues/524)
+- Add some custom data types [\#521](https://github.com/Icinga/puppet-icinga2/issues/521)
+- Remove repos info to data in module hiera [\#519](https://github.com/Icinga/puppet-icinga2/issues/519)
+- Puppet 6 Support [\#505](https://github.com/Icinga/puppet-icinga2/issues/505)
+- API change to icinga2 CA as default  [\#495](https://github.com/Icinga/puppet-icinga2/issues/495)
+- Import IDO DB schema for mysql over SSL isn't supported [\#414](https://github.com/Icinga/puppet-icinga2/issues/414)
+- Use beaker for acceptence tests and replace boxes with bento [\#356](https://github.com/Icinga/puppet-icinga2/issues/356)
+- Add IDO PostreSQL integration tests [\#278](https://github.com/Icinga/puppet-icinga2/issues/278)
+
+**Fixed bugs:**
+
+- Cannot use localhost as host in feature idomysql [\#525](https://github.com/Icinga/puppet-icinga2/issues/525)
+- IdoMysqlConnection: Optional parameters are forced by module [\#523](https://github.com/Icinga/puppet-icinga2/issues/523)
+- ElasticsearchWriter: Optional parameters are forced by module [\#522](https://github.com/Icinga/puppet-icinga2/issues/522)
+- fix unit test functions/attributes\_spec.rb [\#517](https://github.com/Icinga/puppet-icinga2/issues/517)
+- rework unit test for objects\_spec.rb  [\#516](https://github.com/Icinga/puppet-icinga2/issues/516)
+- InfluxWriter: Optional parameters are forced by module [\#491](https://github.com/Icinga/puppet-icinga2/issues/491)
+- Replace gpgkey handling for suse [\#397](https://github.com/Icinga/puppet-icinga2/issues/397)
+
+## [v1.4.0](https://github.com/icinga/puppet-icinga2/tree/v1.4.0) (2019-01-18)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.7...v1.4.0)
+
+**Implemented enhancements:**
+
+- Feature Request: Allow to pass ticket\_id to API Feature [\#512](https://github.com/Icinga/puppet-icinga2/issues/512)
+- New parameter 'ticket\_id' for API feature [\#514](https://github.com/Icinga/puppet-icinga2/pull/514) ([benningm](https://github.com/benningm))
+- Facility configuration for Syslog + New severity for syslog [\#502](https://github.com/Icinga/puppet-icinga2/pull/502) ([liveder](https://github.com/liveder))
+- Add multiline support for lambda functions and unparsed strings. [\#422](https://github.com/Icinga/puppet-icinga2/pull/422) ([n00by](https://github.com/n00by))
+
+**Fixed bugs:**
+
+- Fix init\_spec test [\#515](https://github.com/Icinga/puppet-icinga2/issues/515)
+- Problem with ownership NETWORK on non-english Windows  [\#511](https://github.com/Icinga/puppet-icinga2/issues/511)
+- API configuration on Windows systems [\#510](https://github.com/Icinga/puppet-icinga2/issues/510)
+- Allow dots in data structures of object attributes  [\#509](https://github.com/Icinga/puppet-icinga2/issues/509)
+- Some comments when using on Windows [\#499](https://github.com/Icinga/puppet-icinga2/issues/499)
+- Windows : owner and group [\#437](https://github.com/Icinga/puppet-icinga2/issues/437)
+- Quote and escape string values correctly [\#471](https://github.com/Icinga/puppet-icinga2/pull/471) ([marcofl](https://github.com/marcofl))
+- Depend on Apt::Update instead of Apt::Source [\#446](https://github.com/Icinga/puppet-icinga2/pull/446) ([jkroepke](https://github.com/jkroepke))
+
+**Closed issues:**
+
+- Incomplete list of supported operatingssystems  [\#501](https://github.com/Icinga/puppet-icinga2/issues/501)
+
+**Merged pull requests:**
+
+- Fixed markup error in Readme.md [\#508](https://github.com/Icinga/puppet-icinga2/pull/508) ([dagobert](https://github.com/dagobert))
+- Quoting mistake in doc [\#507](https://github.com/Icinga/puppet-icinga2/pull/507) ([dagobert](https://github.com/dagobert))
+- Fixed requirements [\#506](https://github.com/Icinga/puppet-icinga2/pull/506) ([dagobert](https://github.com/dagobert))
+
+## [v1.3.7](https://github.com/icinga/puppet-icinga2/tree/v1.3.7) (2018-11-29)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.6...v1.3.7)
+
+**Implemented enhancements:**
+
+- Path to key, cert and cacert are not configurable anymore [\#493](https://github.com/Icinga/puppet-icinga2/issues/493)
+- Move to module data [\#490](https://github.com/Icinga/puppet-icinga2/issues/490)
+- Remove define resource compatlogger [\#488](https://github.com/Icinga/puppet-icinga2/issues/488)
+- Rework rspec tests [\#486](https://github.com/Icinga/puppet-icinga2/issues/486)
+- Remove include of params from object class [\#485](https://github.com/Icinga/puppet-icinga2/issues/485)
+- Change location of the CA and the cert [\#484](https://github.com/Icinga/puppet-icinga2/issues/484)
+- Change storing of certificate for influxdb feature [\#483](https://github.com/Icinga/puppet-icinga2/issues/483)
+- Change storing of certificate for elasticsearch feature  [\#482](https://github.com/Icinga/puppet-icinga2/issues/482)
+- Remove management of repository.d in install.pp [\#479](https://github.com/Icinga/puppet-icinga2/issues/479)
+- Default of parameter import of icinga2::object::notificationcommand is outdated [\#478](https://github.com/Icinga/puppet-icinga2/issues/478)
+- Rework dependency list of modules [\#476](https://github.com/Icinga/puppet-icinga2/issues/476)
+- Remove default apply\_target from service object [\#475](https://github.com/Icinga/puppet-icinga2/issues/475)
+- Default of parameter import of icinga2::object::eventcommand is outdated [\#468](https://github.com/Icinga/puppet-icinga2/issues/468)
+- Default of parameter import of icinga2::object::checkcommand is outdated [\#467](https://github.com/Icinga/puppet-icinga2/issues/467)
+- Rework param data types of icinga2::feature::syslog [\#465](https://github.com/Icinga/puppet-icinga2/issues/465)
+- Rework param data types of icinga2::feature::statusdata [\#464](https://github.com/Icinga/puppet-icinga2/issues/464)
+- Rework param data types of icinga2::feature::perfdata [\#463](https://github.com/Icinga/puppet-icinga2/issues/463)
+- Rework param data types of icinga2::feature::opentsdb [\#462](https://github.com/Icinga/puppet-icinga2/issues/462)
+- Rework param data types of icinga2::feature::livestatus [\#461](https://github.com/Icinga/puppet-icinga2/issues/461)
+- Rework param data types of icinga2::feature::influxdb [\#460](https://github.com/Icinga/puppet-icinga2/issues/460)
+- Rework param data types of icinga2::feature::idopgsql [\#459](https://github.com/Icinga/puppet-icinga2/issues/459)
+- Rework param data types of icinga2::feature::idomysql [\#458](https://github.com/Icinga/puppet-icinga2/issues/458)
+- Rework param data types of icinga2::feature::graphite [\#457](https://github.com/Icinga/puppet-icinga2/issues/457)
+- Rework param datatypes of icinga2::feature::gelf [\#456](https://github.com/Icinga/puppet-icinga2/issues/456)
+- Rework param data types of icinga2::feature::elasticsearch [\#455](https://github.com/Icinga/puppet-icinga2/issues/455)
+- Rework param datatype of icinga2::feature::compatlog [\#454](https://github.com/Icinga/puppet-icinga2/issues/454)
+- Rework param data types of icinga2::feature::api [\#453](https://github.com/Icinga/puppet-icinga2/issues/453)
+- Remove icinga2::pki::ca  [\#452](https://github.com/Icinga/puppet-icinga2/issues/452)
+- Add crl\_path to feature api [\#432](https://github.com/Icinga/puppet-icinga2/issues/432)
+- Updated to support puppetlabs/chocolatey 3.0.0? [\#363](https://github.com/Icinga/puppet-icinga2/issues/363)
+- Separate unit tests for functions [\#355](https://github.com/Icinga/puppet-icinga2/issues/355)
+- Replace deprecated stdlib functions [\#275](https://github.com/Icinga/puppet-icinga2/issues/275)
+
+**Fixed bugs:**
+
+- pki::ca require dependency to config class [\#498](https://github.com/Icinga/puppet-icinga2/issues/498)
+- Unknown variable \_ssl\_key [\#497](https://github.com/Icinga/puppet-icinga2/issues/497)
+- Unknown variable ido\_mysql\_package on debian [\#496](https://github.com/Icinga/puppet-icinga2/issues/496)
+- Duplicate key HOSTDISPLAYNAME in example\_config.pp [\#480](https://github.com/Icinga/puppet-icinga2/issues/480)
+- Attribute vars of all object types can be also a string [\#474](https://github.com/Icinga/puppet-icinga2/issues/474)
+- Attribute vars of object type service can be also a string [\#473](https://github.com/Icinga/puppet-icinga2/issues/473)
+- Parameter prefix of icinga2::object::service is not a boolean only [\#472](https://github.com/Icinga/puppet-icinga2/issues/472)
+- Parameter prefix of icinga2::object::notification is not a boolean only [\#470](https://github.com/Icinga/puppet-icinga2/issues/470)
+- Parameter host\_name icinga2::object::host is not optional [\#469](https://github.com/Icinga/puppet-icinga2/issues/469)
+- Debian 9/Stretch support [\#466](https://github.com/Icinga/puppet-icinga2/issues/466)
+- Parameter order of concat resource has to be a string [\#451](https://github.com/Icinga/puppet-icinga2/issues/451)
+- Incorrect example for icinga2::object::apiuser [\#448](https://github.com/Icinga/puppet-icinga2/issues/448)
+- Using a reference to icinga variable in icinga2::object::notification $interval [\#443](https://github.com/Icinga/puppet-icinga2/issues/443)
+- Attribute prefix for services is not documented [\#430](https://github.com/Icinga/puppet-icinga2/issues/430)
+- ido-pgsql db import fails on debian [\#500](https://github.com/Icinga/puppet-icinga2/issues/500)
+- Fix syntax error [\#487](https://github.com/Icinga/puppet-icinga2/pull/487) ([paladox](https://github.com/paladox))
+
+**Closed issues:**
+
+- Missing documentation of class icinga::globals [\#494](https://github.com/Icinga/puppet-icinga2/issues/494)
+- Missing of if else functionality in serviceconfiguration as icinga2 would normally allow [\#444](https://github.com/Icinga/puppet-icinga2/issues/444)
+- Is there a way to purge exported resources? [\#442](https://github.com/Icinga/puppet-icinga2/issues/442)
+- overriding thresholds of individual disks [\#428](https://github.com/Icinga/puppet-icinga2/issues/428)
+
+## [v1.3.6](https://github.com/icinga/puppet-icinga2/tree/v1.3.6) (2018-04-25)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.5...v1.3.6)
 
 **Implemented enhancements:**
 
@@ -22,15 +142,16 @@
 
 - Bug/do not quote null 433 [\#435](https://github.com/Icinga/puppet-icinga2/pull/435) ([lbetz](https://github.com/lbetz))
 
-## [v1.3.5](https://github.com/Icinga/puppet-icinga2/tree/v1.3.5) (2018-01-24)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.4...v1.3.5)
+## [v1.3.5](https://github.com/icinga/puppet-icinga2/tree/v1.3.5) (2018-01-24)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.4...v1.3.5)
 
 **Implemented enhancements:**
 
 - icinga2 binary is wrong on rhel5 [\#409](https://github.com/Icinga/puppet-icinga2/issues/409)
 - Add feature Elasticsearch [\#408](https://github.com/Icinga/puppet-icinga2/issues/408)
 - Add feature elasticsearch [\#399](https://github.com/Icinga/puppet-icinga2/issues/399)
-- Added cloudlinux to supported operating systems. Is nearly identical … [\#424](https://github.com/Icinga/puppet-icinga2/pull/424) ([koma85](https://github.com/koma85))
+- Added cloudlinux to supported operating systems. Is nearly identical … [\#424](https://github.com/Icinga/puppet-icinga2/pull/424) ([Koma-Andrea](https://github.com/Koma-Andrea))
+- Add elasticsearch feature [\#418](https://github.com/Icinga/puppet-icinga2/pull/418) ([dnsmichi](https://github.com/dnsmichi))
 
 **Fixed bugs:**
 
@@ -51,8 +172,8 @@
 - Fix confd example path [\#417](https://github.com/Icinga/puppet-icinga2/pull/417) ([dnsmichi](https://github.com/dnsmichi))
 - fix \#409 icinga2 binary is wrong on rhel5 [\#410](https://github.com/Icinga/puppet-icinga2/pull/410) ([lbetz](https://github.com/lbetz))
 
-## [v1.3.4](https://github.com/Icinga/puppet-icinga2/tree/v1.3.4) (2017-11-22)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.3...v1.3.4)
+## [v1.3.4](https://github.com/icinga/puppet-icinga2/tree/v1.3.4) (2017-11-22)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.3...v1.3.4)
 
 **Fixed bugs:**
 
@@ -70,8 +191,8 @@
 - Bug/repository.d missing after install 403 [\#404](https://github.com/Icinga/puppet-icinga2/pull/404) ([lbetz](https://github.com/lbetz))
 - fix \#396 incorrect bin\_dir path for FreeBSD [\#401](https://github.com/Icinga/puppet-icinga2/pull/401) ([lbetz](https://github.com/lbetz))
 
-## [v1.3.3](https://github.com/Icinga/puppet-icinga2/tree/v1.3.3) (2017-10-24)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.2...v1.3.3)
+## [v1.3.3](https://github.com/icinga/puppet-icinga2/tree/v1.3.3) (2017-10-24)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.2...v1.3.3)
 
 **Fixed bugs:**
 
@@ -81,8 +202,8 @@
 
 - fix \#390 icinga2 binary not found on rhel6 [\#391](https://github.com/Icinga/puppet-icinga2/pull/391) ([lbetz](https://github.com/lbetz))
 
-## [v1.3.2](https://github.com/Icinga/puppet-icinga2/tree/v1.3.2) (2017-10-11)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.1...v1.3.2)
+## [v1.3.2](https://github.com/icinga/puppet-icinga2/tree/v1.3.2) (2017-10-11)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.1...v1.3.2)
 
 **Fixed bugs:**
 
@@ -92,8 +213,12 @@
 
 - Update docs how to pass package version [\#388](https://github.com/Icinga/puppet-icinga2/issues/388)
 
-## [v1.3.1](https://github.com/Icinga/puppet-icinga2/tree/v1.3.1) (2017-10-05)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.3.0...v1.3.1)
+**Merged pull requests:**
+
+- example of check\_mysql and check\_mysql\_health [\#387](https://github.com/Icinga/puppet-icinga2/pull/387) ([rowanruseler](https://github.com/rowanruseler))
+
+## [v1.3.1](https://github.com/icinga/puppet-icinga2/tree/v1.3.1) (2017-10-05)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.3.0...v1.3.1)
 
 **Implemented enhancements:**
 
@@ -134,12 +259,14 @@
 - fix \#367, \#366 and remove management of conf\_dir [\#369](https://github.com/Icinga/puppet-icinga2/pull/369) ([lbetz](https://github.com/lbetz))
 - Examples: Fix notification commands for 2.7 [\#368](https://github.com/Icinga/puppet-icinga2/pull/368) ([dnsmichi](https://github.com/dnsmichi))
 - Fixed typos [\#357](https://github.com/Icinga/puppet-icinga2/pull/357) ([rgevaert](https://github.com/rgevaert))
+- Replace validate\_\* with data types [\#350](https://github.com/Icinga/puppet-icinga2/pull/350) ([baurmatt](https://github.com/baurmatt))
 - fix \#338 update facterdb dependency to 0.3.12 [\#349](https://github.com/Icinga/puppet-icinga2/pull/349) ([lbetz](https://github.com/lbetz))
 - Update protection of private classes from direct use [\#336](https://github.com/Icinga/puppet-icinga2/pull/336) ([lbetz](https://github.com/lbetz))
+- Fix dependency issues with apt repository [\#334](https://github.com/Icinga/puppet-icinga2/pull/334) ([baurmatt](https://github.com/baurmatt))
 - Update documentation examples for mysql::db [\#346](https://github.com/Icinga/puppet-icinga2/pull/346) ([rgevaert](https://github.com/rgevaert))
 
-## [v1.3.0](https://github.com/Icinga/puppet-icinga2/tree/v1.3.0) (2017-06-26)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.2.1...v1.3.0)
+## [v1.3.0](https://github.com/icinga/puppet-icinga2/tree/v1.3.0) (2017-06-26)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.2.1...v1.3.0)
 
 **Implemented enhancements:**
 
@@ -172,8 +299,8 @@
 - Replace darin/zypprepo with puppet/zypprepo [\#306](https://github.com/Icinga/puppet-icinga2/pull/306) ([noqqe](https://github.com/noqqe))
 - Remove deprecated apt options [\#293](https://github.com/Icinga/puppet-icinga2/pull/293) ([jkroepke](https://github.com/jkroepke))
 
-## [v1.2.1](https://github.com/Icinga/puppet-icinga2/tree/v1.2.1) (2017-04-12)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.2.0...v1.2.1)
+## [v1.2.1](https://github.com/icinga/puppet-icinga2/tree/v1.2.1) (2017-04-12)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.2.0...v1.2.1)
 
 **Implemented enhancements:**
 
@@ -200,8 +327,8 @@
 - fix time periods example [\#271](https://github.com/Icinga/puppet-icinga2/pull/271) ([deric](https://github.com/deric))
 - Update icingamaster.yaml because yaml-lint failes [\#270](https://github.com/Icinga/puppet-icinga2/pull/270) ([matthiasritter](https://github.com/matthiasritter))
 
-## [v1.2.0](https://github.com/Icinga/puppet-icinga2/tree/v1.2.0) (2017-03-16)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.1.1...v1.2.0)
+## [v1.2.0](https://github.com/icinga/puppet-icinga2/tree/v1.2.0) (2017-03-16)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.1.1...v1.2.0)
 
 **Implemented enhancements:**
 
@@ -215,8 +342,8 @@
 
 - consider-type-of-attribute [\#256](https://github.com/Icinga/puppet-icinga2/issues/256)
 
-## [v1.1.1](https://github.com/Icinga/puppet-icinga2/tree/v1.1.1) (2017-03-08)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.1.0...v1.1.1)
+## [v1.1.1](https://github.com/icinga/puppet-icinga2/tree/v1.1.1) (2017-03-08)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.1.0...v1.1.1)
 
 **Implemented enhancements:**
 
@@ -238,8 +365,8 @@
 
 - enable setting of bind\_host and bind\_port for feature::api [\#243](https://github.com/Icinga/puppet-icinga2/pull/243) ([aschaber1](https://github.com/aschaber1))
 
-## [v1.1.0](https://github.com/Icinga/puppet-icinga2/tree/v1.1.0) (2017-02-20)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.2...v1.1.0)
+## [v1.1.0](https://github.com/icinga/puppet-icinga2/tree/v1.1.0) (2017-02-20)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.0.2...v1.1.0)
 
 **Implemented enhancements:**
 
@@ -259,8 +386,8 @@
 - Allow other time units in notification and scheduleddowntime [\#220](https://github.com/Icinga/puppet-icinga2/pull/220) ([jkroepke](https://github.com/jkroepke))
 - Add initial FreeBSD support [\#210](https://github.com/Icinga/puppet-icinga2/pull/210) ([xaque208](https://github.com/xaque208))
 
-## [v1.0.2](https://github.com/Icinga/puppet-icinga2/tree/v1.0.2) (2017-01-24)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v1.0.1...v1.0.2)
+## [v1.0.2](https://github.com/icinga/puppet-icinga2/tree/v1.0.2) (2017-01-24)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.0.1...v1.0.2)
 
 **Implemented enhancements:**
 
@@ -277,8 +404,8 @@
 - travis: Enable deploy to Puppetforge [\#213](https://github.com/Icinga/puppet-icinga2/pull/213) ([lazyfrosch](https://github.com/lazyfrosch))
 - Add support for OracleLinux [\#200](https://github.com/Icinga/puppet-icinga2/pull/200) ([TwizzyDizzy](https://github.com/TwizzyDizzy))
 
-## [v1.0.1](https://github.com/Icinga/puppet-icinga2/tree/v1.0.1) (2017-01-19)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.8.1...v1.0.1)
+## [v1.0.1](https://github.com/icinga/puppet-icinga2/tree/v1.0.1) (2017-01-19)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.8.1...v1.0.1)
 
 **Implemented enhancements:**
 
@@ -294,8 +421,8 @@
 - Extended example 3 README to mention Puppet parser bug [\#45](https://github.com/Icinga/puppet-icinga2/pull/45) ([kwisatz](https://github.com/kwisatz))
 - Improving README [\#44](https://github.com/Icinga/puppet-icinga2/pull/44) ([lazyfrosch](https://github.com/lazyfrosch))
 
-## [v0.8.1](https://github.com/Icinga/puppet-icinga2/tree/v0.8.1) (2017-01-11)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.8.0...v0.8.1)
+## [v0.8.1](https://github.com/icinga/puppet-icinga2/tree/v0.8.1) (2017-01-11)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.8.0...v0.8.1)
 
 **Fixed bugs:**
 
@@ -306,8 +433,8 @@
 
 - Parallelisation problems with Travis on Ruby 2.1 [\#42](https://github.com/Icinga/puppet-icinga2/pull/42) ([lazyfrosch](https://github.com/lazyfrosch))
 
-## [v0.8.0](https://github.com/Icinga/puppet-icinga2/tree/v0.8.0) (2017-01-04)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.7.2...v0.8.0)
+## [v0.8.0](https://github.com/icinga/puppet-icinga2/tree/v0.8.0) (2017-01-04)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.7.2...v0.8.0)
 
 **Implemented enhancements:**
 
@@ -334,8 +461,8 @@
 - Make Puppet Lint happy [\#37](https://github.com/Icinga/puppet-icinga2/pull/37) ([lazyfrosch](https://github.com/lazyfrosch))
 - Enabling Travis CI [\#36](https://github.com/Icinga/puppet-icinga2/pull/36) ([lazyfrosch](https://github.com/lazyfrosch))
 
-## [v0.7.2](https://github.com/Icinga/puppet-icinga2/tree/v0.7.2) (2017-01-02)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.7.1...v0.7.2)
+## [v0.7.2](https://github.com/icinga/puppet-icinga2/tree/v0.7.2) (2017-01-02)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.7.1...v0.7.2)
 
 **Implemented enhancements:**
 
@@ -353,8 +480,8 @@
 
 - Added an example that uses exported resources to create a master-agent set-up using exported resources. [\#32](https://github.com/Icinga/puppet-icinga2/pull/32) ([kwisatz](https://github.com/kwisatz))
 
-## [v0.7.1](https://github.com/Icinga/puppet-icinga2/tree/v0.7.1) (2016-12-28)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.7.0...v0.7.1)
+## [v0.7.1](https://github.com/icinga/puppet-icinga2/tree/v0.7.1) (2016-12-28)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.7.0...v0.7.1)
 
 **Fixed bugs:**
 
@@ -383,8 +510,8 @@
 - Fix non-breaking space. [\#30](https://github.com/Icinga/puppet-icinga2/pull/30) ([n00by](https://github.com/n00by))
 - Don't call private method preferred\_run\_mode= in facts [\#29](https://github.com/Icinga/puppet-icinga2/pull/29) ([antaflos](https://github.com/antaflos))
 
-## [v0.7.0](https://github.com/Icinga/puppet-icinga2/tree/v0.7.0) (2016-12-15)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.6.0...v0.7.0)
+## [v0.7.0](https://github.com/icinga/puppet-icinga2/tree/v0.7.0) (2016-12-15)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.6.0...v0.7.0)
 
 **Implemented enhancements:**
 
@@ -409,8 +536,8 @@
 - Remove duplicate target parameter section in icinga2::object::timeper… [\#23](https://github.com/Icinga/puppet-icinga2/pull/23) ([kwisatz](https://github.com/kwisatz))
 - fix small typos [\#22](https://github.com/Icinga/puppet-icinga2/pull/22) ([xorpaul](https://github.com/xorpaul))
 
-## [v0.6.0](https://github.com/Icinga/puppet-icinga2/tree/v0.6.0) (2016-11-23)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.5.0...v0.6.0)
+## [v0.6.0](https://github.com/icinga/puppet-icinga2/tree/v0.6.0) (2016-11-23)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.5.0...v0.6.0)
 
 **Implemented enhancements:**
 
@@ -456,8 +583,8 @@
 
 - Proposal \(to be discussed\) for allowing function that USE context [\#20](https://github.com/Icinga/puppet-icinga2/pull/20) ([kwisatz](https://github.com/kwisatz))
 
-## [v0.5.0](https://github.com/Icinga/puppet-icinga2/tree/v0.5.0) (2016-10-10)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.4.0...v0.5.0)
+## [v0.5.0](https://github.com/icinga/puppet-icinga2/tree/v0.5.0) (2016-10-10)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.4.0...v0.5.0)
 
 **Implemented enhancements:**
 
@@ -492,8 +619,8 @@
 - \[dev.icinga.com \#12797\] windows line-breaks for objects [\#116](https://github.com/Icinga/puppet-icinga2/issues/116)
 - \[dev.icinga.com \#12775\] Api feature unit tests fail for windows [\#115](https://github.com/Icinga/puppet-icinga2/issues/115)
 
-## [v0.4.0](https://github.com/Icinga/puppet-icinga2/tree/v0.4.0) (2016-09-22)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.3.1...v0.4.0)
+## [v0.4.0](https://github.com/icinga/puppet-icinga2/tree/v0.4.0) (2016-09-22)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.3.1...v0.4.0)
 
 **Implemented enhancements:**
 
@@ -505,8 +632,8 @@
 
 - \[dev.icinga.com \#12743\] paths in api feature must be quoted [\#111](https://github.com/Icinga/puppet-icinga2/issues/111)
 
-## [v0.3.1](https://github.com/Icinga/puppet-icinga2/tree/v0.3.1) (2016-09-16)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.2.0...v0.3.1)
+## [v0.3.1](https://github.com/icinga/puppet-icinga2/tree/v0.3.1) (2016-09-16)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.2.0...v0.3.1)
 
 **Implemented enhancements:**
 
@@ -539,8 +666,8 @@
 - \[dev.icinga.com \#12692\] Fix mlodule depency Typo for module puppetlabs/chocolaty [\#101](https://github.com/Icinga/puppet-icinga2/issues/101)
 - \[dev.icinga.com \#12738\] Duplicate declaration File\[/etc/icinga2/pki\] [\#110](https://github.com/Icinga/puppet-icinga2/issues/110)
 
-## [v0.2.0](https://github.com/Icinga/puppet-icinga2/tree/v0.2.0) (2016-09-09)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.1.0...v0.2.0)
+## [v0.2.0](https://github.com/icinga/puppet-icinga2/tree/v0.2.0) (2016-09-09)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.1.0...v0.2.0)
 
 **Implemented enhancements:**
 
@@ -553,8 +680,8 @@
 
 - \[dev.icinga.com \#12656\] Inheritance [\#97](https://github.com/Icinga/puppet-icinga2/issues/97)
 
-## [v0.1.0](https://github.com/Icinga/puppet-icinga2/tree/v0.1.0) (2016-09-06)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.6.2...v0.1.0)
+## [v0.1.0](https://github.com/icinga/puppet-icinga2/tree/v0.1.0) (2016-09-06)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.6.2...v0.1.0)
 
 **Implemented enhancements:**
 
@@ -564,10 +691,10 @@
 - \[dev.icinga.com \#12342\] Repo management [\#48](https://github.com/Icinga/puppet-icinga2/issues/48)
 - \[dev.icinga.com \#12340\] Installation [\#46](https://github.com/Icinga/puppet-icinga2/issues/46)
 
-## [v0.6.2](https://github.com/Icinga/puppet-icinga2/tree/v0.6.2) (2015-01-30)
-[Full Changelog](https://github.com/Icinga/puppet-icinga2/compare/v0.6.1...v0.6.2)
+## [v0.6.2](https://github.com/icinga/puppet-icinga2/tree/v0.6.2) (2015-01-30)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v0.6.1...v0.6.2)
 
-## [v0.6.1](https://github.com/Icinga/puppet-icinga2/tree/v0.6.1) (2014-12-03)
+## [v0.6.1](https://github.com/icinga/puppet-icinga2/tree/v0.6.1) (2014-12-03)
 
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*

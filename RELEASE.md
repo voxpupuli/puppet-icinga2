@@ -20,7 +20,7 @@ gem install github_changelog_generator
 
 Generate [CHANGELOG.md]
 ```bash
-github_changelog_generator -t <github-access-token> --future-release=v1.0.0
+github_changelog_generator -t <github-access-token> --future-release=v1.0.0 -u icinga -p puppet-icinga2
 ```
 
 ## 3. Version
