@@ -35,6 +35,7 @@ configuration of Icinga 2 on multiple operating systems.
     * Parameter `password` is required now.
 * Feature `idomysql`
     * Parameter `password` is required now.
+    * Parameter default for `host` is set to `localhost`
     * Remove parameter `pki`.
         * Puppet as key, cert or cacert source isn't supported anymore.
         * However to use these create file resources with tag to `icinga2::config::file` and source to one of the facts icinga2_puppet_hostcert, icinga2_puppet_hostprivkey, icinga2_puppet_localcacert

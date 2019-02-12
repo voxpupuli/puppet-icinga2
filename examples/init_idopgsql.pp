@@ -10,7 +10,7 @@ class{ 'icinga2':
 }
 
 class{ 'icinga2::feature::idopgsql':
-  host          => "127.0.0.1",
+  host          => '127.0.0.1',
   user          => "icinga2",
   password      => "supersecret",
   database      => "icinga2",

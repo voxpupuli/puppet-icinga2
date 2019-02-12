@@ -8,10 +8,10 @@
 #   Set to present enables the feature ido-mysql, absent disables it. Defaults to present.
 #
 # [*host*]
-#    MySQL database host address. Defaults to '127.0.0.1'.
+#    MySQL database host address. Defaults to 'localhost'.
 #
 # [*port*]
-#    MySQL database port. Defaults to '3306'.
+#    MySQL database port.
 #
 # [*socket_path*]
 #    MySQL socket path.
@@ -118,8 +118,8 @@
 class icinga2::feature::idomysql(
   String                                      $password,
   Enum['absent', 'present']                   $ensure                 = present,
-  Stdlib::Host                                $host                   = '127.0.0.1',
-  Stdlib::Port::Unprivileged                  $port                   = 3306,
+  Stdlib::Host                                $host                   = 'localhost',
+  Optional[Stdlib::Port::Unprivileged]        $port                   = undef,
   Optional[Stdlib::Absolutepath]              $socket_path            = undef,
   String                                      $user                   = 'icinga',
   String                                      $database               = 'icinga',
@@ -153,13 +153,27 @@ class icinga2::feature::idomysql(
   $ido_mysql_package_name = $::icinga2::globals::ido_mysql_package_name
   $ido_mysql_schema       = $::icinga2::globals::ido_mysql_schema
   $manage_package         = $::icinga2::manage_package
+
   $_ssl_key_mode          = $::osfamily ? {
     'windows' => undef,
     default   => '0600',
   }
+
   $_notify           = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
+  }
+
+  # to build mysql exec command to import schema
+  if $import_schema {
+    $_mysql_options = join(any2array(delete_undef_values({
+      '-h' => $host ? {
+        /localhost/ => undef,
+        default     => $host,
+      },
+      '-P' => $port,
+      '-u' => $user,
+    })), ' ')
   }
 
   File {
@@ -167,8 +181,8 @@ class icinga2::feature::idomysql(
     group   => $group,
   }
 
-  if $enable_ssl {
 
+  if $enable_ssl {
     # Set defaults for certificate stuff
     if $ssl_key {
       if $ssl_key_path {
@@ -234,16 +248,18 @@ class icinga2::feature::idomysql(
       $_ssl_cacert_path = $ssl_cacert_path
     }
 
-    $_ssl_options = join(any2array(delete_undef_values({
-      '--ssl-ca'     => $_ssl_cacert_path,
-      '--ssl-cert'   => $_ssl_cert_path,
-      '--ssl-key'    => $_ssl_key_path,
-      '--ssl-capath' => $ssl_capath,
-      '--ssl-cipher' => $ssl_cipher,
-    })), ' ')
-
-    # set cli options for mysql connection via tls
-    $_mysql_command = "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${_ssl_options} ${database}"
+    if $import_schema {
+      $_ssl_options = join(any2array(delete_undef_values({
+        '--ssl-ca'     => $_ssl_cacert_path,
+        '--ssl-cert'   => $_ssl_cert_path,
+        '--ssl-key'    => $_ssl_key_path,
+        '--ssl-capath' => $ssl_capath,
+        '--ssl-cipher' => $ssl_cipher,
+      })), ' ')
+  
+      # set cli options for mysql connection via tls
+      $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${_ssl_options} ${database}"
+    }
 
     $attrs_ssl = {
       enable_ssl => $enable_ssl,
@@ -256,7 +272,8 @@ class icinga2::feature::idomysql(
   } # enable_ssl
   else {
     # set cli options for mysql connection
-    $_mysql_command = "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${database}"
+    if $import_schema {
+      $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${database}" }
 
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
