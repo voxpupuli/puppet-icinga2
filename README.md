@@ -35,6 +35,9 @@ configuration of Icinga 2 on multiple operating systems.
     * Parameter `password` is required now.
 * Feature `idomysql`
     * Parameter `password` is required now.
+    * Remove parameter `pki`.
+        * Puppet as key, cert or cacert source isn't supported anymore.
+        * However to use these create file resources with tag to `icinga2::config::file` and source to one of the facts icinga2_puppet_hostcert, icinga2_puppet_hostprivkey, icinga2_puppet_localcacert
     * Key and certs now are stored into the certs directory named `IdoMysqlConnection_ido-mysql` by default.
 * Feature `elasticsearch`
     * Remove parameter `pki`.
@@ -1468,10 +1471,9 @@ MySQL database user's password.
 ##### `database`
 MySQL database name. Icinga defaults to `icinga`.
 
-##### `ssl`
-SSL settings will be set depending on this parameter:
-* `puppet` Use puppet certificates
-* `none` Set custom paths for certificate, key and CA
+##### `enable_ssl`
+Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+Icinga defaults to 'false'.
 
 ##### `ssl_key`
 MySQL SSL client key file path. Only valid if ssl is set to `none`.

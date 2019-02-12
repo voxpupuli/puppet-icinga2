@@ -29,39 +29,35 @@
 #    Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 #    Defaults to 'false'.
 #
-# [*pki*]
-#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet' or 'none'.
-#   'puppet' copies the key, cert and CAcert from the Puppet ssl directory to the certs directory
-#   /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
-#   'none' does nothing and you either have to manage the files yourself as file resources
-#   or use the ssl_key, ssl_cert, ssl_cacert parameters. Defaults to puppet.
-#
 # [*ssl_key_path*]
-#   Location of the private key. Default depends on platform:
-#   /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Windows
+#   Location of the private key. Only valid if ssl is enabled.
 #
 # [*ssl_cert_path*]
-#   Location of the certificate. Default depends on platform:
-#   /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Windows
+#   Location of the certificate. Only valid if ssl is enabled.
 #
 # [*ssl_cacert_path*]
-#   Location of the CA certificate. Default is:
-#   /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Linux
-#   C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Windows
+#   Location of the CA certificate. Only valid if ssl is enabled.
 #
 # [*ssl_key*]
-#   The private key in a base64 encoded string to store in cert directory, file is stored to
-#   path spicified in ssl_key_path. This parameter requires pki to be set to 'none'.
+#   The private key in a base64 encoded string to store in spicified ssl_key_path file.
+#   Default depends on platform:
+#     /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Linux
+#     C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Windows
+#   Only valid if ssl is enabled.
 #
 # [*ssl_cert*]
-#   The certificate in a base64 encoded string to store in cert directory, file is  stored to
-#   path spicified in ssl_cert_path. This parameter requires pki to be set to 'none'.
+#   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
+#   Default depends on platform:
+#     /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Linux
+#     C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Windows
+#   Only valid if ssl is enabled.
 #
 # [*ssl_cacert*]
-#   The CA root certificate in a base64 encoded string to store in cert directory, file is stored
-#   to path spicified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
+#   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+#   Default depends on platform:
+#     /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Linux
+#     C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Windows
+#   Only valid if ssl is enabled.
 #
 # [*ssl_capath*]
 #    MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
@@ -128,7 +124,6 @@ class icinga2::feature::idomysql(
   String                                      $user                   = 'icinga',
   String                                      $database               = 'icinga',
   Boolean                                     $enable_ssl             = false,
-  Enum['none', 'puppet']                      $pki                    = 'puppet',
   Optional[Stdlib::Absolutepath]              $ssl_key_path           = undef,
   Optional[Stdlib::Absolutepath]              $ssl_cert_path          = undef,
   Optional[Stdlib::Absolutepath]              $ssl_cacert_path        = undef,
@@ -175,18 +170,80 @@ class icinga2::feature::idomysql(
   if $enable_ssl {
 
     # Set defaults for certificate stuff
-    if $ssl_key_path {
-      $_ssl_key_path = $ssl_key_path}
-    else {
-      $_ssl_key_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.key" }
-    if $ssl_cert_path {
-      $_ssl_cert_path = $ssl_cert_path }
-    else {
-      $_ssl_cert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.crt" }
-    if $ssl_cacert_path {
-      $_ssl_cacert_path = $ssl_cacert_path }
-    else {
-      $_ssl_cacert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql_ca.crt" }
+    if $ssl_key {
+      if $ssl_key_path {
+        $_ssl_key_path = $ssl_key_path }
+      else {
+        $_ssl_key_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.key"
+      }
+
+      $_ssl_key = $::osfamily ? {
+        'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
+        default   => $ssl_key,
+      }
+
+      file { $_ssl_key_path:
+        ensure  => file,
+        mode    => $_ssl_key_mode,
+        content => $ssl_key,
+        tag     => 'icinga2::config::file',
+      }
+    } else {
+      $_ssl_key_path = $ssl_key_path
+    }
+
+    if $ssl_cert {
+      if $ssl_cert_path {
+        $_ssl_cert_path = $ssl_cert_path }
+      else {
+        $_ssl_cert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.crt"
+      }
+
+      $_ssl_cert = $::osfamily ? {
+        'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
+        default   => $ssl_cert,
+      }
+
+      file { $_ssl_cert_path:
+        ensure  => file,
+        content => $ssl_cert,
+        tag     => 'icinga2::config::file',
+      }
+    } else {
+      $_ssl_cert_path = $ssl_cert_path
+    }
+
+    if $ssl_cacert {
+      if $ssl_cacert_path {
+        $_ssl_cacert_path = $ssl_cacert_path }
+      else {
+        $_ssl_cacert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql_ca.crt"
+      }
+
+      $_ssl_cacert = $::osfamily ? {
+        'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
+        default   => $ssl_cacert,
+      }
+
+      file { $_ssl_cacert_path:
+        ensure  => file,
+        content => $ssl_cacert,
+        tag     => 'icinga2::config::file',
+      }
+    } else {
+      $_ssl_cacert_path = $ssl_cacert_path
+    }
+
+    $_ssl_options = join(any2array(delete_undef_values({
+      '--ssl-ca'     => $_ssl_cacert_path,
+      '--ssl-cert'   => $_ssl_cert_path,
+      '--ssl-key'    => $_ssl_key_path,
+      '--ssl-capath' => $ssl_capath,
+      '--ssl-cipher' => $ssl_cipher,
+    })), ' ')
+
+    # set cli options for mysql connection via tls
+    $_mysql_command = "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${_ssl_options} ${database}"
 
     $attrs_ssl = {
       enable_ssl => $enable_ssl,
@@ -196,73 +253,11 @@ class icinga2::feature::idomysql(
       ssl_capath => $ssl_capath,
       ssl_cipher => $ssl_cipher,
     }
-
-    case $pki {
-      'puppet': {
-        file { $_ssl_key_path:
-          ensure => file,
-          mode   => $_ssl_key_mode,
-          source => $::icinga2_puppet_hostprivkey,
-          tag    => 'icinga2::config::file',
-        }
-
-        file { $_ssl_cert_path:
-          ensure => file,
-          source => $::icinga2_puppet_hostcert,
-          tag    => 'icinga2::config::file',
-        }
-
-        file { $_ssl_cacert_path:
-          ensure => file,
-          source => $::icinga2_puppet_localcacert,
-          tag    => 'icinga2::config::file',
-        }
-      } # puppet
-
-      'none': {
-        if $ssl_key {
-          $_ssl_key = $::osfamily ? {
-            'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-            default   => $ssl_key,
-          }
-
-          file { $_ssl_key_path:
-            ensure  => file,
-            mode    => $_ssl_key_mode,
-            content => $_ssl_key,
-            tag     => 'icinga2::config::file',
-          }
-        }
-
-        if $ssl_cert {
-          $_ssl_cert = $::osfamily ? {
-            'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-            default   => $ssl_cert,
-          }
-
-          file { $_ssl_cert_path:
-            ensure  => file,
-            content => $_ssl_cert,
-            tag     => 'icinga2::config::file',
-          }
-        }
-
-        if $ssl_cacert {
-          $_ssl_cacert = $::osfamily ? {
-            'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-            default   => $ssl_cacert,
-          }
-
-          file { $_ssl_cacert_path:
-            ensure  => file,
-            content => $_ssl_cacert,
-            tag     => 'icinga2::config::file',
-          }
-        }
-      } # none
-    } # case pki
   } # enable_ssl
   else {
+    # set cli options for mysql connection
+    $_mysql_command = "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${database}"
+
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
@@ -280,7 +275,6 @@ class icinga2::feature::idomysql(
     failover_timeout      => $failover_timeout,
     cleanup               => $cleanup,
     categories            => $categories,
-
   }
 
   # install additional package
@@ -309,8 +303,8 @@ class icinga2::feature::idomysql(
     exec { 'idomysql-import-schema':
       user    => 'root',
       path    => $::path,
-      command => "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${database} < ${ido_mysql_schema}",
-      unless  => "mysql -h ${host} -P ${port} -u ${user} -p'${password}' ${database} -Ns -e 'select version from icinga_dbversion'",
+      command => "${_mysql_command} < ${ido_mysql_schema}",
+      unless  => "${_mysql_command} -Ns -e 'select version from icinga_dbversion'",
     }
   }
 

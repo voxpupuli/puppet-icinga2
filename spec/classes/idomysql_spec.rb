@@ -126,47 +126,15 @@ describe('icinga2::feature::idomysql', :type => :class) do
         end
       end
 
-      context "with enable_ssl => true, pki => puppet" do
+      context "with enable_ssl => true, import_schema => true, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
         let(:params) do
           {
-            :enable_ssl => true,
-            :pki        => 'puppet',
-            :password   => 'foo'
-          }
-        end
-
-        it { is_expected.to contain_file("#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key")
-          .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'mode'   => @icinga2_sslkey_mode,
-            'tag'    => 'icinga2::config::file', })  }
-
-        it { is_expected.to contain_file("#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt")
-          .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'tag'    => 'icinga2::config::file', })  }
-
-        it { is_expected.to contain_file("#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt")
-          .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'tag'    => 'icinga2::config::file', })  }
-      end
-
-      context "with enable_ssl = true, pki => none, ssl_key => foo, ssl_cert => bar, ssl_cacert => baz" do
-        let(:params) do
-          {
-            :enable_ssl => true,
-            :pki        => 'none',
-            :ssl_key    => 'foo',
-            :ssl_cert   => 'bar',
-            :ssl_cacert => 'baz',
-            :password   => 'foo'
+            :enable_ssl    => true,
+            :ssl_key       => 'foo',
+            :ssl_cert      => 'bar',
+            :ssl_cacert    => 'baz',
+            :import_schema => true,
+            :password      => 'foo'
           }
         end
 
@@ -188,6 +156,38 @@ describe('icinga2::feature::idomysql', :type => :class) do
             'owner' => @icinga2_user,
             'group' => @icinga2_group, })
           .with_content(/^baz$/) }
+
+        it { is_expected.to contain_exec('idomysql-import-schema')
+          .with({
+            'user'    => 'root',
+            'command' => "mysql -h 127.0.0.1 -P 3306 -u icinga -p'foo' --ssl-ca #{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt --ssl-cert #{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt --ssl-key #{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key icinga < #{@ido_mysql_schema_dir}/mysql.sql", }) }
+      end
+
+      context "with enable_ssl => true, import_schema => true, ssl_key_path, ssl_cert_path and ssl_cacert_path set" do
+        let(:params) do
+          {
+            :enable_ssl      => true,
+            :ssl_key_path    => "#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key",
+            :ssl_cert_path   => "#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt",
+            :ssl_cacert_path => "#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt",
+            :import_schema   => true,
+            :password        => 'foo'
+          }
+        end
+
+        it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+          .with_content %r{ssl_key = "#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key"} }
+
+        it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+          .with_content %r{ssl_cert = "#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt"} }
+
+        it { is_expected.to contain_concat__fragment('icinga2::object::IdoMysqlConnection::ido-mysql')
+          .with_content %r{ssl_ca = "#{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt"} }
+
+        it { is_expected.to contain_exec('idomysql-import-schema')
+          .with({
+            'user'    => 'root',
+            'command' => "mysql -h 127.0.0.1 -P 3306 -u icinga -p'foo' --ssl-ca #{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt --ssl-cert #{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt --ssl-key #{@icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key icinga < #{@ido_mysql_schema_dir}/mysql.sql", }) }
       end
     end
 
