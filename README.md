@@ -33,6 +33,7 @@ configuration of Icinga 2 on multiple operating systems.
     * Parameter ssl_crl_path was renamed to ssl_crl.
 * Feature `idopgsql`
     * Parameter `password` is required now.
+    * Parameter default for `host` is set to `localhost`
 * Feature `idomysql`
     * Parameter `password` is required now.
     * Parameter default for `host` is set to `localhost`
@@ -1426,10 +1427,10 @@ Enables or disables the `ido-pgsql` feature.
 Either `present` or `absent`. Defines if the feature `ido-pgsql` should be enabled. Defaults to `present`.
 
 ##### `host`
-PostgreSQL database host address. Icinga defaults to `localhost`.
+PostgreSQL database host address. Defaults to `localhost`.
 
 ##### `port`
-PostgreSQL database port. Icinga defaults to `3306`.
+PostgreSQL database port. Defaults to `5432`.
 
 ##### `user`
 PostgreSQL database user with read/write permission to the icinga database. Icinga defaults to `icinga`.

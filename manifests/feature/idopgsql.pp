@@ -8,7 +8,7 @@
 #   Set to present enables the feature ido-pgsql, absent disables it. Defaults to present.
 #
 # [*host*]
-#    PostgreSQL database host address. Defaults to '127.0.0.1'.
+#    PostgreSQL database host address. Defaults to 'localhost'.
 #
 # [*port*]
 #    PostgreSQL database port. Defaults to '5432'.
@@ -74,7 +74,7 @@
 class icinga2::feature::idopgsql(
   String                         $password,
   Enum['absent', 'present']      $ensure               = present,
-  Stdlib::Host                   $host                 = '127.0.0.1',
+  Stdlib::Host                   $host                 = 'localhost',
   Stdlib::Port::Unprivileged     $port                 = 5432,
   String                         $user                 = 'icinga',
   String                         $database             = 'icinga',
