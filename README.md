@@ -750,13 +750,13 @@ class { '::icinga2::feature::api':
 
 file { "/var/lib/icinga2/certs/${::fqdn}.crt":
   ensure => file,
-  tag    => 'icinga2::config::file,
+  tag    => 'icinga2::config::file',
   source => "puppet:///modules/profiles/certificates/${::fqdn}.crt",
 }
 
 file { "/var/lib/icinga2/certs/${::fqdn}.key":
   ensure => file,
-  tag    => 'icinga2::config::file,
+  tag    => 'icinga2::config::file',
   source => "puppet:///modules/profiles/private_keys/${::fqdn}.key",
 }
 ```
