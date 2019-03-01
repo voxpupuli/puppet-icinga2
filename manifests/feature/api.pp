@@ -291,6 +291,9 @@ class icinga2::feature::api(
 
   # compose attributes
   $attrs = {
+    cert_path                        => $_ssl_cert_path,
+    key_path                         => $_ssl_key_path,
+    ca_path                          => $_ssl_cacert_path,
     crl_path                         => $ssl_crl,
     accept_commands                  => $accept_commands,
     accept_config                    => $accept_config,
