@@ -1,0 +1,4 @@
+---
+icinga2::globals::user: icinga
+icinga2::globals::group: icinga
+icinga2::globals::icinga2_bin: /usr/sbin/icinga2
