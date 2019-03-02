@@ -74,6 +74,42 @@ describe('icinga2::object', :type => :define) do
     facts
   end
 
+  context 'with relative target' do
+    let(:params) do
+      {
+        :object_type => 'foobar',
+        :target      => 'bar.conf',
+        :order       => '10'
+      }
+    end
+
+    context 'with confd => true' do
+      let(:pre_condition) do
+        <<-PUPPET
+        class { 'icinga2':
+          confd => true,
+        }
+        PUPPET
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_concat__fragment('foo')
+        .with_target('/etc/icinga2/conf.d/bar.conf') }
+    end
+
+    context 'with confd => false' do
+      let(:pre_condition) do
+        <<-PUPPET
+        class { 'icinga2':
+          confd => false,
+        }
+        PUPPET
+      end
+
+      it { is_expected.to raise_error(/Target must be absolute if no confd directory is set/) }
+    end
+  end
+
   context "with template => true" do
     let(:params) do
       {

@@ -62,7 +62,7 @@
 #
 define icinga2::object(
   String                                                      $object_type,
-  Stdlib::Absolutepath                                        $target,
+  String                                                      $target,
   Variant[String, Integer]                                    $order,
   Enum['present', 'absent']                                   $ensure       = present,
   String                                                      $object_name  = $title,
@@ -78,6 +78,14 @@ define icinga2::object(
 ) {
 
   assert_private()
+
+  if $target =~ Stdlib::Absolutepath {
+    $_target = $target
+  } elsif $::icinga2::confd_path {
+    $_target = "${::icinga2::confd_path}/${target}"
+  } else {
+    fail('Target must be absolute if no confd directory is set')
+  }
 
   case $::osfamily {
     'windows': {
@@ -105,8 +113,8 @@ define icinga2::object(
     default   => template('icinga2/object.conf.erb'),
   }
 
-  if !defined(Concat[$target]) {
-    concat { $target:
+  if !defined(Concat[$_target]) {
+    concat { $_target:
       ensure => present,
       tag    => 'icinga2::config::file',
       warn   => true,
@@ -115,7 +123,7 @@ define icinga2::object(
 
   if $ensure != 'absent' {
     concat::fragment { $title:
-      target  => $target,
+      target  => $_target,
       content => $_content,
       order   => $order,
     }

@@ -165,6 +165,12 @@ class icinga2 (
     $_confd = $confd
   }
 
+  $confd_path = $_confd ? {
+    Stdlib::Absolutepath => $_confd,
+    String               => "${::icinga2::globals::conf_dir}/${_confd}",
+    default              => undef,
+  }
+
   Class['::icinga2::config']
   -> Concat <| tag == 'icinga2::config::file' |>
   ~> Class['::icinga2::service']
