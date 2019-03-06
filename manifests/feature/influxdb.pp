@@ -89,26 +89,26 @@
 #
 class icinga2::feature::influxdb(
   Enum['absent', 'present']                $ensure                 = present,
-  Optional[Stdlib::Host]                   $host                   = undef,
-  Optional[Stdlib::Port::Unprivileged]     $port                   = undef,
-  Optional[String]                         $database               = undef,
+  Optional[Stdlib::Host]                   $host                   = '127.0.01',
+  Optional[Stdlib::Port::Unprivileged]     $port                   = 8086,
+  Optional[String]                         $database               = 'icinga2',
   Optional[String]                         $username               = undef,
   Optional[String]                         $password               = undef,
-  Optional[Boolean]                        $enable_ssl             = undef,
+  Optional[Boolean]                        $enable_ssl             = false,
   Optional[Stdlib::Absolutepath]           $ssl_key_path           = undef,
   Optional[Stdlib::Absolutepath]           $ssl_cert_path          = undef,
   Optional[Stdlib::Absolutepath]           $ssl_cacert_path        = undef,
   Optional[String]                         $ssl_key                = undef,
   Optional[String]                         $ssl_cert               = undef,
   Optional[String]                         $ssl_cacert             = undef,
-  Optional[String]                         $host_measurement       = undef,
-  Optional[Hash]                           $host_tags              = undef,
-  Optional[String]                         $service_measurement    = undef,
-  Optional[Hash]                           $service_tags           = undef,
-  Optional[Boolean]                        $enable_send_thresholds = undef,
-  Optional[Boolean]                        $enable_send_metadata   = undef,
-  Optional[Icinga2::Interval]              $flush_interval         = undef,
-  Optional[Integer[1]]                     $flush_threshold        = undef,
+  Optional[String]                         $host_measurement       = '$host.check_command$',
+  Optional[Hash]                           $host_tags              = { hostname => '$host.name$' },
+  Optional[String]                         $service_measurement    = '$service.check_command$',
+  Optional[Hash]                           $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
+  Optional[Boolean]                        $enable_send_thresholds = false,
+  Optional[Boolean]                        $enable_send_metadata   = false,
+  Optional[Icinga2::Interval]              $flush_interval         = '10s',
+  Optional[Integer[1]]                     $flush_threshold        = 1024
 ) {
 
   if ! defined(Class['::icinga2']) {
