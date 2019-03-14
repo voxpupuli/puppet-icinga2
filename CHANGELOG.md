@@ -1,5 +1,21 @@
 # Change Log
 
+## [v2.0.2](https://github.com/icinga/puppet-icinga2/tree/v2.0.2) (2019-03-14)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.1...v2.0.2)
+
+**Implemented enhancements:**
+
+- add initial support for OpenBSD [\#539](https://github.com/Icinga/puppet-icinga2/pull/539) ([trefzer](https://github.com/trefzer))
+- Add values for the Gentoo family [\#534](https://github.com/Icinga/puppet-icinga2/pull/534) ([ekohl](https://github.com/ekohl))
+
+**Fixed bugs:**
+
+- Unable to define endpoint with custom port number [\#530](https://github.com/Icinga/puppet-icinga2/issues/530)
+
+**Merged pull requests:**
+
+- fix typos in documentation [\#529](https://github.com/Icinga/puppet-icinga2/pull/529) ([aschaber1](https://github.com/aschaber1))
+
 ## [v2.0.1](https://github.com/icinga/puppet-icinga2/tree/v2.0.1) (2019-02-12)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.0...v2.0.1)
 
