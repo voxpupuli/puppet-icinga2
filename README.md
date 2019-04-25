@@ -1308,7 +1308,7 @@ Host certificate to present to the remote host for mutual verification.
 Host key to accompany the ssl_cert.
 
 ##### `host_measurement`
-The value of this is used for the measurement setting in host_template. Icinga defaults to `$host.check_command$`.
+The value of this is used for the measurement setting in host_template. Defaults to `$host.check_command$`.
 
 ##### `host_tags`
 Tags defined in this hash will be set in the host_template.
@@ -1321,7 +1321,7 @@ class { '::icinga2::feature::influxdb':
 ```
 
 ##### `service_measurement`
-The value of this is used for the measurement setting in host_template. Icinga defaults to `$service.check_command$`.
+The value of this is used for the measurement setting in host_template. Defaults to `$service.check_command$`.
 
 ##### `service_tags`
 Tags defined in this hash will be set in the service_template.

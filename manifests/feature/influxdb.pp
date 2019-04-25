@@ -54,13 +54,13 @@
 #     C:/ProgramData/icinga2/var/lib/icinga2/certs/InfluxdbWriter_influxdb_ca.crt on Windows
 #
 # [*host_measurement*]
-#    The value of this is used for the measurement setting in host_template. Icinga defaults to '$host.check_command$'.
+#    The value of this is used for the measurement setting in host_template. Defaults to '$host.check_command$'.
 #
 # [*host_tags*]
 #    Tags defined in this hash will be set in the host_template.
 #
 #  [*service_measurement*]
-#    The value of this is used for the measurement setting in host_template. Icinga defaults to '$service.check_command$'.
+#    The value of this is used for the measurement setting in host_template. Defaults to '$service.check_command$'.
 #
 # [*service_tags*]
 #    Tags defined in this hash will be set in the service_template.
@@ -101,10 +101,10 @@ class icinga2::feature::influxdb(
   Optional[String]                         $ssl_key                = undef,
   Optional[String]                         $ssl_cert               = undef,
   Optional[String]                         $ssl_cacert             = undef,
-  Optional[String]                         $host_measurement       = undef,
-  Optional[Hash]                           $host_tags              = undef,
-  Optional[String]                         $service_measurement    = undef,
-  Optional[Hash]                           $service_tags           = undef,
+  String                                   $host_measurement       = '$host.check_command$',
+  Hash                                     $host_tags              = { hostname => '$host.name$' },
+  String                                   $service_measurement    = '$service.check_command$',
+  Hash                                     $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
   Optional[Boolean]                        $enable_send_thresholds = undef,
   Optional[Boolean]                        $enable_send_metadata   = undef,
   Optional[Icinga2::Interval]              $flush_interval         = undef,
