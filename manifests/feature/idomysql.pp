@@ -320,7 +320,7 @@ class icinga2::feature::idomysql(
     exec { 'idomysql-import-schema':
       user    => 'root',
       path    => $::path,
-      command => "${_mysql_command} < ${ido_mysql_schema}",
+      command => "${_mysql_command} < \"${ido_mysql_schema}\"",
       unless  => "${_mysql_command} -Ns -e 'select version from icinga_dbversion'",
     }
   }

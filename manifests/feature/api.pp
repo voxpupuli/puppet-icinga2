@@ -21,16 +21,16 @@
 #   Defaults to 'icinga2'.
 #
 # [*ssl_key*]
-#   The private key in a base64 encoded string to store in cert directory, file is stored to
-#   path specified in ssl_key_path. This parameter requires pki to be set to 'none'.
+#   The private key in a base64 encoded string to store in cert directory. This parameter
+#   requires pki to be set to 'none'.
 #
 # [*ssl_cert*]
-#   The certificate in a base64 encoded string to store in cert directory, file is  stored to
-#   path specified in ssl_cert_path. This parameter requires pki to be set to 'none'.
+#   The certificate in a base64 encoded string to store in cert directory This parameter
+#    requires pki to be set to 'none'.
 #
 # [*ssl_cacert*]
-#   The CA root certificate in a base64 encoded string to store in cert directory, file is stored
-#   to path specified in ssl_cacert_path. This parameter requires pki to be set to 'none'.
+#   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
+#   requires pki to be set to 'none'.
 #
 # [*ssl_crl*]
 #   Optional location of the certificate revocation list.
@@ -273,17 +273,17 @@ class icinga2::feature::api(
       }
 
       exec { 'icinga2 pki create key':
-        command => "${icinga2_bin} pki new-cert --cn ${node_name} --key ${_ssl_key_path} --cert ${_ssl_cert_path}",
+        command => "\"${icinga2_bin}\" pki new-cert --cn ${node_name} --key ${_ssl_key_path} --cert ${_ssl_cert_path}",
         creates => $_ssl_key_path,
       }
 
       -> exec { 'icinga2 pki get trusted-cert':
-        command => "${icinga2_bin} pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}",
+        command => "\"${icinga2_bin}\" pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}",
         creates => $trusted_cert,
       }
 
       -> exec { 'icinga2 pki request':
-        command => "${icinga2_bin} pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${_ticket_id}",
+        command => "\"${icinga2_bin}\" pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${_ticket_id}",
         creates => $_ssl_cacert_path,
       }
     } # icinga2
