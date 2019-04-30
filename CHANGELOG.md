@@ -1,5 +1,18 @@
 # Change Log
 
+## [v2.1.0](https://github.com/icinga/puppet-icinga2/tree/v2.1.0) (2019-04-30)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.2...v2.1.0)
+
+**Implemented enhancements:**
+
+- The puppet module does not validate the master's X.509 certificate [\#360](https://github.com/Icinga/puppet-icinga2/issues/360)
+- Set the object file owner to root [\#533](https://github.com/Icinga/puppet-icinga2/pull/533) ([ekohl](https://github.com/ekohl))
+
+**Fixed bugs:**
+
+- Path on Windows does not work [\#542](https://github.com/Icinga/puppet-icinga2/issues/542)
+- Documentation of default values for InfluxWriter is outdated [\#537](https://github.com/Icinga/puppet-icinga2/issues/537)
+
 ## [v2.0.2](https://github.com/icinga/puppet-icinga2/tree/v2.0.2) (2019-03-14)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.1...v2.0.2)
 
@@ -11,6 +24,11 @@
 **Fixed bugs:**
 
 - Unable to define endpoint with custom port number [\#530](https://github.com/Icinga/puppet-icinga2/issues/530)
+
+**Closed issues:**
+
+- Failed to apply catalog: One or more resource dependency cycles [\#536](https://github.com/Icinga/puppet-icinga2/issues/536)
+- icinga2 pki request does not invoke JSON RPC request [\#531](https://github.com/Icinga/puppet-icinga2/issues/531)
 
 **Merged pull requests:**
 
