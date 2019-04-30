@@ -47,6 +47,11 @@
 # [*ca_port*]
 #   Port of the 'ca_host'. Defaults to 5665
 #
+# [*fingerprint*]
+#   Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
+#   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]'
+#   on your CA host.
+# 
 # [*ticket_salt*]
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 #   Defaults to constant TicketSalt.
@@ -150,6 +155,7 @@ class icinga2::feature::api(
   Optional[Array[String]]                                 $access_control_allow_origin      = undef,
   Optional[Boolean]                                       $access_control_allow_credentials = undef,
   Optional[String]                                        $access_control_allow_headers     = undef,
+  Optional[Icinga2::Fingerprint]                          $fingerprint                      = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -260,12 +266,25 @@ class icinga2::feature::api(
     'icinga2': {
       $_ticket_salt = undef
       $trusted_cert = "${cert_dir}/trusted-cert.crt"
+
+      $cmd_pki_get_cert = "\"${icinga2_bin}\" pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}"
+
       if($ticket_id) {
         $_ticket_id = $ticket_id
       } elsif($ticket_salt != 'TicketSalt') {
         $_ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
       } else {
         fail("Parameter ticket_salt or ticket_id has be set when using pki='icinga2'")
+      }
+      if $fingerprint {
+        $_fingerprint = upcase(regsubst($fingerprint, ':', ' ', 'G'))
+        if $::osfamily != 'Windows' {
+          $_cmd_pki_get_cert = "${cmd_pki_get_cert} |grep '${_fingerprint}\s*$'"
+        } else {
+          $_cmd_pki_get_cert = "cmd.exe /c \"${cmd_pki_get_cert} |findstr /R /C:\"${_fingerprint}\"\""
+        }
+      } else {
+        $_cmd_pki_get_cert = $cmd_pki_get_cert
       }
 
       Exec {
@@ -278,7 +297,8 @@ class icinga2::feature::api(
       }
 
       -> exec { 'icinga2 pki get trusted-cert':
-        command => "\"${icinga2_bin}\" pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}",
+        path    => $::path,
+        command => $_cmd_pki_get_cert,
         creates => $trusted_cert,
       }
 

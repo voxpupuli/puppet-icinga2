@@ -106,7 +106,6 @@ This module has been tested on:
 * Debian 8, 9
 * Ubuntu 16.04, 18.04
 * CentOS/RHEL 6, 7
-    * **Caution:** CentOS 6 comes with Ruby 1.8.7 by default
 * Fedora 29
 * FreeBSD 10, 11
 * SLES 12
@@ -341,6 +340,7 @@ class { '::icinga2':
 class { '::icinga2::feature::api':
   accept_config   => true,
   accept_commands => true,
+  fingerprint     => ''D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72,
   endpoints       => {
     'satellite.example.org' => {},
     'master.example.org'    => {
@@ -380,6 +380,7 @@ class { '::icinga2::feature::api':
   pki             => 'none',
   accept_config   => true,
   accept_commands => true,
+  fingerprint     => ''D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72,
   endpoints       => {
     'NodeName'              => {},
     'satellite.example.org' => {
@@ -401,6 +402,9 @@ icinga2::object::zone { 'global-templates':
   global => true,
 }
 ```
+
+The parameter `fingerprint` is optional and new since v2.1.0. It's used to validate the certificate of the master.
+A fingerprint can be got by `openssl x509 -noout -fingerprint -sha1 -inform pem -in master.crt` on the master host.
 
 ### Config Objects
 
@@ -714,6 +718,7 @@ include ::icinga2::feature::api
 * Use a custom function implemented in this module to generate a certificate. This feature will do the following:
   * Generate a key and certificate based on the FQDN of the host
   * Save the certificate of another Icinga 2 instance, usually the Icinga master where your Icinga CA is located
+  * Validate the certificate of the other Icinga 2 instance by it's fingerprint
   * Generate a ticket based on the TicketSalt
   * Request a signed certificate at your Icinga CA
 
@@ -721,6 +726,7 @@ include ::icinga2::feature::api
 class { '::icinga2::feature::api':
   pki             => 'icinga2',
   ca_host         => 'icinga2-master.example.com',
+  fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
   ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
   accept_config   => true,
   accept_commands => true,
@@ -1364,7 +1370,17 @@ Provides multiple sources for the certificate and key.
 the configured 'ticket_salt' in a custom function.
 * `none` Does nothing and you either have to manage the files yourself as file resources or use the `ssl_key`, `ssl_cert`, `ssl_cacert` parameters.
 
-Defaults to `icinga2`
+##### `ssl_key`
+The private key in a base64 encoded string to store in cert directory. This parameter
+requires pki to be set to 'none'.
+
+##### `ssl_cert`
+The certificate in a base64 encoded string to store in cert directory This parameter
+requires pki to be set to 'none'.
+
+##### `ssl_cacert`
+The CA root certificate in a base64 encoded string to store in cert directory. This parameter
+requires pki to be set to 'none'.
 
 ##### `ssl_crl`
 Optional location of the certificate revocation list.
@@ -1379,7 +1395,12 @@ Accept remote commands. Defaults to `false`
 This host will be connected to request the certificate. Set this if you use the `icinga2` pki.
 
 ##### `ca_port`
-Port of the 'ca_host'. Defaults to `5665`
+Port of the `ca_host`. Defaults to `5665`
+
+##### `fingerprint`
+Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
+You can get the fingerprint via `openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]`
+on your CA host.
 
 ##### `ticket_salt`
 Salt to use for ticket generation. The salt is stored to api.conf if `none` or `ca` is chosen for `pki`.
