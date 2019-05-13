@@ -340,7 +340,7 @@ class { '::icinga2':
 class { '::icinga2::feature::api':
   accept_config   => true,
   accept_commands => true,
-  fingerprint     => ''D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72,
+  fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
   endpoints       => {
     'satellite.example.org' => {},
     'master.example.org'    => {
