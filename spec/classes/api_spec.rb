@@ -170,19 +170,19 @@ describe('icinga2::feature::api', :type => :class) do
 
         it { is_expected.to contain_exec('icinga2 pki create key')
           .with({
-            'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
+            'command' => "\"#{@icinga2_bin}\" pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
             'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
           .that_notifies('Class[icinga2::service]') }
 
         it { is_expected.to contain_exec('icinga2 pki get trusted-cert')
           .with({
-            'command' => "#{@icinga2_bin} pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
+            'command' => "\"#{@icinga2_bin}\" pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
             'creates' => "#{@icinga2_pki_dir}/trusted-cert.crt", })
           .that_notifies('Class[icinga2::service]') }
 
         it { is_expected.to contain_exec('icinga2 pki request')
           .with({
-            'command' => "#{@icinga2_bin} pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket ac5cb0d8c98f3f50ceff399b3cfedbb03782c117",
+            'command' => "\"#{@icinga2_bin}\" pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket ac5cb0d8c98f3f50ceff399b3cfedbb03782c117",
             'creates' => "#{@icinga2_pki_dir}/ca.crt", })
           .that_notifies('Class[icinga2::service]') }
       end
@@ -199,19 +199,19 @@ describe('icinga2::feature::api', :type => :class) do
 
         it { is_expected.to contain_exec('icinga2 pki create key')
           .with({
-            'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
+            'command' => "\"#{@icinga2_bin}\" pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt",
             'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
           .that_notifies('Class[icinga2::service]') }
 
         it { is_expected.to contain_exec('icinga2 pki get trusted-cert')
           .with({
-            'command' => "#{@icinga2_bin} pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
+            'command' => "\"#{@icinga2_bin}\" pki save-cert --host foo --port 1234 --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt",
             'creates' => "#{@icinga2_pki_dir}/trusted-cert.crt", })
           .that_notifies('Class[icinga2::service]') }
 
         it { is_expected.to contain_exec('icinga2 pki request')
           .with({
-            'command' => "#{@icinga2_bin} pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket bar",
+            'command' => "\"#{@icinga2_bin}\" pki request --host foo --port 1234 --ca #{@icinga2_pki_dir}/ca.crt --key #{@icinga2_pki_dir}/host.example.org.key --cert #{@icinga2_pki_dir}/host.example.org.crt --trustedcert #{@icinga2_pki_dir}/trusted-cert.crt --ticket bar",
             'creates' => "#{@icinga2_pki_dir}/ca.crt", })
           .that_notifies('Class[icinga2::service]') }
       end
