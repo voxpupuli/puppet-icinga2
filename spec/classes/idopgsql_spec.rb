@@ -85,7 +85,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
          .with({
             'user'        => 'root',
             'environment' => ["PGPASSWORD=foo"],
-            'command'     => "psql -h 'localhost' -U 'icinga' -p '5432' -d 'icinga' -w -f #{@ido_pgsql_schema_dir}/pgsql.sql" }) }
+            'command'     => "psql -h 'localhost' -U 'icinga' -p '5432' -d 'icinga' -w -f \"#{@ido_pgsql_schema_dir}/pgsql.sql\"" }) }
       end
 
       if facts[:kernel] == 'Linux'
