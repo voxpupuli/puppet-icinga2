@@ -76,20 +76,20 @@ describe('icinga2::pki::ca', :type => :class) do
       context "with defaults" do
         it { is_expected.to contain_exec('create-icinga2-ca')
           .with({
-            'command' => "#{@icinga2_bin} pki new-ca",
+            'command' => "\"#{@icinga2_bin}\" pki new-ca",
             'creates' => "#{@icinga2_ca_dir}/ca.crt", })
           .that_notifies('Class[icinga2::service]')
           .that_comes_before("File[#{@icinga2_pki_dir}/ca.crt]") }
 
         it { is_expected.to contain_exec('icinga2 pki create certificate signing request')
           .with({
-            'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --csr #{@icinga2_pki_dir}/host.example.org.csr",
+            'command' => "\"#{@icinga2_bin}\" pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --csr #{@icinga2_pki_dir}/host.example.org.csr",
             'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
           .that_requires("File[#{@icinga2_pki_dir}/ca.crt]") }
        
         it { is_expected.to contain_exec('icinga2 pki sign certificate')
           .with({
-            'command'     => "#{@icinga2_bin} pki sign-csr --csr #{@icinga2_pki_dir}/host.example.org.csr --cert #{@icinga2_pki_dir}/host.example.org.crt",
+            'command'     => "\"#{@icinga2_bin}\" pki sign-csr --csr #{@icinga2_pki_dir}/host.example.org.csr --cert #{@icinga2_pki_dir}/host.example.org.crt",
             'refreshonly' => true, })
           .that_notifies('Class[icinga2::service]')
           .that_subscribes_to('Exec[icinga2 pki create certificate signing request]') }
@@ -132,13 +132,13 @@ describe('icinga2::pki::ca', :type => :class) do
 
         it { is_expected.to contain_exec('icinga2 pki create certificate signing request')
          .with({
-           'command' => "#{@icinga2_bin} pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --csr #{@icinga2_pki_dir}/host.example.org.csr",
+           'command' => "\"#{@icinga2_bin}\" pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --csr #{@icinga2_pki_dir}/host.example.org.csr",
            'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
          .that_requires("File[#{@icinga2_pki_dir}/ca.crt]") }
        
         it { is_expected.to contain_exec('icinga2 pki sign certificate')
          .with({
-           'command' => "#{@icinga2_bin} pki sign-csr --csr #{@icinga2_pki_dir}/host.example.org.csr --cert #{@icinga2_pki_dir}/host.example.org.crt",
+           'command' => "\"#{@icinga2_bin}\" pki sign-csr --csr #{@icinga2_pki_dir}/host.example.org.csr --cert #{@icinga2_pki_dir}/host.example.org.crt",
            'refreshonly' => true, })
          .that_notifies('Class[icinga2::service]')
          .that_subscribes_to('Exec[icinga2 pki create certificate signing request]') }
