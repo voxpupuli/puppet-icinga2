@@ -18,14 +18,6 @@
   "data_provider": "hiera",
   "operatingsystem_support": [
     {
-      "operatingsystem": "Windows",
-      "operatingsystemrelease": [
-        "Server 2012",
-        "Server 2012 R2",
-        "Server 2016"
-      ]
-    },
-    {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "6",
