@@ -4,9 +4,7 @@ icinga2::globals::service_name: icinga2
 icinga2::globals::service_reload: service icinga2 reload
 icinga2::globals::user: icinga
 icinga2::globals::group: icinga
-icinga2::globals::ido_mysql_package_name: null
 icinga2::globals::ido_mysql_schema: /usr/local/share/icinga2-ido-mysql/schema/mysql.sql
-icinga2::globals::ido_pgsql_package_name: null
 icinga2::globals::ido_pgsql_schema: /usr/local/share/icinga2-ido-pgsql/schema/pgsql.sql
 icinga2::globals::icinga2_bin: /usr/local/sbin/icinga2
 icinga2::globals::conf_dir: /usr/local/etc/icinga2
