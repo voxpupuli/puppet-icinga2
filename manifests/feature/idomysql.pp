@@ -256,7 +256,7 @@ class icinga2::feature::idomysql(
         '--ssl-capath' => $ssl_capath,
         '--ssl-cipher' => $ssl_cipher,
       })), ' ')
-  
+
       # set cli options for mysql connection via tls
       $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${_ssl_options} ${database}"
     }

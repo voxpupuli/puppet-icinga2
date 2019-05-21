@@ -339,7 +339,7 @@ class icinga2::feature::api(
     order       => 10,
     notify      => $_notify,
   }
- 
+
   # manage feature
   icinga2::feature { 'api':
     ensure      => $ensure,
