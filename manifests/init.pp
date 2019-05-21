@@ -1,3 +1,4 @@
+
 # == Class: icinga2
 #
 # This module installs and configures Icinga 2.
