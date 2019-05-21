@@ -97,6 +97,8 @@ Depending on your setup following modules may also be required:
 * [puppetlabs/apt] >= 6.0.0
 * [puppetlabs/chocolatey] >= 3.1.0
 * [puppet/zypprepo] >= 2.2.1
+* [puppetlabs/yumrepo_core] >= 1.0.0
+    * If Puppet 6 is used
 
 ### Limitations
 

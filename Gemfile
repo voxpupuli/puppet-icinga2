@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'puppet', ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'].to_s : '>= 4.10', '< 6.0.0'
+gem 'puppet', ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'].to_s : '>= 4.10', '< 7.0.0'
 
 gem 'github_changelog_generator'
 gem 'puppetlabs_spec_helper', '>= 2.0'
