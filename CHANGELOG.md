@@ -1,5 +1,26 @@
 # Change Log
 
+## [v2.1.1](https://github.com/icinga/puppet-icinga2/tree/v2.1.1) (2019-05-24)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.1.0...v2.1.1)
+
+**Implemented enhancements:**
+
+- Rework travis batch and enable check for puppet 6 [\#560](https://github.com/Icinga/puppet-icinga2/issues/560)
+
+**Fixed bugs:**
+
+- Fix and update TESTING documentation [\#561](https://github.com/Icinga/puppet-icinga2/issues/561)
+- Set default of all optional parameters in globals to undef [\#559](https://github.com/Icinga/puppet-icinga2/issues/559)
+- Fact kernel on windows has to be lower case [\#556](https://github.com/Icinga/puppet-icinga2/issues/556)
+- Fix some lint issues in api, idomysql, globals [\#553](https://github.com/Icinga/puppet-icinga2/issues/553)
+- Fix tests for Puppet 6 [\#550](https://github.com/Icinga/puppet-icinga2/issues/550)
+- Fix spec tests of icinga objects [\#549](https://github.com/Icinga/puppet-icinga2/issues/549)
+- Fix spec tests for class pki [\#548](https://github.com/Icinga/puppet-icinga2/issues/548)
+- Fix spec tests for feature idopgsql [\#547](https://github.com/Icinga/puppet-icinga2/issues/547)
+- Fix spec tests for feature idomysql [\#546](https://github.com/Icinga/puppet-icinga2/issues/546)
+- Fix spec test of feature api [\#545](https://github.com/Icinga/puppet-icinga2/issues/545)
+- fix typo in README.md [\#544](https://github.com/Icinga/puppet-icinga2/pull/544) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v2.1.0](https://github.com/icinga/puppet-icinga2/tree/v2.1.0) (2019-04-30)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.2...v2.1.0)
 
@@ -12,6 +33,11 @@
 
 - Path on Windows does not work [\#542](https://github.com/Icinga/puppet-icinga2/issues/542)
 - Documentation of default values for InfluxWriter is outdated [\#537](https://github.com/Icinga/puppet-icinga2/issues/537)
+- The puppet module does not validate the master's X.509 certificate [\#360](https://github.com/Icinga/puppet-icinga2/issues/360)
+
+**Closed issues:**
+
+- Windows service permissions and update-windows check [\#449](https://github.com/Icinga/puppet-icinga2/issues/449)
 
 ## [v2.0.2](https://github.com/icinga/puppet-icinga2/tree/v2.0.2) (2019-03-14)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.1...v2.0.2)
@@ -402,6 +428,10 @@
 - Can't pass function via variable [\#238](https://github.com/Icinga/puppet-icinga2/issues/238)
 - ido schema import dependency [\#237](https://github.com/Icinga/puppet-icinga2/issues/237)
 - Using pki =\> "ca" can either cause incomplete deps or circular reference [\#236](https://github.com/Icinga/puppet-icinga2/issues/236)
+
+**Closed issues:**
+
+- Can't enable feature::idomysql without importing schema [\#241](https://github.com/Icinga/puppet-icinga2/issues/241)
 
 **Merged pull requests:**
 
