@@ -82,11 +82,7 @@
 class icinga2::globals(
   String                 $package_name,
   String                 $service_name,
-  Optional[String]       $user                   = undef,
-  Optional[String]       $group                  = undef,
-  Optional[String]       $ido_mysql_package_name = undef,
   String                 $ido_mysql_schema,
-  Optional[String]       $ido_pgsql_package_name = undef,
   String                 $ido_pgsql_schema,
   Stdlib::Absolutepath   $icinga2_bin,
   Stdlib::Absolutepath   $conf_dir,
@@ -98,6 +94,10 @@ class icinga2::globals(
   Stdlib::Absolutepath   $cert_dir,
   Stdlib::Absolutepath   $ca_dir,
   Array[String]          $reserved,
+  Optional[String]       $user                   = undef,
+  Optional[String]       $group                  = undef,
+  Optional[String]       $ido_mysql_package_name = undef,
+  Optional[String]       $ido_pgsql_package_name = undef,
   Optional[String]       $service_reload         = undef,
 ) {
 
