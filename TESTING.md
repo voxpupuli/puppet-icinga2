@@ -16,7 +16,7 @@ Validation tests will check all manifests, templates and ruby files against synt
 Run validation tests:
 ```
 cd puppet-icinga2
-rake validate
+bundle exec rake validate
 ```
 
 ## Puppet lint
@@ -25,7 +25,7 @@ With puppet-lint we test if our manifests conform to the recommended style guide
 Run lint tests:
 ```
 cd puppet-icinga2
-rake lint
+bundle exec rake lint
 ```
 
 ## Unit tests
@@ -34,50 +34,49 @@ For unit testing we use [RSpec]. All classes, defined resource types and functio
 Run unit tests:
 ```
 cd puppet-icinga2
-rake parallel_spec
+bundle exec rake parallel_spec
 ```
 
 ## Integration tests
 With integration tests this module is tested on multiple platforms to check the complete installation process. We define
-these tests with [ServerSpec] and run them on VMs by using [Vagrant].
-### Prerequisites
-In addition to Vagrant, you need to install all dependent modules to run the tests properly. Those modules are listed in
-`serverspec/environments/production/Puppetfile` and can be installed with [r10k]
-
-```
-cd puppet-icinga2/serverspec/environments/production
-r10k puppetfile install -v
-```
+these tests with [Beaker] and run them on VMs by using [Vagrant].
 
 ### Run tests
-All available ServerSpec tests are listed in the `serverspec/spec` directory, where each instance has its own directory.
+All available Beaker acceptance tests are listed in the `spec/acceptance` directory.
 
 Run all integraion tests:
-
 ```
-cd puppet-icinga2/serverspec
-rake spec
-```
-
-List all available tasks/platforms:
-```
-cd puppet-icinga2/serverspec
-rake --task
+cd puppet-icinga2
+bundle exec rake beaker
 ```
 
 Run integration tests for a single platform:
 ```
-cd puppet-icinga2/serverspec
-rake spec:i2debian7puppet4
+cd puppet-icinga2
+bundle exec rake beaker:centos-6-x64
 ```
 
-### Windows / SLES
-Since we don't want to violate any licenses of Microsoft or SUSE, Windows and SLES boxes are not available publicly.
+To choose a specific Puppet version for your tests set the environment variable, e.g.
+```
+BEAKER_PUPPET_AGENT_VERSION="6.4.2"
+```
 
-[README.md]: README.md
-[puppet-lint]: http://puppet-lint.com/
-[metadata.json]: metadata.json
-[RSpec]: http://rspec-puppet.com/
-[Serverspec]: http://serverspec.org/
-[Vagrant]: https://www.vagrantup.com/
-[R10k]: https://github.com/puppetlabs/r10k
+Debugging: Does not destroy a virtual machine after a test fails is done by setting:
+
+```
+BEAKER_destroy=no
+```
+
+Logging in virtual machine, e.g.
+```
+cd puppet-icinga2
+bundle exec rake beaker:ssh:centos-6-x64
+```
+
+or in the default machine:
+
+```
+cd puppet-icinga2
+bundle exec rake beaker:ssh:default
+```
+
