@@ -88,9 +88,9 @@ This module supports:
 
 And depends on:
 
-* [puppetlabs/stdlib] >= 4.16.0 < 6.0.0
+* [puppetlabs/stdlib] >= 4.16.0 < 7.0.0
     * If Puppet 6 is used a stdlib 5.1 or higher is required, see https://github.com/Icinga/puppet-icinga2/issues/505
-* [puppetlabs/concat] >= 2.1.0 < 6.0.0
+* [puppetlabs/concat] >= 2.1.0 < 7.0.0
 
 Depending on your setup following modules may also be required:
 
