@@ -1,12 +1,12 @@
 ---
 #Travis CI Job File. Feel free to extend. Have a look at the special cases in the Gemfile for Ruby 1.9
+dist: xenial
 sudo: false
 language: ruby
 cache: bundler
 before_install:
   - bundle -v
   - rm Gemfile.lock || true
-  - gem update --system $RUBYGEMS_VERSION
   - gem --version
   - bundle -v
 script:
