@@ -1,8 +1,9 @@
 --relative
 --no-80chars-check
 --no-140chars-check
---fail_on_warnings
 --no-only_variable_string-check
 --no-class_inherits_from_params_class-check
 #obsololete?
 #--log-format '%{path}:%{line}:%{check}:%{KIND}:%{message}'
+# fix puppet4 build
+#--fail_on_warnings
