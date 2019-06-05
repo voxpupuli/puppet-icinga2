@@ -7,13 +7,15 @@
   "source": "git://github.com/icinga/puppet-icinga2",
   "project_page": "https://github.com/icinga/puppet-icinga2",
   "issues_url": "https://github.com/icinga/puppet-icinga2/issues",
-  "tags": ["monitoring"],
-  "requirements": [
-    { "name": "puppet", "version_requirement": ">= 4.10.0 < 7.0.0" }
-  ],
   "dependencies": [
-    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.16.0 < 7.0.0" },
-    { "name": "puppetlabs/concat", "version_requirement": ">= 2.1.0 < 7.0.0" }
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.16.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 2.1.0 < 7.0.0"
+    }
   ],
   "data_provider": "hiera",
   "operatingsystem_support": [
@@ -92,5 +94,17 @@
         "6.4"
       ]
     }
-  ]
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ],
+  "tags": [
+    "monitoring"
+  ],
+  "pdk-version": "1.10.0",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git#1.10.0",
+  "template-ref": "1.10.0-0-gbba9ac3"
 }
