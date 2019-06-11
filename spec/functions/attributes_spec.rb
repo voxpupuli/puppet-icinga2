@@ -35,12 +35,24 @@ describe 'icinga2_attributes' do
       'foo' => 'some string, connected to another. Yeah!'
     }).and_return("foo = \"some string, connected to another. Yeah!\"\n")
 
+    # foo += "some string"
+    is_expected.to run.with_params({
+      'foo' => '+ some string, connected to another. Yeah!'
+    }).and_return("foo += \"some string, connected to another. Yeah!\"\n")
+
     # vars.foo = "some string"
     is_expected.to run.with_params({
       'vars' => {
         'foo' => 'some string, connected to another. Yeah!'
       }
     }).and_return("vars.foo = \"some string, connected to another. Yeah!\"\n")
+
+    # vars.foo += "some string"
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '+ some string, connected to another. Yeah!'
+      }
+    }).and_return("vars.foo += \"some string, connected to another. Yeah!\"\n")
   end
 
 
@@ -91,10 +103,30 @@ describe 'icinga2_attributes' do
       'foo' => '42'
     }).and_return("foo = 42\n")
 
+    # foo += 42
+    is_expected.to run.with_params({
+      'foo' => '+ 42'
+    }).and_return("foo += 42\n")
+
+    # foo -= 42
+    is_expected.to run.with_params({
+      'foo' => '- 42'
+    }).and_return("foo -= 42\n")
+
     # foo = -42
     is_expected.to run.with_params({
       'foo' => '-42'
     }).and_return("foo = -42\n")
+
+    # foo += -42
+    is_expected.to run.with_params({
+      'foo' => '+ -42'
+    }).and_return("foo += -42\n")
+
+    # foo -= -42
+    is_expected.to run.with_params({
+      'foo' => '- -42'
+    }).and_return("foo -= -42\n")
 
     # vars.foo = 42
     is_expected.to run.with_params({
@@ -103,12 +135,40 @@ describe 'icinga2_attributes' do
       }
     }).and_return("vars.foo = 42\n")
 
+    # vars.foo += 42
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '+ 42'
+      }
+    }).and_return("vars.foo += 42\n")
+
+    # vars.foo -= 42
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '- 42'
+      }
+    }).and_return("vars.foo -= 42\n")
+
     # vars.foo = -42
     is_expected.to run.with_params({
       'vars' => {
         'foo' => '-42'
       }
     }).and_return("vars.foo = -42\n")
+
+    # vars.foo += -42
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '+ -42'
+      }
+    }).and_return("vars.foo += -42\n")
+
+    # vars.foo -= -42
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '- -42'
+      }
+    }).and_return("vars.foo -= -42\n")
   end
 
 
@@ -119,10 +179,30 @@ describe 'icinga2_attributes' do
       'foo' => '3.141'
     }).and_return("foo = 3.141\n")
 
+    # foo += 3.141
+    is_expected.to run.with_params({
+      'foo' => '+ 3.141'
+    }).and_return("foo += 3.141\n")
+
+    # foo -= 3.141
+    is_expected.to run.with_params({
+      'foo' => '- 3.141'
+    }).and_return("foo -= 3.141\n")
+
     # foo = -3.141
     is_expected.to run.with_params({
-      'foo' => '3.141'
-    }).and_return("foo = 3.141\n")
+      'foo' => '-3.141'
+    }).and_return("foo = -3.141\n")
+
+    # foo += -3.141
+    is_expected.to run.with_params({
+      'foo' => '+ -3.141'
+    }).and_return("foo += -3.141\n")
+
+    # foo -= -3.141
+    is_expected.to run.with_params({
+      'foo' => '- -3.141'
+    }).and_return("foo -= -3.141\n")
 
     # vars.foo = 3.141
     is_expected.to run.with_params({
@@ -131,12 +211,40 @@ describe 'icinga2_attributes' do
       }
     }).and_return("vars.foo = 3.141\n")
 
+    # vars.foo += 3.141
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '+ 3.141'
+      }
+    }).and_return("vars.foo += 3.141\n")
+
+    # vars.foo -= 3.141
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '- 3.141'
+      }
+    }).and_return("vars.foo -= 3.141\n")
+
     # vars.foo = -3.141
     is_expected.to run.with_params({
       'vars' => {
         'foo' => '-3.141'
       }
     }).and_return("vars.foo = -3.141\n")
+
+    # vars.foo += -3.141
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '+ -3.141'
+      }
+    }).and_return("vars.foo += -3.141\n")
+
+    # vars.foo -= -3.141
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => '- -3.141'
+      }
+    }).and_return("vars.foo -= -3.141\n")
   end
 
 
@@ -282,6 +390,11 @@ describe 'icinga2_attributes' do
     is_expected.to run.with_params({
       'result' => '3 + 2 * 4 - (4 + (-2.5)) * 8 + func(3 * 2 + 1, funcN(-42)) + str(NodeName, some string, another string)'
     }).and_return("result = 3 + 2 * 4 - (4 + (-2.5)) * 8 + func(3 * 2 + 1, funcN(-42)) + str(NodeName, \"some string\", \"another string\")\n")
+
+    # result += 3 + 2 * 4 - (4 + (-2.5)) * 8 + func(3 * 2 + 1, funcN(-42)) + str(NodeName, "some string", "another string")
+    is_expected.to run.with_params({
+      'result' => '+ 3 + 2 * 4 - (4 + (-2.5)) * 8 + func(3 * 2 + 1, funcN(-42)) + str(NodeName, some string, another string)'
+    }).and_return("result += 3 + 2 * 4 - (4 + (-2.5)) * 8 + func(3 * 2 + 1, funcN(-42)) + str(NodeName, \"some string\", \"another string\")\n")
 
     # result = [ 3 + 4, 4 - (4 + (-2.5)) * 8, func(3 * 2 + 1, funcN(-42)) + str(NodeName, "some string", "another string"), ]
     is_expected.to run.with_params({

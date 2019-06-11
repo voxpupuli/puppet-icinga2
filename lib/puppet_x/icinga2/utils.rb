@@ -61,19 +61,29 @@
 #   - all attributes or variables (custom attributes) from the host, service or user contexts:
 #       host.name, service.check_command, user.groups, ...
 #
+# Assignment with += and -=:
+# 
+# Now it's possible to build an Icinga DSL code snippet like
+#
+#  vars += config
+#
+# simply use a string with the prefix '+ ', e.g.
+#
+#  vars => '+ config',
+#
+# The blank between + and the proper string 'config' is imported for the parser because numbers
+#
+#   attr => '+ -14',
+#
+# are also possible now. For numbers -= can be built, too:
+#
+#   attr => '- -14', 
+# 
 # === What isn't supported?
 #
 # It's not currently possible to use arrays or dictionaries in a string, like
 #
 #   attr => 'array1 + [ item1, item2, ... ]' or attr => 'hash1 + { item1, ... }'
-#
-# Assignments other than simple attribution are not currently possible either, e.g. building something like
-#
-#   vars += config
-#
-# but you can use the following instead:
-#
-#   vars = vars + config
 #
 #
 require 'puppet'
@@ -184,16 +194,21 @@ module Puppet
                 else "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
               end
             else
+              # String: attr = '+value' -> attr += 'value'
+              if value =~ /^([\+,-])\s+/
+                operator = "#{$1}="
+                value = value.sub(/^[\+,-]\s+/, '')
+              else
+                operator = '='
+              end
               if level > 1
                 if level == 3
-                  result += "%s%s = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
-                  #result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
+                  result += "%s%s #{operator} %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
                 else
-                  #result += "%s[\"%s\"] = %s\n" % [ prefix, attribute_types(attr), parse(value) ] if value != :nil
-                  result += "%s[\"%s\"] = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
+                  result += "%s[\"%s\"] #{operator} %s\n" % [ prefix, attr, parse(value) ] if value != :nil
                 end
               else
-                result += "%s%s = %s\n" % [ prefix, attr, parse(value) ] if value != :nil
+                result += "%s%s #{operator} %s\n" % [ prefix, attr, parse(value) ] if value != :nil
               end
             end
           end
@@ -227,7 +242,12 @@ module Puppet
             elsif value.is_a?(Array)
               config += "%s%s = [ %s]\n" % [ ' ' * indent, attr, process_array(value) ]
             else
-              config += "%s%s = %s\n" % [ ' ' * indent, attr, parse(value) ]
+              # String: attr = '+config' -> attr += config 
+              if value =~ /^([\+,-])\s+/
+                config += "%s%s #{$1}= %s\n" % [ ' ' * indent, attr, parse(value.sub(/^[\+,-]\s+/, '')) ]
+              else
+                config += "%s%s = %s\n" % [ ' ' * indent, attr, parse(value) ]
+              end
             end
           end
         end
