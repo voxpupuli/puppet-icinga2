@@ -17,7 +17,6 @@
       "version_requirement": ">= 2.1.0 < 7.0.0"
     }
   ],
-  "data_provider": "hiera",
   "operatingsystem_support": [
     {
       "operatingsystem": "Windows",
