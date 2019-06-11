@@ -511,20 +511,30 @@ As a general rule, all fragments are quoted except for the following:
 * All attributes or variables (custom attributes) from the host, service or user contexts:
     * `host.name`, `service.check_command`, `user.groups`, ...
 
+Assignment with += and -=:
+ 
+Now it's possible to build an Icinga DSL code snippet like 
+```
+  vars += config
+```
+simply use a string with the prefix '+ ', e.g.
+```
+  vars => '+ config',
+```
+The blank between + and the proper string 'config' is imported for the parser because numbers 
+```
+   attr => '+ -14',
+```
+are also possible now. For numbers -= can be built, too:
+```
+   attr => '- -14',
+```
+
 ###### What isn't supported?
 
 It's not currently possible to use arrays or dictionaries in a string, like
 ```
   attr => 'array1 + [ item1, item2, ... ]'
-```
-
-Assignments other than simple attribution are not currently possible either, e.g. building something like
-```
-  vars += config
-```
-but you can use the following instead:
-```
-  vars = vars + config
 ```
 
 #### Reading objects from hiera data

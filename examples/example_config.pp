@@ -99,7 +99,7 @@ file { '/etc/icinga2/example.d':
   apply         => 'vhost => config in host.vars.http_vhosts',
   import        => [ 'generic-service' ],
   check_command => 'http',
-  vars          => 'vars + config',
+  vars          => '+ config',
 }
 
 ::icinga2::object::service { 'disk':
@@ -107,7 +107,7 @@ file { '/etc/icinga2/example.d':
   apply         => 'fs => config in host.vars.disks',
   import        => [ 'generic-service' ],
   check_command => 'disk',
-  vars          => 'vars + config',
+  vars          => '+ config',
 }
 
 ::icinga2::object::service { 'icinga':
