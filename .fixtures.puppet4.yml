@@ -2,15 +2,18 @@ fixtures:
   forge_modules:
     stdlib:
       repo: puppetlabs/stdlib
+      ref: 5.2.0
     concat:
       repo: puppetlabs/concat
+      ref: 5.3.0
     apt:
       repo: puppetlabs/apt
+      ref: 6.3.0
     chocolatey:
       repo: puppetlabs/chocolatey
     zypprepo:
       repo: puppet/zypprepo
     yumrepo_core:
-      repo: puppetlabs-yumrepo_core
+      repo: "puppetlabs-yumrepo_core"
       puppet_version: ">= 6.0.0"
 
