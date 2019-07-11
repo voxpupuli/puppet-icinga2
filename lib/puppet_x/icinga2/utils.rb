@@ -79,6 +79,48 @@
 #
 #   attr => '- -14', 
 # 
+# Arrays can also be marked to merge with '+' or reduce by '-' as the first item of the array:
+#
+#   attr => [ '+', item1, item2, ... ]
+#
+# Result: attr += [ item1, item2, ... ]
+#
+#   attr => [ '-' item1, item2, ... ]
+#
+# Result: attr -= [ item1, item2, ... ]
+#
+# That all works for attributes and custom attributes!
+#
+# Finally dictionaries can be merged when a key '+' is set:
+#
+#   attr => {
+#     '+'    => true,
+#     'key1' => 'val1',
+#   }
+#
+# Result:
+#
+#   attr += {
+#     "key1" = "val1"
+#   }
+#
+# If 'attr' is a custom attribute this just works since level 3 of the dictionary:
+#
+#   vars => {
+#     'level1' => {
+#       'level2' => {
+#         'level3' => {
+#           '+' => true,
+#           ...
+#         },
+#       },
+#     },
+#   },
+#
+# Parsed to:
+#
+#   vars.level1["level2"] += level3
+#
 # === What isn't supported?
 #
 # It's not currently possible to use arrays or dictionaries in a string, like
@@ -175,26 +217,28 @@ module Puppet
           result = ''
           attrs.each do |attr, value|
             if value.is_a?(Hash)
+              op = '+' if value.delete('+')
               if value.empty?
                 result += case level
-                  when 1 then "%s%s = {}\n" % [ prefix, attribute_types(attr) ]
-                  when 2 then "%s[\"%s\"] = {}\n" % [ prefix, attr ]
-                  else "%s%s = {}\n" % [ prefix, attribute_types(attr) ]
+                  when 1 then "%s%s #{op}= {}\n" % [ prefix, attribute_types(attr) ]
+                  when 2 then "%s[\"%s\"] #{op}= {}\n" % [ prefix, attr ]
+                  else "%s%s #{op}= {}\n" % [ prefix, attribute_types(attr) ]
                 end
               else
                 result += case level
                   when 1 then process_hash(value, indent, 2, "%s%s" % [ prefix, attr ])
-                  when 2 then "%s[\"%s\"] = {\n%s%s}\n" % [ prefix, attr, process_hash(value, indent), ' ' * (indent-2) ]
-                  else "%s%s = {\n%s%s}\n" % [ prefix, attribute_types(attr), process_hash(value, indent+2), ' ' * indent ]
+                  when 2 then "%s[\"%s\"] #{op}= {\n%s%s}\n" % [ prefix, attr, process_hash(value, indent), ' ' * (indent-2) ]
+                  else "%s%s #{op}= {\n%s%s}\n" % [ prefix, attribute_types(attr), process_hash(value, indent+2), ' ' * indent ]
                 end
               end
             elsif value.is_a?(Array)
+              op = value.delete_at(0) if value[0] == '+' or value[0] == '-'
               result += case level
-                when 2 then "%s[\"%s\"] = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
-                else "%s%s = [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
+                when 2 then "%s[\"%s\"] #{op}= [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
+                else "%s%s #{op}= [ %s]\n" % [ prefix, attribute_types(attr), process_array(value) ]
               end
             else
-              # String: attr = '+value' -> attr += 'value'
+              # String: attr = '+ value' -> attr += 'value'
               if value =~ /^([\+,-])\s+/
                 operator = "#{$1}="
                 value = value.sub(/^[\+,-]\s+/, '')
@@ -232,15 +276,40 @@ module Puppet
             value.each do |x|
               config += "%s%s %s\n" % [ ' ' * indent, attr, parse(x) ] if x
             end
+          elsif attr == 'vars'
+            if value.is_a?(Hash)
+              # delete pair of key '+' because a merge at this point is not allowed
+              value.delete('+')
+              config += process_hash(value, indent+2, 1, "%s%s." % [ ' ' * indent, attr])
+            elsif value.is_a?(Array)
+              value.each do |item|
+                if item.is_a?(String)
+                  config += "%s%s += %s\n" % [ ' ' * indent, attr, item.sub(/^[\+,-]\s+/, '') ]
+                else
+                  item.delete('+')
+                  if item.empty?
+                    config += "%s%s += {}\n" % [ ' ' * indent, attr]
+                  else
+                    config += process_hash(item, indent+2, 1, "%s%s." % [ ' ' * indent, attr])
+                  end
+                end
+              end
+            else
+              if value =~ /^\+\s+/
+                config += "%s%s += %s\n" % [ ' ' * indent, attr, value.sub(/^\+\s+/, '') ]
+              end
+            end
           else
             if value.is_a?(Hash)
-              if ['vars'].include?(attr)
-                config += process_hash(value, indent+2, 1, "%s%s." % [ ' ' * indent, attr])
+              op = '+' if value.delete('+')
+              unless value.empty?
+                config += "%s%s #{op}= {\n%s%s}\n" % [ ' ' * indent, attr, process_hash(value, indent+2), ' ' * indent ]
               else
-                config += "%s%s = {\n%s%s}\n" % [ ' ' * indent, attr, process_hash(value, indent+2), ' ' * indent ]
+                config += "%s%s #{op}= {}\n" % [ ' ' * indent, attr ]
               end
             elsif value.is_a?(Array)
-              config += "%s%s = [ %s]\n" % [ ' ' * indent, attr, process_array(value) ]
+              op = value.delete_at(0) if value[0] == '+' or value[0] == '-'
+              config += "%s%s #{op}= [ %s]\n" % [ ' ' * indent, attr, process_array(value) ]
             else
               # String: attr = '+config' -> attr += config 
               if value =~ /^([\+,-])\s+/

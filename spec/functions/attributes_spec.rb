@@ -283,16 +283,52 @@ describe 'icinga2_attributes' do
       'foo' => ['some string, connected to another. Yeah!', 'NodeName', '42', '3.141', '2.5d', 'true']
     }).and_return("foo = [ \"some string, connected to another. Yeah!\", NodeName, 42, 3.141, 2.5d, true, ]\n")
 
+    # foo += [ "some string, connected to another. Yeah!", NodeName, 42, 3.141, 2d, true, ]
+    is_expected.to run.with_params({
+      'foo' => ['+', 'some string, connected to another. Yeah!', 'NodeName', '42', '3.141', '2.5d', 'true']
+    }).and_return("foo += [ \"some string, connected to another. Yeah!\", NodeName, 42, 3.141, 2.5d, true, ]\n")
+
+    # foo -= [ "some string, connected to another. Yeah!", NodeName, 42, 3.141, 2d, true, ]
+    is_expected.to run.with_params({
+      'foo' => ['-', 'some string, connected to another. Yeah!', 'NodeName', '42', '3.141', '2.5d', 'true']
+    }).and_return("foo -= [ \"some string, connected to another. Yeah!\", NodeName, 42, 3.141, 2.5d, true, ]\n")
+
     # vars.foo = [ "some string, connected to another. Yeah!", NodeName, 42, 3.141, 2d, true, ]
     is_expected.to run.with_params({
       'vars' => {
         'foo' => ['some string, connected to another. Yeah!', 'NodeName', '42', '3.141', '2.5d', 'true']
       }
     }).and_return("vars.foo = [ \"some string, connected to another. Yeah!\", NodeName, 42, 3.141, 2.5d, true, ]\n")
+
+    # vars.foo += [ "some string, connected to another. Yeah!", NodeName, 42, 3.141, 2d, true, ]
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => ['+', 'some string, connected to another. Yeah!', 'NodeName', '42', '3.141', '2.5d', 'true']
+      }
+    }).and_return("vars.foo += [ \"some string, connected to another. Yeah!\", NodeName, 42, 3.141, 2.5d, true, ]\n")
+
+    # vars.foo -= [ "some string, connected to another. Yeah!", NodeName, 42, 3.141, 2d, true, ]
+    is_expected.to run.with_params({
+      'vars' => {
+        'foo' => ['-', 'some string, connected to another. Yeah!', 'NodeName', '42', '3.141', '2.5d', 'true']
+      }
+    }).and_return("vars.foo -= [ \"some string, connected to another. Yeah!\", NodeName, 42, 3.141, 2.5d, true, ]\n")
   end
 
 
   it 'assign a hash' do
+
+    # foo = {}
+    is_expected.to run.with_params({
+      'foo' => {}
+    }).and_return("foo = {}\n")
+
+    # foo += {}
+    is_expected.to run.with_params({
+      'foo' => {
+        '+' => true,
+      }
+    }).and_return("foo += {}\n")
 
     # foo = {
     #   string = "some string, connected to another. Yeah!"
@@ -306,14 +342,35 @@ describe 'icinga2_attributes' do
         'string' => 'some string, connected to another. Yeah!',
         'constant' => 'NodeName',
         'numbers' => ['42', '3.141', '-42', '-3.141'],
+        'merge_array' => ['+', '42', '3.141', '-42', '-3.141'],
         'time' => '2.5d',
-        'bool' => 'true'
+        'bool' => 'true',
       }
-    }).and_return("foo = {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n  bool = true\n}\n")
+    }).and_return("foo = {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n  bool = true\n}\n")
+
+    # foo += {
+    #   string = "some string, connected to another. Yeah!"
+    #   constant = NodeName
+    #   numbers = [ 42, 3.141, -42, -3.141, ]
+    #   time = 2.5d
+    #   bool = true
+    # }
+    is_expected.to run.with_params({
+      'foo' => {
+        '+' => true,
+        'string' => 'some string, connected to another. Yeah!',
+        'constant' => 'NodeName',
+        'numbers' => ['42', '3.141', '-42', '-3.141'],
+        'merge_array' => ['+', '42', '3.141', '-42', '-3.141'],
+        'time' => '2.5d',
+        'bool' => 'true',
+      }
+    }).and_return("foo += {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n  bool = true\n}\n")
 
     # vars.foo["string"] = "some string, connected to another. Yeah!"
     # vars.foo["constant"] = NodeName
     # vars.foo["numbers"] = [ 42, 3.141, -42, -3.141, ]
+    # vars.foo["merge_array"] += [ 42, 3.141, -42, -3.141, ]
     # vars.foo["time"] = 2.5d
     # vars.foo["bool"] = true
     is_expected.to run.with_params({
@@ -322,65 +379,114 @@ describe 'icinga2_attributes' do
           'string' => 'some string, connected to another. Yeah!',
           'constant' => 'NodeName',
           'numbers' => ['42', '3.141', '-42', '-3.141'],
+          'merge_array' => ['+', '42', '3.141', '-42', '-3.141'],
           'time' => '2.5d',
           'bool' => 'true'
         }
       }
-    }).and_return("vars.foo[\"string\"] = \"some string, connected to another. Yeah!\"\nvars.foo[\"constant\"] = NodeName\nvars.foo[\"numbers\"] = [ 42, 3.141, -42, -3.141, ]\nvars.foo[\"time\"] = 2.5d\nvars.foo[\"bool\"] = true\n")
+    }).and_return("vars.foo[\"string\"] = \"some string, connected to another. Yeah!\"\nvars.foo[\"constant\"] = NodeName\nvars.foo[\"numbers\"] = [ 42, 3.141, -42, -3.141, ]\nvars.foo[\"merge_array\"] += [ 42, 3.141, -42, -3.141, ]\nvars.foo[\"time\"] = 2.5d\nvars.foo[\"bool\"] = true\n")
   end
 
 
   it 'assign a nested hash' do
 
     # foobar = {
-    #   foo = {
+    #   foo += {
     #     string = "some string, connected to another. Yeah!"
     #     constant = NodeName
     #     bool = true
     #   }
+    #   fooz += {}
     #   bar = {
     #     numbers = [ 42, 3.141, -42, -3,141, ]
+    #     merge_array += [ 42, 3.141, -42, -3,141, ]
     #     time = 2.5d
     #   }
+    #   baz = {}
     # }
     is_expected.to run.with_params({
       'foobar' => {
         'foo' => {
+          '+' => true,
           'string' => 'some string, connected to another. Yeah!',
           'constant' => 'NodeName',
           'bool' => 'true'
         },
+        'fooz' => {
+          '+' => true,
+        },
         'bar' => {
           'numbers' => ['42', '3.141', '-42', '-3.141'],
+          'merge_array' => ['+', '42', '3.141', '-42', '-3.141'],
           'time' => '2.5d'
-        }
+        },
+        'baz' => {},
       }
-    }).and_return("foobar = {\n  foo = {\n    string = \"some string, connected to another. Yeah!\"\n    constant = NodeName\n    bool = true\n  }\n  bar = {\n    numbers = [ 42, 3.141, -42, -3.141, ]\n    time = 2.5d\n  }\n}\n")
+    }).and_return("foobar = {\n  foo += {\n    string = \"some string, connected to another. Yeah!\"\n    constant = NodeName\n    bool = true\n  }\n  fooz += {}\n  bar = {\n    numbers = [ 42, 3.141, -42, -3.141, ]\n    merge_array += [ 42, 3.141, -42, -3.141, ]\n    time = 2.5d\n  }\n  baz = {}\n}\n")
 
-    # vars.foobar["foo"] = {
+    # vars.foobar["foo"] += {
     #   string = "some string, connected to another. Yeah!"
     #   constant = NodeName
     #   bool = true
     # }
+    # vars.foobar["fooz"] += {}
     # vars.foobar["bar"] = {
     #   numbers = [ 42, 3.141, -42, -3,141, ]
+    #   merge_array += [ 42, 3.141, -42, -3,141, ]
     #   time = 2.5d
     # }
+    # vars.foobar["baz"] = {}
     is_expected.to run.with_params({
       'vars' => {
         'foobar' => {
           'foo' => {
+            '+' => true,
             'string' => 'some string, connected to another. Yeah!',
             'constant' => 'NodeName',
             'bool' => 'true'
           },
+          'fooz' => {
+            '+' => true,
+          },
           'bar' => {
             'numbers' => ['42', '3.141', '-42', '-3.141'],
+            'merge_array' => ['+', '42', '3.141', '-42', '-3.141'],
             'time' => '2.5d'
-          }
+          },
+          'baz' => {},
         }
       }
-    }).and_return("vars.foobar[\"foo\"] = {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  bool = true\n}\nvars.foobar[\"bar\"] = {\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n}\n")
+    }).and_return("vars.foobar[\"foo\"] += {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  bool = true\n}\nvars.foobar[\"fooz\"] += {}\nvars.foobar[\"bar\"] = {\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n}\nvars.foobar[\"baz\"] = {}\n")
+  end
+
+
+  # vars += config1
+  # vars.foo = "some string"
+  # vars.bar += [ 42, 3.141, -42, -3.141, ]
+  # vars.baz["number"] -= 42
+  # vars.baz["floating"] += 3.141
+  # vars += config2
+  it 'assign multiple custom attributes' do
+    is_expected.to run.with_params({
+      'vars' => '+ config',
+    }).and_return("vars += config\n")
+
+    is_expected.to run.with_params({
+      'vars' => [
+        '+ config1',
+        {},
+        {
+          'foo' => 'some string',
+          'bar' => [ '+', '42', '3.141', '-42', '-3.141' ],
+          'baz' => {
+            '+' => true,
+            'number' => '- 42',
+            'floating' => '+ 3.141',
+          },
+        },
+        'config2',
+      ],
+    }).and_return("vars += config1\nvars += {}\nvars.foo = \"some string\"\nvars.bar += [ 42, 3.141, -42, -3.141, ]\nvars.baz[\"number\"] -= 42\nvars.baz[\"floating\"] += 3.141\nvars += config2\n")
   end
 
 
