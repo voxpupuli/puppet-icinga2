@@ -523,11 +523,53 @@ simply use a string with the prefix '+ ', e.g.
 ```
 The blank between + and the proper string 'config' is imported for the parser because numbers 
 ```
-   attr => '+ -14',
+  attr => '+ -14',
 ```
 are also possible now. For numbers -= can be built, too:
 ```
-   attr => '- -14',
+  attr => '- -14',
+```
+Arrays can also be marked to merge with '+' or reduce by '-' as the first item of the array:
+```
+  attr => [ '+', item1, item2, ... ]
+```
+Result: attr += [ item1, item2, ... ]
+```
+  attr => [ '-', item1, item2, ... ]
+```
+Result: attr -= [ item1, item2, ... ]
+
+That all works for attributes and custom attributes!
+
+Finally dictionaries can be merged when a key '+' is set:
+```
+  attr => {
+    '+'    => true,
+    'key1' => 'val1',
+  }
+```
+Result:
+```
+  attr += {
+    "key1" = "val1"
+  }
+```
+If 'attr' is a custom attribute this just works since level 3 of the dictionary:
+```
+  vars => {
+    'level1' => {
+      'level2' => {
+        'level3' => {
+          '+' => true,
+          ...
+        },
+      },
+    },
+  },
+```
+Parsed to:
+```
+  vars.level1["level2"] += level3
 ```
 
 ###### What isn't supported?
