@@ -25,8 +25,9 @@
 #   The service groups this service belongs to.
 #
 # [*vars*]
-#   A dictionary containing custom attributes that are specific to this service
-#   or a string to do operations on this dictionary.
+#   A dictionary containing custom attributes that are specific to this service,
+#   a string to do operations on this dictionary or an array for multiple use
+#   of custom attributes.
 #
 # [*check_command*]
 #   The name of the check command.
@@ -149,7 +150,7 @@
 #     apply            =>  'disk_name => config in host.vars.disks',
 #     check_command    => 'disk',
 #     command_endpoint => 'host.name',
-#     vars             => 'vars + config',
+#     vars             => '+ config',
 #     assign           => ['host.vars.os == Linux'],
 #     ignore           => ['host.vars.noagent'],
 #     target           => '/etc/icinga2/zones.d/global-templates/services.conf',
@@ -164,7 +165,7 @@ define icinga2::object::service (
   Optional[String]                           $display_name           = undef,
   Optional[String]                           $host_name              = undef,
   Optional[Array]                            $groups                 = undef,
-  Optional[Variant[String, Array, Hash]]     $vars                   = undef,
+  Optional[Icinga2::CustomAttributes]        $vars                   = undef,
   Optional[String]                           $check_command          = undef,
   Optional[Integer[1]]                       $max_check_attempts     = undef,
   Optional[String]                           $check_period           = undef,

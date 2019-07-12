@@ -1764,7 +1764,8 @@ attribute this must be an array. Can be specified as function for advanced imple
 A dictionary of macros which should be exported as environment variables prior to executing the command.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this command.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `timeout`
 The command timeout in seconds. Defaults to `60` seconds.
@@ -1800,7 +1801,8 @@ The host's address v4.
 The host's address v6.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this host.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `groups`
 A list of host groups this host belongs to.
@@ -2048,7 +2050,8 @@ An email string for this user. Useful for notification commands.
 A pager string for this user. Useful for notification commands.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this user.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `groups`
 An array of group names.
@@ -2097,7 +2100,8 @@ which case the shell interpreter (usually /bin/sh) takes care of parsing the com
 A dictionary of macros which should be exported as environment variables prior to executing the command.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this command.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `timeout`
 The command timeout in seconds. Defaults to `60` seconds.
@@ -2133,7 +2137,8 @@ The short name of the service this notification belongs to. If omitted, this not
 notification.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this notification object.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `users`
 A list of user names who should be notified.
@@ -2206,7 +2211,8 @@ The service name. Must be unique on a per-host basis (Similar to the service_des
 The service groups this service belongs to.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this service.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `check_command`
 The name of the check command.
@@ -2405,7 +2411,8 @@ which case the shell interpreter (usually /bin/sh) takes care of parsing the com
 A dictionary of macros which should be exported as environment variables prior to executing the command.
 
 ##### `vars`
-A dictionary containing custom attributes that are specific to this command.
+A dictionary containing custom attributes that are specific to this service, a string to do operations
+on this dictionary or an array for multiple use of custom attributes.
 
 ##### `timeout`
 The command timeout in seconds. Defaults to 60 seconds.

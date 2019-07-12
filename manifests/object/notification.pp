@@ -18,8 +18,9 @@
 #   notification object is treated as host notification.
 #
 # [*vars*]
-# 	A dictionary containing custom attributes that are specific to this
-#   notification object or a string to do operations on this dictionary.
+#   A dictionary containing custom attributes that are specific to this service,
+#   a string to do operations on this dictionary or an array for multiple use
+#   of custom attributes.
 #
 # [*users*]
 # 	A list of user names who should be notified.
@@ -84,7 +85,7 @@ define icinga2::object::notification (
   String                                                              $notification_name = $title,
   Optional[String]                                                    $host_name         = undef,
   Optional[String]                                                    $service_name      = undef,
-  Optional[Variant[String, Hash]]                                     $vars              = undef,
+  Optional[Icinga2::CustomAttributes]                                 $vars              = undef,
   Optional[Variant[String, Array]]                                    $users             = undef,
   Optional[Variant[String, Array]]                                    $user_groups       = undef,
   Optional[Hash]                                                      $times             = undef,

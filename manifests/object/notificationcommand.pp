@@ -23,8 +23,9 @@
 #    prior to executing the command.
 #
 # [*vars*]
-# 	 A dictionary containing custom attributes that are specific to this command
-#    or a string to do operations on this dictionary.
+#   A dictionary containing custom attributes that are specific to this service,
+#   a string to do operations on this dictionary or an array for multiple use
+#   of custom attributes.
 #
 # [*timeout*]
 # 	 The command timeout in seconds. Defaults to 60 seconds.
@@ -52,7 +53,7 @@ define icinga2::object::notificationcommand (
   String                               $notificationcommand_name = $title,
   Optional[Variant[Array, String]]     $command                  = undef,
   Optional[Hash]                       $env                      = undef,
-  Optional[Variant[String, Hash]]      $vars                     = undef,
+  Optional[Icinga2::CustomAttributes]  $vars                     = undef,
   Optional[Integer[1]]                 $timeout                  = undef,
   Optional[Hash]                       $arguments                = undef,
   Boolean                              $template                 = false,

@@ -20,8 +20,9 @@
 #   A pager string for this user. Useful for notification commands.
 #
 # [*vars*]
-#   A dictionary containing custom attributes that are specific to this user
-#   or a string to do operations on this dictionary.
+#   A dictionary containing custom attributes that are specific to this service,
+#   a string to do operations on this dictionary or an array for multiple use
+#   of custom attributes.
 #
 # [*groups*]
 #   An array of group names.
@@ -62,7 +63,7 @@ define icinga2::object::user (
   Optional[String]                    $display_name         = undef,
   Optional[String]                    $email                = undef,
   Optional[String]                    $pager                = undef,
-  Optional[Variant[String, Hash]]     $vars                 = undef,
+  Optional[Icinga2::CustomAttributes] $vars                 = undef,
   Optional[Array]                     $groups               = undef,
   Optional[Boolean]                   $enable_notifications = undef,
   Optional[String]                    $period               = undef,
