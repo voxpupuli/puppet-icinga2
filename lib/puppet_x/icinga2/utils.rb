@@ -121,6 +121,35 @@
 #
 #   vars.level1["level2"] += level3
 #
+# Now it's also possible to add multiple custom attributes:
+#
+#   vars => [
+#     {
+#       'a' => '1',
+#       'b' => '2',
+#     },
+#     'config',
+#     {
+#       'c' => {
+#         'd' => {
+#           '+' => true,
+#           'e' => '5',
+#         },
+#       },
+#     },
+#   ],
+#
+# And you'll get:
+#
+#   vars.a = "1"
+#   vars.b = "2"
+#   vars += config
+#   vars.c["d"] += {
+#     "e" = "5"
+#   }
+#
+# Note: Using an Array always means merge '+=' all items to vars.
+#
 # === What isn't supported?
 #
 # It's not currently possible to use arrays or dictionaries in a string, like
