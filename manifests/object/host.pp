@@ -23,8 +23,9 @@
 #   The host's address v6.
 #
 # [*vars*]
-#   A dictionary containing custom attributes that are specific to this host
-#   or a string to do operations on this dictionary.
+#   A dictionary containing custom attributes that are specific to this service,
+#   a string to do operations on this dictionary or an array for multiple use
+#   of custom attributes.
 #
 # [*groups*]
 #   A list of host groups this host belongs to.
@@ -114,7 +115,7 @@ define icinga2::object::host(
   Array                               $import                = [],
   Optional[Stdlib::Host]              $address               = undef,
   Optional[Stdlib::Host]              $address6              = undef,
-  Optional[Variant[String, Hash]]     $vars                  = undef,
+  Optional[Icinga2::CustomAttributes] $vars                  = undef,
   Optional[Array]                     $groups                = undef,
   Optional[String]                    $display_name          = undef,
   Optional[String]                    $check_command         = undef,

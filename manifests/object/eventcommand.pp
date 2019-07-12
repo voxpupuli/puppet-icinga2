@@ -11,25 +11,26 @@
 #   Set the Icinga 2 name of the eventcommand object. Defaults to title of the define resource.
 #
 # [*execute*]
-#     The "execute" script method takes care of executing the event handler.
+#   The "execute" script method takes care of executing the event handler.
 #
 # [*command*]
-#     The command. This can either be an array of individual command arguments.
-#     Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh)
-#     takes care of parsing the command.
+#   The command. This can either be an array of individual command arguments.
+#   Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh)
+#   takes care of parsing the command.
 #
 # [*env*]
-#     A dictionary of macros which should be exported as environment variables prior to executing the command.
+#   A dictionary of macros which should be exported as environment variables prior to executing the command.
 #
 # [*vars*]
-#     A dictionary containing custom attributes that are specific to this command
-#     or a string to do operations on this dictionary.
+#   A dictionary containing custom attributes that are specific to this service,
+#   a string to do operations on this dictionary or an array for multiple use
+#   of custom attributes.
 #
 # [*timeout*]
-#     The command timeout in seconds. Defaults to 60 seconds.
+#   The command timeout in seconds. Defaults to 60 seconds.
 #
 # [*arguments*]
-#     A dictionary of command arguments.
+#   A dictionary of command arguments.
 #
 # [*target*]
 #   Destination config file to store in this object. File will be declared the
@@ -48,7 +49,7 @@ define icinga2::object::eventcommand (
   String                              $eventcommand_name = $title,
   Optional[Variant[Array, String]]    $command           = undef,
   Optional[Hash]                      $env               = undef,
-  Optional[Variant[String, Hash]]     $vars              = undef,
+  Optional[Icinga2::CustomAttributes] $vars              = undef,
   Optional[Integer[1]]                $timeout           = undef,
   Optional[Hash]                      $arguments         = undef,
   Array                               $import            = [],
