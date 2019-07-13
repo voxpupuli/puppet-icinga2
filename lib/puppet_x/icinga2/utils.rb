@@ -324,9 +324,8 @@ module Puppet
                 end
               end
             else
-              if value =~ /^\+\s+/
-                config += "%s%s += %s\n" % [ ' ' * indent, attr, value.sub(/^\+\s+/, '') ]
-              end
+              op = '+' if value =~ /^\+\s+/
+              config += "%s%s #{op}= %s\n" % [ ' ' * indent, attr, parse(value.sub(/^\+\s+/, '')) ]
             end
           else
             if value.is_a?(Hash)

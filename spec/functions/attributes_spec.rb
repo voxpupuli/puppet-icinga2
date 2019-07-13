@@ -460,19 +460,24 @@ describe 'icinga2_attributes' do
   end
 
 
-  # vars = +config1
   it 'assign multiple custom attributes' do
+    # vars += config1
     is_expected.to run.with_params({
       'vars' => '+ config',
-    }).and_return("vars += config\n")
+    }, 0, ['config']).and_return("vars += config\n")
 
-  # vars += config1
-  # vars += {}
-  # vars.foo = "some string"
-  # vars.bar += [ 42, 3.141, -42, -3.141, ]
-  # vars.baz["number"] -= 42
-  # vars.baz["floating"] += 3.141
-  # vars += config2
+    # vars = vars + config1
+    is_expected.to run.with_params({
+      'vars' => 'vars + config',
+    }, 0, ['vars','config']).and_return("vars = vars + config\n")
+
+    # vars += config1
+    # vars += {}
+    # vars.foo = "some string"
+    # vars.bar += [ 42, 3.141, -42, -3.141, ]
+    # vars.baz["number"] -= 42
+    # vars.baz["floating"] += 3.141
+    # vars += config2
     is_expected.to run.with_params({
       'vars' => [
         '+ config1',
