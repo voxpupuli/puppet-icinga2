@@ -1,5 +1,28 @@
 # Change Log
 
+## [v2.2.0](https://github.com/icinga/puppet-icinga2/tree/v2.2.0) (2019-07-14)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.1.1...v2.2.0)
+
+**Implemented enhancements:**
+
+- Remove deprecated data\_provider [\#568](https://github.com/Icinga/puppet-icinga2/issues/568)
+- Convert to pdk [\#528](https://github.com/Icinga/puppet-icinga2/issues/528)
+- add new type for custom attributes to support also arrays [\#574](https://github.com/Icinga/puppet-icinga2/pull/574) ([lbetz](https://github.com/lbetz))
+- add feature to merge arrays and hashes by the parser [\#573](https://github.com/Icinga/puppet-icinga2/pull/573) ([lbetz](https://github.com/lbetz))
+- Extent parser to build += assignments [\#569](https://github.com/Icinga/puppet-icinga2/pull/569) ([lbetz](https://github.com/lbetz))
+- Add constants for Gentoo AMD64 [\#567](https://github.com/Icinga/puppet-icinga2/pull/567) ([ekohl](https://github.com/ekohl))
+- convert module to PDK [\#564](https://github.com/Icinga/puppet-icinga2/pull/564) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+
+**Fixed bugs:**
+
+- Downgrade restore of vars [\#575](https://github.com/Icinga/puppet-icinga2/issues/575)
+- fix \#570 Pin versions for travis of required puppet modules for puppet [\#571](https://github.com/Icinga/puppet-icinga2/pull/571) ([lbetz](https://github.com/lbetz))
+- Fix Puppet4 build [\#565](https://github.com/Icinga/puppet-icinga2/pull/565) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+
+**Closed issues:**
+
+- Allow to specify both vars + config as custom vars using hash [\#566](https://github.com/Icinga/puppet-icinga2/issues/566)
+
 ## [v2.1.1](https://github.com/icinga/puppet-icinga2/tree/v2.1.1) (2019-05-24)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.1.0...v2.1.1)
 
@@ -20,6 +43,10 @@
 - Fix spec tests for feature idomysql [\#546](https://github.com/Icinga/puppet-icinga2/issues/546)
 - Fix spec test of feature api [\#545](https://github.com/Icinga/puppet-icinga2/issues/545)
 - fix typo in README.md [\#544](https://github.com/Icinga/puppet-icinga2/pull/544) ([bastelfreak](https://github.com/bastelfreak))
+
+**Closed issues:**
+
+- Icinga2 custom config dir \(not /etc/...\) [\#543](https://github.com/Icinga/puppet-icinga2/issues/543)
 
 ## [v2.1.0](https://github.com/icinga/puppet-icinga2/tree/v2.1.0) (2019-04-30)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.0.2...v2.1.0)
