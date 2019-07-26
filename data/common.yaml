@@ -14,6 +14,8 @@ icinga2::globals::constants:
   TicketSalt: ''
 icinga2::globals::reserved:
   - Acknowledgement
+  - ApiBindHost
+  - ApiBindPort
   - ApplicationType
   - AttachDebugger
   - BuildCompilerName
@@ -27,6 +29,7 @@ icinga2::globals::reserved:
   - DowntimeEnd
   - DowntimeRemoved
   - DowntimeStart
+  - Environment
   - FlappingEnd
   - FlappingStart
   - HostDown
