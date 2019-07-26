@@ -16,6 +16,7 @@ icinga2::globals::reserved:
   - Acknowledgement
   - ApiBindHost
   - ApiBindPort
+  - ApiEnvironment
   - ApplicationType
   - AttachDebugger
   - BuildCompilerName

@@ -1475,6 +1475,9 @@ Accept zone configuration. Defaults to `false`
 ##### `accept_commands`
 Accept remote commands. Defaults to `false`
 
+##### `max_anonymous_clients`
+Limit the number of anonymous client connections (not configured endpoints and signing requests).
+
 ##### `ca_host`
 This host will be connected to request the certificate. Set this if you use the `icinga2` pki.
 
@@ -1500,6 +1503,9 @@ are Icinga 2 constants.
 ##### `ssl_protocolmin`
 Minimal TLS version to require. Default undef (e.g. `TLSv1.2`)
 
+##### `ssl_handshake_timeout`
+TLS Handshake timeout. Icinga defaults to 10s.
+
 ##### `ssl_cipher_list`
 List of allowed TLS ciphers, to fine tune encryption. Default undef (e.g. `HIGH:MEDIUM:!aNULL:!MD5:!RC4`)
 
@@ -1522,6 +1528,9 @@ Defaults to `Authorization`.
 ##### `access_control_allow_methods`
 Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
 Defaults to `GET, POST, PUT, DELETE`.
+
+##### `environment`
+Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 
 #### Class: `icinga2::feature::idopgsql`
 Enables or disables the `ido-pgsql` feature.

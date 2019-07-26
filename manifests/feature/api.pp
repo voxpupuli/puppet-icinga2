@@ -41,6 +41,9 @@
 # [*accept_commands*]
 #   Accept remote commands. Defaults to false.
 #
+# [*max_anonymous_clients*]
+#   Limit the number of anonymous client connections (not configured endpoints and signing requests).
+#
 # [*ca_host*]
 #   This host will be connected to request the certificate. Set this if you use the icinga2 pki.
 #
@@ -72,6 +75,9 @@
 # [*ssl_protocolmin*]
 #   Minimal TLS version to require. Default undef (e.g. "TLSv1.2")
 #
+# [*ssl_handshake_timeout*]
+#   TLS Handshake timeout. Icinga defaults to 10s.
+#
 # [*ssl_cipher_list*]
 #   List of allowed TLS ciphers, to finetune encryption. Default undef (e.g. "HIGH:MEDIUM:!aNULL:!MD5:!RC4")
 #
@@ -94,6 +100,9 @@
 # [*access_control_allow_methods]
 #  Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
 #  Defaults to `GET, POST, PUT, DELETE`.
+#
+# [*environment*]
+#  Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 #
 # === Examples
 #
@@ -138,6 +147,7 @@ class icinga2::feature::api(
   Optional[Stdlib::Absolutepath]                          $ssl_crl                          = undef,
   Optional[Boolean]                                       $accept_config                    = undef,
   Optional[Boolean]                                       $accept_commands                  = undef,
+  Optional[Integer[0]]                                    $max_anonymous_clients            = undef,
   Optional[Stdlib::Host]                                  $ca_host                          = undef,
   Stdlib::Port::Unprivileged                              $ca_port                          = 5665,
   String                                                  $ticket_salt                      = 'TicketSalt',
@@ -148,6 +158,7 @@ class icinga2::feature::api(
   Optional[String]                                        $ssl_cert                         = undef,
   Optional[String]                                        $ssl_cacert                       = undef,
   Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2']]           $ssl_protocolmin                  = undef,
+  Optional[Icinga2::Interval]                             $ssl_handshake_timeout            = undef,
   Optional[String]                                        $ssl_cipher_list                  = undef,
   Optional[Stdlib::Host]                                  $bind_host                        = undef,
   Optional[Stdlib::Port::Unprivileged]                    $bind_port                        = undef,
@@ -156,6 +167,7 @@ class icinga2::feature::api(
   Optional[Boolean]                                       $access_control_allow_credentials = undef,
   Optional[String]                                        $access_control_allow_headers     = undef,
   Optional[Icinga2::Fingerprint]                          $fingerprint                      = undef,
+  Optional[String]                                        $environment                      = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -314,8 +326,10 @@ class icinga2::feature::api(
     crl_path                         => $ssl_crl,
     accept_commands                  => $accept_commands,
     accept_config                    => $accept_config,
+    max_anonymous_clients            => $max_anonymous_clients,
     ticket_salt                      => $_ticket_salt,
     tls_protocolmin                  => $ssl_protocolmin,
+    tls_handshake_timeout            => $ssl_handshake_timeout,
     cipher_list                      => $ssl_cipher_list,
     bind_host                        => $bind_host,
     bind_port                        => $bind_port,
@@ -323,6 +337,7 @@ class icinga2::feature::api(
     access_control_allow_credentials => $access_control_allow_credentials,
     access_control_allow_headers     => $access_control_allow_headers,
     access_control_allow_methods     => $access_control_allow_methods,
+    environment                      => $environment,
   }
 
   # create endpoints and zones
