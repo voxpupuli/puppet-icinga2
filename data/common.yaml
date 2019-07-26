@@ -44,6 +44,7 @@ icinga2::globals::reserved:
   - LogNotice
   - LogWarning
   - Math
+  - MaxConcurrentChecks
   - ModAttrPath
   - NodeName
   - OK

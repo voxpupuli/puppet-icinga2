@@ -1032,6 +1032,8 @@ Either `present` or `absent`. Defines if the feature `checker` should be enabled
 
 ##### `concurrent_checks`
 The maximum number of concurrent checks. Defaults to `512`.
+Note: deprecated in Icinga 2.11, replaced by global constant
+MaxConcurrentChecks which will be set if you still use concurrent_checks.
 
 #### Class: `icinga2::feature::mainlog`
 Enables or disables the `mainlog` feature.
