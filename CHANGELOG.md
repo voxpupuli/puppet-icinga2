@@ -1,5 +1,20 @@
 # Change Log
 
+## [v2.3.0](https://github.com/icinga/puppet-icinga2/tree/v2.3.0) (2019-07-26)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.2.0...v2.3.0)
+
+**Implemented enhancements:**
+
+- Add new attributes to feature api [\#581](https://github.com/Icinga/puppet-icinga2/issues/581)
+- Add new constants and keywords [\#579](https://github.com/Icinga/puppet-icinga2/issues/579)
+- Add info of new constant MaxConcurrentChecks to feature checker [\#578](https://github.com/Icinga/puppet-icinga2/issues/578)
+- New HA-aware Features [\#576](https://github.com/Icinga/puppet-icinga2/issues/576)
+
+**Fixed bugs:**
+
+- Remove OpenBSD from official support list [\#583](https://github.com/Icinga/puppet-icinga2/issues/583)
+- Add missed flapping attributes to objects host and service [\#580](https://github.com/Icinga/puppet-icinga2/issues/580)
+
 ## [v2.2.0](https://github.com/icinga/puppet-icinga2/tree/v2.2.0) (2019-07-14)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.1.1...v2.2.0)
 
@@ -16,6 +31,7 @@
 **Fixed bugs:**
 
 - Downgrade restore of vars [\#575](https://github.com/Icinga/puppet-icinga2/issues/575)
+- Pin versions for travis of required puppet modules for puppet 4 [\#570](https://github.com/Icinga/puppet-icinga2/issues/570)
 - fix \#570 Pin versions for travis of required puppet modules for puppet [\#571](https://github.com/Icinga/puppet-icinga2/pull/571) ([lbetz](https://github.com/lbetz))
 - Fix Puppet4 build [\#565](https://github.com/Icinga/puppet-icinga2/pull/565) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
 
