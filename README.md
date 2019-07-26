@@ -1875,8 +1875,11 @@ Whether performance data processing is enabled. Defaults to `true`
 ##### `event_command`
 The name of an event command that should be executed every time the host's state changes or the host is in a SOFT state.
 
-##### `flapping_threshold`
-The flapping threshold in percent when a host is considered to be flapping.
+##### `flapping_threshold_low`
+Flapping lower bound in percent for a host to be considered not flapping. Icinga defaults to 25.0.
+
+##### `flapping_threshold_low`
+Flapping upper bound in percent for a host to be considered flapping. Icinga defaults to 30.0.
 
 ##### `volatile`
 The volatile setting enables always HARD state types if NOT-OK state changes occur.
@@ -2285,8 +2288,11 @@ Whether performance data processing is enabled. Defaults to `true`
 The name of an event command that should be executed every time the service's state changes or the service is in a SOFT
 state.
 
-##### `flapping_threshold`
-The flapping threshold in percent when a service is considered to be flapping.
+##### `flapping_threshold_low`
+Flapping lower bound in percent for a host to be considered not flapping. Icinga defaults to 25.0.
+
+##### `flapping_threshold_low`
+Flapping upper bound in percent for a host to be considered flapping. Icinga defaults to 30.0.
 
 ##### `volatile`
 The volatile setting enables always HARD state types if NOT-OK state changes occur.
