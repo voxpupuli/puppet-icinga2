@@ -19,6 +19,9 @@
 # [*enable_send_perfdata*]
 #   Enable performance data for 'CHECK RESULT' events. Icinga defaults to false.
 #
+# [*enable_ha*]
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+#
 #
 class icinga2::feature::gelf(
   Enum['absent', 'present']                $ensure               = present,
@@ -26,6 +29,7 @@ class icinga2::feature::gelf(
   Optional[Stdlib::Port::Unprivileged]     $port                 = undef,
   Optional[String]                         $source               = undef,
   Optional[Boolean]                        $enable_send_perfdata = undef,
+  Optional[Boolean]                        $enable_ha            = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -44,6 +48,7 @@ class icinga2::feature::gelf(
     port                 => $port,
     source               => $source,
     enable_send_perfdata => $enable_send_perfdata,
+    enable_ha            => $enable_ha,
   }
 
   # create object

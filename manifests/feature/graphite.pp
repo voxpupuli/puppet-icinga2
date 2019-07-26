@@ -27,6 +27,9 @@
 # [*enable_send_metadata*]
 #   Send metadata as metrics. Icinga defaults to false.
 #
+# [*enable_ha*]
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+#
 #
 class icinga2::feature::graphite(
   Enum['absent', 'present']                $ensure                 = present,
@@ -36,6 +39,7 @@ class icinga2::feature::graphite(
   Optional[String]                         $service_name_template  = undef,
   Optional[Boolean]                        $enable_send_thresholds = undef,
   Optional[Boolean]                        $enable_send_metadata   = undef,
+  Optional[Boolean]                        $enable_ha              = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -56,6 +60,7 @@ class icinga2::feature::graphite(
     service_name_template  => $service_name_template,
     enable_send_thresholds => $enable_send_thresholds,
     enable_send_metadata   => $enable_send_metadata,
+    enable_ha              => $enable_ha,
   }
 
   # create object

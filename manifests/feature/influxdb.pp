@@ -77,6 +77,10 @@
 # [*flush_threshold*]
 #    How many data points to buffer before forcing a transfer to InfluxDB. Icinga defaults to '1024'.
 #
+# # [*enable_ha*]
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+#
+#
 # === Example
 #
 # class { 'icinga2::feature::influxdb':
@@ -109,6 +113,7 @@ class icinga2::feature::influxdb(
   Optional[Boolean]                        $enable_send_metadata   = undef,
   Optional[Icinga2::Interval]              $flush_interval         = undef,
   Optional[Integer[1]]                     $flush_threshold        = undef,
+  Optional[Boolean]                        $enable_ha              = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -226,6 +231,7 @@ class icinga2::feature::influxdb(
     enable_send_metadata   => $enable_send_metadata,
     flush_interval         => $flush_interval,
     flush_threshold        => $flush_threshold,
+    enable_ha              => $enable_ha,
   }
 
   # create object

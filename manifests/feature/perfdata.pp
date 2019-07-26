@@ -39,6 +39,9 @@
 #   Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
 #   i.e. 1m or 15s. Icinga defaults to 30s.
 #
+# [*enable_ha*]
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+#
 #
 class icinga2::feature::perfdata(
   Enum['absent', 'present']           $ensure                  = present,
@@ -49,6 +52,7 @@ class icinga2::feature::perfdata(
   Optional[String]                    $host_format_template    = undef,
   Optional[String]                    $service_format_template = undef,
   Optional[Icinga2::Interval]         $rotation_interval       = undef,
+  Optional[Boolean]                   $enable_ha               = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -70,6 +74,7 @@ class icinga2::feature::perfdata(
     host_format_template    => $host_format_template,
     service_format_template => $service_format_template,
     rotation_interval       => $rotation_interval,
+    enable_ha               => $enable_ha,
   }
 
   # create object

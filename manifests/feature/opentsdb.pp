@@ -13,11 +13,15 @@
 # [*port*]
 #   OpenTSDB port. Icinga defaults to 4242.
 #
+# [*enable_ha*]
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+#
 #
 class icinga2::feature::opentsdb(
-  Enum['absent', 'present']               $ensure = present,
-  Optional[Stdlib::Host]                  $host   = undef,
-  Optional[Stdlib::Port::Unprivileged]    $port   = undef,
+  Enum['absent', 'present']               $ensure    = present,
+  Optional[Stdlib::Host]                  $host      = undef,
+  Optional[Stdlib::Port::Unprivileged]    $port      = undef,
+  Optional[Boolean]                       $enable_ha = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -32,8 +36,9 @@ class icinga2::feature::opentsdb(
 
   # compose attributes
   $attrs = {
-    host => $host,
-    port => $port,
+    host      => $host,
+    port      => $port,
+    enable_ha => $enable_ha,
   }
 
   # create object

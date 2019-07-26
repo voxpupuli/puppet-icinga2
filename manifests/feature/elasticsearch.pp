@@ -54,13 +54,16 @@
 #     C:/ProgramData/icinga2/var/lib/icinga2/certs/ElasticsearchWriter_elasticsearch_ca.crt on Windows
 #
 # [*enable_send_perfdata*]
-#    Whether to send check performance data metrics. Icinga defaults to 'false'.
+#   Whether to send check performance data metrics. Icinga defaults to 'false'.
 #
 # [*flush_interval*]
-#    How long to buffer data points before transferring to Elasticsearch. Icinga defaults to '10s'.
+#   How long to buffer data points before transferring to Elasticsearch. Icinga defaults to '10s'.
 #
 # [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to Elasticsearch. Icinga defaults to '1024'.
+#   How many data points to buffer before forcing a transfer to Elasticsearch. Icinga defaults to '1024'.
+#
+# [*enable_ha*]
+#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
 #
 # === Example
 #
@@ -87,6 +90,7 @@ class icinga2::feature::elasticsearch(
   Optional[Boolean]                      $enable_send_perfdata = undef,
   Optional[Icinga2::Interval]            $flush_interval       = undef,
   Optional[Integer]                      $flush_threshold      = undef,
+  Optional[Boolean]                      $enable_ha            = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -199,6 +203,7 @@ class icinga2::feature::elasticsearch(
     enable_send_perfdata   => $enable_send_perfdata,
     flush_interval         => $flush_interval,
     flush_threshold        => $flush_threshold,
+    enable_ha              => $enable_ha,
   }
 
   # create object

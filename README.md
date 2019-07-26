@@ -1181,6 +1181,10 @@ OpenTSDB host address. Icinga defaults to `127.0.0.1`
 ##### `port`
 OpenTSDB port. Icinga defaults to `4242`
 
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+
+
 #### Class: `icinga2::feature::perfdata`
 Enables or disables the `perfdata` feature.
 
@@ -1218,6 +1222,10 @@ Service Format template for the performance data file. Icinga defaults to a temp
 ##### `rotation_interval`
 Rotation interval for the files specified in `{host,service}_perfdata_path`. Can be written in minutes or seconds,
 i.e. `1m` or `15s`. Icinga defaults to `30s`
+
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+
 
 #### Class: `icinga2::feature::statusdata`
 Enables or disables the `statusdata` feature. The feature is deprecated and will be removed in Icinga 2 2.11.0.
@@ -1341,6 +1349,9 @@ How long to buffer data points before transferring to Elasticsearch. Icinga defa
 ##### `flush_threshold`
 How many data points to buffer before forcing a transfer to Elasticsearch. Icinga defaults to `1024`
 
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+
 
 #### Class: `icinga2::feature::gelf`
 Enables or disables the `gelf` feature.
@@ -1361,6 +1372,10 @@ Source name for this instance. Icinga defaults to `icinga2`
 
 ##### `enable_send_perfdata`
 Enable performance data for *CHECK RESULT* events. Icinga defaults to `false`.
+
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
+
 
 #### Class: `icinga2::feature::influxdb`
 Enables or disables the `influxdb` feature.
@@ -1434,6 +1449,9 @@ How long to buffer data points before transferring to InfluxDB. Icinga defaults 
 
 ##### `flush_threshold`
 How many data points to buffer before forcing a transfer to InfluxDB. Icinga defaults to `1024`.
+
+##### `enable_ha`
+Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
 
 
 #### Class: `icinga2::feature::api`
