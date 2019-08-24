@@ -49,7 +49,7 @@ define icinga2::object::checkcommand(
   Optional[Hash]                      $env               = undef,
   Optional[Icinga2::CustomAttributes] $vars              = undef,
   Optional[Integer[1]]                $timeout           = undef,
-  Optional[Hash]                      $arguments         = undef,
+  Optional[Variant[Hash, String]]     $arguments         = undef,
   Boolean                             $template          = false,
   Variant[String, Integer]            $order             = 15,
 ) {

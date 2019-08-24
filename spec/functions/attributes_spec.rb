@@ -531,6 +531,11 @@ describe 'icinga2_attributes' do
       }
     }).and_return("result = {\n  add = 3 + 4\n  expr = 4 - (4 + (-2.5)) * 8\n  func = func(3 * 2 + 1, funcN(-42)) + str(NodeName, \"some string\", \"another string\")\n}\n")
 
+    # result = get_object("Endpoint", host.name).host + "host.example.org"
+    is_expected.to run.with_params({
+      'result' => 'get_object(Endpoint, host.name).attribute + string',
+    }).and_return("result = get_object(\"Endpoint\", host.name).attribute + \"string\"\n")
+
     # assign where (host.address || host.address6) && host.vars.os == "Linux"
     # assign where get_object("Endpoint", host.name)
     is_expected.to run.with_params({

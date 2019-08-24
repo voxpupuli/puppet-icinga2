@@ -212,8 +212,9 @@ module Puppet
           else
             if row =~ /^(.+)\((.*)$/
               result += "%s(%s" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
-            elsif row =~ /^(.*)\)$/
-              result += "%s)" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
+            # closing bracket ) with optional method connected with .
+            elsif row =~ /^(.*)\)(.*)$/
+              result += "%s)%s" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', '), $2 ]
             elsif row =~ /^\((.*)$/
               result += "(%s" % [ parse($1) ]
             else
