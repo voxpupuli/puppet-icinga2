@@ -30,7 +30,7 @@ describe 'icinga2_attributes' do
 
   it 'assign a string' do
 
-    # foo = "some string"
+    # foo = "some string, connected to another. Yeah!"
     is_expected.to run.with_params({
       'foo' => 'some string, connected to another. Yeah!'
     }).and_return("foo = \"some string, connected to another. Yeah!\"\n")
@@ -53,6 +53,26 @@ describe 'icinga2_attributes' do
         'foo' => '+ some string, connected to another. Yeah!'
       }
     }).and_return("vars.foo += \"some string, connected to another. Yeah!\"\n")
+
+    # foo = "some string" + [ "bar", "baz", ]
+    is_expected.to run.with_params({
+      'foo' => 'some string + [ bar, baz ]'
+    }).and_return("foo = \"some string\" + [ \"bar\", \"baz\", ]\n")
+
+    # foo = "[ "bar", "baz", ] + "other string"
+    is_expected.to run.with_params({
+      'foo' => '[ bar, baz ] + other string'
+    }).and_return("foo = [ \"bar\", \"baz\", ] + \"other string\"\n")
+
+    # foo = "[ "bar", "baz", ] + [ "barbaz", ]"
+    is_expected.to run.with_params({
+      'foo' => '[ bar, baz ] + [ barbaz ]'
+    }).and_return("foo = [ \"bar\", \"baz\", ] + [ \"barbaz\", ]\n")
+
+    # foo = "[ "bar", [ "baz", ], ]"
+    is_expected.to run.with_params({
+      'foo' => '[ bar, [ baz ] ]'
+    }).and_return("foo = [ \"bar\", [ \"baz\", ], ]\n")
   end
 
 
