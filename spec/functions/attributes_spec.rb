@@ -64,15 +64,23 @@ describe 'icinga2_attributes' do
       'foo' => '[ bar, baz ] + other string'
     }).and_return("foo = [ \"bar\", \"baz\", ] + \"other string\"\n")
 
-    # foo = "[ "bar", "baz", ] + [ "barbaz", ]"
+    # foo = "[ "bar", "baz", ] + [ "barbaz", ]
     is_expected.to run.with_params({
       'foo' => '[ bar, baz ] + [ barbaz ]'
     }).and_return("foo = [ \"bar\", \"baz\", ] + [ \"barbaz\", ]\n")
 
-    # foo = "[ "bar", [ "baz", ], ]"
+    # foo = "[ "bar", [ "baz", ], ]
     is_expected.to run.with_params({
       'foo' => '[ bar, [ baz ] ]'
     }).and_return("foo = [ \"bar\", [ \"baz\", ], ]\n")
+
+    # result = "some string" + {
+    #   foo = "baz"
+    #   bar = "baz"
+    # }
+    is_expected.to run.with_params({
+      'result' => '{ foo => baz, bar => baz }'
+    }).and_return("result = {\n  foo = \"baz\"\n  bar = \"baz\"\n}\n")
   end
 
 

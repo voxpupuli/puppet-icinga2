@@ -152,9 +152,10 @@
 #
 # === What isn't supported?
 #
-# It's not currently possible to use dictionaries in a string, like
+# It's not currently possible to use dictionaries in a string WITH nested array or hash, like
 #
-#   attr => 'hash1 + { item1 => value1, ... }'
+#   attr1 => 'hash1 + { item1 => value1, item2 => [ value1, value2 ], ... ]'
+#   attr2 => 'hash2 + { item1 => value1, item2 => { ... },... }'
 #
 #
 require 'puppet'
@@ -200,14 +201,14 @@ module Puppet
             return $1
           end
 
-          # scan function
           if row =~ /^\{{2}(.+)\}{2}$/m
+            # scan function
             result += "{{%s}}" % [ $1 ]
-          # scan expression + function (function should contain expressions, but we donno parse it)
           elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$/m
+            # scan expression + function (function should contain expressions, but we donno parse it)
             result += "%s %s {{%s}}" % [ parse($1), $2, $3 ]
-          # scan expression
           elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
+            # scan expression
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
             if row =~ /^(.+)\((.*)$/
@@ -220,6 +221,10 @@ module Puppet
             elsif row =~ /^\s*\[\s*(.*)\s*\]\s?(.+)?$/
               # parse array
               result += "[ %s]" % [ process_array($1.split(',')) ]
+              result += " %s" % [ parse($2) ] if $2
+            elsif row =~ /^\s*\{\s*(.*)\s*\}\s?(.+)?$/
+              # parse hash
+              result += "{\n%s}" % [ process_hash(Hash[$1.gsub(/\s*=>\s*|\s*,\s*/, ',').split(',').each_slice(2).to_a]) ]
               result += " %s" % [ parse($2) ] if $2
             else
               result += value_types(row.to_s.strip)
