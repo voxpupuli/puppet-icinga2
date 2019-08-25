@@ -602,9 +602,9 @@ Note: Using an Array always means merge '+=' all items to vars.
 
 ###### What isn't supported?
 
-It's not currently possible to use arrays or dictionaries in a string, like
+It's not currently possible to use dictionaries in a string, like
 ```
-  attr => 'array1 + [ item1, item2, ... ]'
+  attr => 'hash1 + { item1 => value1, ... }'
 ```
 
 #### Reading objects from hiera data

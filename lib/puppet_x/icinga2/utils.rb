@@ -152,9 +152,9 @@
 #
 # === What isn't supported?
 #
-# It's not currently possible to use arrays or dictionaries in a string, like
+# It's not currently possible to use dictionaries in a string, like
 #
-#   attr => 'array1 + [ item1, item2, ... ]' or attr => 'hash1 + { item1, ... }'
+#   attr => 'hash1 + { item1 => value1, ... }'
 #
 #
 require 'puppet'
@@ -212,13 +212,17 @@ module Puppet
           else
             if row =~ /^(.+)\((.*)$/
               result += "%s(%s" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
-            # closing bracket ) with optional method connected with .
-            elsif row =~ /^(.*)\)(.*)$/
+            elsif row =~ /^(.*)\)(.+)?$/
+              # closing bracket ) with optional access of an attribute e.g. '.arguments'
               result += "%s)%s" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', '), $2 ]
             elsif row =~ /^\((.*)$/
               result += "(%s" % [ parse($1) ]
+            elsif row =~ /^\s*\[\s*(.*)\s*\]\s?(.+)?$/
+              # parse array
+              result += "[ %s]" % [ process_array($1.split(',')) ]
+              result += " %s" % [ parse($2) ] if $2
             else
-              result += value_types(row.to_s)
+              result += value_types(row.to_s.strip)
             end
           end
 
