@@ -2566,6 +2566,7 @@ See also [CHANGELOG.md]
 
 [distributed monitoring]: http://docs.icinga.com/icinga2/latest/doc/module/icinga2/chapter/distributed-monitoring
 [examples]: examples
+[puppet]: https://puppet.com/
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
@@ -2573,6 +2574,7 @@ See also [CHANGELOG.md]
 [puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
 [puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
+[puppetlabs/yumrepo_core]: https://github.com/puppetlabs/puppetlabs-yumrepo_core
 [puppet-icinga2]: https://github.com/icinga/puppet-icinga2
 [packages.icinga.com]: https://packages.icinga.com
 [Chocolatey]: https://chocolatey.org
