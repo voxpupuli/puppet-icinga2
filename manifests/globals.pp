@@ -11,6 +11,9 @@
 # [*package_name*]
 #   The name of the icinga package to manage.
 #
+# [*selinux_name*]
+#   The name of the icinga selinux package.
+#
 # [*service_name*]
 #   The name of the icinga service to manage.
 #
@@ -81,6 +84,7 @@
 #
 class icinga2::globals(
   String                 $package_name,
+  String                 $selinux_name,
   String                 $service_name,
   String                 $ido_mysql_schema,
   String                 $ido_pgsql_schema,

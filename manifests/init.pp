@@ -19,6 +19,9 @@
 # [*manage_package*]
 #   If set to false packages aren't managed. Defaults to true.
 #
+# [*manage_selinux*]
+#   If set to true the icinga selinux package is installed. Defaults to false.
+#
 # [*manage_service*]
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed. Defaults to true.
@@ -144,6 +147,7 @@ class icinga2 (
   Boolean                    $enable         = true,
   Boolean                    $manage_repo    = false,
   Boolean                    $manage_package = true,
+  Boolean                    $manage_selinux = false,
   Boolean                    $manage_service = true,
   Boolean                    $purge_features = true,
   Hash                       $constants      = {},
