@@ -145,6 +145,13 @@ icinga2::repo:
   proxy: http://proxy.example.org:3128
 ```
 
+*Notice*: If you wanna setup Icinga on Debian 8 the required backports repository (Icinga 2 v2.11.0 or higher) changed its location! You have to use hiera to configure the location used by the class apt::backports or disable `manage_repo` by setting to `false` to manage the required repos by yourself.
+
+``` puppet
+---
+apt::backports::location: http://archive.debian.org/debian
+```
+
 You can also change or set every other parameter of the underlying resources, supported for operating system families:
 
 * RedHat, resource type: yumrepo
