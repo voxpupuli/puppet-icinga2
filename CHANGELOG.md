@@ -1,5 +1,13 @@
 # Change Log
 
+## [v2.3.1](https://github.com/icinga/puppet-icinga2/tree/v2.3.1) (2019-12-17)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.0...v2.3.1)
+
+**Fixed bugs:**
+
+- Add Backports Repo on Debian [\#595](https://github.com/Icinga/puppet-icinga2/issues/595)
+- Rework and correct documentation of Clustering Icinga 2 [\#584](https://github.com/Icinga/puppet-icinga2/issues/584)
+
 ## [v2.3.0](https://github.com/icinga/puppet-icinga2/tree/v2.3.0) (2019-07-26)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.2.0...v2.3.0)
 
