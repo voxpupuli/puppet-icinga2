@@ -296,21 +296,22 @@ templates, and all features of a typical master are enabled.
 ``` puppet
 class { '::icinga2':
   confd     => false,
-  features  => ['checker','mainlog','notification','statusdata','compatlog','command'],
   constants => {
-    'ZoneName' => 'master',
+    'ZoneName'   => 'master',
+    'TicketSalt' => '5a3d695b8aef8f18452fc494593056a4',
   },
 }
 
 class { '::icinga2::feature::api':
+  pki             => 'none'
   accept_commands => true,
-  # when having multiple masters, you should enable:
+  # when having multiple masters, you have to enable:
   # accept_config => true,
   endpoints       => {
     'master.example.org'    => {},
     'satellite.example.org' => {
       'host' => '172.16.2.11'
-    }
+    },
   },
   zones           => {
     'master' => {
@@ -322,6 +323,9 @@ class { '::icinga2::feature::api':
     },
   }
 }
+
+# to enable a CA on this instance you have to declare:
+# include ::icinga2::pki::ca
 
 icinga2::object::zone { 'global-templates':
   global => true,
@@ -340,6 +344,7 @@ a satellite or client below in the hierarchy. As parent acts either the master z
 ``` puppet
 class { '::icinga2':
   confd     => false,
+  # setting dedicated feature list to disable notification
   features  => ['checker','mainlog'],
   constants => {
     'ZoneName' => 'dmz',
@@ -349,7 +354,10 @@ class { '::icinga2':
 class { '::icinga2::feature::api':
   accept_config   => true,
   accept_commands => true,
-  fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
+  ca_host         => '172.16.1.11',
+  ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
+  # to increase your security set fingerprint to validate the certificate of ca_host
+  # fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
   endpoints       => {
     'satellite.example.org' => {},
     'master.example.org'    => {
@@ -382,19 +390,20 @@ The client is connected to the satellite, which is the direct parent zone.
 ``` puppet
 class { '::icinga2':
   confd     => false,
-  features  => ['checker','mainlog'],
+  features  => ['mainlog'],
 }
 
 class { '::icinga2::feature::api':
-  pki             => 'none',
   accept_config   => true,
   accept_commands => true,
-  fingerprint     => ''D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72,
+  ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
+  # to increase your security set fingerprint to validate the certificate of ca_host
+  # fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
   endpoints       => {
     'NodeName'              => {},
     'satellite.example.org' => {
       'host' => '172.16.2.11',
-    }
+    },
   },
   zones           => {
     'ZoneName' => {
@@ -403,7 +412,7 @@ class { '::icinga2::feature::api':
     },
     'dmz'      => {
       'endpoints' => ['satellite.example.org'],
-    }
+    },
   }
 }
 
@@ -412,7 +421,7 @@ icinga2::object::zone { 'global-templates':
 }
 ```
 
-The parameter `fingerprint` is optional and new since v2.1.0. It's used to validate the certificate of the master.
+The parameter `fingerprint` is optional and new since v2.1.0. It's used to validate the certificate of the CA host.
 A fingerprint can be got by `openssl x509 -noout -fingerprint -sha1 -inform pem -in master.crt` on the master host.
 
 ### Config Objects
