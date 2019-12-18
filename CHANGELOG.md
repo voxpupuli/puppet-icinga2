@@ -1,7 +1,13 @@
 # Change Log
 
-## [v2.3.1](https://github.com/icinga/puppet-icinga2/tree/v2.3.1) (2019-12-17)
-[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.0...v2.3.1)
+## [v2.3.2](https://github.com/icinga/puppet-icinga2/tree/v2.3.2) (2019-12-18)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.1...v2.3.2)
+
+**Fixed bugs:**
+
+- Missing default in case statement for pki in feature::api [\#596](https://github.com/Icinga/puppet-icinga2/pull/596)
+## [v2.3.2](https://github.com/icinga/puppet-icinga2/tree/v2.3.2) (2019-12-18)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.1...v2.3.2)
 
 **Fixed bugs:**
 
