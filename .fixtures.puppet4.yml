@@ -11,9 +11,7 @@ fixtures:
       ref: 6.3.0
     chocolatey:
       repo: puppetlabs/chocolatey
+      ref: 3.3.0
     zypprepo:
       repo: puppet/zypprepo
-    yumrepo_core:
-      repo: "puppetlabs-yumrepo_core"
-      puppet_version: ">= 6.0.0"
-
+      ref: 2.2.2

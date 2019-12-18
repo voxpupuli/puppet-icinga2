@@ -31,10 +31,6 @@ matrix:
       rvm: 2.4.5
       stage: spec
     -
-      env: PUPPET_VERSION="~> 4.10" CHECK=test PARALLEL_TEST_PROCESSORS=4 FIXTURES_YML=.fixtures.puppet4.yml
-      rvm: 2.1.9
-      stage: spec
-    -
       env: DEPLOY_TO_FORGE=yes
       stage: deploy
 branches:

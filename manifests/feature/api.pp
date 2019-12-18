@@ -275,7 +275,8 @@ class icinga2::feature::api(
       }
     } # none
 
-    'icinga2': {
+    # icinga2 as default
+    default: {
       $_ticket_salt = undef
       $trusted_cert = "${cert_dir}/trusted-cert.crt"
 
