@@ -132,6 +132,15 @@ class { '::icinga2':
   manage_repo => true,
 }
 ```
+*Notice*: Since Icinga v2.11.0 on RedHat the EPEL-Repository is required to install the Boost libraries. EPEL is NOT managed by this module so you have to do this on your own in front of icinga2 class, e.g. as `yum_repo` or if you've an internet connection as a simple package resource like:
+
+``` puppet
+package { 'epel-release': }
+
+class { '::icinga2':
+  manage_repo => true,
+}
+``` 
 
 *Info:* If you are using the [Icinga Web 2](https://github.com/Icinga/puppet-icingaweb2/) Puppet module on the same
 server, make sure to disable the repository management for one of the modules!
@@ -625,7 +634,7 @@ It's not currently possible to use arrays or dictionaries in a string, like
 
 #### Reading objects from hiera data
 
-The following example is for puppet 4 and higher. It shows how icinga2 objects can be read from
+The following example shows how icinga2 objects can be read from
 a hiera datastore. See also examples/objects_from_hiera.pp.
 
 ```

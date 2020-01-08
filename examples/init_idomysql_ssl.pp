@@ -1,3 +1,9 @@
+case $::osfamily {
+  'redhat': {
+    package { 'epel-release': }
+  } # RedHat
+}
+
 file { '/etc/mysql':
   ensure => directory,
 }

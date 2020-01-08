@@ -1,3 +1,9 @@
+case $::osfamily {
+  'redhat': {
+    package { 'epel-release': }
+  } # RedHat
+}
+
 include ::postgresql::server
 
 postgresql::server::db { 'icinga2':

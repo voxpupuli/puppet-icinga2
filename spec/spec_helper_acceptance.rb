@@ -2,7 +2,7 @@ require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
 
 # Install Puppet on all hosts
-install_puppet_agent_on(hosts, options)
+install_puppet_agent_on(hosts, :puppet_collection => 'puppet5')
 
 RSpec.configure do |c|
   module_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
