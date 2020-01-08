@@ -7,6 +7,12 @@ class profile::icinga2::agent(
 
   contain ::profile::icinga2::plugins
 
+  case $::osfamily {
+    'redhat': {
+      package { 'epel-release': }
+    } # RedHat
+  }
+
   class { '::icinga2':
     manage_repo => true,
     confd       => false,

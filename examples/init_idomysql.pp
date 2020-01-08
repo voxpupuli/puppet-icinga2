@@ -1,3 +1,9 @@
+case $::osfamily {
+  'redhat': {
+    package { 'epel-release': }
+  } # RedHat
+}
+
 include ::mysql::server
 
 mysql::db { 'icinga2':

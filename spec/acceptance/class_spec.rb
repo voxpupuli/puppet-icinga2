@@ -5,6 +5,11 @@ describe 'icinga2 class' do
   describe 'with API, IDO mysql and pgsql' do
     let(:pp) do
       <<-MANIFEST
+        case $::osfamily {
+          'redhat': {
+            package { 'epel-release': }
+          } # RedHat
+        }
         class { 'icinga2':
           manage_repo => true,
           constants   => {
