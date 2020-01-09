@@ -1,0 +1,12 @@
+---
+HOSTS:
+  i2centos8:
+    roles:
+      - agent
+      - default
+    platform: el-8-x86_64
+    hypervisor: vagrant
+    box: bento/centos-8
+    vagrant_memsize: 1024
+CONFIG:
+  type: aio
