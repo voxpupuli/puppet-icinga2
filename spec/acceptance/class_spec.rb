@@ -5,10 +5,8 @@ describe 'icinga2 class' do
   describe 'with API, IDO mysql and pgsql' do
     let(:pp) do
       <<-MANIFEST
-        case $::osfamily {
-          'redhat': {
+        if $facts['os']['name'] == 'centos' and Integer($facts['os']['release']['major']) < 8 {
             package { 'epel-release': }
-          } # RedHat
         }
         class { 'icinga2':
           manage_repo => true,
