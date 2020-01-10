@@ -5,10 +5,8 @@ describe 'icinga2 class' do
   describe 'with API, IDO mysql and pgsql' do
     let(:pp) do
       <<-MANIFEST
-        case $::osfamily {
-          'redhat': {
+        if $facts['os']['name'] == 'centos' and Integer($facts['os']['release']['major']) < 8 {
             package { 'epel-release': }
-          } # RedHat
         }
         class { 'icinga2':
           manage_repo => true,
@@ -63,8 +61,11 @@ describe 'icinga2 class' do
     end
 
     describe service('icinga2') do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_running }
+    end
+
+    describe port(5665) do
+      it { is_expected.to be_listening }
     end
 
     describe command("mysql icinga2 -Ns -e 'select version from icinga_dbversion;'") do
