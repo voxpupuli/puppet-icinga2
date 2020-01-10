@@ -11,6 +11,13 @@ postgresql::server::db { 'icinga2':
   password => postgresql_password('icinga2', 'supersecret'),
 }
 
+exec { 'icinga2-idopgsql-create-plpgsql':
+  user    => 'postgres',
+  path    => $::path,
+  command => "psql icinga2 -w -c 'CREATE LANGUAGE plpgsql'",
+  unless  => 'psql icinga2 -A -t -c "SELECT lanname FROM pg_catalog.pg_language" |grep plpgsql',
+}
+
 class{ 'icinga2':
   manage_repo => true,
 }

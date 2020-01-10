@@ -36,6 +36,12 @@ describe 'icinga2 class' do
           user     => 'icinga2',
           password => postgresql_password('icinga2', 'topsecret4idopgsql'),
         }
+        -> exec { 'icinga2-idopgsql-create-plpgsql':
+          user    => 'postgres',
+          path    => $::path,
+          command => "psql icinga2 -w -c 'CREATE LANGUAGE plpgsql'",
+          unless  => 'psql icinga2 -A -t -c "SELECT lanname FROM pg_catalog.pg_language" |grep plpgsql',
+        }
         -> class { 'icinga2::feature::idopgsql':
           host          => 'localhost',
           user          => 'icinga2',
