@@ -56,6 +56,15 @@ describe('icinga2::feature::idopgsql', :type => :class) do
           it { is_expected.to contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }
         end
 
+        if facts[:osfamily] == 'Debian'
+          it { is_expected.to contain_file('/etc/dbconfig-common/icinga2-ido-pgsql.conf')
+            .with({
+              'ensure' => 'file',
+              'owner'  => 'root',
+              'group'  => 'root', })
+          }
+        end
+
         it { is_expected.to contain_icinga2__feature('ido-pgsql').with({'ensure' => 'present'}) }
 
         it { is_expected.to contain_concat__fragment('icinga2::object::IdoPgsqlConnection::ido-pgsql')

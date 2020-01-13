@@ -69,6 +69,15 @@ describe('icinga2::feature::idomysql', :type => :class) do
           it { is_expected.to contain_package('icinga2-ido-mysql').with({ 'ensure' => 'installed' }) }
         end
 
+        if facts[:osfamily] == 'Debian'
+          it { is_expected.to contain_file('/etc/dbconfig-common/icinga2-ido-mysql.conf')
+            .with({
+              'ensure' => 'file',
+              'owner'  => 'root',
+              'group'  => 'root', })
+          }
+        end
+
         it { is_expected.to contain_icinga2__feature('ido-mysql').with({'ensure' => 'present'}) }
 
         it { is_expected.to contain_icinga2__object('icinga2::object::IdoMysqlConnection::ido-mysql')
