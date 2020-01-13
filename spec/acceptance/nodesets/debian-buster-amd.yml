@@ -1,0 +1,12 @@
+---
+HOSTS:
+  i2debian10:
+    roles:
+      - agent
+      - default
+    platform: debian-buster-amd
+    hypervisor: vagrant
+    box: bento/debian-10
+    vagrant_memsize: 1024
+CONFIG:
+  type: aio

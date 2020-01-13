@@ -1,0 +1,12 @@
+---
+HOSTS:
+  i2debian9:
+    roles:
+      - agent
+      - default
+    platform: debian-stretch-amd
+    hypervisor: vagrant
+    box: bento/debian-9
+    vagrant_memsize: 1024
+CONFIG:
+  type: aio

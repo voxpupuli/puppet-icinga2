@@ -297,10 +297,12 @@ class icinga2::feature::idomysql(
   # install additional package
   if $ido_mysql_package_name and $manage_package {
     if $::osfamily == 'debian' {
-      ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory } })
+      ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_mysql_package_name}.conf":
         ensure  => file,
         content => "dbc_install='false'\ndbc_upgrade='false'\ndbc_remove='false'\n",
+        owner   => 'root',
+        group   => 'root',
         mode    => '0600',
         before  => Package[$ido_mysql_package_name],
       }
