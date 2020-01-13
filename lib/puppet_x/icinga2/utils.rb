@@ -152,9 +152,10 @@
 #
 # === What isn't supported?
 #
-# It's not currently possible to use arrays or dictionaries in a string, like
+# It's not currently possible to use dictionaries in a string WITH nested array or hash, like
 #
-#   attr => 'array1 + [ item1, item2, ... ]' or attr => 'hash1 + { item1, ... }'
+#   attr1 => 'hash1 + { item1 => value1, item2 => [ value1, value2 ], ... ]'
+#   attr2 => 'hash2 + { item1 => value1, item2 => { ... },... }'
 #
 #
 require 'puppet'
@@ -200,24 +201,33 @@ module Puppet
             return $1
           end
 
-          # scan function
           if row =~ /^\{{2}(.+)\}{2}$/m
+            # scan function
             result += "{{%s}}" % [ $1 ]
-          # scan expression + function (function should contain expressions, but we donno parse it)
           elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$/m
+            # scan expression + function (function should contain expressions, but we donno parse it)
             result += "%s %s {{%s}}" % [ parse($1), $2, $3 ]
-          # scan expression
           elsif row =~ /^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$/
+            # scan expression
             result += "%s %s %s" % [ parse($1), $2, parse($3) ]
           else
             if row =~ /^(.+)\((.*)$/
               result += "%s(%s" % [ $1, $2.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
-            elsif row =~ /^(.*)\)$/
-              result += "%s)" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', ') ]
+            elsif row =~ /^(.*)\)(.+)?$/
+              # closing bracket ) with optional access of an attribute e.g. '.arguments'
+              result += "%s)%s" % [ $1.split(',').map {|x| parse(x.lstrip)}.join(', '), $2 ]
             elsif row =~ /^\((.*)$/
               result += "(%s" % [ parse($1) ]
+            elsif row =~ /^\s*\[\s*(.*)\s*\]\s?(.+)?$/
+              # parse array
+              result += "[ %s]" % [ process_array($1.split(',')) ]
+              result += " %s" % [ parse($2) ] if $2
+            elsif row =~ /^\s*\{\s*(.*)\s*\}\s?(.+)?$/
+              # parse hash
+              result += "{\n%s}" % [ process_hash(Hash[$1.gsub(/\s*=>\s*|\s*,\s*/, ',').split(',').each_slice(2).to_a]) ]
+              result += " %s" % [ parse($2) ] if $2
             else
-              result += value_types(row.to_s)
+              result += value_types(row.to_s.strip)
             end
           end
 

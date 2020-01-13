@@ -30,7 +30,7 @@ describe 'icinga2_attributes' do
 
   it 'assign a string' do
 
-    # foo = "some string"
+    # foo = "some string, connected to another. Yeah!"
     is_expected.to run.with_params({
       'foo' => 'some string, connected to another. Yeah!'
     }).and_return("foo = \"some string, connected to another. Yeah!\"\n")
@@ -53,6 +53,34 @@ describe 'icinga2_attributes' do
         'foo' => '+ some string, connected to another. Yeah!'
       }
     }).and_return("vars.foo += \"some string, connected to another. Yeah!\"\n")
+
+    # foo = "some string" + [ "bar", "baz", ]
+    is_expected.to run.with_params({
+      'foo' => 'some string + [ bar, baz ]'
+    }).and_return("foo = \"some string\" + [ \"bar\", \"baz\", ]\n")
+
+    # foo = "[ "bar", "baz", ] + "other string"
+    is_expected.to run.with_params({
+      'foo' => '[ bar, baz ] + other string'
+    }).and_return("foo = [ \"bar\", \"baz\", ] + \"other string\"\n")
+
+    # foo = "[ "bar", "baz", ] + [ "barbaz", ]
+    is_expected.to run.with_params({
+      'foo' => '[ bar, baz ] + [ barbaz ]'
+    }).and_return("foo = [ \"bar\", \"baz\", ] + [ \"barbaz\", ]\n")
+
+    # foo = "[ "bar", [ "baz", ], ]
+    is_expected.to run.with_params({
+      'foo' => '[ bar, [ baz ] ]'
+    }).and_return("foo = [ \"bar\", [ \"baz\", ], ]\n")
+
+    # result = "some string" + {
+    #   foo = "baz"
+    #   bar = "baz"
+    # }
+    is_expected.to run.with_params({
+      'result' => '{ foo => baz, bar => baz }'
+    }).and_return("result = {\n  foo = \"baz\"\n  bar = \"baz\"\n}\n")
   end
 
 
@@ -530,6 +558,11 @@ describe 'icinga2_attributes' do
         'func' => 'func(3 * 2 + 1, funcN(-42)) + str(NodeName, some string, another string)'
       }
     }).and_return("result = {\n  add = 3 + 4\n  expr = 4 - (4 + (-2.5)) * 8\n  func = func(3 * 2 + 1, funcN(-42)) + str(NodeName, \"some string\", \"another string\")\n}\n")
+
+    # result = get_object("Endpoint", host.name).host + "host.example.org"
+    is_expected.to run.with_params({
+      'result' => 'get_object(Endpoint, host.name).attribute + string',
+    }).and_return("result = get_object(\"Endpoint\", host.name).attribute + \"string\"\n")
 
     # assign where (host.address || host.address6) && host.vars.os == "Linux"
     # assign where get_object("Endpoint", host.name)

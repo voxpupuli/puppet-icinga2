@@ -625,11 +625,12 @@ And you'll get:
 ```
 Note: Using an Array always means merge '+=' all items to vars.
 
-###### What isn't supported?
+##### What isn't supported?
 
-It's not currently possible to use arrays or dictionaries in a string, like
+It's not currently possible to use dictionaries in a string WITH nested array or hash, like
 ```
-  attr => 'array1 + [ item1, item2, ... ]'
+  attr1 => 'hash1 + { item1 => value1, item2 => [ value1, value2 ], ... ]'
+  attr2 => 'hash2 + { item1 => value1, item2 => { ... },... }'
 ```
 
 #### Reading objects from hiera data
