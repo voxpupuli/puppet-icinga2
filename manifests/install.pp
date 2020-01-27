@@ -33,10 +33,10 @@ class icinga2::install {
       before => File[$cert_dir, $conf_dir],
     }
 
-    if $manage_selinux {
+    if str2bool($manage_selinux) {
       package { $selinux_name:
-        ensure => installed,
-        after  => [Package[$package_name], File[$cert_dir, $conf_dir]],
+        ensure  => installed,
+        require => Package[$package_name],
       }
     }
   }

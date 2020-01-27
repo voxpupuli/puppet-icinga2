@@ -147,7 +147,7 @@ class icinga2 (
   Boolean                    $enable         = true,
   Boolean                    $manage_repo    = false,
   Boolean                    $manage_package = true,
-  Boolean                    $manage_selinux = false,
+  Variant[Boolean, String]   $manage_selinux = false,
   Boolean                    $manage_service = true,
   Boolean                    $purge_features = true,
   Hash                       $constants      = {},

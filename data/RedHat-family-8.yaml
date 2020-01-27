@@ -1,2 +1,2 @@
 ---
-icinga2::manage_selinux: "%{facts.os.seliunx}"
+icinga2::manage_selinux: "%{facts.os.selinux.enabled}"
