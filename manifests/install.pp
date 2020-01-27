@@ -37,9 +37,6 @@ class icinga2::install {
       package { $selinux_name:
         ensure => installed,
         after  => [Package[$package_name], File[$cert_dir, $conf_dir]],
-      } ~>
-      exec { '/usr/sbin/restorecon -R -F /var/lib/icinga2':
-        refreshonly => true
       }
     }
   }
