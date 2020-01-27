@@ -84,7 +84,6 @@
 #
 class icinga2::globals(
   String                 $package_name,
-  String                 $selinux_name,
   String                 $service_name,
   String                 $ido_mysql_schema,
   String                 $ido_pgsql_schema,
@@ -103,6 +102,7 @@ class icinga2::globals(
   Optional[String]       $ido_mysql_package_name = undef,
   Optional[String]       $ido_pgsql_package_name = undef,
   Optional[String]       $service_reload         = undef,
+  Optional[String]       $selinux_name           = unde,
 ) {
 
   assert_private()
