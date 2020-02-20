@@ -18,6 +18,8 @@ class icinga2::install {
 
   $package_name   = $::icinga2::globals::package_name
   $manage_package = $::icinga2::manage_package
+  $selinux_name   = $::icinga2::globals::selinux_name
+  $manage_selinux = $::icinga2::manage_selinux
   $cert_dir       = $::icinga2::globals::cert_dir
   $conf_dir       = $::icinga2::globals::conf_dir
   $user           = $::icinga2::globals::user
@@ -29,6 +31,13 @@ class icinga2::install {
     package { $package_name:
       ensure => installed,
       before => File[$cert_dir, $conf_dir],
+    }
+
+    if str2bool($manage_selinux) {
+      package { $selinux_name:
+        ensure  => installed,
+        require => Package[$package_name],
+      }
     }
   }
 

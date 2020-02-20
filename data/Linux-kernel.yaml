@@ -1,6 +1,7 @@
 ---
 icinga2::globals::package_name: icinga2
 icinga2::globals::service_name: icinga2
+icinga2::globals::selinux_name: icinga2-selinux
 icinga2::globals::service_reload: service icinga2 reload
 icinga2::globals::ido_mysql_package_name: icinga2-ido-mysql
 icinga2::globals::ido_mysql_schema: /usr/share/icinga2-ido-mysql/schema/mysql.sql
