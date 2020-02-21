@@ -20,7 +20,8 @@
 #   If set to false packages aren't managed. Defaults to true.
 #
 # [*manage_selinux*]
-#   If set to true the icinga selinux package is installed. Defaults to false.
+#   If set to true the icinga selinux package is installed. Default on RedHat family is `facts.os.selinux.enforcing`
+#   otherwise set to false. Requires a `selinux_package_name` (icinga2::globals) and `manage_package` has to be set to true.
 #
 # [*manage_service*]
 #   If set to true the service is managed otherwise the service also

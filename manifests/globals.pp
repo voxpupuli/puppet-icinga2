@@ -11,9 +11,6 @@
 # [*package_name*]
 #   The name of the icinga package to manage.
 #
-# [*selinux_name*]
-#   The name of the icinga selinux package.
-#
 # [*service_name*]
 #   The name of the icinga service to manage.
 #
@@ -26,6 +23,9 @@
 #   Group as the icinga process runs.
 #   CAUTION: This does not manage the group context for the runnig icinga 2 process!
 #   The parameter is only used for group membership of files or directories.
+#
+# [*selinux_package_name*]
+#   The name of the icinga selinux package.
 #
 # [*ido_mysql_package_name*]
 #   The name of the icinga package that's needed for MySQL.
@@ -99,10 +99,10 @@ class icinga2::globals(
   Array[String]          $reserved,
   Optional[String]       $user                   = undef,
   Optional[String]       $group                  = undef,
+  Optional[String]       $selinux_package_name   = undef,
   Optional[String]       $ido_mysql_package_name = undef,
   Optional[String]       $ido_pgsql_package_name = undef,
   Optional[String]       $service_reload         = undef,
-  Optional[String]       $selinux_name           = unde,
 ) {
 
   assert_private()
