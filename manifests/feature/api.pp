@@ -210,10 +210,12 @@ class icinga2::feature::api(
       $_ticket_salt = undef
 
       file { $_ssl_key_path:
-        ensure => file,
-        mode   => $_ssl_key_mode,
-        source => $::icinga2_puppet_hostprivkey,
-        tag    => 'icinga2::config::file',
+        ensure    => file,
+        mode      => $_ssl_key_mode,
+        source    => $::icinga2_puppet_hostprivkey,
+        tag       => 'icinga2::config::file',
+        show_diff => false,
+        backup    => false,
       }
 
       file { $_ssl_cert_path:
@@ -241,10 +243,12 @@ class icinga2::feature::api(
         }
 
         file { $_ssl_key_path:
-          ensure  => file,
-          mode    => $_ssl_key_mode,
-          content => $_ssl_key,
-          tag     => 'icinga2::config::file',
+          ensure    => file,
+          mode      => $_ssl_key_mode,
+          content   => $_ssl_key,
+          tag       => 'icinga2::config::file',
+          show_diff => false,
+          backup    => false,
         }
       }
 
