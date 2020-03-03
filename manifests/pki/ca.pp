@@ -87,10 +87,12 @@ class icinga2::pki::ca(
     }
 
     file { "${ca_dir}/ca.key":
-      ensure  => file,
-      mode    => $_ca_key_mode,
-      content => $_ca_key,
-      tag     => 'icinga2::config::file',
+      ensure    => file,
+      mode      => $_ca_key_mode,
+      content   => $_ca_key,
+      tag       => 'icinga2::config::file',
+      show_diff => false,
+      backup    => false,
     }
   }
 
