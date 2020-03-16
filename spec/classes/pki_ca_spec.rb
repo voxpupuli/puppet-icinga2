@@ -102,10 +102,12 @@ describe('icinga2::pki::ca', :type => :class) do
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.key")
           .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'mode'   => @icinga2_sslkey_mode, })
+            'ensure'    => 'file',
+            'owner'     => @icinga2_user,
+            'group'     => @icinga2_group,
+            'mode'      => @icinga2_sslkey_mode,
+            'show_diff' => false,
+            'backup'    => false, })
           .that_requires('Exec[icinga2 pki create certificate signing request]') }
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.crt")
@@ -154,11 +156,13 @@ describe('icinga2::pki::ca', :type => :class) do
 
         it { is_expected.to contain_file("#{@icinga2_ca_dir}/ca.key")
           .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'mode'   => @icinga2_sslkey_mode,
-            'tag'    => 'icinga2::config::file', })
+            'ensure'    => 'file',
+            'owner'     => @icinga2_user,
+            'group'     => @icinga2_group,
+            'mode'      => @icinga2_sslkey_mode,
+            'tag'       => 'icinga2::config::file',
+            'show_diff' => false,
+            'backup'   => false, })
           .with_content(/bar/)  }
       end
     end

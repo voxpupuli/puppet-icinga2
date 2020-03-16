@@ -111,8 +111,10 @@ class icinga2::pki::ca(
   }
 
   -> file { $_ssl_key_path:
-    ensure => file,
-    mode   => $_ca_key_mode,
+    ensure    => file,
+    mode      => $_ca_key_mode,
+    show_diff => false,
+    backup    => false,
   }
 
   exec { 'icinga2 pki sign certificate':

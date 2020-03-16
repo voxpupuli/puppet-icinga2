@@ -90,10 +90,12 @@ describe('icinga2::feature::api', :type => :class) do
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.key")
          .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'mode'   => @icinga2_sslkey_mode, }) }
+            'ensure'    => 'file',
+            'owner'     => @icinga2_user,
+            'group'     => @icinga2_group,
+            'mode'      => @icinga2_sslkey_mode,
+            'show_diff' => false,
+            'backup'    => false, }) }
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.crt")
          .with({
@@ -137,10 +139,12 @@ describe('icinga2::feature::api', :type => :class) do
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.key")
           .with({
-            'ensure' => 'file',
-            'owner'  => @icinga2_user,
-            'group'  => @icinga2_group,
-            'mode'   => @icinga2_sslkey_mode, })
+            'ensure'    => 'file',
+            'owner'     => @icinga2_user,
+            'group'     => @icinga2_group,
+            'mode'      => @icinga2_sslkey_mode,
+            'show_diff' => false,
+            'backup'    => false, })
           .with_content(/^foo$/) }
 
         it { is_expected.to contain_file("#{@icinga2_pki_dir}/host.example.org.crt")
