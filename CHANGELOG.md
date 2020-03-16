@@ -1,5 +1,12 @@
 # Change Log
 
+## [v2.3.3](https://github.com/icinga/puppet-icinga2/tree/v2.3.3) (2020-03-16)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.2...v2.3.3)
+
+**Fixed bugs:**
+
+- Private keys: no diff, no backup [\#606](https://github.com/Icinga/puppet-icinga2/pull/606)
+
 ## [v2.3.2](https://github.com/icinga/puppet-icinga2/tree/v2.3.2) (2019-12-18)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.1...v2.3.2)
 
