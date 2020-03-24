@@ -32,8 +32,6 @@ class icinga2::repo {
       Apt::Source['icinga-stable-release'] -> Package <| tag == 'icinga2' |>
       Class['Apt::Update'] -> Package<|tag == 'icinga2'|>
 
-      contain ::apt, ::apt::backports
-
       apt::source { 'icinga-stable-release':
         * => $repo,
       }
