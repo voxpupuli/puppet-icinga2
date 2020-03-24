@@ -94,7 +94,7 @@
 class icinga2::feature::influxdb(
   Enum['absent', 'present']                $ensure                 = present,
   Optional[Stdlib::Host]                   $host                   = undef,
-  Optional[Stdlib::Port::Unprivileged]     $port                   = undef,
+  Optional[Stdlib::Port]                   $port                   = undef,
   Optional[String]                         $database               = undef,
   Optional[String]                         $username               = undef,
   Optional[String]                         $password               = undef,
