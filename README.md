@@ -142,6 +142,16 @@ class { '::icinga2':
 }
 ``` 
 
+*Notice:* The same holds on Debian with the backports repository.
+
+``` puppet
+include ::apt, ::apt::backports
+
+class { '::icinga2':
+  manage_repo => true,
+}
+```
+
 *Info:* If you are using the [Icinga Web 2](https://github.com/Icinga/puppet-icingaweb2/) Puppet module on the same
 server, make sure to disable the repository management for one of the modules!
 
