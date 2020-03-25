@@ -15,7 +15,7 @@ git commit -am "Update AUTHORS"
 ## 2. Changelog
 Install [github-changelog-generator]
 ```bash
-gem install github_changelog_generator
+gem install github_changelog_generator -v 1.13.2
 ```
 
 Generate [CHANGELOG.md]
