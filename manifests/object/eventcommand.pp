@@ -1,47 +1,40 @@
-# == Define: icinga2::object::eventcommand
+# @summary
+#   Manage Icinga 2 EventCommand objects.
 #
-# Manage Icinga 2 EventCommand objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
+# @param [String] eventcommand_name
+#   Set the Icinga 2 name of the eventcommand object.
 #
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
-#
-# [*eventcommand_name*]
-#   Set the Icinga 2 name of the eventcommand object. Defaults to title of the define resource.
-#
-# [*execute*]
-#   The "execute" script method takes care of executing the event handler.
-#
-# [*command*]
+# @param [Optional[Variant[Array, String]]] command
 #   The command. This can either be an array of individual command arguments.
 #   Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh)
 #   takes care of parsing the command.
 #
-# [*env*]
+# @param [Optional[Hash]] env
 #   A dictionary of macros which should be exported as environment variables prior to executing the command.
 #
-# [*vars*]
+# @param [Optional[Icinga2::CustomAttributes]] vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# [*timeout*]
-#   The command timeout in seconds. Defaults to 60 seconds.
+# @param [Optional[Integer[1]]] timeout
+#   The command timeout in seconds.
 #
-# [*arguments*]
+# @param [Optional[Hash]] arguments
 #   A dictionary of command arguments.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
+# @param [Array] import
+#   Sorted List of templates to include.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 20.
-#
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::eventcommand (
   Stdlib::Absolutepath                $target,

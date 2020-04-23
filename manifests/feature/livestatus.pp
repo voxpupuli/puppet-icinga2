@@ -1,34 +1,23 @@
-# == Class: icinga2::feature::livestatus
+# @summary
+#   Configures the Icinga 2 feature livestatus.
 #
-# This module configures the Icinga 2 feature livestatus.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature livestatus, absent disables it.
 #
-# === Parameters
+# @param [Optional[Enum['tcp', 'unix']]] socket_type
+#   Specifies the socket type. Can be either 'tcp' or 'unix'.
 #
-# [*ensure*]
-#   Set to present enables the feature livestatus, absent disables it. Defaults to present.
-#
-# [*socket_type*]
-#   Specifies the socket type. Can be either 'tcp' or 'unix'. Icinga defaults to 'unix'.
-#
-# [*bind_host*]
+# @param [Optional[Stdlib::Host]] bind_host
 #   IP address to listen for connections. Only valid when socket_type is 'tcp'.
-#   Icinga defaults to '127.0.0.1'.
 #
-# [*bind_port*]
-#   Port to listen for connections. Only valid when socket_type is 'tcp'. Icinga defaults to 6558.
+# @param [Optional[Stdlib::Port::Unprivileged]] bind_port
+#   Port to listen for connections. Only valid when socket_type is 'tcp'.
 #
-# [*socket_path*]
+# @param [Optional[Stdlib::Absolutepath]] socket_path
 #   Specifies the path to the UNIX socket file. Only valid when socket_type is 'unix'.
-#   Default depends on platform:
-#   '/var/run/icinga2/cmd/livestatus' on Linux
-#   'C:/ProgramData/icinga2/var/run/icinga2/cmd/livestatus' on Windows.
 #
-# [*compat_log_path*]
+# @param [Optional[Stdlib::Absolutepath]] compat_log_path
 #   Required for historical table queries. Requires CompatLogger feature to be enabled.
-#   Default depends platform:
-#   'var/icinga2/log/icinga2/compat' on Linux
-#   'C:/ProgramData/icinga2/var/log/icinga2/compat' on Windows.
-#
 #
 class icinga2::feature::livestatus(
   Enum['absent', 'present']                $ensure          = present,

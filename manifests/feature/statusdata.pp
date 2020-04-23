@@ -1,27 +1,18 @@
-# == Class: icinga2::feature::statusdata
+# @summary
+#   Configures the Icinga 2 feature statusdata.
 #
-# This module configures the Icinga 2 feature statusdata.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature statusdata, absent disables it.
 #
-# === Parameters
+# @param [Optional[Stdlib::Absolutepath]] status_path
+#   Absolute path to the status.dat file.
 #
-# [*ensure*]
-#   Set to present enables the feature statusdata, absent disables it. Defaults to present.
+# @param [Optional[Stdlib::Absolutepath]] objects_path
+#   Absolute path to the object.cache file.
 #
-# [*status_path*]
-#   Absolute path to the status.dat file. Defaults depend on platform:
-#   /var/cache/icinga2/status.dat on Linux
-#   C:/ProgramData/icinga2/var/cache/icinga2/status.dat on Windows
-#
-# [*object_path*]
-#   Absolute path to the object.cache file. Defaults depend on platform:
-#   /var/cache/icinga2/object.cache on Linux
-#   C:/ProgramData/icinga2/var/cache/icinga2/object.cache on Windows
-#
-# [*update_interval*]
+# @param [Optional[Icinga2::Interval]] update_interval
 #   Interval in seconds to update both status files. You can also specify
 #   it in minutes with the letter m or in seconds with s.
-#   Icinga defaults to '15s'
-#
 #
 class icinga2::feature::statusdata(
   Enum['absent', 'present']          $ensure          = present,

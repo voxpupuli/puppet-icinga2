@@ -1,49 +1,49 @@
-# == Define: icinga2::object::checkcommand
+# @summary
+#   Manage Icinga 2 Host objects.
 #
-# Manage Icinga 2 Host objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
-#
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
-#
-# [*checkcommand_name*]
+# @param [String] checkcommand_name
 #   Title of the CheckCommand object.
 #
-# [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
+# @param [Array] import
+#   Sorted List of templates to include.
 #
-# [*command*]
+# @param [Optional[Variant[Array, String]]] command
 #   The command. This can either be an array of individual command arguments.
 #   Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh) takes care of parsing the command.
 #   When using the "arguments" attribute this must be an array. Can be specified as function for advanced implementations.
 #
-# [*env*]
+# @param [Optional[Hash]] env
 #   A dictionary of macros which should be exported as environment variables prior to executing the command.
 #
-# [*vars*]
+# @param [Optional[Icinga2::CustomAttributes]] vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# [*timeout*]
-#   The command timeout in seconds. Defaults to 60 seconds.
+# @param [Optional[Integer[1]]] timeout
+#   The command timeout in seconds.
 #
-# [*arguments*]
+# @param [Optional[Variant[Hash, String]]] arguments
 #   A dictionary of command arguments.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 10.
+# @param [Boolean] template
+#   Set to true creates a template instead of an object.
+#
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 #
 define icinga2::object::checkcommand(
   Stdlib::Absolutepath                $target,
   Enum['absent', 'present']           $ensure            = present,
-  Optional[String]                    $checkcommand_name = $title,
+  String                              $checkcommand_name = $title,
   Array                               $import            = [],
   Optional[Variant[Array, String]]    $command           = undef,
   Optional[Hash]                      $env               = undef,

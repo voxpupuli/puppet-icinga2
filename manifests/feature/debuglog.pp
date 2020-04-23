@@ -1,17 +1,11 @@
-# == Class: icinga2::feature::debuglog
+# @summary
+#   Configures the Icinga 2 feature mainlog.
 #
-# This module configures the Icinga 2 feature mainlog.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature mainlog, absent disables it.
 #
-# === Parameters
-#
-# [*ensure*]
-#   Set to present enables the feature mainlog, absent disables it. Defaults to present.
-#
-# [*path*]
-#   Absolute path to the log file. Default depends on platform:
-#   /var/log/icinga2/debug.log on Linux
-#   C:/ProgramData/icinga2/var/log/icinga2/debug.log on Windows
-#
+# @param [Stdlib::Absolutepath] path
+#   Absolute path to the log file.
 #
 class icinga2::feature::debuglog(
   Enum['absent', 'present'] $ensure   = present,

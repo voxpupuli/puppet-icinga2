@@ -1,60 +1,55 @@
-# == Define: icinga2::object::user
+# @summary
+#   Manage Icinga 2 user objects.
 #
-# Manage Icinga 2 user objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
+# @param [String] user_name
+#   Set the Icinga 2 name of the user object.
 #
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
-#
-# [*user_name*]
-#   Set the Icinga 2 name of the user object. Defaults to title of the define resource.
-#
-# [*display_name*]
+# @param [Optional[String]] display_name
 #   A short description of the user.
 #
-# [*email*]
+# @param [Optional[String]] email
 #   An email string for this user. Useful for notification commands.
 #
-# [*pager*]
+# @param [Optional[String]] pager
 #   A pager string for this user. Useful for notification commands.
 #
-# [*vars*]
+# @param [Optional[Icinga2::CustomAttributes]] vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# [*groups*]
+# @param [Optional[Array]] groups
 #   An array of group names.
 #
-# [*enable_notifications*]
+# @param [Optional[Boolean]] enable_notifications
 #   Whether notifications are enabled for this user.
 #
-# [*period*]
+# @param [Optional[String]] period
 #   The name of a time period which determines when a notification for this user
-#   should be triggered. Not set by default.
+#   should be triggered.
 #
-# [*types*]
-#   A set of type filters when this notification should be triggered. By default
+# @param [Optional[Array]] types
+#   A set of type filters when this notification should be triggered.
 #   everything is matched.
 #
-# [*states*]
-#   A set of state filters when this notification should be triggered. By
-#   default everything is matched.
+# @param [Optional[Array]] states
+#   A set of state filters when this notification should be triggered.
 #
-# [*template*]
-#   Set to true creates a template instead of an object. Defaults to false.
+# @param [Boolean] template
+#   Set to true creates a template instead of an object.
 #
-# [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
+# @param [Array] import
+#   Sorted List of templates to include.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 75.
-#
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::user (
   Stdlib::Absolutepath                $target,

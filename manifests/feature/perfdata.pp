@@ -1,47 +1,33 @@
-# == Class: icinga2::feature::perfdata
+# @summary
+#   Configures the Icinga 2 feature perfdata.
 #
-# This module configures the Icinga 2 feature perfdata.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature perfdata, absent disables it.
 #
-# === Parameters
+# @param [Optional[Stdlib::Absolutepath]] host_perfdata_path
+#   Absolute path to the perfdata file for hosts.
 #
-# [*ensure*]
-#   Set to present enables the feature perfdata, absent disables it. Defaults to present.
+# @param [Optional[Stdlib::Absolutepath]] service_perfdata_path
+#   Absolute path to the perfdata file for services.
 #
-# [*host_perfdata_path*]
-#   Absolute path to the perfdata file for hosts. Default depends on platform:
-#   /var/spool/icinga2/host-perfdata on Linux
-#   C:/ProgramData/icinga2/var/spool/icinga2/host-perfdata on Windows.
+# @param [Optional[Stdlib::Absolutepath]] host_temp_path
+#   Path to the temporary host file.
 #
-# [*service_perfdata_path*]
-#   Absolute path to the perfdata file for services. Default depends on platform:
-#   /var/spool/icinga2/service-perfdata on Linux
-#   C:/ProgramData/icinga2/var/spool/icinga2/service-perfdata on Windows.
+# @param [Optional[Stdlib::Absolutepath]] service_temp_path
+#   Path to the temporary service file.
 #
-# [*host_temp_path*]
-#   Path to the temporary host file. Defaults depends on platform:
-#   /var/spool/icinga2/tmp/host-perfdata on Linux
-#   C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata on Windows.
-#
-# [*service_temp_path*]
-#   Path to the temporary service file. Defaults depends on platform:
-#   /var/spool/icinga2/tmp/host-perfdata on Linux
-#   C:/ProgramData/icinga2/var/spool/icinga2/tmp/host-perfdata on Windows.
-#
-# [*host_format_template*]
+# @param [Optional[String]] host_format_template
 #   Host Format template for the performance data file.
-#   Icinga defaults to a template that's suitable for use with PNP4Nagios.
 #
-# [*service_format_template*]
+# @param [Optional[String]] service_format_template
 #   Service Format template for the performance data file.
-#   Icinga defaults to a template that's suitable for use with PNP4Nagios.
 #
-# [*rotation_interval*]
+# @param [Optional[Icinga2::Interval]] rotation_interval
 #   Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
-#   i.e. 1m or 15s. Icinga defaults to 30s.
+#   i.e. 1m or 15s.
 #
-# [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
-#
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::perfdata(
   Enum['absent', 'present']           $ensure                  = present,

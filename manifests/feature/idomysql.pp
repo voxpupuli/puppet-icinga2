@@ -1,119 +1,98 @@
-# == Class: icinga2::feature::idomysql
+# @summary
+#   Installs and configures the Icinga 2 feature ido-mysql.
 #
-# This module configures the Icinga 2 feature ido-mysql.
+# @example The ido-mysql featue requires an existing database and a user with permissions. This example uses the [puppetlabs/mysql](https://forge.puppet.com/puppetlabs/mysql) module.
+#   include mysql::server
 #
-# === Parameters
+#   mysql::db { 'icinga2':
+#     user     => 'icinga2',
+#     password => 'supersecret',
+#     host     => 'localhost',
+#     grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
+#   }
 #
-# [*ensure*]
-#   Set to present enables the feature ido-mysql, absent disables it. Defaults to present.
+#   class{ 'icinga2::feature::idomysql':
+#     user          => "icinga2",
+#     password      => "supersecret",
+#     database      => "icinga2",
+#     import_schema => true,
+#     require       => Mysql::Db['icinga2']
+#   }
 #
-# [*host*]
-#    MySQL database host address. Defaults to 'localhost'.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature ido-mysql, absent disables it.
 #
-# [*port*]
+# @param [Stdlib::Host] host
+#    MySQL database host address.
+#
+# @param [Optional[Stdlib::Port::Unprivileged]] port
 #    MySQL database port.
 #
-# [*socket_path*]
+# @param [Optional[Stdlib::Absolutepath]] socket_path
 #    MySQL socket path.
 #
-# [*user*]
-#    MySQL database user with read/write permission to the icinga database. Defaults to 'icinga'.
+# @param [String] user
+#    MySQL database user with read/write permission to the icinga database.
 #
-# [*password*]
+# @param [String] password
 #    MySQL database user's password.
 #
-# [*database*]
-#    MySQL database name. Defaults to 'icinga'.
+# @param [String] database
+#    MySQL database name.
 #
-# [*enable_ssl*]
+# @param [Boolean] enable_ssl
 #    Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
-#    Defaults to 'false'.
 #
-# [*ssl_key_path*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
 #   Location of the private key. Only valid if ssl is enabled.
 #
-# [*ssl_cert_path*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
 #   Location of the certificate. Only valid if ssl is enabled.
 #
-# [*ssl_cacert_path*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
 #   Location of the CA certificate. Only valid if ssl is enabled.
 #
-# [*ssl_key*]
+# @param [Optional[String]] ssl_key
 #   The private key in a base64 encoded string to store in spicified ssl_key_path file.
-#   Default depends on platform:
-#     /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Linux
-#     C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.key on Windows
 #   Only valid if ssl is enabled.
 #
-# [*ssl_cert*]
+# @param [Optional[String]] ssl_cert
 #   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
-#   Default depends on platform:
-#     /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Linux
-#     C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql.crt on Windows
 #   Only valid if ssl is enabled.
 #
-# [*ssl_cacert*]
+# @param [Optional[String]] ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
-#   Default depends on platform:
-#     /var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Linux
-#     C:/ProgramData/icinga2/var/lib/icinga2/certs/IdoMysqlConnection_ido-mysql_ca.crt on Windows
 #   Only valid if ssl is enabled.
 #
-# [*ssl_capath*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_capath
 #    MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
 #
-# [*ssl_cipher*]
+# @param [Optional[String]] ssl_cipher
 #    MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 #
-# [*table_prefix*]
-#   MySQL database table prefix. Icinga defaults to 'icinga_'.
+# @param [Optional[String]] table_prefix
+#   MySQL database table prefix.
 #
-# [*instance_name*]
-#   Unique identifier for the local Icinga 2 instance. Icinga defaults to 'default'.
+# @param [Optional[String]] instance_name
+#   Unique identifier for the local Icinga 2 instance.
 #
-# [*instance_description*]
+# @param [Optional[String]] instance_description
 #   Description for the Icinga 2 instance.
 #
-# [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to 'true'.
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
-# [*failover_timeout*]
-#   Set the failover timeout in a HA cluster. Must not be lower than 60s. Icinga defaults to '60s'.
+# @param [Optional[Icinga2::Interval]] failover_timeout
+#   Set the failover timeout in a HA cluster. Must not be lower than 60s.
 #
-# [*cleanup*]
+# @param [Optional[Hash[String,Icinga2::Interval]]] cleanup
 #   Hash with items for historical table cleanup.
 #
-# [*categories*]
+# @param [Optional[Array]] categories
 #   Array of information types that should be written to the database.
 #
-# [*import_schema*]
-#   Whether to import the MySQL schema or not. Defaults to 'false'.
-#
-# === Examples
-#
-# The ido-mysql featue requires an existing database and a user with permissions.
-# To install a database server, create databases and manage user permissions we recommend the puppetlabs/mysql module.
-# Here's an example how you create a MySQL database with the corresponding user with permissions by usng the
-# puppetlabs/mysql module:
-#
-# include icinga2
-# include mysql::server
-#
-# mysql::db { 'icinga2':
-#   user     => 'icinga2',
-#   password => 'supersecret',
-#   host     => 'localhost',
-#   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
-# }
-#
-# class{ 'icinga2::feature::idomysql':
-#   user          => "icinga2",
-#   password      => "supersecret",
-#   database      => "icinga2",
-#   import_schema => true,
-#   require       => Mysql::Db['icinga2']
-# }
-#
+# @param [Boolean] import_schema
+#   Whether to import the MySQL schema or not.
 #
 class icinga2::feature::idomysql(
   String                                      $password,

@@ -1,38 +1,34 @@
-# == Define: icinga2::object::endpoint
+# @summary
+#   Manage Icinga 2 endpoint objects.
 #
-# Manage Icinga 2 endpoint objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
+# @param [String] endpoint_name
+#   Set the Icinga 2 name of the endpoint object.
 #
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
-#
-# [*endpoint_name*]
-#   Set the Icinga 2 name of the endpoint object. Defaults to title of the define resource.
-#
-# [*host*]
+# @param [Optional[Stdlib::Host]] host
 #   Optional. The IP address of the remote Icinga 2 instance.
 #
-# [*port*]
-#   The service name/port of the remote Icinga 2 instance. Defaults to 5665.
+# @param [Optional[Stdlib::Port::Unprivileged]] port
+#   The service name/port of the remote Icinga 2 instance.
 #
-# [*log_duration*]
-#   Duration for keeping replay logs on connection loss. Defaults to 1d (86400 seconds).
+# @param [Optional[Icinga2::Interval]] log_duration
+#   Duration for keeping replay logs on connection loss.
 #   Attribute is specified in seconds. If log_duration is set to 0, replaying logs is disabled.
 #   You could also specify the value in human readable format like 10m for 10 minutes
 #   or 1h for one hour.
 #
-# [*target*]
+# @param [Optional[Stdlib::Absolutepath]] target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 40.
-#
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::endpoint(
   Enum['absent', 'present']             $ensure        = present,
-  Optional[String]                      $endpoint_name = $title,
+  String                                $endpoint_name = $title,
   Optional[Stdlib::Host]                $host          = undef,
   Optional[Stdlib::Port::Unprivileged]  $port          = undef,
   Optional[Icinga2::Interval]           $log_duration  = undef,

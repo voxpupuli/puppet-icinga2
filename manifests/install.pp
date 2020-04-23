@@ -1,16 +1,8 @@
-# == Class: icinga2::install
+# @summary
+#   This class handles the installation of the Icinga 2 package.
+#   On Windows only chocolatey is supported as installation source.
 #
-# This class handles the installation of the Icinga 2 package. On Windows only chocolatey is supported as installation
-# source.
-#
-# === Parameters
-#
-# This class does not provide any parameters.
-#
-# === Examples
-#
-# This class is private and should not be called by others than this module.
-#
+# @api private
 #
 class icinga2::install {
 

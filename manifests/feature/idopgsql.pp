@@ -1,75 +1,64 @@
-# == Class: icinga2::feature::idopgsql
+# @summary
+#   Installs and configures the Icinga 2 feature ido-pgsql.
 #
-# This module configures the Icinga 2 feature ido-pgsql.
+# @example The ido-pgsql featue requires an existing database and a user with permissions. This example uses the [puppetlab/postgresql](https://forge.puppet.com/puppetlabs/postgresql) module.
+#   include icinga2
+#   include postgresql::server
 #
-# === Parameters
+#   postgresql::server::db { 'icinga2':
+#     user     => 'icinga2',
+#     password => postgresql_password('icinga2', 'supersecret'),
+#   }
 #
-# [*ensure*]
-#   Set to present enables the feature ido-pgsql, absent disables it. Defaults to present.
+#   class{ 'icinga2::feature::idopgsql':
+#     user          => "icinga2",
+#     password      => "supersecret",
+#     database      => "icinga2",
+#     import_schema => true,
+#     require       => Postgresql::Server::Db['icinga2']
+#   }
 #
-# [*host*]
-#    PostgreSQL database host address. Defaults to 'localhost'.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature ido-pgsql, absent disables it.
 #
-# [*port*]
-#    PostgreSQL database port. Defaults to '5432'.
+# @param [Stdlib::Host] host
+#    PostgreSQL database host address.
 #
-# [*user*]
+# @param [Stdlib::Port::Unprivileged] port
+#    PostgreSQL database port.
+#
+# @param [String] user
 #    PostgreSQL database user with read/write permission to the icinga database.
-#    Defaults to 'icinga'.
 #
-# [*password*]
+# @param [String] password
 #    PostgreSQL database user's password.
 #
-# [*database*]
-#    PostgreSQL database name. Defaults to 'icinga'.
+# @param [String] database
+#    PostgreSQL database name.
 #
-# [*table_prefix*]
-#   PostgreSQL database table prefix. Icinga defaults to "icinga_".
+# @param [Optional[String]] table_prefix
+#   PostgreSQL database table prefix.
 #
-# [*instance_name*]
-#   Unique identifier for the local Icinga 2 instance. Icinga defaults to "default".
+# @param [Optional[String]] instance_name
+#   Unique identifier for the local Icinga 2 instance.
 #
-# [*instance_description*]
+# @param [Optional[String]] instance_description
 #   Description of the Icinga 2 instance.
 #
-# [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to 'true'.
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
-# [*failover_timeout*]
-#   Set the failover timeout in a HA cluster. Must not be lower than 60s. Icinga defaults to '60s'.
+# @param [Optional[Icinga2::Interval]] failover_timeout
+#   Set the failover timeout in a HA cluster. Must not be lower than 60s.
 #
-# [*cleanup*]
+# @param [Optional[Hash]] cleanup
 #   Hash with items for historical table cleanup.
 #
-# [*categories*]
+# @param [Optional[Array]] categories
 #   Array of information types that should be written to the database.
 #
-# [*import_schema*]
-#   Whether to import the PostgreSQL schema or not. Defaults to 'false'.
-#
-# === Examples
-#
-# The ido-pgsql featue requires an existing database and a user with permissions.
-# To install a database server, create databases and manage user permissions we recommend the puppetlabs-postgresql module.
-# Here's an example how you create a PostgreSQL database with the corresponding user with permissions by usng the
-# puppetlabs-postgresql module:
-#
-# include icinga2
-# include postgresql::server
-#
-# postgresql::server::db { 'icinga2':
-#   user     => 'icinga2',
-#   password => postgresql_password('icinga2', 'supersecret'),
-# }
-#
-# class{ 'icinga2::feature::idopgsql':
-#   user          => "icinga2",
-#   password      => "supersecret",
-#   database      => "icinga2",
-#   import_schema => true,
-#   require       => Postgresql::Server::Db['icinga2']
-# }
-#
+# @param [Boolean] import_schema
+#   Whether to import the PostgreSQL schema or not.
 #
 class icinga2::feature::idopgsql(
   String                         $password,
