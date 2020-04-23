@@ -1,64 +1,53 @@
-# == Define: icinga2::object
+# @summary
+#   Define resource to used by this module only.
 #
-# Private define resource to used by this module only.
+# @api private
 #
-# === Parameters
+# @param [Enum['present', 'absent']] ensure
+#   Set to present enables the object, absent disabled it.
 #
-# [*ensure*]
-#   Set to present enables the object, absent disabled it. Defaults to present.
+# @param [String] object_name
+#   Set the icinga2 name of the object.
 #
-# [*object_name*]
-#   Set the icinga2 name of the object. Defaults to title of the define resource.
-#
-# [*template*]
+# @param [Boolean] template
 #   Set to true will define a template otherwise an object.
-#   Ignored if apply is set. Defaults to false.
+#   Ignored if apply is set.
 #
-# [*apply*]
+# @param [Variant[Boolean, Pattern[/^.+\s+(=>\s+.+\s+)?in\s+.+$/]]] apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# [*prefix*]
-#   Set object_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+# @param [Variant[Boolean, String]] prefix
+#   Set object_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# [*apply_target*]
+# @param [Optional[Enum['Host', 'Service']]] apply_target
 #   Optional for an object type on which to target the apply rule. Valid values are `Host` and `Service`.
 #
-# [*import*]
-#   A sorted list of templates to import in this object. Defaults to an empty array.
+# @param [Array] import
+#   A sorted list of templates to import in this object.
 #
-# [*assign*]
+# @param [Array] assign
 #   Array of assign rules.
 #
-# [*ignore*]
+# @param [Array] ignore
 #   Array of ignore rules.
 #
-# [*attrs*]
+# @param [Hash] attrs
 #   Hash for the attributes of this object. Keys are the attributes and
-#   values are there values. Defaults to an empty Hash.
+#   values are there values.
 #
-# [*object_type*]
+# @param [String] object_type
 #   Icinga 2 object type for this object.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*order*]
+# @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-# [*attrs_list*]
+# @param [Array] attrs_list
 #   Array of all possible attributes for this object type.
-#
-# === Variables
-#
-# [*_constants*]
-#   Array of all possible bar words included globals, constants
-#   and the attribute names of the object.
-#
-# [*_attrs*]
-#   Hash of all atrributes if their values aren't undef.
-#
 #
 define icinga2::object(
   String                                                      $object_type,

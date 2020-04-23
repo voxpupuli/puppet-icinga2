@@ -1,16 +1,11 @@
-# == Class: icinga2::feature::command
+# @summary
+#   Configures the Icinga 2 feature command.
 #
-# This module configures the Icinga 2 feature command.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present to enable the feature command, absent to disabled it.
 #
-# === Parameters
-#
-# [*ensure*]
-#   Set to present to enable the feature command, absent to disabled it. Defaults to present.
-#
-# [*command_path*]
-#   Absolute path to the command pipe. Default depends on platform, /var/run/icinga2/cmd/icinga2.cmd on Linux
-#   and C:/ProgramData/icinga2/var/run/icinga2/cmd/icinga2.cmd on Windows.
-#
+# @param [Optional[Stdlib::Absolutepath]] command_path
+#   Absolute path to the command pipe.
 #
 class icinga2::feature::command(
   Enum['absent', 'present']         $ensure       = present,

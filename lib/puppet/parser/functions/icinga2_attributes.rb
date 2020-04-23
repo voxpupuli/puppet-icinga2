@@ -1,6 +1,12 @@
 require File.join(File.dirname(__FILE__), '../../..', 'puppet_x/icinga2/utils.rb')
 
 module Puppet::Parser::Functions
+  # @summary
+  #   Wrapper for config parser
+  #
+  # @return
+  #   Parsed config as string
+  #
   newfunction(:icinga2_attributes, :type => :rvalue) do |args|
     raise Puppet::ParseError, 'icinga2_atributes(): Must provide at least one argument.' if args.length > 4 || args.length < 1
 

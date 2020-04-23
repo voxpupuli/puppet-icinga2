@@ -1,95 +1,79 @@
-# == Class: icinga2::feature::influxdb
+# @summary
+#   Configures the Icinga 2 feature influxdb.
 #
-# This module configures the Icinga 2 feature influxdb.
+# @example
+#   class { 'icinga2::feature::influxdb':
+#     host     => "10.10.0.15",
+#     username => "icinga2",
+#     password => "supersecret",
+#     database => "icinga2"
+#   }
 #
-# === Parameters
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature influxdb, absent disables it.
 #
-# [*ensure*]
-#   Set to present enables the feature influxdb, absent disables it. Defaults to present.
+# @param [Optional[Stdlib::Host]] host
+#    InfluxDB host address.
 #
-# [*host*]
-#    InfluxDB host address. Icinga defaults to 127.0.0.1.
+# @param [Optional[Stdlib::Port::Unprivileged]] port
+#    InfluxDB HTTP port.
 #
-# [*port*]
-#    InfluxDB HTTP port. Icinga defaults to 8086.
+# @param [Optional[String]] database
+#    InfluxDB database name.
 #
-# [*database*]
-#    InfluxDB database name. Icinga defaults to icinga2.
-#
-# [*username*]
+# @param [Optional[String]] username
 #    InfluxDB user name.
 #
-# [*password*]
+# @param [Optional[String]] password
 #    InfluxDB user password.
 #
-# [*enable_ssl*]
+# @param [Optional[Boolean]] enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
-#    Icinga defaults to 'false'.
 #
-# [*ssl_key_path*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
 #   Location of the private key.
 #
-# [*ssl_cert_path*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
 #   Location of the certificate.
 #
-# [*ssl_cacert_path*]
+# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
 #   Location of the CA certificate.
 #
-# [*ssl_key*]
+# @param [Optional[String]] ssl_key
 #   The private key in a base64 encoded string to store in ssl_key_path file.
-#   Default depends on platform:
-#     /var/lib/icinga2/certs/InfluxdbWriter_influxdb.key on Linux
-#     C:/ProgramData/icinga2/var/lib/icinga2/certs/InfluxdbWriter_influxdb.key on Windows
 #
-# [*ssl_cert*]
+# @param [Optional[String]] ssl_cert
 #   The certificate in a base64 encoded string to store in ssl_cert_path file.
-#   Default depends on platform:
-#     /var/lib/icinga2/certs/InfluxdbWriter_influxdb.crt on Linux
-#     C:/ProgramData/icinga2/var/lib/icinga2/certs/InfluxdbWriter_influxdb.crt on Windows
 #
-# [*ssl_cacert*]
+# @param [Optional[String]] ssl_cacert
 #   The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
-#   Default depends on platform:
-#     /var/lib/icinga2/certs/InfluxdbWriter_influxdb_ca.crt on Linux
-#     C:/ProgramData/icinga2/var/lib/icinga2/certs/InfluxdbWriter_influxdb_ca.crt on Windows
 #
-# [*host_measurement*]
-#    The value of this is used for the measurement setting in host_template. Defaults to '$host.check_command$'.
+# @param [String] host_measurement
+#    The value of this is used for the measurement setting in host_template.
 #
-# [*host_tags*]
+# @param [Hash] host_tags
 #    Tags defined in this hash will be set in the host_template.
 #
-#  [*service_measurement*]
-#    The value of this is used for the measurement setting in host_template. Defaults to '$service.check_command$'.
+# @param [String] service_measurement
+#    The value of this is used for the measurement setting in host_template.
 #
-# [*service_tags*]
+# @param [Hash] service_tags
 #    Tags defined in this hash will be set in the service_template.
 #
-# [*enable_send_thresholds*]
-#    Whether to send warn, crit, min & max tagged data. Icinga defaults to 'false'.
+# @param [Optional[Boolean]] enable_send_thresholds
+#    Whether to send warn, crit, min & max tagged data.
 #
-# [*enable_send_metadata*]
-#    Whether to send check metadata e.g. states, execution time, latency etc. Icinga defaults to 'false'.
+# @param [Optional[Boolean]] enable_send_metadata
+#    Whether to send check metadata e.g. states, execution time, latency etc.
 #
-# [*flush_interval*]
-#    How long to buffer data points before transfering to InfluxDB. Icinga defaults to '10s'.
+# @param [Optional[Icinga2::Interval]] flush_interval
+#    How long to buffer data points before transfering to InfluxDB.
 #
-# [*flush_threshold*]
-#    How many data points to buffer before forcing a transfer to InfluxDB. Icinga defaults to '1024'.
+# @param [Optional[Integer[1]]] flush_threshold
+#    How many data points to buffer before forcing a transfer to InfluxDB.
 #
-# # [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
-#
-#
-# === Example
-#
-# class { 'icinga2::feature::influxdb':
-#   host     => "10.10.0.15",
-#   username => "icinga2",
-#   password => "supersecret",
-#   database => "icinga2"
-# }
-#
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::influxdb(
   Enum['absent', 'present']                $ensure                 = present,

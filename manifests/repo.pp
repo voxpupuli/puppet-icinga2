@@ -1,18 +1,7 @@
-# == Class: icinga2::repo
+# @summary
+#   This class manages the packages.icinga.com repository based on the operating system. Windows is not supported.
 #
-# This class manages the packages.icinga.com repository based on the operating system. Windows is not supported, as the
-# Icinga Project does not offer a chocolate repository.
-#
-# === Parameters
-#
-# This class does not provide any parameters.
-# To control the behaviour of this class, have a look at the parameters:
-# * icinga2::manage_repo
-#
-# === Examples
-#
-# This class is private and should not be called by others than this module.
-#
+# @api private
 #
 class icinga2::repo {
 

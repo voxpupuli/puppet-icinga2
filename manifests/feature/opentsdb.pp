@@ -1,21 +1,17 @@
-# == Class: icinga2::feature::opentsdb
+# @summary
+#   Configures the Icinga 2 feature opentsdb.
 #
-# This module configures the Icinga 2 feature opentsdb.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature opentsdb, absent disables it.
 #
-# === Parameters
+# @param [Optional[Stdlib::Host]] host
+#   OpenTSDB host address.
 #
-# [*ensure*]
-#   Set to present enables the feature opentsdb, absent disables it. Defaults to present.
+# @param [Optional[Stdlib::Port::Unprivileged]] port
+#   OpenTSDB port.
 #
-# [*host*]
-#   OpenTSDB host address. Icinga defaults to '127.0.0.1'.
-#
-# [*port*]
-#   OpenTSDB port. Icinga defaults to 4242.
-#
-# [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
-#
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::opentsdb(
   Enum['absent', 'present']               $ensure    = present,

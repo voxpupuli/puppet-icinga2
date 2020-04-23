@@ -1,32 +1,28 @@
-# == Define: icinga2::object::zone
+# @summary
+#   Manage Icinga 2 zone objects.
 #
-# Manage Icinga 2 zone objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
+# @param [String] zone_name
+#   Set the Icinga 2 name of the zone object.
 #
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
-#
-# [*zone_name*]
-#   Set the Icinga 2 name of the zone object. Defaults to title of the define resource.
-#
-# [*endpoints*]
+# @param [Optional[Array]] endpoints
 #   List of endpoints belong to this zone.
 #
-# [*parent*]
+# @param [Optional[String]] parent
 #   Parent zone to this zone.
 #
-# [*global*]
+# @param [Optional[Boolean]] global
 #   If set to true, a global zone is defined and the parameter endpoints
-#   and parent are ignored. Defaults to false.
+#   and parent are ignored.
 #
-# [*target*]
+# @param [Optional[Stdlib::Absolutepath]] target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# [*order*]
-#   String or integer to control the position in the target file, sorted alpha numeric. Defaults to 45.
-#
+# @param [Variant[String, Integer]] order
+#   String or integer to control the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::zone(
   Enum['absent', 'present']          $ensure    = present,

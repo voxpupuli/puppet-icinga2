@@ -1,27 +1,23 @@
-# == Class: icinga2::feature::gelf
+# @summary
+#   Configures the Icinga 2 feature gelf.
 #
-# This module configures the Icinga 2 feature gelf.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature gelf, absent disables it.
 #
-# === Parameters
+# @param [Optional[Stdlib::Host]] host
+#   GELF receiver host address.
 #
-# [*ensure*]
-#   Set to present enables the feature gelf, absent disables it. Defaults to present.
+# @param [Optional[Stdlib::Port::Unprivileged]] port
+#   GELF receiver port.
 #
-# [*host*]
-#   GELF receiver host address. Icinga defaults to '127.0.0.1'.
+# @param [Optional[String]] source
+#   Source name for this instance.
 #
-# [*port*]
-#   GELF receiver port. Icinga defaults to '12201'.
+# @param [Optional[Boolean]] enable_send_perfdata
+#   Enable performance data for 'CHECK RESULT' events.
 #
-# [*source*]
-#   Source name for this instance. Icinga defaults to 'icinga2'.
-#
-# [*enable_send_perfdata*]
-#   Enable performance data for 'CHECK RESULT' events. Icinga defaults to false.
-#
-# [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
-#
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::gelf(
   Enum['absent', 'present']                $ensure               = present,

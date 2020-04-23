@@ -1,120 +1,10 @@
-# == Class: icinga2::feature::api
+# @summary
+#   Configures the Icinga 2 feature api.
 #
-# This module configures the Icinga 2 feature api.
-#
-# === Parameters
-#
-# [*ensure*]
-#   Set to present enables the feature api, absent disabled it. Defaults to present.
-#
-# [*pki*]
-#   Provides multiple sources for the certificate, key and ca. Valid parameters are 'puppet', 'icinga2'  or 'none'.
-#   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
-#             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
-#   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
-#              Certificate from 'ca_host' using the icinga2 ticket mechanism.
-#              In case the 'ticket_salt' has been configured the ticket_id will be generated
-#              by the module in a custom function that imitates the icinga ticket generation.
-#              The 'ticket_id' parameter can be used to directly set an ticket_id.
-#   - none: Does nothing and you either have to manage the files yourself as file resources
-#           or use the ssl_key, ssl_cert, ssl_cacert parameters.
-#   Defaults to 'icinga2'.
-#
-# [*ssl_key*]
-#   The private key in a base64 encoded string to store in cert directory. This parameter
-#   requires pki to be set to 'none'.
-#
-# [*ssl_cert*]
-#   The certificate in a base64 encoded string to store in cert directory This parameter
-#    requires pki to be set to 'none'.
-#
-# [*ssl_cacert*]
-#   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
-#   requires pki to be set to 'none'.
-#
-# [*ssl_crl*]
-#   Optional location of the certificate revocation list.
-#
-# [*accept_config*]
-#   Accept zone configuration. Defaults to false.
-#
-# [*accept_commands*]
-#   Accept remote commands. Defaults to false.
-#
-# [*max_anonymous_clients*]
-#   Limit the number of anonymous client connections (not configured endpoints and signing requests).
-#
-# [*ca_host*]
-#   This host will be connected to request the certificate. Set this if you use the icinga2 pki.
-#
-# [*ca_port*]
-#   Port of the 'ca_host'. Defaults to 5665
-#
-# [*fingerprint*]
-#   Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
-#   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]'
-#   on your CA host.
-# 
-# [*ticket_salt*]
-#   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
-#   Defaults to constant TicketSalt.
-#
-# [*ticket_id*]
-#   If a ticket_id is given it will be used instead of generating an ticket_id.
-#   The ticket_id will be used only when requesting a certificate from the ca_host
-#   in case the pki is set to 'icinga2'.
-#
-# [*endpoints*]
-#   Hash to configure endpoint objects. Defaults to { 'NodeName' => {} }.
-#   NodeName is a icnga2 constant.
-#
-# [*zones*]
-#   Hash to configure zone objects. Defaults to { 'ZoneName' => {'endpoints' => ['NodeName']} }.
-#   ZoneName and NodeName are icinga2 constants.
-#
-# [*ssl_protocolmin*]
-#   Minimal TLS version to require. Default undef (e.g. "TLSv1.2")
-#
-# [*ssl_handshake_timeout*]
-#   TLS Handshake timeout. Icinga defaults to 10s.
-#
-# [*ssl_cipher_list*]
-#   List of allowed TLS ciphers, to finetune encryption. Default undef (e.g. "HIGH:MEDIUM:!aNULL:!MD5:!RC4")
-#
-# [*bind_host*]
-#   The IP address the api listener will be bound to. (e.g. 0.0.0.0)
-#
-# [*bind_port*]
-#   The port the api listener will be bound to. (e.g. 5665)
-#
-# [*access_control_allow_origin]
-#  Specifies an array of origin URLs that may access the API.
-#
-# [*access_control_allow_credentials]
-#  Indicates whether or not the actual request can be made using credentials. Defaults to `true`.
-#
-# [*access_control_allow_headers]
-#  Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
-#  Defaults to `Authorization`.
-#
-# [*access_control_allow_methods]
-#  Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
-#  Defaults to `GET, POST, PUT, DELETE`.
-#
-# [*environment*]
-#  Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
-#
-# === Examples
-#
-# Use the puppet certificates and key copy these files to the cert directory
-# named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName
-# is set to 'hostname'.
-#
+# @example Use the puppet certificates and key copy these files to the cert directory named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName is set to 'hostname'.
 #   include ::icinga2::feature::api
 #
-# To use your own certificates and key as file resources if the contant NodeName is
-# set to fqdn (default) do:
-#
+# @example To use your own certificates and key as file resources if the contant NodeName is set to fqdn (default) do:
 #   class { 'icinga2::feature::api':
 #     pki => 'none',
 #   }
@@ -131,8 +21,7 @@
 #   }
 #   ...
 #
-# If you like to manage the certificates and the key as strings in base64 encoded format:
-#
+# @example If you like to manage the certificates and the key as strings in base64 encoded format:
 #   class { 'icinga2::feature::api':
 #     pki         => 'none',
 #     ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
@@ -140,6 +29,119 @@
 #     ssl_cert    => '-----BEGIN CERTIFICATE----- ...',
 #   }
 #
+# @example Fine tune TLS settings
+#   class { '::icinga2::feature::api':
+#     ssl_protocolmin => 'TLSv1.2',
+#     ssl_cipher_list => 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
+#   }
+#
+# @example Transfer a CA certificate and key from an existing CA by using the file resource:
+#   include ::icinga2
+#
+#   file { '/var/lib/icinga2/ca/ca.crt':
+#     source => '...',
+#     tag    => 'icinga2::config::file',
+#   }
+#
+#   file { '/var/lib/icinga2/ca/ca.key':
+#     source => '...',
+#     tag    => 'icinga2::config::file',
+#   }
+#
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature api, absent disabled it.
+#
+# @param [Enum['ca', 'icinga2', 'none', 'puppet']] pki
+#   Provides multiple sources for the certificate, key and ca.
+#   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
+#             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
+#   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
+#              Certificate from 'ca_host' using the icinga2 ticket mechanism.
+#              In case the 'ticket_salt' has been configured the ticket_id will be generated
+#              by the module in a custom function that imitates the icinga ticket generation.
+#              The 'ticket_id' parameter can be used to directly set an ticket_id.
+#   - none: Does nothing and you either have to manage the files yourself as file resources
+#           or use the ssl_key, ssl_cert, ssl_cacert parameters.
+#
+# @param [Optional[String]] ssl_key
+#   The private key in a base64 encoded string to store in cert directory. This parameter
+#   requires pki to be set to 'none'.
+#
+# @param [Optional[String]] ssl_cert
+#   The certificate in a base64 encoded string to store in cert directory This parameter
+#    requires pki to be set to 'none'.
+#
+# @param [Optional[String]] ssl_cacert
+#   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
+#   requires pki to be set to 'none'.
+#
+# @param [Optional[Stdlib::Absolutepath]] ssl_crl
+#   Optional location of the certificate revocation list.
+#
+# @param [Optional[Boolean]] accept_config
+#   Accept zone configuration.
+#
+# @param [Optional[Boolean]] accept_commands
+#   Accept remote commands.
+#
+# @param [Optional[Integer[0]]] max_anonymous_clients
+#   Limit the number of anonymous client connections (not configured endpoints and signing requests).
+#
+# @param [Optional[Stdlib::Host]] ca_host
+#   This host will be connected to request the certificate. Set this if you use the icinga2 pki.
+#
+# @param [Stdlib::Port::Unprivileged] ca_port
+#   Port of the 'ca_host'.
+#
+# @param [Optional[Icinga2::Fingerprint]] fingerprint
+#   Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
+#   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]'
+#   on your CA host.
+# 
+# @param [String] ticket_salt
+#   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
+#   Defaults to constant TicketSalt.
+#
+# @param [Optional[String]] ticket_id
+#   If a ticket_id is given it will be used instead of generating an ticket_id.
+#   The ticket_id will be used only when requesting a certificate from the ca_host
+#   in case the pki is set to 'icinga2'.
+#
+# @param [Hash[String, Hash]] endpoints
+#   Hash to configure endpoint objects. `NodeName` is a icnga2 constant.
+#
+# @param [Hash[String, Hash]] zones
+#   Hash to configure zone objects. `ZoneName` and `NodeName` are icinga2 constants.
+#
+# @param [Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2']]] ssl_protocolmin
+#   Minimal TLS version to require.
+#
+# @param [Optional[Icinga2::Interval]] ssl_handshake_timeout
+#   TLS Handshake timeout.
+#
+# @param [Optional[String]] ssl_cipher_list
+#   List of allowed TLS ciphers, to finetune encryption.
+#
+# @param [Optional[Stdlib::Host]] bind_host
+#   The IP address the api listener will be bound to.
+#
+# @param [Optional[Stdlib::Port::Unprivileged]] bind_port
+#   The port the api listener will be bound to.
+#
+# @param [Optional[Array[String]]] access_control_allow_origin
+#  Specifies an array of origin URLs that may access the API.
+#
+# @param [Optional[Boolean]] access_control_allow_credentials
+#  Indicates whether or not the actual request can be made using credentials.
+#
+# @param [Optional[String]] access_control_allow_headers
+#  Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
+#
+# @param [Optional[Array[Enum['GET', 'POST', 'PUT', 'DELETE']]]] access_control_allow_methods
+#  Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
+#
+# @param [Optional[String]] environment
+#  Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 #
 class icinga2::feature::api(
   Enum['absent', 'present']                               $ensure                           = present,

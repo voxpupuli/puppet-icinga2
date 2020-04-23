@@ -1,6 +1,10 @@
 require File.join(File.dirname(__FILE__), '../../..', 'puppet_x/icinga2/pbkdf2.rb')
 
 module Puppet::Parser::Functions
+  # @summary
+  #   Generates a auth ticket to get a certificate
+  # @return
+  #   The ticket to get a certificate
   newfunction(:icinga2_ticket_id, :type => :rvalue) do |args|
     raise Puppet::ParseError, 'Must provide exactly two arguments to icinga2_ticket_id' if args.length != 2
 

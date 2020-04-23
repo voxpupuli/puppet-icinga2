@@ -1,77 +1,73 @@
-# == Define: icinga2::object::scheduleddowntime
+# @summary
+#   Manage Icinga 2 scheduleddowntime objects.
 #
-# Manage Icinga 2 scheduleddowntime objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
+# @param [String] scheduleddowntime_name
+#   Set the Icinga 2 name of the scheduleddowntime object.
 #
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
+# @param [Optional[String]] host_name
+#   The name of the host this comment belongs to.
 #
-# [*scheduleddowntime_name*]
-#   Set the Icinga 2 name of the scheduleddowntime object. Defaults to title of the define resource.
+# @param [Optional[String]] service_name
+#   The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
 #
-# [*host_name*]
-#     The name of the host this comment belongs to.
+# @param [Optional[String]] author
+#   The author's name.
 #
-# [*service_name*]
-#     The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+# @param [Optional[String]] comment
+#   The comment text.
 #
-# [*author*]
-#     The author's name.
+# @param [Optional[Boolean]] fixed
+#   Whether this is a fixed downtime.
 #
-# [*comment*]
-#     The comment text.
+# @param [Optional[Icinga2::Interval]] duration
+#   The duration as number.
 #
-# [*fixed*]
-#     Whether this is a fixed downtime. Defaults to true.
+# @param [Optional[Hash]] ranges
+#   A dictionary containing information which days and durations apply to this timeperiod.
 #
-# [*duration*]
-#     The duration as number.
-#
-# [*ranges*]
-#     A dictionary containing information which days and durations apply to this timeperiod.
-#
-# [*apply*]
+# @param [Variant[Boolean, String]] apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# [*prefix*]
-#   Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+# @param [Variant[Boolean, String]] prefix
+#   Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# [*apply_target*]
-#   An object type on which to target the apply rule. Valid values are `Host` and `Service`. Defaults to `Host`.
+# @param [Enum['Host', 'Service']] apply_target
+#   An object type on which to target the apply rule. Valid values are `Host` and `Service`.
 #
-# [*assign*]
+# @param [Array] assign
 #   Assign user group members using the group assign rules.
 #
-# [*ignore*]
+# @param [Array] ignore
 #   Exclude users using the group ignore rules.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 90.
-#
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::scheduleddowntime (
-  Stdlib::Absolutepath                          $target,
-  Enum['absent', 'present']                     $ensure                 = present,
-  String                                        $scheduleddowntime_name = $title,
-  Optional[String]                              $host_name              = undef,
-  Optional[String]                              $service_name           = undef,
-  Optional[String]                              $author                 = undef,
-  Optional[String]                              $comment                = undef,
-  Optional[Boolean]                             $fixed                  = undef,
-  Optional[Pattern[/^\d+(\.\d+)?[dhms]?$/]]     $duration               = undef,
-  Optional[Hash]                                $ranges                 = undef,
-  Variant[Boolean, String]                      $apply                  = false,
-  Variant[String, Boolean]                      $prefix                 = false,
-  Enum['Host', 'Service']                       $apply_target           = 'Host',
-  Array                                         $assign                 = [],
-  Array                                         $ignore                 = [],
-  Variant[String, Integer]                      $order                  = 90,
+  Stdlib::Absolutepath            $target,
+  Enum['absent', 'present']       $ensure                 = present,
+  String                          $scheduleddowntime_name = $title,
+  Optional[String]                $host_name              = undef,
+  Optional[String]                $service_name           = undef,
+  Optional[String]                $author                 = undef,
+  Optional[String]                $comment                = undef,
+  Optional[Boolean]               $fixed                  = undef,
+  Optional[Icinga2::Interval]     $duration               = undef,
+  Optional[Hash]                  $ranges                 = undef,
+  Variant[Boolean, String]        $apply                  = false,
+  Variant[Boolean, String]        $prefix                 = false,
+  Enum['Host', 'Service']         $apply_target           = 'Host',
+  Array                           $assign                 = [],
+  Array                           $ignore                 = [],
+  Variant[String, Integer]        $order                  = 90,
 ){
 
   # compose attributes

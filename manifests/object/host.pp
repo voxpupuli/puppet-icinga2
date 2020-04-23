@@ -1,115 +1,111 @@
-# == Define: icinga2::object::host
+# @summary
+#   Manage Icinga 2 Host objects.
 #
-# Manage Icinga 2 Host objects.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# === Parameters
-#
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
-#
-# [*host_name*]
+# @param [String] host_name
 #   Hostname of the Host object.
 #
-# [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
+# @param [Array] import
+#   Sorted List of templates to include.
 #
-# [*display_name*]
+# @param [Optional[String]] display_name
 #   A short description of the host (e.g. displayed by external interfaces instead of the name if set).
 #
-# [*address*]
+# @param [Optional[Stdlib::Host]] address
 #   The host's address v4.
 #
-# [*address6*]
+# @param [Optional[Stdlib::Host]] address6
 #   The host's address v6.
 #
-# [*vars*]
+# @param [Optional[Icinga2::CustomAttributes]] vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# [*groups*]
+# @param [Optional[Array]] groups
 #   A list of host groups this host belongs to.
 #
-# [*check_command*]
+# @param [Optional[String]] check_command
 #   The name of the check command.
 #
-# [*max_check_attempts*]
-#   The number of times a host is re-checked before changing into a hard state. Defaults to 3.
+# @param [Optional[Integer[1]]] max_check_attempts
+#   The number of times a host is re-checked before changing into a hard state.
 #
-# [*check_period*]
-#   The name of a time period which determines when this host should be checked. Not set by default.
+# @param [Optional[String]] check_period
+#   The name of a time period which determines when this host should be checked.
 #
-# [*check_timeout*]
+# @param [Optional[Icinga2::Interval]] check_timeout
 #    Check command timeout in seconds. Overrides the CheckCommand's timeout attribute.
 #
-# [*check_interval*]
-#   The check interval (in seconds). This interval is used for checks when the host is in a HARD state. Defaults to 5 minutes.
+# @param [Optional[Icinga2::Interval]] check_interval
+#   The check interval (in seconds). This interval is used for checks when the host is in a HARD state.
 #
-# [*retry_interval*]
-#   The retry interval (in seconds). This interval is used for checks when the host is in a SOFT state. Defaults to 1 minute.
+# @param [Optional[Icinga2::Interval]] retry_interval
+#   The retry interval (in seconds). This interval is used for checks when the host is in a SOFT state.
 #
-# [*enable_notifications*]
-#   Whether notifications are enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_notifications
+#   Whether notifications are enabled.
 #
-# [*enable_active_checks*]
-#   Whether active checks are enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_active_checks
+#   Whether active checks are enabled.
 #
-# [*enable_passive_checks*]
-#   Whether passive checks are enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_passive_checks
+#   Whether passive checks are enabled.
 #
-# [*enable_event_handler*]
-#   Enables event handlers for this host. Defaults to true.
+# @param [Optional[Boolean]] enable_event_handler
+#   Enables event handlers for this host.
 #
-# [*enable_flapping*]
-#   Whether flap detection is enabled. Defaults to false.
+# @param [Optional[Boolean]] enable_flapping
+#   Whether flap detection is enabled.
 #
-# [*enable_perfdata*]
-#   Whether performance data processing is enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_perfdata
+#   Whether performance data processing is enabled.
 #
-# [*event_command*]
+# @param [Optional[String]] event_command
 #   The name of an event command that should be executed every time the host's
 #   state changes or the host is in a SOFT state.
 #
-# [*flapping_threshold_low*]
-#   Flapping lower bound in percent for a host to be considered not flapping. Icinga defaults to 25.0.
+# @param [Optional[Integer[1]]] flapping_threshold_low
+#   Flapping lower bound in percent for a host to be considered not flapping.
 #
-# [*flapping_threshold_high*]
-#   Flapping upper bound in percent for a host to be considered flapping. Icinga defaults to 30.0.
+# @param [Optional[Integer[1]]] flapping_threshold_high
+#   Flapping upper bound in percent for a host to be considered flapping.
 #
-# [*volatile*]
+# @param [Optional[Boolean]] volatile
 #   The volatile setting enables always HARD state types if NOT-OK state changes occur.
 #
-# [*zone*]
+# @param [Optional[String]] zone
 #   The zone this object is a member of.
 #
-# [*command_endpoint*]
+# @param [Optional[String]] command_endpoint
 #   The endpoint where commands are executed on.
 #
-# [*notes*]
+# @param [Optional[String]] notes
 #   Notes for the host.
 #
-# [*notes_url*]
+# @param [Optional[String]] notes_url
 #   Url for notes for the host (for example, in notification commands).
 #
-# [*action_url*]
+# @param [Optional[String]] action_url
 #   Url for actions for the host (for example, an external graphing tool).
 #
-# [*icon_image*]
+# @param [Optional[Stdlib::Absolutepath]] icon_image
 #   Icon image for the host. Used by external interfaces only.
 #
-# [*icon_image_alt*]
+# @param [Optional[String]] icon_image_alt
 #   Icon image description for the host. Used by external interface only.
 #
-# [*template*]
-#   Set to true creates a template instead of an object. Defaults to false.
+# @param [Boolean] template
+#   Set to true creates a template instead of an object.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 50.
-#
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::host(
   Stdlib::Absolutepath                $target,

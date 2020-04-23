@@ -1,137 +1,151 @@
-# == Define: icinga2::object::service
+# @summary
+#   Manage Icinga 2 service objects.
 #
-# Manage Icinga 2 service objects.
+# @example # A service `ping` is applied to all hosts with a valid ipv4 address.
+#   ::icinga2::object::service { 'ping4':
+#     import        => ['generic-service'],
+#     apply         => true,
+#     check_command => 'ping',
+#     assign        => ['host.address'],
+#     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+#   }
 #
-# === Parameters
+# @example A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
+#   ::icinga2::object::service { 'linux_disks':
+#     import           => ['generic-service'],
+#     apply            =>  'disk_name => config in host.vars.disks',
+#     check_command    => 'disk',
+#     command_endpoint => 'host.name',
+#     vars             => '+ config',
+#     assign           => ['host.vars.os == Linux'],
+#     ignore           => ['host.vars.noagent'],
+#     target           => '/etc/icinga2/zones.d/global-templates/services.conf',
+#   }
 #
-# [*ensure*]
-#   Set to present enables the object, absent disables it. Defaults to present.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the object, absent disables it.
 #
-# [*service_name*]
-#   Set the Icinga 2 name of the service object. Defaults to title of the define resource.
+# @param [String] service_name
+#   Set the Icinga 2 name of the service object.
 #
-# [*display_name*]
+# @param [Optional[String]] display_name
 #   A short description of the service.
 #
-# [*host_name*]
+# @param [Optional[String]] host_name
 #   The host this service belongs to. There must be a Host object with
 #   that name.
 #
-# [*name*]
-#   The service name. Must be unique on a per-host basis (Similar to the
-#   service_description attribute in Icinga 1.x).
-#
-# [*groups*]
+# @param [Optional[Array]] groups
 #   The service groups this service belongs to.
 #
-# [*vars*]
+# @param [Optional[Icinga2::CustomAttributes]] vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# [*check_command*]
+# @param [Optional[String]] check_command
 #   The name of the check command.
 #
-# [*max_check_attempts*]
+# @param [Optional[Integer[1]]] max_check_attempts
 #   The number of times a service is re-checked before changing into a hard
-#   state. Defaults to 3.
+#   state.
 #
-# [*check_period*]
+# @param [Optional[String]] check_period
 #   The name of a time period which determines when this service should be
-#   checked. Not set by default.
+#   checked.
 #
-# [*check_timeout*]
+# @param [Optional[Icinga2::Interval]] check_timeout
 #   Check command timeout in seconds. Overrides the CheckCommand's timeout
 #   attribute.
 #
-# [*check_interval*]
+# @param [Optional[Icinga2::Interval]] check_interval
 #   The check interval (in seconds). This interval is used for checks when the
-#   service is in a HARD state. Defaults to 5 minutes.
+#   service is in a HARD state.
 #
-# [*retry_interval*]
+# @param [Optional[Icinga2::Interval]] retry_interval
 #   The retry interval (in seconds). This interval is used for checks when the
-#   service is in a SOFT state. Defaults to 1 minute.
+#   service is in a SOFT state.
 #
-# [*enable_notifications*]
-#   Whether notifications are enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_notifications
+#   Whether notifications are enabled.
 #
-# [*enable_active_checks*]
-#   Whether active checks are enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_active_checks
+#   Whether active checks are enabled.
 #
-# [*enable_passive_checks*]
-#   Whether passive checks are enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_passive_checks
+#   Whether passive checks are enabled.
 #
-# [*enable_event_handler*]
-#   Enables event handlers for this host. Defaults to true.
+# @param [Optional[Boolean]] enable_event_handler
+#   Enables event handlers for this host.
 #
-# [*enable_flapping*]
-#   Whether flap detection is enabled. Defaults to false.
+# @param [Optional[Boolean]] enable_flapping
+#   Whether flap detection is enabled.
 #
-# [*enable_perfdata*]
-#   Whether performance data processing is enabled. Defaults to true.
+# @param [Optional[Boolean]] enable_perfdata
+#   Whether performance data processing is enabled.
 #
-# [*event_command*]
+# @param [Optional[String]] event_command
 #   The name of an event command that should be executed every time the
 #   service's state changes or the service is in a SOFT state.
 #
-# [*flapping_threshold_low*]
-#   Flapping lower bound in percent for a host to be considered not flapping. Icinga defaults to 25.0.
+# @param [Optional[Integer[1]]] flapping_threshold_low
+#   Flapping lower bound in percent for a host to be considered not flapping.
 #
-# [*flapping_threshold_high*]
-#   Flapping upper bound in percent for a host to be considered flapping. Icinga defaults to 30.0.
+# @param [Optional[Integer[1]]] flapping_threshold_high
+#   Flapping upper bound in percent for a host to be considered flapping.
 #
-# [*volatile*]
+# @param [Optional[Boolean]] volatile
 #   The volatile setting enables always HARD state types if NOT-OK state changes
 #   occur.
 #
-# [*zone*]
+# @param [Optional[String]] zone
 #   The zone this object is a member of.
 #
-# [*command_endpoint*]
+# @param [Optional[String]] command_endpoint
 #   The endpoint where commands are executed on.
 #
-# [*notes*]
+# @param [Optional[String]] notes
 #   Notes for the service.
 #
-# [*notes_url*]
+# @param [Optional[String]] notes_url
 #   Url for notes for the service (for example, in notification commands).
 #
-# [*action_url*]
+# @param [Optional[String]] action_url
 #   Url for actions for the service (for example, an external graphing tool).
 #
-# [*icon_image*]
+# @param [Optional[Stdlib::Absolutepath]] icon_image
 #   Icon image for the service. Used by external interfaces only.
 #
-# [*icon_image_alt*]
+# @param [Optional[String]] icon_image_alt
 #   Icon image description for the service. Used by external interface only.
 #
-# [*template*]
-#   Set to true creates a template instead of an object. Defaults to false.
+# @param [Boolean] template
+#   Set to true creates a template instead of an object.
 #
-# [*apply*]
+# @param [Variant[Boolean, String]] apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-#   i.e. 'vhost => config in host.vars.vhosts'. Defaults to false.
+#   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# [*prefix*]
-#   Set service_name as prefix in front of 'apply for'. Only effects if apply is a string. Defaults to false.
+# @param [Variant[Boolean, String]] prefix
+#   Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# [*assign*]
+# @param [Array] assign
 #   Assign user group members using the group assign rules.
 #
-# [*ignore*]
+# @param [Array] ignore
 #   Exclude users using the group ignore rules.
 #
-# [*import*]
-#   Sorted List of templates to include. Defaults to an empty list.
+# @param [Array] import
+#   Sorted List of templates to include.
 #
-# [*target*]
+# @param [Stadlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# [*order*]
-#   String or integer to set the position in the target file, sorted alpha numeric. Defaults to 60.
+# @param [Variant[String, Integer]] order
+#   String or integer to set the position in the target file, sorted alpha numeric.
 #
-# === Examples
+# @example
 #
 # A service `ping` is applied to all hosts with a valid ipv4 address.
 #
@@ -158,8 +172,6 @@
 #     target           => '/etc/icinga2/zones.d/global-templates/services.conf',
 #   }
 #
-#
-
 define icinga2::object::service (
   Stdlib::Absolutepath                       $target,
   Enum['absent', 'present']                  $ensure                  = present,

@@ -1,7 +1,7 @@
-# == Define: icinga2::feature
+# @summary
+#   Private define resource to used by this module only.
 #
-# Private define resource to used by this module only.
-#
+# @api private
 #
 define icinga2::feature(
   Enum['absent', 'present'] $ensure  = present,

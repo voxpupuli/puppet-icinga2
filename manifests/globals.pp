@@ -1,83 +1,67 @@
-# == Class: icinga2::globals
+# @summary
+#   This class loads the default parameters by doing a hiera lookup.
 #
-# This class loads the default parameters by doing a hiera lookup.
+# @note This parameters depend on the os plattform. Changes maybe will break the functional capability of the supported plattforms and versions. Please only do changes when you know what you're doing.
 #
-# NOTE: This parameters depend on the os plattform. Changes maybe will
-#       break the functional capability of the supported plattforms and versions.
-#       Please only do changes when you know what you're doing.
+# @api private
 #
-# === Parameters
-#
-# [*package_name*]
+# @param [String] package_name
 #   The name of the icinga package to manage.
 #
-# [*service_name*]
+# @param [String] service_name
 #   The name of the icinga service to manage.
 #
-# [*user*]
+# @param [Optional[String]] user
 #   User as the icinga process runs.
 #   CAUTION: This does not manage the user context for the runnig icinga 2 process!
 #   The parameter is only used for ownership of files or directories.
 #   
-# [*group*]
+# @param [Optional[String]] group
 #   Group as the icinga process runs.
 #   CAUTION: This does not manage the group context for the runnig icinga 2 process!
 #   The parameter is only used for group membership of files or directories.
 #
-# [*ido_mysql_package_name*]
+# @param [Optional[String]] ido_mysql_package_name
 #   The name of the icinga package that's needed for MySQL.
 #   
-# [*ido_mysql_schema*]
+# @param [String] ido_mysql_schema
 #   Path to the MySQL schema to import.
 #
-# [*ido_pgsql_package_name*]
+# @param [Optional[String]] ido_pgsql_package_name
 #   The name of the icinga package that's needed for Postrgesql.
 #   
-# [*ido_pgsql_schema*]
+# @param [String] ido_pgsql_schema
 #   Path to the Postgresql schema to import.
 #
-# [*icinga2_bin*]
+# @param [Stdlib::Absolutepath] icinga2_bin
 #   Path to the icinga2 binary.
 #
-# [*conf_dir*]
+# @param [Stdlib::Absolutepath] conf_dir
 #   Location of the configuration directory of Icinga.
 #
-# [*lib_dir*]
+# @param [Stdlib::Absolutepath] lib_dir
 #   Path to the directory contained the system libs.
 #
-# [*log_dir*]
+# @param [Stdlib::Absolutepath] log_dir
 #   Location to store Icinga log files.
 #
-# [*run_dir*]
+# @param [Stdlib::Absolutepath] run_dir
 #   Runtime directory of Icinga.
 #
-# [*spool_dir*]
+# @param [Stdlib::Absolutepath] spool_dir
 #   Path to spool files of Icinga.
 #
-# [*cache_dir*]
+# @param [Stdlib::Absolutepath] cache_dir
 #   Path to cache files of Icinga.
 #
-# [*cert_dir*]
+# @param [Stdlib::Absolutepath] cert_dir
 #   Path to the directory where Icinga stores keys and certificates.
 #
-# [*ca_dir*]
+# @param [Stdlib::Absolutepath] ca_dir
 #   Path to CA.
 #
-# [*reserved_words*]
-#   Reserved words of the Icinga DSL. These words are not quoted by the
-#   parser (function icinga2_attributes) of this module.
-
-# [*service_reload*]
+# @param [Optional[String]] service_reload
 #   How to do a reload of the Icinga process.
-#
-# [*constants*]
-#   Set default constants.
-#
-#
-# === Examples
-#
-# This class is private and should not be called by others than this module.
-#
 #
 class icinga2::globals(
   String                 $package_name,

@@ -1,21 +1,14 @@
-# == Class: icinga2::feature::compatlog
+# @summary
+#   Configures the Icinga 2 feature compatlog.
 #
-# This module configures the Icinga 2 feature compatlog.
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature compatlog, absent disabled it.
 #
-# === Parameters
+# @param [Optional[Stdlib::Absolutepath]] log_dir
+#   Absolute path to the log directory.
 #
-# [*ensure*]
-#   Set to present enables the feature compatlog, absent disabled it. Defaults to present.
-#
-# [*log_dir*]
-#   Absolute path to the log directory. Default depends on platform,
-#   /var/log/icinga2/compat on Linux
-#   and C:/ProgramData/icinga2/var/log/icinga2/compat on Windows.
-#
-# [*rotation_method*]
-#   Sets how often should the log file be rotated. Valid options are:
-#   HOURLY, DAILY, WEEKLY or MONTHLY. Icinga defaults to DAILY.
-#
+# @param [Optional[Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY']]] rotation_method
+#   Sets how often should the log file be rotated.
 #
 class icinga2::feature::compatlog(
   Enum['absent', 'present']                                 $ensure          = present,

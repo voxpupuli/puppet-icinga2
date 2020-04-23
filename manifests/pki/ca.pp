@@ -1,36 +1,24 @@
-# == Class: icinga2::pki::ca
+# @summary
+#   This class provides multiple ways to create the CA used by Icinga 2.
 #
-# This class provides multiple ways to create the CA used by Icinga 2. By default it will create
-# a CA by using the icinga2 CLI. If you want to use your own CA you will either have to transfer
-# it by using a file resource or you can set the content of your certificat and key in this class.
+# @example Let Icinga 2 generate a CA for you:
+#   include icinga2
+#   include icinga2::pki::ca
 #
-# The certificate of the icinga2 instance itself will be created, is signed by the new CA and
-# has the CN based on the constant NodeName.
+# @example Set the content of CA certificate and key:
+#   include icinga2
 #
-# === Parameters
+#   class { 'icinga2::pki::ca':
+#     ca_cert => '-----BEGIN CERTIFICATE----- ...',
+#     ca_key  => '-----BEGIN RSA PRIVATE KEY----- ...',
+#   }
 #
-# [*ca_cert*]
+# @param [Optional[String]] ca_cert
 #   Content of the CA certificate. If this is unset, a certificate will be generated with the
 #   Icinga 2 CLI.
 #
-# [*ca_key*]
+# @param [Optional[String]] ca_key
 #   Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
-#
-# === Examples
-#
-# Let Icinga 2 generate a CA for you:
-#
-# include icinga2
-# class { 'icinga2::pki::ca': }
-#
-# Set the content of CA certificate and key:
-#
-# include icinga2
-# class { 'icinga2::pki::ca':
-#   ca_cert => '-----BEGIN CERTIFICATE----- ...',
-#   ca_key  => '-----BEGIN RSA PRIVATE KEY----- ...',
-# }
-#
 #
 class icinga2::pki::ca(
   Optional[String]               $ca_cert         = undef,

@@ -1,35 +1,35 @@
-# == Class: icinga2::feature::graphite
+# @summary
+#   Configures the Icinga 2 feature graphite.
 #
-# This module configures the Icinga 2 feature graphite.
+# @example
+#   class { '::icinga2::feature::graphite':
+#     host                   => '10.10.0.15',
+#     port                   => 2003,
+#     enable_send_thresholds => true,
+#     enable_send_metadata   => true,
+#   }
 #
-# === Parameters
+# @param [Enum['absent', 'present']] ensure
+#   Set to present enables the feature graphite, absent disabled it.
 #
-# [*ensure*]
-#   Set to present enables the feature graphite, absent disabled it. Defaults to present.
+# @param [Optional[Stdlib::Host]] host
+#   Graphite Carbon host address.
 #
-# [*host*]
-#   Graphite Carbon host address. Icinga defaults to '127.0.0.1'.
+# @param [Optional[Stdlib::Port::Unprivileged]] port
+#   Graphite Carbon port.
 #
-# [*port*]
-#   Graphite Carbon port. Icinga defaults to 2003.
-#
-# [*host_name_template*]
+# @param [Optional[String]] host_name_template
 #   Template for metric path of hosts.
-#   Icinga defaults to 'icinga2.$host.name$.host.$host.check_command$'.
 #
-# [*service_name_template*]
+# @param [Optional[String]] service_name_template
 #   Template for metric path of services.
-#   Icinga defaults to 'icinga2.$host.name$.services.$service.name$.$service.check_command$'.
 #
-# [*enable_send_thresholds*]
-#   Send threholds as metrics. Icinga defaults to false.
+# @param [Optional[Boolean]] enable_send_thresholds
 #
-# [*enable_send_metadata*]
-#   Send metadata as metrics. Icinga defaults to false.
+# @param [Optional[Boolean]] enable_send_metadata
 #
-# [*enable_ha*]
-#   Enable the high availability functionality. Only valid in a cluster setup. Icinga defaults to false.
-#
+# @param [Optional[Boolean]] enable_ha
+#   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::graphite(
   Enum['absent', 'present']                $ensure                 = present,

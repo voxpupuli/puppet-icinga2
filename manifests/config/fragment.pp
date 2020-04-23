@@ -1,19 +1,39 @@
-# == Define: icinga2::config::fragment
+# @summary
+#   Set a code fragment in a target configuration file.
 #
-# Set a code fragment in a target configuration file.
+# @example To create a custom configuration add content to a specified target at the position you set in the order parameter. You can use also templates to add content.
+#   include ::icinga2
 #
-# === Parameters
+#   icinga2::object::service { 'load':
+#     display_name  => 'Load',
+#     apply         => true,
+#     check_command => 'load',
+#     assign        => ['vars.os == Linux'],
+#     target        => '/etc/icinga2/conf.d/service_load.conf',
+#     order         => 30,
+#   }
 #
-# [*content*]
+#   icinga2::config::fragment { 'load-function':
+#     target => '/etc/icinga2/conf.d/service_load.conf',
+#     order => 10,
+#     content => 'vars.load_wload1 = {{
+#       if (get_time_period("backup").is_inside) {
+#         return 20
+#       } else {
+#         return 5
+#       }
+#     }}',
+#   }
+#
+# @param [String] content
 #   Content to insert in file specified in target.
 #
-# [*target*]
+# @param [Stdlib::Absolutepath]target
 #   Destination config file to store in this fragment. File will be declared the
 #   first time.
 #
-# [*order*]
+# @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted in alpha numeric order. Defaults to `00`.
-#
 #
 define icinga2::config::fragment(
   String                       $content,
