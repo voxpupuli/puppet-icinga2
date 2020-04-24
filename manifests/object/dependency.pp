@@ -7,35 +7,35 @@
 # @param [String] dependency_name
 #   Set the Icinga 2 name of the dependency object.
 #
-# @param [String] parent_host_name
+# @param [Optional[String]] parent_host_name
 #   The parent host.
 #
-# @param [String] parent_service_name
+# @param [Optional[String]] parent_service_name
 #   The parent service. If omitted, this dependency object is treated as host
 #   dependency.
 #
-# @param [String] child_host_name
+# @param [Optional[String]] child_host_name
 #   The child host.
 #
-# @param [String] child_service_name
+# @param [Optional[String]] child_service_name
 #   The child service. If omitted, this dependency object is treated as host
 #   dependency.
 #
-# @param [Boolean] disable_checks
+# @param [Optional[Boolean]] disable_checks
 #   Whether to disable checks when this dependency fails.
 #
-# @param [Boolean] disable_notifications
+# @param [Optional[Boolean]] disable_notifications
 #   Whether to disable notifications when this dependency fails.
 #   true.
 #
-# @param [Boolean] ignore_soft_states
+# @param [Optional[Boolean]] ignore_soft_states
 #   Whether to ignore soft states for the reachability calculation.
 #   true.
 #
-# @param [String] period
+# @param [Optional[String]] period
 #   Time period during which this dependency is enabled.
 #
-# @param [Array] states
+# @param [Optional[Array]] states
 #   A list of state filters when this dependency should be OK.
 #
 # @param [Variant[Boolean, String]] apply
@@ -82,7 +82,7 @@ define icinga2::object::dependency (
   Optional[String]              $period                = undef,
   Optional[Array]               $states                = undef,
   Variant[Boolean, String]      $apply                 = false,
-  Variant[String, Boolean]      $prefix                = false,
+  Variant[Boolean, String]      $prefix                = false,
   Enum['Host', 'Service']       $apply_target          = 'Host',
   Array                         $assign                = [],
   Array                         $ignore                = [],

@@ -46,11 +46,15 @@ _Public Defined types_
 * [`icinga2::object::apiuser`](#icinga2objectapiuser): Manage Icinga 2 ApiUser objects.
 * [`icinga2::object::checkcommand`](#icinga2objectcheckcommand): Manage Icinga 2 Host objects.
 * [`icinga2::object::checkresultreader`](#icinga2objectcheckresultreader): Manage Icinga 2 CheckResultReader objects.
+* [`icinga2::object::dependency`](#icinga2objectdependency): Manage Icinga 2 dependency objects.
 * [`icinga2::object::endpoint`](#icinga2objectendpoint): Manage Icinga 2 endpoint objects.
 * [`icinga2::object::eventcommand`](#icinga2objecteventcommand): Manage Icinga 2 EventCommand objects.
 * [`icinga2::object::host`](#icinga2objecthost): Manage Icinga 2 Host objects.
 * [`icinga2::object::hostgroup`](#icinga2objecthostgroup): Manage Icinga 2 HostGroup objects.
+* [`icinga2::object::notification`](#icinga2objectnotification): Manage Icinga 2 notification objects.
 * [`icinga2::object::notificationcommand`](#icinga2objectnotificationcommand): Manage Icinga 2 notificationcommand objects.
+* [`icinga2::object::scheduleddowntime`](#icinga2objectscheduleddowntime): Manage Icinga 2 scheduleddowntime objects.
+* [`icinga2::object::service`](#icinga2objectservice): Manage Icinga 2 service objects.
 * [`icinga2::object::servicegroup`](#icinga2objectservicegroup): Manage Icinga 2 servicegroup objects.
 * [`icinga2::object::timeperiod`](#icinga2objecttimeperiod): Manage Icinga 2 timeperiod objects.
 * [`icinga2::object::user`](#icinga2objectuser): Manage Icinga 2 user objects.
@@ -1371,7 +1375,7 @@ Default value: `undef`
 
 ##### `port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 InfluxDB HTTP port.
 
@@ -2203,6 +2207,179 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: '05'
 
+### icinga2::object::dependency
+
+Manage Icinga 2 dependency objects.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::dependency` defined type.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: present
+
+##### `dependency_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the dependency object.
+
+Default value: $title
+
+##### `parent_host_name`
+
+Data type: `Optional[String]`
+
+The parent host.
+
+Default value: `undef`
+
+##### `parent_service_name`
+
+Data type: `Optional[String]`
+
+The parent service. If omitted, this dependency object is treated as host
+dependency.
+
+Default value: `undef`
+
+##### `child_host_name`
+
+Data type: `Optional[String]`
+
+The child host.
+
+Default value: `undef`
+
+##### `child_service_name`
+
+Data type: `Optional[String]`
+
+The child service. If omitted, this dependency object is treated as host
+dependency.
+
+Default value: `undef`
+
+##### `disable_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether to disable checks when this dependency fails.
+
+Default value: `undef`
+
+##### `disable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether to disable notifications when this dependency fails.
+true.
+
+Default value: `undef`
+
+##### `ignore_soft_states`
+
+Data type: `Optional[Boolean]`
+
+Whether to ignore soft states for the reachability calculation.
+true.
+
+Default value: `undef`
+
+##### `period`
+
+Data type: `Optional[String]`
+
+Time period during which this dependency is enabled.
+
+Default value: `undef`
+
+##### `states`
+
+Data type: `Optional[Array]`
+
+A list of state filters when this dependency should be OK.
+
+Default value: `undef`
+
+##### `apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### `prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set dependency_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### `apply_target`
+
+Data type: `Enum['Host', 'Service']`
+
+An object type on which to target the apply rule. Valid values are `Host`
+and `Service`.
+
+Default value: 'Host'
+
+##### `assign`
+
+Data type: `Array`
+
+Assign user group members using the group assign rules.
+
+Default value: []
+
+##### `ignore`
+
+Data type: `Array`
+
+Exclude users using the group ignore rules.
+
+Default value: []
+
+##### `template`
+
+Data type: `Boolean`
+
+Set to true creates a template instead of an object.
+
+Default value: `false`
+
+##### `import`
+
+Data type: `Array`
+
+Sorted List of templates to include.
+
+Default value: []
+
+##### `target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### `order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: 70
+
 ### icinga2::object::endpoint
 
 Manage Icinga 2 endpoint objects.
@@ -2728,6 +2905,204 @@ Data type: `String`
 
 Default value: $title
 
+### icinga2::object::notification
+
+Manage Icinga 2 notification objects.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::notification` defined type.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: present
+
+##### `notification_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the notification object.
+
+Default value: $title
+
+##### `host_name`
+
+Data type: `Optional[String]`
+
+The name of the host this notification belongs to.
+
+Default value: `undef`
+
+##### `service_name`
+
+Data type: `Optional[String]`
+
+The short name of the service this notification belongs to. If omitted, this
+notification object is treated as host notification.
+
+Default value: `undef`
+
+##### `vars`
+
+Data type: `Optional[Icinga2::CustomAttributes]`
+
+A dictionary containing custom attributes that are specific to this service,
+a string to do operations on this dictionary or an array for multiple use
+of custom attributes.
+
+Default value: `undef`
+
+##### `users`
+
+Data type: `Optional[Variant[String, Array]]`
+
+A list of user names who should be notified.
+
+Default value: `undef`
+
+##### `user_groups`
+
+Data type: `Optional[Variant[String, Array]]`
+
+A list of user group names who should be notified.
+
+Default value: `undef`
+
+##### `times`
+
+Data type: `Optional[Hash]`
+
+A dictionary containing begin and end attributes for the notification.
+
+Default value: `undef`
+
+##### `command`
+
+Data type: `Optional[String]`
+
+The name of the notification command which should be executed when the
+notification is triggered.
+
+Default value: `undef`
+
+##### `interval`
+
+Data type: `Optional[Variant[Icinga2::Interval,Pattern[/(host|service)\./]]]`
+
+The notification interval (in seconds). This interval is used for active
+notifications.
+
+Default value: `undef`
+
+##### `period`
+
+Data type: `Optional[String]`
+
+The name of a time period which determines when this notification should be
+triggered.
+
+Default value: `undef`
+
+##### `zone`
+
+Data type: `Optional[String]`
+
+The zone this object is a member of.
+
+Default value: `undef`
+
+##### `types`
+
+Data type: `Optional[Variant[Array, String]]`
+
+A list of type filters when this notification should be triggered.
+
+Default value: `undef`
+
+##### `states`
+
+Data type: `Optional[Variant[Array, String]]`
+
+A list of state filters when this notification should be triggered.
+
+Default value: `undef`
+
+##### `template`
+
+Data type: `Boolean`
+
+Set to true creates a template instead of an object.
+
+Default value: `false`
+
+##### `apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### `prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### `apply_target`
+
+Data type: `Enum['Host', 'Service']`
+
+An object type on which to target the apply rule. Valid values are `Host` and `Service`.
+
+Default value: 'Host'
+
+##### `import`
+
+Data type: `Array`
+
+Sorted List of templates to include.
+
+Default value: []
+
+##### `target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### `order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: 85
+
+##### `assign`
+
+Data type: `Array`
+
+
+
+Default value: []
+
+##### `ignore`
+
+Data type: `Array`
+
+
+
+Default value: []
+
 ### icinga2::object::notificationcommand
 
 Manage Icinga 2 notificationcommand objects.
@@ -2827,6 +3202,514 @@ Data type: `Variant[String, Integer]`
 String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: 25
+
+### icinga2::object::scheduleddowntime
+
+Manage Icinga 2 scheduleddowntime objects.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::scheduleddowntime` defined type.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: present
+
+##### `scheduleddowntime_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the scheduleddowntime object.
+
+Default value: $title
+
+##### `host_name`
+
+Data type: `Optional[String]`
+
+The name of the host this comment belongs to.
+
+Default value: `undef`
+
+##### `service_name`
+
+Data type: `Optional[String]`
+
+The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+
+Default value: `undef`
+
+##### `author`
+
+Data type: `Optional[String]`
+
+The author's name.
+
+Default value: `undef`
+
+##### `comment`
+
+Data type: `Optional[String]`
+
+The comment text.
+
+Default value: `undef`
+
+##### `fixed`
+
+Data type: `Optional[Boolean]`
+
+Whether this is a fixed downtime.
+
+Default value: `undef`
+
+##### `duration`
+
+Data type: `Optional[Icinga2::Interval]`
+
+The duration as number.
+
+Default value: `undef`
+
+##### `ranges`
+
+Data type: `Optional[Hash]`
+
+A dictionary containing information which days and durations apply to this timeperiod.
+
+Default value: `undef`
+
+##### `apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### `prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### `apply_target`
+
+Data type: `Enum['Host', 'Service']`
+
+An object type on which to target the apply rule. Valid values are `Host` and `Service`.
+
+Default value: 'Host'
+
+##### `assign`
+
+Data type: `Array`
+
+Assign user group members using the group assign rules.
+
+Default value: []
+
+##### `ignore`
+
+Data type: `Array`
+
+Exclude users using the group ignore rules.
+
+Default value: []
+
+##### `target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### `order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: 90
+
+### icinga2::object::service
+
+Manage Icinga 2 service objects.
+
+#### Examples
+
+##### # A service `ping` is applied to all hosts with a valid ipv4 address.
+
+```puppet
+::icinga2::object::service { 'ping4':
+  import        => ['generic-service'],
+  apply         => true,
+  check_command => 'ping',
+  assign        => ['host.address'],
+  target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+}
+```
+
+##### A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
+
+```puppet
+::icinga2::object::service { 'linux_disks':
+  import           => ['generic-service'],
+  apply            =>  'disk_name => config in host.vars.disks',
+  check_command    => 'disk',
+  command_endpoint => 'host.name',
+  vars             => '+ config',
+  assign           => ['host.vars.os == Linux'],
+  ignore           => ['host.vars.noagent'],
+  target           => '/etc/icinga2/zones.d/global-templates/services.conf',
+}
+```
+
+##### A service `ping` is applied to all hosts with a valid ipv4 address.
+
+```puppet
+
+::icinga2::object::service { 'ping4':
+  import        => ['generic-service'],
+  apply         => true,
+  check_command => 'ping',
+  assign        => ['host.address'],
+  target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+}
+```
+
+##### A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
+
+```puppet
+
+::icinga2::object::service { 'linux_disks':
+  import           => ['generic-service'],
+  apply            =>  'disk_name => config in host.vars.disks',
+  check_command    => 'disk',
+  command_endpoint => 'host.name',
+  vars             => '+ config',
+  assign           => ['host.vars.os == Linux'],
+  ignore           => ['host.vars.noagent'],
+  target           => '/etc/icinga2/zones.d/global-templates/services.conf',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::service` defined type.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: present
+
+##### `service_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the service object.
+
+Default value: $title
+
+##### `display_name`
+
+Data type: `Optional[String]`
+
+A short description of the service.
+
+Default value: `undef`
+
+##### `host_name`
+
+Data type: `Optional[String]`
+
+The host this service belongs to. There must be a Host object with
+that name.
+
+Default value: `undef`
+
+##### `groups`
+
+Data type: `Optional[Array]`
+
+The service groups this service belongs to.
+
+Default value: `undef`
+
+##### `vars`
+
+Data type: `Optional[Icinga2::CustomAttributes]`
+
+A dictionary containing custom attributes that are specific to this service,
+a string to do operations on this dictionary or an array for multiple use
+of custom attributes.
+
+Default value: `undef`
+
+##### `check_command`
+
+Data type: `Optional[String]`
+
+The name of the check command.
+
+Default value: `undef`
+
+##### `max_check_attempts`
+
+Data type: `Optional[Integer[1]]`
+
+The number of times a service is re-checked before changing into a hard
+state.
+
+Default value: `undef`
+
+##### `check_period`
+
+Data type: `Optional[String]`
+
+The name of a time period which determines when this service should be
+checked.
+
+Default value: `undef`
+
+##### `check_timeout`
+
+Data type: `Optional[Icinga2::Interval]`
+
+Check command timeout in seconds. Overrides the CheckCommand's timeout
+attribute.
+
+Default value: `undef`
+
+##### `check_interval`
+
+Data type: `Optional[Icinga2::Interval]`
+
+The check interval (in seconds). This interval is used for checks when the
+service is in a HARD state.
+
+Default value: `undef`
+
+##### `retry_interval`
+
+Data type: `Optional[Icinga2::Interval]`
+
+The retry interval (in seconds). This interval is used for checks when the
+service is in a SOFT state.
+
+Default value: `undef`
+
+##### `enable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether notifications are enabled.
+
+Default value: `undef`
+
+##### `enable_active_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active checks are enabled.
+
+Default value: `undef`
+
+##### `enable_passive_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether passive checks are enabled.
+
+Default value: `undef`
+
+##### `enable_event_handler`
+
+Data type: `Optional[Boolean]`
+
+Enables event handlers for this host.
+
+Default value: `undef`
+
+##### `enable_flapping`
+
+Data type: `Optional[Boolean]`
+
+Whether flap detection is enabled.
+
+Default value: `undef`
+
+##### `enable_perfdata`
+
+Data type: `Optional[Boolean]`
+
+Whether performance data processing is enabled.
+
+Default value: `undef`
+
+##### `event_command`
+
+Data type: `Optional[String]`
+
+The name of an event command that should be executed every time the
+service's state changes or the service is in a SOFT state.
+
+Default value: `undef`
+
+##### `flapping_threshold_low`
+
+Data type: `Optional[Integer[1]]`
+
+Flapping lower bound in percent for a host to be considered not flapping.
+
+Default value: `undef`
+
+##### `flapping_threshold_high`
+
+Data type: `Optional[Integer[1]]`
+
+Flapping upper bound in percent for a host to be considered flapping.
+
+Default value: `undef`
+
+##### `volatile`
+
+Data type: `Optional[Boolean]`
+
+The volatile setting enables always HARD state types if NOT-OK state changes
+occur.
+
+Default value: `undef`
+
+##### `zone`
+
+Data type: `Optional[String]`
+
+The zone this object is a member of.
+
+Default value: `undef`
+
+##### `command_endpoint`
+
+Data type: `Optional[String]`
+
+The endpoint where commands are executed on.
+
+Default value: `undef`
+
+##### `notes`
+
+Data type: `Optional[String]`
+
+Notes for the service.
+
+Default value: `undef`
+
+##### `notes_url`
+
+Data type: `Optional[String]`
+
+Url for notes for the service (for example, in notification commands).
+
+Default value: `undef`
+
+##### `action_url`
+
+Data type: `Optional[String]`
+
+Url for actions for the service (for example, an external graphing tool).
+
+Default value: `undef`
+
+##### `icon_image`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Icon image for the service. Used by external interfaces only.
+
+Default value: `undef`
+
+##### `icon_image_alt`
+
+Data type: `Optional[String]`
+
+Icon image description for the service. Used by external interface only.
+
+Default value: `undef`
+
+##### `template`
+
+Data type: `Boolean`
+
+Set to true creates a template instead of an object.
+
+Default value: `false`
+
+##### `apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### `prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### `assign`
+
+Data type: `Array`
+
+Assign user group members using the group assign rules.
+
+Default value: []
+
+##### `ignore`
+
+Data type: `Array`
+
+Exclude users using the group ignore rules.
+
+Default value: []
+
+##### `import`
+
+Data type: `Array`
+
+Sorted List of templates to include.
+
+Default value: []
+
+##### `target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### `order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: 60
 
 ### icinga2::object::servicegroup
 

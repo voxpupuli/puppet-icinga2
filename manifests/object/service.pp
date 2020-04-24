@@ -138,16 +138,14 @@
 # @param [Array] import
 #   Sorted List of templates to include.
 #
-# @param [Stadlib::Absolutepath] target
+# @param [Stdlib::Absolutepath] target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
 # @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-# @example
-#
-# A service `ping` is applied to all hosts with a valid ipv4 address.
+# @example A service `ping` is applied to all hosts with a valid ipv4 address.
 #
 #   ::icinga2::object::service { 'ping4':
 #     import        => ['generic-service'],
@@ -157,9 +155,7 @@
 #     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
 #   }
 #
-# A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied
-# to all Linux hosts with an Icinga Agent. Note in this example it's required that
-# the endpoint (see `command_endpoint`) and the host object has the same name!
+# @example A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
 #
 #   ::icinga2::object::service { 'linux_disks':
 #     import           => ['generic-service'],

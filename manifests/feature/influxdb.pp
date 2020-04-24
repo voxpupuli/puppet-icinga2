@@ -15,7 +15,7 @@
 # @param [Optional[Stdlib::Host]] host
 #    InfluxDB host address.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param [Optional[Stdlib::Port]] port
 #    InfluxDB HTTP port.
 #
 # @param [Optional[String]] database
