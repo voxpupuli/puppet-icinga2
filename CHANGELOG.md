@@ -1,20 +1,27 @@
 # Change Log
 
+## [v2.4.0](https://github.com/icinga/puppet-icinga2/tree/v2.4.0) (2020-04-24)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.4...v2.4.0)
+
+**Implemented enhancements:**
+
+- Add new icingadb feature  [\#612](https://github.com/Icinga/puppet-icinga2/issues/612)
+- Rework examples and docs [\#423](https://github.com/Icinga/puppet-icinga2/issues/423)
+
+**Fixed bugs:**
+
+- Fix rubocop LineLength \# see https://rubocop.readthedocs.io/en/latest… [\#611](https://github.com/Icinga/puppet-icinga2/pull/611) ([thomas-merz](https://github.com/thomas-merz))
+
 ## [v2.3.4](https://github.com/icinga/puppet-icinga2/tree/v2.3.4) (2020-03-25)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.3...v2.3.4)
 
 **Implemented enhancements:**
 
 - Remove Support for some platforms [\#610](https://github.com/Icinga/puppet-icinga2/issues/610)
+- Allow to parse a simple hash in strings [\#588](https://github.com/Icinga/puppet-icinga2/issues/588)
+- Allow to parse an array in strings [\#587](https://github.com/Icinga/puppet-icinga2/issues/587)
 - rework icinga2::repo class to a public class [\#609](https://github.com/Icinga/puppet-icinga2/pull/609) ([lbetz](https://github.com/lbetz))
 - Influxdb can be reachable via any port [\#607](https://github.com/Icinga/puppet-icinga2/pull/607) ([b3n4kh](https://github.com/b3n4kh))
-
-## [v2.3.3](https://github.com/icinga/puppet-icinga2/tree/v2.3.3) (2020-03-16)
-[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.2...v2.3.3)
-
-**Implemented enhancements:**
-
-- Allow to parse a simple hash in strings [\#588](https://github.com/Icinga/puppet-icinga2/issues/588)
 - Debian10 support [\#604](https://github.com/Icinga/puppet-icinga2/pull/604) ([lbetz](https://github.com/lbetz))
 - Enhancement/allow to get attributes from function result [\#603](https://github.com/Icinga/puppet-icinga2/pull/603) ([lbetz](https://github.com/lbetz))
 - RHEL 8 support [\#600](https://github.com/Icinga/puppet-icinga2/pull/600) ([lbetz](https://github.com/lbetz))
@@ -22,8 +29,18 @@
 
 **Fixed bugs:**
 
-- Private keys: no diff, no backup [\#606](https://github.com/Icinga/puppet-icinga2/pull/606) ([Thomas-Gelf](https://github.com/Thomas-Gelf))
 - add missing EPEL repo on RedHat [\#599](https://github.com/Icinga/puppet-icinga2/pull/599) ([lbetz](https://github.com/lbetz))
+
+## [v2.3.3](https://github.com/icinga/puppet-icinga2/tree/v2.3.3) (2020-03-16)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.2...v2.3.3)
+
+**Implemented enhancements:**
+
+- install icinga2-selinux  [\#602](https://github.com/Icinga/puppet-icinga2/pull/602) ([b3n4kh](https://github.com/b3n4kh))
+
+**Fixed bugs:**
+
+- Private keys: no diff, no backup [\#606](https://github.com/Icinga/puppet-icinga2/pull/606) ([Thomas-Gelf](https://github.com/Thomas-Gelf))
 
 **Closed issues:**
 
@@ -38,10 +55,6 @@
 
 ## [v2.3.1](https://github.com/icinga/puppet-icinga2/tree/v2.3.1) (2019-12-17)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.0...v2.3.1)
-
-**Implemented enhancements:**
-
-- Allow to parse an array in strings [\#587](https://github.com/Icinga/puppet-icinga2/issues/587)
 
 **Fixed bugs:**
 

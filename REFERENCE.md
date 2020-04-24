@@ -994,7 +994,7 @@ The following parameters are available in the `icinga2::feature::icingadb` class
 
 Data type: `Enum['absent', 'present']`
 
-Set to present, enables the feature icingadb, absent disabled it. Defaults to present.
+Set to present, enables the feature icingadb, absent disabled it.
 
 Default value: present
 
@@ -1002,7 +1002,7 @@ Default value: present
 
 Data type: `Optional[Stdlib::Host]`
 
-IcingaDB Redis host address. Icinga defaults to '127.0.0.1'.
+IcingaDB Redis host address.
 
 Default value: `undef`
 
@@ -1010,21 +1010,7 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
-IcingaDB Redis port. Icinga defaults to 6380.
-
-Default value: `undef`
-
-##### `path`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
-
-##### `password`
-
-Data type: `Optional[String]`
-
-IcingaDB Redis password.
+IcingaDB Redis port.
 
 Default value: `undef`
 
@@ -1032,7 +1018,15 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
+IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 
+Default value: `undef`
+
+##### `password`
+
+Data type: `Optional[String]`
+
+IcingaDB Redis password.
 
 Default value: `undef`
 
@@ -3409,37 +3403,9 @@ Manage Icinga 2 service objects.
 
 #### Examples
 
-##### # A service `ping` is applied to all hosts with a valid ipv4 address.
-
-```puppet
-::icinga2::object::service { 'ping4':
-  import        => ['generic-service'],
-  apply         => true,
-  check_command => 'ping',
-  assign        => ['host.address'],
-  target        => '/etc/icinga2/zones.d/global-templates/services.conf',
-}
-```
-
-##### A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
-
-```puppet
-::icinga2::object::service { 'linux_disks':
-  import           => ['generic-service'],
-  apply            =>  'disk_name => config in host.vars.disks',
-  check_command    => 'disk',
-  command_endpoint => 'host.name',
-  vars             => '+ config',
-  assign           => ['host.vars.os == Linux'],
-  ignore           => ['host.vars.noagent'],
-  target           => '/etc/icinga2/zones.d/global-templates/services.conf',
-}
-```
-
 ##### A service `ping` is applied to all hosts with a valid ipv4 address.
 
 ```puppet
-
 ::icinga2::object::service { 'ping4':
   import        => ['generic-service'],
   apply         => true,
@@ -3452,7 +3418,6 @@ Manage Icinga 2 service objects.
 ##### A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
 
 ```puppet
-
 ::icinga2::object::service { 'linux_disks':
   import           => ['generic-service'],
   apply            =>  'disk_name => config in host.vars.disks',

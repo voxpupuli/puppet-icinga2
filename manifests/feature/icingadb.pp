@@ -2,15 +2,15 @@
 #   Configures the Icinga 2 feature icingadb.
 #
 # @param [Enum['absent', 'present']] ensure
-#   Set to present, enables the feature icingadb, absent disabled it. Defaults to present.
+#   Set to present, enables the feature icingadb, absent disabled it.
 #
 # @param [Optional[Stdlib::Host]] host
-#   IcingaDB Redis host address. Icinga defaults to '127.0.0.1'.
+#   IcingaDB Redis host address.
 #
 # @param [Optional[Stdlib::Port::Unprivileged]] port
-#   IcingaDB Redis port. Icinga defaults to 6380.
+#   IcingaDB Redis port.
 #
-# @param [Optional[Stdlib::Absolutepath]] path
+# @param [Optional[Stdlib::Absolutepath]] socket_path
 #   IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 #
 # @param [Optional[String]] password

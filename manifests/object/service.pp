@@ -1,7 +1,7 @@
 # @summary
 #   Manage Icinga 2 service objects.
 #
-# @example # A service `ping` is applied to all hosts with a valid ipv4 address.
+# @example A service `ping` is applied to all hosts with a valid ipv4 address.
 #   ::icinga2::object::service { 'ping4':
 #     import        => ['generic-service'],
 #     apply         => true,
@@ -144,29 +144,6 @@
 #
 # @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted alpha numeric.
-#
-# @example A service `ping` is applied to all hosts with a valid ipv4 address.
-#
-#   ::icinga2::object::service { 'ping4':
-#     import        => ['generic-service'],
-#     apply         => true,
-#     check_command => 'ping',
-#     assign        => ['host.address'],
-#     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
-#   }
-#
-# @example A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
-#
-#   ::icinga2::object::service { 'linux_disks':
-#     import           => ['generic-service'],
-#     apply            =>  'disk_name => config in host.vars.disks',
-#     check_command    => 'disk',
-#     command_endpoint => 'host.name',
-#     vars             => '+ config',
-#     assign           => ['host.vars.os == Linux'],
-#     ignore           => ['host.vars.noagent'],
-#     target           => '/etc/icinga2/zones.d/global-templates/services.conf',
-#   }
 #
 define icinga2::object::service (
   Stdlib::Absolutepath                       $target,
