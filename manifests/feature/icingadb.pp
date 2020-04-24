@@ -1,0 +1,60 @@
+# @summary
+#   Configures the Icinga 2 feature icingadb.
+#
+# @param [Enum['absent', 'present']] ensure
+#   Set to present, enables the feature icingadb, absent disabled it. Defaults to present.
+#
+# @param [Optional[Stdlib::Host]] host
+#   IcingaDB Redis host address. Icinga defaults to '127.0.0.1'.
+#
+# @param [Optional[Stdlib::Port::Unprivileged]] port
+#   IcingaDB Redis port. Icinga defaults to 6380.
+#
+# @param [Optional[Stdlib::Absolutepath]] path
+#   IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
+#
+# @param [Optional[String]] password
+#   IcingaDB Redis password.
+#
+class icinga2::feature::icingadb(
+  Enum['absent', 'present']                $ensure      = present,
+  Optional[Stdlib::Host]                   $host        = undef,
+  Optional[Stdlib::Port::Unprivileged]     $port        = undef,
+  Optional[Stdlib::Absolutepath]           $socket_path = undef,
+  Optional[String]                         $password    = undef,
+) {
+
+  if ! defined(Class['::icinga2']) {
+    fail('You must include the icinga2 base class before using any icinga2 feature class!')
+  }
+
+  $conf_dir = $::icinga2::globals::conf_dir
+  $_notify  = $ensure ? {
+    'present' => Class['::icinga2::service'],
+    default   => undef,
+  }
+
+  # compose attributes
+  $attrs = {
+    host     => $host,
+    port     => $port,
+    path     => $socket_path,
+    password => $password,
+  }
+
+  # create object
+  icinga2::object { 'icinga2::object::IcingaDB::icingadb':
+    object_name => 'icingadb',
+    object_type => 'IcingaDB',
+    attrs       => delete_undef_values($attrs),
+    attrs_list  => keys($attrs),
+    target      => "${conf_dir}/features-available/icingadb.conf",
+    order       => 10,
+    notify      => $_notify,
+  }
+
+  # manage feature
+  icinga2::feature { 'icingadb':
+    ensure => $ensure,
+  }
+}

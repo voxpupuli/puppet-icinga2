@@ -147,7 +147,7 @@ class icinga2 (
   # Put ::icinga2::repo outside to work around dependency cycle issues with the apt module
   # and to use this class independently.
   if $::icinga2::manage_repo {
-    include '::icinga2::repo'
+    require ::icinga2::repo
   }
 
   anchor { '::icinga2::begin':

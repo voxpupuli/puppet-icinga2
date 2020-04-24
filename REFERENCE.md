@@ -16,6 +16,7 @@ _Public Classes_
 * [`icinga2::feature::elasticsearch`](#icinga2featureelasticsearch): Configures the Icinga 2 feature elasticsearch.
 * [`icinga2::feature::gelf`](#icinga2featuregelf): Configures the Icinga 2 feature gelf.
 * [`icinga2::feature::graphite`](#icinga2featuregraphite): Configures the Icinga 2 feature graphite.
+* [`icinga2::feature::icingadb`](#icinga2featureicingadb): Configures the Icinga 2 feature icingadb.
 * [`icinga2::feature::idomysql`](#icinga2featureidomysql): Installs and configures the Icinga 2 feature ido-mysql.
 * [`icinga2::feature::idopgsql`](#icinga2featureidopgsql): Installs and configures the Icinga 2 feature ido-pgsql.
 * [`icinga2::feature::influxdb`](#icinga2featureinfluxdb): Configures the Icinga 2 feature influxdb.
@@ -978,6 +979,60 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
+
+Default value: `undef`
+
+### icinga2::feature::icingadb
+
+Configures the Icinga 2 feature icingadb.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::icingadb` class.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present, enables the feature icingadb, absent disabled it. Defaults to present.
+
+Default value: present
+
+##### `host`
+
+Data type: `Optional[Stdlib::Host]`
+
+IcingaDB Redis host address. Icinga defaults to '127.0.0.1'.
+
+Default value: `undef`
+
+##### `port`
+
+Data type: `Optional[Stdlib::Port::Unprivileged]`
+
+IcingaDB Redis port. Icinga defaults to 6380.
+
+Default value: `undef`
+
+##### `path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
+
+##### `password`
+
+Data type: `Optional[String]`
+
+IcingaDB Redis password.
+
+Default value: `undef`
+
+##### `socket_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
 
 Default value: `undef`
 

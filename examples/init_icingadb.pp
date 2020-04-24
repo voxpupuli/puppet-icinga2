@@ -14,10 +14,12 @@ case $::facts['os']['name'] {
 }
 
 class { '::icinga::repos':
+  manage_release      => false,
+  manage_testing      => true,
   manage_epel         => $epel,
   configure_backports => $backports,
 }
 
-class { 'icinga2':
-  manage_repo => true,
-}
+include ::icinga2
+include ::icinga2::feature::icingadb
+
