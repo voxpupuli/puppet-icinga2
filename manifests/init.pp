@@ -85,6 +85,10 @@
 # @param [Boolean] manage_package
 #   If set to false packages aren't managed.
 #
+# @param [Boolean] manage_selinux
+#   If set to true the icinga selinux package is installed. Requires a `selinux_package_name` (icinga2::globals)
+#   and `manage_package` has to be set to true.
+#
 # @param [Boolean] manage_service
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed.
@@ -114,6 +118,7 @@ class icinga2 (
   Boolean                    $enable         = true,
   Boolean                    $manage_repo    = false,
   Boolean                    $manage_package = true,
+  Boolean                    $manage_selinux = false,
   Boolean                    $manage_service = true,
   Boolean                    $purge_features = true,
   Hash                       $constants      = {},

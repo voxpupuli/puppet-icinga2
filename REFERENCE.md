@@ -224,6 +224,15 @@ If set to false packages aren't managed.
 
 Default value: `true`
 
+##### `manage_selinux`
+
+Data type: `Boolean`
+
+If set to true the icinga selinux package is installed. Requires a `selinux_package_name` (icinga2::globals)
+and `manage_package` has to be set to true.
+
+Default value: `false`
+
 ##### `manage_service`
 
 Data type: `Boolean`

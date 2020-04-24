@@ -59,6 +59,17 @@ describe('icinga2', :type => :class) do
         it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
       end
 
+      context "with manage_selinux => true" do
+        let(:params) do
+          {:manage_selinux => true}
+        end
+
+        case facts[:osfamily]
+        when 'RedHat'
+          it { should contain_package('icinga2-selinux').with({ 'ensure' => 'installed' }) }
+        end
+      end
+
       context "with confd => false" do
         let(:params) do
           {:confd => false}
