@@ -1,5 +1,12 @@
 # Change Log
 
+## [v2.4.1](https://github.com/icinga/puppet-icinga2/tree/v2.4.1) (2020-05-05)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.4.0...v2.4.1)
+
+**Fixed bugs:**
+
+- Lost pull request \#611 [\#615](https://github.com/Icinga/puppet-icinga2/issues/615)
+
 ## [v2.4.0](https://github.com/icinga/puppet-icinga2/tree/v2.4.0) (2020-04-24)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.4...v2.4.0)
 
@@ -7,6 +14,7 @@
 
 - Add new icingadb feature  [\#612](https://github.com/Icinga/puppet-icinga2/issues/612)
 - Rework examples and docs [\#423](https://github.com/Icinga/puppet-icinga2/issues/423)
+- install icinga2-selinux  [\#602](https://github.com/Icinga/puppet-icinga2/pull/602) ([b3n4kh](https://github.com/b3n4kh))
 
 **Fixed bugs:**
 
@@ -33,10 +41,6 @@
 
 ## [v2.3.3](https://github.com/icinga/puppet-icinga2/tree/v2.3.3) (2020-03-16)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.3.2...v2.3.3)
-
-**Implemented enhancements:**
-
-- install icinga2-selinux  [\#602](https://github.com/Icinga/puppet-icinga2/pull/602) ([b3n4kh](https://github.com/b3n4kh))
 
 **Fixed bugs:**
 
