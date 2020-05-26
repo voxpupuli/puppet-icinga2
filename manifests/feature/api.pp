@@ -313,7 +313,6 @@ class icinga2::feature::api(
       exec { 'icinga2 pki create key':
         command     => "\"${icinga2_bin}\" pki new-cert --cn ${node_name} --key ${_ssl_key_path} --cert ${_ssl_cert_path}",
         environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
-        subscribe   => Exec['icinga2 pki create certificate signing request'],
         creates     => $_ssl_key_path,
       }
 
