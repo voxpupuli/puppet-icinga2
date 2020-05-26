@@ -109,7 +109,8 @@ class icinga2::pki::ca(
 
   exec { 'icinga2 pki sign certificate':
     command     => "\"${icinga2_bin}\" pki sign-csr --csr ${_ssl_csr_path} --cert ${_ssl_cert_path}",
-    environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"], subscribe => Exec['icinga2 pki create certificate signing request'],
+    environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
+    subscribe   => Exec['icinga2 pki create certificate signing request'],
     refreshonly => true,
     notify      => Class['::icinga2::service'],
   }
