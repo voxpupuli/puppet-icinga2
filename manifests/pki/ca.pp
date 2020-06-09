@@ -53,10 +53,11 @@ class icinga2::pki::ca(
 
   if !$ca_cert or !$ca_key {
     exec { 'create-icinga2-ca':
-      command => "\"${icinga2_bin}\" pki new-ca",
-      creates => "${ca_dir}/ca.crt",
-      before  => File[$_ssl_cacert_path],
-      notify  => Class['::icinga2::service'],
+      command     => "\"${icinga2_bin}\" pki new-ca",
+      environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
+      creates     => "${ca_dir}/ca.crt",
+      before      => File[$_ssl_cacert_path],
+      notify      => Class['::icinga2::service'],
     }
   } else {
     if $::osfamily == 'windows' {
@@ -93,9 +94,10 @@ class icinga2::pki::ca(
   }
 
   exec { 'icinga2 pki create certificate signing request':
-    command => "\"${icinga2_bin}\" pki new-cert --cn ${node_name} --key ${_ssl_key_path} --csr ${_ssl_csr_path}",
-    creates => $_ssl_key_path,
-    require => File[$_ssl_cacert_path],
+    command     => "\"${icinga2_bin}\" pki new-cert --cn ${node_name} --key ${_ssl_key_path} --csr ${_ssl_csr_path}",
+    environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
+    creates     => $_ssl_key_path,
+    require     => File[$_ssl_cacert_path],
   }
 
   -> file { $_ssl_key_path:
@@ -107,6 +109,7 @@ class icinga2::pki::ca(
 
   exec { 'icinga2 pki sign certificate':
     command     => "\"${icinga2_bin}\" pki sign-csr --csr ${_ssl_csr_path} --cert ${_ssl_cert_path}",
+    environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
     subscribe   => Exec['icinga2 pki create certificate signing request'],
     refreshonly => true,
     notify      => Class['::icinga2::service'],
