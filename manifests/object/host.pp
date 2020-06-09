@@ -91,7 +91,7 @@
 # @param [Optional[String]] action_url
 #   Url for actions for the host (for example, an external graphing tool).
 #
-# @param [Optional[Stdlib::Absolutepath]] icon_image
+# @param [Optional[String]] icon_image
 #   Icon image for the host. Used by external interfaces only.
 #
 # @param [Optional[String]] icon_image_alt
@@ -138,7 +138,7 @@ define icinga2::object::host(
   Optional[String]                    $notes                   = undef,
   Optional[String]                    $notes_url               = undef,
   Optional[String]                    $action_url              = undef,
-  Optional[Stdlib::Absolutepath]      $icon_image              = undef,
+  Optional[String]                    $icon_image              = undef,
   Optional[String]                    $icon_image_alt          = undef,
   Boolean                             $template                = false,
   Variant[String, Integer]            $order                   = 50,
