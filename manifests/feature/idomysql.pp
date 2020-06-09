@@ -35,7 +35,7 @@
 #    MySQL database user with read/write permission to the icinga database.
 #
 # @param [String] password
-#    MySQL database user's password.
+#    MySQL database user's password. The password parameter isn't parsed anymore.
 #
 # @param [String] database
 #    MySQL database name.
@@ -262,7 +262,7 @@ class icinga2::feature::idomysql(
     port                  => $port,
     socket_path           => $socket_path,
     user                  => $user,
-    password              => $password,
+    password              => "-:\"$password"",   # The password parameter isn't parsed anymore.
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,

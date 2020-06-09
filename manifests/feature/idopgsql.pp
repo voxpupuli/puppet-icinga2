@@ -11,9 +11,9 @@
 #   }
 #
 #   class{ 'icinga2::feature::idopgsql':
-#     user          => "icinga2",
-#     password      => "supersecret",
-#     database      => "icinga2",
+#     user          => 'icinga2',
+#     password      => 'supersecret',
+#     database      => 'icinga2',
 #     import_schema => true,
 #     require       => Postgresql::Server::Db['icinga2']
 #   }
@@ -31,7 +31,7 @@
 #    PostgreSQL database user with read/write permission to the icinga database.
 #
 # @param [String] password
-#    PostgreSQL database user's password.
+#    PostgreSQL database user's password. The password parameter isn't parsed anymore.
 #
 # @param [String] database
 #    PostgreSQL database name.
@@ -94,7 +94,7 @@ class icinga2::feature::idopgsql(
     host                  => $host,
     port                  => $port,
     user                  => $user,
-    password              => $password,
+    password              => "-:\"$password\"",   # The password parameter isn't parsed anymore.
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,

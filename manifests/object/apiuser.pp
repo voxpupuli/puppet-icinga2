@@ -41,7 +41,7 @@
 #   Set the name of the apiuser object.
 #
 # @param [Optional[String]] password
-#   Password string.
+#   Password string. The password parameter isn't parsed anymore.
 #
 # @param [Optional[String]] client_cn
 #   Optional. Client Common Name (CN).
@@ -67,9 +67,16 @@ define icinga2::object::apiuser(
   Variant[String, Integer]    $order        = 30,
 ) {
 
+  # The password parameter isn't parsed anymore.
+  if $password {
+    $_password = "-:\"$password\""
+  } else {
+    $_password = undef
+  }
+
   # compose the attributes
   $attrs = {
-    password    => $password,
+    password    => $_password,
     client_cn   => $client_cn,
     permissions => $permissions,
   }

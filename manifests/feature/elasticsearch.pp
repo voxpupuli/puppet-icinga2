@@ -23,7 +23,7 @@
 #    Elasticsearch user name.
 #
 # @param [Optional[String]] password
-#    Elasticsearch user password.
+#    Elasticsearch user password. The password parameter isn't parsed anymore.
 #
 # @param [Optional[Boolean]] enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
@@ -179,12 +179,19 @@ class icinga2::feature::elasticsearch(
     $attrs_ssl = { enable_tls  => $enable_ssl }
   }
 
+  # The password parameter isn't parsed anymore.
+  if $password {
+    $_password = "-:\"$password\""
+  } else {
+    $_password = undef
+  }
+
   $attrs = {
     host                   => $host,
     port                   => $port,
     index                  => $index,
     username               => $username,
-    password               => $password,
+    password               => $_password,
     enable_send_perfdata   => $enable_send_perfdata,
     flush_interval         => $flush_interval,
     flush_threshold        => $flush_threshold,
