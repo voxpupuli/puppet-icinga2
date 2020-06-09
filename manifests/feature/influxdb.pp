@@ -25,7 +25,7 @@
 #    InfluxDB user name.
 #
 # @param [Optional[String]] password
-#    InfluxDB user password.
+#    InfluxDB user password. The password parameter isn't parsed anymore.
 #
 # @param [Optional[Boolean]] enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
@@ -203,12 +203,19 @@ class icinga2::feature::influxdb(
     $attrs_ssl = { ssl_enable  => $enable_ssl }
   }
 
+  # The password parameter isn't parsed anymore.
+  if $password {
+    $_password = "-:\"$password\""
+  } else {
+    $_password = undef
+  }
+
   $attrs = {
     host                   => $host,
     port                   => $port,
     database               => $database,
     username               => $username,
-    password               => $password,
+    password               => $_password,
     host_template          => $host_template,
     service_template       => $service_template,
     enable_send_thresholds => $enable_send_thresholds,

@@ -14,7 +14,7 @@
 #   IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 #
 # @param [Optional[String]] password
-#   IcingaDB Redis password.
+#   IcingaDB Redis password. The password parameter isn't parsed anymore.
 #
 class icinga2::feature::icingadb(
   Enum['absent', 'present']                $ensure      = present,
@@ -34,12 +34,19 @@ class icinga2::feature::icingadb(
     default   => undef,
   }
 
+  # The password parameter isn't parsed anymore.
+  if $password {
+    $_password = "-:\"$password\""
+  } else {
+    $_password = undef
+  }
+
   # compose attributes
   $attrs = {
     host     => $host,
     port     => $port,
     path     => $socket_path,
-    password => $password,
+    password => $_password,
   }
 
   # create object

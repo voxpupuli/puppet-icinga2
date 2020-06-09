@@ -30,7 +30,7 @@ include ::icinga2::pki::ca
 
 ::icinga2::object::apiuser { 'read':
   ensure      => present,
-  password    => 'read',
+  password    => 'rea)d',
   permissions => [
     {
       permission => 'objects/query/Host',

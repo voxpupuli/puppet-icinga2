@@ -100,7 +100,8 @@
 # 
 # @param [String] ticket_salt
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
-#   Defaults to constant TicketSalt.
+#   Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
+#   characters as salt or a constant.
 #
 # @param [Optional[String]] ticket_id
 #   If a ticket_id is given it will be used instead of generating an ticket_id.
