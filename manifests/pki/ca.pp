@@ -21,8 +21,8 @@
 #   Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 #
 class icinga2::pki::ca(
-  Optional[String]               $ca_cert         = undef,
-  Optional[String]               $ca_key          = undef,
+  $ca_cert         = undef,
+  $ca_key          = undef,
 ) {
 
   require ::icinga2::config
@@ -68,11 +68,16 @@ class icinga2::pki::ca(
       $_ca_key      = $ca_key
     }
 
+    file { "${ca_dir}":
+      ensure  => directory,
+    }
+
     file { "${ca_dir}/ca.crt":
       ensure  => file,
       content => $_ca_cert,
       tag     => 'icinga2::config::file',
       before  => File[$_ssl_cacert_path],
+      require => File[$ca_dir],
     }
 
     file { "${ca_dir}/ca.key":
@@ -82,6 +87,7 @@ class icinga2::pki::ca(
       tag       => 'icinga2::config::file',
       show_diff => false,
       backup    => false,
+      require => File[$ca_dir],
     }
   }
 
