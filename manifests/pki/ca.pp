@@ -21,8 +21,8 @@
 #   Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 #
 class icinga2::pki::ca(
-  $ca_cert         = undef,
-  $ca_key          = undef,
+  Optional[String]               $ca_cert         = undef,
+  Optional[String]               $ca_key          = undef,
 ) {
 
   require ::icinga2::config
