@@ -34,10 +34,10 @@ class icinga2::pki::ca(
   $group       = $::icinga2::globals::group
   $node_name   = $::icinga2::_constants['NodeName']
 
-  $_ssl_key_path    = "${::icinga2::globals::cert_dir}/${node_name}.key"
-  $_ssl_csr_path    = "${::icinga2::globals::cert_dir}/${node_name}.csr"
-  $_ssl_cert_path   = "${::icinga2::globals::cert_dir}/${node_name}.crt"
-  $_ssl_cacert_path = "${::icinga2::globals::cert_dir}/ca.crt"
+  $_ssl_key_path    = "${cert_dir}/${node_name}.key"
+  $_ssl_csr_path    = "${cert_dir}/${node_name}.csr"
+  $_ssl_cert_path   = "${cert_dir}/${node_name}.crt"
+  $_ssl_cacert_path = "${cert_dir}/ca.crt"
 
   File {
     owner => $user,
@@ -66,6 +66,10 @@ class icinga2::pki::ca(
     } else {
       $_ca_cert     = $ca_cert
       $_ca_key      = $ca_key
+    }
+
+    file { $ca_dir:
+      ensure => directory,
     }
 
     file { "${ca_dir}/ca.crt":
