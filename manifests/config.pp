@@ -12,6 +12,8 @@ class icinga2::config {
   $plugins        = $::icinga2::plugins
   $confd          = $::icinga2::_confd
   $purge_features = $::icinga2::purge_features
+  $user           = $::icinga2::globals::user
+  $group          = $::icinga2::globals::group
 
   if $::kernel != 'windows' {
     $template_constants  = icinga2_attributes($constants)
@@ -23,16 +25,22 @@ class icinga2::config {
 
   file { "${conf_dir}/constants.conf":
     ensure  => file,
+    owner   => $user,
+    group   => $group,
     content => $template_constants,
   }
 
   file { "${conf_dir}/icinga2.conf":
     ensure  => file,
+    owner   => $user,
+    group   => $group,
     content => $template_mainconfig,
   }
 
   file { "${conf_dir}/features-enabled":
     ensure  => directory,
+    owner   => $user,
+    group   => $group,
     purge   => $purge_features,
     recurse => $purge_features,
   }
