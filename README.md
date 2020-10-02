@@ -251,7 +251,7 @@ class { '::icinga2::feature::api':
   ca_host         => '172.16.1.11',
   ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
   # to increase your security set fingerprint to validate the certificate of ca_host
-  # fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
+  # fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:99:3D:96:72:72',
   endpoints       => {
     'satellite.example.org' => {},
     'master.example.org'    => {
@@ -292,7 +292,7 @@ class { '::icinga2::feature::api':
   accept_commands => true,
   ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
   # to increase your security set fingerprint to validate the certificate of ca_host
-  # fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72',
+  # fingerprint     => 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:99:3D:96:72:72',
   endpoints       => {
     'NodeName'              => {},
     'satellite.example.org' => {
@@ -316,7 +316,7 @@ icinga2::object::zone { 'global-templates':
 ```
 
 The parameter `fingerprint` is optional and new since v2.1.0. It's used to validate the certificate of the CA host.
-A fingerprint can be got by `openssl x509 -noout -fingerprint -sha1 -inform pem -in master.crt` on the master host.
+You can get the fingerprint via `openssl x509 -noout -fingerprint -sha256 -inform pem -in master.crt` on the master host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 
 
 ### Config Objects
