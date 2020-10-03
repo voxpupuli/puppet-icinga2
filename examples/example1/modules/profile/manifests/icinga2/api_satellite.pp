@@ -32,7 +32,7 @@ class { 'profile::icinga2::satellite':
   zone_name => 'dmz',
   endpoints => {
     'satellite.example.org' => {},
-    'master.example.org' => {
+    'master.example.org'    => {
       'host' => '172.16.1.11',
     },
   },
@@ -40,7 +40,7 @@ class { 'profile::icinga2::satellite':
     'master' => {
       'endpoints' => ['master.example.org'],
     },
-    'dmz' => {
+    'dmz'    => {
       'endpoints' => ['satellite.example.org'],
       'parent'    => 'master',
     },

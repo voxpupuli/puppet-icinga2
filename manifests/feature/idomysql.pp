@@ -257,12 +257,13 @@ class icinga2::feature::idomysql(
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
+  # lint:ignore:variables_not_enclosed
   $attrs = {
     host                  => $host,
     port                  => $port,
     socket_path           => $socket_path,
     user                  => $user,
-    password              => "-:\"$password"",   # The password parameter isn't parsed anymore.
+    password              => "-:\"$password\"",   # The password parameter isn't parsed anymore.
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,
@@ -272,6 +273,7 @@ class icinga2::feature::idomysql(
     cleanup               => $cleanup,
     categories            => $categories,
   }
+  # lint:endignore
 
   # install additional package
   if $ido_mysql_package_name and $manage_package {

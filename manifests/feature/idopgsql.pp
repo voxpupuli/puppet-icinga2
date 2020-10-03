@@ -89,7 +89,7 @@ class icinga2::feature::idopgsql(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-
+  # lint:ignore:variables_not_enclosed
   $attrs = {
     host                  => $host,
     port                  => $port,
@@ -104,6 +104,7 @@ class icinga2::feature::idopgsql(
     cleanup               => $cleanup,
     categories            => $categories,
   }
+  # lint:endignore
 
   # install additional package
   if $ido_pgsql_package_name and $manage_package {

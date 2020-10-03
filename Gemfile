@@ -75,9 +75,9 @@ end
 
 #move to .sync.yaml in the future
 gem 'puppetlabs_spec_helper', '>= 2.0'
-gem 'puppet-lint', '>= 2.0.0'
-gem 'facter', '>= 2.4.0'
-gem 'facterdb', '>= 1.0.0'
+gem 'puppet-lint', '>= 2.4.2'
+gem 'facter', '>= 2.5.1'
+gem 'facterdb', '>= 1.4.0'
 gem 'rspec-puppet-facts', '>= 1.6.0'
 gem 'serverspec'
 gem 'r10k'
