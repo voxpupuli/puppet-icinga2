@@ -1,9 +1,7 @@
 fixtures:
-  repositories:
+forge_modules:
     icinga:
-      repo: https://github.com/SimonHoenscheid/puppet-icinga.git
-      branch: simonhoenscheid_activate_epel_on_fedora_hard_dependency_icinga2_module
-  forge_modules:
+      repo: icinga/icinga
     stdlib:
       repo: puppetlabs/stdlib
     concat:
