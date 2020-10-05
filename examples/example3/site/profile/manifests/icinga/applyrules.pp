@@ -11,32 +11,32 @@ class profile::icinga::applyrules {
     # example's README on why this is the case.
 
     file { '/etc/icinga2/conf.d/services/nginx.conf':
-        ensure  => file,
-        owner   => 'nagios',
-        group   => 'nagios',
-        tag     => 'icinga2::config::file',
+        ensure => file,
+        owner  => 'nagios',
+        group  => 'nagios',
+        tag    => 'icinga2::config::file',
         source => [
-            "puppet:///modules/1024/icinga/services/nginx.conf",
+            'puppet:///modules/1024/icinga/services/nginx.conf',
         ],
     }
 
     file { '/etc/icinga2/conf.d/services/postgres.conf':
-        ensure  => file,
-        owner   => 'nagios',
-        group   => 'nagios',
-        tag     => 'icinga2::config::file',
+        ensure => file,
+        owner  => 'nagios',
+        group  => 'nagios',
+        tag    => 'icinga2::config::file',
         source => [
-            "puppet:///modules/1024/icinga/services/postgres.conf",
+            'puppet:///modules/1024/icinga/services/postgres.conf',
         ],
     }
 
     file { '/etc/icinga2/conf.d/services/elasticsearch.conf':
-        ensure  => file,
-        owner   => 'nagios',
-        group   => 'nagios',
-        tag     => 'icinga2::config::file',
+        ensure => file,
+        owner  => 'nagios',
+        group  => 'nagios',
+        tag    => 'icinga2::config::file',
         source => [
-            "puppet:///modules/1024/icinga/services/elasticsearch.conf",
+            'puppet:///modules/1024/icinga/services/elasticsearch.conf',
         ],
     }
 

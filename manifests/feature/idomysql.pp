@@ -257,6 +257,7 @@ class icinga2::feature::idomysql(
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
+  # lint:ignore:variables_not_enclosed
   $attrs = {
     host                  => $host,
     port                  => $port,
@@ -272,6 +273,7 @@ class icinga2::feature::idomysql(
     cleanup               => $cleanup,
     categories            => $categories,
   }
+  # lint:endignore
 
   # install additional package
   if $ido_mysql_package_name and $manage_package {

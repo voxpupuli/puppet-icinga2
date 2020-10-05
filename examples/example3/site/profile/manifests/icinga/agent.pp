@@ -34,20 +34,20 @@ class profile::icinga::agent {
     # The vars (set in the various nodes hiera files) are used to Apply Services
     # to these hosts. (See profile::icinga::server)
     @@::icinga2::object::host { $::fqdn:
-        display_name            => $::fqdn,
-        address                 => $::ipaddress_eth0,
-        check_command           => 'hostalive',
-        vars                    => hiera_hash('icinga_vars', {}),
-        target                  => "/etc/icinga2/zones.d/master/${::fqdn}.conf"
+        display_name  => $::fqdn,
+        address       => $::ipaddress_eth0,
+        check_command => 'hostalive',
+        vars          => hiera_hash('icinga_vars', {}),
+        target        => "/etc/icinga2/zones.d/master/${::fqdn}.conf"
     }
 
     # Create virtual resources for this agent node
-    @@::icinga2::object::endpoint { "$::fqdn":
-        host => "$::ipaddress_eth0",
+    @@::icinga2::object::endpoint { "${::fqdn}":
+        host => "${::ipaddress_eth0}",
     }
 
-    @@::icinga2::object::zone { "$::fqdn":
-        endpoints => [ "$::fqdn", ],
+    @@::icinga2::object::zone { "${::fqdn}":
+        endpoints => [ "${::fqdn}", ],
         parent    => 'master',
     }
 

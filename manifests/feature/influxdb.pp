@@ -203,12 +203,14 @@ class icinga2::feature::influxdb(
     $attrs_ssl = { ssl_enable  => $enable_ssl }
   }
 
+  # lint:ignore:variables_not_enclosed
   # The password parameter isn't parsed anymore.
   if $password {
     $_password = "-:\"${password}\""
   } else {
     $_password = undef
   }
+  # lint:endignore
 
   $attrs = {
     host                   => $host,

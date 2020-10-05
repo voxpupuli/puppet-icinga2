@@ -67,12 +67,14 @@ define icinga2::object::apiuser(
   Variant[String, Integer]    $order        = 30,
 ) {
 
+  # lint:ignore:variables_not_enclosed
   # The password parameter isn't parsed anymore.
   if $password {
     $_password = "-:\"${password}\""
   } else {
     $_password = undef
   }
+  # lint:endignore
 
   # compose the attributes
   $attrs = {

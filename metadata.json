@@ -19,6 +19,10 @@
     {
       "name": "puppetlabs/concat",
       "version_requirement": ">= 2.1.0 < 7.0.0"
+    },
+    {
+      "name": "icinga/icinga",
+      "version_requirement": ">= 0.1.3"
     }
   ],
   "operatingsystem_support": [

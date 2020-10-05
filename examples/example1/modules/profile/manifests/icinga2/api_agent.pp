@@ -5,8 +5,8 @@ class profile::icinga2::agent(
 ) {
 
   class { 'icinga2':
-    confd     => false,
-    features  => ['mainlog'],
+    confd    => false,
+    features => ['mainlog'],
   }
 
   # Feature: api
@@ -26,8 +26,8 @@ class profile::icinga2::agent(
 
 # Declaration
 class { 'profile::icinga2::agent':
-  endpoints  => {
-    'NodeName' => {},
+  endpoints => {
+    'NodeName'              => {},
     'satellite.example.org' => {
       'host' => '172.16.2.11',
     },
@@ -35,9 +35,9 @@ class { 'profile::icinga2::agent':
   zones     => {
     'ZoneName' => {
       'endpoints' => ['NodeName'],
-      'parent' => 'dmz',
+      'parent'    => 'dmz',
     },
-    'dmz' => {
+    'dmz'      => {
       'endpoints' => ['satellite.example.org'],
     },
   },
