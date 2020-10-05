@@ -33,14 +33,12 @@ class icinga2::feature::icingadb(
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-  # lint:ignore:variables_not_enclosed
   # The password parameter isn't parsed anymore.
   if $password {
     $_password = "-:\"${password}\""
   } else {
     $_password = undef
   }
-  # lint:endignore
 
   # compose attributes
   $attrs = {
