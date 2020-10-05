@@ -459,8 +459,8 @@ Default value: 5665
 Data type: `Optional[Icinga2::Fingerprint]`
 
 Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
-You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]'
-on your CA host.
+You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]'
+on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 
 Default value: `undef`
 
@@ -4282,7 +4282,7 @@ Alias of `Optional[Variant[String, Array[Variant[String, Hash]], Hash]]`
 
 Type for certificate fingerprints
 
-Alias of `Pattern[/^([0-9a-fA-F]{2}\:){19}[0-9,a-f,A-F]{2}$/]`
+Alias of `Pattern[/^([0-9a-fA-F]{2}\:)({19}[0-9a-fA-F]{2}\:){12})?[0-9,a-f,A-F]{2}$/]`
 
 ### Icinga2::Interval
 

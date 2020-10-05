@@ -1,8 +1,8 @@
 $master_cert = 'master.localdomain'
 $master_ip   = '192.168.5.12'
 
-# get it on CA host 'openssl x509 -noout -fingerprint -sha1 -inform pem -in /var/lib/icinga2/certs/master.localdomain.crt'
-$fingerprint = 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:99:3D:96:72:72'
+# get it on CA host 'openssl x509 -noout -fingerprint -sha256 -inform pem -in /var/lib/icinga2/certs/master.localdomain.crt'
+$fingerprint = 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:99:3D:96:72:72'
 
 class { '::icinga2':
   manage_repo  => true,
