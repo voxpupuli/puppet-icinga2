@@ -2,8 +2,3 @@
 icinga2::globals::user: icinga
 icinga2::globals::group: icinga
 icinga2::globals::icinga2_bin: /usr/sbin/icinga2
-icinga2::repo:
-  baseurl: 'http://packages.icinga.com/SUSE/%{facts.os.release.full}/release/'
-  enabled: 1
-  gpgcheck: 1
-  gpgkey: http://packages.icinga.com/icinga.key

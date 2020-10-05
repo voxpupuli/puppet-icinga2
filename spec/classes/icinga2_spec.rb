@@ -40,15 +40,6 @@ describe('icinga2', :type => :class) do
           .with({'ensure' => 'present'}) }
         it { is_expected.to contain_icinga2__feature('notification')
           .with({'ensure' => 'present'}) }
-
-        case facts[:osfamily]
-        when 'Debian'
-          it { should_not contain_apt__source('icinga-stable-release') }
-        when 'RedHat'
-          it { should_not contain_yumrepo('icinga-stable-release') }
-        when 'Suse'
-          it { should_not contain_zypprepo('icinga-stable-release') }
-        end
       end
 
       context "with manage_package => false" do
@@ -56,7 +47,7 @@ describe('icinga2', :type => :class) do
           {:manage_package => false}
         end
 
-        it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+        it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
       end
 
       context "with manage_selinux => true" do
@@ -66,7 +57,7 @@ describe('icinga2', :type => :class) do
 
         case facts[:osfamily]
         when 'RedHat'
-          it { should contain_package('icinga2-selinux').with({ 'ensure' => 'installed' }) }
+          it { is_expected.to contain_package('icinga2-selinux').with({ 'ensure' => 'installed' }) }
         end
       end
 
@@ -165,23 +156,6 @@ describe('icinga2', :type => :class) do
             'enable' => false, }) }
       end
 
-      context 'with manage_repo => true' do
-        let(:params) do
-          {
-            :manage_repo => true
-          }
-        end
-
-        case facts[:osfamily]
-          when 'Debian'
-            it { should contain_apt__source('icinga-stable-release') }
-          when 'RedHat'
-            it { should contain_yumrepo('icinga-stable-release') }
-          when 'Suse'
-            it { should contain_zypprepo('icinga-stable-release') }
-        end
-      end
-
       context "with manage_service => false" do
         let(:params) do
           {
@@ -189,9 +163,10 @@ describe('icinga2', :type => :class) do
           }
         end
 
-        it { should_not contain_service('icinga2') }
+        it { is_expected.not_to contain_service('icinga2') }
       end
     end
 
   end
+
 end

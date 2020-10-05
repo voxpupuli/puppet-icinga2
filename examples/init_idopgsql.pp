@@ -1,9 +1,3 @@
-case $::osfamily {
-  'redhat': {
-    package { 'epel-release': }
-  } # RedHat
-}
-
 include ::postgresql::server
 
 postgresql::server::db { 'icinga2':
@@ -16,9 +10,9 @@ class{ 'icinga2':
 }
 
 class{ 'icinga2::feature::idopgsql':
-  user          => "icinga2",
-  password      => "supersecret",
-  database      => "icinga2",
+  user          => 'icinga2',
+  password      => 'supersecret',
+  database      => 'icinga2',
   import_schema => true,
   require       => Postgresql::Server::Db['icinga2'],
 }

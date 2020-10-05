@@ -27,15 +27,7 @@
 #      - generic-service
 #    target: /etc/icinga2/conf.d/services.conf
 
-case $::osfamily {
-  'redhat': {
-    package { 'epel-release': }
-  } # RedHat
-}
-
-class { 'icinga2':
-  manage_repo => true,
-}
+include icinga2
 
 $defaults = lookup('monitoring::defaults')
 

@@ -130,8 +130,8 @@ describe('icinga2::feature::idomysql', :type => :class) do
             ]
           end
 
-          it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
-          it { should_not contain_package('icinga2-ido-mysql').with({ 'ensure' => 'installed' }) }
+          it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+          it { is_expected.not_to contain_package('icinga2-ido-mysql').with({ 'ensure' => 'installed' }) }
         end
       end
 

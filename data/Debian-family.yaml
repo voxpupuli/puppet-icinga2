@@ -2,10 +2,3 @@
 icinga2::globals::user: nagios
 icinga2::globals::group: nagios
 icinga2::globals::icinga2_bin: /usr/sbin/icinga2
-icinga2::repo:
-  location: http://packages.icinga.com/debian
-  release: 'icinga-%{facts.os.distro.codename}'
-  repos: main
-  key: 
-    id: F51A91A5EE001AA5D77D53C4C6E319C334410682
-    source: http://packages.icinga.com/icinga.key

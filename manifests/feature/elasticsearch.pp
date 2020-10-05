@@ -182,7 +182,7 @@ class icinga2::feature::elasticsearch(
   # The password parameter isn't parsed anymore.
   # lint:ignore:variables_not_enclosed
   if $password {
-    $_password = "-:\"$password\""
+    $_password = "-:\"${password}\""
   } else {
     $_password = undef
   }

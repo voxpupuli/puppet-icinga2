@@ -1,5 +1,5 @@
 fixtures:
-forge_modules:
+  forge_modules:
     icinga:
       repo: icinga/icinga
     stdlib:

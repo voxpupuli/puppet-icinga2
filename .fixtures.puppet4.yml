@@ -1,6 +1,8 @@
 fixtures:
   forge_modules:
     stdlib:
+      repo: icinga/icinga
+    stdlib:
       repo: puppetlabs/stdlib
       ref: 5.2.0
     concat:

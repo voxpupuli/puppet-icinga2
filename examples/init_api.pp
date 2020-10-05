@@ -1,12 +1,4 @@
-case $::osfamily {
-  'redhat': {
-    package { 'epel-release': }
-  } # RedHat
-}
-
-class { 'icinga2':
-  manage_repo => true,
-}
+class { 'icinga2': }
 
 class { '::icinga2::feature::api':
   pki => none,

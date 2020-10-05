@@ -94,7 +94,7 @@ class icinga2::feature::idopgsql(
     host                  => $host,
     port                  => $port,
     user                  => $user,
-    password              => "-:\"$password\"",   # The password parameter isn't parsed anymore.
+    password              => "-:\"${password}\"",   # The password parameter isn't parsed anymore.
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,

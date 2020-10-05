@@ -1,3 +1,0 @@
----
-icinga2::repo:
-  baseurl: 'http://packages.icinga.com/fedora/%{facts.os.release.major}/release/'

@@ -1,3 +1,0 @@
----
-icinga2::repo:
-  location: http://packages.icinga.com/ubuntu
