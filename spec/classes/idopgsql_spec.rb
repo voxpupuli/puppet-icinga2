@@ -111,8 +111,8 @@ describe('icinga2::feature::idopgsql', :type => :class) do
             ]
           end
 
-          it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
-          it { should_not contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }
+          it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+          it { is_expected.not_to contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }
         end
       end
     end

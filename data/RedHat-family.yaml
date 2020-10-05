@@ -3,9 +3,3 @@ icinga2::globals::user: icinga
 icinga2::globals::group: icinga
 icinga2::globals::icinga2_bin: /sbin/icinga2
 icinga2::globals::selinux_package_name: icinga2-selinux
-icinga2::repo:
-  baseurl: 'http://packages.icinga.com/epel/%{facts.os.release.major}/release/'
-  descr: ICINGA (stable release for epel)
-  enabled: 1
-  gpgcheck: 1
-  gpgkey: http://packages.icinga.com/icinga.key

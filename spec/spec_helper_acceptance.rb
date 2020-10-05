@@ -16,6 +16,7 @@ RSpec.configure do |c|
           :target_module_path => '/etc/puppetlabs/code/modules')
 
       # Install dependencies
+      on(host, puppet('module', 'install', 'icinga-icinga'))
       on(host, puppet('module', 'install', 'puppetlabs-stdlib'))
       on(host, puppet('module', 'install', 'puppetlabs-concat'))
 

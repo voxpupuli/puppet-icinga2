@@ -3,6 +3,9 @@ case $::facts['os']['name'] {
     if Integer($::facts['os']['release']['major']) < 8 {
       $epel      = true
       $backports = false
+    } else {
+      $epel      = false
+      $backports = false
     }
   } # RedHat
   'debian', 'ubuntu': {

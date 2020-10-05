@@ -205,7 +205,7 @@ class icinga2::feature::influxdb(
 
   # The password parameter isn't parsed anymore.
   if $password {
-    $_password = "-:\"$password\""
+    $_password = "-:\"${password}\""
   } else {
     $_password = undef
   }
