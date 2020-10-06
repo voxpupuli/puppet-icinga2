@@ -95,8 +95,8 @@
 #
 # @param [Optional[Icinga2::Fingerprint]] fingerprint
 #   Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
-#   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]'
-#   on your CA host.
+#   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]'
+#   on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 # 
 # @param [String] ticket_salt
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
