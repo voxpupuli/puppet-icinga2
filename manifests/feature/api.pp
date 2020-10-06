@@ -307,27 +307,30 @@ class icinga2::feature::api(
         $_cmd_pki_get_cert = $cmd_pki_get_cert
       }
 
+      $_env = $::kernel ? {
+        'windows' => undef,
+        default   => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
+      }
+
       Exec {
-        notify  => Class['::icinga2::service'],
+        environment => $_env,
+        notify      => Class['::icinga2::service'],
       }
 
       exec { 'icinga2 pki create key':
-        command     => "\"${icinga2_bin}\" pki new-cert --cn ${node_name} --key ${_ssl_key_path} --cert ${_ssl_cert_path}",
-        environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
-        creates     => $_ssl_key_path,
+        command => "\"${icinga2_bin}\" pki new-cert --cn ${node_name} --key ${_ssl_key_path} --cert ${_ssl_cert_path}",
+        creates => $_ssl_key_path,
       }
 
       -> exec { 'icinga2 pki get trusted-cert':
-        path        => $::path,
-        command     => $_cmd_pki_get_cert,
-        environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
-        creates     => $trusted_cert,
+        path    => $::path,
+        command => $_cmd_pki_get_cert,
+        creates => $trusted_cert,
       }
 
       -> exec { 'icinga2 pki request':
-        command     => "\"${icinga2_bin}\" pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${_ticket_id}", # lint:ignore:140chars
-        environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
-        creates     => $_ssl_cacert_path,
+        command => "\"${icinga2_bin}\" pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${_ticket_id}", # lint:ignore:140chars
+        creates => $_ssl_cacert_path,
       }
     } # icinga2
   } # case pki
