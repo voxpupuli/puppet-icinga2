@@ -39,13 +39,13 @@
 # @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
 #   Location of the CA certificate.
 #
-# @param [Optional[String]] ssl_key
+# @param [Optional[Stdlib::Base64]] ssl_key
 #   The private key in a base64 encoded string to store in ssl_key_path file.
 #
-# @param [Optional[String]] ssl_cert
+# @param [Optional[Stdlib::Base64]] ssl_cert
 #   The certificate in a base64 encoded string to store in ssl_cert_path file.
 #
-# @param [Optional[String]] ssl_cacert
+# @param [Optional[Sdlib::Base64]] ssl_cacert
 #   The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
 #
 # @param [String] host_measurement
@@ -86,9 +86,9 @@ class icinga2::feature::influxdb(
   Optional[Stdlib::Absolutepath]           $ssl_key_path           = undef,
   Optional[Stdlib::Absolutepath]           $ssl_cert_path          = undef,
   Optional[Stdlib::Absolutepath]           $ssl_cacert_path        = undef,
-  Optional[String]                         $ssl_key                = undef,
-  Optional[String]                         $ssl_cert               = undef,
-  Optional[String]                         $ssl_cacert             = undef,
+  Optional[Stdlib::Base64]                 $ssl_key                = undef,
+  Optional[Stdlib::Base64]                 $ssl_cert               = undef,
+  Optional[Stdlib::Base64]                 $ssl_cacert             = undef,
   String                                   $host_measurement       = '$host.check_command$',
   Hash                                     $host_tags              = { hostname => '$host.name$' },
   String                                   $service_measurement    = '$service.check_command$',
