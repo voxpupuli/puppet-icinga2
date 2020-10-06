@@ -1,13 +1,14 @@
 # TESTING
+# TESTING
 
 ## Prerequisites
-Before starting any test, you should make sure you have installed all dependent puppet modules. Find a list of all
-dependencies in [README.md] or [metadata.json].
+Before starting any test, you should make sure you have installed the Puppet PDK and Bolt,
+also Vagrant and VirtualBox have to be installed for acceptance tests.
 
 Required gems are installed with `bundler`:
 ```
 cd puppet-icinga2
-bundle install
+pdk bundle install
 ```
 
 ## Validation tests
@@ -16,7 +17,7 @@ Validation tests will check all manifests, templates and ruby files against synt
 Run validation tests:
 ```
 cd puppet-icinga2
-bundle exec rake validate
+pdk bundle exec rake validate
 ```
 
 ## Puppet lint
@@ -25,7 +26,7 @@ With puppet-lint we test if our manifests conform to the recommended style guide
 Run lint tests:
 ```
 cd puppet-icinga2
-bundle exec rake lint
+pdk bundle exec rake lint
 ```
 
 ## Unit tests
@@ -34,10 +35,17 @@ For unit testing we use [RSpec]. All classes, defined resource types and functio
 Run unit tests:
 ```
 cd puppet-icinga2
-bundle exec rake parallel_spec
+pdk test unit
+pdk test unit --tests=repos
 ```
 
-## Integration tests
+Or dedicated tests:
+```
+pdk test unit --tests=spec/classes/repos_spec.rb,spec/classes/redis_spec.rb
+```
+
+
+## Acceptence tests
 With integration tests this module is tested on multiple platforms to check the complete installation process. We define
 these tests with [Beaker] and run them on VMs by using [Vagrant].
 
@@ -47,13 +55,13 @@ All available Beaker acceptance tests are listed in the `spec/acceptance` direct
 Run all integraion tests:
 ```
 cd puppet-icinga2
-bundle exec rake beaker
+pdk bundle exec rake beaker
 ```
 
 Run integration tests for a single platform:
 ```
 cd puppet-icinga2
-bundle exec rake beaker:centos-6-x64
+pdk bundle exec rake beaker:centos-6-x64
 ```
 
 To choose a specific Puppet version for your tests set the environment variable, e.g.
@@ -70,13 +78,13 @@ BEAKER_destroy=no
 Logging in virtual machine, e.g.
 ```
 cd puppet-icinga2
-bundle exec rake beaker:ssh:centos-6-x64
+pdk bundle exec rake beaker:ssh:centos-6-x64
 ```
 
 or in the default machine:
 
 ```
 cd puppet-icinga2
-bundle exec rake beaker:ssh:default
+pdk bundle exec rake beaker:ssh:default
 ```
 

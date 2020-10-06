@@ -4,28 +4,28 @@
 .yardoc
 .yardwarns
 *.iml
-/.bundle/
-/.vagrant/
-/coverage/
-/bin/
-/doc/
-/junit/
-/log/
-/pkg/
-/spec/fixtures/manifests/
-/spec/fixtures/modules/
-/tmp/
-/vendor/
-/convert_report.txt
-/update_report.txt
+.bundle/
+.vagrant/
+coverage/
+bin/
+doc/
+junit/
+log/
+pkg/
+spec/fixtures/manifests/
+spec/fixtures/modules/
+tmp/
+vendor/
+convert_report.txt
+update_report.txt
 .project
 .envrc
-/inventory.yaml
+inventory.yaml
 ## editors
-/.idea/
+.idea/
 *~
 .DS_Store
-/.idea/
+.idea/
 .*.sw[op]
 settings.json
 
@@ -36,8 +36,8 @@ spec/fixtures/
 pkg/
 
 ## ruby
-/Gemfile.local
-/Gemfile.lock
-/.ruby-*
+Gemfile.local
+Gemfile.lock
+.ruby-*
 .vendor/
 log/
