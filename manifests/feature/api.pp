@@ -63,15 +63,15 @@
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters.
 #
-# @param [Optional[String]] ssl_key
+# @param [Optional[Stdlib::Base64]] ssl_key
 #   The private key in a base64 encoded string to store in cert directory. This parameter
 #   requires pki to be set to 'none'.
 #
-# @param [Optional[String]] ssl_cert
+# @param [Optional[Stdlib::Base64]] ssl_cert
 #   The certificate in a base64 encoded string to store in cert directory This parameter
 #    requires pki to be set to 'none'.
 #
-# @param [Optional[String]] ssl_cacert
+# @param [Optional[Stdlib::Base64]] ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 #   requires pki to be set to 'none'.
 #
@@ -157,9 +157,9 @@ class icinga2::feature::api(
   Optional[String]                                        $ticket_id                        = undef,
   Hash[String, Hash]                                      $endpoints                        = { 'NodeName' => {} },
   Hash[String, Hash]                                      $zones                            = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
-  Optional[String]                                        $ssl_key                          = undef,
-  Optional[String]                                        $ssl_cert                         = undef,
-  Optional[String]                                        $ssl_cacert                       = undef,
+  Optional[Stdlib::Base64]                                $ssl_key                          = undef,
+  Optional[Stdlib::Base64]                                $ssl_cert                         = undef,
+  Optional[Stdlib::Base64]                                $ssl_cacert                       = undef,
   Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2']]           $ssl_protocolmin                  = undef,
   Optional[Icinga2::Interval]                             $ssl_handshake_timeout            = undef,
   Optional[String]                                        $ssl_cipher_list                  = undef,
