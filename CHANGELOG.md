@@ -1,5 +1,39 @@
 # Change Log
 
+## [v3.0.0](https://github.com/icinga/puppet-icinga2/tree/v3.0.0) (2020-10-13)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.4.1...v3.0.0)
+
+**Implemented enhancements:**
+
+- Replace class repo with new class from module icinga [\#613](https://github.com/Icinga/puppet-icinga2/issues/613)
+- Add new param manage\_repos to replace manage\_repo in the future [\#643](https://github.com/Icinga/puppet-icinga2/pull/643) ([lbetz](https://github.com/lbetz))
+- add-unit-tests-for-types [\#641](https://github.com/Icinga/puppet-icinga2/pull/641) ([lbetz](https://github.com/lbetz))
+- fix \#623 change data types of all certificates and keys [\#640](https://github.com/Icinga/puppet-icinga2/pull/640) ([lbetz](https://github.com/lbetz))
+- Accepts SHA1 and SHA256 fingerprint digests [\#632](https://github.com/Icinga/puppet-icinga2/pull/632) ([thorstenk](https://github.com/thorstenk))
+
+**Fixed bugs:**
+
+- Parameter icon\_image value must not be an absolute path [\#619](https://github.com/Icinga/puppet-icinga2/issues/619)
+- Attribute parser breaks passwords [\#616](https://github.com/Icinga/puppet-icinga2/issues/616)
+- setting env vars in \#618 do not work on Windows [\#642](https://github.com/Icinga/puppet-icinga2/pull/642) ([lbetz](https://github.com/lbetz))
+- Missing parameters [\#630](https://github.com/Icinga/puppet-icinga2/pull/630) ([jas01](https://github.com/jas01))
+- Add environment variables for icinga user and group to execs [\#618](https://github.com/Icinga/puppet-icinga2/pull/618) ([joernott](https://github.com/joernott))
+
+**Closed issues:**
+
+- Add unit test for type logseverity [\#639](https://github.com/Icinga/puppet-icinga2/issues/639)
+- Add unit test for type logfacility [\#638](https://github.com/Icinga/puppet-icinga2/issues/638)
+- Add unit test for type interval [\#636](https://github.com/Icinga/puppet-icinga2/issues/636)
+- Add unit test for type fingerprint  [\#635](https://github.com/Icinga/puppet-icinga2/issues/635)
+- Accept SHA256 fingerprints \(since Icinga2 2.12.0\) [\#631](https://github.com/Icinga/puppet-icinga2/issues/631)
+- Change all TLS certificates and keys to datatype Stdlib::Base64 [\#623](https://github.com/Icinga/puppet-icinga2/issues/623)
+- Setting up certificates does not work if user != icinga [\#617](https://github.com/Icinga/puppet-icinga2/issues/617)
+
+**Merged pull requests:**
+
+- correct fixtures and metadata [\#634](https://github.com/Icinga/puppet-icinga2/pull/634) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+- changes to fix breaking tests [\#633](https://github.com/Icinga/puppet-icinga2/pull/633) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+
 ## [v2.4.1](https://github.com/icinga/puppet-icinga2/tree/v2.4.1) (2020-05-05)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.4.0...v2.4.1)
 
