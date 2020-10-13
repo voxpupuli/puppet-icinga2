@@ -5,7 +5,7 @@ $master_ip   = '192.168.5.12'
 $fingerprint = 'D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:50:68:01:D8:98:82:1B:14:8A:6A:89:4B:7A:40:32:99:3D:96:72:72'
 
 class { '::icinga2':
-  manage_repo  => true,
+  manage_repos => true,
   constants    => {
     'NodeName' => 'slave.localdomain',
   },

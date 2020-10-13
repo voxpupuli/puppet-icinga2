@@ -26,8 +26,8 @@ describe 'icinga2 class' do
         }
 
         class { 'icinga2':
-          manage_repo => true,
-          constants   => {
+          manage_repos => true,
+          constants    => {
             'TicketSalt' => 'topsecret4ticketid',
           },
         }

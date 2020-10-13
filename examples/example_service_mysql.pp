@@ -23,8 +23,8 @@
  * Icinga2
  */
 class { '::icinga2':
-  manage_repo => true,
-  confd       => 'example.d',
+  manage_repos => true,
+  confd        => 'example.d',
 }
 
 file { '/etc/icinga2/example.d':
