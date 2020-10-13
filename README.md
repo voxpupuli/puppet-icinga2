@@ -30,7 +30,7 @@ configuration of Icinga 2 on multiple operating systems.
 * The current version now uses the icinga :: repos class from the new `icinga` module for the configuration of
 repositories including EPEL on RedHat and Backports on Debian. (see https://github.com/icinga/puppet-icinga)
 * `manage_repos` will replace `manage_repo` in the future
-* Since Icinga v2.12.0 the fingerprint to validte certificates is a sha256 instead of a sha1. Both is supported now.
+* Since Icinga v2.12.0 the fingerprint to validate certificates is a sha256 instead of a sha1. Both is supported now.
 
 ## Module Description
 
