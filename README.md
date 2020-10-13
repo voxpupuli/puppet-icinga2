@@ -25,6 +25,13 @@
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
+### What's new in version 3.0.0
+
+* The current version now uses the icinga :: repos class from the new `icinga` module for the configuration of
+repositories including EPEL on RedHat and Backports on Debian. (see https://github.com/icinga/puppet-icinga)
+* `manage_repos` will replace `manage_repo` in the future
+* Since Icinga v2.12.0 the fingerprint to validte certificates is a sha256 instead of a sha1. Both is supported now.
+
 ## Module Description
 
 This module installs and configures Icinga 2 on your Linux or Windows hosts.
@@ -59,26 +66,20 @@ And depends on:
 * [puppetlabs/stdlib] >= 4.16.0 < 7.0.0
     * If Puppet 6 is used a stdlib 5.1 or higher is required, see https://github.com/Icinga/puppet-icinga2/issues/505
 * [puppetlabs/concat] >= 2.1.0 < 7.0.0
-
-Depending on your setup following modules may also be required:
-
-* [puppetlabs/apt] >= 6.0.0
-* [puppetlabs/chocolatey] >= 3.1.0
-* [puppet/zypprepo] >= 2.2.1
-* [puppetlabs/yumrepo_core] >= 1.0.0
-    * If Puppet 6 is used
+* [icinga/icinga] >= 1.0.0 < 2.0.0
+    * needed if `manage_repos` is set to `true`
 
 ### Limitations
 
 This module has been tested on:
 
 * Ruby >= 1.9
-* Debian 9, 10
-* Ubuntu 16.04, 18.04
+* Debian 8, 9, 10
+* Ubuntu 16.04, 18.04, 20.04
 * CentOS/RHEL 6, 7, 8
 * Fedora 31
 * FreeBSD 10, 11
-* SLES 12
+* SLES 12, 15
 * Windows Server 2012 R2, 2016
 
 Other operating systems or versions may work but have not been tested.
@@ -93,65 +94,22 @@ and `notification` are enabled by default.
 By default, your distribution's packages are used to install Icinga 2. On Windows systems we use the [Chocolatey]
 package manager.
 
-Use the `manage_repo` parameter to configure the official [packages.icinga.com] repositories.
+Use the `manage_repos` parameter to configure repositories by default the official and stable [packages.icinga.com]. To configure your own
+repositories, or use the official testing or nightly snapshot stage, see https://github.com/icinga/puppet-icinga.
 
 ``` puppet
 class { '::icinga2':
-  manage_repo => true,
+  manage_repos => true,
 }
 ```
-*Notice*: Since Icinga v2.11.0 on RedHat the EPEL-Repository is required to install the Boost libraries. EPEL is NOT managed by this module so you have to do this on your own in front of icinga2 class, e.g. as `yum_repo` or if you've an internet connection as a simple package resource like:
-
-``` puppet
-package { 'epel-release': }
-
-class { '::icinga2':
-  manage_repo => true,
-}
-``` 
-
-*Notice:* The same holds on Debian with the backports repository.
-
-``` puppet
-include ::apt, ::apt::backports
-
-class { '::icinga2':
-  manage_repo => true,
-}
-```
-
-*Info:* If you are using the [Icinga Web 2](https://github.com/Icinga/puppet-icingaweb2/) Puppet module on the same
-server, make sure to disable the repository management for one of the modules!
-
-Since version 2.0.0 you're able via hiera to overload which repository will be used for installation, e.g. for icinga on YUM based operating systems:
-
-``` puppet
----
-icinga2::repo:
-  baseurl: 'http://myhost.example.org/epel/%{facts.os.release.major}/release/'
-  proxy: http://proxy.example.org:3128
-```
-
-*Notice*: If you wanna setup Icinga on Debian 8 the required backports repository (Icinga 2 v2.11.0 or higher) changed its location! You have to use hiera to configure the location used by the class apt::backports or disable `manage_repo` by setting to `false` to manage the required repos by yourself.
-
-``` puppet
----
-apt::backports::location: http://archive.debian.org/debian
-```
-
-You can also change or set every other parameter of the underlying resources, supported for operating system families:
-
-* RedHat, resource type: yumrepo
-* Debian, define resource: apt::source
-* SuSE, resource type: zypprepo
-    * a workaround is implemented to use a parameter proxy also to download the gpg key thru a proxy, see https://github.com/Icinga/puppet-icinga2/issues/397.
 
 If you want to manage the version of Icinga 2, you have to disable the package management of this module and handle
-packages in your own Puppet code. The attribute manage_repo is disabled by default and you have to manage
+packages in your own Puppet code. The attribute `manage_repos` is disabled by default and you have to manage
 a repository within icinga in front of the package resource. You can combine this one with the section before about repositories.
 
 ``` puppet
-include ::icinga2::repo
+# class of extra module icinga/icinga
+include ::icinga::repos
 
 package { 'icinga2':
   ensure => latest,
@@ -165,6 +123,7 @@ class { '::icinga2':
 
 Note: Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
 all, including IDO packages!
+
 
 ### Clustering Icinga
 
@@ -367,7 +326,7 @@ a hiera datastore. See also examples/objects_from_hiera.pp.
 
 ```
 class { 'icinga2':
-  manage_repo => true,
+  manage_repos => true,
 }
 
 $defaults = lookup('monitoring::defaults', undef, undef, {})
