@@ -15,10 +15,10 @@ class profile::icinga2::slave(
   }
 
   class { '::icinga2':
-    manage_repo => true,
-    confd       => false,
-    features    => ['checker','mainlog'],
-    constants   => {
+    manage_repos => true,
+    confd        => false,
+    features     => ['checker','mainlog'],
+    constants    => {
       'ZoneName' => $slave_zone,
     },
   }

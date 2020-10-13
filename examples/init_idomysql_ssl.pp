@@ -97,7 +97,7 @@ mysql::db { 'icinga':
 }
 
 class { '::icinga2':
-  manage_repo => true,
+  manage_repos => true,
 }
 
 class{ '::icinga2::feature::idomysql':

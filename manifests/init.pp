@@ -5,9 +5,9 @@
 #
 #   include ::icinga2
 #
-# @example If you want to use the official Icinga Project repository, enable the manage_repo parameter.
+# @example If you want to use the module icinga/puppet-icinga, e.g. to use the official Icinga Project repositories, enable the manage_repos parameter.
 #   class { 'icinga2':
-#     manage_repo => true,
+#     manage_repos => true,
 #   }
 #
 # @example If you don't want to manage the Icinga 2 service with puppet, you can dissable this behaviour with the manage_service parameter. When set to false no service refreshes will be triggered.
@@ -39,8 +39,8 @@
 #
 # @example Enabling features with there defaults or loading parameters via Hiera:
 #   class { '::icinga2':
-#     manage_repo => true,
-#     features    => ['checker', 'mainlog', 'command'],
+#     manage_repos => true,
+#     features     => ['checker', 'mainlog', 'command'],
 #   }
 #
 # @example The ITL contains several CheckCommand definitions to load, set these in the array of the plugins parameter, i.e. for a master or satellite do the following and disbale the load of the configuration in conf.d.
@@ -78,9 +78,12 @@
 #   If set to true the Icinga 2 service will start on boot.
 #
 # @param [Boolean] manage_repo
-#   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
-#   the latest version of Icinga. When set to false the operating systems default will be used. As the Icinga Project
-#   does not offer a Chocolatey repository, you will get a warning if you enable this parameter on Windows.
+#   Deprecated, use manage_repos.
+#
+# @param [Boolean] manage_repos
+#   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
+#   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
+#   For more information, see http://github.com/icinga/puppet-icinga.
 #
 # @param [Boolean] manage_package
 #   If set to false packages aren't managed.
@@ -117,6 +120,7 @@ class icinga2 (
   Stdlib::Ensure::Service    $ensure         = running,
   Boolean                    $enable         = true,
   Boolean                    $manage_repo    = false,
+  Boolean                    $manage_repos   = false,
   Boolean                    $manage_package = true,
   Boolean                    $manage_selinux = false,
   Boolean                    $manage_service = true,
@@ -144,8 +148,11 @@ class icinga2 (
   -> Concat <| tag == 'icinga2::config::file' |>
   ~> Class['::icinga2::service']
 
-  if $::icinga2::manage_repo {
+  if $manage_repos or $manage_repo {
     require ::icinga::repos
+    if $manage_repo {
+      deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
+    }
   }
 
   anchor { '::icinga2::begin':

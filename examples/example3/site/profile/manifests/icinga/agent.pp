@@ -11,9 +11,9 @@ class profile::icinga::agent {
 
     # Options valid for all agents, thus defined inside the manifest
     class { '::icinga2':
-        manage_repo => true,
-        confd       => false,
-        features    => [ 'mainlog' ],
+        manage_repos => true,
+        confd        => false,
+        features     => [ 'mainlog' ],
     }
 
     # Leave this here or put it in a yaml file common

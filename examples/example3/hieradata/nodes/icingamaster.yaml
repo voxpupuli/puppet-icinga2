@@ -1,5 +1,5 @@
 ---
-icinga2::manage_repo: true
+icinga2::manage_repos: true
 icinga2::confd: true
 icinga2::constants:
   NodeName: "%{::fqdn}"

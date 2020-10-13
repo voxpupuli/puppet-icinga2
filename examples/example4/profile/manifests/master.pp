@@ -9,7 +9,7 @@ class profile::icinga2::master {
   }
 
   class { '::icinga2':
-    manage_repo    => true,
+    manage_repos   => true,
     purge_features => false,
     confd          => false,
     constants      => {
