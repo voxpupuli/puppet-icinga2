@@ -22,16 +22,22 @@ class icinga2::config {
   }
 
   file { "${conf_dir}/constants.conf":
+    owner => $::icinga2::globals::user,
+    group => $::icinga2::globals::group,
     ensure  => file,
     content => $template_constants,
   }
 
   file { "${conf_dir}/icinga2.conf":
+    owner => $::icinga2::globals::user,
+    group => $::icinga2::globals::group,
     ensure  => file,
     content => $template_mainconfig,
   }
 
   file { "${conf_dir}/features-enabled":
+    owner => $::icinga2::globals::user,
+    group => $::icinga2::globals::group,
     ensure  => directory,
     purge   => $purge_features,
     recurse => $purge_features,
