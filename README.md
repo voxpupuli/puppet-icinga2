@@ -156,7 +156,7 @@ class { '::icinga2':
 }
 
 class { '::icinga2::feature::api':
-  pki             => 'none'
+  pki             => 'none',
   accept_commands => true,
   # when having multiple masters, you have to enable:
   accept_config => true,
