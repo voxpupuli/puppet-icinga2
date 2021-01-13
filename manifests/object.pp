@@ -1,8 +1,6 @@
 # @summary
 #   Define resource to used by this module only.
 #
-# @api private
-#
 # @param [Enum['present', 'absent']] ensure
 #   Set to present enables the object, absent disabled it.
 #
@@ -65,8 +63,6 @@ define icinga2::object(
   Array                                                       $ignore       = [],
   Hash                                                        $attrs        = {},
 ) {
-
-  assert_private()
 
   case $::osfamily {
     'windows': {
