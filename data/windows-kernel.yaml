@@ -1,6 +1,7 @@
 ---
 icinga2::globals::package_name: icinga2
 icinga2::globals::service_name: icinga2
+icinga2::globals::service_user: 'NetworkService'
 icinga2::globals::ido_mysql_schema: C:/Program Files/icinga2/usr/share/icinga2-ido-mysql/schema/mysql.sql
 icinga2::globals::ido_pgsql_schema: C:/Program Files/icinga2/usr/share/icinga2-ido-pgsql/schema/pgsql.sql
 icinga2::globals::icinga2_bin: C:/Program Files/icinga2/sbin/icinga2.exe
