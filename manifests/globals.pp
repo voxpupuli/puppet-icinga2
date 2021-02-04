@@ -15,7 +15,7 @@
 #   User as the icinga process runs.
 #   CAUTION: This does not manage the user context for the runnig icinga 2 process!
 #   The parameter is only used for ownership of files or directories.
-#   
+#
 # @param [Optional[String]] group
 #   Group as the icinga process runs.
 #   CAUTION: This does not manage the group context for the runnig icinga 2 process!
@@ -26,13 +26,13 @@
 #
 # @param [Optional[String]] ido_mysql_package_name
 #   The name of the icinga package that's needed for MySQL.
-#   
+#
 # @param [String] ido_mysql_schema
 #   Path to the MySQL schema to import.
 #
 # @param [Optional[String]] ido_pgsql_package_name
 #   The name of the icinga package that's needed for Postrgesql.
-#   
+#
 # @param [String] ido_pgsql_schema
 #   Path to the Postgresql schema to import.
 #
@@ -66,6 +66,10 @@
 # @param [Optional[String]] service_reload
 #   How to do a reload of the Icinga process.
 #
+# @param [Optional[String]] service_user
+#   The user context in which the service should run.
+#   ATM only relevant on Windows.
+#
 class icinga2::globals(
   String                 $package_name,
   String                 $service_name,
@@ -87,6 +91,7 @@ class icinga2::globals(
   Optional[String]       $ido_mysql_package_name = undef,
   Optional[String]       $ido_pgsql_package_name = undef,
   Optional[String]       $service_reload         = undef,
+  Optional[String]       $service_user           = undef,
 ) {
 
   assert_private()
