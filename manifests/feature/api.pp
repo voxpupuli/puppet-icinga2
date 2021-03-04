@@ -290,11 +290,11 @@ class icinga2::feature::api(
       $cmd_pki_get_cert = "\"${icinga2_bin}\" pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}"
 
       if($ticket_id) {
-        $_ticket_id = $ticket_id
+        $_ticket = "--ticket ${ticket_id}"
       } elsif($ticket_salt != 'TicketSalt') {
-        $_ticket_id = icinga2_ticket_id($node_name, $ticket_salt)
+        $_ticket = "--ticket ${icinga2_ticket_id($node_name, $ticket_salt)}"
       } else {
-        fail("Parameter ticket_salt or ticket_id has be set when using pki='icinga2'")
+        $_ticket = ''
       }
       if $fingerprint {
         $_fingerprint = upcase(regsubst($fingerprint, ':', ' ', 'G'))
@@ -329,7 +329,7 @@ class icinga2::feature::api(
       }
 
       -> exec { 'icinga2 pki request':
-        command => "\"${icinga2_bin}\" pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} --ticket ${_ticket_id}", # lint:ignore:140chars
+        command => "\"${icinga2_bin}\" pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} ${_ticket}", # lint:ignore:140chars
         creates => $_ssl_cacert_path,
       }
     } # icinga2
