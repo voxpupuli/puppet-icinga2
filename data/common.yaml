@@ -18,13 +18,20 @@ icinga2::globals::reserved:
   - ApiBindPort
   - ApiEnvironment
   - ApplicationType
+  - Array
   - AttachDebugger
   - BuildCompilerName
   - BuildCompilerVersion
   - BuildHostName
+  - Checkable
+  - Command
   - Concurrency
+  - ConfigObject
+  - Configuration
   - Critical
   - Custom
+  - CustomVarObject
+  - DateTime
   - Deprecated
   - Dictionary
   - Down
@@ -34,6 +41,7 @@ icinga2::globals::reserved:
   - Environment
   - FlappingEnd
   - FlappingStart
+  - Function
   - HostDown
   - HostUp
   - IncludeConfDir
@@ -42,15 +50,18 @@ icinga2::globals::reserved:
   - LocalStateDir
   - LogCritical
   - LogDebug
+  - Logger
   - LogInformation
   - LogNotice
   - LogWarning
   - Math
   - MaxConcurrentChecks
   - ModAttrPath
+  - Namespace
   - NodeName
   - OK
   - ObjectsPath
+  - PerfdataValue
   - PidPath
   - PkgDataDir
   - PlatformArchitecture
@@ -61,6 +72,7 @@ icinga2::globals::reserved:
   - PrefixDir
   - Problem
   - Recovery
+  - Reference
   - RunAsGroup
   - RunAsUser
   - RunDir
@@ -69,8 +81,10 @@ icinga2::globals::reserved:
   - ServiceUnknown
   - ServiceWarning
   - StatePath
+  - StreamLogger
   - SysconfDir
   - System
+  - Type
   - Types
   - Unknown
   - Up
