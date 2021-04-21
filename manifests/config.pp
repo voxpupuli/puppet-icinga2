@@ -18,15 +18,17 @@ class icinga2::config {
   if $::kernel != 'windows' {
     $template_constants  = icinga2_attributes($constants)
     $template_mainconfig = template('icinga2/icinga2.conf.erb')
+    $file_permissions    = '0640'
   } else {
     $template_constants  = regsubst(icinga2_attributes($constants), '\n', "\r\n", 'EMG')
     $template_mainconfig = regsubst(template('icinga2/icinga2.conf.erb'), '\n', "\r\n", 'EMG')
+    $file_permissions    = undef
   }
 
   File {
     owner => $user,
     group => $group,
-    mode  => '0640',
+    mode  => $file_permissions,
   }
 
   file { "${conf_dir}/constants.conf":

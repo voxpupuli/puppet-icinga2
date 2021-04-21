@@ -15,24 +15,28 @@
 #   User as the icinga process runs.
 #   CAUTION: This does not manage the user context for the runnig icinga 2 process!
 #   The parameter is only used for ownership of files or directories.
-#   
+#
 # @param [Optional[String]] group
 #   Group as the icinga process runs.
 #   CAUTION: This does not manage the group context for the runnig icinga 2 process!
 #   The parameter is only used for group membership of files or directories.
+#
+# @param [Optional[String]] logon_account
+#   The user context in which the service should run.
+#   ATM only relevant on Windows.
 #
 # @param [Optional[String]] selinux_package_name
 #   The name of the icinga selinux package.
 #
 # @param [Optional[String]] ido_mysql_package_name
 #   The name of the icinga package that's needed for MySQL.
-#   
+#
 # @param [String] ido_mysql_schema
 #   Path to the MySQL schema to import.
 #
 # @param [Optional[String]] ido_pgsql_package_name
 #   The name of the icinga package that's needed for Postrgesql.
-#   
+#
 # @param [String] ido_pgsql_schema
 #   Path to the Postgresql schema to import.
 #
@@ -83,6 +87,7 @@ class icinga2::globals(
   Array[String]          $reserved,
   Optional[String]       $user                   = undef,
   Optional[String]       $group                  = undef,
+  Optional[String]       $logon_account          = undef,
   Optional[String]       $selinux_package_name   = undef,
   Optional[String]       $ido_mysql_package_name = undef,
   Optional[String]       $ido_pgsql_package_name = undef,
@@ -93,6 +98,16 @@ class icinga2::globals(
 
   if ( versioncmp($::puppetversion, '6' ) >= 0 and versioncmp(load_module_metadata('stdlib')['version'], '5.1.0') < 0 ) {
     fail('You be affected by this bug: https://github.com/Icinga/puppet-icinga2/issues/505 so you should update your stdlib to version 5.1 or higher')
+  }
+
+  # Logon account on Windows
+  if $facts['os']['kernel'] == 'windows' {
+    if $logon_account and versioncmp($puppetversion, '6.18.0') < 0 {
+      fail('Using logon_account requieres a Puppet version 6.18 or higher')
+    }
+    $_logonaccount = $logon_account
+  } else {
+    $_logonaccount = undef
   }
 
   $constants =  lookup('icinga2::globals::constants', Hash, 'deep', {})
