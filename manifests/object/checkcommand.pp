@@ -23,7 +23,7 @@
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# @param [Optional[Integer[1]]] timeout
+# @param [Optional[Icinga2::Interval]] timeout
 #   The command timeout in seconds.
 #
 # @param [Optional[Variant[Hash, String]]] arguments
@@ -48,7 +48,7 @@ define icinga2::object::checkcommand(
   Optional[Variant[Array, String]]    $command           = undef,
   Optional[Hash]                      $env               = undef,
   Optional[Icinga2::CustomAttributes] $vars              = undef,
-  Optional[Integer[1]]                $timeout           = undef,
+  Optional[Icinga2::Interval]         $timeout           = undef,
   Optional[Variant[Hash, String]]     $arguments         = undef,
   Boolean                             $template          = false,
   Variant[String, Integer]            $order             = 15,
