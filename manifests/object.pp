@@ -73,7 +73,7 @@ define icinga2::object(
     } # windows
     default: {
       Concat {
-        owner => 'root',
+        owner => $::icinga2::globals::user,
         group => $::icinga2::globals::group,
         mode  => '0640',
       }
