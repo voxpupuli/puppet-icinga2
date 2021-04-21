@@ -26,6 +26,7 @@ icinga2::globals::reserved:
   - Critical
   - Custom
   - Deprecated
+  - Dictionary
   - Down
   - DowntimeEnd
   - DowntimeRemoved
