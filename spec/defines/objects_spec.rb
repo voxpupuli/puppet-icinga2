@@ -39,7 +39,7 @@ describe('icinga2::object', :type => :define) do
       case facts[:osfamily]
       when 'Debian'
         before(:each) do
-          @icinga2_user = 'root'
+          @icinga2_user = 'nagios'
           @icinga2_group = 'nagios'
         end
       when 'Windows'
@@ -49,7 +49,7 @@ describe('icinga2::object', :type => :define) do
         end
       else
         before(:each) do
-          @icinga2_user = 'root'
+          @icinga2_user = 'icinga'
           @icinga2_group = 'icinga'
         end
       end
