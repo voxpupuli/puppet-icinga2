@@ -1,5 +1,29 @@
 # Change Log
 
+## [v3.1.0](https://github.com/icinga/puppet-icinga2/tree/v3.1.0) (2021-04-24)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Change owner of config file to icinga [\#660](https://github.com/Icinga/puppet-icinga2/issues/660)
+- Add some words to reserve list  [\#659](https://github.com/Icinga/puppet-icinga2/issues/659)
+- Allow to send cert req without ticket [\#653](https://github.com/Icinga/puppet-icinga2/issues/653)
+- Add new parameter logon\_account [\#650](https://github.com/Icinga/puppet-icinga2/issues/650)
+- Manage owner, group and permission of config files [\#648](https://github.com/Icinga/puppet-icinga2/issues/648)
+
+**Fixed bugs:**
+
+- Added Dictionary to reserved list [\#655](https://github.com/Icinga/puppet-icinga2/pull/655) ([hp197](https://github.com/hp197))
+- Changed Integer parameters into Icinga2::Interval [\#654](https://github.com/Icinga/puppet-icinga2/pull/654) ([hp197](https://github.com/hp197))
+
+**Closed issues:**
+
+- Support conditional blocks inside objects [\#652](https://github.com/Icinga/puppet-icinga2/issues/652)
+
+**Merged pull requests:**
+
+- docs: Add comma to clustering example [\#646](https://github.com/Icinga/puppet-icinga2/pull/646) ([fionera](https://github.com/fionera))
+
 ## [v3.0.0](https://github.com/icinga/puppet-icinga2/tree/v3.0.0) (2020-10-13)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v2.4.1...v3.0.0)
 
@@ -21,13 +45,13 @@
 
 **Closed issues:**
 
+- Accept SHA256 fingerprints \(since Icinga2 2.12.0\) [\#631](https://github.com/Icinga/puppet-icinga2/issues/631)
+- Setting up certificates does not work if user != icinga [\#617](https://github.com/Icinga/puppet-icinga2/issues/617)
 - Add unit test for type logseverity [\#639](https://github.com/Icinga/puppet-icinga2/issues/639)
 - Add unit test for type logfacility [\#638](https://github.com/Icinga/puppet-icinga2/issues/638)
 - Add unit test for type interval [\#636](https://github.com/Icinga/puppet-icinga2/issues/636)
 - Add unit test for type fingerprint  [\#635](https://github.com/Icinga/puppet-icinga2/issues/635)
-- Accept SHA256 fingerprints \(since Icinga2 2.12.0\) [\#631](https://github.com/Icinga/puppet-icinga2/issues/631)
 - Change all TLS certificates and keys to datatype Stdlib::Base64 [\#623](https://github.com/Icinga/puppet-icinga2/issues/623)
-- Setting up certificates does not work if user != icinga [\#617](https://github.com/Icinga/puppet-icinga2/issues/617)
 
 **Merged pull requests:**
 
@@ -349,7 +373,7 @@
 - icinga2 binary is wrong on rhel5 [\#409](https://github.com/Icinga/puppet-icinga2/issues/409)
 - Add feature Elasticsearch [\#408](https://github.com/Icinga/puppet-icinga2/issues/408)
 - Add feature elasticsearch [\#399](https://github.com/Icinga/puppet-icinga2/issues/399)
-- Added cloudlinux to supported operating systems. Is nearly identical … [\#424](https://github.com/Icinga/puppet-icinga2/pull/424) ([Koma-Andrea](https://github.com/Koma-Andrea))
+- Added cloudlinux to supported operating systems. Is nearly identical … [\#424](https://github.com/Icinga/puppet-icinga2/pull/424) ([thekoma](https://github.com/thekoma))
 
 **Fixed bugs:**
 

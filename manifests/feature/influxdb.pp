@@ -45,7 +45,7 @@
 # @param [Optional[Stdlib::Base64]] ssl_cert
 #   The certificate in a base64 encoded string to store in ssl_cert_path file.
 #
-# @param [Optional[Sdlib::Base64]] ssl_cacert
+# @param [Optional[Stdlib::Base64]] ssl_cacert
 #   The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
 #
 # @param [String] host_measurement

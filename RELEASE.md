@@ -3,7 +3,17 @@ Before submitting a new release, make sure all relevant pull requests and local 
 branch. All tests must pass before a release is tagged.
 
 
-## 1. AUTHORS
+## 1. Puppet Development Kit
+If not installed, please install the PDK and do a 'bundle install'.
+``` bash
+pdk bundle install
+```
+Or if already installed do an update.
+``` bash
+pdk bundle update
+```
+
+## 2. AUTHORS
 Update the [AUTHORS] and [.mailmap] file
 
 ``` bash
@@ -12,7 +22,21 @@ git log --use-mailmap | grep ^Author: | cut -f2- -d' ' | sort | uniq > AUTHORS
 git commit -am "Update AUTHORS"
 ```
 
-## 2. Changelog
+## 3. Reference
+If it is not installed [puppet-strings]:
+``` bash
+gem install puppet-strings --no-ri --no-rdoc
+```
+Generate [REFERENCE.md] via [Puppet Strings]
+``` bash
+puppet strings generate --format markdown --out ./REFERENCE.md
+```
+
+## 4. Version
+Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
+Update the version number in `metadata.json`.
+
+## 5. Changelog
 Install [github-changelog-generator]
 ```bash
 gem install github_changelog_generator -v 1.13.2
@@ -23,11 +47,7 @@ Generate [CHANGELOG.md]
 github_changelog_generator -t <github-access-token> --future-release=v1.0.0 -u icinga -p puppet-icinga2
 ```
 
-## 3. Version
-Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
-Update the version number in `metadata.json`.
-
-## 4. Git Tag
+## 6. Git Tag
 Commit all changes to the `master` branch
 
 ``` bash
@@ -47,11 +67,14 @@ Push tags
 git push --tags
 ```
 
-
-## Puppet Forge
-The module is uploaded automatically to Puppet Forge by TravisCI when a new tag is set.
+## 7. Build and Upload
+``` bash
+pdk build
+```
+Upload the tarball to Puppet Forge.
 
 [github-changelog-generator]: https://github.com/skywinder/github-changelog-generator
+[Puppet Strings]: https://puppet.com/docs/puppet/5.5/puppet_strings.html
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 [CHANGELOG.md]: CHANGELOG.md
 [AUTHORS]: AUTHORS

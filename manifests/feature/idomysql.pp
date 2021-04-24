@@ -56,11 +56,11 @@
 #   The private key in a base64 encoded string to store in spicified ssl_key_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[tdlib::Base64]] ssl_cert
+# @param [Optional[Stdlib::Base64]] ssl_cert
 #   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[tdlib::Base64]] ssl_cacert
+# @param [Optional[Stdlib::Base64]] ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
 #   Only valid if ssl is enabled.
 #
