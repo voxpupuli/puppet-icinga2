@@ -22,10 +22,10 @@
 #   }
 #
 #   class { '::icinga2':
-#     manage_package => false,
+#     manage_packages => false,
 #   }
 #
-# @note Setting manage_package to false means that all package aren't handeld by the module included the IDO packages.
+# @note Setting manage_packages to false means that all package aren't handeld by the module included the IDO packages.
 #
 # @example To set constants in etc/icinga2/constants.conf use the constants parameter and as value a hash, every key will be set as constant and assigned by it's value. Defaults can be overwritten.
 #   class { 'icinga2':
@@ -86,11 +86,14 @@
 #   For more information, see http://github.com/icinga/puppet-icinga.
 #
 # @param [Boolean] manage_package
+#   Deprecated, use manage_packages.
+#
+# @param [Boolean] manage_packages
 #   If set to false packages aren't managed.
 #
 # @param [Boolean] manage_selinux
 #   If set to true the icinga selinux package is installed. Requires a `selinux_package_name` (icinga2::globals)
-#   and `manage_package` has to be set to true.
+#   and `manage_packages` has to be set to true.
 #
 # @param [Boolean] manage_service
 #   If set to true the service is managed otherwise the service also
@@ -117,16 +120,17 @@
 class icinga2 (
   Array                      $features,
   Array                      $plugins,
-  Stdlib::Ensure::Service    $ensure         = running,
-  Boolean                    $enable         = true,
-  Boolean                    $manage_repo    = false,
-  Boolean                    $manage_repos   = false,
-  Boolean                    $manage_package = true,
-  Boolean                    $manage_selinux = false,
-  Boolean                    $manage_service = true,
-  Boolean                    $purge_features = true,
-  Hash                       $constants      = {},
-  Variant[Boolean, String]   $confd          = true,
+  Stdlib::Ensure::Service    $ensure          = running,
+  Boolean                    $enable          = true,
+  Boolean                    $manage_repo     = false,
+  Boolean                    $manage_repos    = false,
+  Boolean                    $manage_package  = false,
+  Boolean                    $manage_packages = true,
+  Boolean                    $manage_selinux  = false,
+  Boolean                    $manage_service  = true,
+  Boolean                    $purge_features  = true,
+  Hash                       $constants       = {},
+  Variant[Boolean, String]   $confd           = true,
 ) {
 
   require ::icinga2::globals
@@ -147,6 +151,10 @@ class icinga2 (
   Class['::icinga2::config']
   -> Concat <| tag == 'icinga2::config::file' |>
   ~> Class['::icinga2::service']
+
+  if $manage_package {
+    deprecation('manage_package', 'manage_package is deprecated and will be replaced by manage_packages in the future.')
+  }
 
   if $manage_repos or $manage_repo {
     require ::icinga::repos

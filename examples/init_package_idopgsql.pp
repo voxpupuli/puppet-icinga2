@@ -6,7 +6,7 @@ package { ['icinga2', 'icinga2-ido-pgsql']:
 }
 
 class{ 'icinga2':
-  manage_package => false,
+  manage_packages => false,
 }
 
 class{ 'icinga2::feature::idopgsql':

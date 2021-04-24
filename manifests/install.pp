@@ -10,6 +10,7 @@ class icinga2::install {
 
   $package_name         = $::icinga2::globals::package_name
   $manage_package       = $::icinga2::manage_package
+  $manage_packages      = $::icinga2::manage_packages
   $selinux_package_name = $::icinga2::globals::selinux_package_name
   $manage_selinux       = $::icinga2::manage_selinux
   $cert_dir             = $::icinga2::globals::cert_dir
@@ -17,7 +18,7 @@ class icinga2::install {
   $user                 = $::icinga2::globals::user
   $group                = $::icinga2::globals::group
 
-  if $manage_package {
+  if $manage_package or $manage_packages {
     if $::osfamily == 'windows' { Package { provider => chocolatey, } }
 
     package { $package_name:

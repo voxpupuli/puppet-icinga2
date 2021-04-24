@@ -85,6 +85,7 @@ class icinga2::feature::idopgsql(
   $ido_pgsql_package_name = $::icinga2::globals::ido_pgsql_package_name
   $ido_pgsql_schema       = $::icinga2::globals::ido_pgsql_schema
   $manage_package         = $::icinga2::manage_package
+  $manage_packages        = $::icinga2::manage_packages
   $_notify                = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
@@ -106,7 +107,7 @@ class icinga2::feature::idopgsql(
   }
 
   # install additional package
-  if $ido_pgsql_package_name and $manage_package {
+  if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
     if $::osfamily == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_pgsql_package_name}.conf":
@@ -127,7 +128,7 @@ class icinga2::feature::idopgsql(
 
   # import db schema
   if $import_schema {
-    if $ido_pgsql_package_name and $manage_package {
+    if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
       Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
     exec { 'idopgsql-import-schema':

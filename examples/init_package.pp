@@ -6,5 +6,5 @@ package { 'icinga2':
 }
 
 class { '::icinga2':
-  manage_package => false,
+  manage_packages => false,
 }

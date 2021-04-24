@@ -98,7 +98,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
       end
 
       if facts[:kernel] == 'Linux'
-        context "with manage_package => false" do
+        context "with manage_packages => false" do
           let(:params) do
             {
               :password => 'foo'
@@ -107,7 +107,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
 
           let(:pre_condition) do
             [
-              "class { 'icinga2': features => [], manage_package => false }"
+              "class { 'icinga2': features => [], manage_packages => false }"
             ]
           end
 

@@ -30,6 +30,7 @@ configuration of Icinga 2 on multiple operating systems.
 * The current version now uses the icinga :: repos class from the new `icinga` module for the configuration of
 repositories including EPEL on RedHat and Backports on Debian. (see https://github.com/icinga/puppet-icinga)
 * `manage_repos` will replace `manage_repo` in the future
+* `manage_packages` will replace `manage_package` in the future
 * Since Icinga v2.12.0 the fingerprint to validate certificates is a sha256 instead of a sha1. Both is supported now.
 
 ## Module Description
@@ -59,14 +60,14 @@ available in Icinga 2 can be enabled and configured with this module.
 
 This module supports:
 
-* [puppet] >= 4.10 < 7.0.0
+* [puppet] >= 4.10 < 8.0.0
 
 And depends on:
 
-* [puppetlabs/stdlib] >= 4.16.0 < 7.0.0
+* [puppetlabs/stdlib] >= 5.0.0 < 8.0.0
     * If Puppet 6 is used a stdlib 5.1 or higher is required, see https://github.com/Icinga/puppet-icinga2/issues/505
-* [puppetlabs/concat] >= 2.1.0 < 7.0.0
-* [icinga/icinga] >= 1.0.0 < 2.0.0
+* [puppetlabs/concat] >= 2.1.0 < 8.0.0
+* [icinga/icinga] >= 1.0.0 < 3.0.0
     * needed if `manage_repos` is set to `true`
 
 ### Limitations
@@ -80,7 +81,7 @@ This module has been tested on:
 * Fedora 31
 * FreeBSD 10, 11
 * SLES 12, 15
-* Windows Server 2012 R2, 2016
+* Windows Server 2016
 
 Other operating systems or versions may work but have not been tested.
 

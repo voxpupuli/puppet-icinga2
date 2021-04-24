@@ -117,7 +117,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
       end
 
       if facts[:kernel] == 'Linux'
-        context "with icinga2::manage_package => false" do
+        context "with icinga2::manage_packages => false" do
           let(:params) do
             {
               :password => 'foo'
@@ -126,7 +126,7 @@ describe('icinga2::feature::idomysql', :type => :class) do
 
           let(:pre_condition) do
             [
-              "class { 'icinga2': features => [], manage_package => false }"
+              "class { 'icinga2': features => [], manage_packages => false }"
             ]
           end
 

@@ -42,9 +42,9 @@ describe('icinga2', :type => :class) do
           .with({'ensure' => 'present'}) }
       end
 
-      context "with manage_package => false" do
+      context "with manage_packages => false" do
         let(:params) do
-          {:manage_package => false}
+          {:manage_packages => false}
         end
 
         it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
