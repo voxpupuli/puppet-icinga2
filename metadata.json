@@ -9,16 +9,12 @@
   "issues_url": "https://github.com/icinga/puppet-icinga2/issues",
   "dependencies": [
     {
-      "name": "icinga/icinga",
-      "version_requirement": ">= 1.0.0 < 3.0.0"
-    },
-    {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 5.0.0 < 7.0.0"
+      "version_requirement": ">= 5.0.0 < 8.0.0"
     },
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">= 2.1.0 < 7.0.0"
+      "version_requirement": ">= 2.1.0 < 8.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -27,7 +23,8 @@
       "operatingsystemrelease": [
         "Server 2012",
         "Server 2012 R2",
-        "Server 2016"
+        "Server 2016",
+        "Server 2019"
       ]
     },
     {
@@ -99,13 +96,13 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 4.10.0 < 8.0.0"
     }
   ],
   "tags": [
     "monitoring"
   ],
-  "pdk-version": "1.10.0",
-  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git#1.10.0",
-  "template-ref": "1.10.0-0-gbba9ac3"
+  "pdk-version": "1.18.1",
+  "template-url": "pdk-default#1.18.1",
+  "template-ref": "tags/1.18.1-0-g3d2e75c"
 }
