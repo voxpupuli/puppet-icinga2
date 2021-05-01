@@ -1,10 +1,22 @@
 # Change Log
 
+## [v3.1.1](https://github.com/icinga/puppet-icinga2/tree/v3.1.1) (2021-05-01)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.1.0...v3.1.1)
+
+**Fixed bugs:**
+
+- Add Integer to Icinga2::Interval type alias [\#663](https://github.com/Icinga/puppet-icinga2/pull/663) ([UiP9AV6Y](https://github.com/UiP9AV6Y))
+
+**Closed issues:**
+
+- Add Integer to Icinga2::Interval type alias [\#662](https://github.com/Icinga/puppet-icinga2/issues/662)
+
 ## [v3.1.0](https://github.com/icinga/puppet-icinga2/tree/v3.1.0) (2021-04-24)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.0.0...v3.1.0)
 
 **Implemented enhancements:**
 
+- Add manage\_packages to replace manage\_packages [\#661](https://github.com/Icinga/puppet-icinga2/issues/661)
 - Change owner of config file to icinga [\#660](https://github.com/Icinga/puppet-icinga2/issues/660)
 - Add some words to reserve list  [\#659](https://github.com/Icinga/puppet-icinga2/issues/659)
 - Allow to send cert req without ticket [\#653](https://github.com/Icinga/puppet-icinga2/issues/653)
