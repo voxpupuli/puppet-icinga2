@@ -1,6 +1,6 @@
 class { 'icinga2':
-  confd     => false,
-  features  => ['checker','mainlog'],
+  confd    => false,
+  features => ['checker','mainlog'],
 }
 
 class { 'icinga2::feature::api':
@@ -10,7 +10,7 @@ class { 'icinga2::feature::api':
   accept_config   => true,
   accept_commands => true,
   endpoints       => {
-    'NodeName' => {},
+    'NodeName'                   => {},
     'icinga2-master.example.com' => {
       'host' => '192.168.56.103',
     }
@@ -18,9 +18,9 @@ class { 'icinga2::feature::api':
   zones           => {
     'NodeName' => {
       'endpoints' => ['NodeName'],
-      'parent' => 'master',
+      'parent'    => 'master',
     },
-    'master' => {
+    'master'   => {
       'endpoints' => ['icinga2-master.example.com']
     }
   }

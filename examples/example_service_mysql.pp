@@ -19,9 +19,6 @@
 #   Example:
 #   mysql_health_name => '-:"SELECT COUNT(*) FROM t1;"'
 #
-/*
- * Icinga2
- */
 class { '::icinga2':
   manage_repos => true,
   confd        => 'example.d',
@@ -34,9 +31,9 @@ file { '/etc/icinga2/example.d':
   recurse => true,
 }
 
-/*
- * MySQL
- */
+#
+# MySQL
+#
 class { '::mysql::server':
   root_password           => 'secret',
   remove_default_accounts => true,
@@ -52,9 +49,9 @@ mysql::db { 'icinga2':
   ],
 }
 
-/*
- * Hosts
- */
+#
+# Hosts
+#
 ::icinga2::object::host { 'generic-host':
   template           => true,
   target             => '/etc/icinga2/example.d/templates.conf',
@@ -91,9 +88,9 @@ mysql::db { 'icinga2':
   },
 }
 
-/*
- * Services
- */
+#
+# Services
+#
 ::icinga2::object::service { 'generic-service':
   template           => true,
   target             => '/etc/icinga2/example.d/templates.conf',
@@ -112,11 +109,10 @@ mysql::db { 'icinga2':
 }
 
 ::icinga2::object::service { 'mysql_health':
-  target           => '/etc/icinga2/example.d/services.conf',
-  apply            => 'mysql_health => config in host.vars.mysql_health',
-  import           => ['generic-service'],
-  check_command    => '-:"mysql_health"',
-#  command_endpoint => 'host.vars.client_endpoint',
-  assign           => ['host.vars.mysql_health'],
-  vars             => 'vars + config',
+  target        => '/etc/icinga2/example.d/services.conf',
+  apply         => 'mysql_health => config in host.vars.mysql_health',
+  import        => ['generic-service'],
+  check_command => '-:"mysql_health"',
+  assign        => ['host.vars.mysql_health'],
+  vars          => 'vars + config',
 }

@@ -14,6 +14,9 @@ case $::facts['os']['name'] {
       $backports = true
     }
   } # Debian
+  default: {
+    fail('Your operating system is not supported.')
+  }
 }
 
 class { '::icinga::repos':

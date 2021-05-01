@@ -102,7 +102,7 @@ class icinga2::globals(
 
   # Logon account on Windows
   if $facts['os']['kernel'] == 'windows' {
-    if $logon_account and versioncmp($puppetversion, '6.18.0') < 0 {
+    if $logon_account and versioncmp($::puppetversion, '6.18.0') < 0 {
       fail('Using logon_account requieres a Puppet version 6.18 or higher')
     }
     $_logonaccount = $logon_account

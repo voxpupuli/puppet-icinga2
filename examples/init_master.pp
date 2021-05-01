@@ -8,8 +8,8 @@ class { '::icinga2':
 }
 
 class { '::icinga2::feature::api':
-  pki             => 'none',
-  zones           => {
+  pki   => 'none',
+  zones => {
     'master' => {
       'endpoints' => [ 'NodeName' ],
     },

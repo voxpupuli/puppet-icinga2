@@ -28,7 +28,7 @@ class { '::icinga2::feature::api':
       'endpoints' => [ 'NodeName' ],
       'parent'    => 'master',
     },
-    'master' => {
+    'master'   => {
       'endpoints' => [ $master_cert ],
     },
   },
