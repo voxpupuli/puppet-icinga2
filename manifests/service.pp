@@ -13,7 +13,7 @@ class icinga2::service {
   $manage_service = $::icinga2::manage_service
   $service_name   = $::icinga2::globals::service_name
   $reload         = $::icinga2::globals::service_reload
-  $logonaccount   = $::icinga2::globals::_logonaccount
+  $logon_account  = $::icinga2::globals::logon_account
 
   $hasrestart     = $reload ? {
     undef   => false,
@@ -21,12 +21,21 @@ class icinga2::service {
   }
 
   if $manage_service {
-    service { $service_name:
-      ensure       => $ensure,
-      enable       => $enable,
-      hasrestart   => $hasrestart,
-      restart      => $reload,
-      logonaccount => $logonaccount,
+    if $facts['os']['kernel'] == 'windows' and versioncmp($::puppetversion, '6.18.0') >= 0 {
+      service { $service_name:
+        ensure       => $ensure,
+        enable       => $enable,
+        hasrestart   => $hasrestart,
+        restart      => $reload,
+        logonaccount => $logon_account,
+      }
+    } else {
+      service { $service_name:
+        ensure       => $ensure,
+        enable       => $enable,
+        hasrestart   => $hasrestart,
+        restart      => $reload,
+      }
     }
   }
 

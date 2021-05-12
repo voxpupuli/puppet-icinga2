@@ -105,9 +105,6 @@ class icinga2::globals(
     if $logon_account and versioncmp($::puppetversion, '6.18.0') < 0 {
       fail('Using logon_account requieres a Puppet version 6.18 or higher')
     }
-    $_logonaccount = $logon_account
-  } else {
-    $_logonaccount = undef
   }
 
   $constants =  lookup('icinga2::globals::constants', Hash, 'deep', {})
