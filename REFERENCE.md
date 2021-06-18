@@ -1896,11 +1896,11 @@ Default value: `present`
 
 ##### `severity`
 
-Data type: `Optional[Icinga2::LogSeverity]`
+Data type: `Icinga2::LogSeverity`
 
 You can choose the log severity between information, notice, warning or debug.
 
-Default value: ``undef``
+Default value: `'warning'`
 
 ##### `facility`
 

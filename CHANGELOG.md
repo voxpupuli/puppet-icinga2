@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.1.3](https://github.com/icinga/puppet-icinga2/tree/v3.1.3) (2021-06-18)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.1.2...v3.1.3)
+
+**Fixed bugs:**
+
+- Attribute severity of object SyslogLogger no longer appears to be optional [\#666](https://github.com/Icinga/puppet-icinga2/issues/666)
+
 ## [v3.1.2](https://github.com/icinga/puppet-icinga2/tree/v3.1.2) (2021-05-12)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.1.1...v3.1.2)
 
