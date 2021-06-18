@@ -36,12 +36,11 @@ Run unit tests:
 ```
 cd puppet-icinga2
 pdk test unit
-pdk test unit --tests=repos
 ```
 
 Or dedicated tests:
 ```
-pdk test unit --tests=spec/classes/repos_spec.rb,spec/classes/redis_spec.rb
+pdk test unit --tests=spec/classes/icinga2_spec.rb,spec/classes/api_spec.rb
 ```
 
 

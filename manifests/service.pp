@@ -31,10 +31,10 @@ class icinga2::service {
       }
     } else {
       service { $service_name:
-        ensure       => $ensure,
-        enable       => $enable,
-        hasrestart   => $hasrestart,
-        restart      => $reload,
+        ensure     => $ensure,
+        enable     => $enable,
+        hasrestart => $hasrestart,
+        restart    => $reload,
       }
     }
   }

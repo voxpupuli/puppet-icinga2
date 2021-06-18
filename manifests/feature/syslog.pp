@@ -4,7 +4,7 @@
 # @param [Enum['absent', 'present']] ensure
 #   Set to present enables the feature syslog, absent disables it.
 #
-# @param [Optional[Icinga2::LogSeverity]] severity
+# @param [Icinga2::LogSeverity] severity
 #   You can choose the log severity between information, notice, warning or debug.
 #
 # @param [Optional[Icinga2::LogFacility]] facility
@@ -13,7 +13,7 @@
 #
 class icinga2::feature::syslog(
   Enum['absent', 'present']        $ensure   = present,
-  Optional[Icinga2::LogSeverity]   $severity = undef,
+  Icinga2::LogSeverity             $severity = 'warning',
   Optional[Icinga2::LogFacility]   $facility = undef,
 ) {
 

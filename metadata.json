@@ -54,12 +54,10 @@
     {
       "operatingsystem": "Fedora",
       "operatingsystemrelease": [
-        "26",
-        "27",
-        "28",
-        "29",
-        "30",
-        "31"
+        "31",
+        "32",
+        "33",
+        "34"
       ]
     },
     {
@@ -89,7 +87,8 @@
       "operatingsystem": "FreeBSD",
       "operatingsystemrelease": [
         "11",
-        "10"
+        "12",
+        "13"
       ]
     }
   ],
