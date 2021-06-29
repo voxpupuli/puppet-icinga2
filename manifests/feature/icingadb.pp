@@ -25,8 +25,13 @@ class icinga2::feature::icingadb(
   Optional[Stdlib::Port::Unprivileged]     $port            = undef,
   Optional[Stdlib::Absolutepath]           $socket_path     = undef,
   Optional[Icinga2::Interval]              $connect_timeout = undef,
-  Optional[String]                         $password        = undef,
+  Optional[Variant[String, Sensitive[String]]] $password    = undef,
 ) {
+  $password_unsensitive = if $password =~ Sensitive {
+    $password.unwrap
+  } else {
+    $password
+  }
 
   if ! defined(Class['::icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -38,8 +43,8 @@ class icinga2::feature::icingadb(
     default   => undef,
   }
   # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
+  if $password_unsensitive {
+    $_password = "-:\"${password_unsensitive}\""
   } else {
     $_password = undef
   }

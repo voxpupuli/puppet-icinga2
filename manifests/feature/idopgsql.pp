@@ -82,7 +82,7 @@
 #   Whether to import the PostgreSQL schema or not.
 #
 class icinga2::feature::idopgsql(
-  String                         $password,
+  Variant[String, Sensitive[String]] $password,
   Enum['absent', 'present']      $ensure               = present,
   Stdlib::Host                   $host                 = 'localhost',
   Stdlib::Port::Unprivileged     $port                 = 5432,
@@ -107,6 +107,11 @@ class icinga2::feature::idopgsql(
   Optional[Array]                $categories           = undef,
   Boolean                        $import_schema        = false,
 ) {
+  $password_unsensitive = if $password =~ Sensitive {
+    $password.unwrap
+  } else {
+    $password
+  }
 
   if ! defined(Class['::icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -205,7 +210,7 @@ class icinga2::feature::idopgsql(
     host                  => $host,
     port                  => $port,
     user                  => $user,
-    password              => "-:\"${password}\"",   # The password parameter isn't parsed anymore.
+    password              => "-:\"${password_unsensitive}\"",   # The password parameter isn't parsed anymore.
     database              => $database,
     ssl_mode              => $ssl_mode,
     ssl_key               => $_ssl_key_path,
@@ -260,7 +265,7 @@ class icinga2::feature::idopgsql(
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $::facts['path'],
-      environment => ["PGPASSWORD=${password}"],
+      environment => ["PGPASSWORD=${password_unsensitive}"],
       command     => "psql '${_connection}' -w -f '${ido_pgsql_schema}'",
       unless      => "psql '${_connection}' -w -c 'select version from icinga_dbversion'",
     }

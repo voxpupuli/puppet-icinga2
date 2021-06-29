@@ -95,7 +95,7 @@
 #   Whether to import the MySQL schema or not.
 #
 class icinga2::feature::idomysql(
-  String                                $password,
+  Variant[String, Sensitive[String]]    $password,
   Enum['absent', 'present']             $ensure                 = present,
   Stdlib::Host                          $host                   = 'localhost',
   Optional[Stdlib::Port::Unprivileged]  $port                   = undef,
@@ -120,6 +120,11 @@ class icinga2::feature::idomysql(
   Optional[Array]                       $categories             = undef,
   Boolean                               $import_schema          = false,
 ) {
+  $password_unsensitive = if $password =~ Sensitive {
+    $password.unwrap
+  } else {
+    $password
+  }
 
   if ! defined(Class['::icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -244,7 +249,7 @@ class icinga2::feature::idomysql(
       }
 
       # set cli options for mysql connection via tls
-      $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${_ssl_options} ${database}"
+      $_mysql_command = "mysql ${_mysql_options} -p'${password_unsensitive}' ${_ssl_options} ${database}"
     }
 
     $attrs_ssl = {
@@ -259,7 +264,7 @@ class icinga2::feature::idomysql(
   else {
     # set cli options for mysql connection
     if $import_schema {
-      $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${database}" }
+      $_mysql_command = "mysql ${_mysql_options} -p'${password_unsensitive}' ${database}" }
 
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
@@ -269,7 +274,7 @@ class icinga2::feature::idomysql(
     port                  => $port,
     socket_path           => $socket_path,
     user                  => $user,
-    password              => "-:\"${password}\"",   # The password parameter isn't parsed anymore.
+    password              => "-:\"${password_unsensitive}\"",   # The password parameter isn't parsed anymore.
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,

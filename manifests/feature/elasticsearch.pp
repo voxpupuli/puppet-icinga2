@@ -67,7 +67,7 @@ class icinga2::feature::elasticsearch(
   Optional[Stdlib::Port::Unprivileged]   $port                 = undef,
   Optional[String]                       $index                = undef,
   Optional[String]                       $username             = undef,
-  Optional[String]                       $password             = undef,
+  Optional[Variant[String, Sensitive[String]]] $password       = undef,
   Optional[Boolean]                      $enable_ssl           = undef,
   Optional[Boolean]                      $ssl_noverify         = undef,
   Optional[Stdlib::Absolutepath]         $ssl_key_path         = undef,
@@ -81,6 +81,11 @@ class icinga2::feature::elasticsearch(
   Optional[Integer]                      $flush_threshold      = undef,
   Optional[Boolean]                      $enable_ha            = undef,
 ) {
+  $password_unsensitive = if $password =~ Sensitive {
+    $password.unwrap
+  } else {
+    $password
+  }
 
   if ! defined(Class['::icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -186,8 +191,8 @@ class icinga2::feature::elasticsearch(
   }
 
   # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
+  if $password_unsensitive {
+    $_password = "-:\"${password_unsensitive}\""
   } else {
     $_password = undef
   }

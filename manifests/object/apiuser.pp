@@ -26,7 +26,7 @@
 #         permission => 'objects/query/Host',
 #         filter     => '{{ regex("^Linux", host.vars.os) }}'
 #       },
-#       { 
+#       {
 #         permission => 'objects/query/Service',
 #         filter     => '{{ regex("^Linux", host.vars.os) }}'
 #       },
@@ -62,14 +62,19 @@ define icinga2::object::apiuser(
   Enum['absent', 'present']   $ensure       = present,
   String                      $apiuser_name = $title,
   Optional[Array]             $permissions  = undef,
-  Optional[String]            $password     = undef,
+  Optional[Variant[String, Sensitive[String]]] $password = undef,
   Optional[String]            $client_cn    = undef,
   Variant[String, Integer]    $order        = 30,
 ) {
+  $password_unsensitive = if $password =~ Sensitive {
+    $password.unwrap
+  } else {
+    $password
+  }
 
   # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
+  if $password_unsensitive {
+    $_password = "-:\"${password_unsensitive}\""
   } else {
     $_password = undef
   }
