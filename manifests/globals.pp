@@ -96,13 +96,13 @@ class icinga2::globals(
 
   assert_private()
 
-  if ( versioncmp($::puppetversion, '6' ) >= 0 and versioncmp(load_module_metadata('stdlib')['version'], '5.1.0') < 0 ) {
+  if ( versioncmp($::facts['puppetversion'], '6' ) >= 0 and versioncmp(load_module_metadata('stdlib')['version'], '5.1.0') < 0 ) {
     fail('You be affected by this bug: https://github.com/Icinga/puppet-icinga2/issues/505 so you should update your stdlib to version 5.1 or higher')
   }
 
   # Logon account on Windows
   if $facts['os']['kernel'] == 'windows' {
-    if $logon_account and versioncmp($::puppetversion, '6.18.0') < 0 {
+    if $logon_account and versioncmp($::facts['puppetversion'], '6.18.0') < 0 {
       fail('Using logon_account requieres a Puppet version 6.18 or higher')
     }
   }

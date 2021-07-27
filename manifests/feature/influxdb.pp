@@ -108,7 +108,7 @@ class icinga2::feature::influxdb(
   $group         = $::icinga2::globals::group
   $conf_dir      = $::icinga2::globals::conf_dir
   $ssl_dir       = $::icinga2::globals::cert_dir
-  $_ssl_key_mode = $::kernel ? {
+  $_ssl_key_mode = $::facts['kernel'] ? {
     'windows' => undef,
     default   => '0600',
   }
@@ -135,7 +135,7 @@ class icinga2::feature::influxdb(
         $_ssl_key_path = "${ssl_dir}/InfluxdbWriter_influxdb.key"
       }
 
-      $_ssl_key = $::osfamily ? {
+      $_ssl_key = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
@@ -157,7 +157,7 @@ class icinga2::feature::influxdb(
         $_ssl_cert_path = "${ssl_dir}/InfluxdbWriter_influxdb.crt"
       }
 
-      $_ssl_cert = $::osfamily ? {
+      $_ssl_cert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
@@ -178,7 +178,7 @@ class icinga2::feature::influxdb(
         $_ssl_cacert_path = "${ssl_dir}/InfluxdbWriter_influxdb_ca.crt"
       }
 
-      $_ssl_cacert = $::osfamily ? {
+      $_ssl_cacert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }

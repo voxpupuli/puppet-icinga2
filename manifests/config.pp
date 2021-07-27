@@ -15,7 +15,7 @@ class icinga2::config {
   $confd          = $::icinga2::_confd
   $purge_features = $::icinga2::purge_features
 
-  if $::kernel != 'windows' {
+  if $::facts['kernel'] != 'windows' {
     $template_constants  = icinga2_attributes($constants)
     $template_mainconfig = template('icinga2/icinga2.conf.erb')
     $file_permissions    = '0640'

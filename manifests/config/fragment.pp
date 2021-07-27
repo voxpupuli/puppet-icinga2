@@ -42,7 +42,7 @@ define icinga2::config::fragment(
   Variant[String, Integer]     $order     = '00',
 ) {
 
-  case $::osfamily {
+  case $::facts['os']['family'] {
     'windows': {
       $_content = regsubst($content, '\n', "\r\n", 'EMG')
     } # windows

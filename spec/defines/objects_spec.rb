@@ -2,8 +2,8 @@ require 'spec_helper'
 
 facts = {
   :kernel   => 'Linux',
-  :os => {:family => 'Debian', :name => 'Debian'},
-  :osfamily => 'Debian' }
+  :os => {'family' => 'Debian', 'name' => 'Debian'},
+}
 
 
 describe('icinga2::object', :type => :define) do
@@ -36,7 +36,7 @@ describe('icinga2::object', :type => :define) do
         }
       end
 
-      case facts[:osfamily]
+      case facts[:os]['family']
       when 'Debian'
         before(:each) do
           @icinga2_user = 'nagios'

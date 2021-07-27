@@ -134,7 +134,7 @@ class icinga2::feature::idomysql(
   $manage_package         = $::icinga2::manage_package
   $manage_packages        = $::icinga2::manage_packages
 
-  $_ssl_key_mode          = $::osfamily ? {
+  $_ssl_key_mode          = $::facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
@@ -171,7 +171,7 @@ class icinga2::feature::idomysql(
         $_ssl_key_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.key"
       }
 
-      $_ssl_key = $::osfamily ? {
+      $_ssl_key = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
@@ -193,7 +193,7 @@ class icinga2::feature::idomysql(
         $_ssl_cert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.crt"
       }
 
-      $_ssl_cert = $::osfamily ? {
+      $_ssl_cert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
@@ -214,7 +214,7 @@ class icinga2::feature::idomysql(
         $_ssl_cacert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql_ca.crt"
       }
 
-      $_ssl_cacert = $::osfamily ? {
+      $_ssl_cacert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }
@@ -276,7 +276,7 @@ class icinga2::feature::idomysql(
 
   # install additional package
   if $ido_mysql_package_name and ($manage_package or $manage_packages) {
-    if $::osfamily == 'debian' {
+    if $::facts['os']['family'] == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_mysql_package_name}.conf":
         ensure  => file,
@@ -301,7 +301,7 @@ class icinga2::feature::idomysql(
     }
     exec { 'idomysql-import-schema':
       user    => 'root',
-      path    => $::path,
+      path    => $::facts['path'],
       command => "${_mysql_command} < \"${ido_mysql_schema}\"",
       unless  => "${_mysql_command} -Ns -e 'select version from icinga_dbversion'",
     }

@@ -44,7 +44,7 @@ class icinga2::pki::ca(
     group => $group,
   }
 
-  if $::osfamily != 'windows' {
+  if $::facts['os']['family'] != 'windows' {
     $_ca_key_mode = '0600'
   } else {
     $_ca_key_mode = undef
@@ -60,7 +60,7 @@ class icinga2::pki::ca(
       notify      => Class['::icinga2::service'],
     }
   } else {
-    if $::osfamily == 'windows' {
+    if $::facts['os']['family'] == 'windows' {
       $_ca_cert     = regsubst($ca_cert, '\n', "\r\n", 'EMG')
       $_ca_key      = regsubst($ca_key, '\n', "\r\n", 'EMG')
     } else {
@@ -91,7 +91,7 @@ class icinga2::pki::ca(
 
   file { $_ssl_cacert_path:
     ensure => file,
-    source => $::kernel ? {
+    source => $::facts['kernel'] ? {
       'windows' => "file:///${ca_dir}/ca.crt",
       default   => "${ca_dir}/ca.crt",
     },

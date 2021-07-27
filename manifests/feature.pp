@@ -14,7 +14,7 @@ define icinga2::feature(
   $group    = $::icinga2::globals::group
   $conf_dir = $::icinga2::globals::conf_dir
 
-  if $::osfamily != 'windows' {
+  if $::facts['os']['family'] != 'windows' {
     $_ensure = $ensure ? {
       'present' => link,
       default   => absent,

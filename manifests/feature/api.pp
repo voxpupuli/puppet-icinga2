@@ -97,7 +97,7 @@
 #   Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
 #   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]'
 #   on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
-# 
+#
 # @param [String] ticket_salt
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 #   Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
@@ -187,7 +187,7 @@ class icinga2::feature::api(
   $user          = $::icinga2::globals::user
   $group         = $::icinga2::globals::group
   $node_name     = $::icinga2::_constants['NodeName']
-  $_ssl_key_mode = $::osfamily ? {
+  $_ssl_key_mode = $::facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
@@ -215,7 +215,7 @@ class icinga2::feature::api(
       file { $_ssl_key_path:
         ensure    => file,
         mode      => $_ssl_key_mode,
-        source    => $::icinga2_puppet_hostprivkey,
+        source    => $::facts['icinga2_puppet_hostprivkey'],
         tag       => 'icinga2::config::file',
         show_diff => false,
         backup    => false,
@@ -223,13 +223,13 @@ class icinga2::feature::api(
 
       file { $_ssl_cert_path:
         ensure => file,
-        source => $::icinga2_puppet_hostcert,
+        source => $::facts['icinga2_puppet_hostcert'],
         tag    => 'icinga2::config::file',
       }
 
       file { $_ssl_cacert_path:
         ensure => file,
-        source => $::icinga2_puppet_localcacert,
+        source => $::facts['icinga2_puppet_localcacert'],
         tag    => 'icinga2::config::file',
       }
     } # puppet
@@ -240,7 +240,7 @@ class icinga2::feature::api(
       $_ticket_salt = $ticket_salt
 
       if $ssl_key {
-        $_ssl_key = $::osfamily ? {
+        $_ssl_key = $::facts['os']['family'] ? {
           'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
           default   => $ssl_key,
         }
@@ -256,7 +256,7 @@ class icinga2::feature::api(
       }
 
       if $ssl_cert {
-        $_ssl_cert = $::osfamily ? {
+        $_ssl_cert = $::facts['os']['family'] ? {
           'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
           default   => $ssl_cert,
         }
@@ -269,7 +269,7 @@ class icinga2::feature::api(
       }
 
       if $ssl_cacert {
-        $_ssl_cacert = $::osfamily ? {
+        $_ssl_cacert = $::facts['os']['family'] ? {
           'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
           default   => $ssl_cacert,
         }
@@ -298,7 +298,7 @@ class icinga2::feature::api(
       }
       if $fingerprint {
         $_fingerprint = upcase(regsubst($fingerprint, ':', ' ', 'G'))
-        if $::osfamily != 'Windows' {
+        if $::facts['os']['family'] != 'Windows' {
           $_cmd_pki_get_cert = "${cmd_pki_get_cert} |grep '${_fingerprint}\s*$'"
         } else {
           $_cmd_pki_get_cert = "cmd.exe /c \"${cmd_pki_get_cert} |findstr /R /C:\"${_fingerprint}\"\""
@@ -307,7 +307,7 @@ class icinga2::feature::api(
         $_cmd_pki_get_cert = $cmd_pki_get_cert
       }
 
-      $_env = $::kernel ? {
+      $_env = $::facts['kernel'] ? {
         'windows' => undef,
         default   => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
       }
@@ -323,7 +323,7 @@ class icinga2::feature::api(
       }
 
       -> exec { 'icinga2 pki get trusted-cert':
-        path    => $::path,
+        path    => $::facts['path'],
         command => $_cmd_pki_get_cert,
         creates => $trusted_cert,
       }

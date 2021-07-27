@@ -37,7 +37,7 @@ describe('icinga2::feature::mainlog', :type => :class) do
           .with({ 'target' => "#{@icinga2_conf_dir}/features-available/mainlog.conf" })
           .that_notifies('Class[icinga2::service]') }
 
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'windows'
           it { is_expected.to contain_concat__fragment('icinga2::object::FileLogger::mainlog')
             .with({

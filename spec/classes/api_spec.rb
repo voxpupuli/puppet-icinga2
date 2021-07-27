@@ -48,7 +48,7 @@ describe('icinga2::feature::api', :type => :class) do
           @icinga2_conf_dir = '/etc/icinga2'
           @icinga2_pki_dir = '/var/lib/icinga2/certs'
           @icinga2_sslkey_mode = '0600'
-          case facts[:osfamily]
+          case facts[:os]['family']
           when 'Debian'
             @icinga2_user = 'nagios'
             @icinga2_group = 'nagios'
@@ -56,10 +56,10 @@ describe('icinga2::feature::api', :type => :class) do
           else
             @icinga2_user = 'icinga'
             @icinga2_group = 'icinga'
-            if facts[:osfamily] != 'RedHat'
+            if facts[:os]['family'] != 'RedHat'
               @icinga2_bin = '/usr/sbin/icinga2'
             else
-              case facts[:operatingsystemmajrelease]
+              case facts[:os]['release']['major']
               when '5'
                 @icinga2_bin = '/usr/sbin/icinga2'
               when '6'
