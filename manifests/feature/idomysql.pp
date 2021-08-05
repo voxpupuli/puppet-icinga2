@@ -288,10 +288,7 @@ class icinga2::feature::idomysql(
       }
     } # Debian
 
-    package { $ido_mysql_package_name:
-      ensure => installed,
-      before => Icinga2::Feature['ido-mysql'],
-    }
+    ensure_packages($ido_mysql_package_name, { before => Icinga2::Feature['ido-mysql'] })
   }
 
   # import db schema

@@ -21,16 +21,10 @@ class icinga2::install {
   if $manage_package or $manage_packages {
     if $::facts['os']['family'] == 'windows' { Package { provider => chocolatey, } }
 
-    package { $package_name:
-      ensure => installed,
-      before => File[$cert_dir, $conf_dir],
-    }
+    ensure_packages($package_name, { before => File[$cert_dir, $conf_dir] })
 
     if str2bool($manage_selinux) and $selinux_package_name {
-      package { $selinux_package_name:
-        ensure  => installed,
-        require => Package[$package_name],
-      }
+      ensure_packages($selinux_package_name, { require => Package[$package_name] })
     }
   }
 

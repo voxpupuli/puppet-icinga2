@@ -16,10 +16,13 @@
 #   }
 #
 # @example To manage the version of Icinga 2 binaries you can do it by disable package management:
-#   package { 'icinga2':
-#     ensure  => latest,
-#     notifiy => Class['icinga2'],
-#   }
+#   ensure_packages(
+#     'icinga2',
+#     {
+#       ensure  => latest,
+#       notifiy => Class['icinga2'],
+#     }
+#   )
 #
 #   class { '::icinga2':
 #     manage_packages => false,

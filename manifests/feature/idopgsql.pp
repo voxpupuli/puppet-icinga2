@@ -120,10 +120,7 @@ class icinga2::feature::idopgsql(
       }
     } # Debian
 
-    package { $ido_pgsql_package_name:
-      ensure => installed,
-      before => Icinga2::Feature['ido-pgsql'],
-    }
+    ensure_packages($ido_pgsql_package_name, { before => Icinga2::Feature['ido-pgsql'] })
   }
 
   # import db schema
