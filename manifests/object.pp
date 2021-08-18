@@ -68,7 +68,7 @@ define icinga2::object(
 
   assert_private()
 
-  case $::osfamily {
+  case $::facts['os']['family'] {
     'windows': {
     } # windows
     default: {
@@ -89,7 +89,7 @@ define icinga2::object(
     'ignore where' => $ignore,
   })
 
-  $_content = $::osfamily ? {
+  $_content = $::facts['os']['family'] ? {
     'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
     default   => template('icinga2/object.conf.erb'),
   }

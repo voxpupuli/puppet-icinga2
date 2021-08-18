@@ -19,7 +19,7 @@ class icinga2::install {
   $group                = $::icinga2::globals::group
 
   if $manage_package or $manage_packages {
-    if $::osfamily == 'windows' { Package { provider => chocolatey, } }
+    if $::facts['os']['family'] == 'windows' { Package { provider => chocolatey, } }
 
     package { $package_name:
       ensure => installed,

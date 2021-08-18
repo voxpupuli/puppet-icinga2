@@ -108,7 +108,7 @@ class icinga2::feature::idopgsql(
 
   # install additional package
   if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
-    if $::osfamily == 'debian' {
+    if $::facts['os']['family'] == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_pgsql_package_name}.conf":
         ensure  => file,
@@ -133,7 +133,7 @@ class icinga2::feature::idopgsql(
     }
     exec { 'idopgsql-import-schema':
       user        => 'root',
-      path        => $::path,
+      path        => $::facts['path'],
       environment => ["PGPASSWORD=${password}"],
       command     => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -f \"${ido_pgsql_schema}\"",
       unless      => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -c 'select version from icinga_dbversion'",

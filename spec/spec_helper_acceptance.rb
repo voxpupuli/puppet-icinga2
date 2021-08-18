@@ -24,11 +24,11 @@ RSpec.configure do |c|
       on(host, puppet('module', 'install', 'puppetlabs-mysql'))
       on(host, puppet('module', 'install', 'puppetlabs-postgresql'))
 
-      if fact('osfamily') == 'Debian'
+      if fact('os.family') == 'Debian'
         on(host, puppet('module', 'install', 'puppetlabs-apt'))
       end
 
-      if fact('osfamily') == 'Suse'
+      if fact('os.family') == 'Suse'
         on(host, puppet('module', 'install', 'puppet-zypprepo'))
       end
 

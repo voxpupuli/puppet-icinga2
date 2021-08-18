@@ -16,10 +16,12 @@ describe('icinga2::feature::gelf', :type => :class) do
   let(:facts) do
     {
       :kernel => 'Windows',
-      :architecture => 'x86_64',
-      :osfamily => 'Windows',
-      :operatingsystem => 'Windows',
-      :operatingsystemmajrelease => '2012 R2',
+      :os => {
+        'architecture' => 'x86_64',
+        'family' => 'Windows',
+        'name' => 'Windows',
+        'release' => {'major' => '2012 R2'}
+      },
       :path => 'C:\Program Files\Puppet Labs\Puppet\puppet\bin;
                C:\Program Files\Puppet Labs\Puppet\facter\bin;
                C:\Program Files\Puppet Labs\Puppet\hiera\bin;

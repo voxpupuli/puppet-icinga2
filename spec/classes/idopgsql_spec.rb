@@ -34,7 +34,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
           @icinga2_pki_dir = '/var/lib/icinga2/certs'
           @ido_pgsql_schema_dir = '/usr/share/icinga2-ido-pgsql/schema'
           @icinga2_sslkey_mode = '0600'
-          case facts[:osfamily]
+          case facts[:os]['family']
           when 'Debian'
             @icinga2_user = 'nagios'
             @icinga2_group = 'nagios'
@@ -56,7 +56,7 @@ describe('icinga2::feature::idopgsql', :type => :class) do
           it { is_expected.to contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }
         end
 
-        if facts[:osfamily] == 'Debian'
+        if facts[:os]['family'] == 'Debian'
           it { is_expected.to contain_file('/etc/dbconfig-common/icinga2-ido-pgsql.conf')
             .with({
               'ensure' => 'file',

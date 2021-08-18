@@ -31,7 +31,7 @@ describe('icinga2::feature::influxdb', :type => :class) do
           @icinga2_conf_dir = '/etc/icinga2'
           @icinga2_pki_dir = '/var/lib/icinga2/certs'
           @icinga2_sslkey_mode = '0600'
-          case facts[:osfamily]
+          case facts[:os]['family']
           when 'Debian'
             @icinga2_user = 'nagios'
             @icinga2_group = 'nagios'

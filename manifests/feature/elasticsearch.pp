@@ -98,7 +98,7 @@ class icinga2::feature::elasticsearch(
   if $enable_ssl {
 
     $ssl_dir       = $::icinga2::globals::cert_dir
-    $_ssl_key_mode = $::kernel ? {
+    $_ssl_key_mode = $::facts['kernel'] ? {
       'windows' => undef,
       default   => '0600',
     }
@@ -111,7 +111,7 @@ class icinga2::feature::elasticsearch(
         $_ssl_key_path = "${ssl_dir}/ElasticsearchWriter_elasticsearch.key"
       }
 
-      $_ssl_key = $::osfamily ? {
+      $_ssl_key = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
@@ -133,7 +133,7 @@ class icinga2::feature::elasticsearch(
         $_ssl_cert_path = "${ssl_dir}/ElasticsearchWriter_elasticsearch.crt"
       }
 
-      $_ssl_cert = $::osfamily ? {
+      $_ssl_cert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
@@ -154,7 +154,7 @@ class icinga2::feature::elasticsearch(
         $_ssl_cacert_path = "${ssl_dir}/ElasticsearchWriter_elasticsearch_ca.crt"
       }
 
-      $_ssl_cacert = $::osfamily ? {
+      $_ssl_cacert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }

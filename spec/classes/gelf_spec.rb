@@ -48,6 +48,6 @@ describe('icinga2::feature::gelf', :type => :class) do
         it { is_expected.to contain_icinga2__feature('gelf').with({'ensure' => 'absent'}) }
       end
     end
-    
+
   end
 end

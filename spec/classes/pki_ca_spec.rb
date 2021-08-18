@@ -49,7 +49,7 @@ describe('icinga2::pki::ca', :type => :class) do
           @icinga2_pki_dir = '/var/lib/icinga2/certs'
           @icinga2_ca_dir = '/var/lib/icinga2/ca'
           @icinga2_sslkey_mode = '0600'
-          case facts[:osfamily]
+          case facts[:os]['family']
           when 'Debian'
             @icinga2_user = 'nagios'
             @icinga2_group = 'nagios'
@@ -57,10 +57,10 @@ describe('icinga2::pki::ca', :type => :class) do
           else
             @icinga2_user = 'icinga'
             @icinga2_group = 'icinga'
-            if facts[:osfamily] != 'RedHat'
+            if facts[:os]['family'] != 'RedHat'
               @icinga2_bin = '/usr/sbin/icinga2'
             else
-              case facts[:operatingsystemmajrelease]
+              case facts[:os]['release']['major']
               when '5'
                 @icinga2_bin = '/usr/sbin/icinga2'
               when '6'
@@ -86,7 +86,7 @@ describe('icinga2::pki::ca', :type => :class) do
             'command' => "\"#{@icinga2_bin}\" pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --csr #{@icinga2_pki_dir}/host.example.org.csr",
             'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
           .that_requires("File[#{@icinga2_pki_dir}/ca.crt]") }
-       
+
         it { is_expected.to contain_exec('icinga2 pki sign certificate')
           .with({
             'command'     => "\"#{@icinga2_bin}\" pki sign-csr --csr #{@icinga2_pki_dir}/host.example.org.csr --cert #{@icinga2_pki_dir}/host.example.org.crt",
@@ -137,7 +137,7 @@ describe('icinga2::pki::ca', :type => :class) do
            'command' => "\"#{@icinga2_bin}\" pki new-cert --cn host.example.org --key #{@icinga2_pki_dir}/host.example.org.key --csr #{@icinga2_pki_dir}/host.example.org.csr",
            'creates' => "#{@icinga2_pki_dir}/host.example.org.key", })
          .that_requires("File[#{@icinga2_pki_dir}/ca.crt]") }
-       
+
         it { is_expected.to contain_exec('icinga2 pki sign certificate')
          .with({
            'command' => "\"#{@icinga2_bin}\" pki sign-csr --csr #{@icinga2_pki_dir}/host.example.org.csr --cert #{@icinga2_pki_dir}/host.example.org.crt",
@@ -150,7 +150,7 @@ describe('icinga2::pki::ca', :type => :class) do
             'ensure' => 'file',
             'owner'  => @icinga2_user,
             'group'  => @icinga2_group,
-            'tag'    => 'icinga2::config::file', }) 
+            'tag'    => 'icinga2::config::file', })
           .with_content(/^foo$/)
           .that_comes_before("File[#{@icinga2_pki_dir}/ca.crt]") }
 

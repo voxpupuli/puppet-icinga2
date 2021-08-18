@@ -28,7 +28,7 @@ describe('icinga2::feature::elasticsearch', :type => :class) do
           @icinga2_user = 'icinga'
           @icinga2_group = 'icinga'
         else
-          case facts[:osfamily]
+          case facts[:os]['family']
             when 'Debian'
              @icinga2_conf_dir = '/etc/icinga2'
              @icinga2_pki_dir = '/var/lib/icinga2/certs'

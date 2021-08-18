@@ -11,10 +11,9 @@ describe 'icinga2_attributes' do
     {
       :kernel => 'Linux',
       :os     => {
-        :family => 'Debian',
-        :name => 'Debian'
+        'family' => 'Debian',
+        'name' => 'Debian'
       },
-      :osfamily => 'Debian',
     }
   end
 

@@ -18,7 +18,7 @@ describe('icinga2::feature', :type => :define) do
 
       case facts[:kernel]
         when 'Linux'
-          case facts[:osfamily]
+          case facts[:os]['family']
             when 'Debian'
               before(:all) do
                 @icinga2_config_dir = '/etc/icinga2'

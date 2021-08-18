@@ -55,7 +55,7 @@ describe('icinga2', :type => :class) do
           {:manage_selinux => true}
         end
 
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'RedHat'
           it { is_expected.to contain_package('icinga2-selinux').with({ 'ensure' => 'installed' }) }
         end
