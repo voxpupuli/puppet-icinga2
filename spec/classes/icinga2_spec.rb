@@ -1,78 +1,79 @@
 require 'spec_helper'
 
-describe('icinga2', :type => :class) do
-
+describe('icinga2', type: :class) do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts
       end
 
-      before(:each) do
-        case facts[:kernel]
-        when 'windows'
-          @icinga2_conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
-        when 'FreeBSD'
-          @icinga2_conf_dir = '/usr/local/etc/icinga2'
-        else
-          @icinga2_conf_dir = '/etc/icinga2'
-        end
+      case facts[:kernel]
+      when 'windows'
+        let(:icinga2_conf_dir) { 'C:/ProgramData/icinga2/etc/icinga2' }
+      when 'FreeBSD'
+        let(:icinga2_conf_dir) { '/usr/local/etc/icinga2' }
+      else
+        let(:icinga2_conf_dir) { '/etc/icinga2' }
       end
 
       context 'with defaults' do
-        it { is_expected.to contain_package('icinga2')
-          .with({ 'ensure' => 'installed' }) }
+        it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
 
-        it { is_expected.to contain_service('icinga2')
-          .with({
-            'ensure' => 'running',
-            'enable' => true }) }
+        it {
+          is_expected.to contain_service('icinga2').with(
+            {
+              'ensure' => 'running',
+              'enable' => true,
+            },
+          )
+        }
 
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/features-enabled")
-          .with({
-            'ensure'  => 'directory',
-            'purge'   => true,
-            'recurse' => true, }) }
+        it {
+          is_expected.to contain_file("#{icinga2_conf_dir}/features-enabled").with(
+            {
+              'ensure'  => 'directory',
+              'purge'   => true,
+              'recurse' => true,
+            },
+          )
+        }
 
-        it { is_expected.to contain_icinga2__feature('checker')
-          .with({'ensure' => 'present'}) }
-        it { is_expected.to contain_icinga2__feature('mainlog')
-          .with({'ensure' => 'present'}) }
-        it { is_expected.to contain_icinga2__feature('notification')
-          .with({'ensure' => 'present'}) }
+        it { is_expected.to contain_icinga2__feature('checker').with({ 'ensure' => 'present' }) }
+        it { is_expected.to contain_icinga2__feature('mainlog').with({ 'ensure' => 'present' }) }
+        it { is_expected.to contain_icinga2__feature('notification').with({ 'ensure' => 'present' }) }
       end
 
-      context "with manage_packages => false" do
+      context 'with manage_packages => false' do
         let(:params) do
-          {:manage_packages => false}
+          { manage_packages: false }
         end
 
         it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
       end
 
-      context "with manage_selinux => true" do
-        let(:params) do
-          {:manage_selinux => true}
-        end
+      if facts[:os]['family'] == 'RedHat'
+        context 'with manage_selinux => true' do
+          let(:params) do
+            { manage_selinux: true }
+          end
 
-        case facts[:os]['family']
-        when 'RedHat'
           it { is_expected.to contain_package('icinga2-selinux').with({ 'ensure' => 'installed' }) }
         end
       end
 
-      context "with confd => false" do
+      context 'with confd => false' do
         let(:params) do
-          {:confd => false}
+          { confd: false }
         end
 
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .without_content %r{^include_recursive \"conf.d\"} }
+        it {
+          is_expected.to contain_file("#{icinga2_conf_dir}/icinga2.conf").without_content(%r{^include_recursive \"conf.d\"})
+        }
       end
 
-      context "with confd => example.d" do
+      context "with confd => 'example.d'" do
         let(:params) do
-          {:confd => "#{@icinga2_conf_dir}/example.d"}
+          { confd: "#{icinga2_conf_dir}/example.d" }
         end
 
         case facts[:kernel]
@@ -84,8 +85,11 @@ describe('icinga2', :type => :class) do
             ]
           end
 
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-            .with_content %r{^include_recursive \"C:/ProgramData/icinga2/etc/icinga2/example.d\"} }
+          it {
+            is_expected.to contain_file("#{icinga2_conf_dir}/icinga2.conf").with_content(
+              %r{^include_recursive \"C:/ProgramData/icinga2/etc/icinga2/example.d\"},
+            )
+          }
         when 'FreeBSD'
           let(:pre_condition) do
             [
@@ -94,8 +98,11 @@ describe('icinga2', :type => :class) do
             ]
           end
 
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-            .with_content %r{^include_recursive \"/usr/local/etc/icinga2/example.d\"} }
+          it {
+            is_expected.to contain_file("#{icinga2_conf_dir}/icinga2.conf").with_content(
+              %r{^include_recursive \"/usr/local/etc/icinga2/example.d\"},
+            )
+          }
         else
           let(:pre_condition) do
             [
@@ -104,69 +111,83 @@ describe('icinga2', :type => :class) do
             ]
           end
 
-          it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-            .with_content %r{^include_recursive \"/etc/icinga2/example.d\"} }
-        end
-
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/example.d")
-          .with({
-            'ensure' => 'directory',
-            'tag'    => 'icinga2::config::file', }) }
-
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/example.d/foo")
-          .with({
-            'ensure' => 'file',
-            'tag'    => 'icinga2::config::file', })
-          .that_notifies('Class[icinga2::service]') }
-      end
-
-      context "with constants => { foo => bar }" do
-        let(:params) do
-          {
-            :constants => {'foo' => 'bar'}
+          it {
+            is_expected.to contain_file("#{icinga2_conf_dir}/icinga2.conf").with_content(
+              %r{^include_recursive \"/etc/icinga2/example.d\"},
+            )
           }
         end
 
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/constants.conf")
-          .with_content(/^const foo = \"bar\"/) }
+        it {
+          is_expected.to contain_file("#{icinga2_conf_dir}/example.d").with(
+            {
+              'ensure' => 'directory',
+              'tag'    => 'icinga2::config::file',
+            },
+          )
+        }
+
+        it {
+          is_expected.to contain_file("#{icinga2_conf_dir}/example.d/foo").with(
+            {
+              'ensure' => 'file',
+              'tag'    => 'icinga2::config::file',
+            },
+          ).that_notifies('Class[icinga2::service]')
+        }
       end
 
-      context "with plugins => [ foo, bar ]" do
+      context "with constants => { foo => 'bar' }" do
         let(:params) do
           {
-            :plugins => ['foo', 'bar']
+            constants: { foo: 'bar' }
           }
         end
 
-        it { is_expected.to contain_file("#{@icinga2_conf_dir}/icinga2.conf")
-          .with_content(/^include <foo>/)
-          .with_content(/^include <bar>/) }
+        it { is_expected.to contain_file("#{icinga2_conf_dir}/constants.conf").with_content(%r{^const foo = \"bar\"}) }
       end
 
-      context "with ensure => stopped, enable => false" do
+      context "with plugins => [ 'foo', 'bar' ]" do
         let(:params) do
           {
-            :ensure => 'stopped', :enable => false
+            plugins: ['foo', 'bar']
           }
         end
 
-        it { is_expected.to contain_service('icinga2')
-          .with({
-            'ensure' => 'stopped',
-            'enable' => false, }) }
+        it {
+          is_expected.to contain_file("#{icinga2_conf_dir}/icinga2.conf").with_content(
+            %r{^include <foo>},
+          ).with_content(%r{^include <bar>})
+        }
       end
 
-      context "with manage_service => false" do
+      context 'with ensure => stopped, enable => false' do
         let(:params) do
           {
-            :manage_service => false
+            ensure: 'stopped',
+            enable: false,
+          }
+        end
+
+        it {
+          is_expected.to contain_service('icinga2').with(
+            {
+              'ensure' => 'stopped',
+              'enable' => false,
+            },
+          )
+        }
+      end
+
+      context 'with manage_service => false' do
+        let(:params) do
+          {
+            manage_service: false,
           }
         end
 
         it { is_expected.not_to contain_service('icinga2') }
       end
     end
-
   end
-
 end

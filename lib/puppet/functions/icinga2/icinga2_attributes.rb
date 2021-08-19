@@ -27,30 +27,27 @@ Puppet::Functions.create_function(:'icinga2::icinga2_attributes') do
     repeated_param 'Any', :args
   end
 
-
   def default_impl(*args)
-    
-    raise Puppet::ParseError, 'icinga2_atributes(): Must provide at least one argument.' if args.length > 4 || args.length < 1
+    raise Puppet::ParseError, 'icinga2_atributes(): Must provide at least one argument.' if args.length > 4 || args.empty?
 
-    if args[1]
-      indent = args[1]
-    else
-      indent = 0
-    end
+    indent = if args[1]
+               args[1]
+             else
+               0
+             end
 
-    if args[2]
-      globals = args[2].concat(lookupvar('::icinga2::_reserved'))
-    else
-      globals = lookupvar('::icinga2::_reserved')
-    end
+    globals = if args[2]
+                args[2].concat(lookupvar('::icinga2::_reserved'))
+              else
+                lookupvar('::icinga2::_reserved')
+              end
 
-    if args[3]
-      constants = args[3].merge(lookupvar('::icinga2::_constants'))
-    else
-      constants = lookupvar('::icinga2::_constants')
-    end
+    constants = if args[3]
+                  args[3].merge(lookupvar('::icinga2::_constants'))
+                else
+                  lookupvar('::icinga2::_constants')
+                end
 
     Puppet::Icinga2::Utils.attributes(args[0], globals, constants, indent)
-  
   end
 end

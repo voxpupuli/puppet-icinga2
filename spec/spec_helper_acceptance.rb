@@ -2,7 +2,7 @@ require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
 
 # Install Puppet on all hosts
-install_puppet_agent_on(hosts, :puppet_collection => 'puppet5')
+install_puppet_agent_on(hosts, puppet_collection: 'puppet5')
 
 RSpec.configure do |c|
   module_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
@@ -12,8 +12,8 @@ RSpec.configure do |c|
   c.before :suite do
     # Install module to all hosts
     hosts.each do |host|
-      install_dev_puppet_module_on(host, :source => module_root, :module_name => 'icinga2',
-          :target_module_path => '/etc/puppetlabs/code/modules')
+      install_dev_puppet_module_on(host, source: module_root, module_name: 'icinga2',
+        target_module_path: '/etc/puppetlabs/code/modules')
 
       # Install dependencies
       on(host, puppet('module', 'install', 'icinga-icinga'))

@@ -27,24 +27,21 @@ Puppet::Functions.create_function(:'icinga2::icinga2_ticket_id') do
     repeated_param 'Any', :args
   end
 
-
   def default_impl(*args)
-    
     raise Puppet::ParseError, 'Must provide exactly two arguments to icinga2_ticket_id' if args.length != 2
 
-    if !args[0] or args[0] == ''
+    if !args[0] || args[0] == ''
       raise Puppet::ParseError, 'first argument (cn) can not be empty for icinga2_ticket_id'
     end
-    if !args[1] or args[1] == ''
+    if !args[1] || args[1] == ''
       raise Puppet::ParseError, 'second argument (salt) can not be empty for icinga2_ticket_id'
     end
 
     PBKDF2.new(
-      :password => args[0],
-      :salt => args[1],
-      :iterations => 50000,
-      :hash_function => OpenSSL::Digest.new("sha1")
+      password: args[0],
+      salt: args[1],
+      iterations: 50_000,
+      hash_function: OpenSSL::Digest.new('sha1'),
     ).hex_string
-  
   end
 end

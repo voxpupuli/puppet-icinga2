@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'icinga2 class' do
-
   describe 'with API, IDO mysql and pgsql' do
     let(:pp) do
       <<-MANIFEST
@@ -19,7 +18,7 @@ describe 'icinga2 class' do
             }
           } # Debian
         }
-        
+
         class { '::icinga::repos':
           manage_epel         => $epel,
           configure_backports => $backports,
@@ -45,7 +44,7 @@ describe 'icinga2 class' do
           password      => 'topsecret4idomysql',
           database      => 'icinga2',
           import_schema => true,
-        } 
+        }
         include ::postgresql::server
         postgresql::server::db { 'icinga2':
           user     => 'icinga2',
@@ -66,7 +65,7 @@ describe 'icinga2 class' do
           ensure      => present,
           password    => 'topsecret4ticketid',
           permissions => [ 'actions/generate-ticket' ],
-          target      => '/etc/icinga2/conf.d/api-users.conf',          
+          target      => '/etc/icinga2/conf.d/api-users.conf',
         }
       MANIFEST
     end
@@ -100,5 +99,4 @@ describe 'icinga2 class' do
       its(:stdout) { is_expected.to match %r{e1cfea2cff7bc91bd9be1f0f02ef40a0e5233c2e} }
     end
   end
-
 end

@@ -358,10 +358,8 @@ module Puppet
             end
           end
         end
-
         return config
       end
-
     end
   end
 end

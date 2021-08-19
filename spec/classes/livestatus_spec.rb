@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe('icinga2::feature::livestatus', :type => :class) do
+describe('icinga2::feature::livestatus', type: :class) do
   let(:pre_condition) do
     [
-      "class { 'icinga2': features => [], }"
+      "class { 'icinga2': features => [] }",
     ]
   end
 
@@ -13,41 +13,43 @@ describe('icinga2::feature::livestatus', :type => :class) do
         facts
       end
 
-      before(:each) do
-        case facts[:kernel]
-        when 'windows'
-          @icinga2_conf_dir = 'C:/ProgramData/icinga2/etc/icinga2'
-        when 'FreeBSD'
-          @icinga2_conf_dir = '/usr/local/etc/icinga2'
-        else
-          @icinga2_conf_dir = '/etc/icinga2'
-        end
+      case facts[:kernel]
+      when 'windows'
+        let(:icinga2_conf_dir) { 'C:/ProgramData/icinga2/etc/icinga2' }
+      when 'FreeBSD'
+        let(:icinga2_conf_dir) { '/usr/local/etc/icinga2' }
+      else
+        let(:icinga2_conf_dir) { '/etc/icinga2' }
       end
 
-      context "with all defaults" do
-        it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'present'}) }
+      context 'with all defaults' do
+        it { is_expected.to contain_icinga2__feature('livestatus').with({ 'ensure' => 'present' }) }
 
-        it { is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus')
-          .with({ 'target' => "#{@icinga2_conf_dir}/features-available/livestatus.conf" })
-          .that_notifies('Class[icinga2::service]') }
+        it {
+          is_expected.to contain_concat__fragment('icinga2::object::LivestatusListener::livestatus').with(
+            { 'target' => "#{icinga2_conf_dir}/features-available/livestatus.conf" },
+          ).that_notifies('Class[icinga2::service]')
+        }
 
-        it { is_expected.to contain_concat__fragment('icinga2::feature::livestatus')
-          .with({
-            'target' => "#{@icinga2_conf_dir}/features-available/livestatus.conf",
-            'order'  => '05', })
-          .with_content(/library \"livestatus\"$/) }
+        it {
+          is_expected.to contain_concat__fragment('icinga2::feature::livestatus').with(
+            {
+              'target' => "#{icinga2_conf_dir}/features-available/livestatus.conf",
+              'order'  => '05',
+            },
+          ).with_content(%r{library \"livestatus\"$})
+        }
       end
 
-      context "with ensure => absent" do
+      context 'with ensure => absent' do
         let(:params) do
           {
-            :ensure => 'absent'
+            ensure: 'absent',
           }
         end
 
-        it { is_expected.to contain_icinga2__feature('livestatus').with({'ensure' => 'absent'}) }
+        it { is_expected.to contain_icinga2__feature('livestatus').with({ 'ensure' => 'absent' }) }
       end
     end
-
   end
 end
