@@ -55,6 +55,8 @@
 #   Provides multiple sources for the certificate, key and ca.
 #   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
 #             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
+#             Please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle
+#             its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
 #   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
 #              Certificate from 'ca_host' using the icinga2 ticket mechanism.
 #              In case the 'ticket_salt' has been configured the ticket_id will be generated

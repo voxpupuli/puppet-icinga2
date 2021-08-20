@@ -72,6 +72,8 @@ And depends on:
 
 ### Limitations
 
+The use of Icinga's own CA is recommended. If you still want to use the Puppet certificates, please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
+
 This module has been tested on:
 
 * Ruby >= 1.9
