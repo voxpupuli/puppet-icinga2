@@ -27,8 +27,14 @@
 # @param [Optional[String]] password
 #    InfluxDB user password. The password parameter isn't parsed anymore.
 #
+# @param [Optional[Hash[Enum['username', 'password'], String]]] basic_auth
+#    Username and password for HTTP basic authentication.
+#
 # @param [Optional[Boolean]] enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+#
+# @param [Optional[Boolean]] ssl_noverify
+#    Disable TLS peer verification.
 #
 # @param [Optional[Stdlib::Absolutepath]] ssl_key_path
 #   Location of the private key.
@@ -76,28 +82,30 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::influxdb(
-  Enum['absent', 'present']                $ensure                 = present,
-  Optional[Stdlib::Host]                   $host                   = undef,
-  Optional[Stdlib::Port]                   $port                   = undef,
-  Optional[String]                         $database               = undef,
-  Optional[String]                         $username               = undef,
-  Optional[String]                         $password               = undef,
-  Optional[Boolean]                        $enable_ssl             = undef,
-  Optional[Stdlib::Absolutepath]           $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]           $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]           $ssl_cacert_path        = undef,
-  Optional[Stdlib::Base64]                 $ssl_key                = undef,
-  Optional[Stdlib::Base64]                 $ssl_cert               = undef,
-  Optional[Stdlib::Base64]                 $ssl_cacert             = undef,
-  String                                   $host_measurement       = '$host.check_command$',
-  Hash                                     $host_tags              = { hostname => '$host.name$' },
-  String                                   $service_measurement    = '$service.check_command$',
-  Hash                                     $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
-  Optional[Boolean]                        $enable_send_thresholds = undef,
-  Optional[Boolean]                        $enable_send_metadata   = undef,
-  Optional[Icinga2::Interval]              $flush_interval         = undef,
-  Optional[Integer[1]]                     $flush_threshold        = undef,
-  Optional[Boolean]                        $enable_ha              = undef,
+  Enum['absent', 'present']                             $ensure                 = present,
+  Optional[Stdlib::Host]                                $host                   = undef,
+  Optional[Stdlib::Port]                                $port                   = undef,
+  Optional[String]                                      $database               = undef,
+  Optional[String]                                      $username               = undef,
+  Optional[String]                                      $password               = undef,
+  Optional[Hash[Enum['username', 'password'], String]]  $basic_auth             = undef,
+  Optional[Boolean]                                     $enable_ssl             = undef,
+  Optional[Boolean]                                     $ssl_noverify           = undef,
+  Optional[Stdlib::Absolutepath]                        $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]                        $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]                        $ssl_cacert_path        = undef,
+  Optional[Stdlib::Base64]                              $ssl_key                = undef,
+  Optional[Stdlib::Base64]                              $ssl_cert               = undef,
+  Optional[Stdlib::Base64]                              $ssl_cacert             = undef,
+  String                                                $host_measurement       = '$host.check_command$',
+  Hash                                                  $host_tags              = { hostname => '$host.name$' },
+  String                                                $service_measurement    = '$service.check_command$',
+  Hash                                                  $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
+  Optional[Boolean]                                     $enable_send_thresholds = undef,
+  Optional[Boolean]                                     $enable_send_metadata   = undef,
+  Optional[Icinga2::Interval]                           $flush_interval         = undef,
+  Optional[Integer[1]]                                  $flush_threshold        = undef,
+  Optional[Boolean]                                     $enable_ha              = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -193,10 +201,11 @@ class icinga2::feature::influxdb(
     }
 
     $attrs_ssl = {
-      ssl_enable  => $enable_ssl,
-      ssl_ca_cert => $_ssl_cacert_path,
-      ssl_cert    => $_ssl_cert_path,
-      ssl_key     => $_ssl_key_path,
+      ssl_enable            => $enable_ssl,
+      ssl_insecure_noverify => ssl_noverify,
+      ssl_ca_cert           => $_ssl_cacert_path,
+      ssl_cert              => $_ssl_cert_path,
+      ssl_key               => $_ssl_key_path,
     }
   } # enable_ssl
   else {
@@ -216,6 +225,7 @@ class icinga2::feature::influxdb(
     database               => $database,
     username               => $username,
     password               => $_password,
+    basic_auth             => $basic_auth,
     host_template          => $host_template,
     service_template       => $service_template,
     enable_send_thresholds => $enable_send_thresholds,
