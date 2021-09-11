@@ -99,7 +99,7 @@ describe('icinga2::feature::idopgsql', type: :class) do
             {
               'user'        => 'root',
               'environment' => ['PGPASSWORD=foo'],
-              'command'     => "psql -h 'localhost' -U 'icinga' -p '5432' -d 'icinga' -w -f \"#{ido_pgsql_schema_dir}/pgsql.sql\"",
+              'command'     => "psql 'host=localhost user=icinga port=5432 dbname=icinga' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'" \
             },
           )
         }
@@ -122,6 +122,60 @@ describe('icinga2::feature::idopgsql', type: :class) do
           it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
           it { is_expected.not_to contain_package('icinga2-ido-pgsql').with({ 'ensure' => 'installed' }) }
         end
+      end
+
+      context "with ssl_mode => verify-full, host => '127.0.0.1', port => 5432, import_schema => true, ssl_key => 'foo', ssl_cert => 'bar', ssl_cacert => 'baz'" do
+        let(:params) do
+          {
+            ssl_mode: 'verify-full',
+            ssl_key: 'foo',
+            ssl_cert: 'bar',
+            ssl_cacert: 'baz',
+            host: '127.0.0.1',
+            port: 5432,
+            import_schema: true,
+            password: 'foo',
+          }
+        end
+
+        it {
+          is_expected.to contain_file("#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.key").with(
+            {
+              'mode'  => icinga2_sslkey_mode,
+              'owner' => icinga2_user,
+              'group' => icinga2_group,
+            },
+          ).with_content(%r{^foo})
+        }
+
+        it {
+          is_expected.to contain_file("#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.crt").with(
+            {
+              'owner' => icinga2_user,
+              'group' => icinga2_group,
+            },
+          ).with_content(%r{^bar$})
+        }
+
+        it {
+          is_expected.to contain_file("#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt").with(
+            {
+              'owner' => icinga2_user,
+              'group' => icinga2_group,
+            },
+          ).with_content(%r{^baz$})
+        }
+
+        it {
+          is_expected.to contain_exec('idopgsql-import-schema').with(
+            {
+              'user'      => 'root',
+              'command'   => "psql 'host=127.0.0.1 sslmode=verify-full sslcert=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.crt " \
+                "sslkey=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.key sslrootcert=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt " \
+                "user=icinga port=5432 dbname=icinga' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'" \
+            },
+          )
+        }
       end
     end
   end
