@@ -36,6 +36,27 @@
 # @param [String] database
 #    PostgreSQL database name.
 #
+# @param [Optional[Enum[disable', 'allow', 'prefer', 'verify-full', 'varify-ca', 'require']]] ssl_mode
+#   Enable SSL connection mode.
+#
+# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
+#   Location of the private key.
+#
+# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
+#   Location of the certificate.
+#
+# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
+#   Location of the CA certificate.
+#
+# @param [Optional[Stdlib::Base64]] ssl_key
+#   The private key in a base64 encoded string to store in spicified ssl_key_path file.
+#
+# @param [Optional[Stdlib::Base64]] ssl_cert
+#   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
+#
+# @param [Optional[Stdlib::Base64]] ssl_cacert
+#   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+#
 # @param [Optional[String]] table_prefix
 #   PostgreSQL database table prefix.
 #
@@ -67,6 +88,16 @@ class icinga2::feature::idopgsql(
   Stdlib::Port::Unprivileged     $port                 = 5432,
   String                         $user                 = 'icinga',
   String                         $database             = 'icinga',
+  Optional[Enum[
+    'disable', 'allow',
+    'prefer', 'verify-full',
+    'verify-ca', 'require']]     $ssl_mode             = undef,
+  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
+  Optional[Stdlib::Base64]       $ssl_key              = undef,
+  Optional[Stdlib::Base64]       $ssl_cert             = undef,
+  Optional[Stdlib::Base64]       $ssl_cacert           = undef,
   Optional[String]               $table_prefix         = undef,
   Optional[String]               $instance_name        = undef,
   Optional[String]               $instance_description = undef,
@@ -81,7 +112,10 @@ class icinga2::feature::idopgsql(
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
+  $owner                  = $::icinga2::globals::user
+  $group                  = $::icinga2::globals::group
   $conf_dir               = $::icinga2::globals::conf_dir
+  $ssl_dir                = $::icinga2::globals::cert_dir
   $ido_pgsql_package_name = $::icinga2::globals::ido_pgsql_package_name
   $ido_pgsql_schema       = $::icinga2::globals::ido_pgsql_schema
   $manage_package         = $::icinga2::manage_package
@@ -91,12 +125,91 @@ class icinga2::feature::idopgsql(
     default   => undef,
   }
 
+  $_ssl_key_mode          = $::facts['os']['family'] ? {
+    'windows' => undef,
+    default   => '0600',
+  }
+
+  File {
+    owner   => $owner,
+    group   => $group,
+  }
+
+  # Set defaults for certificate stuff
+  if $ssl_key {
+    if $ssl_key_path {
+      $_ssl_key_path = $ssl_key_path }
+    else {
+      $_ssl_key_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql.key"
+    }
+
+    $_ssl_key = $::facts['os']['family'] ? {
+      'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
+      default   => $ssl_key,
+    }
+
+    file { $_ssl_key_path:
+      ensure  => file,
+      mode    => $_ssl_key_mode,
+      content => $ssl_key,
+      tag     => 'icinga2::config::file',
+    }
+  } else {
+    $_ssl_key_path = $ssl_key_path
+  }
+
+  if $ssl_cert {
+    if $ssl_cert_path {
+      $_ssl_cert_path = $ssl_cert_path }
+    else {
+      $_ssl_cert_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql.crt"
+    }
+
+    $_ssl_cert = $::facts['os']['family'] ? {
+      'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
+      default   => $ssl_cert,
+    }
+
+    file { $_ssl_cert_path:
+      ensure  => file,
+      content => $ssl_cert,
+      tag     => 'icinga2::config::file',
+    }
+  } else {
+    $_ssl_cert_path = $ssl_cert_path
+  }
+
+  if $ssl_cacert {
+    if $ssl_cacert_path {
+      $_ssl_cacert_path = $ssl_cacert_path }
+    else {
+      $_ssl_cacert_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt"
+    }
+
+    $_ssl_cacert = $::facts['os']['family'] ? {
+      'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
+      default   => $ssl_cacert,
+    }
+
+    file { $_ssl_cacert_path:
+      ensure  => file,
+      content => $ssl_cacert,
+      tag     => 'icinga2::config::file',
+    }
+  } else {
+    $_ssl_cacert_path = $ssl_cacert_path
+  }
+
   $attrs = {
     host                  => $host,
     port                  => $port,
     user                  => $user,
     password              => "-:\"${password}\"",   # The password parameter isn't parsed anymore.
     database              => $database,
+    ssl_mode              => $ssl_mode,
+    ssl_key               => $_ssl_key_path,
+    ssl_cert              => $_ssl_cert_path,
+    ssl_ca                => $_ssl_cacert_path,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,
     instance_description  => $instance_description,
@@ -131,12 +244,24 @@ class icinga2::feature::idopgsql(
     if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
       Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
+
+    $_connection = regsubst(join(any2array(delete_undef_values({
+        'host='        => $host,
+        'sslmode='     => $ssl_mode,
+        'sslcert='     => $_ssl_cert_path,
+        'sslkey='      => $_ssl_key_path,
+        'sslrootcert=' => $_ssl_cacert_path,
+        'user='        => $user,
+        'port='        => $port,
+        'dbname='      => $database,
+      })), ' '), '= ', '=', 'G')
+
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $::facts['path'],
       environment => ["PGPASSWORD=${password}"],
-      command     => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -f \"${ido_pgsql_schema}\"",
-      unless      => "psql -h '${host}' -U '${user}' -p '${port}' -d '${database}' -w -c 'select version from icinga_dbversion'",
+      command     => "psql '${_connection}' -w -f '${ido_pgsql_schema}'",
+      unless      => "psql '${_connection}' -w -c 'select version from icinga_dbversion'",
     }
   }
 
