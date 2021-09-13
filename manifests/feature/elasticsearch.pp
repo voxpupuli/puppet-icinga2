@@ -28,6 +28,9 @@
 # @param [Optional[Boolean]] enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
 #
+# @param [Optional[Boolean]] ssl_noverify
+#     Disable TLS peer verification.
+#
 # @param [Optional[Stdlib::Absolutepath]] ssl_key_path
 #   Location of the private key.
 #
@@ -66,6 +69,7 @@ class icinga2::feature::elasticsearch(
   Optional[String]                       $username             = undef,
   Optional[String]                       $password             = undef,
   Optional[Boolean]                      $enable_ssl           = undef,
+  Optional[Boolean]                      $ssl_noverify         = undef,
   Optional[Stdlib::Absolutepath]         $ssl_key_path         = undef,
   Optional[Stdlib::Absolutepath]         $ssl_cert_path        = undef,
   Optional[Stdlib::Absolutepath]         $ssl_cacert_path      = undef,
@@ -169,10 +173,11 @@ class icinga2::feature::elasticsearch(
     }
 
     $attrs_ssl = {
-      enable_tls  => $enable_ssl,
-      ca_path     => $_ssl_cacert_path,
-      cert_path   => $_ssl_cert_path,
-      key_path    => $_ssl_key_path,
+      enable_tls        => $enable_ssl,
+      insecure_noverify => $ssl_noverify,
+      ca_path           => $_ssl_cacert_path,
+      cert_path         => $_ssl_cert_path,
+      key_path          => $_ssl_key_path,
     }
   } # enable_ssl
   else {
