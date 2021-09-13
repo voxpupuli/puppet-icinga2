@@ -122,6 +122,9 @@
 # @param [Optional[Icinga2::Interval]] ssl_handshake_timeout
 #   TLS Handshake timeout.
 #
+# @param [Optional[Icinga2::Interval]] connect_timeout
+#   Timeout for establishing new connections.
+#
 # @param [Optional[String]] ssl_cipher_list
 #   List of allowed TLS ciphers, to finetune encryption.
 #
@@ -164,6 +167,7 @@ class icinga2::feature::api(
   Optional[Stdlib::Base64]                                $ssl_cacert                       = undef,
   Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2']]           $ssl_protocolmin                  = undef,
   Optional[Icinga2::Interval]                             $ssl_handshake_timeout            = undef,
+  Optional[Icinga2::Interval]                             $connect_timeout                  = undef,
   Optional[String]                                        $ssl_cipher_list                  = undef,
   Optional[Stdlib::Host]                                  $bind_host                        = undef,
   Optional[Stdlib::Port::Unprivileged]                    $bind_port                        = undef,
@@ -346,6 +350,7 @@ class icinga2::feature::api(
     ticket_salt                      => $_ticket_salt,
     tls_protocolmin                  => $ssl_protocolmin,
     tls_handshake_timeout            => $ssl_handshake_timeout,
+    connect_timeout                  => $connect_timeout,
     cipher_list                      => $ssl_cipher_list,
     bind_host                        => $bind_host,
     bind_port                        => $bind_port,
