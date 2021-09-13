@@ -17,16 +17,7 @@ Validation tests will check all manifests, templates and ruby files against synt
 Run validation tests:
 ```
 cd puppet-icinga2
-pdk bundle exec rake validate
-```
-
-## Puppet lint
-With puppet-lint we test if our manifests conform to the recommended style guides from Puppet.
-
-Run lint tests:
-```
-cd puppet-icinga2
-pdk bundle exec rake lint
+pdk validate
 ```
 
 ## Unit tests
