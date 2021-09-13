@@ -229,13 +229,18 @@ class icinga2::feature::idomysql(
     }
 
     if $import_schema {
-      $_ssl_options = join(any2array(delete_undef_values({
-        '--ssl-ca'     => $_ssl_cacert_path,
-        '--ssl-cert'   => $_ssl_cert_path,
-        '--ssl-key'    => $_ssl_key_path,
-        '--ssl-capath' => $ssl_capath,
-        '--ssl-cipher' => $ssl_cipher,
-      })), ' ')
+      if $enable_ssl {
+        $_ssl_options = join(any2array(delete_undef_values({
+          '--ssl'        => '',
+          '--ssl-ca'     => $_ssl_cacert_path,
+          '--ssl-cert'   => $_ssl_cert_path,
+          '--ssl-key'    => $_ssl_key_path,
+          '--ssl-capath' => $ssl_capath,
+          '--ssl-cipher' => $ssl_cipher,
+        })), ' ')
+      } else {
+        $_ssl_options = ''
+      }
 
       # set cli options for mysql connection via tls
       $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${_ssl_options} ${database}"
