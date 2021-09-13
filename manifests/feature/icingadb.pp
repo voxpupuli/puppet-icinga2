@@ -13,15 +13,19 @@
 # @param [Optional[Stdlib::Absolutepath]] socket_path
 #   IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 #
+# @param [Optional[Icinga2::Interval]] connect_timeout
+#   Timeout for establishing new connections.
+#
 # @param [Optional[String]] password
 #   IcingaDB Redis password. The password parameter isn't parsed anymore.
 #
 class icinga2::feature::icingadb(
-  Enum['absent', 'present']                $ensure      = present,
-  Optional[Stdlib::Host]                   $host        = undef,
-  Optional[Stdlib::Port::Unprivileged]     $port        = undef,
-  Optional[Stdlib::Absolutepath]           $socket_path = undef,
-  Optional[String]                         $password    = undef,
+  Enum['absent', 'present']                $ensure          = present,
+  Optional[Stdlib::Host]                   $host            = undef,
+  Optional[Stdlib::Port::Unprivileged]     $port            = undef,
+  Optional[Stdlib::Absolutepath]           $socket_path     = undef,
+  Optional[Icinga2::Interval]              $connect_timeout = undef,
+  Optional[String]                         $password        = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
