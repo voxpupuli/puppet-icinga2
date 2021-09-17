@@ -40,7 +40,7 @@ describe('icinga2::feature::influxdb2', type: :class) do
         end
       end
 
-      context "with all defaults" do
+      context 'with all defaults' do
         let(:params) do
           {
             organization: 'ICINGA',

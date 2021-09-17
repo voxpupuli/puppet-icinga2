@@ -43,7 +43,7 @@
 #
 define icinga2::object::icingaapplication(
   Enum['absent', 'present']             $ensure                = present,
-  String                                $app_mame              = $title,
+  String                                $app_name              = $title,
   Optional[Boolean]                     $enable_notifications  = undef,
   Optional[Boolean]                     $enable_event_handlers = undef,
   Optional[Boolean]                     $enable_flapping       = undef,

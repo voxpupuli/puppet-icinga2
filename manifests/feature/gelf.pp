@@ -96,12 +96,12 @@ class icinga2::feature::gelf(
       else {
         $_ssl_key_path = "${ssl_dir}/GelfWriter_gelf.key"
       }
-  
+
       $_ssl_key = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
-  
+
       file { $_ssl_key_path:
         ensure  => file,
         mode    => $_ssl_key_mode,
@@ -111,19 +111,19 @@ class icinga2::feature::gelf(
     } else {
       $_ssl_key_path = $ssl_key_path
     }
-  
+
     if $ssl_cert {
       if $ssl_cert_path {
         $_ssl_cert_path = $ssl_cert_path }
       else {
         $_ssl_cert_path = "${ssl_dir}/GelfWriter_gelf.crt"
       }
-  
+
       $_ssl_cert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
-  
+
       file { $_ssl_cert_path:
         ensure  => file,
         content => $ssl_cert,
@@ -132,19 +132,19 @@ class icinga2::feature::gelf(
     } else {
       $_ssl_cert_path = $ssl_cert_path
     }
-  
+
     if $ssl_cacert {
       if $ssl_cacert_path {
         $_ssl_cacert_path = $ssl_cacert_path }
       else {
         $_ssl_cacert_path = "${ssl_dir}/GelfWriter_gelf_ca.crt"
       }
-  
+
       $_ssl_cacert = $::facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }
-  
+
       file { $_ssl_cacert_path:
         ensure  => file,
         content => $ssl_cacert,

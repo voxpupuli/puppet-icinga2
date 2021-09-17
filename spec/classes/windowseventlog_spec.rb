@@ -19,7 +19,7 @@ describe('icinga2::feature::windowseventlog', type: :class) do
 
         context 'with defaults' do
           it { is_expected.to contain_icinga2__feature('windowseventlog').with({ 'ensure' => 'present' }) }
-  
+
           it {
             is_expected.to contain_icinga2__object('icinga2::object::WindowsEventLogLogger::windowseventlog').with(
               { 'target' => "#{icinga2_conf_dir}/features-available/windowseventlog.conf" },
