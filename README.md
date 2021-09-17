@@ -120,11 +120,11 @@ package { 'icinga2':
 }
 
 class { '::icinga2':
-  manage_package => false,
+  manage_packages => false,
 }
 ```
 
-Note: Be careful with this option: Setting `manage_package` to false means that this module will not install any package at
+Note: Be careful with this option: Setting `manage_packages` to false means that this module will not install any package at
 all, including IDO packages!
 
 
