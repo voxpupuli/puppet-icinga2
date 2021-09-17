@@ -1,12 +1,12 @@
 # @summary
-#   Configures the Icinga 2 feature influxdb.
+#   Configures the Icinga 2 feature influxdb2.
 #
 # @example
-#   class { 'icinga2::feature::influxdb':
-#     host     => "10.10.0.15",
-#     username => "icinga2",
-#     password => "supersecret",
-#     database => "icinga2"
+#   class { 'icinga2::feature::influxdb2':
+#     host         => "10.10.0.15",
+#     organization => "ICINGA",
+#     bucket       => "icinga2",
+#     auth_token   => "supersecret",
 #   }
 #
 # @param [Enum['absent', 'present']] ensure
@@ -18,17 +18,14 @@
 # @param [Optional[Stdlib::Port]] port
 #    InfluxDB HTTP port.
 #
-# @param [Optional[String]] database
-#    InfluxDB database name.
+# @param [String] organization
+#    InfluxDB organization name.
 #
-# @param [Optional[String]] username
-#    InfluxDB user name.
+# @param [String] bucket
+#    InfluxDB bucket name.
 #
-# @param [Optional[String]] password
-#    InfluxDB user password. The password parameter isn't parsed anymore.
-#
-# @param [Optional[Hash[Enum['username', 'password'], String]]] basic_auth
-#    Username and password for HTTP basic authentication.
+# @param [String] auth_token
+#    InfluxDB authentication token.
 #
 # @param [Optional[Boolean]] enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
@@ -81,31 +78,30 @@
 # @param [Optional[Boolean]] enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
-class icinga2::feature::influxdb(
-  Enum['absent', 'present']                             $ensure                 = present,
-  Optional[Stdlib::Host]                                $host                   = undef,
-  Optional[Stdlib::Port]                                $port                   = undef,
-  Optional[String]                                      $database               = undef,
-  Optional[String]                                      $username               = undef,
-  Optional[String]                                      $password               = undef,
-  Optional[Hash[Enum['username', 'password'], String]]  $basic_auth             = undef,
-  Optional[Boolean]                                     $enable_ssl             = undef,
-  Optional[Boolean]                                     $ssl_noverify           = undef,
-  Optional[Stdlib::Absolutepath]                        $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]                        $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]                        $ssl_cacert_path        = undef,
-  Optional[Stdlib::Base64]                              $ssl_key                = undef,
-  Optional[Stdlib::Base64]                              $ssl_cert               = undef,
-  Optional[Stdlib::Base64]                              $ssl_cacert             = undef,
-  String                                                $host_measurement       = '$host.check_command$',
-  Hash                                                  $host_tags              = { hostname => '$host.name$' },
-  String                                                $service_measurement    = '$service.check_command$',
-  Hash                                                  $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
-  Optional[Boolean]                                     $enable_send_thresholds = undef,
-  Optional[Boolean]                                     $enable_send_metadata   = undef,
-  Optional[Icinga2::Interval]                           $flush_interval         = undef,
-  Optional[Integer[1]]                                  $flush_threshold        = undef,
-  Optional[Boolean]                                     $enable_ha              = undef,
+class icinga2::feature::influxdb2(
+  String                           $organization,
+  String                           $bucket,
+  String                           $auth_token,
+  Enum['absent', 'present']        $ensure                 = present,
+  Optional[Stdlib::Host]           $host                   = undef,
+  Optional[Stdlib::Port]           $port                   = undef,
+  Optional[Boolean]                $enable_ssl             = undef,
+  Optional[Boolean]                $ssl_noverify           = undef,
+  Optional[Stdlib::Absolutepath]   $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]   $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]   $ssl_cacert_path        = undef,
+  Optional[Stdlib::Base64]         $ssl_key                = undef,
+  Optional[Stdlib::Base64]         $ssl_cert               = undef,
+  Optional[Stdlib::Base64]         $ssl_cacert             = undef,
+  String                           $host_measurement       = '$host.check_command$',
+  Hash                             $host_tags              = { hostname => '$host.name$' },
+  String                           $service_measurement    = '$service.check_command$',
+  Hash                             $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
+  Optional[Boolean]                $enable_send_thresholds = undef,
+  Optional[Boolean]                $enable_send_metadata   = undef,
+  Optional[Icinga2::Interval]      $flush_interval         = undef,
+  Optional[Integer[1]]             $flush_threshold        = undef,
+  Optional[Boolean]                $enable_ha              = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -140,7 +136,7 @@ class icinga2::feature::influxdb(
       if $ssl_key_path {
         $_ssl_key_path = $ssl_key_path }
       else {
-        $_ssl_key_path = "${ssl_dir}/InfluxdbWriter_influxdb.key"
+        $_ssl_key_path = "${ssl_dir}/Influxdb2Writer_influxdb2.key"
       }
 
       $_ssl_key = $::facts['os']['family'] ? {
@@ -162,7 +158,7 @@ class icinga2::feature::influxdb(
       if $ssl_cert_path {
         $_ssl_cert_path = $ssl_cert_path }
       else {
-        $_ssl_cert_path = "${ssl_dir}/InfluxdbWriter_influxdb.crt"
+        $_ssl_cert_path = "${ssl_dir}/Influxdb2Writer_influxdb2.crt"
       }
 
       $_ssl_cert = $::facts['os']['family'] ? {
@@ -183,7 +179,7 @@ class icinga2::feature::influxdb(
       if $ssl_cacert_path {
         $_ssl_cacert_path = $ssl_cacert_path }
       else {
-        $_ssl_cacert_path = "${ssl_dir}/InfluxdbWriter_influxdb_ca.crt"
+        $_ssl_cacert_path = "${ssl_dir}/Influxdb2Writer_influxdb2_ca.crt"
       }
 
       $_ssl_cacert = $::facts['os']['family'] ? {
@@ -212,20 +208,12 @@ class icinga2::feature::influxdb(
     $attrs_ssl = { ssl_enable  => $enable_ssl }
   }
 
-  # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
-  } else {
-    $_password = undef
-  }
-
   $attrs = {
     host                   => $host,
     port                   => $port,
-    database               => $database,
-    username               => $username,
-    password               => $_password,
-    basic_auth             => $basic_auth,
+    organization           => $organization,
+    bucket                 => $bucket,
+    auth_token             => "-:\"${auth_token}\"",
     host_template          => $host_template,
     service_template       => $service_template,
     enable_send_thresholds => $enable_send_thresholds,
@@ -236,24 +224,17 @@ class icinga2::feature::influxdb(
   }
 
   # create object
-  icinga2::object { 'icinga2::object::InfluxdbWriter::influxdb':
-    object_name => 'influxdb',
-    object_type => 'InfluxdbWriter',
+  icinga2::object { 'icinga2::object::Influxdb2Writer::influxdb2':
+    object_name => 'influxdb2',
+    object_type => 'Influxdb2Writer',
     attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
     attrs_list  => keys($attrs),
-    target      => "${conf_dir}/features-available/influxdb.conf",
+    target      => "${conf_dir}/features-available/influxdb2.conf",
     notify      => $_notify,
     order       => 10,
   }
 
-  # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::influxdb':
-    target  => "${conf_dir}/features-available/influxdb.conf",
-    content => "library \"perfdata\"\n\n",
-    order   => '05',
-  }
-
-  icinga2::feature { 'influxdb':
+  icinga2::feature { 'influxdb2':
     ensure => $ensure,
   }
 }
