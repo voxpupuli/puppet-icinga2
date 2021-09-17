@@ -72,7 +72,7 @@
 # @param [Optional[Icinga2::Interval]] failover_timeout
 #   Set the failover timeout in a HA cluster. Must not be lower than 60s.
 #
-# @param [Optional[Hash]] cleanup
+# @param [Optional[Icinga2::IdoCleanup]] cleanup
 #   Hash with items for historical table cleanup.
 #
 # @param [Optional[Array]] categories
@@ -103,7 +103,7 @@ class icinga2::feature::idopgsql(
   Optional[String]               $instance_description = undef,
   Optional[Boolean]              $enable_ha            = undef,
   Optional[Icinga2::Interval]    $failover_timeout     = undef,
-  Optional[Hash]                 $cleanup              = undef,
+  Optional[Icinga2::IdoCleanup]  $cleanup              = undef,
   Optional[Array]                $categories           = undef,
   Boolean                        $import_schema        = false,
 ) {

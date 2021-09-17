@@ -85,7 +85,7 @@
 # @param [Optional[Icinga2::Interval]] failover_timeout
 #   Set the failover timeout in a HA cluster. Must not be lower than 60s.
 #
-# @param [Optional[Hash[String,Icinga2::Interval]]] cleanup
+# @param [Optional[Icinga2::IdoCleanup]] cleanup
 #   Hash with items for historical table cleanup.
 #
 # @param [Optional[Array]] categories
@@ -95,30 +95,30 @@
 #   Whether to import the MySQL schema or not.
 #
 class icinga2::feature::idomysql(
-  String                                      $password,
-  Enum['absent', 'present']                   $ensure                 = present,
-  Stdlib::Host                                $host                   = 'localhost',
-  Optional[Stdlib::Port::Unprivileged]        $port                   = undef,
-  Optional[Stdlib::Absolutepath]              $socket_path            = undef,
-  String                                      $user                   = 'icinga',
-  String                                      $database               = 'icinga',
-  Boolean                                     $enable_ssl             = false,
-  Optional[Stdlib::Absolutepath]              $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]              $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]              $ssl_cacert_path        = undef,
-  Optional[Stdlib::Base64]                    $ssl_key                = undef,
-  Optional[Stdlib::Base64]                    $ssl_cert               = undef,
-  Optional[Stdlib::Base64]                    $ssl_cacert             = undef,
-  Optional[Stdlib::Absolutepath]              $ssl_capath             = undef,
-  Optional[String]                            $ssl_cipher             = undef,
-  Optional[String]                            $table_prefix           = undef,
-  Optional[String]                            $instance_name          = undef,
-  Optional[String]                            $instance_description   = undef,
-  Optional[Boolean]                           $enable_ha              = undef,
-  Optional[Icinga2::Interval]                 $failover_timeout       = undef,
-  Optional[Hash[String,Icinga2::Interval]]    $cleanup                = undef,
-  Optional[Array]                             $categories             = undef,
-  Boolean                                     $import_schema          = false,
+  String                                $password,
+  Enum['absent', 'present']             $ensure                 = present,
+  Stdlib::Host                          $host                   = 'localhost',
+  Optional[Stdlib::Port::Unprivileged]  $port                   = undef,
+  Optional[Stdlib::Absolutepath]        $socket_path            = undef,
+  String                                $user                   = 'icinga',
+  String                                $database               = 'icinga',
+  Boolean                               $enable_ssl             = false,
+  Optional[Stdlib::Absolutepath]        $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]        $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]        $ssl_cacert_path        = undef,
+  Optional[Stdlib::Base64]              $ssl_key                = undef,
+  Optional[Stdlib::Base64]              $ssl_cert               = undef,
+  Optional[Stdlib::Base64]              $ssl_cacert             = undef,
+  Optional[Stdlib::Absolutepath]        $ssl_capath             = undef,
+  Optional[String]                      $ssl_cipher             = undef,
+  Optional[String]                      $table_prefix           = undef,
+  Optional[String]                      $instance_name          = undef,
+  Optional[String]                      $instance_description   = undef,
+  Optional[Boolean]                     $enable_ha              = undef,
+  Optional[Icinga2::Interval]           $failover_timeout       = undef,
+  Optional[Icinga2::IdoCleanup]         $cleanup                = undef,
+  Optional[Array]                       $categories             = undef,
+  Boolean                               $import_schema          = false,
 ) {
 
   if ! defined(Class['::icinga2']) {

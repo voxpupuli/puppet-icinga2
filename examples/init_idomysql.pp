@@ -17,5 +17,8 @@ class{ '::icinga2::feature::idomysql':
   database      => 'icinga2',
   import_schema => true,
   require       => Mysql::Db['icinga2'],
+  cleanup       => {
+    hostchecks_age    => '3m',
+    servicechecks_age => '36h',
+  },
 }
-
