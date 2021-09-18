@@ -149,10 +149,11 @@ class icinga2::feature::idopgsql(
     }
 
     file { $_ssl_key_path:
-      ensure  => file,
-      mode    => $_ssl_key_mode,
-      content => $ssl_key,
-      tag     => 'icinga2::config::file',
+      ensure    => file,
+      mode      => $_ssl_key_mode,
+      content   => $ssl_key,
+      show_diff => false,
+      tag       => 'icinga2::config::file',
     }
   } else {
     $_ssl_key_path = $ssl_key_path
