@@ -15,7 +15,7 @@ include ::icinga2::pki::ca
 
 ::icinga2::object::apiuser { 'icingaweb2':
   ensure      => present,
-  password    => '12e2ef553068b519',
+  password    => Sensitive('read(write'),
   permissions => [ 'status/query', 'actions/*', 'objects/modify/*', 'objects/query/*' ],
   target      => '/etc/icinga2/conf.d/api-users.conf',
 }

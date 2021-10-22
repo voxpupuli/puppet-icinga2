@@ -239,6 +239,10 @@ module Puppet
           result = ''
 
           items.each do |value|
+            if value.is_a?(Puppet::Pops::Types::PSensitiveType::Sensitive)
+              value = value.unwrap
+              value = '-:"' + value + '"' if value.is_a?(String)
+            end
             if value.is_a?(Hash)
               result += "\n%s{\n%s%s}, " % [ ' ' * indent, process_hash(value, indent + 2), ' ' * indent ]
             elsif value.is_a?(Array)
@@ -255,6 +259,10 @@ module Puppet
         def self.process_hash(attrs, indent=2, level=3, prefix=' '*indent)
           result = ''
           attrs.each do |attr, value|
+            if value.is_a?(Puppet::Pops::Types::PSensitiveType::Sensitive)
+              value = value.unwrap
+              value = '-:"' + value + '"' if value.is_a?(String)
+            end
             if value.is_a?(Hash)
               op = '+' if value.delete('+')
               if value.empty?
@@ -310,6 +318,10 @@ module Puppet
         config = ''
 
         attrs.each do |attr, value|
+          if value.is_a?(Puppet::Pops::Types::PSensitiveType::Sensitive)
+            value = value.unwrap
+            value = '-:"' + value + '"' if value.is_a?(String)
+          end
 
           if attr =~ /^(assign|ignore) where$/
             value.each do |x|

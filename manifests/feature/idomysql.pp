@@ -34,7 +34,7 @@
 # @param [String] user
 #    MySQL database user with read/write permission to the icinga database.
 #
-# @param [String] password
+# @param [Variant[String, Sensitive[String]] password
 #    MySQL database user's password. The password parameter isn't parsed anymore.
 #
 # @param [String] database
@@ -95,7 +95,7 @@
 #   Whether to import the MySQL schema or not.
 #
 class icinga2::feature::idomysql(
-  String                                $password,
+  Variant[String, Sensitive[String]]    $password,
   Enum['absent', 'present']             $ensure                 = present,
   Stdlib::Host                          $host                   = 'localhost',
   Optional[Stdlib::Port::Unprivileged]  $port                   = undef,
@@ -139,9 +139,15 @@ class icinga2::feature::idomysql(
     default   => '0600',
   }
 
-  $_notify           = $ensure ? {
+  $_notify                = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
+  }
+
+  $_password              = if $password =~ Sensitive {
+    $password
+  } else {
+    Sensitive($password)
   }
 
   # to build mysql exec command to import schema
@@ -244,7 +250,7 @@ class icinga2::feature::idomysql(
       }
 
       # set cli options for mysql connection via tls
-      $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${_ssl_options} ${database}"
+      $_mysql_command = "mysql ${_mysql_options} -p'${_password.unwrap}' ${_ssl_options} ${database}"
     }
 
     $attrs_ssl = {
@@ -259,7 +265,7 @@ class icinga2::feature::idomysql(
   else {
     # set cli options for mysql connection
     if $import_schema {
-      $_mysql_command = "mysql ${_mysql_options} -p'${password}' ${database}" }
+      $_mysql_command = "mysql ${_mysql_options} -p'${_password.unwrap}' ${database}" }
 
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
@@ -269,7 +275,7 @@ class icinga2::feature::idomysql(
     port                  => $port,
     socket_path           => $socket_path,
     user                  => $user,
-    password              => "-:\"${password}\"",   # The password parameter isn't parsed anymore.
+    password              => $_password,
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,

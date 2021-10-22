@@ -7,7 +7,7 @@
 #
 #   postgresql::server::db { 'icinga2':
 #     user     => 'icinga2',
-#     password => postgresql_password('icinga2', 'supersecret'),
+#     password => postgresql::postgresql_password('icinga2', 'supersecret'),
 #   }
 #
 #   class{ 'icinga2::feature::idopgsql':
@@ -30,7 +30,7 @@
 # @param [String] user
 #    PostgreSQL database user with read/write permission to the icinga database.
 #
-# @param [String] password
+# @param Variant[[String, Sensitive[String]]] password
 #    PostgreSQL database user's password. The password parameter isn't parsed anymore.
 #
 # @param [String] database
@@ -82,30 +82,30 @@
 #   Whether to import the PostgreSQL schema or not.
 #
 class icinga2::feature::idopgsql(
-  String                         $password,
-  Enum['absent', 'present']      $ensure               = present,
-  Stdlib::Host                   $host                 = 'localhost',
-  Stdlib::Port::Unprivileged     $port                 = 5432,
-  String                         $user                 = 'icinga',
-  String                         $database             = 'icinga',
+  Variant[String, Sensitive[String]]  $password,
+  Enum['absent', 'present']           $ensure               = present,
+  Stdlib::Host                        $host                 = 'localhost',
+  Stdlib::Port::Unprivileged          $port                 = 5432,
+  String                              $user                 = 'icinga',
+  String                              $database             = 'icinga',
   Optional[Enum[
     'disable', 'allow',
     'prefer', 'verify-full',
-    'verify-ca', 'require']]     $ssl_mode             = undef,
-  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
-  Optional[Stdlib::Base64]       $ssl_key              = undef,
-  Optional[Stdlib::Base64]       $ssl_cert             = undef,
-  Optional[Stdlib::Base64]       $ssl_cacert           = undef,
-  Optional[String]               $table_prefix         = undef,
-  Optional[String]               $instance_name        = undef,
-  Optional[String]               $instance_description = undef,
-  Optional[Boolean]              $enable_ha            = undef,
-  Optional[Icinga2::Interval]    $failover_timeout     = undef,
-  Optional[Icinga2::IdoCleanup]  $cleanup              = undef,
-  Optional[Array]                $categories           = undef,
-  Boolean                        $import_schema        = false,
+    'verify-ca', 'require']]          $ssl_mode             = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_cacert_path      = undef,
+  Optional[Stdlib::Base64]            $ssl_key              = undef,
+  Optional[Stdlib::Base64]            $ssl_cert             = undef,
+  Optional[Stdlib::Base64]            $ssl_cacert           = undef,
+  Optional[String]                    $table_prefix         = undef,
+  Optional[String]                    $instance_name        = undef,
+  Optional[String]                    $instance_description = undef,
+  Optional[Boolean]                   $enable_ha            = undef,
+  Optional[Icinga2::Interval]         $failover_timeout     = undef,
+  Optional[Icinga2::IdoCleanup]       $cleanup              = undef,
+  Optional[Array]                     $categories           = undef,
+  Boolean                             $import_schema        = false,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -128,6 +128,12 @@ class icinga2::feature::idopgsql(
   $_ssl_key_mode          = $::facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
+  }
+
+  $_password              = if $password =~ Sensitive {
+    $password
+  } else {
+    Sensitive($password)
   }
 
   File {
@@ -205,7 +211,7 @@ class icinga2::feature::idopgsql(
     host                  => $host,
     port                  => $port,
     user                  => $user,
-    password              => "-:\"${password}\"",   # The password parameter isn't parsed anymore.
+    password              => $_password,
     database              => $database,
     ssl_mode              => $ssl_mode,
     ssl_key               => $_ssl_key_path,
@@ -260,7 +266,7 @@ class icinga2::feature::idopgsql(
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $::facts['path'],
-      environment => ["PGPASSWORD=${password}"],
+      environment => ["PGPASSWORD=${_password.unwrap}"],
       command     => "psql '${_connection}' -w -f '${ido_pgsql_schema}'",
       unless      => "psql '${_connection}' -w -c 'select version from icinga_dbversion'",
     }

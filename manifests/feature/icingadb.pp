@@ -16,16 +16,16 @@
 # @param [Optional[Icinga2::Interval]] connect_timeout
 #   Timeout for establishing new connections.
 #
-# @param [Optional[String]] password
+# @param [Optional[Variant[String, Sensitive[String]]]] password
 #   IcingaDB Redis password. The password parameter isn't parsed anymore.
 #
 class icinga2::feature::icingadb(
-  Enum['absent', 'present']                $ensure          = present,
-  Optional[Stdlib::Host]                   $host            = undef,
-  Optional[Stdlib::Port::Unprivileged]     $port            = undef,
-  Optional[Stdlib::Absolutepath]           $socket_path     = undef,
-  Optional[Icinga2::Interval]              $connect_timeout = undef,
-  Optional[String]                         $password        = undef,
+  Enum['absent', 'present']                     $ensure          = present,
+  Optional[Stdlib::Host]                        $host            = undef,
+  Optional[Stdlib::Port::Unprivileged]          $port            = undef,
+  Optional[Stdlib::Absolutepath]                $socket_path     = undef,
+  Optional[Icinga2::Interval]                   $connect_timeout = undef,
+  Optional[Variant[String, Sensitive[String]]]  $password        = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -33,15 +33,18 @@ class icinga2::feature::icingadb(
   }
 
   $conf_dir = $::icinga2::globals::conf_dir
+
   $_notify  = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
   }
-  # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
+
+  $_password = if $password =~ String {
+    Sensitive($password)
+  } elsif $password =~ Sensitive {
+    $password
   } else {
-    $_password = undef
+    undef
   }
 
   # compose attributes

@@ -24,7 +24,7 @@
 # @param [String] bucket
 #    InfluxDB bucket name.
 #
-# @param [String] auth_token
+# @param [Variant[String, Sensitive[String]]] auth_token
 #    InfluxDB authentication token.
 #
 # @param [Optional[Boolean]] enable_ssl
@@ -79,29 +79,29 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::influxdb2(
-  String                           $organization,
-  String                           $bucket,
-  String                           $auth_token,
-  Enum['absent', 'present']        $ensure                 = present,
-  Optional[Stdlib::Host]           $host                   = undef,
-  Optional[Stdlib::Port]           $port                   = undef,
-  Optional[Boolean]                $enable_ssl             = undef,
-  Optional[Boolean]                $ssl_noverify           = undef,
-  Optional[Stdlib::Absolutepath]   $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]   $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]   $ssl_cacert_path        = undef,
-  Optional[Stdlib::Base64]         $ssl_key                = undef,
-  Optional[Stdlib::Base64]         $ssl_cert               = undef,
-  Optional[Stdlib::Base64]         $ssl_cacert             = undef,
-  String                           $host_measurement       = '$host.check_command$',
-  Hash                             $host_tags              = { hostname => '$host.name$' },
-  String                           $service_measurement    = '$service.check_command$',
-  Hash                             $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
-  Optional[Boolean]                $enable_send_thresholds = undef,
-  Optional[Boolean]                $enable_send_metadata   = undef,
-  Optional[Icinga2::Interval]      $flush_interval         = undef,
-  Optional[Integer[1]]             $flush_threshold        = undef,
-  Optional[Boolean]                $enable_ha              = undef,
+  String                              $organization,
+  String                              $bucket,
+  Variant[String, Sensitive[String]]  $auth_token,
+  Enum['absent', 'present']           $ensure                 = present,
+  Optional[Stdlib::Host]              $host                   = undef,
+  Optional[Stdlib::Port]              $port                   = undef,
+  Optional[Boolean]                   $enable_ssl             = undef,
+  Optional[Boolean]                   $ssl_noverify           = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]      $ssl_cacert_path        = undef,
+  Optional[Stdlib::Base64]            $ssl_key                = undef,
+  Optional[Stdlib::Base64]            $ssl_cert               = undef,
+  Optional[Stdlib::Base64]            $ssl_cacert             = undef,
+  String                              $host_measurement       = '$host.check_command$',
+  Hash                                $host_tags              = { hostname => '$host.name$' },
+  String                              $service_measurement    = '$service.check_command$',
+  Hash                                $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
+  Optional[Boolean]                   $enable_send_thresholds = undef,
+  Optional[Boolean]                   $enable_send_metadata   = undef,
+  Optional[Icinga2::Interval]         $flush_interval         = undef,
+  Optional[Integer[1]]                $flush_threshold        = undef,
+  Optional[Boolean]                   $enable_ha              = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -112,13 +112,21 @@ class icinga2::feature::influxdb2(
   $group         = $::icinga2::globals::group
   $conf_dir      = $::icinga2::globals::conf_dir
   $ssl_dir       = $::icinga2::globals::cert_dir
+
   $_ssl_key_mode = $::facts['kernel'] ? {
     'windows' => undef,
     default   => '0600',
   }
+
   $_notify       = $ensure ? {
     'present' => Class['::icinga2::service'],
     default   => undef,
+  }
+
+  $_auth_token = if $auth_token =~ Sensitive {
+    $auth_token
+  } else {
+    Sensitive($auth_token)
   }
 
   File {
@@ -214,7 +222,7 @@ class icinga2::feature::influxdb2(
     port                   => $port,
     organization           => $organization,
     bucket                 => $bucket,
-    auth_token             => "-:\"${auth_token}\"",
+    auth_token             => $_auth_token,
     host_template          => $host_template,
     service_template       => $service_template,
     enable_send_thresholds => $enable_send_thresholds,

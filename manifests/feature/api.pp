@@ -100,12 +100,12 @@
 #   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]'
 #   on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 #
-# @param [String] ticket_salt
+# @param Variant[[String, Sensitive[String]] ticket_salt
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 #   Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
 #   characters as salt or a constant.
 #
-# @param [Optional[String]] ticket_id
+# @param [Optional[Variant[String, Sensitive[String]]]] ticket_id
 #   If a ticket_id is given it will be used instead of generating an ticket_id.
 #   The ticket_id will be used only when requesting a certificate from the ca_host
 #   in case the pki is set to 'icinga2'.
@@ -158,8 +158,8 @@ class icinga2::feature::api(
   Optional[Integer[0]]                                    $max_anonymous_clients            = undef,
   Optional[Stdlib::Host]                                  $ca_host                          = undef,
   Stdlib::Port::Unprivileged                              $ca_port                          = 5665,
-  String                                                  $ticket_salt                      = 'TicketSalt',
-  Optional[String]                                        $ticket_id                        = undef,
+  Variant[String, Sensitive[String]]                      $ticket_salt                      = 'TicketSalt',
+  Optional[Variant[String, Sensitive[String]]]            $ticket_id                        = undef,
   Hash[String, Hash]                                      $endpoints                        = { 'NodeName' => {} },
   Hash[String, Hash]                                      $zones                            = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
   Optional[Stdlib::Base64]                                $ssl_key                          = undef,
@@ -243,7 +243,11 @@ class icinga2::feature::api(
     'none': {
       # non means you manage the CA on your own and so
       # the salt has to be stored in api.conf
-      $_ticket_salt = $ticket_salt
+      $_ticket_salt = if $ticket_salt =~ Sensitive {
+        $ticket_salt
+      } else {
+        Sensitive($ticket_salt)
+      }
 
       if $ssl_key {
         $_ssl_key = $::facts['os']['family'] ? {
@@ -296,9 +300,13 @@ class icinga2::feature::api(
       $cmd_pki_get_cert = "\"${icinga2_bin}\" pki save-cert --host ${ca_host} --port ${ca_port} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert}"
 
       if($ticket_id) {
-        $_ticket = "--ticket ${ticket_id}"
+        $_ticket = if $ticket_id =~ Sensitive {
+          "--ticket ${ticket_id.unwrap}"
+        } else {
+          "--ticket ${ticket_id}"
+        }
       } elsif($ticket_salt != 'TicketSalt') {
-        $_ticket = "--ticket ${icinga2_ticket_id($node_name, $ticket_salt)}"
+        $_ticket = "--ticket ${icinga2::icinga2_ticket_id($node_name, $ticket_salt)}"
       } else {
         $_ticket = ''
       }

@@ -25,6 +25,14 @@
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
+### What's new in version 3.2.0
+
+Some parameters for secrets like passwords or tokens in features or objects now allow the datatype 'Sensetive'.
+Strings set to constants or as custom variables can also use Sensitive. They are not parsed by the simple config
+parser. When you're using hashes or arrays in constants or custom variables the whole data structure can be
+secured by Sensitive.
+
+
 ### What's new in version 3.0.0
 
 * The current version now uses the icinga :: repos class from the new `icinga` module for the configuration of

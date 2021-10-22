@@ -22,7 +22,7 @@
 # @param [Optional[String]] username
 #    Elasticsearch user name.
 #
-# @param [Optional[String]] password
+# @param [Optional[Variant[String, Sensitive[String]]]] password
 #    Elasticsearch user password. The password parameter isn't parsed anymore.
 #
 # @param [Optional[Boolean]] enable_ssl
@@ -62,24 +62,24 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::elasticsearch(
-  Enum['absent', 'present']              $ensure               = present,
-  Optional[Stdlib::Host]                 $host                 = undef,
-  Optional[Stdlib::Port::Unprivileged]   $port                 = undef,
-  Optional[String]                       $index                = undef,
-  Optional[String]                       $username             = undef,
-  Optional[String]                       $password             = undef,
-  Optional[Boolean]                      $enable_ssl           = undef,
-  Optional[Boolean]                      $ssl_noverify         = undef,
-  Optional[Stdlib::Absolutepath]         $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath]         $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath]         $ssl_cacert_path      = undef,
-  Optional[Stdlib::Base64]               $ssl_key              = undef,
-  Optional[Stdlib::Base64]               $ssl_cert             = undef,
-  Optional[Stdlib::Base64]               $ssl_cacert           = undef,
-  Optional[Boolean]                      $enable_send_perfdata = undef,
-  Optional[Icinga2::Interval]            $flush_interval       = undef,
-  Optional[Integer]                      $flush_threshold      = undef,
-  Optional[Boolean]                      $enable_ha            = undef,
+  Enum['absent', 'present']                     $ensure               = present,
+  Optional[Stdlib::Host]                        $host                 = undef,
+  Optional[Stdlib::Port::Unprivileged]          $port                 = undef,
+  Optional[String]                              $index                = undef,
+  Optional[String]                              $username             = undef,
+  Optional[Variant[String, Sensitive[String]]]  $password             = undef,
+  Optional[Boolean]                             $enable_ssl           = undef,
+  Optional[Boolean]                             $ssl_noverify         = undef,
+  Optional[Stdlib::Absolutepath]                $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath]                $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath]                $ssl_cacert_path      = undef,
+  Optional[Stdlib::Base64]                      $ssl_key              = undef,
+  Optional[Stdlib::Base64]                      $ssl_cert             = undef,
+  Optional[Stdlib::Base64]                      $ssl_cacert           = undef,
+  Optional[Boolean]                             $enable_send_perfdata = undef,
+  Optional[Icinga2::Interval]                   $flush_interval       = undef,
+  Optional[Integer]                             $flush_threshold      = undef,
+  Optional[Boolean]                             $enable_ha            = undef,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -185,11 +185,12 @@ class icinga2::feature::elasticsearch(
     $attrs_ssl = { enable_tls  => $enable_ssl }
   }
 
-  # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
+  $_password = if $password =~ String {
+    Sensitive($password)
+  } elsif $password =~ Sensitive {
+    $password
   } else {
-    $_password = undef
+    undef
   }
 
   $attrs = {

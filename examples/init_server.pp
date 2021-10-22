@@ -1,16 +1,16 @@
 class { '::icinga2':
   manage_repos => true,
   constants    => {
-    'NodeName'   => 'master.localdomain',
-    'ZoneName'   => 'master',
-    'TicketSalt' => '5a3d695b8aef8f18452fc494593056a4',
+    'NodeName'   => 'server.localdomain',
+    'ZoneName'   => 'main',
+    'TicketSalt' => Sensitive('5a3d695b8aef8f18452fc494593056a4'),
   }
 }
 
 class { '::icinga2::feature::api':
   pki   => 'none',
   zones => {
-    'master' => {
+    'main' => {
       'endpoints' => [ 'NodeName' ],
     },
   }

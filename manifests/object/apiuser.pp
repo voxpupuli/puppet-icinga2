@@ -40,7 +40,7 @@
 # @param [String] apiuser_name
 #   Set the name of the apiuser object.
 #
-# @param [Optional[String]] password
+# @param [Optional[Variant[Stringi, Sensitive[String]]]] password
 #   Password string. The password parameter isn't parsed anymore.
 #
 # @param [Optional[String]] client_cn
@@ -58,20 +58,21 @@
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::apiuser(
-  Stdlib::Absolutepath        $target,
-  Enum['absent', 'present']   $ensure       = present,
-  String                      $apiuser_name = $title,
-  Optional[Array]             $permissions  = undef,
-  Optional[String]            $password     = undef,
-  Optional[String]            $client_cn    = undef,
-  Variant[String, Integer]    $order        = 30,
+  Stdlib::Absolutepath                          $target,
+  Enum['absent', 'present']                     $ensure       = present,
+  String                                        $apiuser_name = $title,
+  Optional[Array]                               $permissions  = undef,
+  Optional[Variant[String, Sensitive[String]]]  $password     = undef,
+  Optional[String]                              $client_cn    = undef,
+  Variant[String, Integer]                      $order        = 30,
 ) {
 
-  # The password parameter isn't parsed anymore.
-  if $password {
-    $_password = "-:\"${password}\""
+  $_password = if $password =~ String {
+    Sensitive($password)
+  } elsif $password =~ Sensitive {
+    $password
   } else {
-    $_password = undef
+    undef
   }
 
   # compose the attributes
