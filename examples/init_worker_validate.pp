@@ -28,7 +28,7 @@ class { '::icinga2::feature::api':
       'endpoints' => [ 'NodeName' ],
       'parent'    => 'main',
     },
-    'main'   => {
+    'main'     => {
       'endpoints' => [ $server_cert ],
     },
   },

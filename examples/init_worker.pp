@@ -11,8 +11,7 @@ class { '::icinga2':
 class { '::icinga2::feature::api':
   pki             => 'icinga2',
   ca_host         => $server_ip,
-#  ticket_salt     => Sensitive('5a3d695b8aef8f18452fc494593056a4'),
-  ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
+  ticket_salt     => Sensitive('5a3d695b8aef8f18452fc494593056a4'),
   accept_config   => true,
   accept_commands => true,
   endpoints       => {
@@ -26,7 +25,7 @@ class { '::icinga2::feature::api':
       'endpoints' => [ 'NodeName' ],
       'parent'    => 'main',
     },
-    'main'   => {
+    'main'     => {
       'endpoints' => [ $server_cert ],
     },
   }
