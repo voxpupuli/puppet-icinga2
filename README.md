@@ -27,6 +27,8 @@ configuration of Icinga 2 on multiple operating systems.
 
 ### What's new in version 3.2.0
 
+Add Icinga 2.13.0 support includes the new influxdb2 feature.
+
 Some parameters for secrets like passwords or tokens in features or objects now allow the datatype 'Sensetive'.
 Strings set to constants or as custom variables can also use Sensitive. They are not parsed by the simple config
 parser. When you're using hashes or arrays in constants or custom variables the whole data structure can be

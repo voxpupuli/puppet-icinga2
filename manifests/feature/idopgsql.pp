@@ -30,13 +30,13 @@
 # @param [String] user
 #    PostgreSQL database user with read/write permission to the icinga database.
 #
-# @param Variant[[String, Sensitive[String]]] password
+# @param [Variant[String, Sensitive[String]]] password
 #    PostgreSQL database user's password. The password parameter isn't parsed anymore.
 #
 # @param [String] database
 #    PostgreSQL database name.
 #
-# @param [Optional[Enum[disable', 'allow', 'prefer', 'verify-full', 'varify-ca', 'require']]] ssl_mode
+# @param [Optional[Enum['disable', 'allow', 'prefer', 'verify-full', 'verify-ca', 'require']]] ssl_mode
 #   Enable SSL connection mode.
 #
 # @param [Optional[Stdlib::Absolutepath]] ssl_key_path
@@ -88,10 +88,9 @@ class icinga2::feature::idopgsql(
   Stdlib::Port::Unprivileged          $port                 = 5432,
   String                              $user                 = 'icinga',
   String                              $database             = 'icinga',
-  Optional[Enum[
-    'disable', 'allow',
-    'prefer', 'verify-full',
-    'verify-ca', 'require']]          $ssl_mode             = undef,
+  Optional[Enum['disable', 'allow',
+      'prefer', 'verify-full',
+      'verify-ca', 'require']]        $ssl_mode             = undef,
   Optional[Stdlib::Absolutepath]      $ssl_key_path         = undef,
   Optional[Stdlib::Absolutepath]      $ssl_cert_path        = undef,
   Optional[Stdlib::Absolutepath]      $ssl_cacert_path      = undef,

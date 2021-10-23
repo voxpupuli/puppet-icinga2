@@ -34,7 +34,7 @@
 # @param [String] user
 #    MySQL database user with read/write permission to the icinga database.
 #
-# @param [Variant[String, Sensitive[String]] password
+# @param [Variant[String, Sensitive[String]]] password
 #    MySQL database user's password. The password parameter isn't parsed anymore.
 #
 # @param [String] database

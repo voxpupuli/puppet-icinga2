@@ -40,7 +40,7 @@
 # @param [String] apiuser_name
 #   Set the name of the apiuser object.
 #
-# @param [Optional[Variant[Stringi, Sensitive[String]]]] password
+# @param [Optional[Variant[String, Sensitive[String]]]] password
 #   Password string. The password parameter isn't parsed anymore.
 #
 # @param [Optional[String]] client_cn

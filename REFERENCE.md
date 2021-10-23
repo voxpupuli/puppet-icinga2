@@ -21,6 +21,7 @@
 * [`icinga2::feature::idomysql`](#icinga2featureidomysql): Installs and configures the Icinga 2 feature ido-mysql.
 * [`icinga2::feature::idopgsql`](#icinga2featureidopgsql): Installs and configures the Icinga 2 feature ido-pgsql.
 * [`icinga2::feature::influxdb`](#icinga2featureinfluxdb): Configures the Icinga 2 feature influxdb.
+* [`icinga2::feature::influxdb2`](#icinga2featureinfluxdb2): Configures the Icinga 2 feature influxdb2.
 * [`icinga2::feature::livestatus`](#icinga2featurelivestatus): Configures the Icinga 2 feature livestatus.
 * [`icinga2::feature::mainlog`](#icinga2featuremainlog): Configures the Icinga 2 feature mainlog.
 * [`icinga2::feature::notification`](#icinga2featurenotification): Configures the Icinga 2 feature notification.
@@ -28,6 +29,7 @@
 * [`icinga2::feature::perfdata`](#icinga2featureperfdata): Configures the Icinga 2 feature perfdata.
 * [`icinga2::feature::statusdata`](#icinga2featurestatusdata): Configures the Icinga 2 feature statusdata.
 * [`icinga2::feature::syslog`](#icinga2featuresyslog): Configures the Icinga 2 feature syslog.
+* [`icinga2::feature::windowseventlog`](#icinga2featurewindowseventlog): Configures the Icinga 2 feature windowseventlog.
 * [`icinga2::pki::ca`](#icinga2pkica): This class provides multiple ways to create the CA used by Icinga 2.
 
 #### Private Classes
@@ -51,6 +53,7 @@ start on boot and will be restarted if stopped.
 * [`icinga2::object::eventcommand`](#icinga2objecteventcommand): Manage Icinga 2 EventCommand objects.
 * [`icinga2::object::host`](#icinga2objecthost): Manage Icinga 2 Host objects.
 * [`icinga2::object::hostgroup`](#icinga2objecthostgroup): Manage Icinga 2 HostGroup objects.
+* [`icinga2::object::icingaapplication`](#icinga2objecticingaapplication)
 * [`icinga2::object::notificationcommand`](#icinga2objectnotificationcommand): Manage Icinga 2 notificationcommand objects.
 * [`icinga2::object::servicegroup`](#icinga2objectservicegroup): Manage Icinga 2 servicegroup objects.
 * [`icinga2::object::timeperiod`](#icinga2objecttimeperiod): Manage Icinga 2 timeperiod objects.
@@ -72,8 +75,10 @@ start on boot and will be restarted if stopped.
 
 ### Data types
 
+* [`Icinga2::BasicAuth`](#icinga2basicauth): A strict type for basic authentication
 * [`Icinga2::CustomAttributes`](#icinga2customattributes): A type for the structure of custom attributes
 * [`Icinga2::Fingerprint`](#icinga2fingerprint): Type for certificate fingerprints SHA1: 160 bit (20 byte) digest SHA256: 256 bit (32 byte) digest
+* [`Icinga2::IdoCleanup`](#icinga2idocleanup): A type for the structure of settings to cleanup IDO databases
 * [`Icinga2::Interval`](#icinga2interval): A strict type for intervals
 * [`Icinga2::LogFacility`](#icinga2logfacility): A strict type of syslog facilities
 * [`Icinga2::LogSeverity`](#icinga2logseverity): A strict type for log levels
@@ -381,6 +386,8 @@ Data type: `Enum['ca', 'icinga2', 'none', 'puppet']`
 Provides multiple sources for the certificate, key and ca.
 - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
           /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
+          Please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle
+          its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
 - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
            Certificate from 'ca_host' using the icinga2 ticket mechanism.
            In case the 'ticket_salt' has been configured the ticket_id will be generated
@@ -476,19 +483,21 @@ on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algor
 
 Default value: ``undef``
 
-##### `ticket_salt`
+##### `Variant`
 
-Data type: `String`
+Data type: `[String, Sensitive[String]] ticket_salt
+Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
+Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
+characters as salt or a constant.`
 
+ariant[[String, Sensitive[String]] ticket_salt
 Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
 characters as salt or a constant.
 
-Default value: `'TicketSalt'`
-
 ##### `ticket_id`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 If a ticket_id is given it will be used instead of generating an ticket_id.
 The ticket_id will be used only when requesting a certificate from the ca_host
@@ -525,6 +534,14 @@ Default value: ``undef``
 Data type: `Optional[Icinga2::Interval]`
 
 TLS Handshake timeout.
+
+Default value: ``undef``
+
+##### `connect_timeout`
+
+Data type: `Optional[Icinga2::Interval]`
+
+Timeout for establishing new connections.
 
 Default value: ``undef``
 
@@ -591,6 +608,14 @@ Data type: `Optional[String]`
 Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 
 Default value: ``undef``
+
+##### `ticket_salt`
+
+Data type: `Variant[String, Sensitive[String]]`
+
+
+
+Default value: `'TicketSalt'`
 
 ### `icinga2::feature::checker`
 
@@ -760,7 +785,7 @@ Default value: ``undef``
 
 ##### `password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 Elasticsearch user password. The password parameter isn't parsed anymore.
 
@@ -771,6 +796,14 @@ Default value: ``undef``
 Data type: `Optional[Boolean]`
 
 Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### `ssl_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable TLS peer verification.
 
 Default value: ``undef``
 
@@ -891,6 +924,73 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 Source name for this instance.
+
+Default value: ``undef``
+
+##### `enable_ssl`
+
+Data type: `Boolean`
+
+Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
+
+Default value: ``false``
+
+##### `ssl_key_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key. Only valid if ssl is enabled.
+
+Default value: ``undef``
+
+##### `ssl_cert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate. Only valid if ssl is enabled.
+
+Default value: ``undef``
+
+##### `ssl_cacert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA certificate. Only valid if ssl is enabled.
+
+Default value: ``undef``
+
+##### `ssl_key`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The private key in a base64 encoded string to store in spicified ssl_key_path file.
+Only valid if ssl is enabled.
+
+Default value: ``undef``
+
+##### `ssl_cert`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
+Only valid if ssl is enabled.
+
+Default value: ``undef``
+
+##### `ssl_cacert`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+Only valid if ssl is enabled.
+
+Default value: ``undef``
+
+##### `ssl_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable TLS peer verification.
 
 Default value: ``undef``
 
@@ -1035,9 +1135,17 @@ IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 
 Default value: ``undef``
 
+##### `connect_timeout`
+
+Data type: `Optional[Icinga2::Interval]`
+
+Timeout for establishing new connections.
+
+Default value: ``undef``
+
 ##### `password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
 
@@ -1116,7 +1224,7 @@ Default value: `'icinga'`
 
 ##### `password`
 
-Data type: `String`
+Data type: `Variant[String, Sensitive[String]]`
 
 MySQL database user's password. The password parameter isn't parsed anymore.
 
@@ -1245,7 +1353,7 @@ Default value: ``undef``
 
 ##### `cleanup`
 
-Data type: `Optional[Hash[String,Icinga2::Interval]]`
+Data type: `Optional[Icinga2::IdoCleanup]`
 
 Hash with items for historical table cleanup.
 
@@ -1281,7 +1389,7 @@ include postgresql::server
 
 postgresql::server::db { 'icinga2':
   user     => 'icinga2',
-  password => postgresql_password('icinga2', 'supersecret'),
+  password => postgresql::postgresql_password('icinga2', 'supersecret'),
 }
 
 class{ 'icinga2::feature::idopgsql':
@@ -1331,7 +1439,7 @@ Default value: `'icinga'`
 
 ##### `password`
 
-Data type: `String`
+Data type: `Variant[String, Sensitive[String]]`
 
 PostgreSQL database user's password. The password parameter isn't parsed anymore.
 
@@ -1342,6 +1450,64 @@ Data type: `String`
 PostgreSQL database name.
 
 Default value: `'icinga'`
+
+##### `ssl_mode`
+
+Data type: `Optional[Enum['disable', 'allow',
+      'prefer', 'verify-full',
+      'verify-ca', 'require']]`
+
+Enable SSL connection mode.
+
+Default value: ``undef``
+
+##### `ssl_key_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key.
+
+Default value: ``undef``
+
+##### `ssl_cert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate.
+
+Default value: ``undef``
+
+##### `ssl_cacert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA certificate.
+
+Default value: ``undef``
+
+##### `ssl_key`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The private key in a base64 encoded string to store in spicified ssl_key_path file.
+
+Default value: ``undef``
+
+##### `ssl_cert`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
+
+Default value: ``undef``
+
+##### `ssl_cacert`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+
+Default value: ``undef``
 
 ##### `table_prefix`
 
@@ -1385,7 +1551,7 @@ Default value: ``undef``
 
 ##### `cleanup`
 
-Data type: `Optional[Hash]`
+Data type: `Optional[Icinga2::IdoCleanup]`
 
 Hash with items for historical table cleanup.
 
@@ -1470,9 +1636,17 @@ Default value: ``undef``
 
 ##### `password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 InfluxDB user password. The password parameter isn't parsed anymore.
+
+Default value: ``undef``
+
+##### `basic_auth`
+
+Data type: `Optional[Icinga2::BasicAuth]`
+
+Username and password for HTTP basic authentication.
 
 Default value: ``undef``
 
@@ -1481,6 +1655,213 @@ Default value: ``undef``
 Data type: `Optional[Boolean]`
 
 Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### `ssl_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable TLS peer verification.
+
+Default value: ``undef``
+
+##### `ssl_key_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key.
+
+Default value: ``undef``
+
+##### `ssl_cert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate.
+
+Default value: ``undef``
+
+##### `ssl_cacert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA certificate.
+
+Default value: ``undef``
+
+##### `ssl_key`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The private key in a base64 encoded string to store in ssl_key_path file.
+
+Default value: ``undef``
+
+##### `ssl_cert`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The certificate in a base64 encoded string to store in ssl_cert_path file.
+
+Default value: ``undef``
+
+##### `ssl_cacert`
+
+Data type: `Optional[Stdlib::Base64]`
+
+The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
+
+Default value: ``undef``
+
+##### `host_measurement`
+
+Data type: `String`
+
+The value of this is used for the measurement setting in host_template.
+
+Default value: `'$host.check_command$'`
+
+##### `host_tags`
+
+Data type: `Hash`
+
+Tags defined in this hash will be set in the host_template.
+
+Default value: `{ hostname => '$host.name$' }`
+
+##### `service_measurement`
+
+Data type: `String`
+
+The value of this is used for the measurement setting in host_template.
+
+Default value: `'$service.check_command$'`
+
+##### `service_tags`
+
+Data type: `Hash`
+
+Tags defined in this hash will be set in the service_template.
+
+Default value: `{ hostname => '$host.name$', service => '$service.name$' }`
+
+##### `enable_send_thresholds`
+
+Data type: `Optional[Boolean]`
+
+Whether to send warn, crit, min & max tagged data.
+
+Default value: ``undef``
+
+##### `enable_send_metadata`
+
+Data type: `Optional[Boolean]`
+
+Whether to send check metadata e.g. states, execution time, latency etc.
+
+Default value: ``undef``
+
+##### `flush_interval`
+
+Data type: `Optional[Icinga2::Interval]`
+
+How long to buffer data points before transfering to InfluxDB.
+
+Default value: ``undef``
+
+##### `flush_threshold`
+
+Data type: `Optional[Integer[1]]`
+
+How many data points to buffer before forcing a transfer to InfluxDB.
+
+Default value: ``undef``
+
+##### `enable_ha`
+
+Data type: `Optional[Boolean]`
+
+Enable the high availability functionality. Only valid in a cluster setup.
+
+Default value: ``undef``
+
+### `icinga2::feature::influxdb2`
+
+Configures the Icinga 2 feature influxdb2.
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icinga2::feature::influxdb2':
+  host         => "10.10.0.15",
+  organization => "ICINGA",
+  bucket       => "icinga2",
+  auth_token   => "supersecret",
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::influxdb2` class.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature influxdb, absent disables it.
+
+Default value: `present`
+
+##### `host`
+
+Data type: `Optional[Stdlib::Host]`
+
+InfluxDB host address.
+
+Default value: ``undef``
+
+##### `port`
+
+Data type: `Optional[Stdlib::Port]`
+
+InfluxDB HTTP port.
+
+Default value: ``undef``
+
+##### `organization`
+
+Data type: `String`
+
+InfluxDB organization name.
+
+##### `bucket`
+
+Data type: `String`
+
+InfluxDB bucket name.
+
+##### `auth_token`
+
+Data type: `Variant[String, Sensitive[String]]`
+
+InfluxDB authentication token.
+
+##### `enable_ssl`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### `ssl_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable TLS peer verification.
 
 Default value: ``undef``
 
@@ -1911,6 +2292,30 @@ like FacilityDaemon.
 
 Default value: ``undef``
 
+### `icinga2::feature::windowseventlog`
+
+Configures the Icinga 2 feature windowseventlog.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::windowseventlog` class.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature windowseventlog, absent disables it.
+
+Default value: `present`
+
+##### `severity`
+
+Data type: `Icinga2::LogSeverity`
+
+You can choose the log severity between information, notice, warning or debug.
+
+Default value: `'warning'`
+
 ### `icinga2::pki::ca`
 
 This class provides multiple ways to create the CA used by Icinga 2.
@@ -2094,7 +2499,7 @@ Default value: `$title`
 
 ##### `password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 Password string. The password parameter isn't parsed anymore.
 
@@ -2803,6 +3208,112 @@ Data type: `String`
 
 Default value: `$title`
 
+### `icinga2::object::icingaapplication`
+
+The icinga2::object::icingaapplication class.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::icingaapplication` defined type.
+
+##### `environment`
+
+Data type: `Optional[String]`
+
+Specify the Icinga environment. This overrides the Environment constant
+specified in the configuration or on the CLI with --define.
+
+Default value: ``undef``
+
+##### `target`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Destination config file to store in this object. File will be declared at the
+first time.
+
+Default value: ``undef``
+
+##### `order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to control the position in the target file, sorted alpha numeric.
+
+Default value: `5`
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+
+
+Default value: `present`
+
+##### `app_name`
+
+Data type: `String`
+
+
+
+Default value: `$title`
+
+##### `enable_notifications`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``undef``
+
+##### `enable_event_handlers`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``undef``
+
+##### `enable_flapping`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``undef``
+
+##### `enable_host_checks`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``undef``
+
+##### `enable_service_checks`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``undef``
+
+##### `enable_perfdata`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``undef``
+
+##### `vars`
+
+Data type: `Optional[Icinga2::CustomAttributes]`
+
+
+
+Default value: ``undef``
+
 ### `icinga2::object::notificationcommand`
 
 Manage Icinga 2 notificationcommand objects.
@@ -3394,20 +3905,25 @@ to get the full benefit of the modern function API.
 
 Type: Ruby 4.x API
 
----- original file header ----
+Summarise what the function does here
 
-#### `icinga2::icinga2_ticket_id(Any *$args)`
+#### `icinga2::icinga2_ticket_id(String $cn, Variant[String, Sensitive[String]] $salt)`
 
----- original file header ----
+The icinga2::icinga2_ticket_id function.
 
-Returns: `Data type` Describe what the function returns here
+Returns: `String` Calculated ticket to receive a certificate.
 
-##### `*args`
+##### `cn`
 
-Data type: `Any`
+Data type: `String`
 
-The original array of arguments. Port this to individually managed params
-to get the full benefit of the modern function API.
+The common name of the Icinga host certificate.
+
+##### `salt`
+
+Data type: `Variant[String, Sensitive[String]]`
+
+The ticket salt of the Icinga CA.
 
 ### `icinga2_attributes`
 
@@ -3435,6 +3951,15 @@ Returns: `Any` The ticket to get a certificate
 
 ## Data types
 
+### `Icinga2::BasicAuth`
+
+A strict type for basic authentication
+
+Alias of `Struct[{
+  'username' => String,
+  'password' => Variant[String, Sensitive[String]],
+}]`
+
 ### `Icinga2::CustomAttributes`
 
 A type for the structure of custom attributes
@@ -3449,6 +3974,28 @@ SHA256: 256 bit (32 byte) digest
 
 Alias of `Pattern[/^([0-9a-fA-F]{2}\:){19}(([0-9a-fA-F]{2}\:){12})?[0-9a-fA-F]{2}$/]`
 
+### `Icinga2::IdoCleanup`
+
+A type for the structure of settings to cleanup IDO databases
+
+Alias of `Hash[Enum[
+    'acknowledgements_age',
+    'commenthistory_age',
+    'contactnotifications_age',
+    'contactnotificationmethods_age',
+    'downtimehistory_age',
+    'eventhandlers_age',
+    'externalcommands_age',
+    'flappinghistory_age',
+    'hostchecks_age',
+    'logentries_age',
+    'notifications_age',
+    'processevents_age',
+    'statehistory_age',
+    'servicechecks_age',
+    'systemcommands_age',
+  ], String]`
+
 ### `Icinga2::Interval`
 
 A strict type for intervals
@@ -3459,7 +4006,20 @@ Alias of `Variant[Integer, Pattern[/^\d+\.?\d*[d|h|m|s]?$/]]`
 
 A strict type of syslog facilities
 
-Alias of `Variant[Enum['LOG_AUTH', 'LOG_AUTHPRIV', 'LOG_CRON', 'LOG_DAEMON', 'LOG_FTP', 'LOG_KERN', 'LOG_LPR', 'LOG_MAIL', 'LOG_NEWS', 'LOG_SYSLOG', 'LOG_USER', 'LOG_UUCP'], Pattern[/^LOG_LOCAL[0-7]$/]]`
+Alias of `Variant[Enum[
+    'LOG_AUTH',
+    'LOG_AUTHPRIV',
+    'LOG_CRON',
+    'LOG_DAEMON',
+    'LOG_FTP',
+    'LOG_KERN',
+    'LOG_LPR',
+    'LOG_MAIL',
+    'LOG_NEWS',
+    'LOG_SYSLOG',
+    'LOG_USER',
+    'LOG_UUCP'
+  ], Pattern[/^LOG_LOCAL[0-7]$/]]`
 
 ### `Icinga2::LogSeverity`
 

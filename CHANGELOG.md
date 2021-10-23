@@ -1,5 +1,35 @@
 # Change Log
 
+## [v3.2.0](https://github.com/icinga/puppet-icinga2/tree/v3.2.0) (2021-10-23)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.1.3...v3.2.0)
+
+**Implemented enhancements:**
+
+- Accept Datatype Sensitive for Secrets [\#689](https://github.com/Icinga/puppet-icinga2/issues/689)
+- Update testing doc to use pdk validate command [\#686](https://github.com/Icinga/puppet-icinga2/issues/686)
+- Add new feature windowseventlog [\#684](https://github.com/Icinga/puppet-icinga2/issues/684)
+- Add TLS support to feature idopgsql [\#683](https://github.com/Icinga/puppet-icinga2/issues/683)
+- Add new data type for ido cleanups [\#682](https://github.com/Icinga/puppet-icinga2/issues/682)
+- Add param connect\_timeout and TLS support to feature icingadb [\#681](https://github.com/Icinga/puppet-icinga2/issues/681)
+- Add object type icingaapplication [\#680](https://github.com/Icinga/puppet-icinga2/issues/680)
+- Add TLS support to feature gelf [\#679](https://github.com/Icinga/puppet-icinga2/issues/679)
+- Add param insecure\_noverify to feature elasticsearch [\#678](https://github.com/Icinga/puppet-icinga2/issues/678)
+- Add param connect\_timeout to feature api  [\#677](https://github.com/Icinga/puppet-icinga2/issues/677)
+- Add missing params basic\_auth, ssl\_insecure\_noverify to feature influxdb [\#676](https://github.com/Icinga/puppet-icinga2/issues/676)
+- Write new feature influxdb2 [\#675](https://github.com/Icinga/puppet-icinga2/issues/675)
+- Use new hash style for facts [\#672](https://github.com/Icinga/puppet-icinga2/pull/672) ([cocker-cc](https://github.com/cocker-cc))
+
+**Fixed bugs:**
+
+- Keys are shown in Reports for features elasticsearch, idomysql and influxdb [\#687](https://github.com/Icinga/puppet-icinga2/issues/687)
+- Cannot create MySQL database tables if enable\_ssl is set without any other ssl parameter [\#685](https://github.com/Icinga/puppet-icinga2/issues/685)
+- Update to use pdk 2.x without fails [\#671](https://github.com/Icinga/puppet-icinga2/issues/671)
+
+**Closed issues:**
+
+- Check docu for deprecated parameters [\#673](https://github.com/Icinga/puppet-icinga2/issues/673)
+- Using puppet PKI is unsupported on newer Puppetmaster [\#669](https://github.com/Icinga/puppet-icinga2/issues/669)
+
 ## [v3.1.3](https://github.com/icinga/puppet-icinga2/tree/v3.1.3) (2021-06-18)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.1.2...v3.1.3)
 
