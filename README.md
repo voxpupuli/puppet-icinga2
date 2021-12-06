@@ -644,6 +644,14 @@ This may affect configuration files which are influenced by the following puppet
 This may be fixed by doing the following steps in order:
 1. Update all environments containing this module to the latest version
 2. Regenerate all resource types in case you are using environment isolation
+	- 2.1 Delete old resource types for each environment
+		```
+		rm -rf /etc/puppetlabs/code/environment/xxx/.resource\_types/
+		```
+	- 2.2 Generate new resource types for each environment
+		```
+		puppet generate types --environment xxx
+		```
 3. Restart the puppetserver service
 
 ## Release Notes
