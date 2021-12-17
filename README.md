@@ -621,6 +621,39 @@ It's not currently possible to use dictionaries in a string WITH nested array or
 
 See [REFERENCE.md](https://github.com/Icinga/puppet-icinga2/blob/master/REFERENCE.md)
 
+## Known Issues
+
+### Environment Bleed
+
+Due to a long known bug in puppet known as environment bleed, upgrading this module from versions <3.2.0 to a version >=3.2.0 may present some issues. The handling of new datatypes introduced in the 3.2.0 update of this module may result in configuration file contents with the following line:
+```
+password = "Sensitive [value redacted]"
+```
+This may affect configuration files which are influenced by the following puppet code pieces:
+- icinga2::feature::api::ticket\_salt
+- icinga2::feature::api::ticket\_id
+- icinga2::feature::elasticsearch::password
+- icinga2::feature::icingadb::password
+- icinga2::feature::idomysql::password
+- icinga2::feature::idopgsql::password
+- icinga2::feature::influxdb::password
+- icinga2::feature::influxdb::basic\_auth['password']
+- icinga2::feature::influxdb2::auth\_token
+- icinga2::object::apiuser::password
+
+This may be fixed by doing the following steps in order:
+1. Update all environments containing this module to the latest version
+2. Regenerate all resource types in case you are using environment isolation
+	- 2.1 Delete old resource types for each environment
+		```
+		rm -rf /etc/puppetlabs/code/environment/xxx/.resource\_types/
+		```
+	- 2.2 Generate new resource types for each environment
+		```
+		puppet generate types --environment xxx
+		```
+3. Restart the puppetserver service
+
 ## Release Notes
 
 When releasing new versions we refer to [SemVer 1.0.0] for version numbers. All steps required when creating a new
