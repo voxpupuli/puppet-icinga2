@@ -27,6 +27,8 @@ configuration of Icinga 2 on multiple operating systems.
 
 ### What's new in version 3.2.0
 
+Important: Read the Known Issues section about [Environment Bleed](#environment-bleed) at the end of this document!
+
 Add Icinga 2.13.0 support includes the new influxdb2 feature.
 
 Some parameters for secrets like passwords or tokens in features or objects now allow the datatype 'Sensetive'.
