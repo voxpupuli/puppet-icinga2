@@ -320,7 +320,7 @@ module Puppet
         attrs.each do |attr, value|
           if value.is_a?(Puppet::Pops::Types::PSensitiveType::Sensitive)
             value = value.unwrap
-            value = '-:"' + value + '"' if value.is_a?(String)
+            value = '-:"' + value + '"' if value.is_a?(String) and ! $constants.include?(value)
           end
 
           if attr =~ /^(assign|ignore) where$/
