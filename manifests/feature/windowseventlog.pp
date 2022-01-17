@@ -1,10 +1,10 @@
 # @summary
 #   Configures the Icinga 2 feature windowseventlog.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature windowseventlog, absent disables it.
 #
-# @param [Icinga2::LogSeverity] severity
+# @param severity
 #   You can choose the log severity between information, notice, warning or debug.
 #
 class icinga2::feature::windowseventlog(

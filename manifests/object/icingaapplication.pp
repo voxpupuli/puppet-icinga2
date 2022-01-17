@@ -1,44 +1,44 @@
 # @summary
 #   Manage Icinga 2 IcingaApplication objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] app_name
+# @param app_name
 #   Set the Icinga 2 name of the IcingaApplication object.
 #
-# @param [Optional[Boolean]] enable_notifications
+# @param enable_notifications
 #   Whether notifications are globally enabled.
 #
-# @param [Optional[Boolean]] enable_event_handlers
+# @param enable_event_handlers
 #   Whether event handlers are globally enabled.
 #
-# @param [Optional[Boolean]] enable_flapping
+# @param enable_flapping
 #   Whether flap detection is globally enabled.
 #
-# @param [Optional[Boolean]] enable_host_checks
+# @param enable_host_checks
 #   Whether active host checks are globally enabled.
 #
-# @param [Optional[Boolean]] enable_service_checks
+# @param enable_service_checks
 #   Whether active service checks are globally enabled.
 #
-# @param [Optional[Boolean]] enable_perfdata
+# @param enable_perfdata
 #   Whether performance data processing is globally enabled.
 #
-# @param [Optional[Icinga2::CustomAttributes]] vars
+# @param vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 
-# @param [Optional[String]] environment
+# @param environment
 #   Specify the Icinga environment. This overrides the Environment constant
 #   specified in the configuration or on the CLI with --define.
 #
-# @param [Optional[Stdlib::Absolutepath]] target
+# @param target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::icingaapplication(

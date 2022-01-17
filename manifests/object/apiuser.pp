@@ -34,23 +34,23 @@
 #     target      => '/etc/icinga2/conf.d/api-users.conf',
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] apiuser_name
+# @param apiuser_name
 #   Set the name of the apiuser object.
 #
-# @param [Optional[Variant[String, Sensitive[String]]]] password
+# @param password
 #   Password string. The password parameter isn't parsed anymore.
 #
-# @param [Optional[String]] client_cn
+# @param client_cn
 #   Optional. Client Common Name (CN).
 #
-# @param [Optional[Array]] permissions
+# @param permissions
 #   Array of permissions. Either as string or dictionary with the keys permission
 #   and filter. The latter must be specified as function.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #

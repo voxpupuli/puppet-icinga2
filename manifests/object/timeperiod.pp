@@ -1,38 +1,38 @@
 # @summary
 #   Manage Icinga 2 timeperiod objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] timeperiod_name
+# @param timeperiod_name
 #   Set the Icinga 2 name of the timeperiod object.
 #
-# @param [Optional[String]] display_name
+# @param display_name
 #   A short description of the time period.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Optional[Hash]] ranges
+# @param ranges
 #   A dictionary containing information which days and durations apply to this
 #   timeperiod.
 #
-# @param [Optional[Boolean]] prefer_includes
+# @param prefer_includes
 #   Boolean whether to prefer timeperiods includes or excludes.
 #
-# @param [Optional[Array]] excludes
+# @param excludes
 #   An array of timeperiods, which should exclude from your timerange.
 #
-# @param [Optional[Array]] includes
+# @param includes
 #   An array of timeperiods, which should include into your timerange
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store this object in. File will be declared on the first run.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::timeperiod (

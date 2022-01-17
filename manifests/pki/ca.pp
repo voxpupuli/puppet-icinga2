@@ -13,11 +13,11 @@
 #     ca_key  => '-----BEGIN RSA PRIVATE KEY----- ...',
 #   }
 #
-# @param [Optional[String]] ca_cert
+# @param ca_cert
 #   Content of the CA certificate. If this is unset, a certificate will be generated with the
 #   Icinga 2 CLI.
 #
-# @param [Optional[String]] ca_key
+# @param ca_key
 #   Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 #
 class icinga2::pki::ca(

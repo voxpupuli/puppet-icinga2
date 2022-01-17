@@ -1,110 +1,110 @@
 # @summary
 #   Manage Icinga 2 Host objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] host_name
+# @param host_name
 #   Hostname of the Host object.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Optional[String]] display_name
+# @param display_name
 #   A short description of the host (e.g. displayed by external interfaces instead of the name if set).
 #
-# @param [Optional[Stdlib::Host]] address
+# @param address
 #   The host's address v4.
 #
-# @param [Optional[Stdlib::Host]] address6
+# @param address6
 #   The host's address v6.
 #
-# @param [Optional[Icinga2::CustomAttributes]] vars
+# @param vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# @param [Optional[Array]] groups
+# @param groups
 #   A list of host groups this host belongs to.
 #
-# @param [Optional[String]] check_command
+# @param check_command
 #   The name of the check command.
 #
-# @param [Optional[Integer[1]]] max_check_attempts
+# @param max_check_attempts
 #   The number of times a host is re-checked before changing into a hard state.
 #
-# @param [Optional[String]] check_period
+# @param check_period
 #   The name of a time period which determines when this host should be checked.
 #
-# @param [Optional[Icinga2::Interval]] check_timeout
+# @param check_timeout
 #    Check command timeout in seconds. Overrides the CheckCommand's timeout attribute.
 #
-# @param [Optional[Icinga2::Interval]] check_interval
+# @param check_interval
 #   The check interval (in seconds). This interval is used for checks when the host is in a HARD state.
 #
-# @param [Optional[Icinga2::Interval]] retry_interval
+# @param retry_interval
 #   The retry interval (in seconds). This interval is used for checks when the host is in a SOFT state.
 #
-# @param [Optional[Boolean]] enable_notifications
+# @param enable_notifications
 #   Whether notifications are enabled.
 #
-# @param [Optional[Boolean]] enable_active_checks
+# @param enable_active_checks
 #   Whether active checks are enabled.
 #
-# @param [Optional[Boolean]] enable_passive_checks
+# @param enable_passive_checks
 #   Whether passive checks are enabled.
 #
-# @param [Optional[Boolean]] enable_event_handler
+# @param enable_event_handler
 #   Enables event handlers for this host.
 #
-# @param [Optional[Boolean]] enable_flapping
+# @param enable_flapping
 #   Whether flap detection is enabled.
 #
-# @param [Optional[Boolean]] enable_perfdata
+# @param enable_perfdata
 #   Whether performance data processing is enabled.
 #
-# @param [Optional[String]] event_command
+# @param event_command
 #   The name of an event command that should be executed every time the host's
 #   state changes or the host is in a SOFT state.
 #
-# @param [Optional[Integer[1]]] flapping_threshold_low
+# @param flapping_threshold_low
 #   Flapping lower bound in percent for a host to be considered not flapping.
 #
-# @param [Optional[Integer[1]]] flapping_threshold_high
+# @param flapping_threshold_high
 #   Flapping upper bound in percent for a host to be considered flapping.
 #
-# @param [Optional[Boolean]] volatile
+# @param volatile
 #   The volatile setting enables always HARD state types if NOT-OK state changes occur.
 #
-# @param [Optional[String]] zone
+# @param zone
 #   The zone this object is a member of.
 #
-# @param [Optional[String]] command_endpoint
+# @param command_endpoint
 #   The endpoint where commands are executed on.
 #
-# @param [Optional[String]] notes
+# @param notes
 #   Notes for the host.
 #
-# @param [Optional[String]] notes_url
+# @param notes_url
 #   Url for notes for the host (for example, in notification commands).
 #
-# @param [Optional[String]] action_url
+# @param action_url
 #   Url for actions for the host (for example, an external graphing tool).
 #
-# @param [Optional[String]] icon_image
+# @param icon_image
 #   Icon image for the host. Used by external interfaces only.
 #
-# @param [Optional[String]] icon_image_alt
+# @param icon_image_alt
 #   Icon image description for the host. Used by external interface only.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::host(

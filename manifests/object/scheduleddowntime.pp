@@ -1,54 +1,54 @@
 # @summary
 #   Manage Icinga 2 scheduleddowntime objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] scheduleddowntime_name
+# @param scheduleddowntime_name
 #   Set the Icinga 2 name of the scheduleddowntime object.
 #
-# @param [Optional[String]] host_name
+# @param host_name
 #   The name of the host this comment belongs to.
 #
-# @param [Optional[String]] service_name
+# @param service_name
 #   The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
 #
-# @param [Optional[String]] author
+# @param author
 #   The author's name.
 #
-# @param [Optional[String]] comment
+# @param comment
 #   The comment text.
 #
-# @param [Optional[Boolean]] fixed
+# @param fixed
 #   Whether this is a fixed downtime.
 #
-# @param [Optional[Icinga2::Interval]] duration
+# @param duration
 #   The duration as number.
 #
-# @param [Optional[Hash]] ranges
+# @param ranges
 #   A dictionary containing information which days and durations apply to this timeperiod.
 #
-# @param [Variant[Boolean, String]] apply
+# @param apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# @param [Variant[Boolean, String]] prefix
+# @param prefix
 #   Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# @param [Enum['Host', 'Service']] apply_target
+# @param apply_target
 #   An object type on which to target the apply rule. Valid values are `Host` and `Service`.
 #
-# @param [Array] assign
+# @param assign
 #   Assign user group members using the group assign rules.
 #
-# @param [Array] ignore
+# @param ignore
 #   Exclude users using the group ignore rules.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::scheduleddowntime (

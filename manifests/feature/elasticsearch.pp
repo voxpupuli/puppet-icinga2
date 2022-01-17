@@ -7,58 +7,58 @@
 #     index    => "icinga2"
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature elasticsearch, absent disables it.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #    Elasticsearch host address.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param port
 #    Elasticsearch HTTP port.
 #
-# @param [Optional[String]] index
+# @param index
 #    Elasticsearch index name.
 #
-# @param [Optional[String]] username
+# @param username
 #    Elasticsearch user name.
 #
-# @param [Optional[Variant[String, Sensitive[String]]]] password
+# @param password
 #    Elasticsearch user password. The password parameter isn't parsed anymore.
 #
-# @param [Optional[Boolean]] enable_ssl
+# @param enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
 #
-# @param [Optional[Boolean]] ssl_noverify
+# @param ssl_noverify
 #     Disable TLS peer verification.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
+# @param ssl_key_path
 #   Location of the private key.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
+# @param ssl_cert_path
 #   Location of the certificate.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
+# @param ssl_cacert_path
 #   Location of the CA certificate.
 #
-# @param [Optional[Stdlib::Base64]] ssl_key
+# @param ssl_key
 #   The private key in a base64 encoded string to store in spicified ssl_key_path file.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cert
+# @param ssl_cert
 #   The certificate in a base64 encoded to store in spicified ssl_cert_path file.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
 #
-# @param [Optional[Boolean]] enable_send_perfdata
+# @param enable_send_perfdata
 #   Whether to send check performance data metrics.
 #
-# @param [Optional[Icinga2::Interval]] flush_interval
+# @param flush_interval
 #   How long to buffer data points before transferring to Elasticsearch.
 #
-# @param [Optional[Integer]] flush_threshold
+# @param flush_threshold
 #   How many data points to buffer before forcing a transfer to Elasticsearch.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::elasticsearch(

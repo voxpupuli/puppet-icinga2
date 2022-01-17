@@ -1,54 +1,54 @@
 # @summary
 #   Manage Icinga 2 user objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] user_name
+# @param user_name
 #   Set the Icinga 2 name of the user object.
 #
-# @param [Optional[String]] display_name
+# @param display_name
 #   A short description of the user.
 #
-# @param [Optional[String]] email
+# @param email
 #   An email string for this user. Useful for notification commands.
 #
-# @param [Optional[String]] pager
+# @param pager
 #   A pager string for this user. Useful for notification commands.
 #
-# @param [Optional[Icinga2::CustomAttributes]] vars
+# @param vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# @param [Optional[Array]] groups
+# @param groups
 #   An array of group names.
 #
-# @param [Optional[Boolean]] enable_notifications
+# @param enable_notifications
 #   Whether notifications are enabled for this user.
 #
-# @param [Optional[String]] period
+# @param period
 #   The name of a time period which determines when a notification for this user
 #   should be triggered.
 #
-# @param [Optional[Array]] types
+# @param types
 #   A set of type filters when this notification should be triggered.
 #   everything is matched.
 #
-# @param [Optional[Array]] states
+# @param states
 #   A set of state filters when this notification should be triggered.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::user (

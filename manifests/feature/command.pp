@@ -1,10 +1,10 @@
 # @summary
 #   Configures the Icinga 2 feature command.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present to enable the feature command, absent to disabled it.
 #
-# @param [Optional[Stdlib::Absolutepath]] command_path
+# @param command_path
 #   Absolute path to the command pipe.
 #
 class icinga2::feature::command(

@@ -9,26 +9,26 @@
 #     assign       => [ 'host.name == NodeName' ],
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [Optional[String]] display_name
+# @param display_name
 #   A short description of the host group.
 #
-# @param [Optional[Array]] groups
+# @param groups
 #   An array of nested group names.
 #
-# @param [Array] assign
+# @param assign
 #   Assign host group members using the group rules.
 #
-# @param [Array] ignore
+# @param ignore
 #   Ignore host group members using the group rules.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::hostgroup(

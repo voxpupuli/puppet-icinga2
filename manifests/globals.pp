@@ -5,69 +5,69 @@
 #
 # @api private
 #
-# @param [String] package_name
+# @param package_name
 #   The name of the icinga package to manage.
 #
-# @param [String] service_name
+# @param service_name
 #   The name of the icinga service to manage.
 #
-# @param [Optional[String]] user
+# @param user
 #   User as the icinga process runs.
 #   CAUTION: This does not manage the user context for the runnig icinga 2 process!
 #   The parameter is only used for ownership of files or directories.
 #
-# @param [Optional[String]] group
+# @param group
 #   Group as the icinga process runs.
 #   CAUTION: This does not manage the group context for the runnig icinga 2 process!
 #   The parameter is only used for group membership of files or directories.
 #
-# @param [Optional[String]] logon_account
+# @param logon_account
 #   The user context in which the service should run.
 #   ATM only relevant on Windows.
 #
-# @param [Optional[String]] selinux_package_name
+# @param selinux_package_name
 #   The name of the icinga selinux package.
 #
-# @param [Optional[String]] ido_mysql_package_name
+# @param ido_mysql_package_name
 #   The name of the icinga package that's needed for MySQL.
 #
-# @param [String] ido_mysql_schema
+# @param ido_mysql_schema
 #   Path to the MySQL schema to import.
 #
-# @param [Optional[String]] ido_pgsql_package_name
+# @param ido_pgsql_package_name
 #   The name of the icinga package that's needed for Postrgesql.
 #
-# @param [String] ido_pgsql_schema
+# @param ido_pgsql_schema
 #   Path to the Postgresql schema to import.
 #
-# @param [Stdlib::Absolutepath] icinga2_bin
+# @param icinga2_bin
 #   Path to the icinga2 binary.
 #
-# @param [Stdlib::Absolutepath] conf_dir
+# @param conf_dir
 #   Location of the configuration directory of Icinga.
 #
-# @param [Stdlib::Absolutepath] lib_dir
+# @param lib_dir
 #   Path to the directory contained the system libs.
 #
-# @param [Stdlib::Absolutepath] log_dir
+# @param log_dir
 #   Location to store Icinga log files.
 #
-# @param [Stdlib::Absolutepath] run_dir
+# @param run_dir
 #   Runtime directory of Icinga.
 #
-# @param [Stdlib::Absolutepath] spool_dir
+# @param spool_dir
 #   Path to spool files of Icinga.
 #
-# @param [Stdlib::Absolutepath] cache_dir
+# @param cache_dir
 #   Path to cache files of Icinga.
 #
-# @param [Stdlib::Absolutepath] cert_dir
+# @param cert_dir
 #   Path to the directory where Icinga stores keys and certificates.
 #
-# @param [Stdlib::Absolutepath] ca_dir
+# @param ca_dir
 #   Path to CA.
 #
-# @param [Optional[String]] service_reload
+# @param service_reload
 #   How to do a reload of the Icinga process.
 #
 class icinga2::globals(

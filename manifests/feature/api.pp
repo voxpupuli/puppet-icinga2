@@ -48,10 +48,10 @@
 #     tag    => 'icinga2::config::file',
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature api, absent disabled it.
 #
-# @param [Enum['ca', 'icinga2', 'none', 'puppet']] pki
+# @param pki
 #   Provides multiple sources for the certificate, key and ca.
 #   - puppet: Copies the key, cert and CAcert from the Puppet ssl directory to the cert directory
 #             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
@@ -65,88 +65,88 @@
 #   - none: Does nothing and you either have to manage the files yourself as file resources
 #           or use the ssl_key, ssl_cert, ssl_cacert parameters.
 #
-# @param [Optional[Stdlib::Base64]] ssl_key
+# @param ssl_key
 #   The private key in a base64 encoded string to store in cert directory. This parameter
 #   requires pki to be set to 'none'.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cert
+# @param ssl_cert
 #   The certificate in a base64 encoded string to store in cert directory This parameter
 #    requires pki to be set to 'none'.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 #   requires pki to be set to 'none'.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_crl
+# @param ssl_crl
 #   Optional location of the certificate revocation list.
 #
-# @param [Optional[Boolean]] accept_config
+# @param accept_config
 #   Accept zone configuration.
 #
-# @param [Optional[Boolean]] accept_commands
+# @param accept_commands
 #   Accept remote commands.
 #
-# @param [Optional[Integer[0]]] max_anonymous_clients
+# @param max_anonymous_clients
 #   Limit the number of anonymous client connections (not configured endpoints and signing requests).
 #
-# @param [Optional[Stdlib::Host]] ca_host
+# @param ca_host
 #   This host will be connected to request the certificate. Set this if you use the icinga2 pki.
 #
-# @param [Stdlib::Port::Unprivileged] ca_port
+# @param ca_port
 #   Port of the 'ca_host'.
 #
-# @param [Optional[Icinga2::Fingerprint]] fingerprint
+# @param fingerprint
 #   Fingerprint of the CA host certificate for validation. Requires pki is set to `icinga2`.
 #   You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]'
 #   on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 #
-# @param Variant[[String, Sensitive[String]] ticket_salt
+# @param ticket_salt
 #   Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 #   Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
 #   characters as salt or a constant.
 #
-# @param [Optional[Variant[String, Sensitive[String]]]] ticket_id
+# @param ticket_id
 #   If a ticket_id is given it will be used instead of generating an ticket_id.
 #   The ticket_id will be used only when requesting a certificate from the ca_host
 #   in case the pki is set to 'icinga2'.
 #
-# @param [Hash[String, Hash]] endpoints
+# @param endpoints
 #   Hash to configure endpoint objects. `NodeName` is a icnga2 constant.
 #
-# @param [Hash[String, Hash]] zones
+# @param zones
 #   Hash to configure zone objects. `ZoneName` and `NodeName` are icinga2 constants.
 #
-# @param [Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2']]] ssl_protocolmin
+# @param ssl_protocolmin
 #   Minimal TLS version to require.
 #
-# @param [Optional[Icinga2::Interval]] ssl_handshake_timeout
+# @param ssl_handshake_timeout
 #   TLS Handshake timeout.
 #
-# @param [Optional[Icinga2::Interval]] connect_timeout
+# @param connect_timeout
 #   Timeout for establishing new connections.
 #
-# @param [Optional[String]] ssl_cipher_list
+# @param ssl_cipher_list
 #   List of allowed TLS ciphers, to finetune encryption.
 #
-# @param [Optional[Stdlib::Host]] bind_host
+# @param bind_host
 #   The IP address the api listener will be bound to.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] bind_port
+# @param bind_port
 #   The port the api listener will be bound to.
 #
-# @param [Optional[Array[String]]] access_control_allow_origin
+# @param access_control_allow_origin
 #  Specifies an array of origin URLs that may access the API.
 #
-# @param [Optional[Boolean]] access_control_allow_credentials
+# @param access_control_allow_credentials
 #  Indicates whether or not the actual request can be made using credentials.
 #
-# @param [Optional[String]] access_control_allow_headers
+# @param access_control_allow_headers
 #  Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
 #
-# @param [Optional[Array[Enum['GET', 'POST', 'PUT', 'DELETE']]]] access_control_allow_methods
+# @param access_control_allow_methods
 #  Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
 #
-# @param [Optional[String]] environment
+# @param environment
 #  Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 #
 class icinga2::feature::api(

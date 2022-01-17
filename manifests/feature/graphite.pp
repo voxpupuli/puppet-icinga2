@@ -9,24 +9,24 @@
 #     enable_send_metadata   => true,
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature graphite, absent disabled it.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #   Graphite Carbon host address.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param port
 #   Graphite Carbon port.
 #
-# @param [Optional[String]] host_name_template
+# @param host_name_template
 #   Template for metric path of hosts.
 #
-# @param [Optional[String]] service_name_template
+# @param service_name_template
 #   Template for metric path of services.
 #
-# @param [Optional[Boolean]] enable_send_thresholds
+# @param enable_send_thresholds
 #
-# @param [Optional[Boolean]] enable_send_metadata
+# @param enable_send_metadata
 #
 # @param [Optional[Boolean]] enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.

@@ -1,42 +1,42 @@
 # @summary
 #   Manage Icinga 2 Host objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] checkcommand_name
+# @param checkcommand_name
 #   Title of the CheckCommand object.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Optional[Variant[Array, String]]] command
+# @param command
 #   The command. This can either be an array of individual command arguments.
 #   Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh) takes care of parsing the command.
 #   When using the "arguments" attribute this must be an array. Can be specified as function for advanced implementations.
 #
-# @param [Optional[Hash]] env
+# @param env
 #   A dictionary of macros which should be exported as environment variables prior to executing the command.
 #
-# @param [Optional[Icinga2::CustomAttributes]] vars
+# @param vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# @param [Optional[Icinga2::Interval]] timeout
+# @param timeout
 #   The command timeout in seconds.
 #
-# @param [Optional[Variant[Hash, String]]] arguments
+# @param arguments
 #   A dictionary of command arguments.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 #

@@ -1,22 +1,22 @@
 # @summary
 #   Configures the Icinga 2 feature icingadb.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present, enables the feature icingadb, absent disabled it.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #   IcingaDB Redis host address.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param port
 #   IcingaDB Redis port.
 #
-# @param [Optional[Stdlib::Absolutepath]] socket_path
+# @param socket_path
 #   IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 #
-# @param [Optional[Icinga2::Interval]] connect_timeout
+# @param connect_timeout
 #   Timeout for establishing new connections.
 #
-# @param [Optional[Variant[String, Sensitive[String]]]] password
+# @param password
 #   IcingaDB Redis password. The password parameter isn't parsed anymore.
 #
 class icinga2::feature::icingadb(

@@ -1,27 +1,27 @@
 # @summary
 #   Manage Icinga 2 zone objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] zone_name
+# @param zone_name
 #   Set the Icinga 2 name of the zone object.
 #
-# @param [Optional[Array]] endpoints
+# @param endpoints
 #   List of endpoints belong to this zone.
 #
-# @param [Optional[String]] parent
+# @param parent
 #   Parent zone to this zone.
 #
-# @param [Optional[Boolean]] global
+# @param global
 #   If set to true, a global zone is defined and the parameter endpoints
 #   and parent are ignored.
 #
-# @param [Optional[Stdlib::Absolutepath]] target
+# @param target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::zone(

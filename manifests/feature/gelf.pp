@@ -1,49 +1,49 @@
 # @summary
 #   Configures the Icinga 2 feature gelf.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature gelf, absent disables it.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #   GELF receiver host address.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param port
 #   GELF receiver port.
 #
-# @param [Optional[String]] source
+# @param source
 #   Source name for this instance.
 #
-# @param [Boolean] enable_ssl
+# @param enable_ssl
 #    Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
+# @param ssl_key_path
 #   Location of the private key. Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
+# @param ssl_cert_path
 #   Location of the certificate. Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
+# @param ssl_cacert_path
 #   Location of the CA certificate. Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Base64]] ssl_key
+# @param ssl_key
 #   The private key in a base64 encoded string to store in spicified ssl_key_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cert
+# @param ssl_cert
 #   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[Boolean]] ssl_noverify
+# @param ssl_noverify
 #     Disable TLS peer verification.
 #
-# @param [Optional[Boolean]] enable_send_perfdata
+# @param enable_send_perfdata
 #   Enable performance data for 'CHECK RESULT' events.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::gelf(

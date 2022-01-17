@@ -1,10 +1,10 @@
 # @summary
 #   Configures the Icinga 2 feature notification.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature notification, absent disabled it.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Notifications are load-balanced amongst all nodes in a zone.
 #
 class icinga2::feature::notification(

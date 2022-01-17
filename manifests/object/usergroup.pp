@@ -1,35 +1,35 @@
 # @summary
 #   Manage Icinga 2 usergroup objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] usergroup_name
+# @param usergroup_name
 #   Set the Icinga 2 name of the usergroup object.
 #
-# @param [Optional[String]] display_name
+# @param display_name
 #   A short description of the service group.
 #
-# @param [Array] groups
+# @param groups
 #   An array of nested group names.
 #
-# @param [Array] assign
+# @param assign
 #   Assign user group members using the group assign rules.
 #
-# @param [Array] ignore
+# @param ignore
 #   Exclude users using the group ignore rules.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::usergroup (

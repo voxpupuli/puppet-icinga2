@@ -71,47 +71,47 @@
 #      confd => 'local.d',
 #    }
 #
-# @param [Stdlib::Ensure::Service] ensure
+# @param ensure
 #   Manages if the service should be stopped or running.
 #
-# @param [Boolean] enable
+# @param enable
 #   If set to true the Icinga 2 service will start on boot.
 #
-# @param [Boolean] manage_repo
+# @param manage_repo
 #   Deprecated, use manage_repos.
 #
-# @param [Boolean] manage_repos
+# @param manage_repos
 #   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
 #   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
 #   For more information, see http://github.com/icinga/puppet-icinga.
 #
-# @param [Boolean] manage_package
+# @param manage_package
 #   Deprecated, use manage_packages.
 #
-# @param [Boolean] manage_packages
+# @param manage_packages
 #   If set to false packages aren't managed.
 #
-# @param [Boolean] manage_selinux
+# @param manage_selinux
 #   If set to true the icinga selinux package is installed. Requires a `selinux_package_name` (icinga2::globals)
 #   and `manage_packages` has to be set to true.
 #
-# @param [Boolean] manage_service
+# @param manage_service
 #   If set to true the service is managed otherwise the service also
 #   isn't restarted if a config file changed.
 #
-# @param [Array] features
+# @param features
 #   List of features to activate. Defaults to [checker, mainlog, notification].
 #
-# @param [Boolean] purge_features
+# @param purge_features
 #   Define if configuration files for features not managed by Puppet should be purged.
 #
-# @param [Hash] constants
+# @param constants
 #   Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 #
-# @param [Array] plugins
+# @param plugins
 #   A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 #
-# @param [Variant[Boolean, String]] confd
+# @param confd
 #   `conf.d` is the directory where Icinga 2 stores its object configuration by default. To disable it,
 #   set this parameter to `false`. By default this parameter is `true`. It's also possible to assign your
 #   own directory. This directory must be managed outside of this module as file resource

@@ -1,16 +1,16 @@
 # @summary
 #   Configures the Icinga 2 feature statusdata.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature statusdata, absent disables it.
 #
-# @param [Optional[Stdlib::Absolutepath]] status_path
+# @param status_path
 #   Absolute path to the status.dat file.
 #
-# @param [Optional[Stdlib::Absolutepath]] objects_path
+# @param objects_path
 #   Absolute path to the object.cache file.
 #
-# @param [Optional[Icinga2::Interval]] update_interval
+# @param update_interval
 #   Interval in seconds to update both status files. You can also specify
 #   it in minutes with the letter m or in seconds with s.
 #
