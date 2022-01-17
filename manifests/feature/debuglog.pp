@@ -1,10 +1,10 @@
 # @summary
 #   Configures the Icinga 2 feature mainlog.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature mainlog, absent disables it.
 #
-# @param [Stdlib::Absolutepath] path
+# @param path
 #   Absolute path to the log file.
 #
 class icinga2::feature::debuglog(

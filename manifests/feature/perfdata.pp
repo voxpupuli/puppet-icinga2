@@ -1,32 +1,32 @@
 # @summary
 #   Configures the Icinga 2 feature perfdata.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature perfdata, absent disables it.
 #
-# @param [Optional[Stdlib::Absolutepath]] host_perfdata_path
+# @param host_perfdata_path
 #   Absolute path to the perfdata file for hosts.
 #
-# @param [Optional[Stdlib::Absolutepath]] service_perfdata_path
+# @param service_perfdata_path
 #   Absolute path to the perfdata file for services.
 #
-# @param [Optional[Stdlib::Absolutepath]] host_temp_path
+# @param host_temp_path
 #   Path to the temporary host file.
 #
-# @param [Optional[Stdlib::Absolutepath]] service_temp_path
+# @param service_temp_path
 #   Path to the temporary service file.
 #
-# @param [Optional[String]] host_format_template
+# @param host_format_template
 #   Host Format template for the performance data file.
 #
-# @param [Optional[String]] service_format_template
+# @param service_format_template
 #   Service Format template for the performance data file.
 #
-# @param [Optional[Icinga2::Interval]] rotation_interval
+# @param rotation_interval
 #   Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
 #   i.e. 1m or 15s.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::perfdata(

@@ -1,13 +1,13 @@
 # @summary
 #   Configures the Icinga 2 feature mainlog.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to 'present' enables the feature mainlog, 'absent' disabled it.
 #
-# @param [Icinga2::LogSeverity] severity
+# @param severity
 #   You can set the log severity to 'information', 'notice', 'warning' or 'debug'.
 #
-# @param [Stdlib::Absolutepath] path
+# @param path
 #   Absolute path to the log file.
 #
 class icinga2::feature::mainlog(

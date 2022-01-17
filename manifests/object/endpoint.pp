@@ -1,29 +1,29 @@
 # @summary
 #   Manage Icinga 2 endpoint objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] endpoint_name
+# @param endpoint_name
 #   Set the Icinga 2 name of the endpoint object.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #   Optional. The IP address of the remote Icinga 2 instance.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param port
 #   The service name/port of the remote Icinga 2 instance.
 #
-# @param [Optional[Icinga2::Interval]] log_duration
+# @param log_duration
 #   Duration for keeping replay logs on connection loss.
 #   Attribute is specified in seconds. If log_duration is set to 0, replaying logs is disabled.
 #   You could also specify the value in human readable format like 10m for 10 minutes
 #   or 1h for one hour.
 #
-# @param [Optional[Stdlib::Absolutepath]] target
+# @param target
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::endpoint(

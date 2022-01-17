@@ -25,14 +25,14 @@
 #     }}',
 #   }
 #
-# @param [String] content
+# @param content
 #   Content to insert in file specified in target.
 #
-# @param [Stdlib::Absolutepath]target
+# @param target
 #   Destination config file to store in this fragment. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted in alpha numeric order. Defaults to `00`.
 #
 define icinga2::config::fragment(

@@ -1,11 +1,12 @@
 # @summary
 #   Configures the Icinga 2 feature checker.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature checker, absent disabled it.
 #
-# @param [Optional[Integer[1]]] concurrent_checks
+# @param concurrent_checks
 #   The maximum number of concurrent checks.
+#
 # @note Deprecated in Icinga 2.11, replaced by global constant
 #   MaxConcurrentChecks which will be set if you still use concurrent_checks.
 #

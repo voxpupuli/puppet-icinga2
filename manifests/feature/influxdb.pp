@@ -9,76 +9,76 @@
 #     database => "icinga2"
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature influxdb, absent disables it.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #    InfluxDB host address.
 #
-# @param [Optional[Stdlib::Port]] port
+# @param port
 #    InfluxDB HTTP port.
 #
-# @param [Optional[String]] database
+# @param database
 #    InfluxDB database name.
 #
-# @param [Optional[String]] username
+# @param username
 #    InfluxDB user name.
 #
-# @param [Optional[Variant[String, Sensitive[String]]]] password
+# @param password
 #    InfluxDB user password. The password parameter isn't parsed anymore.
 #
-# @param [Optional[Icinga2::BasicAuth]] basic_auth
+# @param basic_auth
 #    Username and password for HTTP basic authentication.
 #
-# @param [Optional[Boolean]] enable_ssl
+# @param enable_ssl
 #    Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
 #
-# @param [Optional[Boolean]] ssl_noverify
+# @param ssl_noverify
 #    Disable TLS peer verification.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
+# @param ssl_key_path
 #   Location of the private key.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
+# @param ssl_cert_path
 #   Location of the certificate.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
+# @param ssl_cacert_path
 #   Location of the CA certificate.
 #
-# @param [Optional[Stdlib::Base64]] ssl_key
+# @param ssl_key
 #   The private key in a base64 encoded string to store in ssl_key_path file.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cert
+# @param ssl_cert
 #   The certificate in a base64 encoded string to store in ssl_cert_path file.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
 #
-# @param [String] host_measurement
+# @param host_measurement
 #    The value of this is used for the measurement setting in host_template.
 #
-# @param [Hash] host_tags
+# @param host_tags
 #    Tags defined in this hash will be set in the host_template.
 #
-# @param [String] service_measurement
+# @param service_measurement
 #    The value of this is used for the measurement setting in host_template.
 #
-# @param [Hash] service_tags
+# @param service_tags
 #    Tags defined in this hash will be set in the service_template.
 #
-# @param [Optional[Boolean]] enable_send_thresholds
+# @param enable_send_thresholds
 #    Whether to send warn, crit, min & max tagged data.
 #
-# @param [Optional[Boolean]] enable_send_metadata
+# @param enable_send_metadata
 #    Whether to send check metadata e.g. states, execution time, latency etc.
 #
-# @param [Optional[Icinga2::Interval]] flush_interval
+# @param flush_interval
 #    How long to buffer data points before transfering to InfluxDB.
 #
-# @param [Optional[Integer[1]]] flush_threshold
+# @param flush_threshold
 #    How many data points to buffer before forcing a transfer to InfluxDB.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::influxdb(

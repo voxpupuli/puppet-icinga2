@@ -1,22 +1,22 @@
 # @summary
 #   Configures the Icinga 2 feature livestatus.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature livestatus, absent disables it.
 #
-# @param [Optional[Enum['tcp', 'unix']]] socket_type
+# @param socket_type
 #   Specifies the socket type. Can be either 'tcp' or 'unix'.
 #
-# @param [Optional[Stdlib::Host]] bind_host
+# @param bind_host
 #   IP address to listen for connections. Only valid when socket_type is 'tcp'.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] bind_port
+# @param bind_port
 #   Port to listen for connections. Only valid when socket_type is 'tcp'.
 #
-# @param [Optional[Stdlib::Absolutepath]] socket_path
+# @param socket_path
 #   Specifies the path to the UNIX socket file. Only valid when socket_type is 'unix'.
 #
-# @param [Optional[Stdlib::Absolutepath]] compat_log_path
+# @param compat_log_path
 #   Required for historical table queries. Requires CompatLogger feature to be enabled.
 #
 class icinga2::feature::livestatus(

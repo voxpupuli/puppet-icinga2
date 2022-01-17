@@ -1,75 +1,75 @@
 # @summary
 #   Manage Icinga 2 notification objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] notification_name
+# @param notification_name
 #   Set the Icinga 2 name of the notification object.
 #
-# @param [Optional[String]] host_name
+# @param host_name
 #   The name of the host this notification belongs to.
 #
-# @param [Optional[String]] service_name
+# @param service_name
 #   The short name of the service this notification belongs to. If omitted, this
 #   notification object is treated as host notification.
 #
-# @param [Optional[Icinga2::CustomAttributes]] vars
+# @param vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# @param [Optional[Variant[String, Array]]] users
+# @param users
 #   A list of user names who should be notified.
 #
-# @param [Optional[Variant[String, Array]]] user_groups
+# @param user_groups
 #   A list of user group names who should be notified.
 #
-# @param [Optional[Hash]] times
+# @param times
 #   A dictionary containing begin and end attributes for the notification.
 #
-# @param [Optional[String]] command
+# @param command
 #   The name of the notification command which should be executed when the
 #   notification is triggered.
 #
-# @param [Optional[Variant[Icinga2::Interval,Pattern[/(host|service)\./]]]] interval
+# @param interval
 #   The notification interval (in seconds). This interval is used for active
 #   notifications.
 #
-# @param [Optional[String]] period
+# @param period
 #   The name of a time period which determines when this notification should be
 #   triggered.
 #
-# @param [Optional[String]] zone
+# @param zone
 #   The zone this object is a member of.
 #
-# @param [Optional[Variant[Array, String]]] types
+# @param types
 #   A list of type filters when this notification should be triggered.
 #
-# @param [Optional[Variant[Array, String]]] states
+# @param states
 #   A list of state filters when this notification should be triggered.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Variant[Boolean, String]] apply
+# @param apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# @param [Variant[Boolean, String]] prefix
+# @param prefix
 #   Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# @param [Enum['Host', 'Service']] apply_target
+# @param apply_target
 #   An object type on which to target the apply rule. Valid values are `Host` and `Service`.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::notification (

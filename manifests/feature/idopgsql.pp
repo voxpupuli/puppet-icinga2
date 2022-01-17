@@ -18,67 +18,67 @@
 #     require       => Postgresql::Server::Db['icinga2']
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature ido-pgsql, absent disables it.
 #
-# @param [Stdlib::Host] host
+# @param host
 #    PostgreSQL database host address.
 #
-# @param [Stdlib::Port::Unprivileged] port
+# @param port
 #    PostgreSQL database port.
 #
-# @param [String] user
+# @param user
 #    PostgreSQL database user with read/write permission to the icinga database.
 #
-# @param [Variant[String, Sensitive[String]]] password
+# @param password
 #    PostgreSQL database user's password. The password parameter isn't parsed anymore.
 #
-# @param [String] database
+# @param database
 #    PostgreSQL database name.
 #
-# @param [Optional[Enum['disable', 'allow', 'prefer', 'verify-full', 'verify-ca', 'require']]] ssl_mode
+# @param ssl_mode
 #   Enable SSL connection mode.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
+# @param ssl_key_path
 #   Location of the private key.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
+# @param ssl_cert_path
 #   Location of the certificate.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
+# @param ssl_cacert_path
 #   Location of the CA certificate.
 #
-# @param [Optional[Stdlib::Base64]] ssl_key
+# @param ssl_key
 #   The private key in a base64 encoded string to store in spicified ssl_key_path file.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cert
+# @param ssl_cert
 #   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
 #
-# @param [Optional[String]] table_prefix
+# @param table_prefix
 #   PostgreSQL database table prefix.
 #
-# @param [Optional[String]] instance_name
+# @param instance_name
 #   Unique identifier for the local Icinga 2 instance.
 #
-# @param [Optional[String]] instance_description
+# @param instance_description
 #   Description of the Icinga 2 instance.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
-# @param [Optional[Icinga2::Interval]] failover_timeout
+# @param failover_timeout
 #   Set the failover timeout in a HA cluster. Must not be lower than 60s.
 #
-# @param [Optional[Icinga2::IdoCleanup]] cleanup
+# @param cleanup
 #   Hash with items for historical table cleanup.
 #
-# @param [Optional[Array]] categories
+# @param categories
 #   Array of information types that should be written to the database.
 #
-# @param [Boolean] import_schema
+# @param import_schema
 #   Whether to import the PostgreSQL schema or not.
 #
 class icinga2::feature::idopgsql(

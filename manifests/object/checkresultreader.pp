@@ -1,20 +1,20 @@
 # @summary
 #   Manage Icinga 2 CheckResultReader objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] checkresultreader_name
+# @param checkresultreader_name
 #   Set the Icinga 2 name of the ceckresultreader object.
 #
-# @param [Optional[Stdlib::Absolutepath]] spool_dir
+# @param spool_dir
 #   The directory which contains the check result files.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::checkresultreader (

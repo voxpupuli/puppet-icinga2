@@ -1,71 +1,71 @@
 # @summary
 #   Manage Icinga 2 dependency objects.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] dependency_name
+# @param dependency_name
 #   Set the Icinga 2 name of the dependency object.
 #
-# @param [Optional[String]] parent_host_name
+# @param parent_host_name
 #   The parent host.
 #
-# @param [Optional[String]] parent_service_name
+# @param parent_service_name
 #   The parent service. If omitted, this dependency object is treated as host
 #   dependency.
 #
-# @param [Optional[String]] child_host_name
+# @param child_host_name
 #   The child host.
 #
-# @param [Optional[String]] child_service_name
+# @param child_service_name
 #   The child service. If omitted, this dependency object is treated as host
 #   dependency.
 #
-# @param [Optional[Boolean]] disable_checks
+# @param disable_checks
 #   Whether to disable checks when this dependency fails.
 #
-# @param [Optional[Boolean]] disable_notifications
+# @param disable_notifications
 #   Whether to disable notifications when this dependency fails.
 #   true.
 #
-# @param [Optional[Boolean]] ignore_soft_states
+# @param ignore_soft_states
 #   Whether to ignore soft states for the reachability calculation.
 #   true.
 #
-# @param [Optional[String]] period
+# @param period
 #   Time period during which this dependency is enabled.
 #
-# @param [Optional[Array]] states
+# @param states
 #   A list of state filters when this dependency should be OK.
 #
-# @param [Variant[Boolean, String]] apply
+# @param apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# @param [Variant[Boolean, String]] prefix
+# @param prefix
 #   Set dependency_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# @param [Enum['Host', 'Service']] apply_target
+# @param apply_target
 #   An object type on which to target the apply rule. Valid values are `Host`
 #   and `Service`.
 #
-# @param [Array] assign
+# @param assign
 #   Assign user group members using the group assign rules.
 #
-# @param [Array] ignore
+# @param ignore
 #   Exclude users using the group ignore rules.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::dependency (

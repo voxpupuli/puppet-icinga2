@@ -1,13 +1,13 @@
 # @summary
 #   Configures the Icinga 2 feature syslog.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature syslog, absent disables it.
 #
-# @param [Icinga2::LogSeverity] severity
+# @param severity
 #   You can choose the log severity between information, notice, warning or debug.
 #
-# @param [Optional[Icinga2::LogFacility]] facility
+# @param facility
 #   Defines the facility to use for syslog entries. This can be a facility constant
 #   like FacilityDaemon.
 #

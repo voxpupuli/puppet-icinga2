@@ -22,127 +22,127 @@
 #     target           => '/etc/icinga2/zones.d/global-templates/services.conf',
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the object, absent disables it.
 #
-# @param [String] service_name
+# @param service_name
 #   Set the Icinga 2 name of the service object.
 #
-# @param [Optional[String]] display_name
+# @param display_name
 #   A short description of the service.
 #
-# @param [Optional[String]] host_name
+# @param host_name
 #   The host this service belongs to. There must be a Host object with
 #   that name.
 #
-# @param [Optional[Array]] groups
+# @param groups
 #   The service groups this service belongs to.
 #
-# @param [Optional[Icinga2::CustomAttributes]] vars
+# @param vars
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
 #
-# @param [Optional[String]] check_command
+# @param check_command
 #   The name of the check command.
 #
-# @param [Optional[Integer[1]]] max_check_attempts
+# @param max_check_attempts
 #   The number of times a service is re-checked before changing into a hard
 #   state.
 #
-# @param [Optional[String]] check_period
+# @param check_period
 #   The name of a time period which determines when this service should be
 #   checked.
 #
-# @param [Optional[Icinga2::Interval]] check_timeout
+# @param check_timeout
 #   Check command timeout in seconds. Overrides the CheckCommand's timeout
 #   attribute.
 #
-# @param [Optional[Icinga2::Interval]] check_interval
+# @param check_interval
 #   The check interval (in seconds). This interval is used for checks when the
 #   service is in a HARD state.
 #
-# @param [Optional[Icinga2::Interval]] retry_interval
+# @param retry_interval
 #   The retry interval (in seconds). This interval is used for checks when the
 #   service is in a SOFT state.
 #
-# @param [Optional[Boolean]] enable_notifications
+# @param enable_notifications
 #   Whether notifications are enabled.
 #
-# @param [Optional[Boolean]] enable_active_checks
+# @param enable_active_checks
 #   Whether active checks are enabled.
 #
-# @param [Optional[Boolean]] enable_passive_checks
+# @param enable_passive_checks
 #   Whether passive checks are enabled.
 #
-# @param [Optional[Boolean]] enable_event_handler
+# @param enable_event_handler
 #   Enables event handlers for this host.
 #
-# @param [Optional[Boolean]] enable_flapping
+# @param enable_flapping
 #   Whether flap detection is enabled.
 #
-# @param [Optional[Boolean]] enable_perfdata
+# @param enable_perfdata
 #   Whether performance data processing is enabled.
 #
-# @param [Optional[String]] event_command
+# @param event_command
 #   The name of an event command that should be executed every time the
 #   service's state changes or the service is in a SOFT state.
 #
-# @param [Optional[Integer[1]]] flapping_threshold_low
+# @param flapping_threshold_low
 #   Flapping lower bound in percent for a host to be considered not flapping.
 #
-# @param [Optional[Integer[1]]] flapping_threshold_high
+# @param flapping_threshold_high
 #   Flapping upper bound in percent for a host to be considered flapping.
 #
-# @param [Optional[Boolean]] volatile
+# @param volatile
 #   The volatile setting enables always HARD state types if NOT-OK state changes
 #   occur.
 #
-# @param [Optional[String]] zone
+# @param zone
 #   The zone this object is a member of.
 #
-# @param [Optional[String]] command_endpoint
+# @param command_endpoint
 #   The endpoint where commands are executed on.
 #
-# @param [Optional[String]] notes
+# @param notes
 #   Notes for the service.
 #
-# @param [Optional[String]] notes_url
+# @param notes_url
 #   Url for notes for the service (for example, in notification commands).
 #
-# @param [Optional[String]] action_url
+# @param action_url
 #   Url for actions for the service (for example, an external graphing tool).
 #
-# @param [Optional[String]] icon_image
+# @param icon_image
 #   Icon image for the service. Used by external interfaces only.
 #
-# @param [Optional[String]] icon_image_alt
+# @param icon_image_alt
 #   Icon image description for the service. Used by external interface only.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true creates a template instead of an object.
 #
-# @param [Variant[Boolean, String]] apply
+# @param apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# @param [Variant[Boolean, String]] prefix
+# @param prefix
 #   Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# @param [Array] assign
+# @param assign
 #   Assign user group members using the group assign rules.
 #
-# @param [Array] ignore
+# @param ignore
 #   Exclude users using the group ignore rules.
 #
-# @param [Array] import
+# @param import
 #   Sorted List of templates to include.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 define icinga2::object::service (

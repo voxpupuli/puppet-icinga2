@@ -3,50 +3,50 @@
 #
 # @api private
 #
-# @param [Enum['present', 'absent']] ensure
+# @param ensure
 #   Set to present enables the object, absent disabled it.
 #
-# @param [String] object_name
+# @param object_name
 #   Set the icinga2 name of the object.
 #
-# @param [Boolean] template
+# @param template
 #   Set to true will define a template otherwise an object.
 #   Ignored if apply is set.
 #
-# @param [Variant[Boolean, Pattern[/^.+\s+(=>\s+.+\s+)?in\s+.+$/]]] apply
+# @param apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'.
 #
-# @param [Variant[Boolean, String]] prefix
+# @param prefix
 #   Set object_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
-# @param [Optional[Enum['Host', 'Service']]] apply_target
+# @param apply_target
 #   Optional for an object type on which to target the apply rule. Valid values are `Host` and `Service`.
 #
-# @param [Array] import
+# @param import
 #   A sorted list of templates to import in this object.
 #
-# @param [Array] assign
+# @param assign
 #   Array of assign rules.
 #
-# @param [Array] ignore
+# @param ignore
 #   Array of ignore rules.
 #
-# @param [Hash] attrs
+# @param attrs
 #   Hash for the attributes of this object. Keys are the attributes and
 #   values are there values.
 #
-# @param [String] object_type
+# @param object_type
 #   Icinga 2 object type for this object.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Destination config file to store in this object. File will be declared the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-# @param [Array] attrs_list
+# @param attrs_list
 #   Array of all possible attributes for this object type.
 #
 define icinga2::object(

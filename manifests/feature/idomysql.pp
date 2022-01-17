@@ -19,79 +19,79 @@
 #     require       => Mysql::Db['icinga2']
 #   }
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Set to present enables the feature ido-mysql, absent disables it.
 #
-# @param [Stdlib::Host] host
+# @param host
 #    MySQL database host address.
 #
-# @param [Optional[Stdlib::Port::Unprivileged]] port
+# @param port
 #    MySQL database port.
 #
-# @param [Optional[Stdlib::Absolutepath]] socket_path
+# @param socket_path
 #    MySQL socket path.
 #
-# @param [String] user
+# @param user
 #    MySQL database user with read/write permission to the icinga database.
 #
-# @param [Variant[String, Sensitive[String]]] password
+# @param password
 #    MySQL database user's password. The password parameter isn't parsed anymore.
 #
-# @param [String] database
+# @param database
 #    MySQL database name.
 #
-# @param [Boolean] enable_ssl
+# @param enable_ssl
 #    Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_key_path
+# @param ssl_key_path
 #   Location of the private key. Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cert_path
+# @param ssl_cert_path
 #   Location of the certificate. Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_cacert_path
+# @param ssl_cacert_path
 #   Location of the CA certificate. Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Base64]] ssl_key
+# @param ssl_key
 #   The private key in a base64 encoded string to store in spicified ssl_key_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cert
+# @param ssl_cert
 #   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Base64]] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
 #   Only valid if ssl is enabled.
 #
-# @param [Optional[Stdlib::Absolutepath]] ssl_capath
+# @param ssl_capath
 #    MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
 #
-# @param [Optional[String]] ssl_cipher
+# @param ssl_cipher
 #    MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 #
-# @param [Optional[String]] table_prefix
+# @param table_prefix
 #   MySQL database table prefix.
 #
-# @param [Optional[String]] instance_name
+# @param instance_name
 #   Unique identifier for the local Icinga 2 instance.
 #
-# @param [Optional[String]] instance_description
+# @param instance_description
 #   Description for the Icinga 2 instance.
 #
-# @param [Optional[Boolean]] enable_ha
+# @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
-# @param [Optional[Icinga2::Interval]] failover_timeout
+# @param failover_timeout
 #   Set the failover timeout in a HA cluster. Must not be lower than 60s.
 #
-# @param [Optional[Icinga2::IdoCleanup]] cleanup
+# @param cleanup
 #   Hash with items for historical table cleanup.
 #
-# @param [Optional[Array]] categories
+# @param categories
 #   Array of information types that should be written to the database.
 #
-# @param [Boolean] import_schema
+# @param import_schema
 #   Whether to import the MySQL schema or not.
 #
 class icinga2::feature::idomysql(
