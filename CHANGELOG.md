@@ -1,13 +1,24 @@
 # Change Log
 
+## [v3.2.2](https://github.com/icinga/puppet-icinga2/tree/v3.2.2) (2022-01-18)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.2.1...v3.2.2)
+
+**Fixed bugs:**
+
+- feature:api: Allow TLSv1.3 as minimal TLS Version [\#696](https://github.com/Icinga/puppet-icinga2/pull/696) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Cleanup puppet-lint/regenerate REFERENCE.md [\#697](https://github.com/Icinga/puppet-icinga2/pull/697) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v3.2.1](https://github.com/icinga/puppet-icinga2/tree/v3.2.1) (2021-12-17)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.2.0...v3.2.1)
 
 **Fixed bugs:**
 
 - Constant in a sensitive data string are quoted [\#694](https://github.com/Icinga/puppet-icinga2/issues/694)
-- Added known issues regarding environment bleed to documentation [\#693](https://github.com/Icinga/puppet-icinga2/pull/693) ([zilchms](https://github.com/zilchms))
 - added soft-dependency for puppetlabs-chocolatey [\#692](https://github.com/Icinga/puppet-icinga2/pull/692) ([zilchms](https://github.com/zilchms))
+- Added known issues regarding environment bleed to documentation [\#693](https://github.com/Icinga/puppet-icinga2/pull/693) ([zilchms](https://github.com/zilchms))
 
 **Closed issues:**
 
