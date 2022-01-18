@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_WITHOUT: system_tests
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+        bundler-cache: true
+    - name: Run static validation for Puppet/Ruby files
+      run: bundle exec rake validate
+    - name: Run Ruby Linter
+      run: bundle exec rake rubocop
+    - name: Run Puppet Linter
+      run: bundle exec rake lint
+    - name: Check if REFERENCE.md is up2date
+      run: bundle exec rake strings:validate:reference
