@@ -104,7 +104,7 @@ class{ '::icinga2::feature::idomysql':
   user            => 'icinga',
   password        => 'supersecret',
   database        => 'icinga',
-  import_schema   => true,
+  import_schema   => $::mysql::params::provider,
   enable_ssl      => true,
   ssl_key_path    => '/etc/mysql/server-key.pem',
   ssl_cert_path   => '/etc/mysql/server-cert.pem',

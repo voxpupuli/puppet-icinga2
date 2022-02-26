@@ -92,33 +92,35 @@
 #   Array of information types that should be written to the database.
 #
 # @param import_schema
-#   Whether to import the MySQL schema or not.
+#   Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
+#   both means true. With mariadb its cli options are used for the import,
+#   whereas with mysql its different options.
 #
 class icinga2::feature::idomysql(
-  Variant[String, Sensitive[String]]    $password,
-  Enum['absent', 'present']             $ensure                 = present,
-  Stdlib::Host                          $host                   = 'localhost',
-  Optional[Stdlib::Port::Unprivileged]  $port                   = undef,
-  Optional[Stdlib::Absolutepath]        $socket_path            = undef,
-  String                                $user                   = 'icinga',
-  String                                $database               = 'icinga',
-  Boolean                               $enable_ssl             = false,
-  Optional[Stdlib::Absolutepath]        $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]        $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]        $ssl_cacert_path        = undef,
-  Optional[Stdlib::Base64]              $ssl_key                = undef,
-  Optional[Stdlib::Base64]              $ssl_cert               = undef,
-  Optional[Stdlib::Base64]              $ssl_cacert             = undef,
-  Optional[Stdlib::Absolutepath]        $ssl_capath             = undef,
-  Optional[String]                      $ssl_cipher             = undef,
-  Optional[String]                      $table_prefix           = undef,
-  Optional[String]                      $instance_name          = undef,
-  Optional[String]                      $instance_description   = undef,
-  Optional[Boolean]                     $enable_ha              = undef,
-  Optional[Icinga2::Interval]           $failover_timeout       = undef,
-  Optional[Icinga2::IdoCleanup]         $cleanup                = undef,
-  Optional[Array]                       $categories             = undef,
-  Boolean                               $import_schema          = false,
+  Variant[String, Sensitive[String]]         $password,
+  Enum['absent', 'present']                  $ensure                 = present,
+  Stdlib::Host                               $host                   = 'localhost',
+  Optional[Stdlib::Port::Unprivileged]       $port                   = undef,
+  Optional[Stdlib::Absolutepath]             $socket_path            = undef,
+  String                                     $user                   = 'icinga',
+  String                                     $database               = 'icinga',
+  Boolean                                    $enable_ssl             = false,
+  Optional[Stdlib::Absolutepath]             $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]             $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]             $ssl_cacert_path        = undef,
+  Optional[Stdlib::Base64]                   $ssl_key                = undef,
+  Optional[Stdlib::Base64]                   $ssl_cert               = undef,
+  Optional[Stdlib::Base64]                   $ssl_cacert             = undef,
+  Optional[Stdlib::Absolutepath]             $ssl_capath             = undef,
+  Optional[String]                           $ssl_cipher             = undef,
+  Optional[String]                           $table_prefix           = undef,
+  Optional[String]                           $instance_name          = undef,
+  Optional[String]                           $instance_description   = undef,
+  Optional[Boolean]                          $enable_ha              = undef,
+  Optional[Icinga2::Interval]                $failover_timeout       = undef,
+  Optional[Icinga2::IdoCleanup]              $cleanup                = undef,
+  Optional[Array]                            $categories             = undef,
+  Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema          = false,
 ) {
 
   if ! defined(Class['::icinga2']) {
@@ -237,14 +239,25 @@ class icinga2::feature::idomysql(
 
     if $import_schema {
       if $enable_ssl {
-        $_ssl_options = join(any2array(delete_undef_values({
-          '--ssl'        => '',
-          '--ssl-ca'     => $_ssl_cacert_path,
-          '--ssl-cert'   => $_ssl_cert_path,
-          '--ssl-key'    => $_ssl_key_path,
-          '--ssl-capath' => $ssl_capath,
-          '--ssl-cipher' => $ssl_cipher,
-        })), ' ')
+        if $import_schema =~ Boolean or $import_schema == 'mariadb' {
+          $_ssl_options = join(any2array(delete_undef_values({
+            '--ssl'        => '',
+            '--ssl-ca'     => $_ssl_cacert_path,
+            '--ssl-cert'   => $_ssl_cert_path,
+            '--ssl-key'    => $_ssl_key_path,
+            '--ssl-capath' => $ssl_capath,
+            '--ssl-cipher' => $ssl_cipher,
+          })), ' ')
+        } else {
+          $_ssl_options = join(any2array(delete_undef_values({
+            '--ssl-mode'   => 'required',
+            '--ssl-ca'     => $_ssl_cacert_path,
+            '--ssl-cert'   => $_ssl_cert_path,
+            '--ssl-key'    => $_ssl_key_path,
+            '--ssl-capath' => $ssl_capath,
+            '--ssl-cipher' => $ssl_cipher,
+          })), ' ')
+        }
       } else {
         $_ssl_options = ''
       }
