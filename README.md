@@ -89,14 +89,12 @@ The use of Icinga's own CA is recommended. If you still want to use the Puppet c
 
 This module has been tested on:
 
-* Ruby >= 1.9
-* Debian 8, 9, 10
-* Ubuntu 16.04, 18.04, 20.04
-* CentOS/RHEL 6, 7, 8
-* Fedora 31
-* FreeBSD 10, 11
-* SLES 12, 15
-* Windows Server 2016
+* Debian 10, 11
+* Ubuntu 18.04, 20.04
+* CentOS/RHEL 7, 8
+* AlmaLinux/Rocky 8
+* Fedora 32
+* Windows Server 2019
 
 Other operating systems or versions may work but have not been tested.
 
