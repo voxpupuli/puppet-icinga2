@@ -51,12 +51,24 @@
       ]
     },
     {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
       "operatingsystem": "Fedora",
       "operatingsystemrelease": [
-        "31",
         "32",
         "33",
-        "34"
+        "34",
+        "35"
       ]
     },
     {

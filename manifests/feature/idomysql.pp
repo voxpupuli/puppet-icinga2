@@ -41,7 +41,7 @@
 #    MySQL database name.
 #
 # @param enable_ssl
-#    Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
+#   Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 #
 # @param ssl_key_path
 #   Location of the private key. Only valid if ssl is enabled.
