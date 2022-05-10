@@ -11,6 +11,12 @@ cd puppet-icinga2
 pdk bundle install
 ```
 
+Or just do an update:
+```
+cd puppet-icinga2
+pdk bundle update
+```
+
 ## Validation tests
 Validation tests will check all manifests, templates and ruby files against syntax violations and style guides .
 
