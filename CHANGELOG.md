@@ -1,5 +1,24 @@
 # Change Log
 
+## [v3.3.0](https://github.com/icinga/puppet-icinga2/tree/v3.3.0) (2022-05-30)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.2.2...v3.3.0)
+
+**Implemented enhancements:**
+
+- Finish refactoring function API 4.x [\#695](https://github.com/Icinga/puppet-icinga2/issues/695)
+
+**Fixed bugs:**
+
+- MySQL and MariaDB use different commandline options for TLS [\#700](https://github.com/Icinga/puppet-icinga2/issues/700)
+
+**Closed issues:**
+
+- Support Rocky and AlmaLinux [\#701](https://github.com/Icinga/puppet-icinga2/issues/701)
+
+**Merged pull requests:**
+
+- Enabling basic CI jobs on GitHub actions [\#698](https://github.com/Icinga/puppet-icinga2/pull/698) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v3.2.2](https://github.com/icinga/puppet-icinga2/tree/v3.2.2) (2022-01-18)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.2.1...v3.2.2)
 

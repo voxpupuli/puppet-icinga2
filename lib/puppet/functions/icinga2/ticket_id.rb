@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), '../../..', 'puppet_x/icinga2/pbkdf2.rb')
+
 # @summary
 #   Summarise what the function does here
 #

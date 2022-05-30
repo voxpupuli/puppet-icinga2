@@ -1,5 +1,11 @@
 # @summary DEPRECATED.  Use the namespaced function [`icinga2::attributes`](#attributes) instead.
 Puppet::Functions.create_function(:icinga2_attributes) do
+  # @param args
+  #   The original array of arguments.
+  #
+  # @return [Data type]
+  #   Describe what the function returns here
+  #
   dispatch :deprecation_gen do
     repeated_param 'Any', :args
   end

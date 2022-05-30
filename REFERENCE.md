@@ -72,10 +72,11 @@ start on boot and will be restarted if stopped.
 
 ### Functions
 
-* [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Summarise what the function does here
-* [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
-* [`icinga2_attributes`](#icinga2_attributes): Wrapper for config parser
-* [`icinga2_ticket_id`](#icinga2_ticket_id): Generates a auth ticket to get a certificate
+* [`icinga2::attributes`](#icinga2attributes): Calls the simple parser  to decide what to quote.
+For more information, see lib/puppet_x/icinga2/utils.rb.
+* [`icinga2::ticket_id`](#icinga2ticket_id): Summarise what the function does here
+* [`icinga2_attributes`](#icinga2_attributes): DEPRECATED.  Use the namespaced function [`icinga2::attributes`](#attributes) instead.
+* [`icinga2_ticket_id`](#icinga2_ticket_id): DEPRECATED.  Use the namespaced function [`icinga2::ticket_id`](#ticket_id) instead.
 
 ### Data types
 
@@ -1493,9 +1494,11 @@ Default value: ``undef``
 
 ##### <a name="import_schema"></a>`import_schema`
 
-Data type: `Boolean`
+Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 
-Whether to import the MySQL schema or not.
+Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
+both means true. With mariadb its cli options are used for the import,
+whereas with mysql its different options.
 
 Default value: ``false``
 
@@ -5248,15 +5251,16 @@ Default value: `45`
 
 ## Functions
 
-### <a name="icinga2icinga2_attributes"></a>`icinga2::icinga2_attributes`
+### <a name="icinga2attributes"></a>`icinga2::attributes`
 
 Type: Ruby 4.x API
 
----- original file header ----
+Calls the simple parser  to decide what to quote.
+For more information, see lib/puppet_x/icinga2/utils.rb.
 
-#### `icinga2::icinga2_attributes(Any *$args)`
+#### `icinga2::attributes(Any *$args)`
 
----- original file header ----
+The icinga2::attributes function.
 
 Returns: `Data type` Describe what the function returns here
 
@@ -5267,15 +5271,15 @@ Data type: `Any`
 The original array of arguments. Port this to individually managed params
 to get the full benefit of the modern function API.
 
-### <a name="icinga2icinga2_ticket_id"></a>`icinga2::icinga2_ticket_id`
+### <a name="icinga2ticket_id"></a>`icinga2::ticket_id`
 
 Type: Ruby 4.x API
 
 Summarise what the function does here
 
-#### `icinga2::icinga2_ticket_id(String $cn, Variant[String, Sensitive[String]] $salt)`
+#### `icinga2::ticket_id(String $cn, Variant[String, Sensitive[String]] $salt)`
 
-Summarise what the function does here
+The icinga2::ticket_id function.
 
 Returns: `String` Calculated ticket to receive a certificate.
 
@@ -5293,27 +5297,39 @@ The ticket salt of the Icinga CA.
 
 ### <a name="icinga2_attributes"></a>`icinga2_attributes`
 
-Type: Ruby 3.x API
+Type: Ruby 4.x API
 
-Wrapper for config parser
+DEPRECATED.  Use the namespaced function [`icinga2::attributes`](#attributes) instead.
 
-#### `icinga2_attributes()`
+#### `icinga2_attributes(Any *$args)`
 
 The icinga2_attributes function.
 
-Returns: `Any` Parsed config as string
+Returns: `Data type` Describe what the function returns here
+
+##### `*args`
+
+Data type: `Any`
+
+The original array of arguments.
 
 ### <a name="icinga2_ticket_id"></a>`icinga2_ticket_id`
 
-Type: Ruby 3.x API
+Type: Ruby 4.x API
 
-Generates a auth ticket to get a certificate
+DEPRECATED.  Use the namespaced function [`icinga2::ticket_id`](#ticket_id) instead.
 
-#### `icinga2_ticket_id()`
+#### `icinga2_ticket_id(Any *$args)`
 
 The icinga2_ticket_id function.
 
-Returns: `Any` The ticket to get a certificate
+Returns: `String` Calculated ticket to receive a certificate.
+
+##### `*args`
+
+Data type: `Any`
+
+The original array of arguments.
 
 ## Data types
 
