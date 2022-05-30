@@ -306,7 +306,7 @@ class icinga2::feature::api(
           "--ticket ${ticket_id}"
         }
       } elsif($ticket_salt != 'TicketSalt') {
-        $_ticket = "--ticket ${icinga2::icinga2_ticket_id($node_name, $ticket_salt)}"
+        $_ticket = "--ticket ${icinga2::ticket_id($node_name, $ticket_salt)}"
       } else {
         $_ticket = ''
       }

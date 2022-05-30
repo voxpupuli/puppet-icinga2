@@ -18,7 +18,7 @@ AllCops:
   - "**/Puppetfile"
   - "**/Vagrantfile"
   - "**/Guardfile"
-  - "lib/puppet_x/**/*"
+  - lib/puppet_x/**/*.rb
 Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200
@@ -518,3 +518,4 @@ Style/RedundantArgument:
   Enabled: false
 Style/SwapValues:
   Enabled: false
+

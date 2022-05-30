@@ -128,7 +128,7 @@ class icinga2::feature::influxdb(
   }
 
   if $basic_auth {
-    $_basic_auth   = if $basic_auth['password'] =~ String {
+    $_basic_auth = if $basic_auth['password'] =~ String {
       $basic_auth + { 'password' => Sensitive($password) }
     } elsif $basic_auth['password'] =~ Sensitive {
       $basic_auth
@@ -255,7 +255,7 @@ class icinga2::feature::influxdb(
     object_name => 'influxdb',
     object_type => 'InfluxdbWriter',
     attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
-    attrs_list  => keys($attrs),
+    attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/influxdb.conf",
     notify      => $_notify,
     order       => 10,

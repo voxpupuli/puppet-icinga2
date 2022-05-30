@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'icinga2::icinga2_ticket_id' do
+describe 'icinga2::ticket_id' do
   # without knowing details about the implementation, this is the only test
   # case that we can autogenerate. You should add more examples below!
   it { is_expected.not_to eq(nil) }

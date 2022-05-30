@@ -16,11 +16,11 @@ class icinga2::config {
   $purge_features = $::icinga2::purge_features
 
   if $::facts['kernel'] != 'windows' {
-    $template_constants  = icinga2_attributes($constants)
+    $template_constants  = icinga2::attributes($constants)
     $template_mainconfig = template('icinga2/icinga2.conf.erb')
     $file_permissions    = '0640'
   } else {
-    $template_constants  = regsubst(icinga2_attributes($constants), '\n', "\r\n", 'EMG')
+    $template_constants  = regsubst(icinga2::attributes($constants), '\n', "\r\n", 'EMG')
     $template_mainconfig = regsubst(template('icinga2/icinga2.conf.erb'), '\n', "\r\n", 'EMG')
     $file_permissions    = undef
   }

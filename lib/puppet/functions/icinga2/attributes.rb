@@ -6,14 +6,14 @@
 # https://puppet.com/docs/puppet/latest/custom_functions_ruby.html
 #
 # ---- original file header ----
-require File.join(File.dirname(__FILE__), '../../..', 'puppet_x/icinga2/utils.rb')
+require_relative '../../../puppet_x/icinga2/utils.rb'
 
 # ---- original file header ----
 #
 # @summary
 #   Summarise what the function does here
 #
-Puppet::Functions.create_function(:'icinga2::icinga2_attributes') do
+Puppet::Functions.create_function(:'icinga2::attributes') do
   # @param args
   #   The original array of arguments. Port this to individually managed params
   #   to get the full benefit of the modern function API.
@@ -28,7 +28,7 @@ Puppet::Functions.create_function(:'icinga2::icinga2_attributes') do
   end
 
   def default_impl(*args)
-    raise Puppet::ParseError, 'icinga2_atributes(): Must provide at least one argument.' if args.length > 4 || args.empty?
+    raise Puppet::ParseError, 'icinga2::atributes(): Must provide at least one argument.' if args.length > 4 || args.empty?
 
     indent = if args[1]
                args[1]
@@ -37,17 +37,17 @@ Puppet::Functions.create_function(:'icinga2::icinga2_attributes') do
              end
 
     globals = if args[2]
-                args[2].concat(lookupvar('::icinga2::_reserved'))
+                closure_scope['::icinga2::_reserved'].concat(args[2])
               else
-                lookupvar('::icinga2::_reserved')
+                closure_scope['::icinga2::_reserved']
               end
 
     constants = if args[3]
-                  args[3].merge(lookupvar('::icinga2::_constants'))
+                  closure_scope['::icinga2::_constants'].merge(args[3])
                 else
-                  lookupvar('::icinga2::_constants')
+                  closure_scope['::icinga2::_constants']
                 end
 
-    Puppet::Icinga2::Utils.attributes(args[0], globals, constants, indent)
+    PuppetX::Icinga2::Utils.attributes(args[0], globals, constants, indent)
   end
 end
