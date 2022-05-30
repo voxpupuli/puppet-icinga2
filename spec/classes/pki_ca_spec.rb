@@ -91,7 +91,7 @@ describe('icinga2::pki::ca', type: :class) do
               'command' => "\"#{icinga2_bin}\" pki new-cert --cn host.example.org --key #{icinga2_pki_dir}/host.example.org.key --csr #{icinga2_pki_dir}/host.example.org.csr",
               'creates' => "#{icinga2_pki_dir}/host.example.org.key",
             },
-          ) #.that_requires("File[#{icinga2_pki_dir}/ca.crt]")
+          ) # .that_requires("File[#{icinga2_pki_dir}/ca.crt]")
         }
 
         it {
