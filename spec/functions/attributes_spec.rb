@@ -544,9 +544,9 @@ describe 'icinga2::attributes' do
             '+' => true,
           },
           'bar' => {
-            'numbers'      => [ '42', '3.141', '-42', '-3.141' ],
+            'numbers' => [ '42', '3.141', '-42', '-3.141' ],
             'merge_array' => [ '+', '42', '3.141', '-42', '-3.141' ],
-            'time'        => '2.5d',
+            'time' => '2.5d',
           },
           'baz' => {},
         },
@@ -629,8 +629,8 @@ describe 'icinga2::attributes' do
             'foo' => 'some string',
             'bar' => [ '+', '42', '3.141', '-42', '-3.141' ],
             'baz' => {
-              '+'        => true,
-              'number'   => '- 42',
+              '+' => true,
+              'number' => '- 42',
               'floating' => '+ 3.141',
             },
           },
