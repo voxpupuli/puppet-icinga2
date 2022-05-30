@@ -544,14 +544,15 @@ describe 'icinga2::attributes' do
             '+' => true,
           },
           'bar' => {
-           'numbers'      => ['42', '3.141', '-42', '-3.141'],
-            'merge_array' => ['+', '42', '3.141', '-42', '-3.141'],
+           'numbers'      => [ '42', '3.141', '-42', '-3.141' ],
+            'merge_array' => [ '+', '42', '3.141', '-42', '-3.141' ],
             'time'        => '2.5d',
           },
           'baz' => {},
         },
       },
-    ).and_return("foobar = {\n  foo += {\n    string = \"some string, connected to another. Yeah!\"\n    constant = NodeName\n    bool = true\n  }\n  fooz += {}\n  bar = {\n    numbers = [ 42, 3.141, -42, -3.141, ]\n    merge_array += [ 42, 3.141, -42, -3.141, ]\n    time = 2.5d\n  }\n  baz = {}\n}\n")
+    ).and_return("foobar = {\n  foo += {\n    string = \"some string, connected to another. Yeah!\"\n    constant = NodeName\n    bool = true\n  }\n" \
+      "  fooz += {}\n  bar = {\n    numbers = [ 42, 3.141, -42, -3.141, ]\n    merge_array += [ 42, 3.141, -42, -3.141, ]\n    time = 2.5d\n  }\n  baz = {}\n}\n")
 
     # vars.foobar["foo"] += {
     #   string = "some string, connected to another. Yeah!"
@@ -635,7 +636,7 @@ describe 'icinga2::attributes' do
           },
           '+ config2',
         ],
-      }
+      },
     ).and_return("vars += config1\nvars += {}\nvars.foo = \"some string\"\nvars.bar += [ 42, 3.141, -42, -3.141, ]\nvars.baz[\"number\"] -= 42\nvars.baz[\"floating\"] += 3.141\nvars += config2\n")
   end
 
