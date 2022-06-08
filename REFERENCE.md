@@ -72,11 +72,11 @@ start on boot and will be restarted if stopped.
 
 ### Functions
 
-* [`icinga2::attributes`](#icinga2attributes): Calls the simple parser  to decide what to quote.
+* [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
-* [`icinga2::ticket_id`](#icinga2ticket_id): Summarise what the function does here
-* [`icinga2_attributes`](#icinga2_attributes): DEPRECATED.  Use the namespaced function [`icinga2::attributes`](#attributes) instead.
-* [`icinga2_ticket_id`](#icinga2_ticket_id): DEPRECATED.  Use the namespaced function [`icinga2::ticket_id`](#ticket_id) instead.
+* [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
+* [`icinga2_attributes`](#icinga2_attributes): DEPRECATED.  Use the namespaced function [`icinga2::icinga2_attributes`](#icinga2_attributes) instead.
+* [`icinga2_ticket_id`](#icinga2_ticket_id): DEPRECATED.  Use the namespaced function [`icinga2::icinga2_ticket_id`](#icinga2_ticket_id) instead.
 
 ### Data types
 
@@ -5251,16 +5251,16 @@ Default value: `45`
 
 ## Functions
 
-### <a name="icinga2attributes"></a>`icinga2::attributes`
+### <a name="icinga2icinga2_attributes"></a>`icinga2::icinga2_attributes`
 
 Type: Ruby 4.x API
 
 Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 
-#### `icinga2::attributes(Any *$args)`
+#### `icinga2::icinga2_attributes(Any *$args)`
 
-The icinga2::attributes function.
+The icinga2::icinga2_attributes function.
 
 Returns: `Data type` Describe what the function returns here
 
@@ -5271,15 +5271,15 @@ Data type: `Any`
 The original array of arguments. Port this to individually managed params
 to get the full benefit of the modern function API.
 
-### <a name="icinga2ticket_id"></a>`icinga2::ticket_id`
+### <a name="icinga2icinga2_ticket_id"></a>`icinga2::icinga2_ticket_id`
 
 Type: Ruby 4.x API
 
 Summarise what the function does here
 
-#### `icinga2::ticket_id(String $cn, Variant[String, Sensitive[String]] $salt)`
+#### `icinga2::icinga2_ticket_id(String $cn, Variant[String, Sensitive[String]] $salt)`
 
-The icinga2::ticket_id function.
+The icinga2::icinga2_ticket_id function.
 
 Returns: `String` Calculated ticket to receive a certificate.
 
@@ -5299,7 +5299,7 @@ The ticket salt of the Icinga CA.
 
 Type: Ruby 4.x API
 
-DEPRECATED.  Use the namespaced function [`icinga2::attributes`](#attributes) instead.
+DEPRECATED.  Use the namespaced function [`icinga2::icinga2_attributes`](#icinga2_attributes) instead.
 
 #### `icinga2_attributes(Any *$args)`
 
@@ -5317,7 +5317,7 @@ The original array of arguments.
 
 Type: Ruby 4.x API
 
-DEPRECATED.  Use the namespaced function [`icinga2::ticket_id`](#ticket_id) instead.
+DEPRECATED.  Use the namespaced function [`icinga2::icinga2_ticket_id`](#icinga2_ticket_id) instead.
 
 #### `icinga2_ticket_id(Any *$args)`
 

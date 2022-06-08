@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'icinga2::attributes' do
+describe 'icinga2::icinga2_attributes' do
   let(:pre_condition) do
     [
       "class { 'icinga2': }",

@@ -158,10 +158,9 @@
 #   attr2 => 'hash2 + { item1 => value1, item2 => { ... },... }'
 #
 #
+require 'puppet'
 
-require 'puppet_x/icinga2'
-
-module PuppetX::Icinga2
+module Puppet::Icinga2
   # Module: Utils with methods to parse Icinga 2 DSL config
   module Utils
     def self.value_types(value)

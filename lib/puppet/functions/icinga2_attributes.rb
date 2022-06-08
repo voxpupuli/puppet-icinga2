@@ -1,4 +1,4 @@
-# @summary DEPRECATED.  Use the namespaced function [`icinga2::attributes`](#attributes) instead.
+# @summary DEPRECATED.  Use the namespaced function [`icinga2::icinga2_attributes`](#icinga2_attributes) instead.
 Puppet::Functions.create_function(:icinga2_attributes) do
   # @param args
   #   The original array of arguments.
@@ -10,7 +10,7 @@ Puppet::Functions.create_function(:icinga2_attributes) do
     repeated_param 'Any', :args
   end
   def deprecation_gen(*args)
-    call_function('deprecation', 'icinga2_attributes', 'This method is deprecated, please use icinga2::attributes instead.')
-    call_function('icinga2::attributes', *args)
+    call_function('deprecation', 'icinga2_attributes', 'This method is deprecated, please use icinga2::icinga2_attributes instead.')
+    call_function('icinga2::icinga2_attributes', *args)
   end
 end

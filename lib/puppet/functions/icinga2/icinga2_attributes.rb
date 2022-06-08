@@ -4,7 +4,7 @@ require_relative '../../../puppet_x/icinga2/utils.rb'
 #   Calls the simple parser  to decide what to quote.
 #   For more information, see lib/puppet_x/icinga2/utils.rb.
 #
-Puppet::Functions.create_function(:'icinga2::attributes') do
+Puppet::Functions.create_function(:'icinga2::icinga2_attributes') do
   # @param args
   #   The original array of arguments. Port this to individually managed params
   #   to get the full benefit of the modern function API.
@@ -39,6 +39,6 @@ Puppet::Functions.create_function(:'icinga2::attributes') do
                   closure_scope['::icinga2::_constants']
                 end
 
-    PuppetX::Icinga2::Utils.attributes(args[0], globals, constants, indent)
+    Puppet::Icinga2::Utils.attributes(args[0], globals, constants, indent)
   end
 end
