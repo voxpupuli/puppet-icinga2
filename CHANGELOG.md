@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.3.1](https://github.com/icinga/puppet-icinga2/tree/v3.3.1) (2022-06-08)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.3.0...v3.3.1)
+
+**Fixed bugs:**
+
+- Refactor Hepler Function uitils.attributes from puppet\_x context to puppet [\#702](https://github.com/Icinga/puppet-icinga2/issues/702)
+
 ## [v3.3.0](https://github.com/icinga/puppet-icinga2/tree/v3.3.0) (2022-05-30)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.2.2...v3.3.0)
 
