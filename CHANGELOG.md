@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.4.0](https://github.com/icinga/puppet-icinga2/tree/v3.4.0) (2022-06-27)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.3.1...v3.4.0)
+
+**Implemented enhancements:**
+
+- Tune icinga::icinga2\_attributes function call [\#704](https://github.com/Icinga/puppet-icinga2/issues/704)
+
 ## [v3.3.1](https://github.com/icinga/puppet-icinga2/tree/v3.3.1) (2022-06-08)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.3.0...v3.3.1)
 
