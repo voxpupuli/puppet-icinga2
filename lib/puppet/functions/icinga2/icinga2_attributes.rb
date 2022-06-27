@@ -5,40 +5,30 @@ require_relative '../../../puppet_x/icinga2/utils.rb'
 #   For more information, see lib/puppet_x/icinga2/utils.rb.
 #
 Puppet::Functions.create_function(:'icinga2::icinga2_attributes') do
-  # @param args
-  #   The original array of arguments. Port this to individually managed params
-  #   to get the full benefit of the modern function API.
+  # @param attrs
+  #   Object attributes to parse.
   #
-  # @return [Data type]
-  #   Describe what the function returns here
+  # @param globals
+  #   A list of addational reserved words.
   #
-  dispatch :default_impl do
-    # Call the method named 'default_impl' when this is matched
-    # Port this to match individual params for better type safety
-    repeated_param 'Any', :args
+  # @param constants
+  #   A hash of additional constants.
+  #
+  # @return [String]
+  #   Parsed attributes as String.
+  #
+  # @param indent
+  #   Indent to use.
+  #
+  dispatch :icinga2_attributes do
+    required_param 'Hash',    :attrs
+    required_param 'Array',   :globals
+    required_param 'Hash',    :constants
+    optional_param 'Numeric', :indent
+    return_type    'String'
   end
 
-  def default_impl(*args)
-    raise Puppet::ParseError, 'icinga2::atributes(): Must provide at least one argument.' if args.length > 4 || args.empty?
-
-    indent = if args[1]
-               args[1]
-             else
-               0
-             end
-
-    globals = if args[2]
-                closure_scope['::icinga2::_reserved'].concat(args[2])
-              else
-                closure_scope['::icinga2::_reserved']
-              end
-
-    constants = if args[3]
-                  closure_scope['::icinga2::_constants'].merge(args[3])
-                else
-                  closure_scope['::icinga2::_constants']
-                end
-
-    Puppet::Icinga2::Utils.attributes(args[0], globals, constants, indent)
+  def icinga2_attributes(attrs, globals, constants, indent = 0)
+    Puppet::Icinga2::Utils.attributes(attrs, globals, constants, indent)
   end
 end

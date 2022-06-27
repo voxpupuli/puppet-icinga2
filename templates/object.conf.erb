@@ -24,10 +24,10 @@
 <% end -%>
 <% unless @import.empty? %><%= "\n" %><% end -%>
 <% if @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+in\s+.+$/ -%>
-<%= scope.call_function('icinga2::icinga2_attributes', [@_attrs,2,@attrs_list,{$1=>{}}]) -%>
+<%= scope.call_function('icinga2::parse', [@_attrs,2,@attrs_list,{$1=>{}}]) -%>
 <% elsif @apply.is_a?(String) and @apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ -%>
-<%= scope.call_function('icinga2::icinga2_attributes', [@_attrs,2,@attrs_list.concat([$1]),{$2=>{}}]) -%>
+<%= scope.call_function('icinga2::parse', [@_attrs,2,@attrs_list.concat([$1]),{$2=>{}}]) -%>
 <% else -%>
-<%= scope.call_function('icinga2::icinga2_attributes', [@_attrs,2,@attrs_list]) -%>
+<%= scope.call_function('icinga2::parse', [@_attrs,2,@attrs_list]) -%>
 <% end -%>
 }

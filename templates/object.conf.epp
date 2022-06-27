@@ -1,0 +1,43 @@
+<%- | Hash $attrs,
+      Array $attrs_list,
+      Variant[String, Boolean] $apply,
+      Optional[String] $apply_target = undef,
+      Variant[String, Boolean] $prefix,
+      String $object_type,
+      String $object_name,
+      Boolean $template,
+      Array $import,
+| -%>
+
+<% if $apply =~ String { %>apply <%= $object_type -%>
+<% if $prefix { -%>
+<% if $prefix =~ String { %> "<%= $prefix %>"<% } else { -%>
+<% if $object_name in $icinga2::_constants { -%>
+ <%= $object_name -%>
+<% } else { -%>
+ "<%= $object_name -%>"<% } -%>
+<% } -%>
+<% } -%>
+ for (<%= $apply %>)<% if $apply_target { %> to <%= $apply_target %><% } %> {
+<% } else { -%>
+<% if $apply { %>apply<% } else { -%>
+<% if $template { %>template<% } else { %>object<% } -%>
+<% } %> <%= $object_type -%>
+<% if $object_name in $icinga2::_constants { -%>
+ <%= $object_name -%>
+<% } else { -%>
+ "<%= $object_name %>"<% } -%>
+<% if $apply and $apply_target { %> to <%= $apply_target %><% } %> {
+<% } -%>
+<% $import.each |$i| { -%>
+  import "<%= $i %>"
+<% } -%>
+<% unless $import =~ Array[Data,0,0] { %><%= "\n" %><% } -%>
+<% if $apply =~String and $apply =~ /^([A-Za-z_]+)\s+in\s+.+$/ { -%>
+<%= icinga2::parse($attrs, 2, $attrs_list, {$1=>{}}) -%>
+<% } elsif $apply =~ String and $apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ { -%>
+<%= icinga2::parse($attrs, 2, $attrs_list+[$1], {$2=>{}}) -%>
+<% } else { -%>
+<%= icinga2::parse($attrs, 2, $attrs_list) -%>
+<% } -%>
+}

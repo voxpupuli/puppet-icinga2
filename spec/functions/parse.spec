@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'icinga2::icinga2_attributes' do
+describe 'icinga2::parse' do
   let(:pre_condition) do
     [
       "class { 'icinga2': }",
@@ -20,14 +20,6 @@ describe 'icinga2::icinga2_attributes' do
   # without knowing details about the implementation, this is the only test
   # case that we can autogenerate. You should add more examples below!
   it { is_expected.not_to eq(nil) }
-
-  it 'raises a ArgumentError if there is less than 1 arguments' do
-    is_expected.to run.with_params.and_raise_error(Puppet::ParseError)
-  end
-
-  it 'raises a ArgumentError if there are more than 4 arguments' do
-    is_expected.to run.with_params('one', 'two', 'three', 'four', 'five').and_raise_error(Puppet::ParseError)
-  end
 
   it 'assign a string' do
     # foo = "some string, connected to another. Yeah!"

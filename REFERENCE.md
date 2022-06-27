@@ -75,8 +75,7 @@ start on boot and will be restarted if stopped.
 * [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
-* [`icinga2_attributes`](#icinga2_attributes): DEPRECATED.  Use the namespaced function [`icinga2::icinga2_attributes`](#icinga2_attributes) instead.
-* [`icinga2_ticket_id`](#icinga2_ticket_id): DEPRECATED.  Use the namespaced function [`icinga2::icinga2_ticket_id`](#icinga2_ticket_id) instead.
+* [`icinga2::parse`](#icinga2parse): This function parse icinga object attributes.
 
 ### Data types
 
@@ -5258,18 +5257,35 @@ Type: Ruby 4.x API
 Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 
-#### `icinga2::icinga2_attributes(Any *$args)`
+#### `icinga2::icinga2_attributes(Hash $attrs, Array $globals, Hash $constants, Optional[Numeric] $indent)`
 
 The icinga2::icinga2_attributes function.
 
-Returns: `Data type` Describe what the function returns here
+Returns: `String` Parsed attributes as String.
 
-##### `*args`
+##### `attrs`
 
-Data type: `Any`
+Data type: `Hash`
 
-The original array of arguments. Port this to individually managed params
-to get the full benefit of the modern function API.
+Object attributes to parse.
+
+##### `globals`
+
+Data type: `Array`
+
+A list of addational reserved words.
+
+##### `constants`
+
+Data type: `Hash`
+
+A hash of additional constants.
+
+##### `indent`
+
+Data type: `Optional[Numeric]`
+
+Indent to use.
 
 ### <a name="icinga2icinga2_ticket_id"></a>`icinga2::icinga2_ticket_id`
 
@@ -5295,41 +5311,41 @@ Data type: `Variant[String, Sensitive[String]]`
 
 The ticket salt of the Icinga CA.
 
-### <a name="icinga2_attributes"></a>`icinga2_attributes`
+### <a name="icinga2parse"></a>`icinga2::parse`
 
-Type: Ruby 4.x API
+Type: Puppet Language
 
-DEPRECATED.  Use the namespaced function [`icinga2::icinga2_attributes`](#icinga2_attributes) instead.
+This function parse icinga object attributes.
 
-#### `icinga2_attributes(Any *$args)`
+#### `icinga2::parse(Hash[String, Any] $attrs, Integer $indent = 0, Array[String] $reserved = [], Hash[String, Any] $constants = {})`
 
-The icinga2_attributes function.
+The icinga2::parse function.
 
-Returns: `Data type` Describe what the function returns here
+Returns: `Any`
 
-##### `*args`
+##### `attrs`
 
-Data type: `Any`
+Data type: `Hash[String, Any]`
 
-The original array of arguments.
 
-### <a name="icinga2_ticket_id"></a>`icinga2_ticket_id`
 
-Type: Ruby 4.x API
+##### `indent`
 
-DEPRECATED.  Use the namespaced function [`icinga2::icinga2_ticket_id`](#icinga2_ticket_id) instead.
+Data type: `Integer`
 
-#### `icinga2_ticket_id(Any *$args)`
 
-The icinga2_ticket_id function.
 
-Returns: `String` Calculated ticket to receive a certificate.
+##### `reserved`
 
-##### `*args`
+Data type: `Array[String]`
 
-Data type: `Any`
 
-The original array of arguments.
+
+##### `constants`
+
+Data type: `Hash[String, Any]`
+
+
 
 ## Data types
 
