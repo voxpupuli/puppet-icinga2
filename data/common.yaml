@@ -12,6 +12,8 @@ icinga2::globals::constants:
   NodeName: '%{facts.networking.fqdn}'
   ZoneName: '%{facts.networking.fqdn}'
   TicketSalt: ''
+icinga2::globals::cert_dir: "%{lookup('icinga2::globals::data_dir')}/certs"
+icinga2::globals::ca_dir: "%{lookup('icinga2::globals::data_dir')}/ca"
 icinga2::globals::reserved:
   - Acknowledgement
   - ApiBindHost

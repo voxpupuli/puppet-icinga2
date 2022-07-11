@@ -52,8 +52,7 @@ define icinga2::object::notificationcommand (
   Boolean                              $template                 = false,
   Array                                $import                   = [],
   Variant[String, Integer]             $order                    = 25,
-){
-
+) {
   # compose attributes
   $attrs = {
     'command'   => $command,
@@ -75,5 +74,4 @@ define icinga2::object::notificationcommand (
     target      => $target,
     order       => $order,
   }
-
 }

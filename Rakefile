@@ -41,9 +41,8 @@ def changelog_future_release
   returnVal
 end
 
-PuppetLint.configuration.send('disable_140chars')
 PuppetLint.configuration.send('disable_relative')
-
+PuppetLint.configuration.send('disable_140chars')
 
 if Bundler.rubygems.find_name('github_changelog_generator').any?
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|

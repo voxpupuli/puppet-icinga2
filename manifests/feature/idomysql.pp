@@ -96,7 +96,7 @@
 #   both means true. With mariadb its cli options are used for the import,
 #   whereas with mysql its different options.
 #
-class icinga2::feature::idomysql(
+class icinga2::feature::idomysql (
   Variant[String, Sensitive[String]]         $password,
   Enum['absent', 'present']                  $ensure                 = present,
   Stdlib::Host                               $host                   = 'localhost',
@@ -122,27 +122,26 @@ class icinga2::feature::idomysql(
   Optional[Array]                            $categories             = undef,
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema          = false,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $owner                  = $::icinga2::globals::user
-  $group                  = $::icinga2::globals::group
-  $conf_dir               = $::icinga2::globals::conf_dir
-  $ssl_dir                = $::icinga2::globals::cert_dir
-  $ido_mysql_package_name = $::icinga2::globals::ido_mysql_package_name
-  $ido_mysql_schema       = $::icinga2::globals::ido_mysql_schema
-  $manage_package         = $::icinga2::manage_package
-  $manage_packages        = $::icinga2::manage_packages
+  $owner                  = $icinga2::globals::user
+  $group                  = $icinga2::globals::group
+  $conf_dir               = $icinga2::globals::conf_dir
+  $ssl_dir                = $icinga2::globals::cert_dir
+  $ido_mysql_package_name = $icinga2::globals::ido_mysql_package_name
+  $ido_mysql_schema       = $icinga2::globals::ido_mysql_schema
+  $manage_package         = $icinga2::manage_package
+  $manage_packages        = $icinga2::manage_packages
 
-  $_ssl_key_mode          = $::facts['os']['family'] ? {
+  $_ssl_key_mode          = $facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
 
   $_notify                = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
@@ -155,12 +154,12 @@ class icinga2::feature::idomysql(
   # to build mysql exec command to import schema
   if $import_schema {
     $_mysql_options = join(any2array(delete_undef_values({
-      '-h' => $host ? {
-        /localhost/ => undef,
-        default     => $host,
-      },
-      '-P' => $port,
-      '-u' => $user,
+            '-h' => $host ? {
+              /localhost/ => undef,
+              default     => $host,
+            },
+            '-P' => $port,
+            '-u' => $user,
     })), ' ')
   }
 
@@ -169,17 +168,16 @@ class icinga2::feature::idomysql(
     group   => $group,
   }
 
-
   if $enable_ssl {
     # Set defaults for certificate stuff
     if $ssl_key {
       if $ssl_key_path {
-        $_ssl_key_path = $ssl_key_path }
-      else {
+        $_ssl_key_path = $ssl_key_path
+      } else {
         $_ssl_key_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.key"
       }
 
-      $_ssl_key = $::facts['os']['family'] ? {
+      $_ssl_key = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
@@ -197,12 +195,12 @@ class icinga2::feature::idomysql(
 
     if $ssl_cert {
       if $ssl_cert_path {
-        $_ssl_cert_path = $ssl_cert_path }
-      else {
+        $_ssl_cert_path = $ssl_cert_path
+      } else {
         $_ssl_cert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.crt"
       }
 
-      $_ssl_cert = $::facts['os']['family'] ? {
+      $_ssl_cert = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
@@ -218,12 +216,12 @@ class icinga2::feature::idomysql(
 
     if $ssl_cacert {
       if $ssl_cacert_path {
-        $_ssl_cacert_path = $ssl_cacert_path }
-      else {
+        $_ssl_cacert_path = $ssl_cacert_path
+      } else {
         $_ssl_cacert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql_ca.crt"
       }
 
-      $_ssl_cacert = $::facts['os']['family'] ? {
+      $_ssl_cacert = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }
@@ -241,21 +239,21 @@ class icinga2::feature::idomysql(
       if $enable_ssl {
         if $import_schema =~ Boolean or $import_schema == 'mariadb' {
           $_ssl_options = join(any2array(delete_undef_values({
-            '--ssl'        => '',
-            '--ssl-ca'     => $_ssl_cacert_path,
-            '--ssl-cert'   => $_ssl_cert_path,
-            '--ssl-key'    => $_ssl_key_path,
-            '--ssl-capath' => $ssl_capath,
-            '--ssl-cipher' => $ssl_cipher,
+                  '--ssl'        => '',
+                  '--ssl-ca'     => $_ssl_cacert_path,
+                  '--ssl-cert'   => $_ssl_cert_path,
+                  '--ssl-key'    => $_ssl_key_path,
+                  '--ssl-capath' => $ssl_capath,
+                  '--ssl-cipher' => $ssl_cipher,
           })), ' ')
         } else {
           $_ssl_options = join(any2array(delete_undef_values({
-            '--ssl-mode'   => 'required',
-            '--ssl-ca'     => $_ssl_cacert_path,
-            '--ssl-cert'   => $_ssl_cert_path,
-            '--ssl-key'    => $_ssl_key_path,
-            '--ssl-capath' => $ssl_capath,
-            '--ssl-cipher' => $ssl_cipher,
+                  '--ssl-mode'   => 'required',
+                  '--ssl-ca'     => $_ssl_cacert_path,
+                  '--ssl-cert'   => $_ssl_cert_path,
+                  '--ssl-key'    => $_ssl_key_path,
+                  '--ssl-capath' => $ssl_capath,
+                  '--ssl-cipher' => $ssl_cipher,
           })), ' ')
         }
       } else {
@@ -278,8 +276,8 @@ class icinga2::feature::idomysql(
   else {
     # set cli options for mysql connection
     if $import_schema {
-      $_mysql_command = "mysql ${_mysql_options} -p'${_password.unwrap}' ${database}" }
-
+      $_mysql_command = "mysql ${_mysql_options} -p'${_password.unwrap}' ${database}"
+    }
     $attrs_ssl = { enable_ssl  => $enable_ssl }
   }
 
@@ -301,7 +299,7 @@ class icinga2::feature::idomysql(
 
   # install additional package
   if $ido_mysql_package_name and ($manage_package or $manage_packages) {
-    if $::facts['os']['family'] == 'debian' {
+    if $facts['os']['family'] == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_mysql_package_name}.conf":
         ensure  => file,
@@ -326,7 +324,7 @@ class icinga2::feature::idomysql(
     }
     exec { 'idomysql-import-schema':
       user    => 'root',
-      path    => $::facts['path'],
+      path    => $facts['path'],
       command => "${_mysql_command} < \"${ido_mysql_schema}\"",
       unless  => "${_mysql_command} -Ns -e 'select version from icinga_dbversion'",
     }

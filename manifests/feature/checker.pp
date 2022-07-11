@@ -10,18 +10,17 @@
 # @note Deprecated in Icinga 2.11, replaced by global constant
 #   MaxConcurrentChecks which will be set if you still use concurrent_checks.
 #
-class icinga2::feature::checker(
+class icinga2::feature::checker (
   Enum['absent', 'present'] $ensure            = present,
   Optional[Integer[1]]      $concurrent_checks = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
   $_notify  = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
@@ -52,5 +51,4 @@ class icinga2::feature::checker(
   icinga2::feature { 'checker':
     ensure => $ensure,
   }
-
 }

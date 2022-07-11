@@ -47,8 +47,7 @@ define icinga2::object::eventcommand (
   Optional[Hash]                      $arguments         = undef,
   Array                               $import            = [],
   Variant[String, Integer]            $order             = 20,
-){
-
+) {
   # compose the attributes
   $attrs = {
     'command'   => $command,

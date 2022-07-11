@@ -81,7 +81,7 @@
 # @param import_schema
 #   Whether to import the PostgreSQL schema or not.
 #
-class icinga2::feature::idopgsql(
+class icinga2::feature::idopgsql (
   Variant[String, Sensitive[String]]  $password,
   Enum['absent', 'present']           $ensure               = present,
   Stdlib::Host                        $host                 = 'localhost',
@@ -90,7 +90,7 @@ class icinga2::feature::idopgsql(
   String                              $database             = 'icinga',
   Optional[Enum['disable', 'allow',
       'prefer', 'verify-full',
-      'verify-ca', 'require']]        $ssl_mode             = undef,
+  'verify-ca', 'require']]          $ssl_mode             = undef,
   Optional[Stdlib::Absolutepath]      $ssl_key_path         = undef,
   Optional[Stdlib::Absolutepath]      $ssl_cert_path        = undef,
   Optional[Stdlib::Absolutepath]      $ssl_cacert_path      = undef,
@@ -106,25 +106,24 @@ class icinga2::feature::idopgsql(
   Optional[Array]                     $categories           = undef,
   Boolean                             $import_schema        = false,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $owner                  = $::icinga2::globals::user
-  $group                  = $::icinga2::globals::group
-  $conf_dir               = $::icinga2::globals::conf_dir
-  $ssl_dir                = $::icinga2::globals::cert_dir
-  $ido_pgsql_package_name = $::icinga2::globals::ido_pgsql_package_name
-  $ido_pgsql_schema       = $::icinga2::globals::ido_pgsql_schema
-  $manage_package         = $::icinga2::manage_package
-  $manage_packages        = $::icinga2::manage_packages
+  $owner                  = $icinga2::globals::user
+  $group                  = $icinga2::globals::group
+  $conf_dir               = $icinga2::globals::conf_dir
+  $ssl_dir                = $icinga2::globals::cert_dir
+  $ido_pgsql_package_name = $icinga2::globals::ido_pgsql_package_name
+  $ido_pgsql_schema       = $icinga2::globals::ido_pgsql_schema
+  $manage_package         = $icinga2::manage_package
+  $manage_packages        = $icinga2::manage_packages
   $_notify                = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
-  $_ssl_key_mode          = $::facts['os']['family'] ? {
+  $_ssl_key_mode          = $facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
@@ -143,12 +142,12 @@ class icinga2::feature::idopgsql(
   # Set defaults for certificate stuff
   if $ssl_key {
     if $ssl_key_path {
-      $_ssl_key_path = $ssl_key_path }
-    else {
+      $_ssl_key_path = $ssl_key_path
+    } else {
       $_ssl_key_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql.key"
     }
 
-    $_ssl_key = $::facts['os']['family'] ? {
+    $_ssl_key = $facts['os']['family'] ? {
       'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
       default   => $ssl_key,
     }
@@ -166,12 +165,12 @@ class icinga2::feature::idopgsql(
 
   if $ssl_cert {
     if $ssl_cert_path {
-      $_ssl_cert_path = $ssl_cert_path }
-    else {
+      $_ssl_cert_path = $ssl_cert_path
+    } else {
       $_ssl_cert_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql.crt"
     }
 
-    $_ssl_cert = $::facts['os']['family'] ? {
+    $_ssl_cert = $facts['os']['family'] ? {
       'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
       default   => $ssl_cert,
     }
@@ -187,12 +186,12 @@ class icinga2::feature::idopgsql(
 
   if $ssl_cacert {
     if $ssl_cacert_path {
-      $_ssl_cacert_path = $ssl_cacert_path }
-    else {
+      $_ssl_cacert_path = $ssl_cacert_path
+    } else {
       $_ssl_cacert_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt"
     }
 
-    $_ssl_cacert = $::facts['os']['family'] ? {
+    $_ssl_cacert = $facts['os']['family'] ? {
       'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
       default   => $ssl_cacert,
     }
@@ -227,7 +226,7 @@ class icinga2::feature::idopgsql(
 
   # install additional package
   if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
-    if $::facts['os']['family'] == 'debian' {
+    if $facts['os']['family'] == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_pgsql_package_name}.conf":
         ensure  => file,
@@ -252,19 +251,19 @@ class icinga2::feature::idopgsql(
     }
 
     $_connection = regsubst(join(any2array(delete_undef_values({
-        'host='        => $host,
-        'sslmode='     => $ssl_mode,
-        'sslcert='     => $_ssl_cert_path,
-        'sslkey='      => $_ssl_key_path,
-        'sslrootcert=' => $_ssl_cacert_path,
-        'user='        => $user,
-        'port='        => $port,
-        'dbname='      => $database,
-      })), ' '), '= ', '=', 'G')
+              'host='        => $host,
+              'sslmode='     => $ssl_mode,
+              'sslcert='     => $_ssl_cert_path,
+              'sslkey='      => $_ssl_key_path,
+              'sslrootcert=' => $_ssl_cacert_path,
+              'user='        => $user,
+              'port='        => $port,
+              'dbname='      => $database,
+    })), ' '), '= ', '=', 'G')
 
     exec { 'idopgsql-import-schema':
       user        => 'root',
-      path        => $::facts['path'],
+      path        => $facts['path'],
       environment => ["PGPASSWORD=${_password.unwrap}"],
       command     => "psql '${_connection}' -w -f '${ido_pgsql_schema}'",
       unless      => "psql '${_connection}' -w -c 'select version from icinga_dbversion'",

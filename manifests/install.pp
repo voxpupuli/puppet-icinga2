@@ -5,21 +5,20 @@
 # @api private
 #
 class icinga2::install {
-
   assert_private()
 
-  $package_name         = $::icinga2::globals::package_name
-  $manage_package       = $::icinga2::manage_package
-  $manage_packages      = $::icinga2::manage_packages
-  $selinux_package_name = $::icinga2::globals::selinux_package_name
-  $manage_selinux       = $::icinga2::manage_selinux
-  $cert_dir             = $::icinga2::globals::cert_dir
-  $conf_dir             = $::icinga2::globals::conf_dir
-  $user                 = $::icinga2::globals::user
-  $group                = $::icinga2::globals::group
+  $package_name         = $icinga2::globals::package_name
+  $manage_package       = $icinga2::manage_package
+  $manage_packages      = $icinga2::manage_packages
+  $selinux_package_name = $icinga2::globals::selinux_package_name
+  $manage_selinux       = $icinga2::manage_selinux
+  $cert_dir             = $icinga2::globals::cert_dir
+  $conf_dir             = $icinga2::globals::conf_dir
+  $user                 = $icinga2::globals::user
+  $group                = $icinga2::globals::group
 
   if $manage_package or $manage_packages {
-    if $::facts['os']['family'] == 'windows' { Package { provider => chocolatey, } }
+    if $facts['os']['family'] == 'windows' { Package { provider => chocolatey, } }
 
     package { $package_name:
       ensure => installed,
@@ -39,5 +38,4 @@ class icinga2::install {
     owner  => $user,
     group  => $group,
   }
-
 }

@@ -2,7 +2,7 @@
 #   Configures the Icinga 2 feature api.
 #
 # @example Use the puppet certificates and key copy these files to the cert directory named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName is set to 'hostname'.
-#   include ::icinga2::feature::api
+#   include icinga2::feature::api
 #
 # @example To use your own certificates and key as file resources if the contant NodeName is set to fqdn (default) do:
 #   class { 'icinga2::feature::api':
@@ -30,13 +30,13 @@
 #   }
 #
 # @example Fine tune TLS settings
-#   class { '::icinga2::feature::api':
+#   class { 'icinga2::feature::api':
 #     ssl_protocolmin => 'TLSv1.2',
 #     ssl_cipher_list => 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
 #   }
 #
 # @example Transfer a CA certificate and key from an existing CA by using the file resource:
-#   include ::icinga2
+#   include icinga2
 #
 #   file { '/var/lib/icinga2/ca/ca.crt':
 #     source => '...',
@@ -149,7 +149,7 @@
 # @param environment
 #  Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 #
-class icinga2::feature::api(
+class icinga2::feature::api (
   Enum['absent', 'present']                                $ensure                           = present,
   Enum['ca', 'icinga2', 'none', 'puppet']                  $pki                              = 'icinga2',
   Optional[Stdlib::Absolutepath]                           $ssl_crl                          = undef,
@@ -161,7 +161,7 @@ class icinga2::feature::api(
   Variant[String, Sensitive[String]]                       $ticket_salt                      = 'TicketSalt',
   Optional[Variant[String, Sensitive[String]]]             $ticket_id                        = undef,
   Hash[String, Hash]                                       $endpoints                        = { 'NodeName' => {} },
-  Hash[String, Hash]                                       $zones                            = { 'ZoneName' => { endpoints => [ 'NodeName' ] } },
+  Hash[String, Hash]                                       $zones                            = { 'ZoneName' => { endpoints => ['NodeName'] } },
   Optional[Stdlib::Base64]                                 $ssl_key                          = undef,
   Optional[Stdlib::Base64]                                 $ssl_cert                         = undef,
   Optional[Stdlib::Base64]                                 $ssl_cacert                       = undef,
@@ -178,27 +178,26 @@ class icinga2::feature::api(
   Optional[Icinga2::Fingerprint]                           $fingerprint                      = undef,
   Optional[String]                                         $environment                      = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
   # cert directory must exists and icinga binary is required for icinga2 pki
-  require ::icinga2::install
+  require icinga2::install
 
-  $icinga2_bin   = $::icinga2::globals::icinga2_bin
-  $conf_dir      = $::icinga2::globals::conf_dir
-  $cert_dir      = $::icinga2::globals::cert_dir
-  $ca_dir        = $::icinga2::globals::ca_dir
-  $user          = $::icinga2::globals::user
-  $group         = $::icinga2::globals::group
-  $node_name     = $::icinga2::_constants['NodeName']
-  $_ssl_key_mode = $::facts['os']['family'] ? {
+  $icinga2_bin   = $icinga2::globals::icinga2_bin
+  $conf_dir      = $icinga2::globals::conf_dir
+  $cert_dir      = $icinga2::globals::cert_dir
+  $ca_dir        = $icinga2::globals::ca_dir
+  $user          = $icinga2::globals::user
+  $group         = $icinga2::globals::group
+  $node_name     = $icinga2::_constants['NodeName']
+  $_ssl_key_mode = $facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
   $_notify       = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
@@ -221,7 +220,7 @@ class icinga2::feature::api(
       file { $_ssl_key_path:
         ensure    => file,
         mode      => $_ssl_key_mode,
-        source    => $::facts['icinga2_puppet_hostprivkey'],
+        source    => $facts['icinga2_puppet_hostprivkey'],
         tag       => 'icinga2::config::file',
         show_diff => false,
         backup    => false,
@@ -229,13 +228,13 @@ class icinga2::feature::api(
 
       file { $_ssl_cert_path:
         ensure => file,
-        source => $::facts['icinga2_puppet_hostcert'],
+        source => $facts['icinga2_puppet_hostcert'],
         tag    => 'icinga2::config::file',
       }
 
       file { $_ssl_cacert_path:
         ensure => file,
-        source => $::facts['icinga2_puppet_localcacert'],
+        source => $facts['icinga2_puppet_localcacert'],
         tag    => 'icinga2::config::file',
       }
     } # puppet
@@ -250,7 +249,7 @@ class icinga2::feature::api(
       }
 
       if $ssl_key {
-        $_ssl_key = $::facts['os']['family'] ? {
+        $_ssl_key = $facts['os']['family'] ? {
           'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
           default   => $ssl_key,
         }
@@ -266,7 +265,7 @@ class icinga2::feature::api(
       }
 
       if $ssl_cert {
-        $_ssl_cert = $::facts['os']['family'] ? {
+        $_ssl_cert = $facts['os']['family'] ? {
           'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
           default   => $ssl_cert,
         }
@@ -279,7 +278,7 @@ class icinga2::feature::api(
       }
 
       if $ssl_cacert {
-        $_ssl_cacert = $::facts['os']['family'] ? {
+        $_ssl_cacert = $facts['os']['family'] ? {
           'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
           default   => $ssl_cacert,
         }
@@ -312,7 +311,7 @@ class icinga2::feature::api(
       }
       if $fingerprint {
         $_fingerprint = upcase(regsubst($fingerprint, ':', ' ', 'G'))
-        if $::facts['os']['family'] != 'Windows' {
+        if $facts['os']['family'] != 'Windows' {
           $_cmd_pki_get_cert = "${cmd_pki_get_cert} |grep '${_fingerprint}\s*$'"
         } else {
           $_cmd_pki_get_cert = "cmd.exe /c \"${cmd_pki_get_cert} |findstr /R /C:\"${_fingerprint}\"\""
@@ -321,14 +320,14 @@ class icinga2::feature::api(
         $_cmd_pki_get_cert = $cmd_pki_get_cert
       }
 
-      $_env = $::facts['kernel'] ? {
+      $_env = $facts['kernel'] ? {
         'windows' => undef,
         default   => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
       }
 
       Exec {
         environment => $_env,
-        notify      => Class['::icinga2::service'],
+        notify      => Class['icinga2::service'],
       }
 
       exec { 'icinga2 pki create key':
@@ -337,7 +336,7 @@ class icinga2::feature::api(
       }
 
       -> exec { 'icinga2 pki get trusted-cert':
-        path    => $::facts['path'],
+        path    => $facts['path'],
         command => $_cmd_pki_get_cert,
         creates => $trusted_cert,
       }

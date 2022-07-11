@@ -72,6 +72,12 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param assign
+#   Assign notification using the assign rules.
+#
+# @param ignore
+#   Exclude notification using the ignore rules.
+#
 define icinga2::object::notification (
   Stdlib::Absolutepath                                                $target,
   Enum['absent', 'present']                                           $ensure            = present,
@@ -96,8 +102,7 @@ define icinga2::object::notification (
   Array                                                               $import            = [],
   Boolean                                                             $template          = false,
   Variant[String, Integer]                                            $order             = 85,
-){
-
+) {
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
   }
@@ -135,5 +140,4 @@ define icinga2::object::notification (
     assign       => $assign,
     ignore       => $ignore,
   }
-
 }

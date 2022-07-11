@@ -130,10 +130,10 @@
 #   Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
 #
 # @param assign
-#   Assign user group members using the group assign rules.
+#   Assign service using the assign rules.
 #
 # @param ignore
-#   Exclude users using the group ignore rules.
+#   Exclude service using the ignore rules.
 #
 # @param import
 #   Sorted List of templates to include.
@@ -184,7 +184,6 @@ define icinga2::object::service (
   Boolean                                    $template                = false,
   Variant[String, Integer]                   $order                   = 60,
 ) {
-
   # compose the attributes
   $attrs = {
     'display_name'            => $display_name,

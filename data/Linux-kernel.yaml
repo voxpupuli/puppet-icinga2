@@ -12,8 +12,7 @@ icinga2::globals::log_dir: /var/log/icinga2
 icinga2::globals::run_dir: /var/run/icinga2
 icinga2::globals::spool_dir: /var/spool/icinga2
 icinga2::globals::cache_dir: /var/cache/icinga2
-icinga2::globals::cert_dir: /var/lib/icinga2/certs
-icinga2::globals::ca_dir: /var/lib/icinga2/ca
+icinga2::globals::data_dir: /var/lib/icinga2
 icinga2::globals::constants:
   PluginDir: /usr/lib/nagios/plugins
   PluginContribDir: /usr/lib/nagios/plugins

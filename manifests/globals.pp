@@ -61,6 +61,9 @@
 # @param cache_dir
 #   Path to cache files of Icinga.
 #
+# @param data_dir
+#   Path to data files of Icinga.
+#
 # @param cert_dir
 #   Path to the directory where Icinga stores keys and certificates.
 #
@@ -70,7 +73,7 @@
 # @param service_reload
 #   How to do a reload of the Icinga process.
 #
-class icinga2::globals(
+class icinga2::globals (
   String                 $package_name,
   String                 $service_name,
   String                 $ido_mysql_schema,
@@ -82,6 +85,7 @@ class icinga2::globals(
   Stdlib::Absolutepath   $run_dir,
   Stdlib::Absolutepath   $spool_dir,
   Stdlib::Absolutepath   $cache_dir,
+  Stdlib::Absolutepath   $data_dir,
   Stdlib::Absolutepath   $cert_dir,
   Stdlib::Absolutepath   $ca_dir,
   Array[String]          $reserved,
@@ -93,7 +97,6 @@ class icinga2::globals(
   Optional[String]       $ido_pgsql_package_name = undef,
   Optional[String]       $service_reload         = undef,
 ) {
-
   assert_private()
 
   if ( versioncmp($::facts['puppetversion'], '6' ) >= 0 and versioncmp(load_module_metadata('stdlib')['version'], '5.1.0') < 0 ) {
@@ -108,5 +111,4 @@ class icinga2::globals(
   }
 
   $constants =  lookup('icinga2::globals::constants', Hash, 'deep', {})
-
 }

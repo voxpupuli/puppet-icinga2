@@ -29,7 +29,7 @@
 #   A dictionary containing custom attributes that are specific to this service,
 #   a string to do operations on this dictionary or an array for multiple use
 #   of custom attributes.
-
+#
 # @param environment
 #   Specify the Icinga environment. This overrides the Environment constant
 #   specified in the configuration or on the CLI with --define.
@@ -41,7 +41,7 @@
 # @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
-define icinga2::object::icingaapplication(
+define icinga2::object::icingaapplication (
   Enum['absent', 'present']             $ensure                = present,
   String                                $app_name              = $title,
   Optional[Boolean]                     $enable_notifications  = undef,
@@ -55,8 +55,7 @@ define icinga2::object::icingaapplication(
   Optional[Stdlib::Absolutepath]        $target                = undef,
   Variant[String, Integer]              $order                 = 5,
 ) {
-
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
 
   # set defaults
   if $target {

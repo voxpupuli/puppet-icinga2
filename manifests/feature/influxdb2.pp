@@ -78,7 +78,7 @@
 # @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
-class icinga2::feature::influxdb2(
+class icinga2::feature::influxdb2 (
   String                              $organization,
   String                              $bucket,
   Variant[String, Sensitive[String]]  $auth_token,
@@ -103,23 +103,22 @@ class icinga2::feature::influxdb2(
   Optional[Integer[1]]                $flush_threshold        = undef,
   Optional[Boolean]                   $enable_ha              = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user          = $::icinga2::globals::user
-  $group         = $::icinga2::globals::group
-  $conf_dir      = $::icinga2::globals::conf_dir
-  $ssl_dir       = $::icinga2::globals::cert_dir
+  $user          = $icinga2::globals::user
+  $group         = $icinga2::globals::group
+  $conf_dir      = $icinga2::globals::conf_dir
+  $ssl_dir       = $icinga2::globals::cert_dir
 
-  $_ssl_key_mode = $::facts['kernel'] ? {
+  $_ssl_key_mode = $facts['kernel'] ? {
     'windows' => undef,
     default   => '0600',
   }
 
   $_notify       = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
@@ -135,19 +134,18 @@ class icinga2::feature::influxdb2(
   }
 
   $host_template = { measurement => $host_measurement, tags => $host_tags }
-  $service_template = { measurement => $service_measurement, tags => $service_tags}
+  $service_template = { measurement => $service_measurement, tags => $service_tags }
 
   if $enable_ssl {
-
     # Set defaults for certificate stuff
     if $ssl_key {
       if $ssl_key_path {
-        $_ssl_key_path = $ssl_key_path }
-      else {
+        $_ssl_key_path = $ssl_key_path
+      } else {
         $_ssl_key_path = "${ssl_dir}/Influxdb2Writer_influxdb2.key"
       }
 
-      $_ssl_key = $::facts['os']['family'] ? {
+      $_ssl_key = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
@@ -165,12 +163,12 @@ class icinga2::feature::influxdb2(
 
     if $ssl_cert {
       if $ssl_cert_path {
-        $_ssl_cert_path = $ssl_cert_path }
-      else {
+        $_ssl_cert_path = $ssl_cert_path
+      } else {
         $_ssl_cert_path = "${ssl_dir}/Influxdb2Writer_influxdb2.crt"
       }
 
-      $_ssl_cert = $::facts['os']['family'] ? {
+      $_ssl_cert = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
@@ -186,12 +184,12 @@ class icinga2::feature::influxdb2(
 
     if $ssl_cacert {
       if $ssl_cacert_path {
-        $_ssl_cacert_path = $ssl_cacert_path }
-      else {
+        $_ssl_cacert_path = $ssl_cacert_path
+      } else {
         $_ssl_cacert_path = "${ssl_dir}/Influxdb2Writer_influxdb2_ca.crt"
       }
 
-      $_ssl_cacert = $::facts['os']['family'] ? {
+      $_ssl_cacert = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }

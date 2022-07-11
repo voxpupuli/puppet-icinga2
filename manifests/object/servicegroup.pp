@@ -43,8 +43,7 @@ define icinga2::object::servicegroup (
   Boolean                       $template          = false,
   Array                         $import            = [],
   Variant[String, Integer]      $order             = 65,
-){
-
+) {
   # compose attributes
   $attrs = {
     'display_name'  => $display_name,
@@ -65,5 +64,4 @@ define icinga2::object::servicegroup (
     target      => $target,
     order       => $order,
   }
-
 }

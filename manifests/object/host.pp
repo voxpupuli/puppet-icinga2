@@ -107,7 +107,7 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-define icinga2::object::host(
+define icinga2::object::host (
   Stdlib::Absolutepath                $target,
   Enum['absent', 'present']           $ensure                  = present,
   String                              $host_name               = $title,
@@ -143,7 +143,6 @@ define icinga2::object::host(
   Boolean                             $template                = false,
   Variant[String, Integer]            $order                   = 50,
 ) {
-
   # compose the attributes
   $attrs = {
     address                 => $address,

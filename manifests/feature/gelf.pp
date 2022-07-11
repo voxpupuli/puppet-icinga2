@@ -46,7 +46,7 @@
 # @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
-class icinga2::feature::gelf(
+class icinga2::feature::gelf (
   Enum['absent', 'present']                $ensure               = present,
   Optional[Stdlib::Host]                   $host                 = undef,
   Optional[Stdlib::Port::Unprivileged]     $port                 = undef,
@@ -62,23 +62,22 @@ class icinga2::feature::gelf(
   Optional[Boolean]                        $enable_send_perfdata = undef,
   Optional[Boolean]                        $enable_ha            = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $owner    = $::icinga2::globals::user
-  $group    = $::icinga2::globals::group
-  $conf_dir = $::icinga2::globals::conf_dir
-  $ssl_dir  = $::icinga2::globals::cert_dir
+  $owner    = $icinga2::globals::user
+  $group    = $icinga2::globals::group
+  $conf_dir = $icinga2::globals::conf_dir
+  $ssl_dir  = $icinga2::globals::cert_dir
 
-  $_ssl_key_mode = $::facts['os']['family'] ? {
+  $_ssl_key_mode = $facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
 
   $_notify = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
@@ -87,17 +86,16 @@ class icinga2::feature::gelf(
     group   => $group,
   }
 
-
   if $enable_ssl {
     # Set defaults for certificate stuff
     if $ssl_key {
       if $ssl_key_path {
-        $_ssl_key_path = $ssl_key_path }
-      else {
+        $_ssl_key_path = $ssl_key_path
+      } else {
         $_ssl_key_path = "${ssl_dir}/GelfWriter_gelf.key"
       }
 
-      $_ssl_key = $::facts['os']['family'] ? {
+      $_ssl_key = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
         default   => $ssl_key,
       }
@@ -115,12 +113,12 @@ class icinga2::feature::gelf(
 
     if $ssl_cert {
       if $ssl_cert_path {
-        $_ssl_cert_path = $ssl_cert_path }
-      else {
+        $_ssl_cert_path = $ssl_cert_path
+      } else {
         $_ssl_cert_path = "${ssl_dir}/GelfWriter_gelf.crt"
       }
 
-      $_ssl_cert = $::facts['os']['family'] ? {
+      $_ssl_cert = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cert,
       }
@@ -136,12 +134,12 @@ class icinga2::feature::gelf(
 
     if $ssl_cacert {
       if $ssl_cacert_path {
-        $_ssl_cacert_path = $ssl_cacert_path }
-      else {
+        $_ssl_cacert_path = $ssl_cacert_path
+      } else {
         $_ssl_cacert_path = "${ssl_dir}/GelfWriter_gelf_ca.crt"
       }
 
-      $_ssl_cacert = $::facts['os']['family'] ? {
+      $_ssl_cacert = $facts['os']['family'] ? {
         'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
         default   => $ssl_cacert,
       }
@@ -166,7 +164,6 @@ class icinga2::feature::gelf(
   else {
     $attrs_ssl = { enable_tls  => $enable_ssl }
   }
-
 
   # compose attributes
   $attrs = {

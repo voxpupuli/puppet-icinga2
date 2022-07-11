@@ -40,7 +40,7 @@
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 #
-define icinga2::object::checkcommand(
+define icinga2::object::checkcommand (
   Stdlib::Absolutepath                $target,
   Enum['absent', 'present']           $ensure            = present,
   String                              $checkcommand_name = $title,
@@ -53,7 +53,6 @@ define icinga2::object::checkcommand(
   Boolean                             $template          = false,
   Variant[String, Integer]            $order             = 15,
 ) {
-
   # compose the attributes
   $attrs = {
     command   => $command,

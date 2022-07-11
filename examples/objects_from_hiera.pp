@@ -36,6 +36,7 @@ lookup('monitoring::objects').each |String $object_type, Hash $content| {
     ensure_resource(
       $object_type,
       $object_name,
-      deep_merge($defaults[$object_type], $object_config))
+      deep_merge($defaults[$object_type], $object_config)
+    )
   }
 }

@@ -23,8 +23,7 @@ define icinga2::object::checkresultreader (
   String                             $checkresultreader_name = $title,
   Optional[Stdlib::Absolutepath]     $spool_dir              = undef,
   Variant[String, Integer]           $order                  = '05',
-){
-
+) {
   # compose the attributes
   $attrs = {
     'spool_dir'   => $spool_dir,

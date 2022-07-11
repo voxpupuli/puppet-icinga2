@@ -3,18 +3,17 @@
 #
 # @api private
 #
-define icinga2::feature(
+define icinga2::feature (
   Enum['absent', 'present'] $ensure  = present,
   String                    $feature = $title,
 ) {
-
   assert_private()
 
-  $user     = $::icinga2::globals::user
-  $group    = $::icinga2::globals::group
-  $conf_dir = $::icinga2::globals::conf_dir
+  $user     = $icinga2::globals::user
+  $group    = $icinga2::globals::group
+  $conf_dir = $icinga2::globals::conf_dir
 
-  if $::facts['os']['family'] != 'windows' {
+  if $facts['os']['family'] != 'windows' {
     $_ensure = $ensure ? {
       'present' => link,
       default   => absent,
@@ -26,7 +25,7 @@ define icinga2::feature(
       group   => $group,
       target  => "../features-available/${feature}.conf",
       require => Concat["${conf_dir}/features-available/${feature}.conf"],
-      notify  => Class['::icinga2::service'],
+      notify  => Class['icinga2::service'],
     }
   } else {
     $_ensure = $ensure ? {
@@ -40,8 +39,7 @@ define icinga2::feature(
       group   => $group,
       content => "include \"../features-available/${feature}.conf\"\r\n",
       require => Concat["${conf_dir}/features-available/${feature}.conf"],
-      notify  => Class['::icinga2::service'],
+      notify  => Class['icinga2::service'],
     }
   }
-
 }

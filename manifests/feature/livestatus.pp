@@ -19,7 +19,7 @@
 # @param compat_log_path
 #   Required for historical table queries. Requires CompatLogger feature to be enabled.
 #
-class icinga2::feature::livestatus(
+class icinga2::feature::livestatus (
   Enum['absent', 'present']                $ensure          = present,
   Optional[Enum['tcp', 'unix']]            $socket_type     = undef,
   Optional[Stdlib::Host]                   $bind_host       = undef,
@@ -27,14 +27,13 @@ class icinga2::feature::livestatus(
   Optional[Stdlib::Absolutepath]           $socket_path     = undef,
   Optional[Stdlib::Absolutepath]           $compat_log_path = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
   $_notify  = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 

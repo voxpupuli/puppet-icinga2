@@ -10,8 +10,7 @@ icinga2::globals::log_dir: C:/ProgramData/icinga2/var/log/icinga2
 icinga2::globals::run_dir: C:/ProgramData/icinga2/var/run/icinga2
 icinga2::globals::spool_dir: C:/ProgramData/icinga2/var/spool/icinga2
 icinga2::globals::cache_dir: C:/ProgramData/icinga2/var/cache/icinga2
-icinga2::globals::cert_dir: C:/ProgramData/icinga2/var/lib/icinga2/certs
-icinga2::globals::ca_dir: C:/ProgramData/icinga2/var/lib/icinga2/ca
+icinga2::globals::data_dir: C:/ProgramData/icinga2/var/lib/icinga2
 icinga2::globals::constants:
   PluginDir: C:/Program Files/ICINGA2/sbin
   PluginContribDir: C:/Program Files/ICINGA2/sbin

@@ -10,19 +10,18 @@
 # @param rotation_method
 #   Sets how often should the log file be rotated.
 #
-class icinga2::feature::compatlog(
+class icinga2::feature::compatlog (
   Enum['absent', 'present']                                 $ensure          = present,
   Optional[Stdlib::Absolutepath]                            $log_dir         = undef,
   Optional[Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY']]    $rotation_method = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
   $_notify  = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 

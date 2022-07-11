@@ -68,8 +68,7 @@ define icinga2::object::scheduleddowntime (
   Array                           $assign                 = [],
   Array                           $ignore                 = [],
   Variant[String, Integer]        $order                  = 90,
-){
-
+) {
   # compose attributes
   $attrs = {
     'host_name'    => $host_name,
@@ -96,5 +95,4 @@ define icinga2::object::scheduleddowntime (
     target       => $target,
     order        => $order,
   }
-
 }

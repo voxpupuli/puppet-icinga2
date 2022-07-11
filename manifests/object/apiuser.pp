@@ -57,7 +57,7 @@
 # @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-define icinga2::object::apiuser(
+define icinga2::object::apiuser (
   Stdlib::Absolutepath                          $target,
   Enum['absent', 'present']                     $ensure       = present,
   String                                        $apiuser_name = $title,
@@ -66,7 +66,6 @@ define icinga2::object::apiuser(
   Optional[String]                              $client_cn    = undef,
   Variant[String, Integer]                      $order        = 30,
 ) {
-
   $_password = if $password =~ String {
     Sensitive($password)
   } elsif $password =~ Sensitive {

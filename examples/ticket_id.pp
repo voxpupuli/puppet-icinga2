@@ -13,7 +13,7 @@ class { 'icinga2::feature::api':
     'NodeName'                   => {},
     'icinga2-master.example.com' => {
       'host' => '192.168.56.103',
-    }
+    },
   },
   zones           => {
     'NodeName' => {
@@ -21,9 +21,9 @@ class { 'icinga2::feature::api':
       'parent'    => 'master',
     },
     'master'   => {
-      'endpoints' => ['icinga2-master.example.com']
-    }
-  }
+      'endpoints' => ['icinga2-master.example.com'],
+    },
+  },
 }
 
 icinga2::object::zone { 'global-templates':

@@ -12,6 +12,9 @@
 # @param ensure
 #   Set to present enables the object, absent disables it.
 #
+# @param hostgroup_name
+#   Namevar of the hostgroup.
+#
 # @param display_name
 #   A short description of the host group.
 #
@@ -31,7 +34,7 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-define icinga2::object::hostgroup(
+define icinga2::object::hostgroup (
   Stdlib::Absolutepath        $target,
   Enum['absent', 'present']   $ensure         = present,
   String                      $hostgroup_name = $title,
@@ -41,7 +44,6 @@ define icinga2::object::hostgroup(
   Array                       $ignore         = [],
   Variant[String, Integer]    $order          = 55,
 ) {
-
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
   }

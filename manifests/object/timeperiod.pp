@@ -47,8 +47,7 @@ define icinga2::object::timeperiod (
   Boolean                      $template        = false,
   Array                        $import          = ['legacy-timeperiod'],
   Variant[String, Integer]     $order           = 35,
-){
-
+) {
   # compose attributes
   $attrs = {
     'display_name'    => $display_name,
@@ -70,5 +69,4 @@ define icinga2::object::timeperiod (
     target      => $target,
     order       => $order,
   }
-
 }

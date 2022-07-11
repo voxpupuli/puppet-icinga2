@@ -11,19 +11,18 @@
 #   Defines the facility to use for syslog entries. This can be a facility constant
 #   like FacilityDaemon.
 #
-class icinga2::feature::syslog(
+class icinga2::feature::syslog (
   Enum['absent', 'present']        $ensure   = present,
   Icinga2::LogSeverity             $severity = 'warning',
   Optional[Icinga2::LogFacility]   $facility = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir  = $::icinga2::globals::conf_dir
+  $conf_dir  = $icinga2::globals::conf_dir
   $_notify   = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 
@@ -49,4 +48,3 @@ class icinga2::feature::syslog(
     ensure => $ensure,
   }
 }
-

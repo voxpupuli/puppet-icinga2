@@ -4,18 +4,17 @@
 # @api private
 #
 class icinga2::config {
-
   assert_private()
 
-  $constants      = prefix($::icinga2::_constants, 'const ')
-  $conf_dir       = $::icinga2::globals::conf_dir
-  $user           = $::icinga2::globals::user
-  $group          = $::icinga2::globals::group
-  $plugins        = $::icinga2::plugins
-  $confd          = $::icinga2::_confd
-  $purge_features = $::icinga2::purge_features
+  $constants      = prefix($icinga2::_constants, 'const ')
+  $conf_dir       = $icinga2::globals::conf_dir
+  $user           = $icinga2::globals::user
+  $group          = $icinga2::globals::group
+  $plugins        = $icinga2::plugins
+  $confd          = $icinga2::_confd
+  $purge_features = $icinga2::purge_features
 
-  if $::facts['kernel'] != 'windows' {
+  if $facts['kernel'] != 'windows' {
     $template_constants  = icinga2::parse($constants)
     $template_mainconfig = template('icinga2/icinga2.conf.erb')
     $file_permissions    = '0640'
@@ -46,5 +45,4 @@ class icinga2::config {
     purge   => $purge_features,
     recurse => $purge_features,
   }
-
 }
