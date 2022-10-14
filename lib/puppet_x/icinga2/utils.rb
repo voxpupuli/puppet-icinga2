@@ -180,13 +180,14 @@ module Puppet::Icinga2
     end
 
     def self.parse(row)
+      row = row.to_s
       result = ''
 
       # parser is disabled
       if row =~ %r{^-:(.*)$}m
         return Regexp.last_match(1)
       end
-
+ 
       if row =~ %r{^\{{2}(.+)\}{2}$}m
         # scan function
         result += '{{%{expr}}}' % { expr: Regexp.last_match(1) }
@@ -275,7 +276,7 @@ module Puppet::Icinga2
                     end
                   else
                     # String: attr = '+ value' -> attr += 'value'
-                    if value =~ %r{^([\+,-])\s+}
+                    if value.to_s =~ %r{^([\+,-])\s+}
                       operator = "#{Regexp.last_match(1)}="
                       value = value.sub(%r{^[\+,-]\s+}, '')
                     else
@@ -348,7 +349,7 @@ module Puppet::Icinga2
                     elsif value.is_a?(Array)
                       op = value.delete_at(0) if value[0] == '+' || value[0] == '-'
                       "%{ind}%{att} #{op}= [ %{lst}]\n" % { ind: ' ' * indent, att: attr, lst: process_array(value) }
-                    elsif value =~ %r{^([\+,-])\s+}
+                    elsif value.to_s =~ %r{^([\+,-])\s+}
                       # String: attr = '+ config' -> attr += config
                       "%{ind}%{att} #{Regexp.last_match(1)}= %{expr}\n" % { ind: ' ' * indent, att: attr, expr: parse(value.sub(%r{^[\+,-]\s+}, '')) }
                     else
