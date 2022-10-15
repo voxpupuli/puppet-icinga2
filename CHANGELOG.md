@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.4.1](https://github.com/icinga/puppet-icinga2/tree/v3.4.1) (2022-10-15)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.4.0...v3.4.1)
+
+**Fixed bugs:**
+
+- Object\#=~ is called on TrueClass [\#711](https://github.com/Icinga/puppet-icinga2/issues/711)
+
 ## [v3.4.0](https://github.com/icinga/puppet-icinga2/tree/v3.4.0) (2022-06-27)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.3.1...v3.4.0)
 

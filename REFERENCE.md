@@ -75,7 +75,7 @@ start on boot and will be restarted if stopped.
 * [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
-* [`icinga2::parse`](#icinga2parse): This function parse icinga object attributes.
+* [`icinga2::parse`](#icinga2parse)
 
 ### Data types
 
@@ -5315,13 +5315,13 @@ The ticket salt of the Icinga CA.
 
 Type: Puppet Language
 
-This function parse icinga object attributes.
+The icinga2::parse function.
 
 #### `icinga2::parse(Hash[String, Any] $attrs, Integer $indent = 0, Array[String] $reserved = [], Hash[String, Any] $constants = {})`
 
 The icinga2::parse function.
 
-Returns: `Any`
+Returns: `Any` The parsed string.
 
 ##### `attrs`
 

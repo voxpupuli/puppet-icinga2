@@ -1,5 +1,8 @@
 # @summary
 #   This function parse icinga object attributes.
+
+# @return
+#   The parsed string.
 #
 function icinga2::parse(
   Hash[String, Any] $attrs,
