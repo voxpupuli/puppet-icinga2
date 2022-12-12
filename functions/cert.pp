@@ -5,13 +5,13 @@
 #    Returned hash includes all paths and the key, cert and cacert.
 #
 function icinga2::cert(
-  String                               $name,
-  Optional[Stdlib::Absolutepath]       $key_file    = undef,
-  Optional[Stdlib::Absolutepath]       $cert_file   = undef,
-  Optional[Stdlib::Absolutepath]       $cacert_file = undef,
-  Optional[Variant[String, Sensitive]] $key         = undef,
-  Optional[String]                     $cert        = undef,
-  Optional[String]                     $cacert      = undef,
+  String                                       $name,
+  Optional[Stdlib::Absolutepath]               $key_file    = undef,
+  Optional[Stdlib::Absolutepath]               $cert_file   = undef,
+  Optional[Stdlib::Absolutepath]               $cacert_file = undef,
+  Optional[Variant[String, Sensitive[String]]] $key         = undef,
+  Optional[String]                             $cert        = undef,
+  Optional[String]                             $cacert      = undef,
 ) >> Hash {
   # @param name
   #   The base name of certicate, key and ca file.
@@ -40,7 +40,13 @@ function icinga2::cert(
   $default_dir = $icinga2::globals::cert_dir
 
   $result = {
-    'key'         => $key,
+    'key'         => if $key =~ Sensitive {
+      $key
+    } elsif $key =~ String {
+      Sensitive($key)
+    } else {
+      undef
+    },
     'key_file'    => if $key {
       if $key_file {
         $key_file

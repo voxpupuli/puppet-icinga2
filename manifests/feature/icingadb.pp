@@ -95,6 +95,14 @@ class icinga2::feature::icingadb (
   $data_dir      = $icinga2::globals::data_dir
   $ssl_dir       = $icinga2::globals::cert_dir
 
+  $_password = if $password =~ Sensitive {
+    $password
+  } elsif $password =~ String {
+    Sensitive($password)
+  } else {
+    undef
+  }
+
   $_notify       = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
@@ -143,7 +151,17 @@ class icinga2::feature::icingadb (
     }
   } # enable_tls
   else {
-    $attrs_tls = { enable_tls  => false }
+    $attrs_tls = {
+      enable_tls        => undef,
+      ca_path           => undef,
+      cert_path         => undef,
+      key_path          => undef,
+      crl_path          => undef,
+      insecure_noverify => undef,
+      cipher_list       => undef,
+      tls_protocolmin   => undef,
+    }
+    $cert      = {}
   }
 
   # compose attributes
@@ -151,7 +169,7 @@ class icinga2::feature::icingadb (
     host     => $host,
     port     => $port,
     path     => $socket_path,
-    password => $password,
+    password => $_password,
   }
 
   # create object

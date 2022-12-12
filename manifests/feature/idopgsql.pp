@@ -40,22 +40,22 @@
 #   Enable SSL connection mode.
 #
 # @param ssl_key_path
-#   Location of the private key.
+#   Location of the private key. Only valid if ssl_mode is set unequal to `disabled`.
 #
 # @param ssl_cert_path
-#   Location of the certificate.
+#   Location of the certificate. Only valid if ssl_mode is set unequal to `disabled`.
 #
 # @param ssl_cacert_path
-#   Location of the CA certificate.
+#   Location of the CA certificate. Only valid if ssl_mode is set unequal to `disabled`.
 #
 # @param ssl_key
-#   The private key in a base64 encoded string to store in spicified ssl_key_path file.
+#   The client private key in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 #
 # @param ssl_cert
-#   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
+#   The client certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 #
 # @param ssl_cacert
-#   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+#   The CA root certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 #
 # @param table_prefix
 #   PostgreSQL database table prefix.
@@ -82,29 +82,28 @@
 #   Whether to import the PostgreSQL schema or not.
 #
 class icinga2::feature::idopgsql (
-  Variant[String, Sensitive[String]]  $password,
-  Enum['absent', 'present']           $ensure               = present,
-  Stdlib::Host                        $host                 = 'localhost',
-  Stdlib::Port::Unprivileged          $port                 = 5432,
-  String                              $user                 = 'icinga',
-  String                              $database             = 'icinga',
-  Optional[Enum['disable', 'allow',
-      'prefer', 'verify-full',
-  'verify-ca', 'require']]          $ssl_mode             = undef,
-  Optional[Stdlib::Absolutepath]      $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath]      $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath]      $ssl_cacert_path      = undef,
-  Optional[Stdlib::Base64]            $ssl_key              = undef,
-  Optional[Stdlib::Base64]            $ssl_cert             = undef,
-  Optional[Stdlib::Base64]            $ssl_cacert           = undef,
-  Optional[String]                    $table_prefix         = undef,
-  Optional[String]                    $instance_name        = undef,
-  Optional[String]                    $instance_description = undef,
-  Optional[Boolean]                   $enable_ha            = undef,
-  Optional[Icinga2::Interval]         $failover_timeout     = undef,
-  Optional[Icinga2::IdoCleanup]       $cleanup              = undef,
-  Optional[Array]                     $categories           = undef,
-  Boolean                             $import_schema        = false,
+  Variant[String, Sensitive[String]]           $password,
+  Enum['absent', 'present']                    $ensure               = present,
+  Stdlib::Host                                 $host                 = 'localhost',
+  Optional[Stdlib::Port::Unprivileged]         $port                 = undef,
+  String                                       $user                 = 'icinga',
+  String                                       $database             = 'icinga',
+  Optional[Enum['disable', 'allow', 'prefer',
+  'verify-full', 'verify-ca', 'require']]      $ssl_mode             = undef,
+  Optional[Stdlib::Absolutepath]               $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath]               $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath]               $ssl_cacert_path      = undef,
+  Optional[Variant[String, Sensitive[String]]] $ssl_key              = undef,
+  Optional[String]                             $ssl_cert             = undef,
+  Optional[String]                             $ssl_cacert           = undef,
+  Optional[String]                             $table_prefix         = undef,
+  Optional[String]                             $instance_name        = undef,
+  Optional[String]                             $instance_description = undef,
+  Optional[Boolean]                            $enable_ha            = undef,
+  Optional[Icinga2::Interval]                  $failover_timeout     = undef,
+  Optional[Icinga2::IdoCleanup]                $cleanup              = undef,
+  Optional[Array]                              $categories           = undef,
+  Boolean                                      $import_schema        = false,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -118,20 +117,16 @@ class icinga2::feature::idopgsql (
   $ido_pgsql_schema       = $icinga2::globals::ido_pgsql_schema
   $manage_package         = $icinga2::manage_package
   $manage_packages        = $icinga2::manage_packages
+
+  $enable_ssl             = if $ssl_mode and $ssl_mode != 'disabled' {
+    true
+  } else {
+    false
+  }
+
   $_notify                = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
-  }
-
-  $_ssl_key_mode          = $facts['os']['family'] ? {
-    'windows' => undef,
-    default   => '0600',
-  }
-
-  $_password              = if $password =~ Sensitive {
-    $password
-  } else {
-    Sensitive($password)
   }
 
   File {
@@ -139,82 +134,44 @@ class icinga2::feature::idopgsql (
     group   => $group,
   }
 
-  # Set defaults for certificate stuff
-  if $ssl_key {
-    if $ssl_key_path {
-      $_ssl_key_path = $ssl_key_path
-    } else {
-      $_ssl_key_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql.key"
+  if $enable_ssl {
+    $cert = icinga2::cert(
+      'IdoPgsqlConnection_ido-pgsql',
+      $ssl_key_path,
+      $ssl_cert_path,
+      $ssl_cacert_path,
+      $ssl_key,
+      $ssl_cert,
+      $ssl_cacert,
+    )
+
+    $attrs_ssl = {
+      ssl_mode => $ssl_mode,
+      ssl_ca   => $cert['cacert_file'],
+      ssl_cert => $cert['cert_file'],
+      ssl_key  => $cert['key_file'],
     }
 
-    $_ssl_key = $facts['os']['family'] ? {
-      'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-      default   => $ssl_key,
-    }
-
-    file { $_ssl_key_path:
-      ensure    => file,
-      mode      => $_ssl_key_mode,
-      content   => $ssl_key,
-      show_diff => false,
-      tag       => 'icinga2::config::file',
+    icinga2::tls::client { 'IdoPgsqlConnection_ido-pgsql':
+      args   => $cert,
+      notify => $_notify,
     }
   } else {
-    $_ssl_key_path = $ssl_key_path
-  }
-
-  if $ssl_cert {
-    if $ssl_cert_path {
-      $_ssl_cert_path = $ssl_cert_path
-    } else {
-      $_ssl_cert_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql.crt"
+    $attrs_ssl = {
+      ssl_mode => undef,
+      ssl_ca   => undef,
+      ssl_cert => undef,
+      ssl_key  => undef,
     }
-
-    $_ssl_cert = $facts['os']['family'] ? {
-      'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-      default   => $ssl_cert,
-    }
-
-    file { $_ssl_cert_path:
-      ensure  => file,
-      content => $ssl_cert,
-      tag     => 'icinga2::config::file',
-    }
-  } else {
-    $_ssl_cert_path = $ssl_cert_path
-  }
-
-  if $ssl_cacert {
-    if $ssl_cacert_path {
-      $_ssl_cacert_path = $ssl_cacert_path
-    } else {
-      $_ssl_cacert_path = "${ssl_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt"
-    }
-
-    $_ssl_cacert = $facts['os']['family'] ? {
-      'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-      default   => $ssl_cacert,
-    }
-
-    file { $_ssl_cacert_path:
-      ensure  => file,
-      content => $ssl_cacert,
-      tag     => 'icinga2::config::file',
-    }
-  } else {
-    $_ssl_cacert_path = $ssl_cacert_path
+    $cert      = {}
   }
 
   $attrs = {
     host                  => $host,
     port                  => $port,
     user                  => $user,
-    password              => $_password,
+    password              => Sensitive($password),
     database              => $database,
-    ssl_mode              => $ssl_mode,
-    ssl_key               => $_ssl_key_path,
-    ssl_cert              => $_ssl_cert_path,
-    ssl_ca                => $_ssl_cacert_path,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,
     instance_description  => $instance_description,
@@ -250,23 +207,20 @@ class icinga2::feature::idopgsql (
       Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
 
-    $_connection = regsubst(join(any2array(delete_undef_values({
-              'host='        => $host,
-              'sslmode='     => $ssl_mode,
-              'sslcert='     => $_ssl_cert_path,
-              'sslkey='      => $_ssl_key_path,
-              'sslrootcert=' => $_ssl_cacert_path,
-              'user='        => $user,
-              'port='        => $port,
-              'dbname='      => $database,
-    })), ' '), '= ', '=', 'G')
+    $db_cli_options = icinga2::db::connect({
+        type     => 'pgsql',
+        host     => $host,
+        port     => $port,
+        database => $database,
+        username => $user,
+    }, $cert, $enable_ssl)
 
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $facts['path'],
-      environment => ["PGPASSWORD=${_password.unwrap}"],
-      command     => "psql '${_connection}' -w -f '${ido_pgsql_schema}'",
-      unless      => "psql '${_connection}' -w -c 'select version from icinga_dbversion'",
+      environment => [sprintf('PGPASSWORD=%s', icinga2::unwrap($password))],
+      command     => "psql '${db_cli_options}' -w -f '${ido_pgsql_schema}'",
+      unless      => "psql '${db_cli_options}' -w -c 'select version from icinga_dbversion'",
     }
   }
 
@@ -274,8 +228,8 @@ class icinga2::feature::idopgsql (
   icinga2::object { 'icinga2::object::IdoPgsqlConnection::ido-pgsql':
     object_name => 'ido-pgsql',
     object_type => 'IdoPgsqlConnection',
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
+    attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/ido-pgsql.conf",
     order       => 10,
     notify      => $_notify,

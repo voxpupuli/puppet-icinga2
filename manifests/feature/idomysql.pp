@@ -44,25 +44,22 @@
 #   Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 #
 # @param ssl_key_path
-#   Location of the private key. Only valid if ssl is enabled.
+#   Location of the client private key. Only valid if ssl is enabled.
 #
 # @param ssl_cert_path
-#   Location of the certificate. Only valid if ssl is enabled.
+#   Location of the client certificate. Only valid if ssl is enabled.
 #
 # @param ssl_cacert_path
 #   Location of the CA certificate. Only valid if ssl is enabled.
 #
 # @param ssl_key
-#   The private key in a base64 encoded string to store in spicified ssl_key_path file.
-#   Only valid if ssl is enabled.
+#   The client private key in PEM Format. Only valid if ssl is enabled.
 #
 # @param ssl_cert
-#   The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
-#   Only valid if ssl is enabled.
+#   The client certificate in PEM format. Only valid if ssl is enabled.
 #
 # @param ssl_cacert
-#   The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
-#   Only valid if ssl is enabled.
+#   The CA root certificate in PEM format. Only valid if ssl is enabled.
 #
 # @param ssl_capath
 #    MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
@@ -97,30 +94,30 @@
 #   whereas with mysql its different options.
 #
 class icinga2::feature::idomysql (
-  Variant[String, Sensitive[String]]         $password,
-  Enum['absent', 'present']                  $ensure                 = present,
-  Stdlib::Host                               $host                   = 'localhost',
-  Optional[Stdlib::Port::Unprivileged]       $port                   = undef,
-  Optional[Stdlib::Absolutepath]             $socket_path            = undef,
-  String                                     $user                   = 'icinga',
-  String                                     $database               = 'icinga',
-  Boolean                                    $enable_ssl             = false,
-  Optional[Stdlib::Absolutepath]             $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]             $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]             $ssl_cacert_path        = undef,
-  Optional[Stdlib::Base64]                   $ssl_key                = undef,
-  Optional[Stdlib::Base64]                   $ssl_cert               = undef,
-  Optional[Stdlib::Base64]                   $ssl_cacert             = undef,
-  Optional[Stdlib::Absolutepath]             $ssl_capath             = undef,
-  Optional[String]                           $ssl_cipher             = undef,
-  Optional[String]                           $table_prefix           = undef,
-  Optional[String]                           $instance_name          = undef,
-  Optional[String]                           $instance_description   = undef,
-  Optional[Boolean]                          $enable_ha              = undef,
-  Optional[Icinga2::Interval]                $failover_timeout       = undef,
-  Optional[Icinga2::IdoCleanup]              $cleanup                = undef,
-  Optional[Array]                            $categories             = undef,
-  Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema          = false,
+  Variant[String, Sensitive[String]]           $password,
+  Enum['absent', 'present']                    $ensure                 = present,
+  Stdlib::Host                                 $host                   = 'localhost',
+  Optional[Stdlib::Port::Unprivileged]         $port                   = undef,
+  Optional[Stdlib::Absolutepath]               $socket_path            = undef,
+  String                                       $user                   = 'icinga',
+  String                                       $database               = 'icinga',
+  Boolean                                      $enable_ssl             = false,
+  Optional[Stdlib::Absolutepath]               $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath]               $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath]               $ssl_cacert_path        = undef,
+  Optional[Variant[String, Sensitive[String]]] $ssl_key                = undef,
+  Optional[String]                             $ssl_cert               = undef,
+  Optional[String]                             $ssl_cacert             = undef,
+  Optional[Stdlib::Absolutepath]               $ssl_capath             = undef,
+  Optional[String]                             $ssl_cipher             = undef,
+  Optional[String]                             $table_prefix           = undef,
+  Optional[String]                             $instance_name          = undef,
+  Optional[String]                             $instance_description   = undef,
+  Optional[Boolean]                            $enable_ha              = undef,
+  Optional[Icinga2::Interval]                  $failover_timeout       = undef,
+  Optional[Icinga2::IdoCleanup]                $cleanup                = undef,
+  Optional[Array]                              $categories             = undef,
+  Variant[Boolean, Enum['mariadb', 'mysql']]   $import_schema          = false,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -135,32 +132,15 @@ class icinga2::feature::idomysql (
   $manage_package         = $icinga2::manage_package
   $manage_packages        = $icinga2::manage_packages
 
-  $_ssl_key_mode          = $facts['os']['family'] ? {
-    'windows' => undef,
-    default   => '0600',
+  $type                   = if $import_schema =~ Boolean {
+    'mariadb'
+  } else {
+    $import_schema
   }
 
   $_notify                = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
-  }
-
-  $_password              = if $password =~ Sensitive {
-    $password
-  } else {
-    Sensitive($password)
-  }
-
-  # to build mysql exec command to import schema
-  if $import_schema {
-    $_mysql_options = join(any2array(delete_undef_values({
-            '-h' => $host ? {
-              /localhost/ => undef,
-              default     => $host,
-            },
-            '-P' => $port,
-            '-u' => $user,
-    })), ' ')
   }
 
   File {
@@ -169,116 +149,39 @@ class icinga2::feature::idomysql (
   }
 
   if $enable_ssl {
-    # Set defaults for certificate stuff
-    if $ssl_key {
-      if $ssl_key_path {
-        $_ssl_key_path = $ssl_key_path
-      } else {
-        $_ssl_key_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.key"
-      }
-
-      $_ssl_key = $facts['os']['family'] ? {
-        'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-        default   => $ssl_key,
-      }
-
-      file { $_ssl_key_path:
-        ensure    => file,
-        mode      => $_ssl_key_mode,
-        content   => $ssl_key,
-        show_diff => false,
-        tag       => 'icinga2::config::file',
-      }
-    } else {
-      $_ssl_key_path = $ssl_key_path
-    }
-
-    if $ssl_cert {
-      if $ssl_cert_path {
-        $_ssl_cert_path = $ssl_cert_path
-      } else {
-        $_ssl_cert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql.crt"
-      }
-
-      $_ssl_cert = $facts['os']['family'] ? {
-        'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-        default   => $ssl_cert,
-      }
-
-      file { $_ssl_cert_path:
-        ensure  => file,
-        content => $ssl_cert,
-        tag     => 'icinga2::config::file',
-      }
-    } else {
-      $_ssl_cert_path = $ssl_cert_path
-    }
-
-    if $ssl_cacert {
-      if $ssl_cacert_path {
-        $_ssl_cacert_path = $ssl_cacert_path
-      } else {
-        $_ssl_cacert_path = "${ssl_dir}/IdoMysqlConnection_ido-mysql_ca.crt"
-      }
-
-      $_ssl_cacert = $facts['os']['family'] ? {
-        'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-        default   => $ssl_cacert,
-      }
-
-      file { $_ssl_cacert_path:
-        ensure  => file,
-        content => $ssl_cacert,
-        tag     => 'icinga2::config::file',
-      }
-    } else {
-      $_ssl_cacert_path = $ssl_cacert_path
-    }
-
-    if $import_schema {
-      if $enable_ssl {
-        if $import_schema =~ Boolean or $import_schema == 'mariadb' {
-          $_ssl_options = join(any2array(delete_undef_values({
-                  '--ssl'        => '',
-                  '--ssl-ca'     => $_ssl_cacert_path,
-                  '--ssl-cert'   => $_ssl_cert_path,
-                  '--ssl-key'    => $_ssl_key_path,
-                  '--ssl-capath' => $ssl_capath,
-                  '--ssl-cipher' => $ssl_cipher,
-          })), ' ')
-        } else {
-          $_ssl_options = join(any2array(delete_undef_values({
-                  '--ssl-mode'   => 'required',
-                  '--ssl-ca'     => $_ssl_cacert_path,
-                  '--ssl-cert'   => $_ssl_cert_path,
-                  '--ssl-key'    => $_ssl_key_path,
-                  '--ssl-capath' => $ssl_capath,
-                  '--ssl-cipher' => $ssl_cipher,
-          })), ' ')
-        }
-      } else {
-        $_ssl_options = ''
-      }
-
-      # set cli options for mysql connection via tls
-      $_mysql_command = "mysql ${_mysql_options} -p'${_password.unwrap}' ${_ssl_options} ${database}"
-    }
+    $cert = icinga2::cert(
+      'IdoMysqlConnection_ido-mysql',
+      $ssl_key_path,
+      $ssl_cert_path,
+      $ssl_cacert_path,
+      $ssl_key,
+      $ssl_cert,
+      $ssl_cacert,
+    )
 
     $attrs_ssl = {
-      enable_ssl => $enable_ssl,
-      ssl_ca     => $_ssl_cacert_path,
-      ssl_cert   => $_ssl_cert_path,
-      ssl_key    => $_ssl_key_path,
+      enable_ssl => true,
+      ssl_ca     => $cert['cacert_file'],
+      ssl_cert   => $cert['cert_file'],
+      ssl_key    => Sensitive($cert['key_file']),
       ssl_capath => $ssl_capath,
       ssl_cipher => $ssl_cipher,
     }
-  } # enable_ssl
-  else {
-    # set cli options for mysql connection
-    if $import_schema {
-      $_mysql_command = "mysql ${_mysql_options} -p'${_password.unwrap}' ${database}"
+
+    icinga2::tls::client { 'IdoMysqlConnection_ido-mysql':
+      args   => $cert,
+      notify => $_notify,
     }
-    $attrs_ssl = { enable_ssl  => $enable_ssl }
+  } else {
+    $attrs_ssl = {
+      enable_ssl => undef,
+      ssl_ca     => undef,
+      ssl_cert   => undef,
+      ssl_key    => undef,
+      ssl_capath => undef,
+      ssl_cipher => undef,
+    }
+    $cert      = {}
   }
 
   $attrs = {
@@ -286,7 +189,7 @@ class icinga2::feature::idomysql (
     port                  => $port,
     socket_path           => $socket_path,
     user                  => $user,
-    password              => $_password,
+    password              => Sensitive($password),
     database              => $database,
     table_prefix          => $table_prefix,
     instance_name         => $instance_name,
@@ -322,11 +225,21 @@ class icinga2::feature::idomysql (
     if $ido_mysql_package_name and ($manage_package or $manage_packages) {
       Package[$ido_mysql_package_name] -> Exec['idomysql-import-schema']
     }
+
+    $db_cli_options = icinga2::db::connect({
+        type     => $type,
+        host     => $host,
+        port     => $port,
+        database => $database,
+        username => $user,
+        password => $password,
+    }, $cert, $enable_ssl)
+
     exec { 'idomysql-import-schema':
       user    => 'root',
       path    => $facts['path'],
-      command => "${_mysql_command} < \"${ido_mysql_schema}\"",
-      unless  => "${_mysql_command} -Ns -e 'select version from icinga_dbversion'",
+      command => "mysql ${db_cli_options} < \"${ido_mysql_schema}\"",
+      unless  => "mysql ${db_cli_options} -Ns -e 'select version from icinga_dbversion'",
     }
   }
 

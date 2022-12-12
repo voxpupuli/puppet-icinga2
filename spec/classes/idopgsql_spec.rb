@@ -25,14 +25,14 @@ describe('icinga2::feature::idopgsql', type: :class) do
         let(:icinga2_conf_dir) { '/usr/local/etc/icinga2' }
         let(:icinga2_pki_dir) { '/var/lib/icinga2/certs' }
         let(:ido_pgsql_schema_dir) { '/usr/local/share/icinga2-ido-pgsql/schema' }
-        let(:icinga2_sslkey_mode) { '0600' }
+        let(:icinga2_sslkey_mode) { '0400' }
         let(:icinga2_user) { 'icinga' }
         let(:icinga2_group) { 'icinga' }
       else
         let(:icinga2_conf_dir) { '/etc/icinga2' }
         let(:icinga2_pki_dir) { '/var/lib/icinga2/certs' }
         let(:ido_pgsql_schema_dir) { '/usr/share/icinga2-ido-pgsql/schema' }
-        let(:icinga2_sslkey_mode) { '0600' }
+        let(:icinga2_sslkey_mode) { '0400' }
         case facts[:os]['family']
         when 'Debian'
           let(:icinga2_user) { 'nagios' }
@@ -99,7 +99,7 @@ describe('icinga2::feature::idopgsql', type: :class) do
             {
               'user'        => 'root',
               'environment' => ['PGPASSWORD=foo'],
-              'command'     => "psql 'host=localhost user=icinga port=5432 dbname=icinga' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'" \
+              'command'     => "psql 'host=localhost user=icinga dbname=icinga ' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'",
             },
           )
         }
@@ -170,9 +170,9 @@ describe('icinga2::feature::idopgsql', type: :class) do
           is_expected.to contain_exec('idopgsql-import-schema').with(
             {
               'user'      => 'root',
-              'command'   => "psql 'host=127.0.0.1 sslmode=verify-full sslcert=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.crt " \
-                "sslkey=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.key sslrootcert=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt " \
-                "user=icinga port=5432 dbname=icinga' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'" \
+              'command'   => "psql 'host=127.0.0.1 user=icinga port=5432 dbname=icinga sslmode=verify-full sslcert=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.crt " \
+                "sslkey=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql.key sslrootcert=#{icinga2_pki_dir}/IdoPgsqlConnection_ido-pgsql_ca.crt' " \
+                "-w -f '#{ido_pgsql_schema_dir}/pgsql.sql'",
             },
           )
         }
