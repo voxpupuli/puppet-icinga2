@@ -26,5 +26,3 @@ jobs:
       run: bundle exec rake lint
     - name: Run unit tests
       run:  bundle exec rake parallel_spec
-    - name: Check if REFERENCE.md is up2date
-      run: bundle exec rake strings:validate:reference
