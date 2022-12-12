@@ -85,7 +85,7 @@ class { 'mysql::server':
     mysqld => {
       ssl => true,
     },
-  }
+  },
 }
 
 mysql::db { 'icinga':
@@ -93,22 +93,21 @@ mysql::db { 'icinga':
   password    => 'supersecret',
   host        => 'localhost',
   grant       => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
-  tls_options => [ 'X509' ],
+  tls_options => ['X509'],
 }
 
-class { '::icinga2':
+class { 'icinga2':
   manage_repos => true,
 }
 
-class{ '::icinga2::feature::idomysql':
+class { 'icinga2::feature::idomysql':
   user            => 'icinga',
   password        => 'supersecret',
   database        => 'icinga',
-  import_schema   => $::mysql::params::provider,
+  import_schema   => $mysql::params::provider,
   enable_ssl      => true,
   ssl_key_path    => '/etc/mysql/server-key.pem',
   ssl_cert_path   => '/etc/mysql/server-cert.pem',
   ssl_cacert_path => '/etc/mysql/cacert.pem',
   require         => Mysql::Db['icinga'],
 }
-

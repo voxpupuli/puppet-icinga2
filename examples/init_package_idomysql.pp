@@ -1,4 +1,4 @@
-include ::icinga2::repo
+include icinga2::repo
 
 package { ['icinga2', 'icinga2-ido-mysql']:
   ensure => latest,

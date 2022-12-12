@@ -32,24 +32,26 @@
 #   Destination config file to store in this fragment. File will be declared the
 #   first time.
 #
+# @param code_name
+#   Namevar of the fragment.
+#
 # @param order
 #   String or integer to set the position in the target file, sorted in alpha numeric order. Defaults to `00`.
 #
-define icinga2::config::fragment(
+define icinga2::config::fragment (
   String                       $content,
   Stdlib::Absolutepath         $target,
   String                       $code_name = $title,
   Variant[String, Integer]     $order     = '00',
 ) {
-
-  case $::facts['os']['family'] {
+  case $facts['os']['family'] {
     'windows': {
       $_content = regsubst($content, '\n', "\r\n", 'EMG')
     } # windows
     default: {
       Concat {
-        owner => $::icinga2::globals::user,
-        group => $::icinga2::globals::group,
+        owner => $icinga2::globals::user,
+        group => $icinga2::globals::group,
         mode  => '0640',
       }
       $_content = $content
@@ -69,5 +71,4 @@ define icinga2::config::fragment(
     content => $_content,
     order   => $order,
   }
-
 }

@@ -2,7 +2,7 @@
 #   Configures the Icinga 2 feature graphite.
 #
 # @example
-#   class { '::icinga2::feature::graphite':
+#   class { 'icinga2::feature::graphite':
 #     host                   => '10.10.0.15',
 #     port                   => 2003,
 #     enable_send_thresholds => true,
@@ -31,7 +31,7 @@
 # @param [Optional[Boolean]] enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
-class icinga2::feature::graphite(
+class icinga2::feature::graphite (
   Enum['absent', 'present']                $ensure                 = present,
   Optional[Stdlib::Host]                   $host                   = undef,
   Optional[Stdlib::Port::Unprivileged]     $port                   = undef,
@@ -41,14 +41,13 @@ class icinga2::feature::graphite(
   Optional[Boolean]                        $enable_send_metadata   = undef,
   Optional[Boolean]                        $enable_ha              = undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
   $_notify  = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 

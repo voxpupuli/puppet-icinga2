@@ -24,17 +24,16 @@
 # @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
-define icinga2::object::zone(
+define icinga2::object::zone (
   Enum['absent', 'present']          $ensure    = present,
   String                             $zone_name = $title,
-  Optional[Array]                    $endpoints = [],
+  Array                              $endpoints = [],
   Optional[String]                   $parent    = undef,
-  Optional[Boolean]                  $global    = false,
+  Boolean                            $global    = false,
   Optional[Stdlib::Absolutepath]     $target    = undef,
   Variant[String, Integer]           $order     = 45,
 ) {
-
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
 
   # set defaults
   if $target {

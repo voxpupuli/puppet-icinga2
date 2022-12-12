@@ -4,6 +4,9 @@
 # @return
 #   The parsed string.
 #
+# @return
+#   The parsed string.
+#
 function icinga2::parse(
   Hash[String, Any] $attrs,
   Integer           $indent    = 0,
@@ -24,8 +27,8 @@ function icinga2::parse(
   #
   icinga2::icinga2_attributes(
     $attrs,
-    concat($::icinga2::globals::reserved, $reserved),
-    merge($::icinga2::_constants, $constants),
+    concat($icinga2::globals::reserved, $reserved),
+    merge($icinga2::_constants, $constants),
     $indent
   )
 }

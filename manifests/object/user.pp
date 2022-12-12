@@ -67,8 +67,7 @@ define icinga2::object::user (
   Array                               $import               = [],
   Boolean                             $template             = false,
   Variant[String, Integer]            $order                = 75,
-){
-
+) {
   # compose attributes
   $attrs = {
     'display_name'         => $display_name,
@@ -94,5 +93,4 @@ define icinga2::object::user (
     target      => $target,
     order       => $order,
   }
-
 }

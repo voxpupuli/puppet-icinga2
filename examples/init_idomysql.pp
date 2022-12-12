@@ -1,6 +1,6 @@
 $password = Sensitive('super(secret')
 
-include ::mysql::server
+include mysql::server
 
 mysql::db { 'icinga2':
   user     => 'icinga2',
@@ -9,13 +9,11 @@ mysql::db { 'icinga2':
   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
 }
 
-class { '::icinga2':
+class { 'icinga2':
   manage_repos => true,
 }
 
-notice($password)
-
-class{ '::icinga2::feature::idomysql':
+class { 'icinga2::feature::idomysql':
   user          => 'icinga2',
   password      => $password,
   database      => 'icinga2',

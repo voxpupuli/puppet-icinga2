@@ -1,3 +1,3 @@
 class { 'icinga2':
-  plugins     => [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ]
+  plugins => ['plugins', 'plugins-contrib', 'windows-plugins', 'nscp'],
 }

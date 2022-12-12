@@ -1,25 +1,4 @@
-# Example service MySQL
-#
-# == Service: mysql
-#
-# [*mysql_hostname*]
-#   If set to an external address, the agent will check an external database.  Usefull to check
-#   connectivity between two replications.
-#
-# == Service: mysql_health
-#
-# [*command_endpoint*]
-#   If set to name, the check source will be the agent itself.  This means the agent needs to be
-#   hosting the database itself.
-#
-# [*mysql_health_name*]
-#   It is best to contain the query within single quotes ('') followed by a hypend (-) and colon (:).
-#   Then contain the query as normal within double quotes ("") and escape (\) anything that would break the string.
-#
-#   Example:
-#   mysql_health_name => '-:"SELECT COUNT(*) FROM t1;"'
-#
-class { '::icinga2':
+class { 'icinga2':
   manage_repos => true,
   confd        => 'example.d',
 }
@@ -34,7 +13,7 @@ file { '/etc/icinga2/example.d':
 #
 # MySQL
 #
-class { '::mysql::server':
+class { 'mysql::server':
   root_password           => 'secret',
   remove_default_accounts => true,
 }
@@ -45,7 +24,7 @@ mysql::db { 'icinga2':
   host     => 'localhost',
   grant    => [
     'SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP',
-    'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'
+    'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER',
   ],
 }
 

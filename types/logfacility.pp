@@ -13,4 +13,5 @@ type Icinga2::LogFacility = Variant[
     'LOG_SYSLOG',
     'LOG_USER',
     'LOG_UUCP'
-  ], Pattern[/^LOG_LOCAL[0-7]$/]]
+  ],
+Pattern[/^LOG_LOCAL[0-7]$/]]

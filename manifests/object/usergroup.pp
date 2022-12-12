@@ -43,8 +43,7 @@ define icinga2::object::usergroup (
   Array                       $import         = [],
   Boolean                     $template       = false,
   Variant[String, Integer]    $order          = 80,
-){
-
+) {
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
   }
@@ -69,5 +68,4 @@ define icinga2::object::usergroup (
     target      => $target,
     order       => $order,
   }
-
 }

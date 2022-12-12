@@ -3,7 +3,7 @@
 #
 # @example Declare icinga2 with all defaults. Keep in mind that your operating system may not have Icinga 2 in its package repository.
 #
-#   include ::icinga2
+#   include icinga2
 #
 # @example If you want to use the module icinga/puppet-icinga, e.g. to use the official Icinga Project repositories, enable the manage_repos parameter.
 #   class { 'icinga2':
@@ -21,7 +21,7 @@
 #     notifiy => Class['icinga2'],
 #   }
 #
-#   class { '::icinga2':
+#   class { 'icinga2':
 #     manage_packages => false,
 #   }
 #
@@ -38,7 +38,7 @@
 #   }
 #
 # @example Enabling features with there defaults or loading parameters via Hiera:
-#   class { '::icinga2':
+#   class { 'icinga2':
 #     manage_repos => true,
 #     features     => ['checker', 'mainlog', 'command'],
 #   }
@@ -132,14 +132,13 @@ class icinga2 (
   Hash                       $constants       = {},
   Variant[Boolean, String]   $confd           = true,
 ) {
-
-  require ::icinga2::globals
+  require icinga2::globals
 
   # load reserved words
-  $_reserved = $::icinga2::globals::reserved
+  $_reserved = $icinga2::globals::reserved
 
   # merge constants with defaults
-  $_constants = merge($::icinga2::globals::constants, $constants)
+  $_constants = merge($icinga2::globals::constants, $constants)
 
   # validate confd, boolean or string
   if $confd =~ Boolean {
@@ -148,32 +147,32 @@ class icinga2 (
     $_confd = $confd
   }
 
-  Class['::icinga2::config']
+  Class['icinga2::config']
   -> Concat <| tag == 'icinga2::config::file' |>
-  ~> Class['::icinga2::service']
+  ~> Class['icinga2::service']
 
   if $manage_package {
     deprecation('manage_package', 'manage_package is deprecated and will be replaced by manage_packages in the future.')
   }
 
   if $manage_repos or $manage_repo {
-    require ::icinga::repos
+    require icinga::repos
     if $manage_repo {
       deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
     }
   }
 
-  anchor { '::icinga2::begin':
-    notify => Class['::icinga2::service'],
+  anchor { 'icinga2::begin':
+    notify => Class['icinga2::service'],
   }
-  -> class { '::icinga2::install': }
+  -> class { 'icinga2::install': }
   -> File <| ensure == 'directory' and tag == 'icinga2::config::file' |>
-  -> class { '::icinga2::config': notify => Class['::icinga2::service'] }
+  -> class { 'icinga2::config': notify => Class['icinga2::service'] }
   -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
-  ~> class { '::icinga2::service': }
-  -> anchor { '::icinga2::end':
-    subscribe => Class['::icinga2::config'],
+  ~> class { 'icinga2::service': }
+  -> anchor { 'icinga2::end':
+    subscribe => Class['icinga2::config'],
   }
 
-  include prefix($features, '::icinga2::feature::')
+  include prefix($features, 'icinga2::feature::')
 }

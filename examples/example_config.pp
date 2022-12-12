@@ -1,4 +1,4 @@
-class { '::icinga2':
+class { 'icinga2':
   manage_repos => true,
   confd        => 'example.d',
 }
@@ -9,7 +9,6 @@ file { '/etc/icinga2/example.d':
   purge   => true,
   recurse => true,
 }
-
 
 #
 # Hosts
@@ -25,7 +24,7 @@ file { '/etc/icinga2/example.d':
 
 ::icinga2::object::host { 'NodeName':
   target   => '/etc/icinga2/example.d/hosts.conf',
-  import   => [ 'generic-host' ],
+  import   => ['generic-host'],
   address  => '127.0.0.1',
   address6 => '::1',
   vars     => {
@@ -43,7 +42,7 @@ file { '/etc/icinga2/example.d':
     },
     notification => {
       mail => {
-        groups => [ 'icingaadmins' ],
+        groups => ['icingaadmins'],
       },
     },
   },
@@ -52,13 +51,13 @@ file { '/etc/icinga2/example.d':
 ::icinga2::object::hostgroup { 'linux-servers':
   target       => '/etc/icinga2/example.d/groups.conf',
   display_name => 'Linux Servers',
-  assign       => [ 'host.vars.os == Linux' ],
+  assign       => ['host.vars.os == Linux'],
 }
 
 ::icinga2::object::hostgroup { 'windows-servers':
   target       => '/etc/icinga2/example.d/groups.conf',
   display_name => 'Windows Servers',
-  assign       => [ 'host.vars.os == Windows' ],
+  assign       => ['host.vars.os == Windows'],
 }
 
 #
@@ -75,31 +74,31 @@ file { '/etc/icinga2/example.d':
 ::icinga2::object::service { 'ping4':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'ping4',
-  assign        => [ 'host.address' ],
+  assign        => ['host.address'],
 }
 
 ::icinga2::object::service { 'ping6':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'ping6',
-  assign        => [ 'host.address6' ],
+  assign        => ['host.address6'],
 }
 
 ::icinga2::object::service { 'ssh':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'ssh',
-  assign        => [ '(host.address || host.address6) && host.vars.os == Linux' ],
+  assign        => ['(host.address || host.address6) && host.vars.os == Linux'],
 }
 
 ::icinga2::object::service { 'http':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => 'vhost => config in host.vars.http_vhosts',
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'http',
   vars          => '+ config',
 }
@@ -107,7 +106,7 @@ file { '/etc/icinga2/example.d':
 ::icinga2::object::service { 'disk':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => 'disk => config in host.vars.disks',
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => '-:"disk"',
   vars          => '+ config',
 }
@@ -115,56 +114,55 @@ file { '/etc/icinga2/example.d':
 ::icinga2::object::service { 'icinga':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'icinga',
-  assign        => [ 'host.name == NodeName' ],
+  assign        => ['host.name == NodeName'],
 }
 
 ::icinga2::object::service { 'load':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'load',
   vars          => {
     backup_downtime => '02:00-03:00',
   },
-  assign        => [ 'host.name == NodeName' ],
+  assign        => ['host.name == NodeName'],
 }
 
 ::icinga2::object::service { 'procs':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'procs',
-  assign        => [ 'host.name == NodeName' ],
+  assign        => ['host.name == NodeName'],
 }
 
 ::icinga2::object::service { 'swap':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'swap',
-  assign        => [ 'host.name == NodeName' ],
+  assign        => ['host.name == NodeName'],
 }
 
 ::icinga2::object::servicegroup { 'ping':
   target       => '/etc/icinga2/example.d/groups.conf',
   display_name => 'Ping Checks',
-  assign       => [ 'match(ping*, service.check_command)' ],
+  assign       => ['match(ping*, service.check_command)'],
 }
 
 ::icinga2::object::servicegroup { 'http':
   target       => '/etc/icinga2/example.d/groups.conf',
   display_name => 'HTTP Checks',
-  assign       => [ 'match(http*, service.check_command)' ],
+  assign       => ['match(http*, service.check_command)'],
 }
 
 ::icinga2::object::servicegroup { 'disk':
   target       => '/etc/icinga2/example.d/groups.conf',
   display_name => 'Disk Checks',
-  assign       => [ 'match(disk*, service.check_command)' ],
+  assign       => ['match(disk*, service.check_command)'],
 }
-
 
 #
 # Users
@@ -177,9 +175,9 @@ file { '/etc/icinga2/example.d':
 ::icinga2::object::service { 'users':
   target        => '/etc/icinga2/example.d/services.conf',
   apply         => true,
-  import        => [ 'generic-service' ],
+  import        => ['generic-service'],
   check_command => 'users',
-  assign        => [ 'host.name == NodeName' ],
+  assign        => ['host.name == NodeName'],
 }
 
 ::icinga2::object::scheduleddowntime { 'backup-downtime':
@@ -197,14 +195,14 @@ file { '/etc/icinga2/example.d':
     saturday  => 'service.vars.backup_downtime',
     sunday    => 'service.vars.backup_downtime',
   },
-  assign       => [ 'service.vars.backup_downtime' ],
+  assign       => ['service.vars.backup_downtime'],
 }
 
 ::icinga2::object::user { 'icingaadmin':
   target       => '/etc/icinga2/example.d/users.conf',
-  import       => [ 'generic-user' ],
+  import       => ['generic-user'],
   display_name => 'Icinga 2 Admin',
-  groups       => [ 'icingaadmins'],
+  groups       => ['icingaadmins'],
   email        => 'icinga@localhost',
 }
 
@@ -213,13 +211,12 @@ file { '/etc/icinga2/example.d':
   display_name => 'Icinga 2 Admin Group',
 }
 
-
 #
 # Notifications
 #
 ::icinga2::object::notificationcommand { 'mail-host-notification':
   target  => '/etc/icinga2/example.d/commands.conf',
-  command => [ 'SysconfDir + /icinga2/scripts/mail-host-notification.sh' ],
+  command => ['SysconfDir + /icinga2/scripts/mail-host-notification.sh'],
   env     => {
     'NOTIFICATIONTYPE'       => '$notification.type$',
     'HOSTNAME'               => '$host.name$',
@@ -236,7 +233,7 @@ file { '/etc/icinga2/example.d':
 
 ::icinga2::object::notificationcommand { 'mail-service-notification':
   target  => '/etc/icinga2/example.d/commands.conf',
-  command => [ 'SysconfDir + /icinga2/scripts/mail-service-notification.sh' ],
+  command => ['SysconfDir + /icinga2/scripts/mail-service-notification.sh'],
   env     => {
     'NOTIFICATIONTYPE'       => '$notification.type$',
     'SERVICENAME'            => '$service.name$',
@@ -257,8 +254,8 @@ file { '/etc/icinga2/example.d':
   target   => '/etc/icinga2/example.d/templates.conf',
   template => true,
   command  => 'mail-host-notification',
-  states   => [ 'Up', 'Down' ],
-  types    => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom', 'FlappingStart', 'FlappingEnd', 'DowntimeStart', 'DowntimeEnd', 'DowntimeRemoved' ],
+  states   => ['Up', 'Down'],
+  types    => ['Problem', 'Acknowledgement', 'Recovery', 'Custom', 'FlappingStart', 'FlappingEnd', 'DowntimeStart', 'DowntimeEnd', 'DowntimeRemoved'],
   period   => '24x7',
 }
 
@@ -266,8 +263,8 @@ file { '/etc/icinga2/example.d':
   target   => '/etc/icinga2/example.d/templates.conf',
   template => true,
   command  => 'mail-service-notification',
-  states   => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
-  types    => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom', 'FlappingStart', 'FlappingEnd', 'DowntimeStart', 'DowntimeEnd', 'DowntimeRemoved' ],
+  states   => ['OK', 'Warning', 'Critical', 'Unknown'],
+  types    => ['Problem', 'Acknowledgement', 'Recovery', 'Custom', 'FlappingStart', 'FlappingEnd', 'DowntimeStart', 'DowntimeEnd', 'DowntimeRemoved'],
   period   => '24x7',
 }
 
@@ -276,10 +273,10 @@ file { '/etc/icinga2/example.d':
   notification_name => 'mail-icingaadmin',
   apply             => true,
   apply_target      => 'Host',
-  import            => [ 'mail-host-notification' ],
+  import            => ['mail-host-notification'],
   user_groups       => 'host.vars.notification.mail.groups',
   users             => 'host.vars.notification.mail.users',
-  assign            => [ 'host.vars.notification.mail' ],
+  assign            => ['host.vars.notification.mail'],
 }
 
 ::icinga2::object::notification { 'mail-service-icingaadmin':
@@ -287,19 +284,18 @@ file { '/etc/icinga2/example.d':
   notification_name => 'mail-icingaadmin',
   apply             => true,
   apply_target      => 'Service',
-  import            => [ 'mail-service-notification' ],
+  import            => ['mail-service-notification'],
   user_groups       => 'host.vars.notification.mail.groups',
   users             => 'host.vars.notification.mail.users',
-  assign            => [ 'host.vars.notification.mail' ],
+  assign            => ['host.vars.notification.mail'],
 }
-
 
 #
 # Timeperiods
 #
 ::icinga2::object::timeperiod { '24x7':
   target       => '/etc/icinga2/example.d/timeperiods.conf',
-  import       => [ 'legacy-timeperiod' ],
+  import       => ['legacy-timeperiod'],
   display_name => 'Icinga 2 24x7 TimePeriod',
   ranges       => {
     monday    => '00:00-24:00',
@@ -314,7 +310,7 @@ file { '/etc/icinga2/example.d':
 
 ::icinga2::object::timeperiod { '9to5':
   target       => '/etc/icinga2/example.d/timeperiods.conf',
-  import       => [ 'legacy-timeperiod' ],
+  import       => ['legacy-timeperiod'],
   display_name => 'Icinga 2 9to5 TimePeriod',
   ranges       => {
     monday    => '09:00-17:00',
@@ -329,7 +325,7 @@ file { '/etc/icinga2/example.d':
 
 ::icinga2::object::timeperiod { 'never':
   target       => '/etc/icinga2/example.d/timeperiods.conf',
-  import       => [ 'legacy-timeperiod' ],
+  import       => ['legacy-timeperiod'],
   display_name => 'Icinga 2 never TimePeriod',
   ranges       => {},
 }

@@ -1,19 +1,17 @@
 $password = Sensitive('super(secret')
 
-include ::postgresql::server
+include postgresql::server
 
 postgresql::server::db { 'icinga2':
   user     => 'icinga2',
   password => postgresql::postgresql_password('icinga2', $password.unwrap),
 }
 
-class{ 'icinga2':
+class { 'icinga2':
   manage_repos => true,
 }
 
-notice($password)
-
-class{ 'icinga2::feature::idopgsql':
+class { 'icinga2::feature::idopgsql':
   user          => 'icinga2',
   password      => $password,
   database      => 'icinga2',

@@ -20,19 +20,18 @@
 # @param ca_key
 #   Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 #
-class icinga2::pki::ca(
+class icinga2::pki::ca (
   Optional[String]               $ca_cert         = undef,
   Optional[String]               $ca_key          = undef,
 ) {
+  require icinga2::config
 
-  require ::icinga2::config
-
-  $icinga2_bin = $::icinga2::globals::icinga2_bin
-  $ca_dir      = $::icinga2::globals::ca_dir
-  $cert_dir    = $::icinga2::globals::cert_dir
-  $user        = $::icinga2::globals::user
-  $group       = $::icinga2::globals::group
-  $node_name   = $::icinga2::_constants['NodeName']
+  $icinga2_bin = $icinga2::globals::icinga2_bin
+  $ca_dir      = $icinga2::globals::ca_dir
+  $cert_dir    = $icinga2::globals::cert_dir
+  $user        = $icinga2::globals::user
+  $group       = $icinga2::globals::group
+  $node_name   = $icinga2::_constants['NodeName']
 
   $_ssl_key_path    = "${cert_dir}/${node_name}.key"
   $_ssl_csr_path    = "${cert_dir}/${node_name}.csr"
@@ -50,17 +49,16 @@ class icinga2::pki::ca(
     $_ca_key_mode = undef
   }
 
-
   if !$ca_cert or !$ca_key {
     exec { 'create-icinga2-ca':
       command     => "\"${icinga2_bin}\" pki new-ca",
       environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
       creates     => "${ca_dir}/ca.crt",
       before      => File[$_ssl_cacert_path],
-      notify      => Class['::icinga2::service'],
+      notify      => Class['icinga2::service'],
     }
   } else {
-    if $::facts['os']['family'] == 'windows' {
+    if $facts['os']['family'] == 'windows' {
       $_ca_cert     = regsubst($ca_cert, '\n', "\r\n", 'EMG')
       $_ca_key      = regsubst($ca_key, '\n', "\r\n", 'EMG')
     } else {
@@ -91,9 +89,10 @@ class icinga2::pki::ca(
 
   file { $_ssl_cacert_path:
     ensure => file,
-    source => $::facts['kernel'] ? {
-      'windows' => "file:///${ca_dir}/ca.crt",
-      default   => "${ca_dir}/ca.crt",
+    source => if $facts['kernel'] == 'windows' {
+      "file:///${ca_dir}/ca.crt"
+    } else {
+      "${ca_dir}/ca.crt"
     },
   }
 
@@ -116,7 +115,7 @@ class icinga2::pki::ca(
     environment => ["ICINGA2_USER=${user}", "ICINGA2_GROUP=${group}"],
     subscribe   => Exec['icinga2 pki create certificate signing request'],
     refreshonly => true,
-    notify      => Class['::icinga2::service'],
+    notify      => Class['icinga2::service'],
   }
 
   -> file {

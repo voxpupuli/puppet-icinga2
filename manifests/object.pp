@@ -49,7 +49,7 @@
 # @param attrs_list
 #   Array of all possible attributes for this object type.
 #
-define icinga2::object(
+define icinga2::object (
   String                                                      $object_type,
   Stdlib::Absolutepath                                        $target,
   Variant[String, Integer]                                    $order,
@@ -65,16 +65,15 @@ define icinga2::object(
   Array                                                       $ignore       = [],
   Hash                                                        $attrs        = {},
 ) {
-
   assert_private()
 
-  case $::facts['os']['family'] {
+  case $facts['os']['family'] {
     'windows': {
     } # windows
     default: {
       Concat {
-        owner => $::icinga2::globals::user,
-        group => $::icinga2::globals::group,
+        owner => $icinga2::globals::user,
+        group => $icinga2::globals::group,
         mode  => '0640',
       }
     } # default
@@ -85,11 +84,11 @@ define icinga2::object(
   }
 
   $_attrs = merge($attrs, {
-    'assign where' => $assign,
-    'ignore where' => $ignore,
+      'assign where' => $assign,
+      'ignore where' => $ignore,
   })
 
-  $_content = $::facts['os']['family'] ? {
+  $_content = $facts['os']['family'] ? {
     'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
     default   => template('icinga2/object.conf.erb'),
   }
@@ -109,5 +108,4 @@ define icinga2::object(
       order   => $order,
     }
   }
-
 }

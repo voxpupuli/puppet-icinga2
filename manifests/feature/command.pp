@@ -7,18 +7,17 @@
 # @param command_path
 #   Absolute path to the command pipe.
 #
-class icinga2::feature::command(
+class icinga2::feature::command (
   Enum['absent', 'present']         $ensure       = present,
   Optional[Stdlib::Absolutepath]    $command_path =  undef,
 ) {
-
-  if ! defined(Class['::icinga2']) {
+  if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
   $_notify  = $ensure ? {
-    'present' => Class['::icinga2::service'],
+    'present' => Class['icinga2::service'],
     default   => undef,
   }
 

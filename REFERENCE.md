@@ -54,7 +54,7 @@ start on boot and will be restarted if stopped.
 * [`icinga2::object::eventcommand`](#icinga2objecteventcommand): Manage Icinga 2 EventCommand objects.
 * [`icinga2::object::host`](#icinga2objecthost): Manage Icinga 2 Host objects.
 * [`icinga2::object::hostgroup`](#icinga2objecthostgroup): Manage Icinga 2 HostGroup objects.
-* [`icinga2::object::icingaapplication`](#icinga2objecticingaapplication)
+* [`icinga2::object::icingaapplication`](#icinga2objecticingaapplication): Manage Icinga 2 IcingaApplication objects.
 * [`icinga2::object::notification`](#icinga2objectnotification): Manage Icinga 2 notification objects.
 * [`icinga2::object::notificationcommand`](#icinga2objectnotificationcommand): Manage Icinga 2 notificationcommand objects.
 * [`icinga2::object::scheduleddowntime`](#icinga2objectscheduleddowntime): Manage Icinga 2 scheduleddowntime objects.
@@ -69,13 +69,16 @@ start on boot and will be restarted if stopped.
 
 * `icinga2::feature`: Private define resource to used by this module only.
 * `icinga2::object`: Define resource to used by this module only.
+* `icinga2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
 
+* [`icinga2::cert`](#icinga2cert): Choose the path of tls key, cert and ca file.
 * [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
-* [`icinga2::parse`](#icinga2parse)
+* [`icinga2::parse`](#icinga2parse): This function parse icinga object attributes.
+* [`icinga2::unwrap`](#icinga2unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
 
@@ -101,7 +104,7 @@ This module installs and configures Icinga 2.
 
 ```puppet
 
-include ::icinga2
+include icinga2
 ```
 
 ##### If you want to use the module icinga/puppet-icinga, e.g. to use the official Icinga Project repositories, enable the manage_repos parameter.
@@ -128,7 +131,7 @@ package { 'icinga2':
   notifiy => Class['icinga2'],
 }
 
-class { '::icinga2':
+class { 'icinga2':
   manage_packages => false,
 }
 ```
@@ -149,7 +152,7 @@ class { 'icinga2':
 ##### Enabling features with there defaults or loading parameters via Hiera:
 
 ```puppet
-class { '::icinga2':
+class { 'icinga2':
   manage_repos => true,
   features     => ['checker', 'mainlog', 'command'],
 }
@@ -326,7 +329,7 @@ Configures the Icinga 2 feature api.
 ##### Use the puppet certificates and key copy these files to the cert directory named to 'hostname.key', 'hostname.crt' and 'ca.crt' if the contant NodeName is set to 'hostname'.
 
 ```puppet
-include ::icinga2::feature::api
+include icinga2::feature::api
 ```
 
 ##### To use your own certificates and key as file resources if the contant NodeName is set to fqdn (default) do:
@@ -363,7 +366,7 @@ class { 'icinga2::feature::api':
 ##### Fine tune TLS settings
 
 ```puppet
-class { '::icinga2::feature::api':
+class { 'icinga2::feature::api':
   ssl_protocolmin => 'TLSv1.2',
   ssl_cipher_list => 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
 }
@@ -372,7 +375,7 @@ class { '::icinga2::feature::api':
 ##### Transfer a CA certificate and key from an existing CA by using the file resource:
 
 ```puppet
-include ::icinga2
+include icinga2
 
 file { '/var/lib/icinga2/ca/ca.crt':
   source => '...',
@@ -563,7 +566,7 @@ Data type: `Hash[String, Hash]`
 
 Hash to configure zone objects. `ZoneName` and `NodeName` are icinga2 constants.
 
-Default value: `{ 'ZoneName' => { endpoints => [ 'NodeName' ] } }`
+Default value: `{ 'ZoneName' => { endpoints => ['NodeName'] } }`
 
 ##### <a name="ssl_protocolmin"></a>`ssl_protocolmin`
 
@@ -771,7 +774,7 @@ Data type: `Stdlib::Absolutepath`
 
 Absolute path to the log file.
 
-Default value: `"${::icinga2::globals::log_dir}/debug.log"`
+Default value: `"${icinga2::globals::log_dir}/debug.log"`
 
 ### <a name="icinga2featureelasticsearch"></a>`icinga2::feature::elasticsearch`
 
@@ -1102,7 +1105,7 @@ Configures the Icinga 2 feature graphite.
 ##### 
 
 ```puppet
-class { '::icinga2::feature::graphite':
+class { 'icinga2::feature::graphite':
   host                   => '10.10.0.15',
   port                   => 2003,
   enable_send_thresholds => true,
@@ -1201,6 +1204,19 @@ The following parameters are available in the `icinga2::feature::icingadb` class
 * [`socket_path`](#socket_path)
 * [`connect_timeout`](#connect_timeout)
 * [`password`](#password)
+* [`env_id`](#env_id)
+* [`enable_tls`](#enable_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_crl_file`](#tls_crl_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_cipher`](#tls_cipher)
+* [`tls_protocolmin`](#tls_protocolmin)
+* [`tls_noverify`](#tls_noverify)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -1247,6 +1263,116 @@ Default value: ``undef``
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
+
+Default value: ``undef``
+
+##### <a name="env_id"></a>`env_id`
+
+Data type: `Optional[Variant[String, Sensitive[String]]]`
+
+The ID is used in all Icinga DB components to separate data from multiple
+different environments and is written to the file `/var/lib/icinga2/icingadb.env`
+by Icinga 2. Icinga 2 generates a unique environment ID from its CA certificate
+when it is first started with the Icinga DB feature enabled.
+
+Default value: ``undef``
+
+##### <a name="enable_tls"></a>`enable_tls`
+
+Data type: `Boolean`
+
+Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
+
+Default value: ``false``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_crl_file"></a>`tls_crl_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the Certicicate Revocation List. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Variant[String, Sensitive[String]]]`
+
+The private key in a PEM formated string to store spicified in tls_key_file.
+Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate in a PEM format string to store spicified in tls_cert_file.
+Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The CA root certificate in a PEM formated string to store spicified in tls_cacert_file.
+Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[String]`
+
+Path to all trusted CA certificates. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+List of allowed ciphers. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_protocolmin"></a>`tls_protocolmin`
+
+Data type: `Optional[String]`
+
+Minimum TLS protocol version like `TLSv1.2`. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Whether not to verify the peer.
 
 Default value: ``undef``
 
@@ -1603,7 +1729,7 @@ Default value: `'icinga'`
 
 Data type: `Optional[Enum['disable', 'allow',
       'prefer', 'verify-full',
-      'verify-ca', 'require']]`
+  'verify-ca', 'require']]`
 
 Enable SSL connection mode.
 
@@ -2279,7 +2405,7 @@ Data type: `Stdlib::Absolutepath`
 
 Absolute path to the log file.
 
-Default value: `"${::icinga2::globals::log_dir}/icinga2.log"`
+Default value: `"${icinga2::globals::log_dir}/icinga2.log"`
 
 ### <a name="icinga2featurenotification"></a>`icinga2::feature::notification`
 
@@ -2643,8 +2769,8 @@ The following parameters are available in the `icinga2::config::fragment` define
 
 * [`content`](#content)
 * [`target`](#target)
-* [`order`](#order)
 * [`code_name`](#code_name)
+* [`order`](#order)
 
 ##### <a name="content"></a>`content`
 
@@ -2659,6 +2785,14 @@ Data type: `Stdlib::Absolutepath`
 Destination config file to store in this fragment. File will be declared the
 first time.
 
+##### <a name="code_name"></a>`code_name`
+
+Data type: `String`
+
+Namevar of the fragment.
+
+Default value: `$title`
+
 ##### <a name="order"></a>`order`
 
 Data type: `Variant[String, Integer]`
@@ -2666,14 +2800,6 @@ Data type: `Variant[String, Integer]`
 String or integer to set the position in the target file, sorted in alpha numeric order. Defaults to `00`.
 
 Default value: `'00'`
-
-##### <a name="code_name"></a>`code_name`
-
-Data type: `String`
-
-
-
-Default value: `$title`
 
 ### <a name="icinga2objectapiuser"></a>`icinga2::object::apiuser`
 
@@ -3666,13 +3792,13 @@ icinga2::object::hostgroup { 'monitoring-hosts':
 The following parameters are available in the `icinga2::object::hostgroup` defined type:
 
 * [`ensure`](#ensure)
+* [`hostgroup_name`](#hostgroup_name)
 * [`display_name`](#display_name)
 * [`groups`](#groups)
 * [`assign`](#assign)
 * [`ignore`](#ignore)
 * [`target`](#target)
 * [`order`](#order)
-* [`hostgroup_name`](#hostgroup_name)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3681,6 +3807,14 @@ Data type: `Enum['absent', 'present']`
 Set to present enables the object, absent disables it.
 
 Default value: `present`
+
+##### <a name="hostgroup_name"></a>`hostgroup_name`
+
+Data type: `String`
+
+Namevar of the hostgroup.
+
+Default value: `$title`
 
 ##### <a name="display_name"></a>`display_name`
 
@@ -3729,25 +3863,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `55`
 
-##### <a name="hostgroup_name"></a>`hostgroup_name`
-
-Data type: `String`
-
-
-
-Default value: `$title`
-
 ### <a name="icinga2objecticingaapplication"></a>`icinga2::object::icingaapplication`
 
-The icinga2::object::icingaapplication class.
+Manage Icinga 2 IcingaApplication objects.
 
 #### Parameters
 
 The following parameters are available in the `icinga2::object::icingaapplication` defined type:
 
-* [`environment`](#environment)
-* [`target`](#target)
-* [`order`](#order)
 * [`ensure`](#ensure)
 * [`app_name`](#app_name)
 * [`enable_notifications`](#enable_notifications)
@@ -3757,6 +3880,83 @@ The following parameters are available in the `icinga2::object::icingaapplicatio
 * [`enable_service_checks`](#enable_service_checks)
 * [`enable_perfdata`](#enable_perfdata)
 * [`vars`](#vars)
+* [`environment`](#environment)
+* [`target`](#target)
+* [`order`](#order)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: `present`
+
+##### <a name="app_name"></a>`app_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the IcingaApplication object.
+
+Default value: `$title`
+
+##### <a name="enable_notifications"></a>`enable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether notifications are globally enabled.
+
+Default value: ``undef``
+
+##### <a name="enable_event_handlers"></a>`enable_event_handlers`
+
+Data type: `Optional[Boolean]`
+
+Whether event handlers are globally enabled.
+
+Default value: ``undef``
+
+##### <a name="enable_flapping"></a>`enable_flapping`
+
+Data type: `Optional[Boolean]`
+
+Whether flap detection is globally enabled.
+
+Default value: ``undef``
+
+##### <a name="enable_host_checks"></a>`enable_host_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active host checks are globally enabled.
+
+Default value: ``undef``
+
+##### <a name="enable_service_checks"></a>`enable_service_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active service checks are globally enabled.
+
+Default value: ``undef``
+
+##### <a name="enable_perfdata"></a>`enable_perfdata`
+
+Data type: `Optional[Boolean]`
+
+Whether performance data processing is globally enabled.
+
+Default value: ``undef``
+
+##### <a name="vars"></a>`vars`
+
+Data type: `Optional[Icinga2::CustomAttributes]`
+
+A dictionary containing custom attributes that are specific to this service,
+a string to do operations on this dictionary or an array for multiple use
+of custom attributes.
+
+Default value: ``undef``
 
 ##### <a name="environment"></a>`environment`
 
@@ -3783,78 +3983,6 @@ Data type: `Variant[String, Integer]`
 String or integer to control the position in the target file, sorted alpha numeric.
 
 Default value: `5`
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-
-
-Default value: `present`
-
-##### <a name="app_name"></a>`app_name`
-
-Data type: `String`
-
-
-
-Default value: `$title`
-
-##### <a name="enable_notifications"></a>`enable_notifications`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="enable_event_handlers"></a>`enable_event_handlers`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="enable_flapping"></a>`enable_flapping`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="enable_host_checks"></a>`enable_host_checks`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="enable_service_checks"></a>`enable_service_checks`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="enable_perfdata"></a>`enable_perfdata`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="vars"></a>`vars`
-
-Data type: `Optional[Icinga2::CustomAttributes]`
-
-
-
-Default value: ``undef``
 
 ### <a name="icinga2objectnotification"></a>`icinga2::object::notification`
 
@@ -4066,7 +4194,7 @@ Default value: `85`
 
 Data type: `Array`
 
-
+Assign notification using the assign rules.
 
 Default value: `[]`
 
@@ -4074,7 +4202,7 @@ Default value: `[]`
 
 Data type: `Array`
 
-
+Exclude notification using the ignore rules.
 
 Default value: `[]`
 
@@ -4689,7 +4817,7 @@ Default value: ``false``
 
 Data type: `Array`
 
-Assign user group members using the group assign rules.
+Assign service using the assign rules.
 
 Default value: `[]`
 
@@ -4697,7 +4825,7 @@ Default value: `[]`
 
 Data type: `Array`
 
-Exclude users using the group ignore rules.
+Exclude service using the ignore rules.
 
 Default value: `[]`
 
@@ -5208,7 +5336,7 @@ Default value: `$title`
 
 ##### <a name="endpoints"></a>`endpoints`
 
-Data type: `Optional[Array]`
+Data type: `Array`
 
 List of endpoints belong to this zone.
 
@@ -5224,7 +5352,7 @@ Default value: ``undef``
 
 ##### <a name="global"></a>`global`
 
-Data type: `Optional[Boolean]`
+Data type: `Boolean`
 
 If set to true, a global zone is defined and the parameter endpoints
 and parent are ignored.
@@ -5249,6 +5377,60 @@ String or integer to control the position in the target file, sorted alpha numer
 Default value: `45`
 
 ## Functions
+
+### <a name="icinga2cert"></a>`icinga2::cert`
+
+Type: Puppet Language
+
+Choose the path of tls key, cert and ca file.
+
+#### `icinga2::cert(String $name, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Variant[String, Sensitive]] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
+
+The icinga2::cert function.
+
+Returns: `Hash` Returned hash includes all paths and the key, cert and cacert.
+
+##### `name`
+
+Data type: `String`
+
+
+
+##### `key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `key`
+
+Data type: `Optional[Variant[String, Sensitive]]`
+
+
+
+##### `cert`
+
+Data type: `Optional[String]`
+
+
+
+##### `cacert`
+
+Data type: `Optional[String]`
+
+
 
 ### <a name="icinga2icinga2_attributes"></a>`icinga2::icinga2_attributes`
 
@@ -5347,6 +5529,24 @@ Data type: `Hash[String, Any]`
 
 
 
+### <a name="icinga2"></a>`icinga2::unwrap`
+
+Type: Puppet Language
+
+This function returns an unwrap string if necessary.
+
+#### `icinga2::unwrap(Optional[Variant[String, Sensitive[String]]] $arg = undef)`
+
+The icinga2::unwrap function.
+
+Returns: `Any` The unwraped string.
+
+##### `arg`
+
+Data type: `Optional[Variant[String, Sensitive[String]]]`
+
+
+
 ## Data types
 
 ### <a name="icinga2basicauth"></a>`Icinga2::BasicAuth`
@@ -5357,8 +5557,8 @@ Alias of
 
 ```puppet
 Struct[{
-  'username' => String,
-  'password' => Variant[String, Sensitive[String]],
+    'username' => String,
+    'password' => Variant[String, Sensitive[String]],
 }]
 ```
 

@@ -26,7 +26,7 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
-define icinga2::object::endpoint(
+define icinga2::object::endpoint (
   Enum['absent', 'present']             $ensure        = present,
   String                                $endpoint_name = $title,
   Optional[Stdlib::Host]                $host          = undef,
@@ -35,8 +35,7 @@ define icinga2::object::endpoint(
   Optional[Stdlib::Absolutepath]        $target        = undef,
   Variant[String, Integer]              $order         = 40,
 ) {
-
-  $conf_dir = $::icinga2::globals::conf_dir
+  $conf_dir = $icinga2::globals::conf_dir
 
   if $target {
     $_target = $target

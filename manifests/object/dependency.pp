@@ -89,8 +89,7 @@ define icinga2::object::dependency (
   Array                         $import                = [],
   Boolean                       $template              = false,
   Variant[String, Integer]      $order                 = 70,
-){
-
+) {
   # compose attributes
   $attrs = {
     'parent_host_name'      => $parent_host_name,
@@ -121,5 +120,4 @@ define icinga2::object::dependency (
     target       => $target,
     order        => $order,
   }
-
 }
