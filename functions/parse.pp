@@ -1,5 +1,8 @@
 # @summary
 #   This function parse icinga object attributes.
+
+# @return
+#   The parsed string.
 #
 # @return
 #   The parsed string.

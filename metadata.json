@@ -1,6 +1,6 @@
 {
   "name": "icinga-icinga2",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",

@@ -5497,7 +5497,7 @@ The ticket salt of the Icinga CA.
 
 Type: Puppet Language
 
-This function parse icinga object attributes.
+The icinga2::parse function.
 
 #### `icinga2::parse(Hash[String, Any] $attrs, Integer $indent = 0, Array[String] $reserved = [], Hash[String, Any] $constants = {})`
 
@@ -5529,7 +5529,7 @@ Data type: `Hash[String, Any]`
 
 
 
-### <a name="icinga2unwrap"></a>`icinga2::unwrap`
+### <a name="icinga2"></a>`icinga2::unwrap`
 
 Type: Puppet Language
 
