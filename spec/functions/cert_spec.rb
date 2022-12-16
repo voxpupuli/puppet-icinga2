@@ -34,7 +34,7 @@ describe 'icinga2::cert' do
       'key',
       'cert',
       'cacert',
-    ).and_return({ 'key' => 'key', 'key_file' => '/var/lib/icinga2/certs/foo.key',
+    ).and_return({ 'key' => sensitive('key'), 'key_file' => '/var/lib/icinga2/certs/foo.key',
                    'cert' => 'cert', 'cert_file' => '/var/lib/icinga2/certs/foo.crt',
                    'cacert' => 'cacert', 'cacert_file' => '/var/lib/icinga2/certs/foo_ca.crt' })
   end
@@ -60,6 +60,6 @@ describe 'icinga2::cert' do
       'key',
       'cert',
       'cacert',
-    ).and_return({ 'key' => 'key', 'key_file' => '/foo.key', 'cert' => 'cert', 'cert_file' => '/foo.crt', 'cacert' => 'cacert', 'cacert_file' => '/ca.crt' })
+    ).and_return({ 'key' => sensitive('key'), 'key_file' => '/foo.key', 'cert' => 'cert', 'cert_file' => '/foo.crt', 'cacert' => 'cacert', 'cacert_file' => '/ca.crt' })
   end
 end

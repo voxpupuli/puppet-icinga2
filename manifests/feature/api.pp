@@ -249,15 +249,10 @@ class icinga2::feature::api (
       }
 
       if $ssl_key {
-        $_ssl_key = $facts['os']['family'] ? {
-          'windows' => regsubst($ssl_key, '\n', "\r\n", 'EMG'),
-          default   => $ssl_key,
-        }
-
         file { $_ssl_key_path:
           ensure    => file,
           mode      => $_ssl_key_mode,
-          content   => $_ssl_key,
+          content   => icinga2::newline($ssl_key),
           tag       => 'icinga2::config::file',
           show_diff => false,
           backup    => false,
@@ -265,27 +260,17 @@ class icinga2::feature::api (
       }
 
       if $ssl_cert {
-        $_ssl_cert = $facts['os']['family'] ? {
-          'windows' => regsubst($ssl_cert, '\n', "\r\n", 'EMG'),
-          default   => $ssl_cert,
-        }
-
         file { $_ssl_cert_path:
           ensure  => file,
-          content => $_ssl_cert,
+          content => icinga2::newline($ssl_cert),
           tag     => 'icinga2::config::file',
         }
       }
 
       if $ssl_cacert {
-        $_ssl_cacert = $facts['os']['family'] ? {
-          'windows' => regsubst($ssl_cacert, '\n', "\r\n", 'EMG'),
-          default   => $ssl_cacert,
-        }
-
         file { $_ssl_cacert_path:
           ensure  => file,
-          content => $_ssl_cacert,
+          content => icinga2::newline($ssl_cacert),
           tag     => 'icinga2::config::file',
         }
       }

@@ -42,14 +42,14 @@ describe('icinga2::feature::idomysql', type: :class) do
         let(:icinga2_conf_dir) { '/usr/local/etc/icinga2' }
         let(:icinga2_pki_dir) { '/var/lib/icinga2/certs' }
         let(:ido_mysql_schema_dir) { '/usr/local/share/icinga2-ido-mysql/schema' }
-        let(:icinga2_sslkey_mode) { '0600' }
+        let(:icinga2_sslkey_mode) { '0400' }
         let(:icinga2_user) { 'icinga' }
         let(:icinga2_group) { 'icinga' }
       else
         let(:icinga2_conf_dir) { '/etc/icinga2' }
         let(:icinga2_pki_dir) { '/var/lib/icinga2/certs' }
         let(:ido_mysql_schema_dir) { '/usr/share/icinga2-ido-mysql/schema' }
-        let(:icinga2_sslkey_mode) { '0600' }
+        let(:icinga2_sslkey_mode) { '0400' }
         case facts[:os]['family']
         when 'Debian'
           let(:icinga2_user) { 'nagios' }
@@ -124,7 +124,7 @@ describe('icinga2::feature::idomysql', type: :class) do
           is_expected.to contain_exec('idomysql-import-schema').with(
             {
               user: 'root',
-              command: "mysql -u icinga -p'foo' icinga < \"#{ido_mysql_schema_dir}/mysql.sql\"",
+              command: "mysql -u icinga -p'foo'  -D icinga  < \"#{ido_mysql_schema_dir}/mysql.sql\"",
             },
           )
         }
@@ -195,8 +195,8 @@ describe('icinga2::feature::idomysql', type: :class) do
           is_expected.to contain_exec('idomysql-import-schema').with(
             {
               'user'    => 'root',
-              'command' => "mysql -h 127.0.0.1 -P 3306 -u icinga -p'foo' --ssl  --ssl-ca #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt" \
-                " --ssl-cert #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt --ssl-key #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key icinga < \"#{ido_mysql_schema_dir}/mysql.sql\"",
+              'command' => "mysql -h 127.0.0.1 -P 3306 -u icinga -p'foo'  -D icinga --ssl  --ssl-ca #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt" \
+                " --ssl-cert #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt --ssl-key #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key < \"#{ido_mysql_schema_dir}/mysql.sql\"",
             },
           )
         }
@@ -236,8 +236,8 @@ describe('icinga2::feature::idomysql', type: :class) do
           is_expected.to contain_exec('idomysql-import-schema').with(
             {
               'user'    => 'root',
-              'command' => "mysql -u icinga -p'foo' --ssl  --ssl-ca #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt" \
-                " --ssl-cert #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt --ssl-key #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key icinga < \"#{ido_mysql_schema_dir}/mysql.sql\"",
+              'command' => "mysql -u icinga -p'foo'  -D icinga --ssl  --ssl-ca #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql_ca.crt" \
+                " --ssl-cert #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.crt --ssl-key #{icinga2_pki_dir}/IdoMysqlConnection_ido-mysql.key < \"#{ido_mysql_schema_dir}/mysql.sql\"",
             },
           )
         }
