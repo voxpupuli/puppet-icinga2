@@ -74,10 +74,13 @@ start on boot and will be restarted if stopped.
 ### Functions
 
 * [`icinga2::cert`](#icinga2cert): Choose the path of tls key, cert and ca file.
+* [`icinga2::db::connect`](#icinga2dbconnect): This function returns a string to connect databases
+with or without TLS information.
 * [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
-* [`icinga2::parse`](#icinga2parse): This function parse icinga object attributes.
+* [`icinga2::newline`](#icinga2newline): Replace newlines for Windows systems.
+* [`icinga2::parse`](#icinga2parse)
 * [`icinga2::unwrap`](#icinga2unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
@@ -874,7 +877,7 @@ Default value: ``undef``
 
 Data type: `Optional[Boolean]`
 
-Disable TLS peer verification.
+Disable TLS peer verification. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -882,7 +885,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the private key.
+Location of the client private key. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -890,7 +893,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the certificate.
+Location of the client certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -898,31 +901,31 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the CA certificate.
+Location of the CA certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
-The private key in a base64 encoded string to store in spicified ssl_key_path file.
+The client private key in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The certificate in a base64 encoded to store in spicified ssl_cert_path file.
+The client certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+The CA root certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1047,28 +1050,25 @@ Default value: ``undef``
 
 ##### <a name="ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
-The private key in a base64 encoded string to store in spicified ssl_key_path file.
-Only valid if ssl is enabled.
+The client private key in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
-Only valid if ssl is enabled.
+The client certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
-Only valid if ssl is enabled.
+The CA certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1076,7 +1076,7 @@ Default value: ``undef``
 
 Data type: `Optional[Boolean]`
 
-Disable TLS peer verification.
+Disable TLS peer verification. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1498,7 +1498,7 @@ Default value: ``false``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the private key. Only valid if ssl is enabled.
+Location of the client private key. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1506,7 +1506,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the certificate. Only valid if ssl is enabled.
+Location of the client certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1520,28 +1520,25 @@ Default value: ``undef``
 
 ##### <a name="ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
-The private key in a base64 encoded string to store in spicified ssl_key_path file.
-Only valid if ssl is enabled.
+The client private key in PEM Format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
-Only valid if ssl is enabled.
+The client certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
-Only valid if ssl is enabled.
+The CA root certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1697,11 +1694,11 @@ Default value: `'localhost'`
 
 ##### <a name="port"></a>`port`
 
-Data type: `Stdlib::Port::Unprivileged`
+Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 PostgreSQL database port.
 
-Default value: `5432`
+Default value: ``undef``
 
 ##### <a name="user"></a>`user`
 
@@ -1727,9 +1724,8 @@ Default value: `'icinga'`
 
 ##### <a name="ssl_mode"></a>`ssl_mode`
 
-Data type: `Optional[Enum['disable', 'allow',
-      'prefer', 'verify-full',
-  'verify-ca', 'require']]`
+Data type: `Optional[Enum['disable', 'allow', 'prefer',
+  'verify-full', 'verify-ca', 'require']]`
 
 Enable SSL connection mode.
 
@@ -1739,7 +1735,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the private key.
+Location of the private key. Only valid if ssl_mode is set unequal to `disabled`.
 
 Default value: ``undef``
 
@@ -1747,7 +1743,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the certificate.
+Location of the certificate. Only valid if ssl_mode is set unequal to `disabled`.
 
 Default value: ``undef``
 
@@ -1755,31 +1751,31 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the CA certificate.
+Location of the CA certificate. Only valid if ssl_mode is set unequal to `disabled`.
 
 Default value: ``undef``
 
 ##### <a name="ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
-The private key in a base64 encoded string to store in spicified ssl_key_path file.
+The client private key in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The certificate in a base64 encoded string to store in spicified ssl_cert_path file.
+The client certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The CA root certificate in a base64 encoded string to store in spicified ssl_cacert_path file.
+The CA root certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
 Default value: ``undef``
 
@@ -1961,7 +1957,7 @@ Default value: ``undef``
 
 Data type: `Optional[Boolean]`
 
-Disable TLS peer verification.
+Disable TLS peer verification. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1969,7 +1965,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the private key.
+Location of the client private key. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1977,7 +1973,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the certificate.
+Location of the client certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -1985,31 +1981,31 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the CA certificate.
+Location of the CA certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
-The private key in a base64 encoded string to store in ssl_key_path file.
+The client private key in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The certificate in a base64 encoded string to store in ssl_cert_path file.
+The client certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
+The CA root certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -2184,7 +2180,7 @@ Default value: ``undef``
 
 Data type: `Optional[Boolean]`
 
-Disable TLS peer verification.
+Disable TLS peer verification. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -2192,7 +2188,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the private key.
+Location of the client private key. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -2200,7 +2196,7 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the certificate.
+Location of the client certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -2208,31 +2204,31 @@ Default value: ``undef``
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Location of the CA certificate.
+Location of the CA certificate. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
-The private key in a base64 encoded string to store in ssl_key_path file.
+The client private key in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The certificate in a base64 encoded string to store in ssl_cert_path file.
+The client certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
 ##### <a name="ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
-The CA root certificate in a base64 encoded to store in ssl_cacert_path file.
+The CA root certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: ``undef``
 
@@ -5384,7 +5380,7 @@ Type: Puppet Language
 
 Choose the path of tls key, cert and ca file.
 
-#### `icinga2::cert(String $name, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Variant[String, Sensitive]] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
+#### `icinga2::cert(String $name, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Variant[String, Sensitive[String]]] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
 
 The icinga2::cert function.
 
@@ -5416,7 +5412,7 @@ Data type: `Optional[Stdlib::Absolutepath]`
 
 ##### `key`
 
-Data type: `Optional[Variant[String, Sensitive]]`
+Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 
 
@@ -5429,6 +5425,51 @@ Data type: `Optional[String]`
 ##### `cacert`
 
 Data type: `Optional[String]`
+
+
+
+### <a name="icinga2dbconnect"></a>`icinga2::db::connect`
+
+Type: Puppet Language
+
+This function returns a string to connect databases
+with or without TLS information.
+
+#### `icinga2::db::connect(Struct[{
+      type     => Enum['pgsql','mysql','mariadb'],
+      host     => Stdlib::Host,
+      port     => Optional[Stdlib::Port],
+      database => String,
+      username => String,
+      password => Optional[Variant[String, Sensitive[String]]],
+  }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef)`
+
+The icinga2::db::connect function.
+
+Returns: `String` Connection string to connect database.
+
+##### `db`
+
+Data type: `Struct[{
+      type     => Enum['pgsql','mysql','mariadb'],
+      host     => Stdlib::Host,
+      port     => Optional[Stdlib::Port],
+      database => String,
+      username => String,
+      password => Optional[Variant[String, Sensitive[String]]],
+  }]`
+
+
+
+##### `tls`
+
+Data type: `Hash[String, Any]`
+
+
+
+##### `use_tls`
+
+Data type: `Optional[Boolean]`
 
 
 
@@ -5493,6 +5534,24 @@ Data type: `Variant[String, Sensitive[String]]`
 
 The ticket salt of the Icinga CA.
 
+### <a name="icinga2newline"></a>`icinga2::newline`
+
+Type: Puppet Language
+
+Replace newlines for Windows systems.
+
+#### `icinga2::newline(Optional[String] $text)`
+
+The icinga2::newline function.
+
+Returns: `String` Text with correct newlines.
+
+##### `text`
+
+Data type: `Optional[String]`
+
+
+
 ### <a name="icinga2parse"></a>`icinga2::parse`
 
 Type: Puppet Language
@@ -5529,7 +5588,7 @@ Data type: `Hash[String, Any]`
 
 
 
-### <a name="icinga2"></a>`icinga2::unwrap`
+### <a name="icinga2unwrap"></a>`icinga2::unwrap`
 
 Type: Puppet Language
 

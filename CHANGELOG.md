@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.5.0](https://github.com/icinga/puppet-icinga2/tree/v3.5.0) (2022-12-16)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.4.1...v3.5.0)
+
+**Implemented enhancements:**
+
+- Add support for EL9 [\#716](https://github.com/Icinga/puppet-icinga2/pull/716) ([lbetz](https://github.com/lbetz))
+- Add Ubuntu Jammy support [\#715](https://github.com/Icinga/puppet-icinga2/pull/715) ([lbetz](https://github.com/lbetz))
+- Rewrite some feature classes [\#714](https://github.com/Icinga/puppet-icinga2/pull/714) ([lbetz](https://github.com/lbetz))
+- Complete attributes for the icingadb object type [\#709](https://github.com/Icinga/puppet-icinga2/pull/709) ([lbetz](https://github.com/lbetz))
+- Add a fact to get the installed icinga2 version [\#705](https://github.com/Icinga/puppet-icinga2/pull/705) ([lbetz](https://github.com/lbetz))
+
+**Fixed bugs:**
+
+- Change data type of all TLS cert and key params back to String [\#713](https://github.com/Icinga/puppet-icinga2/issues/713)
+
 ## [v3.4.1](https://github.com/icinga/puppet-icinga2/tree/v3.4.1) (2022-10-15)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.4.0...v3.4.1)
 
