@@ -29,8 +29,8 @@ define icinga2::tls::client (
   if icinga2::unwrap($args[key]) {
     file { $args['key_file']:
       ensure    => file,
-      content   => icinga2::unwrap($args['key']),
-      mode      => icinga2::newline($key_mode),
+      content   => icinga2::newline(icinga2::unwrap($args['key'])),
+      mode      => $key_mode,
       show_diff => false,
     }
   }
