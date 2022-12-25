@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.5.1](https://github.com/icinga/puppet-icinga2/tree/v3.5.1) (2022-12-25)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.0...v3.5.1)
+
+**Fixed bugs:**
+
+- fix file mode of private key for cert [\#717](https://github.com/Icinga/puppet-icinga2/pull/717) ([lbetz](https://github.com/lbetz))
+
 ## [v3.5.0](https://github.com/icinga/puppet-icinga2/tree/v3.5.0) (2022-12-16)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.4.1...v3.5.0)
 
