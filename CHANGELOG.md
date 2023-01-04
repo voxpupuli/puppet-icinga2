@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.5.2](https://github.com/icinga/puppet-icinga2/tree/v3.5.2) (2023-01-04)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.1...v3.5.2)
+
+**Fixed bugs:**
+
+- Error with custom fact icinga2\_version for older versions of Icinga 2 [\#718](https://github.com/Icinga/puppet-icinga2/issues/718)
+
 ## [v3.5.1](https://github.com/icinga/puppet-icinga2/tree/v3.5.1) (2022-12-25)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.0...v3.5.1)
 
