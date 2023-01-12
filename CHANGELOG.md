@@ -1,5 +1,13 @@
 # Change Log
 
+## [v3.5.3](https://github.com/icinga/puppet-icinga2/tree/v3.5.3) (2023-01-12)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.2...v3.5.3)
+
+**Fixed bugs:**
+
+- fix wrong name of attribute ssl\_enable for influxdb [\#720](https://github.com/Icinga/puppet-icinga2/pull/720) ([lbetz](https://github.com/lbetz))
+- fix wrong name o f attribute ssl\_enable for influxdb2 [\#719](https://github.com/Icinga/puppet-icinga2/pull/719) ([Scnaeg](https://github.com/Scnaeg))
+
 ## [v3.5.2](https://github.com/icinga/puppet-icinga2/tree/v3.5.2) (2023-01-04)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.1...v3.5.2)
 
