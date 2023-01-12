@@ -159,7 +159,7 @@ class icinga2::feature::influxdb (
     )
 
     $attrs_ssl = {
-      enable_ssl            => true,
+      ssl_enable            => true,
       ssl_insecure_noverify => $ssl_noverify,
       ssl_ca_cert           => $cert['cacert_file'],
       ssl_cert              => $cert['cert_file'],
@@ -172,7 +172,7 @@ class icinga2::feature::influxdb (
     }
   } else {
     $attrs_ssl = {
-      enable_ssl            => undef,
+      ssl_enable            => undef,
       ssl_insecure_noverify => undef,
       ssl_ca_cert           => undef,
       ssl_cert              => undef,
