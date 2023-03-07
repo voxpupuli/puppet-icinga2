@@ -188,27 +188,28 @@ module Puppet::Icinga2
         return Regexp.last_match(1)
       end
  
-      if row =~ %r{^\{{2}(.+)\}{2}$}m
+      case row
+      when %r{^\{{2}(.+)\}{2}$}m
         # scan function
         result += '{{%{expr}}}' % { expr: Regexp.last_match(1) }
-      elsif row =~ %r{^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$}m
+      when %r{^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s\{{2}(.+)\}{2}$}m
         # scan expression + function (function should contain expressions, but we donno parse it)
         result += '%{expr} %{op} {{%{fct}}}' % { expr: parse(Regexp.last_match(1)), op: Regexp.last_match(2), fct: Regexp.last_match(3) }
-      elsif row =~ %r{^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$}
+      when %r{^(.+)\s([\+-]|\*|\/|==|!=|&&|\|{2}|in)\s(.+)$}
         # scan expression
         result += '%{expr1} %{op} %{expr2}' % { expr1: parse(Regexp.last_match(1)), op: Regexp.last_match(2), expr2: parse(Regexp.last_match(3)) }
-      elsif row =~ %r{^(.+)\((.*)$}
+      when %r{^(.+)\((.*)$}
         result += '%{fct}(%{param}' % { fct: Regexp.last_match(1), param: Regexp.last_match(2).split(',').map { |x| parse(x.lstrip) }.join(', ') }
-      elsif row =~ %r{^(.*)\)(.+)?$}
+      when %r{^(.*)\)(.+)?$}
         # closing bracket ) with optional access of an attribute e.g. '.arguments'
         result += '%{param})%{expr}' % { param: Regexp.last_match(1).split(',').map { |x| parse(x.lstrip) }.join(', '), expr: Regexp.last_match(2) }
-      elsif row =~ %r{^\((.*)$}
+      when %r{^\((.*)$}
         result += '(%{expr}' % { expr: parse(Regexp.last_match(1)) }
-      elsif row =~ %r{^\s*\[\s*(.*)\s*\]\s?(.+)?$}
+      when %r{^\s*\[\s*(.*)\s*\]\s?(.+)?$}
         # parse array
         result += '[ %{lst}]' % { lst: process_array(Regexp.last_match(1).split(',')) }
         result += ' %{expr}' % { expr: parse(Regexp.last_match(2)) } if Regexp.last_match(2)
-      elsif row =~ %r{^\s*\{\s*(.*)\s*\}\s?(.+)?$}
+      when %r{^\s*\{\s*(.*)\s*\}\s?(.+)?$}
         # parse hash
         result += "{\n%{expr}}" % { expr: process_hash(Hash[Regexp.last_match(1).gsub(%r{\s*=>\s*|\s*,\s*}, ',').split(',').each_slice(2).to_a]) }
         result += ' %{expr}' % { expr: parse(Regexp.last_match(2)) } if Regexp.last_match(2)
