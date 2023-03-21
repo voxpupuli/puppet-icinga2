@@ -34,15 +34,19 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::hostgroup (
-  Stdlib::Absolutepath        $target,
-  Enum['absent', 'present']   $ensure         = present,
-  String                      $hostgroup_name = $title,
-  Optional[String]            $display_name   = undef,
-  Optional[Array]             $groups         = undef,
-  Array                       $assign         = [],
-  Array                       $ignore         = [],
-  Variant[String, Integer]    $order          = 55,
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure         = present,
+  String                         $hostgroup_name = $title,
+  Optional[String]               $display_name   = undef,
+  Optional[Array]                $groups         = undef,
+  Array                          $assign         = [],
+  Array                          $ignore         = [],
+  Variant[String, Integer]       $order          = 55,
+  Variant[Array[String], String] $export         = [],
 ) {
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -55,7 +59,7 @@ define icinga2::object::hostgroup (
   }
 
   # create object
-  icinga2::object { "icinga2::object::HostGroup::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $hostgroup_name,
     object_type => 'HostGroup',
@@ -65,5 +69,16 @@ define icinga2::object::hostgroup (
     ignore      => $ignore,
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::HostGroup::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::HostGroup::${title}":
+      * => $config,
+    }
   }
 }

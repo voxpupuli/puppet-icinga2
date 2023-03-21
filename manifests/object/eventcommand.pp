@@ -36,6 +36,9 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::eventcommand (
   Stdlib::Absolutepath                $target,
   Enum['absent', 'present']           $ensure            = present,
@@ -47,6 +50,7 @@ define icinga2::object::eventcommand (
   Optional[Hash]                      $arguments         = undef,
   Array                               $import            = [],
   Variant[String, Integer]            $order             = 20,
+  Variant[Array[String], String]      $export            = [],
 ) {
   # compose the attributes
   $attrs = {
@@ -58,7 +62,7 @@ define icinga2::object::eventcommand (
   }
 
   # create object
-  icinga2::object { "icinga2::object::EventCommand::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $eventcommand_name,
     object_type => 'EventCommand',
@@ -67,5 +71,16 @@ define icinga2::object::eventcommand (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::EventCommand::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::EventCommand::${title}":
+      * => $config,
+    }
   }
 }

@@ -24,6 +24,9 @@
 # @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::zone (
   Enum['absent', 'present']          $ensure    = present,
   String                             $zone_name = $title,
@@ -32,6 +35,7 @@ define icinga2::object::zone (
   Boolean                            $global    = false,
   Optional[Stdlib::Absolutepath]     $target    = undef,
   Variant[String, Integer]           $order     = 45,
+  Variant[Array[String], String]     $export    = [],
 ) {
   $conf_dir = $icinga2::globals::conf_dir
 
@@ -55,7 +59,7 @@ define icinga2::object::zone (
   }
 
   # create object
-  icinga2::object { "icinga2::object::Zone::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $zone_name,
     object_type => 'Zone',
@@ -63,5 +67,16 @@ define icinga2::object::zone (
     attrs_list  => keys($attrs),
     target      => $_target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::Zone::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::Zone::${title}":
+      * => $config,
+    }
   }
 }

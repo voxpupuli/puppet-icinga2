@@ -32,17 +32,21 @@
 # @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::servicegroup (
-  Stdlib::Absolutepath          $target,
-  Enum['absent', 'present']     $ensure            = present,
-  String                        $servicegroup_name = $title,
-  Optional[String]              $display_name      = undef,
-  Optional[Array]               $groups            = undef,
-  Array                         $assign            = [],
-  Array                         $ignore            = [],
-  Boolean                       $template          = false,
-  Array                         $import            = [],
-  Variant[String, Integer]      $order             = 65,
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure            = present,
+  String                         $servicegroup_name = $title,
+  Optional[String]               $display_name      = undef,
+  Optional[Array]                $groups            = undef,
+  Array                          $assign            = [],
+  Array                          $ignore            = [],
+  Boolean                        $template          = false,
+  Array                          $import            = [],
+  Variant[String, Integer]       $order             = 65,
+  Variant[Array[String], String] $export            = [],
 ) {
   # compose attributes
   $attrs = {
@@ -51,7 +55,7 @@ define icinga2::object::servicegroup (
   }
 
   # create object
-  icinga2::object { "icinga2::object::ServiceGroup::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $servicegroup_name,
     object_type => 'ServiceGroup',
@@ -63,5 +67,16 @@ define icinga2::object::servicegroup (
     ignore      => $ignore,
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::ServiceGroup::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::ServiceGroup::${title}":
+      * => $config,
+    }
   }
 }

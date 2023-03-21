@@ -1,14 +1,17 @@
 <%- | Hash $attrs,
       Array $attrs_list,
-      Variant[String, Boolean] $apply,
+      Variant[String, Boolean] $apply = false,
       Optional[String] $apply_target = undef,
-      Variant[String, Boolean] $prefix,
+      Variant[String, Boolean] $prefix = false,
       String $object_type,
       String $object_name,
-      Boolean $template,
-      Array $import,
+      Boolean $template = false,
+      Array $import = [],
+      Array $assign = [],
+      Array $ignore = [],
 | -%>
 
+<% $_attrs = merge($attrs, { 'assign where' => $assign, 'ignore where' => $ignore, }) -%>
 <% if $apply =~ String { %>apply <%= $object_type -%>
 <% if $prefix { -%>
 <% if $prefix =~ String { %> "<%= $prefix %>"<% } else { -%>
@@ -34,10 +37,10 @@
 <% } -%>
 <% unless $import =~ Array[Data,0,0] { %><%= "\n" %><% } -%>
 <% if $apply =~String and $apply =~ /^([A-Za-z_]+)\s+in\s+.+$/ { -%>
-<%= icinga2::parse($attrs, 2, $attrs_list, {$1=>{}}) -%>
+<%= icinga2::parse($_attrs, 2, $attrs_list, {$1=>{}}) -%>
 <% } elsif $apply =~ String and $apply =~ /^([A-Za-z_]+)\s+=>\s+([A-Za-z_]+)\s+in\s+.+$/ { -%>
-<%= icinga2::parse($attrs, 2, $attrs_list+[$1], {$2=>{}}) -%>
+<%= icinga2::parse($_attrs, 2, $attrs_list+[$1], {$2=>{}}) -%>
 <% } else { -%>
-<%= icinga2::parse($attrs, 2, $attrs_list) -%>
+<%= icinga2::parse($_attrs, 2, $attrs_list) -%>
 <% } -%>
 }

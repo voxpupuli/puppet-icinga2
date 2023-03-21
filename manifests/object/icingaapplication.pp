@@ -41,6 +41,9 @@
 # @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::icingaapplication (
   Enum['absent', 'present']             $ensure                = present,
   String                                $app_name              = $title,
@@ -54,6 +57,7 @@ define icinga2::object::icingaapplication (
   Optional[String]                      $environment           = undef,
   Optional[Stdlib::Absolutepath]        $target                = undef,
   Variant[String, Integer]              $order                 = 5,
+  Variant[Array[String], String]        $export                = [],
 ) {
   $conf_dir = $icinga2::globals::conf_dir
 
@@ -77,7 +81,7 @@ define icinga2::object::icingaapplication (
   }
 
   # create object
-  icinga2::object { "icinga2::object::IcingaApplication::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $app_name,
     object_type => 'IcingaApplication',
@@ -85,5 +89,16 @@ define icinga2::object::icingaapplication (
     attrs_list  => keys($attrs),
     target      => $_target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::IcingaApplication::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::IcingaApplication::${title}":
+      * => $config,
+    }
   }
 }
