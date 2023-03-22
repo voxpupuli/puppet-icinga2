@@ -35,18 +35,22 @@
 # @param order
 #   String or integer to control the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::timeperiod (
-  Stdlib::Absolutepath         $target,
-  Enum['absent', 'present']    $ensure          = present,
-  String                       $timeperiod_name = $title,
-  Optional[String]             $display_name    = undef,
-  Optional[Hash]               $ranges          = undef,
-  Optional[Boolean]            $prefer_includes = undef,
-  Optional[Array]              $excludes        = undef,
-  Optional[Array]              $includes        = undef,
-  Boolean                      $template        = false,
-  Array                        $import          = ['legacy-timeperiod'],
-  Variant[String, Integer]     $order           = 35,
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure          = present,
+  String                         $timeperiod_name = $title,
+  Optional[String]               $display_name    = undef,
+  Optional[Hash]                 $ranges          = undef,
+  Optional[Boolean]              $prefer_includes = undef,
+  Optional[Array]                $excludes        = undef,
+  Optional[Array]                $includes        = undef,
+  Boolean                        $template        = false,
+  Array                          $import          = ['legacy-timeperiod'],
+  Variant[String, Integer]       $order           = 35,
+  Variant[Array[String], String] $export          = [],
 ) {
   # compose attributes
   $attrs = {
@@ -58,7 +62,7 @@ define icinga2::object::timeperiod (
   }
 
   # create object
-  icinga2::object { "icinga2::object::TimePeriod::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $timeperiod_name,
     object_type => 'TimePeriod',
@@ -68,5 +72,16 @@ define icinga2::object::timeperiod (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::TimePeriod::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::TimePeriod::${title}":
+      * => $config,
+    }
   }
 }

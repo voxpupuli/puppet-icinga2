@@ -78,6 +78,9 @@
 # @param ignore
 #   Exclude notification using the ignore rules.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::notification (
   Stdlib::Absolutepath                                                $target,
   Enum['absent', 'present']                                           $ensure            = present,
@@ -102,6 +105,7 @@ define icinga2::object::notification (
   Array                                                               $import            = [],
   Boolean                                                             $template          = false,
   Variant[String, Integer]                                            $order             = 85,
+  Variant[Array[String], String]                                      $export            = [],
 ) {
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -124,7 +128,7 @@ define icinga2::object::notification (
   }
 
   # create object
-  icinga2::object { "icinga2::object::Notification::${title}":
+  $config = {
     ensure       => $ensure,
     object_name  => $notification_name,
     object_type  => 'Notification',
@@ -139,5 +143,16 @@ define icinga2::object::notification (
     apply_target => $apply_target,
     assign       => $assign,
     ignore       => $ignore,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::Notification::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::Notification::${title}":
+      * => $config,
+    }
   }
 }

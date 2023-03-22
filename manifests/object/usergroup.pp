@@ -32,17 +32,21 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::usergroup (
-  Stdlib::Absolutepath        $target,
-  Enum['absent', 'present']   $ensure         = present,
-  String                      $usergroup_name = $title,
-  Optional[String]            $display_name   = undef,
-  Array                       $groups         = [],
-  Array                       $assign         = [],
-  Array                       $ignore         = [],
-  Array                       $import         = [],
-  Boolean                     $template       = false,
-  Variant[String, Integer]    $order          = 80,
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure         = present,
+  String                         $usergroup_name = $title,
+  Optional[String]               $display_name   = undef,
+  Array                          $groups         = [],
+  Array                          $assign         = [],
+  Array                          $ignore         = [],
+  Array                          $import         = [],
+  Boolean                        $template       = false,
+  Variant[String, Integer]       $order          = 80,
+  Variant[Array[String], String] $export         = [],
 ) {
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
@@ -55,7 +59,7 @@ define icinga2::object::usergroup (
   }
 
   # create object
-  icinga2::object { "icinga2::object::UserGroup::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $usergroup_name,
     object_type => 'UserGroup',
@@ -67,5 +71,16 @@ define icinga2::object::usergroup (
     ignore      => $ignore,
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::UserGroup::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::UserGroup::${title}":
+      * => $config,
+    }
   }
 }

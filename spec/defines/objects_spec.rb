@@ -191,5 +191,16 @@ on_icinga_objects.each do |otype, rtype|
 
       it { is_expected.to compile }
     end
+
+    context 'with export => foobar' do
+      let(:params) do
+        {
+          target: '/bar/baz',
+          export: 'foobar'
+        }
+      end
+
+      it { expect(exported_resources).to contain_icinga2__object("icinga2::object::#{otype}::foo").with_object_type(otype) }
+    end
   end
 end

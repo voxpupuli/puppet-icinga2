@@ -39,6 +39,8 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::checkcommand (
   Stdlib::Absolutepath                $target,
@@ -52,6 +54,7 @@ define icinga2::object::checkcommand (
   Optional[Variant[Hash, String]]     $arguments         = undef,
   Boolean                             $template          = false,
   Variant[String, Integer]            $order             = 15,
+  Variant[Array[String], String]      $export            = [],
 ) {
   # compose the attributes
   $attrs = {
@@ -63,7 +66,7 @@ define icinga2::object::checkcommand (
   }
 
   # create object
-  icinga2::object { "icinga2::object::CheckCommand::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $checkcommand_name,
     object_type => 'CheckCommand',
@@ -73,5 +76,16 @@ define icinga2::object::checkcommand (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::CheckCommand::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::CheckCommand::${title}":
+      * => $config,
+    }
   }
 }

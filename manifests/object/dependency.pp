@@ -68,27 +68,31 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::dependency (
-  Stdlib::Absolutepath          $target,
-  Enum['absent', 'present']     $ensure                = present,
-  String                        $dependency_name       = $title,
-  Optional[String]              $parent_host_name      = undef,
-  Optional[String]              $parent_service_name   = undef,
-  Optional[String]              $child_host_name       = undef,
-  Optional[String]              $child_service_name    = undef,
-  Optional[Boolean]             $disable_checks        = undef,
-  Optional[Boolean]             $disable_notifications = undef,
-  Optional[Boolean]             $ignore_soft_states    = undef,
-  Optional[String]              $period                = undef,
-  Optional[Array]               $states                = undef,
-  Variant[Boolean, String]      $apply                 = false,
-  Variant[Boolean, String]      $prefix                = false,
-  Enum['Host', 'Service']       $apply_target          = 'Host',
-  Array                         $assign                = [],
-  Array                         $ignore                = [],
-  Array                         $import                = [],
-  Boolean                       $template              = false,
-  Variant[String, Integer]      $order                 = 70,
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure                = present,
+  String                         $dependency_name       = $title,
+  Optional[String]               $parent_host_name      = undef,
+  Optional[String]               $parent_service_name   = undef,
+  Optional[String]               $child_host_name       = undef,
+  Optional[String]               $child_service_name    = undef,
+  Optional[Boolean]              $disable_checks        = undef,
+  Optional[Boolean]              $disable_notifications = undef,
+  Optional[Boolean]              $ignore_soft_states    = undef,
+  Optional[String]               $period                = undef,
+  Optional[Array]                $states                = undef,
+  Variant[Boolean, String]       $apply                 = false,
+  Variant[Boolean, String]       $prefix                = false,
+  Enum['Host', 'Service']        $apply_target          = 'Host',
+  Array                          $assign                = [],
+  Array                          $ignore                = [],
+  Array                          $import                = [],
+  Boolean                        $template              = false,
+  Variant[String, Integer]       $order                 = 70,
+  Variant[Array[String], String] $export                = [],
 ) {
   # compose attributes
   $attrs = {
@@ -104,7 +108,7 @@ define icinga2::object::dependency (
   }
 
   # create object
-  icinga2::object { "icinga2::object::Dependency::${title}":
+  $config = {
     ensure       => $ensure,
     object_name  => $dependency_name,
     object_type  => 'Dependency',
@@ -119,5 +123,16 @@ define icinga2::object::dependency (
     ignore       => $ignore,
     target       => $target,
     order        => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::Dependency::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::Dependency::${title}":
+      * => $config,
+    }
   }
 }

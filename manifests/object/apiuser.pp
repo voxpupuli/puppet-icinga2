@@ -57,6 +57,9 @@
 # @param [Variant[String, Integer]] order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::apiuser (
   Stdlib::Absolutepath                          $target,
   Enum['absent', 'present']                     $ensure       = present,
@@ -65,6 +68,7 @@ define icinga2::object::apiuser (
   Optional[Variant[String, Sensitive[String]]]  $password     = undef,
   Optional[String]                              $client_cn    = undef,
   Variant[String, Integer]                      $order        = 30,
+  Variant[Array[String], String]                $export       = [],
 ) {
   $_password = if $password =~ String {
     Sensitive($password)
@@ -82,7 +86,7 @@ define icinga2::object::apiuser (
   }
 
   # create object
-  icinga2::object { "icinga2::object::ApiUser::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $apiuser_name,
     object_type => 'ApiUser',
@@ -90,5 +94,16 @@ define icinga2::object::apiuser (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::ApiUser::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::ApiUser::${title}":
+      * => $config,
+    }
   }
 }

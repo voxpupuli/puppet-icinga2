@@ -107,6 +107,9 @@
 # @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
+# @param export
+#   Export object to destination, collected by class `icinga2::query_objects`.
+#
 define icinga2::object::host (
   Stdlib::Absolutepath                $target,
   Enum['absent', 'present']           $ensure                  = present,
@@ -142,6 +145,7 @@ define icinga2::object::host (
   Optional[String]                    $icon_image_alt          = undef,
   Boolean                             $template                = false,
   Variant[String, Integer]            $order                   = 50,
+  Variant[Array[String], String]      $export                  = [],
 ) {
   # compose the attributes
   $attrs = {
@@ -176,7 +180,7 @@ define icinga2::object::host (
   }
 
   # create object
-  icinga2::object { "icinga2::object::Host::${title}":
+  $config = {
     ensure      => $ensure,
     object_name => $host_name,
     object_type => 'Host',
@@ -186,5 +190,16 @@ define icinga2::object::host (
     attrs_list  => keys($attrs),
     target      => $target,
     order       => $order,
+  }
+
+  unless empty($export) {
+    @@icinga2::object { "icinga2::object::Host::${title}":
+      tag => prefix(any2array($export), 'icinga2::instance::'),
+      *   => $config,
+    }
+  } else {
+    icinga2::object { "icinga2::object::Host::${title}":
+      * => $config,
+    }
   }
 }

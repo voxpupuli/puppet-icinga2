@@ -25,6 +25,9 @@
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
+### What's new in version 3.6.0
+Each Icinga object has been given the new parameter `export` that specifies one (ordinary objects for the config server) or more nodes (e.g. zones and endpoints for HA servers from workers aka satellites) as targets where the objects are then created using the class `query_objects`. This has been implemented to avoid collecting export resources in large environments.
+
 ### What's new in version 3.5.0
 There are some new function for internal use. Function `icinga2::cert` handels files and/or content for TLS client auth for bot IDO features and for influxdb, infuxdb2, elasticsearch, gelf and icingadb. The function `icinga2::db::connect` provides the client connection string to mysql, mariadb or pgsql databses for both IDO features. 
 
@@ -97,7 +100,7 @@ The use of Icinga's own CA is recommended. If you still want to use the Puppet c
 This module has been tested on:
 
 * Debian 10, 11
-* Ubuntu 18.04, 20.04, 22.04
+* Ubuntu 20.04, 22.04
 * CentOS/RHEL 7, 8, 9
 * AlmaLinux/Rocky 8, 9
 * Fedora 32
