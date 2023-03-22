@@ -1,5 +1,14 @@
 # Change Log
 
+## [v3.6.0](https://github.com/icinga/puppet-icinga2/tree/v3.6.0) (2023-03-22)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.3...v3.6.0)
+
+**Implemented enhancements:**
+
+- Performance issues with larger setups [\#392](https://github.com/Icinga/puppet-icinga2/issues/392)
+- Add feature to handle large monitoring environments [\#723](https://github.com/Icinga/puppet-icinga2/pull/723) ([lbetz](https://github.com/lbetz))
+- Use a case statement to parse rows [\#722](https://github.com/Icinga/puppet-icinga2/pull/722) ([lbetz](https://github.com/lbetz))
+
 ## [v3.5.3](https://github.com/icinga/puppet-icinga2/tree/v3.5.3) (2023-01-12)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.2...v3.5.3)
 
@@ -752,7 +761,7 @@
 - Fix parse issues when attribute is a nested hash with an array value [\#225](https://github.com/Icinga/puppet-icinga2/pull/225) ([lbetz](https://github.com/lbetz))
 - Remove Puppet 4 Warning - delete :undef symbols in attr hash [\#222](https://github.com/Icinga/puppet-icinga2/pull/222) ([Reamer](https://github.com/Reamer))
 - Allow other time units in notification and scheduleddowntime [\#220](https://github.com/Icinga/puppet-icinga2/pull/220) ([jkroepke](https://github.com/jkroepke))
-- Add initial FreeBSD support [\#210](https://github.com/Icinga/puppet-icinga2/pull/210) ([xaque208](https://github.com/xaque208))
+- Add initial FreeBSD support [\#210](https://github.com/Icinga/puppet-icinga2/pull/210) ([zachfi](https://github.com/zachfi))
 
 ## [v1.0.2](https://github.com/icinga/puppet-icinga2/tree/v1.0.2) (2017-01-24)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v1.0.1...v1.0.2)

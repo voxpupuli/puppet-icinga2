@@ -31,6 +31,7 @@
 * [`icinga2::feature::syslog`](#icinga2featuresyslog): Configures the Icinga 2 feature syslog.
 * [`icinga2::feature::windowseventlog`](#icinga2featurewindowseventlog): Configures the Icinga 2 feature windowseventlog.
 * [`icinga2::pki::ca`](#icinga2pkica): This class provides multiple ways to create the CA used by Icinga 2.
+* [`icinga2::query_objects`](#icinga2query_objects): Class to query `icinga2::objects` from puppetdb.
 
 #### Private Classes
 
@@ -2724,6 +2725,33 @@ Content of the CA key. If this is unset, a key will be generated with the Icinga
 
 Default value: ``undef``
 
+### <a name="icinga2query_objects"></a>`icinga2::query_objects`
+
+Class to query `icinga2::objects` from puppetdb.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::query_objects` class:
+
+* [`destination`](#destination)
+* [`environments`](#environments)
+
+##### <a name="destination"></a>`destination`
+
+Data type: `String`
+
+Destination equal to what was set in parameter `export` for objects.
+
+Default value: `$facts['networking']['fqdn']`
+
+##### <a name="environments"></a>`environments`
+
+Data type: `Array[String]`
+
+limits the response to objects of these environments
+
+Default value: `[$environment]`
+
 ## Defined types
 
 ### <a name="icinga2configfragment"></a>`icinga2::config::fragment`
@@ -2856,6 +2884,7 @@ The following parameters are available in the `icinga2::object::apiuser` defined
 * [`permissions`](#permissions)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -2913,6 +2942,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `30`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectcheckcommand"></a>`icinga2::object::checkcommand`
 
 Manage Icinga 2 Host objects.
@@ -2932,6 +2969,7 @@ The following parameters are available in the `icinga2::object::checkcommand` de
 * [`target`](#target)
 * [`template`](#template)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3024,6 +3062,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `15`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectcheckresultreader"></a>`icinga2::object::checkresultreader`
 
 Manage Icinga 2 CheckResultReader objects.
@@ -3105,6 +3151,7 @@ The following parameters are available in the `icinga2::object::dependency` defi
 * [`import`](#import)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3271,6 +3318,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `70`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectendpoint"></a>`icinga2::object::endpoint`
 
 Manage Icinga 2 endpoint objects.
@@ -3286,6 +3341,7 @@ The following parameters are available in the `icinga2::object::endpoint` define
 * [`log_duration`](#log_duration)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3347,6 +3403,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `40`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objecteventcommand"></a>`icinga2::object::eventcommand`
 
 Manage Icinga 2 EventCommand objects.
@@ -3365,6 +3429,7 @@ The following parameters are available in the `icinga2::object::eventcommand` de
 * [`target`](#target)
 * [`import`](#import)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3449,6 +3514,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `20`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objecthost"></a>`icinga2::object::host`
 
 Manage Icinga 2 Host objects.
@@ -3491,6 +3564,7 @@ The following parameters are available in the `icinga2::object::host` defined ty
 * [`template`](#template)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3766,6 +3840,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `50`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objecthostgroup"></a>`icinga2::object::hostgroup`
 
 Manage Icinga 2 HostGroup objects.
@@ -3795,6 +3877,7 @@ The following parameters are available in the `icinga2::object::hostgroup` defin
 * [`ignore`](#ignore)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3859,6 +3942,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `55`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objecticingaapplication"></a>`icinga2::object::icingaapplication`
 
 Manage Icinga 2 IcingaApplication objects.
@@ -3879,6 +3970,7 @@ The following parameters are available in the `icinga2::object::icingaapplicatio
 * [`environment`](#environment)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3980,6 +4072,14 @@ String or integer to control the position in the target file, sorted alpha numer
 
 Default value: `5`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectnotification"></a>`icinga2::object::notification`
 
 Manage Icinga 2 notification objects.
@@ -4011,6 +4111,7 @@ The following parameters are available in the `icinga2::object::notification` de
 * [`order`](#order)
 * [`assign`](#assign)
 * [`ignore`](#ignore)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -4202,6 +4303,14 @@ Exclude notification using the ignore rules.
 
 Default value: `[]`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectnotificationcommand"></a>`icinga2::object::notificationcommand`
 
 Manage Icinga 2 notificationcommand objects.
@@ -4221,6 +4330,7 @@ The following parameters are available in the `icinga2::object::notificationcomm
 * [`import`](#import)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -4314,6 +4424,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `25`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectscheduleddowntime"></a>`icinga2::object::scheduleddowntime`
 
 Manage Icinga 2 scheduleddowntime objects.
@@ -4338,6 +4456,7 @@ The following parameters are available in the `icinga2::object::scheduleddowntim
 * [`ignore`](#ignore)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -4467,6 +4586,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `90`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectservice"></a>`icinga2::object::service`
 
 Manage Icinga 2 service objects.
@@ -4541,6 +4668,7 @@ The following parameters are available in the `icinga2::object::service` defined
 * [`import`](#import)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -4848,6 +4976,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `60`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectservicegroup"></a>`icinga2::object::servicegroup`
 
 Manage Icinga 2 servicegroup objects.
@@ -4866,6 +5002,7 @@ The following parameters are available in the `icinga2::object::servicegroup` de
 * [`import`](#import)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -4946,6 +5083,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `65`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objecttimeperiod"></a>`icinga2::object::timeperiod`
 
 Manage Icinga 2 timeperiod objects.
@@ -4965,6 +5110,7 @@ The following parameters are available in the `icinga2::object::timeperiod` defi
 * [`template`](#template)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -5053,6 +5199,14 @@ String or integer to control the position in the target file, sorted alpha numer
 
 Default value: `35`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectuser"></a>`icinga2::object::user`
 
 Manage Icinga 2 user objects.
@@ -5076,6 +5230,7 @@ The following parameters are available in the `icinga2::object::user` defined ty
 * [`import`](#import)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -5200,6 +5355,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `75`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectusergroup"></a>`icinga2::object::usergroup`
 
 Manage Icinga 2 usergroup objects.
@@ -5218,6 +5381,7 @@ The following parameters are available in the `icinga2::object::usergroup` defin
 * [`import`](#import)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -5298,6 +5462,14 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `80`
 
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2objectzone"></a>`icinga2::object::zone`
 
 Manage Icinga 2 zone objects.
@@ -5313,6 +5485,7 @@ The following parameters are available in the `icinga2::object::zone` defined ty
 * [`global`](#global)
 * [`target`](#target)
 * [`order`](#order)
+* [`export`](#export)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -5371,6 +5544,14 @@ Data type: `Variant[String, Integer]`
 String or integer to control the position in the target file, sorted alpha numeric.
 
 Default value: `45`
+
+##### <a name="export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
 
 ## Functions
 
