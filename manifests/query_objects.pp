@@ -5,13 +5,16 @@
 #   Destination equal to what was set in parameter `export` for objects.
 #
 # @param environments
-#   limits the response to objects of these environments
+#   limits the response to objects of these environments if set, all environments if list is empty
 #
 class icinga2::query_objects (
   String        $destination  = $facts['networking']['fqdn'],
   Array[String] $environments = [$environment],
 ) {
-  $_environments = join($environments, "'")
+  $_environments = ($environments.size == 0) ? {
+    true    => '',
+    default => sprintf("environment in ['%s'] and", join($environments, "','")),
+  }
 
   case $facts['os']['family'] {
     'windows': {
@@ -25,7 +28,7 @@ class icinga2::query_objects (
     } # default
   }
 
-  $pql_query =  puppetdb_query("resources[parameters] { environment in ['${_environments}'] and type = 'Icinga2::Object' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
+  $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Object' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
 
   $file_list = $pql_query.map |$object| {
     $object['parameters']['target']
