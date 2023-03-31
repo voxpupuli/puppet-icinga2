@@ -10,6 +10,20 @@ file { '/etc/icinga2/example.d':
   recurse => true,
 }
 
+icinga2::config::fragment { 'load-function':
+  target => '/etc/icinga2/example.d/services.conf',
+  order => 10,
+  content => "globals.dynamic_threshold = function(timeperiod, ivalue, ovalue) {
+  return function() use (timeperiod, ivalue, ovalue) {
+    if (get_time_period(timeperiod).is_inside) {
+      return ivalue
+    } else {
+      return ovalue
+    }
+  }
+}\n",
+}
+
 #
 # Hosts
 #
@@ -125,7 +139,8 @@ file { '/etc/icinga2/example.d':
   import        => ['generic-service'],
   check_command => 'load',
   vars          => {
-    backup_downtime => '02:00-03:00',
+    load_wload1 => 'dynamic_threshold(backup, 20, 5)',
+    load_cload1 => 'dynamic_threshold(backup, 40, 10)',
   },
   assign        => ['host.name == NodeName'],
 }
