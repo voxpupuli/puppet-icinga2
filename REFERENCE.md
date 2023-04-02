@@ -46,7 +46,7 @@ start on boot and will be restarted if stopped.
 
 #### Public Defined types
 
-* [`icinga2::config::fragment`](#icinga2configfragment): Set a code fragment in a target configuration file.
+* [`icinga2::config::fragment`](#icinga2configfragment): Set a code fragment in a target configuration file. It's not possible to add a fragment to an object.
 * [`icinga2::object::apiuser`](#icinga2objectapiuser): Manage Icinga 2 ApiUser objects.
 * [`icinga2::object::checkcommand`](#icinga2objectcheckcommand): Manage Icinga 2 Host objects.
 * [`icinga2::object::checkresultreader`](#icinga2objectcheckresultreader): Manage Icinga 2 CheckResultReader objects.
@@ -2748,7 +2748,7 @@ Default value: `$facts['networking']['fqdn']`
 
 Data type: `Array[String]`
 
-limits the response to objects of these environments
+limits the response to objects of these environments if set, all environments if list is empty
 
 Default value: `[$environment]`
 
@@ -2756,11 +2756,11 @@ Default value: `[$environment]`
 
 ### <a name="icinga2configfragment"></a>`icinga2::config::fragment`
 
-Set a code fragment in a target configuration file.
+Set a code fragment in a target configuration file. It's not possible to add a fragment to an object.
 
 #### Examples
 
-##### To create a custom configuration add content to a specified target at the position you set in the order parameter. You can use also templates to add content.
+##### To create a custom configuration add content to a specified target at the position you set in the order parameter.
 
 ```puppet
 include ::icinga2
@@ -2769,21 +2769,27 @@ icinga2::object::service { 'load':
   display_name  => 'Load',
   apply         => true,
   check_command => 'load',
+  vars          => {
+    load_wload1 => 'dynamic_threshold(backup, 20, 5)',
+    load_cload1 => 'dynamic_threshold(backup, 40, 10)',
+  },
   assign        => ['vars.os == Linux'],
-  target        => '/etc/icinga2/conf.d/service_load.conf',
+  target        => '/etc/icinga2/example.d/services.conf',
   order         => 30,
 }
 
 icinga2::config::fragment { 'load-function':
-  target => '/etc/icinga2/conf.d/service_load.conf',
-  order => 10,
-  content => 'vars.load_wload1 = {{
-    if (get_time_period("backup").is_inside) {
-      return 20
+  target  => '/etc/icinga2/example.d/services.conf',
+  order   => 10,
+  content => "globals.dynamic_threshold = function(timeperiod, ivalue, ovalue) {
+  return function() use (timeperiod, ivalue, ovalue) {
+    if (get_time_period(timeperiod).is_inside) {
+      return ivalue
     } else {
-      return 5
+      return ovalue
     }
-  }}',
+  }
+}\n",
 }
 ```
 

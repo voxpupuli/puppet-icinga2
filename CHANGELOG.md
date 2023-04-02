@@ -1,5 +1,13 @@
 # Change Log
 
+## [v3.6.1](https://github.com/icinga/puppet-icinga2/tree/v3.6.1) (2023-04-02)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.0...v3.6.1)
+
+**Fixed bugs:**
+
+- make object-collection deterministic in icinga2::query\_objects [\#725](https://github.com/Icinga/puppet-icinga2/pull/725) ([sircubbi](https://github.com/sircubbi))
+- Bugfix: don't fail if more than one environment is given in query\_objects and allow to collect from all environments [\#724](https://github.com/Icinga/puppet-icinga2/pull/724) ([sircubbi](https://github.com/sircubbi))
+
 ## [v3.6.0](https://github.com/icinga/puppet-icinga2/tree/v3.6.0) (2023-03-22)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.5.3...v3.6.0)
 
