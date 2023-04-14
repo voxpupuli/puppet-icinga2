@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.6.2](https://github.com/icinga/puppet-icinga2/tree/v3.6.2) (2023-04-14)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.1...v3.6.2)
+
+**Fixed bugs:**
+
+- Extend filter of quering objects \(absent\) [\#726](https://github.com/Icinga/puppet-icinga2/pull/726) ([lbetz](https://github.com/lbetz))
+
 ## [v3.6.1](https://github.com/icinga/puppet-icinga2/tree/v3.6.1) (2023-04-02)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.0...v3.6.1)
 
