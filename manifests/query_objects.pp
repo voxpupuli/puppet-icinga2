@@ -35,7 +35,7 @@ class icinga2::query_objects (
   }
 
   unique($file_list).each |$target| {
-    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] }
+    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] and $object['parameters']['ensure'] == 'present' }
 
     $_content = $facts['os']['family'] ? {
       'windows' => regsubst(epp('icinga2/objects.epp', { 'objects' => $objects }), '\n', "\r\n", 'EMG'),
