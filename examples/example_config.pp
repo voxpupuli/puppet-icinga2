@@ -11,8 +11,8 @@ file { '/etc/icinga2/example.d':
 }
 
 icinga2::config::fragment { 'load-function':
-  target => '/etc/icinga2/example.d/services.conf',
-  order => 10,
+  target  => '/etc/icinga2/example.d/services.conf',
+  order   => 10,
   content => "globals.dynamic_threshold = function(timeperiod, ivalue, ovalue) {
   return function() use (timeperiod, ivalue, ovalue) {
     if (get_time_period(timeperiod).is_inside) {
