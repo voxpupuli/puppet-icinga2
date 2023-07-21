@@ -9,29 +9,29 @@
 #### Public Classes
 
 * [`icinga2`](#icinga2): This module installs and configures Icinga 2.
-* [`icinga2::feature::api`](#icinga2featureapi): Configures the Icinga 2 feature api.
-* [`icinga2::feature::checker`](#icinga2featurechecker): Configures the Icinga 2 feature checker.
-* [`icinga2::feature::command`](#icinga2featurecommand): Configures the Icinga 2 feature command.
-* [`icinga2::feature::compatlog`](#icinga2featurecompatlog): Configures the Icinga 2 feature compatlog.
-* [`icinga2::feature::debuglog`](#icinga2featuredebuglog): Configures the Icinga 2 feature mainlog.
-* [`icinga2::feature::elasticsearch`](#icinga2featureelasticsearch): Configures the Icinga 2 feature elasticsearch.
-* [`icinga2::feature::gelf`](#icinga2featuregelf): Configures the Icinga 2 feature gelf.
-* [`icinga2::feature::graphite`](#icinga2featuregraphite): Configures the Icinga 2 feature graphite.
-* [`icinga2::feature::icingadb`](#icinga2featureicingadb): Configures the Icinga 2 feature icingadb.
-* [`icinga2::feature::idomysql`](#icinga2featureidomysql): Installs and configures the Icinga 2 feature ido-mysql.
-* [`icinga2::feature::idopgsql`](#icinga2featureidopgsql): Installs and configures the Icinga 2 feature ido-pgsql.
-* [`icinga2::feature::influxdb`](#icinga2featureinfluxdb): Configures the Icinga 2 feature influxdb.
-* [`icinga2::feature::influxdb2`](#icinga2featureinfluxdb2): Configures the Icinga 2 feature influxdb2.
-* [`icinga2::feature::livestatus`](#icinga2featurelivestatus): Configures the Icinga 2 feature livestatus.
-* [`icinga2::feature::mainlog`](#icinga2featuremainlog): Configures the Icinga 2 feature mainlog.
-* [`icinga2::feature::notification`](#icinga2featurenotification): Configures the Icinga 2 feature notification.
-* [`icinga2::feature::opentsdb`](#icinga2featureopentsdb): Configures the Icinga 2 feature opentsdb.
-* [`icinga2::feature::perfdata`](#icinga2featureperfdata): Configures the Icinga 2 feature perfdata.
-* [`icinga2::feature::statusdata`](#icinga2featurestatusdata): Configures the Icinga 2 feature statusdata.
-* [`icinga2::feature::syslog`](#icinga2featuresyslog): Configures the Icinga 2 feature syslog.
-* [`icinga2::feature::windowseventlog`](#icinga2featurewindowseventlog): Configures the Icinga 2 feature windowseventlog.
-* [`icinga2::pki::ca`](#icinga2pkica): This class provides multiple ways to create the CA used by Icinga 2.
-* [`icinga2::query_objects`](#icinga2query_objects): Class to query `icinga2::objects` from puppetdb.
+* [`icinga2::feature::api`](#icinga2--feature--api): Configures the Icinga 2 feature api.
+* [`icinga2::feature::checker`](#icinga2--feature--checker): Configures the Icinga 2 feature checker.
+* [`icinga2::feature::command`](#icinga2--feature--command): Configures the Icinga 2 feature command.
+* [`icinga2::feature::compatlog`](#icinga2--feature--compatlog): Configures the Icinga 2 feature compatlog.
+* [`icinga2::feature::debuglog`](#icinga2--feature--debuglog): Configures the Icinga 2 feature mainlog.
+* [`icinga2::feature::elasticsearch`](#icinga2--feature--elasticsearch): Configures the Icinga 2 feature elasticsearch.
+* [`icinga2::feature::gelf`](#icinga2--feature--gelf): Configures the Icinga 2 feature gelf.
+* [`icinga2::feature::graphite`](#icinga2--feature--graphite): Configures the Icinga 2 feature graphite.
+* [`icinga2::feature::icingadb`](#icinga2--feature--icingadb): Configures the Icinga 2 feature icingadb.
+* [`icinga2::feature::idomysql`](#icinga2--feature--idomysql): Installs and configures the Icinga 2 feature ido-mysql.
+* [`icinga2::feature::idopgsql`](#icinga2--feature--idopgsql): Installs and configures the Icinga 2 feature ido-pgsql.
+* [`icinga2::feature::influxdb`](#icinga2--feature--influxdb): Configures the Icinga 2 feature influxdb.
+* [`icinga2::feature::influxdb2`](#icinga2--feature--influxdb2): Configures the Icinga 2 feature influxdb2.
+* [`icinga2::feature::livestatus`](#icinga2--feature--livestatus): Configures the Icinga 2 feature livestatus.
+* [`icinga2::feature::mainlog`](#icinga2--feature--mainlog): Configures the Icinga 2 feature mainlog.
+* [`icinga2::feature::notification`](#icinga2--feature--notification): Configures the Icinga 2 feature notification.
+* [`icinga2::feature::opentsdb`](#icinga2--feature--opentsdb): Configures the Icinga 2 feature opentsdb.
+* [`icinga2::feature::perfdata`](#icinga2--feature--perfdata): Configures the Icinga 2 feature perfdata.
+* [`icinga2::feature::statusdata`](#icinga2--feature--statusdata): Configures the Icinga 2 feature statusdata.
+* [`icinga2::feature::syslog`](#icinga2--feature--syslog): Configures the Icinga 2 feature syslog.
+* [`icinga2::feature::windowseventlog`](#icinga2--feature--windowseventlog): Configures the Icinga 2 feature windowseventlog.
+* [`icinga2::pki::ca`](#icinga2--pki--ca): This class provides multiple ways to create the CA used by Icinga 2.
+* [`icinga2::query_objects`](#icinga2--query_objects): Class to query `icinga2::objects` from puppetdb.
 
 #### Private Classes
 
@@ -46,53 +46,48 @@ start on boot and will be restarted if stopped.
 
 #### Public Defined types
 
-* [`icinga2::config::fragment`](#icinga2configfragment): Set a code fragment in a target configuration file. It's not possible to add a fragment to an object.
-* [`icinga2::object::apiuser`](#icinga2objectapiuser): Manage Icinga 2 ApiUser objects.
-* [`icinga2::object::checkcommand`](#icinga2objectcheckcommand): Manage Icinga 2 Host objects.
-* [`icinga2::object::checkresultreader`](#icinga2objectcheckresultreader): Manage Icinga 2 CheckResultReader objects.
-* [`icinga2::object::dependency`](#icinga2objectdependency): Manage Icinga 2 dependency objects.
-* [`icinga2::object::endpoint`](#icinga2objectendpoint): Manage Icinga 2 endpoint objects.
-* [`icinga2::object::eventcommand`](#icinga2objecteventcommand): Manage Icinga 2 EventCommand objects.
-* [`icinga2::object::host`](#icinga2objecthost): Manage Icinga 2 Host objects.
-* [`icinga2::object::hostgroup`](#icinga2objecthostgroup): Manage Icinga 2 HostGroup objects.
-* [`icinga2::object::icingaapplication`](#icinga2objecticingaapplication): Manage Icinga 2 IcingaApplication objects.
-* [`icinga2::object::notification`](#icinga2objectnotification): Manage Icinga 2 notification objects.
-* [`icinga2::object::notificationcommand`](#icinga2objectnotificationcommand): Manage Icinga 2 notificationcommand objects.
-* [`icinga2::object::scheduleddowntime`](#icinga2objectscheduleddowntime): Manage Icinga 2 scheduleddowntime objects.
-* [`icinga2::object::service`](#icinga2objectservice): Manage Icinga 2 service objects.
-* [`icinga2::object::servicegroup`](#icinga2objectservicegroup): Manage Icinga 2 servicegroup objects.
-* [`icinga2::object::timeperiod`](#icinga2objecttimeperiod): Manage Icinga 2 timeperiod objects.
-* [`icinga2::object::user`](#icinga2objectuser): Manage Icinga 2 user objects.
-* [`icinga2::object::usergroup`](#icinga2objectusergroup): Manage Icinga 2 usergroup objects.
-* [`icinga2::object::zone`](#icinga2objectzone): Manage Icinga 2 zone objects.
+* [`icinga2::config::fragment`](#icinga2--config--fragment): Set a code fragment in a target configuration file. It's not possible to add a fragment to an object.
+* [`icinga2::object::apiuser`](#icinga2--object--apiuser): Manage Icinga 2 ApiUser objects.
+* [`icinga2::object::checkcommand`](#icinga2--object--checkcommand): Manage Icinga 2 Host objects.
+* [`icinga2::object::checkresultreader`](#icinga2--object--checkresultreader): Manage Icinga 2 CheckResultReader objects.
+* [`icinga2::object::endpoint`](#icinga2--object--endpoint): Manage Icinga 2 endpoint objects.
+* [`icinga2::object::eventcommand`](#icinga2--object--eventcommand): Manage Icinga 2 EventCommand objects.
+* [`icinga2::object::host`](#icinga2--object--host): Manage Icinga 2 Host objects.
+* [`icinga2::object::hostgroup`](#icinga2--object--hostgroup): Manage Icinga 2 HostGroup objects.
+* [`icinga2::object::icingaapplication`](#icinga2--object--icingaapplication): Manage Icinga 2 IcingaApplication objects.
+* [`icinga2::object::notificationcommand`](#icinga2--object--notificationcommand): Manage Icinga 2 notificationcommand objects.
+* [`icinga2::object::servicegroup`](#icinga2--object--servicegroup): Manage Icinga 2 servicegroup objects.
+* [`icinga2::object::timeperiod`](#icinga2--object--timeperiod): Manage Icinga 2 timeperiod objects.
+* [`icinga2::object::user`](#icinga2--object--user): Manage Icinga 2 user objects.
+* [`icinga2::object::usergroup`](#icinga2--object--usergroup): Manage Icinga 2 usergroup objects.
+* [`icinga2::object::zone`](#icinga2--object--zone): Manage Icinga 2 zone objects.
 
 #### Private Defined types
 
 * `icinga2::feature`: Private define resource to used by this module only.
-* `icinga2::object`: Define resource to used by this module only.
 * `icinga2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
 
-* [`icinga2::cert`](#icinga2cert): Choose the path of tls key, cert and ca file.
-* [`icinga2::db::connect`](#icinga2dbconnect): This function returns a string to connect databases
+* [`icinga2::cert`](#icinga2--cert): Choose the path of tls key, cert and ca file.
+* [`icinga2::db::connect`](#icinga2--db--connect): This function returns a string to connect databases
 with or without TLS information.
-* [`icinga2::icinga2_attributes`](#icinga2icinga2_attributes): Calls the simple parser  to decide what to quote.
+* [`icinga2::icinga2_attributes`](#icinga2--icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
-* [`icinga2::icinga2_ticket_id`](#icinga2icinga2_ticket_id): Summarise what the function does here
-* [`icinga2::newline`](#icinga2newline): Replace newlines for Windows systems.
-* [`icinga2::parse`](#icinga2parse)
-* [`icinga2::unwrap`](#icinga2unwrap): This function returns an unwrap string if necessary.
+* [`icinga2::icinga2_ticket_id`](#icinga2--icinga2_ticket_id): Summarise what the function does here
+* [`icinga2::newline`](#icinga2--newline): Replace newlines for Windows systems.
+* [`icinga2::parse`](#icinga2--parse)
+* [`icinga2::unwrap`](#icinga2--unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
 
-* [`Icinga2::BasicAuth`](#icinga2basicauth): A strict type for basic authentication
-* [`Icinga2::CustomAttributes`](#icinga2customattributes): A type for the structure of custom attributes
-* [`Icinga2::Fingerprint`](#icinga2fingerprint): Type for certificate fingerprints SHA1: 160 bit (20 byte) digest SHA256: 256 bit (32 byte) digest
-* [`Icinga2::IdoCleanup`](#icinga2idocleanup): A type for the structure of settings to cleanup IDO databases
-* [`Icinga2::Interval`](#icinga2interval): A strict type for intervals
-* [`Icinga2::LogFacility`](#icinga2logfacility): A strict type of syslog facilities
-* [`Icinga2::LogSeverity`](#icinga2logseverity): A strict type for log levels
+* [`Icinga2::BasicAuth`](#Icinga2--BasicAuth): A strict type for basic authentication
+* [`Icinga2::CustomAttributes`](#Icinga2--CustomAttributes): A type for the structure of custom attributes
+* [`Icinga2::Fingerprint`](#Icinga2--Fingerprint): Type for certificate fingerprints SHA1: 160 bit (20 byte) digest SHA256: 256 bit (32 byte) digest
+* [`Icinga2::IdoCleanup`](#Icinga2--IdoCleanup): A type for the structure of settings to cleanup IDO databases
+* [`Icinga2::Interval`](#Icinga2--Interval): A strict type for intervals
+* [`Icinga2::LogFacility`](#Icinga2--LogFacility): A strict type of syslog facilities
+* [`Icinga2::LogSeverity`](#Icinga2--LogSeverity): A strict type for log levels
 
 ## Classes
 
@@ -203,21 +198,21 @@ class { 'icinga2':
 
 The following parameters are available in the `icinga2` class:
 
-* [`ensure`](#ensure)
-* [`enable`](#enable)
-* [`manage_repo`](#manage_repo)
-* [`manage_repos`](#manage_repos)
-* [`manage_package`](#manage_package)
-* [`manage_packages`](#manage_packages)
-* [`manage_selinux`](#manage_selinux)
-* [`manage_service`](#manage_service)
-* [`features`](#features)
-* [`purge_features`](#purge_features)
-* [`constants`](#constants)
-* [`plugins`](#plugins)
-* [`confd`](#confd)
+* [`ensure`](#-icinga2--ensure)
+* [`enable`](#-icinga2--enable)
+* [`manage_repo`](#-icinga2--manage_repo)
+* [`manage_repos`](#-icinga2--manage_repos)
+* [`manage_package`](#-icinga2--manage_package)
+* [`manage_packages`](#-icinga2--manage_packages)
+* [`manage_selinux`](#-icinga2--manage_selinux)
+* [`manage_service`](#-icinga2--manage_service)
+* [`features`](#-icinga2--features)
+* [`purge_features`](#-icinga2--purge_features)
+* [`constants`](#-icinga2--constants)
+* [`plugins`](#-icinga2--plugins)
+* [`confd`](#-icinga2--confd)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--ensure"></a>`ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -225,23 +220,23 @@ Manages if the service should be stopped or running.
 
 Default value: `running`
 
-##### <a name="enable"></a>`enable`
+##### <a name="-icinga2--enable"></a>`enable`
 
 Data type: `Boolean`
 
 If set to true the Icinga 2 service will start on boot.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-icinga2--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
 Deprecated, use manage_repos.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="manage_repos"></a>`manage_repos`
+##### <a name="-icinga2--manage_repos"></a>`manage_repos`
 
 Data type: `Boolean`
 
@@ -249,57 +244,57 @@ When set to true this module will use the module icinga/puppet-icinga to manage 
 e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
 For more information, see http://github.com/icinga/puppet-icinga.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="manage_package"></a>`manage_package`
+##### <a name="-icinga2--manage_package"></a>`manage_package`
 
 Data type: `Boolean`
 
 Deprecated, use manage_packages.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="manage_packages"></a>`manage_packages`
+##### <a name="-icinga2--manage_packages"></a>`manage_packages`
 
 Data type: `Boolean`
 
 If set to false packages aren't managed.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_selinux"></a>`manage_selinux`
+##### <a name="-icinga2--manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
 If set to true the icinga selinux package is installed. Requires a `selinux_package_name` (icinga2::globals)
 and `manage_packages` has to be set to true.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-icinga2--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
 If set to true the service is managed otherwise the service also
 isn't restarted if a config file changed.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="features"></a>`features`
+##### <a name="-icinga2--features"></a>`features`
 
 Data type: `Array`
 
 List of features to activate. Defaults to [checker, mainlog, notification].
 
-##### <a name="purge_features"></a>`purge_features`
+##### <a name="-icinga2--purge_features"></a>`purge_features`
 
 Data type: `Boolean`
 
 Define if configuration files for features not managed by Puppet should be purged.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="constants"></a>`constants`
+##### <a name="-icinga2--constants"></a>`constants`
 
 Data type: `Hash`
 
@@ -307,13 +302,13 @@ Hash of constants. Defaults are set in the params class. Your settings will be m
 
 Default value: `{}`
 
-##### <a name="plugins"></a>`plugins`
+##### <a name="-icinga2--plugins"></a>`plugins`
 
 Data type: `Array`
 
 A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 
-##### <a name="confd"></a>`confd`
+##### <a name="-icinga2--confd"></a>`confd`
 
 Data type: `Variant[Boolean, String]`
 
@@ -322,9 +317,9 @@ set this parameter to `false`. By default this parameter is `true`. It's also po
 own directory. This directory must be managed outside of this module as file resource
 with tag icinga2::config::file.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="icinga2featureapi"></a>`icinga2::feature::api`
+### <a name="icinga2--feature--api"></a>`icinga2::feature::api`
 
 Configures the Icinga 2 feature api.
 
@@ -396,35 +391,35 @@ file { '/var/lib/icinga2/ca/ca.key':
 
 The following parameters are available in the `icinga2::feature::api` class:
 
-* [`ensure`](#ensure)
-* [`pki`](#pki)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`ssl_crl`](#ssl_crl)
-* [`accept_config`](#accept_config)
-* [`accept_commands`](#accept_commands)
-* [`max_anonymous_clients`](#max_anonymous_clients)
-* [`ca_host`](#ca_host)
-* [`ca_port`](#ca_port)
-* [`fingerprint`](#fingerprint)
-* [`ticket_salt`](#ticket_salt)
-* [`ticket_id`](#ticket_id)
-* [`endpoints`](#endpoints)
-* [`zones`](#zones)
-* [`ssl_protocolmin`](#ssl_protocolmin)
-* [`ssl_handshake_timeout`](#ssl_handshake_timeout)
-* [`connect_timeout`](#connect_timeout)
-* [`ssl_cipher_list`](#ssl_cipher_list)
-* [`bind_host`](#bind_host)
-* [`bind_port`](#bind_port)
-* [`access_control_allow_origin`](#access_control_allow_origin)
-* [`access_control_allow_credentials`](#access_control_allow_credentials)
-* [`access_control_allow_headers`](#access_control_allow_headers)
-* [`access_control_allow_methods`](#access_control_allow_methods)
-* [`environment`](#environment)
+* [`ensure`](#-icinga2--feature--api--ensure)
+* [`pki`](#-icinga2--feature--api--pki)
+* [`ssl_key`](#-icinga2--feature--api--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--api--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--api--ssl_cacert)
+* [`ssl_crl`](#-icinga2--feature--api--ssl_crl)
+* [`accept_config`](#-icinga2--feature--api--accept_config)
+* [`accept_commands`](#-icinga2--feature--api--accept_commands)
+* [`max_anonymous_clients`](#-icinga2--feature--api--max_anonymous_clients)
+* [`ca_host`](#-icinga2--feature--api--ca_host)
+* [`ca_port`](#-icinga2--feature--api--ca_port)
+* [`fingerprint`](#-icinga2--feature--api--fingerprint)
+* [`ticket_salt`](#-icinga2--feature--api--ticket_salt)
+* [`ticket_id`](#-icinga2--feature--api--ticket_id)
+* [`endpoints`](#-icinga2--feature--api--endpoints)
+* [`zones`](#-icinga2--feature--api--zones)
+* [`ssl_protocolmin`](#-icinga2--feature--api--ssl_protocolmin)
+* [`ssl_handshake_timeout`](#-icinga2--feature--api--ssl_handshake_timeout)
+* [`connect_timeout`](#-icinga2--feature--api--connect_timeout)
+* [`ssl_cipher_list`](#-icinga2--feature--api--ssl_cipher_list)
+* [`bind_host`](#-icinga2--feature--api--bind_host)
+* [`bind_port`](#-icinga2--feature--api--bind_port)
+* [`access_control_allow_origin`](#-icinga2--feature--api--access_control_allow_origin)
+* [`access_control_allow_credentials`](#-icinga2--feature--api--access_control_allow_credentials)
+* [`access_control_allow_headers`](#-icinga2--feature--api--access_control_allow_headers)
+* [`access_control_allow_methods`](#-icinga2--feature--api--access_control_allow_methods)
+* [`environment`](#-icinga2--feature--api--environment)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--api--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -432,7 +427,7 @@ Set to present enables the feature api, absent disabled it.
 
 Default value: `present`
 
-##### <a name="pki"></a>`pki`
+##### <a name="-icinga2--feature--api--pki"></a>`pki`
 
 Data type: `Enum['ca', 'icinga2', 'none', 'puppet']`
 
@@ -451,74 +446,74 @@ Provides multiple sources for the certificate, key and ca.
 
 Default value: `'icinga2'`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--api--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Stdlib::Base64]`
 
 The private key in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--api--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[Stdlib::Base64]`
 
 The certificate in a base64 encoded string to store in cert directory This parameter
  requires pki to be set to 'none'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--api--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[Stdlib::Base64]`
 
 The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_crl"></a>`ssl_crl`
+##### <a name="-icinga2--feature--api--ssl_crl"></a>`ssl_crl`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Optional location of the certificate revocation list.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="accept_config"></a>`accept_config`
+##### <a name="-icinga2--feature--api--accept_config"></a>`accept_config`
 
 Data type: `Optional[Boolean]`
 
 Accept zone configuration.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="accept_commands"></a>`accept_commands`
+##### <a name="-icinga2--feature--api--accept_commands"></a>`accept_commands`
 
 Data type: `Optional[Boolean]`
 
 Accept remote commands.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_anonymous_clients"></a>`max_anonymous_clients`
+##### <a name="-icinga2--feature--api--max_anonymous_clients"></a>`max_anonymous_clients`
 
 Data type: `Optional[Integer[0]]`
 
 Limit the number of anonymous client connections (not configured endpoints and signing requests).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ca_host"></a>`ca_host`
+##### <a name="-icinga2--feature--api--ca_host"></a>`ca_host`
 
 Data type: `Optional[Stdlib::Host]`
 
 This host will be connected to request the certificate. Set this if you use the icinga2 pki.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ca_port"></a>`ca_port`
+##### <a name="-icinga2--feature--api--ca_port"></a>`ca_port`
 
 Data type: `Stdlib::Port::Unprivileged`
 
@@ -526,7 +521,7 @@ Port of the 'ca_host'.
 
 Default value: `5665`
 
-##### <a name="fingerprint"></a>`fingerprint`
+##### <a name="-icinga2--feature--api--fingerprint"></a>`fingerprint`
 
 Data type: `Optional[Icinga2::Fingerprint]`
 
@@ -534,9 +529,9 @@ Fingerprint of the CA host certificate for validation. Requires pki is set to `i
 You can get the fingerprint via 'openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]'
 on your CA host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ticket_salt"></a>`ticket_salt`
+##### <a name="-icinga2--feature--api--ticket_salt"></a>`ticket_salt`
 
 Data type: `Variant[String, Sensitive[String]]`
 
@@ -546,7 +541,7 @@ characters as salt or a constant.
 
 Default value: `'TicketSalt'`
 
-##### <a name="ticket_id"></a>`ticket_id`
+##### <a name="-icinga2--feature--api--ticket_id"></a>`ticket_id`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
@@ -554,9 +549,9 @@ If a ticket_id is given it will be used instead of generating an ticket_id.
 The ticket_id will be used only when requesting a certificate from the ca_host
 in case the pki is set to 'icinga2'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="endpoints"></a>`endpoints`
+##### <a name="-icinga2--feature--api--endpoints"></a>`endpoints`
 
 Data type: `Hash[String, Hash]`
 
@@ -564,7 +559,7 @@ Hash to configure endpoint objects. `NodeName` is a icnga2 constant.
 
 Default value: `{ 'NodeName' => {} }`
 
-##### <a name="zones"></a>`zones`
+##### <a name="-icinga2--feature--api--zones"></a>`zones`
 
 Data type: `Hash[String, Hash]`
 
@@ -572,95 +567,95 @@ Hash to configure zone objects. `ZoneName` and `NodeName` are icinga2 constants.
 
 Default value: `{ 'ZoneName' => { endpoints => ['NodeName'] } }`
 
-##### <a name="ssl_protocolmin"></a>`ssl_protocolmin`
+##### <a name="-icinga2--feature--api--ssl_protocolmin"></a>`ssl_protocolmin`
 
 Data type: `Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3']]`
 
 Minimal TLS version to require.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_handshake_timeout"></a>`ssl_handshake_timeout`
+##### <a name="-icinga2--feature--api--ssl_handshake_timeout"></a>`ssl_handshake_timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 TLS Handshake timeout.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="connect_timeout"></a>`connect_timeout`
+##### <a name="-icinga2--feature--api--connect_timeout"></a>`connect_timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Timeout for establishing new connections.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cipher_list"></a>`ssl_cipher_list`
+##### <a name="-icinga2--feature--api--ssl_cipher_list"></a>`ssl_cipher_list`
 
 Data type: `Optional[String]`
 
 List of allowed TLS ciphers, to finetune encryption.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="bind_host"></a>`bind_host`
+##### <a name="-icinga2--feature--api--bind_host"></a>`bind_host`
 
 Data type: `Optional[Stdlib::Host]`
 
 The IP address the api listener will be bound to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="bind_port"></a>`bind_port`
+##### <a name="-icinga2--feature--api--bind_port"></a>`bind_port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 The port the api listener will be bound to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_control_allow_origin"></a>`access_control_allow_origin`
+##### <a name="-icinga2--feature--api--access_control_allow_origin"></a>`access_control_allow_origin`
 
 Data type: `Optional[Array[String]]`
 
 Specifies an array of origin URLs that may access the API.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_control_allow_credentials"></a>`access_control_allow_credentials`
+##### <a name="-icinga2--feature--api--access_control_allow_credentials"></a>`access_control_allow_credentials`
 
 Data type: `Optional[Boolean]`
 
 Indicates whether or not the actual request can be made using credentials.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_control_allow_headers"></a>`access_control_allow_headers`
+##### <a name="-icinga2--feature--api--access_control_allow_headers"></a>`access_control_allow_headers`
 
 Data type: `Optional[String]`
 
 Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_control_allow_methods"></a>`access_control_allow_methods`
+##### <a name="-icinga2--feature--api--access_control_allow_methods"></a>`access_control_allow_methods`
 
 Data type: `Optional[Array[Enum['GET', 'POST', 'PUT', 'DELETE']]]`
 
 Used in response to a preflight request to indicate which HTTP methods can be used when making the actual request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="environment"></a>`environment`
+##### <a name="-icinga2--feature--api--environment"></a>`environment`
 
 Data type: `Optional[String]`
 
 Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featurechecker"></a>`icinga2::feature::checker`
+### <a name="icinga2--feature--checker"></a>`icinga2::feature::checker`
 
 Configures the Icinga 2 feature checker.
 
@@ -671,10 +666,10 @@ MaxConcurrentChecks which will be set if you still use concurrent_checks.
 
 The following parameters are available in the `icinga2::feature::checker` class:
 
-* [`ensure`](#ensure)
-* [`concurrent_checks`](#concurrent_checks)
+* [`ensure`](#-icinga2--feature--checker--ensure)
+* [`concurrent_checks`](#-icinga2--feature--checker--concurrent_checks)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--checker--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -682,15 +677,15 @@ Set to present enables the feature checker, absent disabled it.
 
 Default value: `present`
 
-##### <a name="concurrent_checks"></a>`concurrent_checks`
+##### <a name="-icinga2--feature--checker--concurrent_checks"></a>`concurrent_checks`
 
 Data type: `Optional[Integer[1]]`
 
 The maximum number of concurrent checks.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featurecommand"></a>`icinga2::feature::command`
+### <a name="icinga2--feature--command"></a>`icinga2::feature::command`
 
 Configures the Icinga 2 feature command.
 
@@ -698,10 +693,10 @@ Configures the Icinga 2 feature command.
 
 The following parameters are available in the `icinga2::feature::command` class:
 
-* [`ensure`](#ensure)
-* [`command_path`](#command_path)
+* [`ensure`](#-icinga2--feature--command--ensure)
+* [`command_path`](#-icinga2--feature--command--command_path)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--command--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -709,15 +704,15 @@ Set to present to enable the feature command, absent to disabled it.
 
 Default value: `present`
 
-##### <a name="command_path"></a>`command_path`
+##### <a name="-icinga2--feature--command--command_path"></a>`command_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to the command pipe.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featurecompatlog"></a>`icinga2::feature::compatlog`
+### <a name="icinga2--feature--compatlog"></a>`icinga2::feature::compatlog`
 
 Configures the Icinga 2 feature compatlog.
 
@@ -725,11 +720,11 @@ Configures the Icinga 2 feature compatlog.
 
 The following parameters are available in the `icinga2::feature::compatlog` class:
 
-* [`ensure`](#ensure)
-* [`log_dir`](#log_dir)
-* [`rotation_method`](#rotation_method)
+* [`ensure`](#-icinga2--feature--compatlog--ensure)
+* [`log_dir`](#-icinga2--feature--compatlog--log_dir)
+* [`rotation_method`](#-icinga2--feature--compatlog--rotation_method)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--compatlog--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -737,23 +732,23 @@ Set to present enables the feature compatlog, absent disabled it.
 
 Default value: `present`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-icinga2--feature--compatlog--log_dir"></a>`log_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to the log directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rotation_method"></a>`rotation_method`
+##### <a name="-icinga2--feature--compatlog--rotation_method"></a>`rotation_method`
 
 Data type: `Optional[Enum['DAILY', 'HOURLY', 'MONTHLY', 'WEEKLY']]`
 
 Sets how often should the log file be rotated.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featuredebuglog"></a>`icinga2::feature::debuglog`
+### <a name="icinga2--feature--debuglog"></a>`icinga2::feature::debuglog`
 
 Configures the Icinga 2 feature mainlog.
 
@@ -761,10 +756,10 @@ Configures the Icinga 2 feature mainlog.
 
 The following parameters are available in the `icinga2::feature::debuglog` class:
 
-* [`ensure`](#ensure)
-* [`path`](#path)
+* [`ensure`](#-icinga2--feature--debuglog--ensure)
+* [`path`](#-icinga2--feature--debuglog--path)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--debuglog--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -772,7 +767,7 @@ Set to present enables the feature mainlog, absent disables it.
 
 Default value: `present`
 
-##### <a name="path"></a>`path`
+##### <a name="-icinga2--feature--debuglog--path"></a>`path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -780,7 +775,7 @@ Absolute path to the log file.
 
 Default value: `"${icinga2::globals::log_dir}/debug.log"`
 
-### <a name="icinga2featureelasticsearch"></a>`icinga2::feature::elasticsearch`
+### <a name="icinga2--feature--elasticsearch"></a>`icinga2::feature::elasticsearch`
 
 Configures the Icinga 2 feature elasticsearch.
 
@@ -799,26 +794,26 @@ class { 'icinga2::feature::elasticsearch':
 
 The following parameters are available in the `icinga2::feature::elasticsearch` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`index`](#index)
-* [`username`](#username)
-* [`password`](#password)
-* [`enable_ssl`](#enable_ssl)
-* [`ssl_noverify`](#ssl_noverify)
-* [`ssl_key_path`](#ssl_key_path)
-* [`ssl_cert_path`](#ssl_cert_path)
-* [`ssl_cacert_path`](#ssl_cacert_path)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`enable_send_perfdata`](#enable_send_perfdata)
-* [`flush_interval`](#flush_interval)
-* [`flush_threshold`](#flush_threshold)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--elasticsearch--ensure)
+* [`host`](#-icinga2--feature--elasticsearch--host)
+* [`port`](#-icinga2--feature--elasticsearch--port)
+* [`index`](#-icinga2--feature--elasticsearch--index)
+* [`username`](#-icinga2--feature--elasticsearch--username)
+* [`password`](#-icinga2--feature--elasticsearch--password)
+* [`enable_ssl`](#-icinga2--feature--elasticsearch--enable_ssl)
+* [`ssl_noverify`](#-icinga2--feature--elasticsearch--ssl_noverify)
+* [`ssl_key_path`](#-icinga2--feature--elasticsearch--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--elasticsearch--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--elasticsearch--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--elasticsearch--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--elasticsearch--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--elasticsearch--ssl_cacert)
+* [`enable_send_perfdata`](#-icinga2--feature--elasticsearch--enable_send_perfdata)
+* [`flush_interval`](#-icinga2--feature--elasticsearch--flush_interval)
+* [`flush_threshold`](#-icinga2--feature--elasticsearch--flush_threshold)
+* [`enable_ha`](#-icinga2--feature--elasticsearch--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--elasticsearch--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -826,143 +821,143 @@ Set to present enables the feature elasticsearch, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--elasticsearch--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 Elasticsearch host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--elasticsearch--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 Elasticsearch HTTP port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="index"></a>`index`
+##### <a name="-icinga2--feature--elasticsearch--index"></a>`index`
 
 Data type: `Optional[String]`
 
 Elasticsearch index name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="username"></a>`username`
+##### <a name="-icinga2--feature--elasticsearch--username"></a>`username`
 
 Data type: `Optional[String]`
 
 Elasticsearch user name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="password"></a>`password`
+##### <a name="-icinga2--feature--elasticsearch--password"></a>`password`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 Elasticsearch user password. The password parameter isn't parsed anymore.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ssl"></a>`enable_ssl`
+##### <a name="-icinga2--feature--elasticsearch--enable_ssl"></a>`enable_ssl`
 
 Data type: `Optional[Boolean]`
 
 Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_noverify"></a>`ssl_noverify`
+##### <a name="-icinga2--feature--elasticsearch--ssl_noverify"></a>`ssl_noverify`
 
 Data type: `Optional[Boolean]`
 
 Disable TLS peer verification. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key_path"></a>`ssl_key_path`
+##### <a name="-icinga2--feature--elasticsearch--ssl_key_path"></a>`ssl_key_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client private key. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert_path"></a>`ssl_cert_path`
+##### <a name="-icinga2--feature--elasticsearch--ssl_cert_path"></a>`ssl_cert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert_path"></a>`ssl_cacert_path`
+##### <a name="-icinga2--feature--elasticsearch--ssl_cacert_path"></a>`ssl_cacert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--elasticsearch--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--elasticsearch--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[String]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--elasticsearch--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[String]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_send_perfdata"></a>`enable_send_perfdata`
+##### <a name="-icinga2--feature--elasticsearch--enable_send_perfdata"></a>`enable_send_perfdata`
 
 Data type: `Optional[Boolean]`
 
 Whether to send check performance data metrics.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flush_interval"></a>`flush_interval`
+##### <a name="-icinga2--feature--elasticsearch--flush_interval"></a>`flush_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 How long to buffer data points before transferring to Elasticsearch.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flush_threshold"></a>`flush_threshold`
+##### <a name="-icinga2--feature--elasticsearch--flush_threshold"></a>`flush_threshold`
 
 Data type: `Optional[Integer]`
 
 How many data points to buffer before forcing a transfer to Elasticsearch.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--elasticsearch--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featuregelf"></a>`icinga2::feature::gelf`
+### <a name="icinga2--feature--gelf"></a>`icinga2::feature::gelf`
 
 Configures the Icinga 2 feature gelf.
 
@@ -970,22 +965,22 @@ Configures the Icinga 2 feature gelf.
 
 The following parameters are available in the `icinga2::feature::gelf` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`source`](#source)
-* [`enable_ssl`](#enable_ssl)
-* [`ssl_key_path`](#ssl_key_path)
-* [`ssl_cert_path`](#ssl_cert_path)
-* [`ssl_cacert_path`](#ssl_cacert_path)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`ssl_noverify`](#ssl_noverify)
-* [`enable_send_perfdata`](#enable_send_perfdata)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--gelf--ensure)
+* [`host`](#-icinga2--feature--gelf--host)
+* [`port`](#-icinga2--feature--gelf--port)
+* [`source`](#-icinga2--feature--gelf--source)
+* [`enable_ssl`](#-icinga2--feature--gelf--enable_ssl)
+* [`ssl_key_path`](#-icinga2--feature--gelf--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--gelf--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--gelf--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--gelf--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--gelf--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--gelf--ssl_cacert)
+* [`ssl_noverify`](#-icinga2--feature--gelf--ssl_noverify)
+* [`enable_send_perfdata`](#-icinga2--feature--gelf--enable_send_perfdata)
+* [`enable_ha`](#-icinga2--feature--gelf--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--gelf--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -993,111 +988,111 @@ Set to present enables the feature gelf, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--gelf--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 GELF receiver host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--gelf--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 GELF receiver port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source"></a>`source`
+##### <a name="-icinga2--feature--gelf--source"></a>`source`
 
 Data type: `Optional[String]`
 
 Source name for this instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ssl"></a>`enable_ssl`
+##### <a name="-icinga2--feature--gelf--enable_ssl"></a>`enable_ssl`
 
 Data type: `Boolean`
 
 Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_key_path"></a>`ssl_key_path`
+##### <a name="-icinga2--feature--gelf--ssl_key_path"></a>`ssl_key_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the private key. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert_path"></a>`ssl_cert_path`
+##### <a name="-icinga2--feature--gelf--ssl_cert_path"></a>`ssl_cert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert_path"></a>`ssl_cacert_path`
+##### <a name="-icinga2--feature--gelf--ssl_cacert_path"></a>`ssl_cacert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--gelf--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--gelf--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[String]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--gelf--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[String]`
 
 The CA certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_noverify"></a>`ssl_noverify`
+##### <a name="-icinga2--feature--gelf--ssl_noverify"></a>`ssl_noverify`
 
 Data type: `Optional[Boolean]`
 
 Disable TLS peer verification. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_send_perfdata"></a>`enable_send_perfdata`
+##### <a name="-icinga2--feature--gelf--enable_send_perfdata"></a>`enable_send_perfdata`
 
 Data type: `Optional[Boolean]`
 
 Enable performance data for 'CHECK RESULT' events.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--gelf--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featuregraphite"></a>`icinga2::feature::graphite`
+### <a name="icinga2--feature--graphite"></a>`icinga2::feature::graphite`
 
 Configures the Icinga 2 feature graphite.
 
@@ -1118,16 +1113,16 @@ class { 'icinga2::feature::graphite':
 
 The following parameters are available in the `icinga2::feature::graphite` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`host_name_template`](#host_name_template)
-* [`service_name_template`](#service_name_template)
-* [`enable_send_thresholds`](#enable_send_thresholds)
-* [`enable_send_metadata`](#enable_send_metadata)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--graphite--ensure)
+* [`host`](#-icinga2--feature--graphite--host)
+* [`port`](#-icinga2--feature--graphite--port)
+* [`host_name_template`](#-icinga2--feature--graphite--host_name_template)
+* [`service_name_template`](#-icinga2--feature--graphite--service_name_template)
+* [`enable_send_thresholds`](#-icinga2--feature--graphite--enable_send_thresholds)
+* [`enable_send_metadata`](#-icinga2--feature--graphite--enable_send_metadata)
+* [`enable_ha`](#-icinga2--feature--graphite--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--graphite--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1135,63 +1130,63 @@ Set to present enables the feature graphite, absent disabled it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--graphite--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 Graphite Carbon host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--graphite--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 Graphite Carbon port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="host_name_template"></a>`host_name_template`
+##### <a name="-icinga2--feature--graphite--host_name_template"></a>`host_name_template`
 
 Data type: `Optional[String]`
 
 Template for metric path of hosts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_name_template"></a>`service_name_template`
+##### <a name="-icinga2--feature--graphite--service_name_template"></a>`service_name_template`
 
 Data type: `Optional[String]`
 
 Template for metric path of services.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_send_thresholds"></a>`enable_send_thresholds`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="enable_send_metadata"></a>`enable_send_metadata`
+##### <a name="-icinga2--feature--graphite--enable_send_thresholds"></a>`enable_send_thresholds`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--graphite--enable_send_metadata"></a>`enable_send_metadata`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--graphite--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featureicingadb"></a>`icinga2::feature::icingadb`
+### <a name="icinga2--feature--icingadb"></a>`icinga2::feature::icingadb`
 
 Configures the Icinga 2 feature icingadb.
 
@@ -1199,27 +1194,27 @@ Configures the Icinga 2 feature icingadb.
 
 The following parameters are available in the `icinga2::feature::icingadb` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`socket_path`](#socket_path)
-* [`connect_timeout`](#connect_timeout)
-* [`password`](#password)
-* [`env_id`](#env_id)
-* [`enable_tls`](#enable_tls)
-* [`tls_key_file`](#tls_key_file)
-* [`tls_cert_file`](#tls_cert_file)
-* [`tls_cacert_file`](#tls_cacert_file)
-* [`tls_crl_file`](#tls_crl_file)
-* [`tls_key`](#tls_key)
-* [`tls_cert`](#tls_cert)
-* [`tls_cacert`](#tls_cacert)
-* [`tls_capath`](#tls_capath)
-* [`tls_cipher`](#tls_cipher)
-* [`tls_protocolmin`](#tls_protocolmin)
-* [`tls_noverify`](#tls_noverify)
+* [`ensure`](#-icinga2--feature--icingadb--ensure)
+* [`host`](#-icinga2--feature--icingadb--host)
+* [`port`](#-icinga2--feature--icingadb--port)
+* [`socket_path`](#-icinga2--feature--icingadb--socket_path)
+* [`connect_timeout`](#-icinga2--feature--icingadb--connect_timeout)
+* [`password`](#-icinga2--feature--icingadb--password)
+* [`env_id`](#-icinga2--feature--icingadb--env_id)
+* [`enable_tls`](#-icinga2--feature--icingadb--enable_tls)
+* [`tls_key_file`](#-icinga2--feature--icingadb--tls_key_file)
+* [`tls_cert_file`](#-icinga2--feature--icingadb--tls_cert_file)
+* [`tls_cacert_file`](#-icinga2--feature--icingadb--tls_cacert_file)
+* [`tls_crl_file`](#-icinga2--feature--icingadb--tls_crl_file)
+* [`tls_key`](#-icinga2--feature--icingadb--tls_key)
+* [`tls_cert`](#-icinga2--feature--icingadb--tls_cert)
+* [`tls_cacert`](#-icinga2--feature--icingadb--tls_cacert)
+* [`tls_capath`](#-icinga2--feature--icingadb--tls_capath)
+* [`tls_cipher`](#-icinga2--feature--icingadb--tls_cipher)
+* [`tls_protocolmin`](#-icinga2--feature--icingadb--tls_protocolmin)
+* [`tls_noverify`](#-icinga2--feature--icingadb--tls_noverify)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--icingadb--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1227,47 +1222,47 @@ Set to present, enables the feature icingadb, absent disabled it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--icingadb--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 IcingaDB Redis host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--icingadb--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 IcingaDB Redis port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="socket_path"></a>`socket_path`
+##### <a name="-icinga2--feature--icingadb--socket_path"></a>`socket_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 IcingaDB Redis unix sockt. Can be used instead of host and port attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="connect_timeout"></a>`connect_timeout`
+##### <a name="-icinga2--feature--icingadb--connect_timeout"></a>`connect_timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Timeout for establishing new connections.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="password"></a>`password`
+##### <a name="-icinga2--feature--icingadb--password"></a>`password`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="env_id"></a>`env_id`
+##### <a name="-icinga2--feature--icingadb--env_id"></a>`env_id`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
@@ -1276,108 +1271,108 @@ different environments and is written to the file `/var/lib/icinga2/icingadb.env
 by Icinga 2. Icinga 2 generates a unique environment ID from its CA certificate
 when it is first started with the Icinga DB feature enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_tls"></a>`enable_tls`
+##### <a name="-icinga2--feature--icingadb--enable_tls"></a>`enable_tls`
 
 Data type: `Boolean`
 
 Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="tls_key_file"></a>`tls_key_file`
+##### <a name="-icinga2--feature--icingadb--tls_key_file"></a>`tls_key_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the private key. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_cert_file"></a>`tls_cert_file`
+##### <a name="-icinga2--feature--icingadb--tls_cert_file"></a>`tls_cert_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the certificate. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+##### <a name="-icinga2--feature--icingadb--tls_cacert_file"></a>`tls_cacert_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_crl_file"></a>`tls_crl_file`
+##### <a name="-icinga2--feature--icingadb--tls_crl_file"></a>`tls_crl_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the Certicicate Revocation List. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_key"></a>`tls_key`
+##### <a name="-icinga2--feature--icingadb--tls_key"></a>`tls_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The private key in a PEM formated string to store spicified in tls_key_file.
 Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_cert"></a>`tls_cert`
+##### <a name="-icinga2--feature--icingadb--tls_cert"></a>`tls_cert`
 
 Data type: `Optional[String]`
 
 The certificate in a PEM format string to store spicified in tls_cert_file.
 Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_cacert"></a>`tls_cacert`
+##### <a name="-icinga2--feature--icingadb--tls_cacert"></a>`tls_cacert`
 
 Data type: `Optional[String]`
 
 The CA root certificate in a PEM formated string to store spicified in tls_cacert_file.
 Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_capath"></a>`tls_capath`
+##### <a name="-icinga2--feature--icingadb--tls_capath"></a>`tls_capath`
 
 Data type: `Optional[String]`
 
 Path to all trusted CA certificates. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_cipher"></a>`tls_cipher`
+##### <a name="-icinga2--feature--icingadb--tls_cipher"></a>`tls_cipher`
 
 Data type: `Optional[String]`
 
 List of allowed ciphers. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_protocolmin"></a>`tls_protocolmin`
+##### <a name="-icinga2--feature--icingadb--tls_protocolmin"></a>`tls_protocolmin`
 
 Data type: `Optional[String]`
 
 Minimum TLS protocol version like `TLSv1.2`. Only valid if tls is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tls_noverify"></a>`tls_noverify`
+##### <a name="-icinga2--feature--icingadb--tls_noverify"></a>`tls_noverify`
 
 Data type: `Optional[Boolean]`
 
 Whether not to verify the peer.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featureidomysql"></a>`icinga2::feature::idomysql`
+### <a name="icinga2--feature--idomysql"></a>`icinga2::feature::idomysql`
 
 Installs and configures the Icinga 2 feature ido-mysql.
 
@@ -1408,32 +1403,32 @@ class{ 'icinga2::feature::idomysql':
 
 The following parameters are available in the `icinga2::feature::idomysql` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`socket_path`](#socket_path)
-* [`user`](#user)
-* [`password`](#password)
-* [`database`](#database)
-* [`enable_ssl`](#enable_ssl)
-* [`ssl_key_path`](#ssl_key_path)
-* [`ssl_cert_path`](#ssl_cert_path)
-* [`ssl_cacert_path`](#ssl_cacert_path)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`ssl_capath`](#ssl_capath)
-* [`ssl_cipher`](#ssl_cipher)
-* [`table_prefix`](#table_prefix)
-* [`instance_name`](#instance_name)
-* [`instance_description`](#instance_description)
-* [`enable_ha`](#enable_ha)
-* [`failover_timeout`](#failover_timeout)
-* [`cleanup`](#cleanup)
-* [`categories`](#categories)
-* [`import_schema`](#import_schema)
+* [`ensure`](#-icinga2--feature--idomysql--ensure)
+* [`host`](#-icinga2--feature--idomysql--host)
+* [`port`](#-icinga2--feature--idomysql--port)
+* [`socket_path`](#-icinga2--feature--idomysql--socket_path)
+* [`user`](#-icinga2--feature--idomysql--user)
+* [`password`](#-icinga2--feature--idomysql--password)
+* [`database`](#-icinga2--feature--idomysql--database)
+* [`enable_ssl`](#-icinga2--feature--idomysql--enable_ssl)
+* [`ssl_key_path`](#-icinga2--feature--idomysql--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--idomysql--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--idomysql--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--idomysql--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--idomysql--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--idomysql--ssl_cacert)
+* [`ssl_capath`](#-icinga2--feature--idomysql--ssl_capath)
+* [`ssl_cipher`](#-icinga2--feature--idomysql--ssl_cipher)
+* [`table_prefix`](#-icinga2--feature--idomysql--table_prefix)
+* [`instance_name`](#-icinga2--feature--idomysql--instance_name)
+* [`instance_description`](#-icinga2--feature--idomysql--instance_description)
+* [`enable_ha`](#-icinga2--feature--idomysql--enable_ha)
+* [`failover_timeout`](#-icinga2--feature--idomysql--failover_timeout)
+* [`cleanup`](#-icinga2--feature--idomysql--cleanup)
+* [`categories`](#-icinga2--feature--idomysql--categories)
+* [`import_schema`](#-icinga2--feature--idomysql--import_schema)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--idomysql--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1441,7 +1436,7 @@ Set to present enables the feature ido-mysql, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--idomysql--host"></a>`host`
 
 Data type: `Stdlib::Host`
 
@@ -1449,23 +1444,23 @@ MySQL database host address.
 
 Default value: `'localhost'`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--idomysql--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 MySQL database port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="socket_path"></a>`socket_path`
+##### <a name="-icinga2--feature--idomysql--socket_path"></a>`socket_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 MySQL socket path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user"></a>`user`
+##### <a name="-icinga2--feature--idomysql--user"></a>`user`
 
 Data type: `String`
 
@@ -1473,13 +1468,13 @@ MySQL database user with read/write permission to the icinga database.
 
 Default value: `'icinga'`
 
-##### <a name="password"></a>`password`
+##### <a name="-icinga2--feature--idomysql--password"></a>`password`
 
 Data type: `Variant[String, Sensitive[String]]`
 
 MySQL database user's password. The password parameter isn't parsed anymore.
 
-##### <a name="database"></a>`database`
+##### <a name="-icinga2--feature--idomysql--database"></a>`database`
 
 Data type: `String`
 
@@ -1487,135 +1482,135 @@ MySQL database name.
 
 Default value: `'icinga'`
 
-##### <a name="enable_ssl"></a>`enable_ssl`
+##### <a name="-icinga2--feature--idomysql--enable_ssl"></a>`enable_ssl`
 
 Data type: `Boolean`
 
 Either enable or disable SSL/TLS. Other SSL parameters are only affected if this is set to 'true'.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_key_path"></a>`ssl_key_path`
+##### <a name="-icinga2--feature--idomysql--ssl_key_path"></a>`ssl_key_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client private key. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert_path"></a>`ssl_cert_path`
+##### <a name="-icinga2--feature--idomysql--ssl_cert_path"></a>`ssl_cert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert_path"></a>`ssl_cacert_path`
+##### <a name="-icinga2--feature--idomysql--ssl_cacert_path"></a>`ssl_cacert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--idomysql--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The client private key in PEM Format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--idomysql--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[String]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--idomysql--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[String]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_capath"></a>`ssl_capath`
+##### <a name="-icinga2--feature--idomysql--ssl_capath"></a>`ssl_capath`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 MySQL SSL trusted SSL CA certificates in PEM format directory path. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cipher"></a>`ssl_cipher`
+##### <a name="-icinga2--feature--idomysql--ssl_cipher"></a>`ssl_cipher`
 
 Data type: `Optional[String]`
 
 MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="table_prefix"></a>`table_prefix`
+##### <a name="-icinga2--feature--idomysql--table_prefix"></a>`table_prefix`
 
 Data type: `Optional[String]`
 
 MySQL database table prefix.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="instance_name"></a>`instance_name`
+##### <a name="-icinga2--feature--idomysql--instance_name"></a>`instance_name`
 
 Data type: `Optional[String]`
 
 Unique identifier for the local Icinga 2 instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="instance_description"></a>`instance_description`
+##### <a name="-icinga2--feature--idomysql--instance_description"></a>`instance_description`
 
 Data type: `Optional[String]`
 
 Description for the Icinga 2 instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--idomysql--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="failover_timeout"></a>`failover_timeout`
+##### <a name="-icinga2--feature--idomysql--failover_timeout"></a>`failover_timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Set the failover timeout in a HA cluster. Must not be lower than 60s.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cleanup"></a>`cleanup`
+##### <a name="-icinga2--feature--idomysql--cleanup"></a>`cleanup`
 
 Data type: `Optional[Icinga2::IdoCleanup]`
 
 Hash with items for historical table cleanup.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="categories"></a>`categories`
+##### <a name="-icinga2--feature--idomysql--categories"></a>`categories`
 
 Data type: `Optional[Array]`
 
 Array of information types that should be written to the database.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="import_schema"></a>`import_schema`
+##### <a name="-icinga2--feature--idomysql--import_schema"></a>`import_schema`
 
 Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 
@@ -1623,9 +1618,9 @@ Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="icinga2featureidopgsql"></a>`icinga2::feature::idopgsql`
+### <a name="icinga2--feature--idopgsql"></a>`icinga2::feature::idopgsql`
 
 Installs and configures the Icinga 2 feature ido-pgsql.
 
@@ -1655,29 +1650,29 @@ class{ 'icinga2::feature::idopgsql':
 
 The following parameters are available in the `icinga2::feature::idopgsql` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`user`](#user)
-* [`password`](#password)
-* [`database`](#database)
-* [`ssl_mode`](#ssl_mode)
-* [`ssl_key_path`](#ssl_key_path)
-* [`ssl_cert_path`](#ssl_cert_path)
-* [`ssl_cacert_path`](#ssl_cacert_path)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`table_prefix`](#table_prefix)
-* [`instance_name`](#instance_name)
-* [`instance_description`](#instance_description)
-* [`enable_ha`](#enable_ha)
-* [`failover_timeout`](#failover_timeout)
-* [`cleanup`](#cleanup)
-* [`categories`](#categories)
-* [`import_schema`](#import_schema)
+* [`ensure`](#-icinga2--feature--idopgsql--ensure)
+* [`host`](#-icinga2--feature--idopgsql--host)
+* [`port`](#-icinga2--feature--idopgsql--port)
+* [`user`](#-icinga2--feature--idopgsql--user)
+* [`password`](#-icinga2--feature--idopgsql--password)
+* [`database`](#-icinga2--feature--idopgsql--database)
+* [`ssl_mode`](#-icinga2--feature--idopgsql--ssl_mode)
+* [`ssl_key_path`](#-icinga2--feature--idopgsql--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--idopgsql--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--idopgsql--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--idopgsql--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--idopgsql--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--idopgsql--ssl_cacert)
+* [`table_prefix`](#-icinga2--feature--idopgsql--table_prefix)
+* [`instance_name`](#-icinga2--feature--idopgsql--instance_name)
+* [`instance_description`](#-icinga2--feature--idopgsql--instance_description)
+* [`enable_ha`](#-icinga2--feature--idopgsql--enable_ha)
+* [`failover_timeout`](#-icinga2--feature--idopgsql--failover_timeout)
+* [`cleanup`](#-icinga2--feature--idopgsql--cleanup)
+* [`categories`](#-icinga2--feature--idopgsql--categories)
+* [`import_schema`](#-icinga2--feature--idopgsql--import_schema)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--idopgsql--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1685,7 +1680,7 @@ Set to present enables the feature ido-pgsql, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--idopgsql--host"></a>`host`
 
 Data type: `Stdlib::Host`
 
@@ -1693,15 +1688,15 @@ PostgreSQL database host address.
 
 Default value: `'localhost'`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--idopgsql--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 PostgreSQL database port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user"></a>`user`
+##### <a name="-icinga2--feature--idopgsql--user"></a>`user`
 
 Data type: `String`
 
@@ -1709,13 +1704,13 @@ PostgreSQL database user with read/write permission to the icinga database.
 
 Default value: `'icinga'`
 
-##### <a name="password"></a>`password`
+##### <a name="-icinga2--feature--idopgsql--password"></a>`password`
 
 Data type: `Variant[String, Sensitive[String]]`
 
 PostgreSQL database user's password. The password parameter isn't parsed anymore.
 
-##### <a name="database"></a>`database`
+##### <a name="-icinga2--feature--idopgsql--database"></a>`database`
 
 Data type: `String`
 
@@ -1723,128 +1718,132 @@ PostgreSQL database name.
 
 Default value: `'icinga'`
 
-##### <a name="ssl_mode"></a>`ssl_mode`
+##### <a name="-icinga2--feature--idopgsql--ssl_mode"></a>`ssl_mode`
 
-Data type: `Optional[Enum['disable', 'allow', 'prefer',
-  'verify-full', 'verify-ca', 'require']]`
+Data type:
+
+```puppet
+Optional[Enum['disable', 'allow', 'prefer',
+  'verify-full', 'verify-ca', 'require']]
+```
 
 Enable SSL connection mode.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key_path"></a>`ssl_key_path`
+##### <a name="-icinga2--feature--idopgsql--ssl_key_path"></a>`ssl_key_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the private key. Only valid if ssl_mode is set unequal to `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert_path"></a>`ssl_cert_path`
+##### <a name="-icinga2--feature--idopgsql--ssl_cert_path"></a>`ssl_cert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the certificate. Only valid if ssl_mode is set unequal to `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert_path"></a>`ssl_cacert_path`
+##### <a name="-icinga2--feature--idopgsql--ssl_cacert_path"></a>`ssl_cacert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if ssl_mode is set unequal to `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--idopgsql--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The client private key in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--idopgsql--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[String]`
 
 The client certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--idopgsql--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[String]`
 
 The CA root certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="table_prefix"></a>`table_prefix`
+##### <a name="-icinga2--feature--idopgsql--table_prefix"></a>`table_prefix`
 
 Data type: `Optional[String]`
 
 PostgreSQL database table prefix.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="instance_name"></a>`instance_name`
+##### <a name="-icinga2--feature--idopgsql--instance_name"></a>`instance_name`
 
 Data type: `Optional[String]`
 
 Unique identifier for the local Icinga 2 instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="instance_description"></a>`instance_description`
+##### <a name="-icinga2--feature--idopgsql--instance_description"></a>`instance_description`
 
 Data type: `Optional[String]`
 
 Description of the Icinga 2 instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--idopgsql--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="failover_timeout"></a>`failover_timeout`
+##### <a name="-icinga2--feature--idopgsql--failover_timeout"></a>`failover_timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Set the failover timeout in a HA cluster. Must not be lower than 60s.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cleanup"></a>`cleanup`
+##### <a name="-icinga2--feature--idopgsql--cleanup"></a>`cleanup`
 
 Data type: `Optional[Icinga2::IdoCleanup]`
 
 Hash with items for historical table cleanup.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="categories"></a>`categories`
+##### <a name="-icinga2--feature--idopgsql--categories"></a>`categories`
 
 Data type: `Optional[Array]`
 
 Array of information types that should be written to the database.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="import_schema"></a>`import_schema`
+##### <a name="-icinga2--feature--idopgsql--import_schema"></a>`import_schema`
 
 Data type: `Boolean`
 
 Whether to import the PostgreSQL schema or not.
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="icinga2featureinfluxdb"></a>`icinga2::feature::influxdb`
+### <a name="icinga2--feature--influxdb"></a>`icinga2::feature::influxdb`
 
 Configures the Icinga 2 feature influxdb.
 
@@ -1865,32 +1864,32 @@ class { 'icinga2::feature::influxdb':
 
 The following parameters are available in the `icinga2::feature::influxdb` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`database`](#database)
-* [`username`](#username)
-* [`password`](#password)
-* [`basic_auth`](#basic_auth)
-* [`enable_ssl`](#enable_ssl)
-* [`ssl_noverify`](#ssl_noverify)
-* [`ssl_key_path`](#ssl_key_path)
-* [`ssl_cert_path`](#ssl_cert_path)
-* [`ssl_cacert_path`](#ssl_cacert_path)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`host_measurement`](#host_measurement)
-* [`host_tags`](#host_tags)
-* [`service_measurement`](#service_measurement)
-* [`service_tags`](#service_tags)
-* [`enable_send_thresholds`](#enable_send_thresholds)
-* [`enable_send_metadata`](#enable_send_metadata)
-* [`flush_interval`](#flush_interval)
-* [`flush_threshold`](#flush_threshold)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--influxdb--ensure)
+* [`host`](#-icinga2--feature--influxdb--host)
+* [`port`](#-icinga2--feature--influxdb--port)
+* [`database`](#-icinga2--feature--influxdb--database)
+* [`username`](#-icinga2--feature--influxdb--username)
+* [`password`](#-icinga2--feature--influxdb--password)
+* [`basic_auth`](#-icinga2--feature--influxdb--basic_auth)
+* [`enable_ssl`](#-icinga2--feature--influxdb--enable_ssl)
+* [`ssl_noverify`](#-icinga2--feature--influxdb--ssl_noverify)
+* [`ssl_key_path`](#-icinga2--feature--influxdb--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--influxdb--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--influxdb--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--influxdb--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--influxdb--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--influxdb--ssl_cacert)
+* [`host_measurement`](#-icinga2--feature--influxdb--host_measurement)
+* [`host_tags`](#-icinga2--feature--influxdb--host_tags)
+* [`service_measurement`](#-icinga2--feature--influxdb--service_measurement)
+* [`service_tags`](#-icinga2--feature--influxdb--service_tags)
+* [`enable_send_thresholds`](#-icinga2--feature--influxdb--enable_send_thresholds)
+* [`enable_send_metadata`](#-icinga2--feature--influxdb--enable_send_metadata)
+* [`flush_interval`](#-icinga2--feature--influxdb--flush_interval)
+* [`flush_threshold`](#-icinga2--feature--influxdb--flush_threshold)
+* [`enable_ha`](#-icinga2--feature--influxdb--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--influxdb--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1898,119 +1897,119 @@ Set to present enables the feature influxdb, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--influxdb--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 InfluxDB host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--influxdb--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port]`
 
 InfluxDB HTTP port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="database"></a>`database`
+##### <a name="-icinga2--feature--influxdb--database"></a>`database`
 
 Data type: `Optional[String]`
 
 InfluxDB database name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="username"></a>`username`
+##### <a name="-icinga2--feature--influxdb--username"></a>`username`
 
 Data type: `Optional[String]`
 
 InfluxDB user name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="password"></a>`password`
+##### <a name="-icinga2--feature--influxdb--password"></a>`password`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 InfluxDB user password. The password parameter isn't parsed anymore.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="basic_auth"></a>`basic_auth`
+##### <a name="-icinga2--feature--influxdb--basic_auth"></a>`basic_auth`
 
 Data type: `Optional[Icinga2::BasicAuth]`
 
 Username and password for HTTP basic authentication.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ssl"></a>`enable_ssl`
+##### <a name="-icinga2--feature--influxdb--enable_ssl"></a>`enable_ssl`
 
 Data type: `Optional[Boolean]`
 
 Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_noverify"></a>`ssl_noverify`
+##### <a name="-icinga2--feature--influxdb--ssl_noverify"></a>`ssl_noverify`
 
 Data type: `Optional[Boolean]`
 
 Disable TLS peer verification. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key_path"></a>`ssl_key_path`
+##### <a name="-icinga2--feature--influxdb--ssl_key_path"></a>`ssl_key_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client private key. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert_path"></a>`ssl_cert_path`
+##### <a name="-icinga2--feature--influxdb--ssl_cert_path"></a>`ssl_cert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert_path"></a>`ssl_cacert_path`
+##### <a name="-icinga2--feature--influxdb--ssl_cacert_path"></a>`ssl_cacert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--influxdb--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--influxdb--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[String]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--influxdb--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[String]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="host_measurement"></a>`host_measurement`
+##### <a name="-icinga2--feature--influxdb--host_measurement"></a>`host_measurement`
 
 Data type: `String`
 
@@ -2018,7 +2017,7 @@ The value of this is used for the measurement setting in host_template.
 
 Default value: `'$host.check_command$'`
 
-##### <a name="host_tags"></a>`host_tags`
+##### <a name="-icinga2--feature--influxdb--host_tags"></a>`host_tags`
 
 Data type: `Hash`
 
@@ -2026,7 +2025,7 @@ Tags defined in this hash will be set in the host_template.
 
 Default value: `{ hostname => '$host.name$' }`
 
-##### <a name="service_measurement"></a>`service_measurement`
+##### <a name="-icinga2--feature--influxdb--service_measurement"></a>`service_measurement`
 
 Data type: `String`
 
@@ -2034,7 +2033,7 @@ The value of this is used for the measurement setting in host_template.
 
 Default value: `'$service.check_command$'`
 
-##### <a name="service_tags"></a>`service_tags`
+##### <a name="-icinga2--feature--influxdb--service_tags"></a>`service_tags`
 
 Data type: `Hash`
 
@@ -2042,47 +2041,47 @@ Tags defined in this hash will be set in the service_template.
 
 Default value: `{ hostname => '$host.name$', service => '$service.name$' }`
 
-##### <a name="enable_send_thresholds"></a>`enable_send_thresholds`
+##### <a name="-icinga2--feature--influxdb--enable_send_thresholds"></a>`enable_send_thresholds`
 
 Data type: `Optional[Boolean]`
 
 Whether to send warn, crit, min & max tagged data.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_send_metadata"></a>`enable_send_metadata`
+##### <a name="-icinga2--feature--influxdb--enable_send_metadata"></a>`enable_send_metadata`
 
 Data type: `Optional[Boolean]`
 
 Whether to send check metadata e.g. states, execution time, latency etc.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flush_interval"></a>`flush_interval`
+##### <a name="-icinga2--feature--influxdb--flush_interval"></a>`flush_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 How long to buffer data points before transfering to InfluxDB.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flush_threshold"></a>`flush_threshold`
+##### <a name="-icinga2--feature--influxdb--flush_threshold"></a>`flush_threshold`
 
 Data type: `Optional[Integer[1]]`
 
 How many data points to buffer before forcing a transfer to InfluxDB.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--influxdb--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featureinfluxdb2"></a>`icinga2::feature::influxdb2`
+### <a name="icinga2--feature--influxdb2"></a>`icinga2::feature::influxdb2`
 
 Configures the Icinga 2 feature influxdb2.
 
@@ -2103,31 +2102,31 @@ class { 'icinga2::feature::influxdb2':
 
 The following parameters are available in the `icinga2::feature::influxdb2` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`organization`](#organization)
-* [`bucket`](#bucket)
-* [`auth_token`](#auth_token)
-* [`enable_ssl`](#enable_ssl)
-* [`ssl_noverify`](#ssl_noverify)
-* [`ssl_key_path`](#ssl_key_path)
-* [`ssl_cert_path`](#ssl_cert_path)
-* [`ssl_cacert_path`](#ssl_cacert_path)
-* [`ssl_key`](#ssl_key)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_cacert`](#ssl_cacert)
-* [`host_measurement`](#host_measurement)
-* [`host_tags`](#host_tags)
-* [`service_measurement`](#service_measurement)
-* [`service_tags`](#service_tags)
-* [`enable_send_thresholds`](#enable_send_thresholds)
-* [`enable_send_metadata`](#enable_send_metadata)
-* [`flush_interval`](#flush_interval)
-* [`flush_threshold`](#flush_threshold)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--influxdb2--ensure)
+* [`host`](#-icinga2--feature--influxdb2--host)
+* [`port`](#-icinga2--feature--influxdb2--port)
+* [`organization`](#-icinga2--feature--influxdb2--organization)
+* [`bucket`](#-icinga2--feature--influxdb2--bucket)
+* [`auth_token`](#-icinga2--feature--influxdb2--auth_token)
+* [`enable_ssl`](#-icinga2--feature--influxdb2--enable_ssl)
+* [`ssl_noverify`](#-icinga2--feature--influxdb2--ssl_noverify)
+* [`ssl_key_path`](#-icinga2--feature--influxdb2--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--influxdb2--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--influxdb2--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--influxdb2--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--influxdb2--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--influxdb2--ssl_cacert)
+* [`host_measurement`](#-icinga2--feature--influxdb2--host_measurement)
+* [`host_tags`](#-icinga2--feature--influxdb2--host_tags)
+* [`service_measurement`](#-icinga2--feature--influxdb2--service_measurement)
+* [`service_tags`](#-icinga2--feature--influxdb2--service_tags)
+* [`enable_send_thresholds`](#-icinga2--feature--influxdb2--enable_send_thresholds)
+* [`enable_send_metadata`](#-icinga2--feature--influxdb2--enable_send_metadata)
+* [`flush_interval`](#-icinga2--feature--influxdb2--flush_interval)
+* [`flush_threshold`](#-icinga2--feature--influxdb2--flush_threshold)
+* [`enable_ha`](#-icinga2--feature--influxdb2--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--influxdb2--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2135,105 +2134,105 @@ Set to present enables the feature influxdb, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--influxdb2--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 InfluxDB host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--influxdb2--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port]`
 
 InfluxDB HTTP port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="organization"></a>`organization`
+##### <a name="-icinga2--feature--influxdb2--organization"></a>`organization`
 
 Data type: `String`
 
 InfluxDB organization name.
 
-##### <a name="bucket"></a>`bucket`
+##### <a name="-icinga2--feature--influxdb2--bucket"></a>`bucket`
 
 Data type: `String`
 
 InfluxDB bucket name.
 
-##### <a name="auth_token"></a>`auth_token`
+##### <a name="-icinga2--feature--influxdb2--auth_token"></a>`auth_token`
 
 Data type: `Variant[String, Sensitive[String]]`
 
 InfluxDB authentication token.
 
-##### <a name="enable_ssl"></a>`enable_ssl`
+##### <a name="-icinga2--feature--influxdb2--enable_ssl"></a>`enable_ssl`
 
 Data type: `Optional[Boolean]`
 
 Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_noverify"></a>`ssl_noverify`
+##### <a name="-icinga2--feature--influxdb2--ssl_noverify"></a>`ssl_noverify`
 
 Data type: `Optional[Boolean]`
 
 Disable TLS peer verification. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key_path"></a>`ssl_key_path`
+##### <a name="-icinga2--feature--influxdb2--ssl_key_path"></a>`ssl_key_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client private key. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert_path"></a>`ssl_cert_path`
+##### <a name="-icinga2--feature--influxdb2--ssl_cert_path"></a>`ssl_cert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the client certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert_path"></a>`ssl_cacert_path`
+##### <a name="-icinga2--feature--influxdb2--ssl_cacert_path"></a>`ssl_cacert_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the CA certificate. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-icinga2--feature--influxdb2--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-icinga2--feature--influxdb2--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[String]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cacert"></a>`ssl_cacert`
+##### <a name="-icinga2--feature--influxdb2--ssl_cacert"></a>`ssl_cacert`
 
 Data type: `Optional[String]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="host_measurement"></a>`host_measurement`
+##### <a name="-icinga2--feature--influxdb2--host_measurement"></a>`host_measurement`
 
 Data type: `String`
 
@@ -2241,7 +2240,7 @@ The value of this is used for the measurement setting in host_template.
 
 Default value: `'$host.check_command$'`
 
-##### <a name="host_tags"></a>`host_tags`
+##### <a name="-icinga2--feature--influxdb2--host_tags"></a>`host_tags`
 
 Data type: `Hash`
 
@@ -2249,7 +2248,7 @@ Tags defined in this hash will be set in the host_template.
 
 Default value: `{ hostname => '$host.name$' }`
 
-##### <a name="service_measurement"></a>`service_measurement`
+##### <a name="-icinga2--feature--influxdb2--service_measurement"></a>`service_measurement`
 
 Data type: `String`
 
@@ -2257,7 +2256,7 @@ The value of this is used for the measurement setting in host_template.
 
 Default value: `'$service.check_command$'`
 
-##### <a name="service_tags"></a>`service_tags`
+##### <a name="-icinga2--feature--influxdb2--service_tags"></a>`service_tags`
 
 Data type: `Hash`
 
@@ -2265,47 +2264,47 @@ Tags defined in this hash will be set in the service_template.
 
 Default value: `{ hostname => '$host.name$', service => '$service.name$' }`
 
-##### <a name="enable_send_thresholds"></a>`enable_send_thresholds`
+##### <a name="-icinga2--feature--influxdb2--enable_send_thresholds"></a>`enable_send_thresholds`
 
 Data type: `Optional[Boolean]`
 
 Whether to send warn, crit, min & max tagged data.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_send_metadata"></a>`enable_send_metadata`
+##### <a name="-icinga2--feature--influxdb2--enable_send_metadata"></a>`enable_send_metadata`
 
 Data type: `Optional[Boolean]`
 
 Whether to send check metadata e.g. states, execution time, latency etc.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flush_interval"></a>`flush_interval`
+##### <a name="-icinga2--feature--influxdb2--flush_interval"></a>`flush_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 How long to buffer data points before transfering to InfluxDB.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flush_threshold"></a>`flush_threshold`
+##### <a name="-icinga2--feature--influxdb2--flush_threshold"></a>`flush_threshold`
 
 Data type: `Optional[Integer[1]]`
 
 How many data points to buffer before forcing a transfer to InfluxDB.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--influxdb2--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featurelivestatus"></a>`icinga2::feature::livestatus`
+### <a name="icinga2--feature--livestatus"></a>`icinga2::feature::livestatus`
 
 Configures the Icinga 2 feature livestatus.
 
@@ -2313,14 +2312,14 @@ Configures the Icinga 2 feature livestatus.
 
 The following parameters are available in the `icinga2::feature::livestatus` class:
 
-* [`ensure`](#ensure)
-* [`socket_type`](#socket_type)
-* [`bind_host`](#bind_host)
-* [`bind_port`](#bind_port)
-* [`socket_path`](#socket_path)
-* [`compat_log_path`](#compat_log_path)
+* [`ensure`](#-icinga2--feature--livestatus--ensure)
+* [`socket_type`](#-icinga2--feature--livestatus--socket_type)
+* [`bind_host`](#-icinga2--feature--livestatus--bind_host)
+* [`bind_port`](#-icinga2--feature--livestatus--bind_port)
+* [`socket_path`](#-icinga2--feature--livestatus--socket_path)
+* [`compat_log_path`](#-icinga2--feature--livestatus--compat_log_path)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--livestatus--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2328,47 +2327,47 @@ Set to present enables the feature livestatus, absent disables it.
 
 Default value: `present`
 
-##### <a name="socket_type"></a>`socket_type`
+##### <a name="-icinga2--feature--livestatus--socket_type"></a>`socket_type`
 
 Data type: `Optional[Enum['tcp', 'unix']]`
 
 Specifies the socket type. Can be either 'tcp' or 'unix'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="bind_host"></a>`bind_host`
+##### <a name="-icinga2--feature--livestatus--bind_host"></a>`bind_host`
 
 Data type: `Optional[Stdlib::Host]`
 
 IP address to listen for connections. Only valid when socket_type is 'tcp'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="bind_port"></a>`bind_port`
+##### <a name="-icinga2--feature--livestatus--bind_port"></a>`bind_port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 Port to listen for connections. Only valid when socket_type is 'tcp'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="socket_path"></a>`socket_path`
+##### <a name="-icinga2--feature--livestatus--socket_path"></a>`socket_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the path to the UNIX socket file. Only valid when socket_type is 'unix'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="compat_log_path"></a>`compat_log_path`
+##### <a name="-icinga2--feature--livestatus--compat_log_path"></a>`compat_log_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Required for historical table queries. Requires CompatLogger feature to be enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featuremainlog"></a>`icinga2::feature::mainlog`
+### <a name="icinga2--feature--mainlog"></a>`icinga2::feature::mainlog`
 
 Configures the Icinga 2 feature mainlog.
 
@@ -2376,11 +2375,11 @@ Configures the Icinga 2 feature mainlog.
 
 The following parameters are available in the `icinga2::feature::mainlog` class:
 
-* [`ensure`](#ensure)
-* [`severity`](#severity)
-* [`path`](#path)
+* [`ensure`](#-icinga2--feature--mainlog--ensure)
+* [`severity`](#-icinga2--feature--mainlog--severity)
+* [`path`](#-icinga2--feature--mainlog--path)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--mainlog--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2388,7 +2387,7 @@ Set to 'present' enables the feature mainlog, 'absent' disabled it.
 
 Default value: `present`
 
-##### <a name="severity"></a>`severity`
+##### <a name="-icinga2--feature--mainlog--severity"></a>`severity`
 
 Data type: `Icinga2::LogSeverity`
 
@@ -2396,7 +2395,7 @@ You can set the log severity to 'information', 'notice', 'warning' or 'debug'.
 
 Default value: `'information'`
 
-##### <a name="path"></a>`path`
+##### <a name="-icinga2--feature--mainlog--path"></a>`path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -2404,7 +2403,7 @@ Absolute path to the log file.
 
 Default value: `"${icinga2::globals::log_dir}/icinga2.log"`
 
-### <a name="icinga2featurenotification"></a>`icinga2::feature::notification`
+### <a name="icinga2--feature--notification"></a>`icinga2::feature::notification`
 
 Configures the Icinga 2 feature notification.
 
@@ -2412,10 +2411,10 @@ Configures the Icinga 2 feature notification.
 
 The following parameters are available in the `icinga2::feature::notification` class:
 
-* [`ensure`](#ensure)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--notification--ensure)
+* [`enable_ha`](#-icinga2--feature--notification--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--notification--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2423,15 +2422,15 @@ Set to present enables the feature notification, absent disabled it.
 
 Default value: `present`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--notification--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Notifications are load-balanced amongst all nodes in a zone.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featureopentsdb"></a>`icinga2::feature::opentsdb`
+### <a name="icinga2--feature--opentsdb"></a>`icinga2::feature::opentsdb`
 
 Configures the Icinga 2 feature opentsdb.
 
@@ -2439,12 +2438,12 @@ Configures the Icinga 2 feature opentsdb.
 
 The following parameters are available in the `icinga2::feature::opentsdb` class:
 
-* [`ensure`](#ensure)
-* [`host`](#host)
-* [`port`](#port)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--opentsdb--ensure)
+* [`host`](#-icinga2--feature--opentsdb--host)
+* [`port`](#-icinga2--feature--opentsdb--port)
+* [`enable_ha`](#-icinga2--feature--opentsdb--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--opentsdb--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2452,31 +2451,31 @@ Set to present enables the feature opentsdb, absent disables it.
 
 Default value: `present`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--feature--opentsdb--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 OpenTSDB host address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--feature--opentsdb--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 OpenTSDB port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--opentsdb--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featureperfdata"></a>`icinga2::feature::perfdata`
+### <a name="icinga2--feature--perfdata"></a>`icinga2::feature::perfdata`
 
 Configures the Icinga 2 feature perfdata.
 
@@ -2484,17 +2483,17 @@ Configures the Icinga 2 feature perfdata.
 
 The following parameters are available in the `icinga2::feature::perfdata` class:
 
-* [`ensure`](#ensure)
-* [`host_perfdata_path`](#host_perfdata_path)
-* [`service_perfdata_path`](#service_perfdata_path)
-* [`host_temp_path`](#host_temp_path)
-* [`service_temp_path`](#service_temp_path)
-* [`host_format_template`](#host_format_template)
-* [`service_format_template`](#service_format_template)
-* [`rotation_interval`](#rotation_interval)
-* [`enable_ha`](#enable_ha)
+* [`ensure`](#-icinga2--feature--perfdata--ensure)
+* [`host_perfdata_path`](#-icinga2--feature--perfdata--host_perfdata_path)
+* [`service_perfdata_path`](#-icinga2--feature--perfdata--service_perfdata_path)
+* [`host_temp_path`](#-icinga2--feature--perfdata--host_temp_path)
+* [`service_temp_path`](#-icinga2--feature--perfdata--service_temp_path)
+* [`host_format_template`](#-icinga2--feature--perfdata--host_format_template)
+* [`service_format_template`](#-icinga2--feature--perfdata--service_format_template)
+* [`rotation_interval`](#-icinga2--feature--perfdata--rotation_interval)
+* [`enable_ha`](#-icinga2--feature--perfdata--enable_ha)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--perfdata--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2502,72 +2501,72 @@ Set to present enables the feature perfdata, absent disables it.
 
 Default value: `present`
 
-##### <a name="host_perfdata_path"></a>`host_perfdata_path`
+##### <a name="-icinga2--feature--perfdata--host_perfdata_path"></a>`host_perfdata_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to the perfdata file for hosts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_perfdata_path"></a>`service_perfdata_path`
+##### <a name="-icinga2--feature--perfdata--service_perfdata_path"></a>`service_perfdata_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to the perfdata file for services.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="host_temp_path"></a>`host_temp_path`
+##### <a name="-icinga2--feature--perfdata--host_temp_path"></a>`host_temp_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to the temporary host file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_temp_path"></a>`service_temp_path`
+##### <a name="-icinga2--feature--perfdata--service_temp_path"></a>`service_temp_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to the temporary service file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="host_format_template"></a>`host_format_template`
+##### <a name="-icinga2--feature--perfdata--host_format_template"></a>`host_format_template`
 
 Data type: `Optional[String]`
 
 Host Format template for the performance data file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_format_template"></a>`service_format_template`
+##### <a name="-icinga2--feature--perfdata--service_format_template"></a>`service_format_template`
 
 Data type: `Optional[String]`
 
 Service Format template for the performance data file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rotation_interval"></a>`rotation_interval`
+##### <a name="-icinga2--feature--perfdata--rotation_interval"></a>`rotation_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Rotation interval for the files specified in {host,service}_perfdata_path. Can be written in minutes or seconds,
 i.e. 1m or 15s.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_ha"></a>`enable_ha`
+##### <a name="-icinga2--feature--perfdata--enable_ha"></a>`enable_ha`
 
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featurestatusdata"></a>`icinga2::feature::statusdata`
+### <a name="icinga2--feature--statusdata"></a>`icinga2::feature::statusdata`
 
 Configures the Icinga 2 feature statusdata.
 
@@ -2575,12 +2574,12 @@ Configures the Icinga 2 feature statusdata.
 
 The following parameters are available in the `icinga2::feature::statusdata` class:
 
-* [`ensure`](#ensure)
-* [`status_path`](#status_path)
-* [`objects_path`](#objects_path)
-* [`update_interval`](#update_interval)
+* [`ensure`](#-icinga2--feature--statusdata--ensure)
+* [`status_path`](#-icinga2--feature--statusdata--status_path)
+* [`objects_path`](#-icinga2--feature--statusdata--objects_path)
+* [`update_interval`](#-icinga2--feature--statusdata--update_interval)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--statusdata--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2588,32 +2587,32 @@ Set to present enables the feature statusdata, absent disables it.
 
 Default value: `present`
 
-##### <a name="status_path"></a>`status_path`
+##### <a name="-icinga2--feature--statusdata--status_path"></a>`status_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to the status.dat file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="objects_path"></a>`objects_path`
+##### <a name="-icinga2--feature--statusdata--objects_path"></a>`objects_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to the object.cache file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="update_interval"></a>`update_interval`
+##### <a name="-icinga2--feature--statusdata--update_interval"></a>`update_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Interval in seconds to update both status files. You can also specify
 it in minutes with the letter m or in seconds with s.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featuresyslog"></a>`icinga2::feature::syslog`
+### <a name="icinga2--feature--syslog"></a>`icinga2::feature::syslog`
 
 Configures the Icinga 2 feature syslog.
 
@@ -2621,11 +2620,11 @@ Configures the Icinga 2 feature syslog.
 
 The following parameters are available in the `icinga2::feature::syslog` class:
 
-* [`ensure`](#ensure)
-* [`severity`](#severity)
-* [`facility`](#facility)
+* [`ensure`](#-icinga2--feature--syslog--ensure)
+* [`severity`](#-icinga2--feature--syslog--severity)
+* [`facility`](#-icinga2--feature--syslog--facility)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--syslog--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2633,7 +2632,7 @@ Set to present enables the feature syslog, absent disables it.
 
 Default value: `present`
 
-##### <a name="severity"></a>`severity`
+##### <a name="-icinga2--feature--syslog--severity"></a>`severity`
 
 Data type: `Icinga2::LogSeverity`
 
@@ -2641,16 +2640,16 @@ You can choose the log severity between information, notice, warning or debug.
 
 Default value: `'warning'`
 
-##### <a name="facility"></a>`facility`
+##### <a name="-icinga2--feature--syslog--facility"></a>`facility`
 
 Data type: `Optional[Icinga2::LogFacility]`
 
 Defines the facility to use for syslog entries. This can be a facility constant
 like FacilityDaemon.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2featurewindowseventlog"></a>`icinga2::feature::windowseventlog`
+### <a name="icinga2--feature--windowseventlog"></a>`icinga2::feature::windowseventlog`
 
 Configures the Icinga 2 feature windowseventlog.
 
@@ -2658,10 +2657,10 @@ Configures the Icinga 2 feature windowseventlog.
 
 The following parameters are available in the `icinga2::feature::windowseventlog` class:
 
-* [`ensure`](#ensure)
-* [`severity`](#severity)
+* [`ensure`](#-icinga2--feature--windowseventlog--ensure)
+* [`severity`](#-icinga2--feature--windowseventlog--severity)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--feature--windowseventlog--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2669,7 +2668,7 @@ Set to present enables the feature windowseventlog, absent disables it.
 
 Default value: `present`
 
-##### <a name="severity"></a>`severity`
+##### <a name="-icinga2--feature--windowseventlog--severity"></a>`severity`
 
 Data type: `Icinga2::LogSeverity`
 
@@ -2677,7 +2676,7 @@ You can choose the log severity between information, notice, warning or debug.
 
 Default value: `'warning'`
 
-### <a name="icinga2pkica"></a>`icinga2::pki::ca`
+### <a name="icinga2--pki--ca"></a>`icinga2::pki::ca`
 
 This class provides multiple ways to create the CA used by Icinga 2.
 
@@ -2705,27 +2704,27 @@ class { 'icinga2::pki::ca':
 
 The following parameters are available in the `icinga2::pki::ca` class:
 
-* [`ca_cert`](#ca_cert)
-* [`ca_key`](#ca_key)
+* [`ca_cert`](#-icinga2--pki--ca--ca_cert)
+* [`ca_key`](#-icinga2--pki--ca--ca_key)
 
-##### <a name="ca_cert"></a>`ca_cert`
+##### <a name="-icinga2--pki--ca--ca_cert"></a>`ca_cert`
 
 Data type: `Optional[String]`
 
 Content of the CA certificate. If this is unset, a certificate will be generated with the
 Icinga 2 CLI.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ca_key"></a>`ca_key`
+##### <a name="-icinga2--pki--ca--ca_key"></a>`ca_key`
 
 Data type: `Optional[String]`
 
 Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="icinga2query_objects"></a>`icinga2::query_objects`
+### <a name="icinga2--query_objects"></a>`icinga2::query_objects`
 
 Class to query `icinga2::objects` from puppetdb.
 
@@ -2733,10 +2732,10 @@ Class to query `icinga2::objects` from puppetdb.
 
 The following parameters are available in the `icinga2::query_objects` class:
 
-* [`destination`](#destination)
-* [`environments`](#environments)
+* [`destination`](#-icinga2--query_objects--destination)
+* [`environments`](#-icinga2--query_objects--environments)
 
-##### <a name="destination"></a>`destination`
+##### <a name="-icinga2--query_objects--destination"></a>`destination`
 
 Data type: `String`
 
@@ -2744,7 +2743,7 @@ Destination equal to what was set in parameter `export` for objects.
 
 Default value: `$facts['networking']['fqdn']`
 
-##### <a name="environments"></a>`environments`
+##### <a name="-icinga2--query_objects--environments"></a>`environments`
 
 Data type: `Array[String]`
 
@@ -2754,7 +2753,7 @@ Default value: `[$environment]`
 
 ## Defined types
 
-### <a name="icinga2configfragment"></a>`icinga2::config::fragment`
+### <a name="icinga2--config--fragment"></a>`icinga2::config::fragment`
 
 Set a code fragment in a target configuration file. It's not possible to add a fragment to an object.
 
@@ -2797,25 +2796,25 @@ icinga2::config::fragment { 'load-function':
 
 The following parameters are available in the `icinga2::config::fragment` defined type:
 
-* [`content`](#content)
-* [`target`](#target)
-* [`code_name`](#code_name)
-* [`order`](#order)
+* [`content`](#-icinga2--config--fragment--content)
+* [`target`](#-icinga2--config--fragment--target)
+* [`code_name`](#-icinga2--config--fragment--code_name)
+* [`order`](#-icinga2--config--fragment--order)
 
-##### <a name="content"></a>`content`
+##### <a name="-icinga2--config--fragment--content"></a>`content`
 
 Data type: `String`
 
 Content to insert in file specified in target.
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--config--fragment--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this fragment. File will be declared the
 first time.
 
-##### <a name="code_name"></a>`code_name`
+##### <a name="-icinga2--config--fragment--code_name"></a>`code_name`
 
 Data type: `String`
 
@@ -2823,7 +2822,7 @@ Namevar of the fragment.
 
 Default value: `$title`
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--config--fragment--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -2831,7 +2830,7 @@ String or integer to set the position in the target file, sorted in alpha numeri
 
 Default value: `'00'`
 
-### <a name="icinga2objectapiuser"></a>`icinga2::object::apiuser`
+### <a name="icinga2--object--apiuser"></a>`icinga2::object::apiuser`
 
 Manage Icinga 2 ApiUser objects.
 
@@ -2883,16 +2882,16 @@ Manage Icinga 2 ApiUser objects.
 
 The following parameters are available in the `icinga2::object::apiuser` defined type:
 
-* [`ensure`](#ensure)
-* [`apiuser_name`](#apiuser_name)
-* [`password`](#password)
-* [`client_cn`](#client_cn)
-* [`permissions`](#permissions)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--apiuser--ensure)
+* [`apiuser_name`](#-icinga2--object--apiuser--apiuser_name)
+* [`password`](#-icinga2--object--apiuser--password)
+* [`client_cn`](#-icinga2--object--apiuser--client_cn)
+* [`permissions`](#-icinga2--object--apiuser--permissions)
+* [`target`](#-icinga2--object--apiuser--target)
+* [`order`](#-icinga2--object--apiuser--order)
+* [`export`](#-icinga2--object--apiuser--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--apiuser--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2900,7 +2899,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="apiuser_name"></a>`apiuser_name`
+##### <a name="-icinga2--object--apiuser--apiuser_name"></a>`apiuser_name`
 
 Data type: `String`
 
@@ -2908,39 +2907,39 @@ Set the name of the apiuser object.
 
 Default value: `$title`
 
-##### <a name="password"></a>`password`
+##### <a name="-icinga2--object--apiuser--password"></a>`password`
 
 Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 Password string. The password parameter isn't parsed anymore.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="client_cn"></a>`client_cn`
+##### <a name="-icinga2--object--apiuser--client_cn"></a>`client_cn`
 
 Data type: `Optional[String]`
 
 Optional. Client Common Name (CN).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="permissions"></a>`permissions`
+##### <a name="-icinga2--object--apiuser--permissions"></a>`permissions`
 
 Data type: `Optional[Array]`
 
 Array of permissions. Either as string or dictionary with the keys permission
 and filter. The latter must be specified as function.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--apiuser--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared at the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--apiuser--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -2948,7 +2947,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `30`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--apiuser--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -2956,7 +2955,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectcheckcommand"></a>`icinga2::object::checkcommand`
+### <a name="icinga2--object--checkcommand"></a>`icinga2::object::checkcommand`
 
 Manage Icinga 2 Host objects.
 
@@ -2964,20 +2963,20 @@ Manage Icinga 2 Host objects.
 
 The following parameters are available in the `icinga2::object::checkcommand` defined type:
 
-* [`ensure`](#ensure)
-* [`checkcommand_name`](#checkcommand_name)
-* [`import`](#import)
-* [`command`](#command)
-* [`env`](#env)
-* [`vars`](#vars)
-* [`timeout`](#timeout)
-* [`arguments`](#arguments)
-* [`target`](#target)
-* [`template`](#template)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--checkcommand--ensure)
+* [`checkcommand_name`](#-icinga2--object--checkcommand--checkcommand_name)
+* [`import`](#-icinga2--object--checkcommand--import)
+* [`command`](#-icinga2--object--checkcommand--command)
+* [`env`](#-icinga2--object--checkcommand--env)
+* [`vars`](#-icinga2--object--checkcommand--vars)
+* [`timeout`](#-icinga2--object--checkcommand--timeout)
+* [`arguments`](#-icinga2--object--checkcommand--arguments)
+* [`target`](#-icinga2--object--checkcommand--target)
+* [`template`](#-icinga2--object--checkcommand--template)
+* [`order`](#-icinga2--object--checkcommand--order)
+* [`export`](#-icinga2--object--checkcommand--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--checkcommand--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2985,7 +2984,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="checkcommand_name"></a>`checkcommand_name`
+##### <a name="-icinga2--object--checkcommand--checkcommand_name"></a>`checkcommand_name`
 
 Data type: `String`
 
@@ -2993,7 +2992,7 @@ Title of the CheckCommand object.
 
 Default value: `$title`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--checkcommand--import"></a>`import`
 
 Data type: `Array`
 
@@ -3001,7 +3000,7 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="command"></a>`command`
+##### <a name="-icinga2--object--checkcommand--command"></a>`command`
 
 Data type: `Optional[Variant[Array, String]]`
 
@@ -3009,17 +3008,17 @@ The command. This can either be an array of individual command arguments.
 Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh) takes care of parsing the command.
 When using the "arguments" attribute this must be an array. Can be specified as function for advanced implementations.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="env"></a>`env`
+##### <a name="-icinga2--object--checkcommand--env"></a>`env`
 
 Data type: `Optional[Hash]`
 
 A dictionary of macros which should be exported as environment variables prior to executing the command.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vars"></a>`vars`
+##### <a name="-icinga2--object--checkcommand--vars"></a>`vars`
 
 Data type: `Optional[Icinga2::CustomAttributes]`
 
@@ -3027,40 +3026,40 @@ A dictionary containing custom attributes that are specific to this service,
 a string to do operations on this dictionary or an array for multiple use
 of custom attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-icinga2--object--checkcommand--timeout"></a>`timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 The command timeout in seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="arguments"></a>`arguments`
+##### <a name="-icinga2--object--checkcommand--arguments"></a>`arguments`
 
 Data type: `Optional[Variant[Hash, String]]`
 
 A dictionary of command arguments.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--checkcommand--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--checkcommand--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--checkcommand--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -3068,7 +3067,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `15`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--checkcommand--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -3076,7 +3075,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectcheckresultreader"></a>`icinga2::object::checkresultreader`
+### <a name="icinga2--object--checkresultreader"></a>`icinga2::object::checkresultreader`
 
 Manage Icinga 2 CheckResultReader objects.
 
@@ -3084,13 +3083,13 @@ Manage Icinga 2 CheckResultReader objects.
 
 The following parameters are available in the `icinga2::object::checkresultreader` defined type:
 
-* [`ensure`](#ensure)
-* [`checkresultreader_name`](#checkresultreader_name)
-* [`spool_dir`](#spool_dir)
-* [`target`](#target)
-* [`order`](#order)
+* [`ensure`](#-icinga2--object--checkresultreader--ensure)
+* [`checkresultreader_name`](#-icinga2--object--checkresultreader--checkresultreader_name)
+* [`spool_dir`](#-icinga2--object--checkresultreader--spool_dir)
+* [`target`](#-icinga2--object--checkresultreader--target)
+* [`order`](#-icinga2--object--checkresultreader--order)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--checkresultreader--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -3098,7 +3097,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="checkresultreader_name"></a>`checkresultreader_name`
+##### <a name="-icinga2--object--checkresultreader--checkresultreader_name"></a>`checkresultreader_name`
 
 Data type: `String`
 
@@ -3106,22 +3105,22 @@ Set the Icinga 2 name of the ceckresultreader object.
 
 Default value: `$title`
 
-##### <a name="spool_dir"></a>`spool_dir`
+##### <a name="-icinga2--object--checkresultreader--spool_dir"></a>`spool_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The directory which contains the check result files.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--checkresultreader--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--checkresultreader--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -3129,210 +3128,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `'05'`
 
-### <a name="icinga2objectdependency"></a>`icinga2::object::dependency`
-
-Manage Icinga 2 dependency objects.
-
-#### Parameters
-
-The following parameters are available in the `icinga2::object::dependency` defined type:
-
-* [`ensure`](#ensure)
-* [`dependency_name`](#dependency_name)
-* [`parent_host_name`](#parent_host_name)
-* [`parent_service_name`](#parent_service_name)
-* [`child_host_name`](#child_host_name)
-* [`child_service_name`](#child_service_name)
-* [`disable_checks`](#disable_checks)
-* [`disable_notifications`](#disable_notifications)
-* [`ignore_soft_states`](#ignore_soft_states)
-* [`period`](#period)
-* [`states`](#states)
-* [`apply`](#apply)
-* [`prefix`](#prefix)
-* [`apply_target`](#apply_target)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`template`](#template)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Set to present enables the object, absent disables it.
-
-Default value: `present`
-
-##### <a name="dependency_name"></a>`dependency_name`
-
-Data type: `String`
-
-Set the Icinga 2 name of the dependency object.
-
-Default value: `$title`
-
-##### <a name="parent_host_name"></a>`parent_host_name`
-
-Data type: `Optional[String]`
-
-The parent host.
-
-Default value: ``undef``
-
-##### <a name="parent_service_name"></a>`parent_service_name`
-
-Data type: `Optional[String]`
-
-The parent service. If omitted, this dependency object is treated as host
-dependency.
-
-Default value: ``undef``
-
-##### <a name="child_host_name"></a>`child_host_name`
-
-Data type: `Optional[String]`
-
-The child host.
-
-Default value: ``undef``
-
-##### <a name="child_service_name"></a>`child_service_name`
-
-Data type: `Optional[String]`
-
-The child service. If omitted, this dependency object is treated as host
-dependency.
-
-Default value: ``undef``
-
-##### <a name="disable_checks"></a>`disable_checks`
-
-Data type: `Optional[Boolean]`
-
-Whether to disable checks when this dependency fails.
-
-Default value: ``undef``
-
-##### <a name="disable_notifications"></a>`disable_notifications`
-
-Data type: `Optional[Boolean]`
-
-Whether to disable notifications when this dependency fails.
-true.
-
-Default value: ``undef``
-
-##### <a name="ignore_soft_states"></a>`ignore_soft_states`
-
-Data type: `Optional[Boolean]`
-
-Whether to ignore soft states for the reachability calculation.
-true.
-
-Default value: ``undef``
-
-##### <a name="period"></a>`period`
-
-Data type: `Optional[String]`
-
-Time period during which this dependency is enabled.
-
-Default value: ``undef``
-
-##### <a name="states"></a>`states`
-
-Data type: `Optional[Array]`
-
-A list of state filters when this dependency should be OK.
-
-Default value: ``undef``
-
-##### <a name="apply"></a>`apply`
-
-Data type: `Variant[Boolean, String]`
-
-Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-i.e. 'vhost => config in host.vars.vhosts'.
-
-Default value: ``false``
-
-##### <a name="prefix"></a>`prefix`
-
-Data type: `Variant[Boolean, String]`
-
-Set dependency_name as prefix in front of 'apply for'. Only effects if apply is a string.
-
-Default value: ``false``
-
-##### <a name="apply_target"></a>`apply_target`
-
-Data type: `Enum['Host', 'Service']`
-
-An object type on which to target the apply rule. Valid values are `Host`
-and `Service`.
-
-Default value: `'Host'`
-
-##### <a name="assign"></a>`assign`
-
-Data type: `Array`
-
-Assign user group members using the group assign rules.
-
-Default value: `[]`
-
-##### <a name="ignore"></a>`ignore`
-
-Data type: `Array`
-
-Exclude users using the group ignore rules.
-
-Default value: `[]`
-
-##### <a name="template"></a>`template`
-
-Data type: `Boolean`
-
-Set to true creates a template instead of an object.
-
-Default value: ``false``
-
-##### <a name="import"></a>`import`
-
-Data type: `Array`
-
-Sorted List of templates to include.
-
-Default value: `[]`
-
-##### <a name="target"></a>`target`
-
-Data type: `Stdlib::Absolutepath`
-
-Destination config file to store in this object. File will be declared the
-first time.
-
-##### <a name="order"></a>`order`
-
-Data type: `Variant[String, Integer]`
-
-String or integer to set the position in the target file, sorted alpha numeric.
-
-Default value: `70`
-
-##### <a name="export"></a>`export`
-
-Data type: `Variant[Array[String], String]`
-
-Export object to destination, collected by class `icinga2::query_objects`.
-
-Default value: `[]`
-
-### <a name="icinga2objectendpoint"></a>`icinga2::object::endpoint`
+### <a name="icinga2--object--endpoint"></a>`icinga2::object::endpoint`
 
 Manage Icinga 2 endpoint objects.
 
@@ -3340,16 +3136,16 @@ Manage Icinga 2 endpoint objects.
 
 The following parameters are available in the `icinga2::object::endpoint` defined type:
 
-* [`ensure`](#ensure)
-* [`endpoint_name`](#endpoint_name)
-* [`host`](#host)
-* [`port`](#port)
-* [`log_duration`](#log_duration)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--endpoint--ensure)
+* [`endpoint_name`](#-icinga2--object--endpoint--endpoint_name)
+* [`host`](#-icinga2--object--endpoint--host)
+* [`port`](#-icinga2--object--endpoint--port)
+* [`log_duration`](#-icinga2--object--endpoint--log_duration)
+* [`target`](#-icinga2--object--endpoint--target)
+* [`order`](#-icinga2--object--endpoint--order)
+* [`export`](#-icinga2--object--endpoint--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--endpoint--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -3357,7 +3153,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="endpoint_name"></a>`endpoint_name`
+##### <a name="-icinga2--object--endpoint--endpoint_name"></a>`endpoint_name`
 
 Data type: `String`
 
@@ -3365,23 +3161,23 @@ Set the Icinga 2 name of the endpoint object.
 
 Default value: `$title`
 
-##### <a name="host"></a>`host`
+##### <a name="-icinga2--object--endpoint--host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
 Optional. The IP address of the remote Icinga 2 instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-icinga2--object--endpoint--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
 The service name/port of the remote Icinga 2 instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="log_duration"></a>`log_duration`
+##### <a name="-icinga2--object--endpoint--log_duration"></a>`log_duration`
 
 Data type: `Optional[Icinga2::Interval]`
 
@@ -3390,18 +3186,18 @@ Attribute is specified in seconds. If log_duration is set to 0, replaying logs i
 You could also specify the value in human readable format like 10m for 10 minutes
 or 1h for one hour.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--endpoint--target"></a>`target`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Destination config file to store in this object. File will be declared at the
 first time.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--endpoint--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -3409,7 +3205,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `40`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--endpoint--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -3417,7 +3213,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objecteventcommand"></a>`icinga2::object::eventcommand`
+### <a name="icinga2--object--eventcommand"></a>`icinga2::object::eventcommand`
 
 Manage Icinga 2 EventCommand objects.
 
@@ -3425,19 +3221,19 @@ Manage Icinga 2 EventCommand objects.
 
 The following parameters are available in the `icinga2::object::eventcommand` defined type:
 
-* [`ensure`](#ensure)
-* [`eventcommand_name`](#eventcommand_name)
-* [`command`](#command)
-* [`env`](#env)
-* [`vars`](#vars)
-* [`timeout`](#timeout)
-* [`arguments`](#arguments)
-* [`target`](#target)
-* [`import`](#import)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--eventcommand--ensure)
+* [`eventcommand_name`](#-icinga2--object--eventcommand--eventcommand_name)
+* [`command`](#-icinga2--object--eventcommand--command)
+* [`env`](#-icinga2--object--eventcommand--env)
+* [`vars`](#-icinga2--object--eventcommand--vars)
+* [`timeout`](#-icinga2--object--eventcommand--timeout)
+* [`arguments`](#-icinga2--object--eventcommand--arguments)
+* [`target`](#-icinga2--object--eventcommand--target)
+* [`import`](#-icinga2--object--eventcommand--import)
+* [`order`](#-icinga2--object--eventcommand--order)
+* [`export`](#-icinga2--object--eventcommand--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--eventcommand--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -3445,7 +3241,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="eventcommand_name"></a>`eventcommand_name`
+##### <a name="-icinga2--object--eventcommand--eventcommand_name"></a>`eventcommand_name`
 
 Data type: `String`
 
@@ -3453,7 +3249,7 @@ Set the Icinga 2 name of the eventcommand object.
 
 Default value: `$title`
 
-##### <a name="command"></a>`command`
+##### <a name="-icinga2--object--eventcommand--command"></a>`command`
 
 Data type: `Optional[Variant[Array, String]]`
 
@@ -3461,17 +3257,17 @@ The command. This can either be an array of individual command arguments.
 Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh)
 takes care of parsing the command.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="env"></a>`env`
+##### <a name="-icinga2--object--eventcommand--env"></a>`env`
 
 Data type: `Optional[Hash]`
 
 A dictionary of macros which should be exported as environment variables prior to executing the command.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vars"></a>`vars`
+##### <a name="-icinga2--object--eventcommand--vars"></a>`vars`
 
 Data type: `Optional[Icinga2::CustomAttributes]`
 
@@ -3479,32 +3275,32 @@ A dictionary containing custom attributes that are specific to this service,
 a string to do operations on this dictionary or an array for multiple use
 of custom attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-icinga2--object--eventcommand--timeout"></a>`timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 The command timeout in seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="arguments"></a>`arguments`
+##### <a name="-icinga2--object--eventcommand--arguments"></a>`arguments`
 
 Data type: `Optional[Hash]`
 
 A dictionary of command arguments.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--eventcommand--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--eventcommand--import"></a>`import`
 
 Data type: `Array`
 
@@ -3512,7 +3308,7 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--eventcommand--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -3520,7 +3316,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `20`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--eventcommand--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -3528,7 +3324,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objecthost"></a>`icinga2::object::host`
+### <a name="icinga2--object--host"></a>`icinga2::object::host`
 
 Manage Icinga 2 Host objects.
 
@@ -3536,43 +3332,43 @@ Manage Icinga 2 Host objects.
 
 The following parameters are available in the `icinga2::object::host` defined type:
 
-* [`ensure`](#ensure)
-* [`host_name`](#host_name)
-* [`import`](#import)
-* [`display_name`](#display_name)
-* [`address`](#address)
-* [`address6`](#address6)
-* [`vars`](#vars)
-* [`groups`](#groups)
-* [`check_command`](#check_command)
-* [`max_check_attempts`](#max_check_attempts)
-* [`check_period`](#check_period)
-* [`check_timeout`](#check_timeout)
-* [`check_interval`](#check_interval)
-* [`retry_interval`](#retry_interval)
-* [`enable_notifications`](#enable_notifications)
-* [`enable_active_checks`](#enable_active_checks)
-* [`enable_passive_checks`](#enable_passive_checks)
-* [`enable_event_handler`](#enable_event_handler)
-* [`enable_flapping`](#enable_flapping)
-* [`enable_perfdata`](#enable_perfdata)
-* [`event_command`](#event_command)
-* [`flapping_threshold_low`](#flapping_threshold_low)
-* [`flapping_threshold_high`](#flapping_threshold_high)
-* [`volatile`](#volatile)
-* [`zone`](#zone)
-* [`command_endpoint`](#command_endpoint)
-* [`notes`](#notes)
-* [`notes_url`](#notes_url)
-* [`action_url`](#action_url)
-* [`icon_image`](#icon_image)
-* [`icon_image_alt`](#icon_image_alt)
-* [`template`](#template)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--host--ensure)
+* [`host_name`](#-icinga2--object--host--host_name)
+* [`import`](#-icinga2--object--host--import)
+* [`display_name`](#-icinga2--object--host--display_name)
+* [`address`](#-icinga2--object--host--address)
+* [`address6`](#-icinga2--object--host--address6)
+* [`vars`](#-icinga2--object--host--vars)
+* [`groups`](#-icinga2--object--host--groups)
+* [`check_command`](#-icinga2--object--host--check_command)
+* [`max_check_attempts`](#-icinga2--object--host--max_check_attempts)
+* [`check_period`](#-icinga2--object--host--check_period)
+* [`check_timeout`](#-icinga2--object--host--check_timeout)
+* [`check_interval`](#-icinga2--object--host--check_interval)
+* [`retry_interval`](#-icinga2--object--host--retry_interval)
+* [`enable_notifications`](#-icinga2--object--host--enable_notifications)
+* [`enable_active_checks`](#-icinga2--object--host--enable_active_checks)
+* [`enable_passive_checks`](#-icinga2--object--host--enable_passive_checks)
+* [`enable_event_handler`](#-icinga2--object--host--enable_event_handler)
+* [`enable_flapping`](#-icinga2--object--host--enable_flapping)
+* [`enable_perfdata`](#-icinga2--object--host--enable_perfdata)
+* [`event_command`](#-icinga2--object--host--event_command)
+* [`flapping_threshold_low`](#-icinga2--object--host--flapping_threshold_low)
+* [`flapping_threshold_high`](#-icinga2--object--host--flapping_threshold_high)
+* [`volatile`](#-icinga2--object--host--volatile)
+* [`zone`](#-icinga2--object--host--zone)
+* [`command_endpoint`](#-icinga2--object--host--command_endpoint)
+* [`notes`](#-icinga2--object--host--notes)
+* [`notes_url`](#-icinga2--object--host--notes_url)
+* [`action_url`](#-icinga2--object--host--action_url)
+* [`icon_image`](#-icinga2--object--host--icon_image)
+* [`icon_image_alt`](#-icinga2--object--host--icon_image_alt)
+* [`template`](#-icinga2--object--host--template)
+* [`target`](#-icinga2--object--host--target)
+* [`order`](#-icinga2--object--host--order)
+* [`export`](#-icinga2--object--host--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--host--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -3580,7 +3376,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="host_name"></a>`host_name`
+##### <a name="-icinga2--object--host--host_name"></a>`host_name`
 
 Data type: `String`
 
@@ -3588,7 +3384,7 @@ Hostname of the Host object.
 
 Default value: `$title`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--host--import"></a>`import`
 
 Data type: `Array`
 
@@ -3596,31 +3392,31 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-icinga2--object--host--display_name"></a>`display_name`
 
 Data type: `Optional[String]`
 
 A short description of the host (e.g. displayed by external interfaces instead of the name if set).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="address"></a>`address`
+##### <a name="-icinga2--object--host--address"></a>`address`
 
 Data type: `Optional[Stdlib::Host]`
 
 The host's address v4.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="address6"></a>`address6`
+##### <a name="-icinga2--object--host--address6"></a>`address6`
 
 Data type: `Optional[Stdlib::Host]`
 
 The host's address v6.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vars"></a>`vars`
+##### <a name="-icinga2--object--host--vars"></a>`vars`
 
 Data type: `Optional[Icinga2::CustomAttributes]`
 
@@ -3628,217 +3424,217 @@ A dictionary containing custom attributes that are specific to this service,
 a string to do operations on this dictionary or an array for multiple use
 of custom attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="groups"></a>`groups`
+##### <a name="-icinga2--object--host--groups"></a>`groups`
 
 Data type: `Optional[Array]`
 
 A list of host groups this host belongs to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="check_command"></a>`check_command`
+##### <a name="-icinga2--object--host--check_command"></a>`check_command`
 
 Data type: `Optional[String]`
 
 The name of the check command.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_check_attempts"></a>`max_check_attempts`
+##### <a name="-icinga2--object--host--max_check_attempts"></a>`max_check_attempts`
 
 Data type: `Optional[Integer[1]]`
 
 The number of times a host is re-checked before changing into a hard state.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="check_period"></a>`check_period`
+##### <a name="-icinga2--object--host--check_period"></a>`check_period`
 
 Data type: `Optional[String]`
 
 The name of a time period which determines when this host should be checked.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="check_timeout"></a>`check_timeout`
+##### <a name="-icinga2--object--host--check_timeout"></a>`check_timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 Check command timeout in seconds. Overrides the CheckCommand's timeout attribute.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="check_interval"></a>`check_interval`
+##### <a name="-icinga2--object--host--check_interval"></a>`check_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 The check interval (in seconds). This interval is used for checks when the host is in a HARD state.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="retry_interval"></a>`retry_interval`
+##### <a name="-icinga2--object--host--retry_interval"></a>`retry_interval`
 
 Data type: `Optional[Icinga2::Interval]`
 
 The retry interval (in seconds). This interval is used for checks when the host is in a SOFT state.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_notifications"></a>`enable_notifications`
+##### <a name="-icinga2--object--host--enable_notifications"></a>`enable_notifications`
 
 Data type: `Optional[Boolean]`
 
 Whether notifications are enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_active_checks"></a>`enable_active_checks`
+##### <a name="-icinga2--object--host--enable_active_checks"></a>`enable_active_checks`
 
 Data type: `Optional[Boolean]`
 
 Whether active checks are enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_passive_checks"></a>`enable_passive_checks`
+##### <a name="-icinga2--object--host--enable_passive_checks"></a>`enable_passive_checks`
 
 Data type: `Optional[Boolean]`
 
 Whether passive checks are enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_event_handler"></a>`enable_event_handler`
+##### <a name="-icinga2--object--host--enable_event_handler"></a>`enable_event_handler`
 
 Data type: `Optional[Boolean]`
 
 Enables event handlers for this host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_flapping"></a>`enable_flapping`
+##### <a name="-icinga2--object--host--enable_flapping"></a>`enable_flapping`
 
 Data type: `Optional[Boolean]`
 
 Whether flap detection is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_perfdata"></a>`enable_perfdata`
+##### <a name="-icinga2--object--host--enable_perfdata"></a>`enable_perfdata`
 
 Data type: `Optional[Boolean]`
 
 Whether performance data processing is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="event_command"></a>`event_command`
+##### <a name="-icinga2--object--host--event_command"></a>`event_command`
 
 Data type: `Optional[String]`
 
 The name of an event command that should be executed every time the host's
 state changes or the host is in a SOFT state.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flapping_threshold_low"></a>`flapping_threshold_low`
+##### <a name="-icinga2--object--host--flapping_threshold_low"></a>`flapping_threshold_low`
 
 Data type: `Optional[Integer[1]]`
 
 Flapping lower bound in percent for a host to be considered not flapping.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="flapping_threshold_high"></a>`flapping_threshold_high`
+##### <a name="-icinga2--object--host--flapping_threshold_high"></a>`flapping_threshold_high`
 
 Data type: `Optional[Integer[1]]`
 
 Flapping upper bound in percent for a host to be considered flapping.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="volatile"></a>`volatile`
+##### <a name="-icinga2--object--host--volatile"></a>`volatile`
 
 Data type: `Optional[Boolean]`
 
 The volatile setting enables always HARD state types if NOT-OK state changes occur.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="zone"></a>`zone`
+##### <a name="-icinga2--object--host--zone"></a>`zone`
 
 Data type: `Optional[String]`
 
 The zone this object is a member of.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="command_endpoint"></a>`command_endpoint`
+##### <a name="-icinga2--object--host--command_endpoint"></a>`command_endpoint`
 
 Data type: `Optional[String]`
 
 The endpoint where commands are executed on.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="notes"></a>`notes`
+##### <a name="-icinga2--object--host--notes"></a>`notes`
 
 Data type: `Optional[String]`
 
 Notes for the host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="notes_url"></a>`notes_url`
+##### <a name="-icinga2--object--host--notes_url"></a>`notes_url`
 
 Data type: `Optional[String]`
 
 Url for notes for the host (for example, in notification commands).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="action_url"></a>`action_url`
+##### <a name="-icinga2--object--host--action_url"></a>`action_url`
 
 Data type: `Optional[String]`
 
 Url for actions for the host (for example, an external graphing tool).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="icon_image"></a>`icon_image`
+##### <a name="-icinga2--object--host--icon_image"></a>`icon_image`
 
 Data type: `Optional[String]`
 
 Icon image for the host. Used by external interfaces only.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="icon_image_alt"></a>`icon_image_alt`
+##### <a name="-icinga2--object--host--icon_image_alt"></a>`icon_image_alt`
 
 Data type: `Optional[String]`
 
 Icon image description for the host. Used by external interface only.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--host--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--host--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--host--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -3846,7 +3642,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `50`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--host--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -3854,7 +3650,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objecthostgroup"></a>`icinga2::object::hostgroup`
+### <a name="icinga2--object--hostgroup"></a>`icinga2::object::hostgroup`
 
 Manage Icinga 2 HostGroup objects.
 
@@ -3875,17 +3671,17 @@ icinga2::object::hostgroup { 'monitoring-hosts':
 
 The following parameters are available in the `icinga2::object::hostgroup` defined type:
 
-* [`ensure`](#ensure)
-* [`hostgroup_name`](#hostgroup_name)
-* [`display_name`](#display_name)
-* [`groups`](#groups)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--hostgroup--ensure)
+* [`hostgroup_name`](#-icinga2--object--hostgroup--hostgroup_name)
+* [`display_name`](#-icinga2--object--hostgroup--display_name)
+* [`groups`](#-icinga2--object--hostgroup--groups)
+* [`assign`](#-icinga2--object--hostgroup--assign)
+* [`ignore`](#-icinga2--object--hostgroup--ignore)
+* [`target`](#-icinga2--object--hostgroup--target)
+* [`order`](#-icinga2--object--hostgroup--order)
+* [`export`](#-icinga2--object--hostgroup--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--hostgroup--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -3893,7 +3689,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="hostgroup_name"></a>`hostgroup_name`
+##### <a name="-icinga2--object--hostgroup--hostgroup_name"></a>`hostgroup_name`
 
 Data type: `String`
 
@@ -3901,23 +3697,23 @@ Namevar of the hostgroup.
 
 Default value: `$title`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-icinga2--object--hostgroup--display_name"></a>`display_name`
 
 Data type: `Optional[String]`
 
 A short description of the host group.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="groups"></a>`groups`
+##### <a name="-icinga2--object--hostgroup--groups"></a>`groups`
 
 Data type: `Optional[Array]`
 
 An array of nested group names.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="assign"></a>`assign`
+##### <a name="-icinga2--object--hostgroup--assign"></a>`assign`
 
 Data type: `Array`
 
@@ -3925,7 +3721,7 @@ Assign host group members using the group rules.
 
 Default value: `[]`
 
-##### <a name="ignore"></a>`ignore`
+##### <a name="-icinga2--object--hostgroup--ignore"></a>`ignore`
 
 Data type: `Array`
 
@@ -3933,14 +3729,14 @@ Ignore host group members using the group rules.
 
 Default value: `[]`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--hostgroup--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared at the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--hostgroup--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -3948,7 +3744,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `55`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--hostgroup--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -3956,7 +3752,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objecticingaapplication"></a>`icinga2::object::icingaapplication`
+### <a name="icinga2--object--icingaapplication"></a>`icinga2::object::icingaapplication`
 
 Manage Icinga 2 IcingaApplication objects.
 
@@ -3964,21 +3760,21 @@ Manage Icinga 2 IcingaApplication objects.
 
 The following parameters are available in the `icinga2::object::icingaapplication` defined type:
 
-* [`ensure`](#ensure)
-* [`app_name`](#app_name)
-* [`enable_notifications`](#enable_notifications)
-* [`enable_event_handlers`](#enable_event_handlers)
-* [`enable_flapping`](#enable_flapping)
-* [`enable_host_checks`](#enable_host_checks)
-* [`enable_service_checks`](#enable_service_checks)
-* [`enable_perfdata`](#enable_perfdata)
-* [`vars`](#vars)
-* [`environment`](#environment)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--icingaapplication--ensure)
+* [`app_name`](#-icinga2--object--icingaapplication--app_name)
+* [`enable_notifications`](#-icinga2--object--icingaapplication--enable_notifications)
+* [`enable_event_handlers`](#-icinga2--object--icingaapplication--enable_event_handlers)
+* [`enable_flapping`](#-icinga2--object--icingaapplication--enable_flapping)
+* [`enable_host_checks`](#-icinga2--object--icingaapplication--enable_host_checks)
+* [`enable_service_checks`](#-icinga2--object--icingaapplication--enable_service_checks)
+* [`enable_perfdata`](#-icinga2--object--icingaapplication--enable_perfdata)
+* [`vars`](#-icinga2--object--icingaapplication--vars)
+* [`environment`](#-icinga2--object--icingaapplication--environment)
+* [`target`](#-icinga2--object--icingaapplication--target)
+* [`order`](#-icinga2--object--icingaapplication--order)
+* [`export`](#-icinga2--object--icingaapplication--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--icingaapplication--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -3986,7 +3782,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="app_name"></a>`app_name`
+##### <a name="-icinga2--object--icingaapplication--app_name"></a>`app_name`
 
 Data type: `String`
 
@@ -3994,55 +3790,55 @@ Set the Icinga 2 name of the IcingaApplication object.
 
 Default value: `$title`
 
-##### <a name="enable_notifications"></a>`enable_notifications`
+##### <a name="-icinga2--object--icingaapplication--enable_notifications"></a>`enable_notifications`
 
 Data type: `Optional[Boolean]`
 
 Whether notifications are globally enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_event_handlers"></a>`enable_event_handlers`
+##### <a name="-icinga2--object--icingaapplication--enable_event_handlers"></a>`enable_event_handlers`
 
 Data type: `Optional[Boolean]`
 
 Whether event handlers are globally enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_flapping"></a>`enable_flapping`
+##### <a name="-icinga2--object--icingaapplication--enable_flapping"></a>`enable_flapping`
 
 Data type: `Optional[Boolean]`
 
 Whether flap detection is globally enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_host_checks"></a>`enable_host_checks`
+##### <a name="-icinga2--object--icingaapplication--enable_host_checks"></a>`enable_host_checks`
 
 Data type: `Optional[Boolean]`
 
 Whether active host checks are globally enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_service_checks"></a>`enable_service_checks`
+##### <a name="-icinga2--object--icingaapplication--enable_service_checks"></a>`enable_service_checks`
 
 Data type: `Optional[Boolean]`
 
 Whether active service checks are globally enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_perfdata"></a>`enable_perfdata`
+##### <a name="-icinga2--object--icingaapplication--enable_perfdata"></a>`enable_perfdata`
 
 Data type: `Optional[Boolean]`
 
 Whether performance data processing is globally enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vars"></a>`vars`
+##### <a name="-icinga2--object--icingaapplication--vars"></a>`vars`
 
 Data type: `Optional[Icinga2::CustomAttributes]`
 
@@ -4050,27 +3846,27 @@ A dictionary containing custom attributes that are specific to this service,
 a string to do operations on this dictionary or an array for multiple use
 of custom attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="environment"></a>`environment`
+##### <a name="-icinga2--object--icingaapplication--environment"></a>`environment`
 
 Data type: `Optional[String]`
 
 Specify the Icinga environment. This overrides the Environment constant
 specified in the configuration or on the CLI with --define.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--icingaapplication--target"></a>`target`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Destination config file to store in this object. File will be declared at the
 first time.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--icingaapplication--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -4078,7 +3874,7 @@ String or integer to control the position in the target file, sorted alpha numer
 
 Default value: `5`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--icingaapplication--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -4086,238 +3882,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectnotification"></a>`icinga2::object::notification`
-
-Manage Icinga 2 notification objects.
-
-#### Parameters
-
-The following parameters are available in the `icinga2::object::notification` defined type:
-
-* [`ensure`](#ensure)
-* [`notification_name`](#notification_name)
-* [`host_name`](#host_name)
-* [`service_name`](#service_name)
-* [`vars`](#vars)
-* [`users`](#users)
-* [`user_groups`](#user_groups)
-* [`times`](#times)
-* [`command`](#command)
-* [`interval`](#interval)
-* [`period`](#period)
-* [`zone`](#zone)
-* [`types`](#types)
-* [`states`](#states)
-* [`template`](#template)
-* [`apply`](#apply)
-* [`prefix`](#prefix)
-* [`apply_target`](#apply_target)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`export`](#export)
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Set to present enables the object, absent disables it.
-
-Default value: `present`
-
-##### <a name="notification_name"></a>`notification_name`
-
-Data type: `String`
-
-Set the Icinga 2 name of the notification object.
-
-Default value: `$title`
-
-##### <a name="host_name"></a>`host_name`
-
-Data type: `Optional[String]`
-
-The name of the host this notification belongs to.
-
-Default value: ``undef``
-
-##### <a name="service_name"></a>`service_name`
-
-Data type: `Optional[String]`
-
-The short name of the service this notification belongs to. If omitted, this
-notification object is treated as host notification.
-
-Default value: ``undef``
-
-##### <a name="vars"></a>`vars`
-
-Data type: `Optional[Icinga2::CustomAttributes]`
-
-A dictionary containing custom attributes that are specific to this service,
-a string to do operations on this dictionary or an array for multiple use
-of custom attributes.
-
-Default value: ``undef``
-
-##### <a name="users"></a>`users`
-
-Data type: `Optional[Variant[String, Array]]`
-
-A list of user names who should be notified.
-
-Default value: ``undef``
-
-##### <a name="user_groups"></a>`user_groups`
-
-Data type: `Optional[Variant[String, Array]]`
-
-A list of user group names who should be notified.
-
-Default value: ``undef``
-
-##### <a name="times"></a>`times`
-
-Data type: `Optional[Hash]`
-
-A dictionary containing begin and end attributes for the notification.
-
-Default value: ``undef``
-
-##### <a name="command"></a>`command`
-
-Data type: `Optional[String]`
-
-The name of the notification command which should be executed when the
-notification is triggered.
-
-Default value: ``undef``
-
-##### <a name="interval"></a>`interval`
-
-Data type: `Optional[Variant[Icinga2::Interval,Pattern[/(host|service)\./]]]`
-
-The notification interval (in seconds). This interval is used for active
-notifications.
-
-Default value: ``undef``
-
-##### <a name="period"></a>`period`
-
-Data type: `Optional[String]`
-
-The name of a time period which determines when this notification should be
-triggered.
-
-Default value: ``undef``
-
-##### <a name="zone"></a>`zone`
-
-Data type: `Optional[String]`
-
-The zone this object is a member of.
-
-Default value: ``undef``
-
-##### <a name="types"></a>`types`
-
-Data type: `Optional[Variant[Array, String]]`
-
-A list of type filters when this notification should be triggered.
-
-Default value: ``undef``
-
-##### <a name="states"></a>`states`
-
-Data type: `Optional[Variant[Array, String]]`
-
-A list of state filters when this notification should be triggered.
-
-Default value: ``undef``
-
-##### <a name="template"></a>`template`
-
-Data type: `Boolean`
-
-Set to true creates a template instead of an object.
-
-Default value: ``false``
-
-##### <a name="apply"></a>`apply`
-
-Data type: `Variant[Boolean, String]`
-
-Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-i.e. 'vhost => config in host.vars.vhosts'.
-
-Default value: ``false``
-
-##### <a name="prefix"></a>`prefix`
-
-Data type: `Variant[Boolean, String]`
-
-Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string.
-
-Default value: ``false``
-
-##### <a name="apply_target"></a>`apply_target`
-
-Data type: `Enum['Host', 'Service']`
-
-An object type on which to target the apply rule. Valid values are `Host` and `Service`.
-
-Default value: `'Host'`
-
-##### <a name="import"></a>`import`
-
-Data type: `Array`
-
-Sorted List of templates to include.
-
-Default value: `[]`
-
-##### <a name="target"></a>`target`
-
-Data type: `Stdlib::Absolutepath`
-
-Destination config file to store in this object. File will be declared the
-first time.
-
-##### <a name="order"></a>`order`
-
-Data type: `Variant[String, Integer]`
-
-String or integer to set the position in the target file, sorted alpha numeric.
-
-Default value: `85`
-
-##### <a name="assign"></a>`assign`
-
-Data type: `Array`
-
-Assign notification using the assign rules.
-
-Default value: `[]`
-
-##### <a name="ignore"></a>`ignore`
-
-Data type: `Array`
-
-Exclude notification using the ignore rules.
-
-Default value: `[]`
-
-##### <a name="export"></a>`export`
-
-Data type: `Variant[Array[String], String]`
-
-Export object to destination, collected by class `icinga2::query_objects`.
-
-Default value: `[]`
-
-### <a name="icinga2objectnotificationcommand"></a>`icinga2::object::notificationcommand`
+### <a name="icinga2--object--notificationcommand"></a>`icinga2::object::notificationcommand`
 
 Manage Icinga 2 notificationcommand objects.
 
@@ -4325,20 +3890,20 @@ Manage Icinga 2 notificationcommand objects.
 
 The following parameters are available in the `icinga2::object::notificationcommand` defined type:
 
-* [`ensure`](#ensure)
-* [`notificationcommand_name`](#notificationcommand_name)
-* [`command`](#command)
-* [`env`](#env)
-* [`vars`](#vars)
-* [`timeout`](#timeout)
-* [`arguments`](#arguments)
-* [`template`](#template)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--notificationcommand--ensure)
+* [`notificationcommand_name`](#-icinga2--object--notificationcommand--notificationcommand_name)
+* [`command`](#-icinga2--object--notificationcommand--command)
+* [`env`](#-icinga2--object--notificationcommand--env)
+* [`vars`](#-icinga2--object--notificationcommand--vars)
+* [`timeout`](#-icinga2--object--notificationcommand--timeout)
+* [`arguments`](#-icinga2--object--notificationcommand--arguments)
+* [`template`](#-icinga2--object--notificationcommand--template)
+* [`import`](#-icinga2--object--notificationcommand--import)
+* [`target`](#-icinga2--object--notificationcommand--target)
+* [`order`](#-icinga2--object--notificationcommand--order)
+* [`export`](#-icinga2--object--notificationcommand--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--notificationcommand--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -4346,7 +3911,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="notificationcommand_name"></a>`notificationcommand_name`
+##### <a name="-icinga2--object--notificationcommand--notificationcommand_name"></a>`notificationcommand_name`
 
 Data type: `String`
 
@@ -4354,7 +3919,7 @@ Set the Icinga 2 name of the notificationcommand object.
 
 Default value: `$title`
 
-##### <a name="command"></a>`command`
+##### <a name="-icinga2--object--notificationcommand--command"></a>`command`
 
 Data type: `Optional[Variant[Array, String]]`
 
@@ -4362,18 +3927,18 @@ The command. This can either be an array of individual command arguments.
 Alternatively a string can be specified in which case the shell interpreter
 (usually /bin/sh) takes care of parsing the command.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="env"></a>`env`
+##### <a name="-icinga2--object--notificationcommand--env"></a>`env`
 
 Data type: `Optional[Hash]`
 
 A dictionary of macros which should be exported as environment variables
 prior to executing the command.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vars"></a>`vars`
+##### <a name="-icinga2--object--notificationcommand--vars"></a>`vars`
 
 Data type: `Optional[Icinga2::CustomAttributes]`
 
@@ -4381,33 +3946,33 @@ A dictionary containing custom attributes that are specific to this service,
 a string to do operations on this dictionary or an array for multiple use
 of custom attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-icinga2--object--notificationcommand--timeout"></a>`timeout`
 
 Data type: `Optional[Icinga2::Interval]`
 
 The command timeout in seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="arguments"></a>`arguments`
+##### <a name="-icinga2--object--notificationcommand--arguments"></a>`arguments`
 
 Data type: `Optional[Hash]`
 
 A dictionary of command arguments.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--notificationcommand--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--notificationcommand--import"></a>`import`
 
 Data type: `Array`
 
@@ -4415,14 +3980,14 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--notificationcommand--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--notificationcommand--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -4430,7 +3995,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `25`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--notificationcommand--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -4438,559 +4003,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectscheduleddowntime"></a>`icinga2::object::scheduleddowntime`
-
-Manage Icinga 2 scheduleddowntime objects.
-
-#### Parameters
-
-The following parameters are available in the `icinga2::object::scheduleddowntime` defined type:
-
-* [`ensure`](#ensure)
-* [`scheduleddowntime_name`](#scheduleddowntime_name)
-* [`host_name`](#host_name)
-* [`service_name`](#service_name)
-* [`author`](#author)
-* [`comment`](#comment)
-* [`fixed`](#fixed)
-* [`duration`](#duration)
-* [`ranges`](#ranges)
-* [`apply`](#apply)
-* [`prefix`](#prefix)
-* [`apply_target`](#apply_target)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Set to present enables the object, absent disables it.
-
-Default value: `present`
-
-##### <a name="scheduleddowntime_name"></a>`scheduleddowntime_name`
-
-Data type: `String`
-
-Set the Icinga 2 name of the scheduleddowntime object.
-
-Default value: `$title`
-
-##### <a name="host_name"></a>`host_name`
-
-Data type: `Optional[String]`
-
-The name of the host this comment belongs to.
-
-Default value: ``undef``
-
-##### <a name="service_name"></a>`service_name`
-
-Data type: `Optional[String]`
-
-The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
-
-Default value: ``undef``
-
-##### <a name="author"></a>`author`
-
-Data type: `Optional[String]`
-
-The author's name.
-
-Default value: ``undef``
-
-##### <a name="comment"></a>`comment`
-
-Data type: `Optional[String]`
-
-The comment text.
-
-Default value: ``undef``
-
-##### <a name="fixed"></a>`fixed`
-
-Data type: `Optional[Boolean]`
-
-Whether this is a fixed downtime.
-
-Default value: ``undef``
-
-##### <a name="duration"></a>`duration`
-
-Data type: `Optional[Icinga2::Interval]`
-
-The duration as number.
-
-Default value: ``undef``
-
-##### <a name="ranges"></a>`ranges`
-
-Data type: `Optional[Hash]`
-
-A dictionary containing information which days and durations apply to this timeperiod.
-
-Default value: ``undef``
-
-##### <a name="apply"></a>`apply`
-
-Data type: `Variant[Boolean, String]`
-
-Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-i.e. 'vhost => config in host.vars.vhosts'.
-
-Default value: ``false``
-
-##### <a name="prefix"></a>`prefix`
-
-Data type: `Variant[Boolean, String]`
-
-Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string.
-
-Default value: ``false``
-
-##### <a name="apply_target"></a>`apply_target`
-
-Data type: `Enum['Host', 'Service']`
-
-An object type on which to target the apply rule. Valid values are `Host` and `Service`.
-
-Default value: `'Host'`
-
-##### <a name="assign"></a>`assign`
-
-Data type: `Array`
-
-Assign user group members using the group assign rules.
-
-Default value: `[]`
-
-##### <a name="ignore"></a>`ignore`
-
-Data type: `Array`
-
-Exclude users using the group ignore rules.
-
-Default value: `[]`
-
-##### <a name="target"></a>`target`
-
-Data type: `Stdlib::Absolutepath`
-
-Destination config file to store in this object. File will be declared the
-first time.
-
-##### <a name="order"></a>`order`
-
-Data type: `Variant[String, Integer]`
-
-String or integer to set the position in the target file, sorted alpha numeric.
-
-Default value: `90`
-
-##### <a name="export"></a>`export`
-
-Data type: `Variant[Array[String], String]`
-
-Export object to destination, collected by class `icinga2::query_objects`.
-
-Default value: `[]`
-
-### <a name="icinga2objectservice"></a>`icinga2::object::service`
-
-Manage Icinga 2 service objects.
-
-#### Examples
-
-##### A service `ping` is applied to all hosts with a valid ipv4 address.
-
-```puppet
-::icinga2::object::service { 'ping4':
-  import        => ['generic-service'],
-  apply         => true,
-  check_command => 'ping',
-  assign        => ['host.address'],
-  target        => '/etc/icinga2/zones.d/global-templates/services.conf',
-}
-```
-
-##### A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
-
-```puppet
-::icinga2::object::service { 'linux_disks':
-  import           => ['generic-service'],
-  apply            =>  'disk_name => config in host.vars.disks',
-  check_command    => 'disk',
-  command_endpoint => 'host.name',
-  vars             => '+ config',
-  assign           => ['host.vars.os == Linux'],
-  ignore           => ['host.vars.noagent'],
-  target           => '/etc/icinga2/zones.d/global-templates/services.conf',
-}
-```
-
-#### Parameters
-
-The following parameters are available in the `icinga2::object::service` defined type:
-
-* [`ensure`](#ensure)
-* [`service_name`](#service_name)
-* [`display_name`](#display_name)
-* [`host_name`](#host_name)
-* [`groups`](#groups)
-* [`vars`](#vars)
-* [`check_command`](#check_command)
-* [`max_check_attempts`](#max_check_attempts)
-* [`check_period`](#check_period)
-* [`check_timeout`](#check_timeout)
-* [`check_interval`](#check_interval)
-* [`retry_interval`](#retry_interval)
-* [`enable_notifications`](#enable_notifications)
-* [`enable_active_checks`](#enable_active_checks)
-* [`enable_passive_checks`](#enable_passive_checks)
-* [`enable_event_handler`](#enable_event_handler)
-* [`enable_flapping`](#enable_flapping)
-* [`enable_perfdata`](#enable_perfdata)
-* [`event_command`](#event_command)
-* [`flapping_threshold_low`](#flapping_threshold_low)
-* [`flapping_threshold_high`](#flapping_threshold_high)
-* [`volatile`](#volatile)
-* [`zone`](#zone)
-* [`command_endpoint`](#command_endpoint)
-* [`notes`](#notes)
-* [`notes_url`](#notes_url)
-* [`action_url`](#action_url)
-* [`icon_image`](#icon_image)
-* [`icon_image_alt`](#icon_image_alt)
-* [`template`](#template)
-* [`apply`](#apply)
-* [`prefix`](#prefix)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
-
-##### <a name="ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Set to present enables the object, absent disables it.
-
-Default value: `present`
-
-##### <a name="service_name"></a>`service_name`
-
-Data type: `String`
-
-Set the Icinga 2 name of the service object.
-
-Default value: `$title`
-
-##### <a name="display_name"></a>`display_name`
-
-Data type: `Optional[String]`
-
-A short description of the service.
-
-Default value: ``undef``
-
-##### <a name="host_name"></a>`host_name`
-
-Data type: `Optional[String]`
-
-The host this service belongs to. There must be a Host object with
-that name.
-
-Default value: ``undef``
-
-##### <a name="groups"></a>`groups`
-
-Data type: `Optional[Array]`
-
-The service groups this service belongs to.
-
-Default value: ``undef``
-
-##### <a name="vars"></a>`vars`
-
-Data type: `Optional[Icinga2::CustomAttributes]`
-
-A dictionary containing custom attributes that are specific to this service,
-a string to do operations on this dictionary or an array for multiple use
-of custom attributes.
-
-Default value: ``undef``
-
-##### <a name="check_command"></a>`check_command`
-
-Data type: `Optional[String]`
-
-The name of the check command.
-
-Default value: ``undef``
-
-##### <a name="max_check_attempts"></a>`max_check_attempts`
-
-Data type: `Optional[Integer[1]]`
-
-The number of times a service is re-checked before changing into a hard
-state.
-
-Default value: ``undef``
-
-##### <a name="check_period"></a>`check_period`
-
-Data type: `Optional[String]`
-
-The name of a time period which determines when this service should be
-checked.
-
-Default value: ``undef``
-
-##### <a name="check_timeout"></a>`check_timeout`
-
-Data type: `Optional[Icinga2::Interval]`
-
-Check command timeout in seconds. Overrides the CheckCommand's timeout
-attribute.
-
-Default value: ``undef``
-
-##### <a name="check_interval"></a>`check_interval`
-
-Data type: `Optional[Icinga2::Interval]`
-
-The check interval (in seconds). This interval is used for checks when the
-service is in a HARD state.
-
-Default value: ``undef``
-
-##### <a name="retry_interval"></a>`retry_interval`
-
-Data type: `Optional[Icinga2::Interval]`
-
-The retry interval (in seconds). This interval is used for checks when the
-service is in a SOFT state.
-
-Default value: ``undef``
-
-##### <a name="enable_notifications"></a>`enable_notifications`
-
-Data type: `Optional[Boolean]`
-
-Whether notifications are enabled.
-
-Default value: ``undef``
-
-##### <a name="enable_active_checks"></a>`enable_active_checks`
-
-Data type: `Optional[Boolean]`
-
-Whether active checks are enabled.
-
-Default value: ``undef``
-
-##### <a name="enable_passive_checks"></a>`enable_passive_checks`
-
-Data type: `Optional[Boolean]`
-
-Whether passive checks are enabled.
-
-Default value: ``undef``
-
-##### <a name="enable_event_handler"></a>`enable_event_handler`
-
-Data type: `Optional[Boolean]`
-
-Enables event handlers for this host.
-
-Default value: ``undef``
-
-##### <a name="enable_flapping"></a>`enable_flapping`
-
-Data type: `Optional[Boolean]`
-
-Whether flap detection is enabled.
-
-Default value: ``undef``
-
-##### <a name="enable_perfdata"></a>`enable_perfdata`
-
-Data type: `Optional[Boolean]`
-
-Whether performance data processing is enabled.
-
-Default value: ``undef``
-
-##### <a name="event_command"></a>`event_command`
-
-Data type: `Optional[String]`
-
-The name of an event command that should be executed every time the
-service's state changes or the service is in a SOFT state.
-
-Default value: ``undef``
-
-##### <a name="flapping_threshold_low"></a>`flapping_threshold_low`
-
-Data type: `Optional[Integer[1]]`
-
-Flapping lower bound in percent for a host to be considered not flapping.
-
-Default value: ``undef``
-
-##### <a name="flapping_threshold_high"></a>`flapping_threshold_high`
-
-Data type: `Optional[Integer[1]]`
-
-Flapping upper bound in percent for a host to be considered flapping.
-
-Default value: ``undef``
-
-##### <a name="volatile"></a>`volatile`
-
-Data type: `Optional[Boolean]`
-
-The volatile setting enables always HARD state types if NOT-OK state changes
-occur.
-
-Default value: ``undef``
-
-##### <a name="zone"></a>`zone`
-
-Data type: `Optional[String]`
-
-The zone this object is a member of.
-
-Default value: ``undef``
-
-##### <a name="command_endpoint"></a>`command_endpoint`
-
-Data type: `Optional[String]`
-
-The endpoint where commands are executed on.
-
-Default value: ``undef``
-
-##### <a name="notes"></a>`notes`
-
-Data type: `Optional[String]`
-
-Notes for the service.
-
-Default value: ``undef``
-
-##### <a name="notes_url"></a>`notes_url`
-
-Data type: `Optional[String]`
-
-Url for notes for the service (for example, in notification commands).
-
-Default value: ``undef``
-
-##### <a name="action_url"></a>`action_url`
-
-Data type: `Optional[String]`
-
-Url for actions for the service (for example, an external graphing tool).
-
-Default value: ``undef``
-
-##### <a name="icon_image"></a>`icon_image`
-
-Data type: `Optional[String]`
-
-Icon image for the service. Used by external interfaces only.
-
-Default value: ``undef``
-
-##### <a name="icon_image_alt"></a>`icon_image_alt`
-
-Data type: `Optional[String]`
-
-Icon image description for the service. Used by external interface only.
-
-Default value: ``undef``
-
-##### <a name="template"></a>`template`
-
-Data type: `Boolean`
-
-Set to true creates a template instead of an object.
-
-Default value: ``false``
-
-##### <a name="apply"></a>`apply`
-
-Data type: `Variant[Boolean, String]`
-
-Dispose an apply instead an object if set to 'true'. Value is taken as statement,
-i.e. 'vhost => config in host.vars.vhosts'.
-
-Default value: ``false``
-
-##### <a name="prefix"></a>`prefix`
-
-Data type: `Variant[Boolean, String]`
-
-Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
-
-Default value: ``false``
-
-##### <a name="assign"></a>`assign`
-
-Data type: `Array`
-
-Assign service using the assign rules.
-
-Default value: `[]`
-
-##### <a name="ignore"></a>`ignore`
-
-Data type: `Array`
-
-Exclude service using the ignore rules.
-
-Default value: `[]`
-
-##### <a name="import"></a>`import`
-
-Data type: `Array`
-
-Sorted List of templates to include.
-
-Default value: `[]`
-
-##### <a name="target"></a>`target`
-
-Data type: `Stdlib::Absolutepath`
-
-Destination config file to store in this object. File will be declared the
-first time.
-
-##### <a name="order"></a>`order`
-
-Data type: `Variant[String, Integer]`
-
-String or integer to set the position in the target file, sorted alpha numeric.
-
-Default value: `60`
-
-##### <a name="export"></a>`export`
-
-Data type: `Variant[Array[String], String]`
-
-Export object to destination, collected by class `icinga2::query_objects`.
-
-Default value: `[]`
-
-### <a name="icinga2objectservicegroup"></a>`icinga2::object::servicegroup`
+### <a name="icinga2--object--servicegroup"></a>`icinga2::object::servicegroup`
 
 Manage Icinga 2 servicegroup objects.
 
@@ -4998,19 +4011,19 @@ Manage Icinga 2 servicegroup objects.
 
 The following parameters are available in the `icinga2::object::servicegroup` defined type:
 
-* [`ensure`](#ensure)
-* [`servicegroup_name`](#servicegroup_name)
-* [`display_name`](#display_name)
-* [`groups`](#groups)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`template`](#template)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--servicegroup--ensure)
+* [`servicegroup_name`](#-icinga2--object--servicegroup--servicegroup_name)
+* [`display_name`](#-icinga2--object--servicegroup--display_name)
+* [`groups`](#-icinga2--object--servicegroup--groups)
+* [`assign`](#-icinga2--object--servicegroup--assign)
+* [`ignore`](#-icinga2--object--servicegroup--ignore)
+* [`template`](#-icinga2--object--servicegroup--template)
+* [`import`](#-icinga2--object--servicegroup--import)
+* [`target`](#-icinga2--object--servicegroup--target)
+* [`order`](#-icinga2--object--servicegroup--order)
+* [`export`](#-icinga2--object--servicegroup--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--servicegroup--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -5018,7 +4031,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="servicegroup_name"></a>`servicegroup_name`
+##### <a name="-icinga2--object--servicegroup--servicegroup_name"></a>`servicegroup_name`
 
 Data type: `String`
 
@@ -5026,23 +4039,23 @@ Set the Icinga 2 name of the servicegroup object.
 
 Default value: `$title`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-icinga2--object--servicegroup--display_name"></a>`display_name`
 
 Data type: `Optional[String]`
 
 A short description of the service group.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="groups"></a>`groups`
+##### <a name="-icinga2--object--servicegroup--groups"></a>`groups`
 
 Data type: `Optional[Array]`
 
 An array of nested group names.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="assign"></a>`assign`
+##### <a name="-icinga2--object--servicegroup--assign"></a>`assign`
 
 Data type: `Array`
 
@@ -5050,7 +4063,7 @@ Assign user group members using the group assign rules.
 
 Default value: `[]`
 
-##### <a name="ignore"></a>`ignore`
+##### <a name="-icinga2--object--servicegroup--ignore"></a>`ignore`
 
 Data type: `Array`
 
@@ -5058,15 +4071,15 @@ Exclude users using the group ignore rules.
 
 Default value: `[]`
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--servicegroup--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--servicegroup--import"></a>`import`
 
 Data type: `Array`
 
@@ -5074,14 +4087,14 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--servicegroup--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--servicegroup--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -5089,7 +4102,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `65`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--servicegroup--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -5097,7 +4110,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objecttimeperiod"></a>`icinga2::object::timeperiod`
+### <a name="icinga2--object--timeperiod"></a>`icinga2::object::timeperiod`
 
 Manage Icinga 2 timeperiod objects.
 
@@ -5105,20 +4118,20 @@ Manage Icinga 2 timeperiod objects.
 
 The following parameters are available in the `icinga2::object::timeperiod` defined type:
 
-* [`ensure`](#ensure)
-* [`timeperiod_name`](#timeperiod_name)
-* [`display_name`](#display_name)
-* [`import`](#import)
-* [`ranges`](#ranges)
-* [`prefer_includes`](#prefer_includes)
-* [`excludes`](#excludes)
-* [`includes`](#includes)
-* [`template`](#template)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--timeperiod--ensure)
+* [`timeperiod_name`](#-icinga2--object--timeperiod--timeperiod_name)
+* [`display_name`](#-icinga2--object--timeperiod--display_name)
+* [`import`](#-icinga2--object--timeperiod--import)
+* [`ranges`](#-icinga2--object--timeperiod--ranges)
+* [`prefer_includes`](#-icinga2--object--timeperiod--prefer_includes)
+* [`excludes`](#-icinga2--object--timeperiod--excludes)
+* [`includes`](#-icinga2--object--timeperiod--includes)
+* [`template`](#-icinga2--object--timeperiod--template)
+* [`target`](#-icinga2--object--timeperiod--target)
+* [`order`](#-icinga2--object--timeperiod--order)
+* [`export`](#-icinga2--object--timeperiod--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--timeperiod--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -5126,7 +4139,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="timeperiod_name"></a>`timeperiod_name`
+##### <a name="-icinga2--object--timeperiod--timeperiod_name"></a>`timeperiod_name`
 
 Data type: `String`
 
@@ -5134,15 +4147,15 @@ Set the Icinga 2 name of the timeperiod object.
 
 Default value: `$title`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-icinga2--object--timeperiod--display_name"></a>`display_name`
 
 Data type: `Optional[String]`
 
 A short description of the time period.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--timeperiod--import"></a>`import`
 
 Data type: `Array`
 
@@ -5150,54 +4163,54 @@ Sorted List of templates to include.
 
 Default value: `['legacy-timeperiod']`
 
-##### <a name="ranges"></a>`ranges`
+##### <a name="-icinga2--object--timeperiod--ranges"></a>`ranges`
 
 Data type: `Optional[Hash]`
 
 A dictionary containing information which days and durations apply to this
 timeperiod.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="prefer_includes"></a>`prefer_includes`
+##### <a name="-icinga2--object--timeperiod--prefer_includes"></a>`prefer_includes`
 
 Data type: `Optional[Boolean]`
 
 Boolean whether to prefer timeperiods includes or excludes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="excludes"></a>`excludes`
+##### <a name="-icinga2--object--timeperiod--excludes"></a>`excludes`
 
 Data type: `Optional[Array]`
 
 An array of timeperiods, which should exclude from your timerange.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="includes"></a>`includes`
+##### <a name="-icinga2--object--timeperiod--includes"></a>`includes`
 
 Data type: `Optional[Array]`
 
 An array of timeperiods, which should include into your timerange
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--timeperiod--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--timeperiod--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store this object in. File will be declared on the first run.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--timeperiod--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -5205,7 +4218,7 @@ String or integer to control the position in the target file, sorted alpha numer
 
 Default value: `35`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--timeperiod--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -5213,7 +4226,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectuser"></a>`icinga2::object::user`
+### <a name="icinga2--object--user"></a>`icinga2::object::user`
 
 Manage Icinga 2 user objects.
 
@@ -5221,24 +4234,24 @@ Manage Icinga 2 user objects.
 
 The following parameters are available in the `icinga2::object::user` defined type:
 
-* [`ensure`](#ensure)
-* [`user_name`](#user_name)
-* [`display_name`](#display_name)
-* [`email`](#email)
-* [`pager`](#pager)
-* [`vars`](#vars)
-* [`groups`](#groups)
-* [`enable_notifications`](#enable_notifications)
-* [`period`](#period)
-* [`types`](#types)
-* [`states`](#states)
-* [`template`](#template)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--user--ensure)
+* [`user_name`](#-icinga2--object--user--user_name)
+* [`display_name`](#-icinga2--object--user--display_name)
+* [`email`](#-icinga2--object--user--email)
+* [`pager`](#-icinga2--object--user--pager)
+* [`vars`](#-icinga2--object--user--vars)
+* [`groups`](#-icinga2--object--user--groups)
+* [`enable_notifications`](#-icinga2--object--user--enable_notifications)
+* [`period`](#-icinga2--object--user--period)
+* [`types`](#-icinga2--object--user--types)
+* [`states`](#-icinga2--object--user--states)
+* [`template`](#-icinga2--object--user--template)
+* [`import`](#-icinga2--object--user--import)
+* [`target`](#-icinga2--object--user--target)
+* [`order`](#-icinga2--object--user--order)
+* [`export`](#-icinga2--object--user--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--user--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -5246,7 +4259,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="user_name"></a>`user_name`
+##### <a name="-icinga2--object--user--user_name"></a>`user_name`
 
 Data type: `String`
 
@@ -5254,31 +4267,31 @@ Set the Icinga 2 name of the user object.
 
 Default value: `$title`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-icinga2--object--user--display_name"></a>`display_name`
 
 Data type: `Optional[String]`
 
 A short description of the user.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="email"></a>`email`
+##### <a name="-icinga2--object--user--email"></a>`email`
 
 Data type: `Optional[String]`
 
 An email string for this user. Useful for notification commands.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pager"></a>`pager`
+##### <a name="-icinga2--object--user--pager"></a>`pager`
 
 Data type: `Optional[String]`
 
 A pager string for this user. Useful for notification commands.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vars"></a>`vars`
+##### <a name="-icinga2--object--user--vars"></a>`vars`
 
 Data type: `Optional[Icinga2::CustomAttributes]`
 
@@ -5286,59 +4299,59 @@ A dictionary containing custom attributes that are specific to this service,
 a string to do operations on this dictionary or an array for multiple use
 of custom attributes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="groups"></a>`groups`
+##### <a name="-icinga2--object--user--groups"></a>`groups`
 
 Data type: `Optional[Array]`
 
 An array of group names.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="enable_notifications"></a>`enable_notifications`
+##### <a name="-icinga2--object--user--enable_notifications"></a>`enable_notifications`
 
 Data type: `Optional[Boolean]`
 
 Whether notifications are enabled for this user.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="period"></a>`period`
+##### <a name="-icinga2--object--user--period"></a>`period`
 
 Data type: `Optional[String]`
 
 The name of a time period which determines when a notification for this user
 should be triggered.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="types"></a>`types`
+##### <a name="-icinga2--object--user--types"></a>`types`
 
 Data type: `Optional[Array]`
 
 A set of type filters when this notification should be triggered.
 everything is matched.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="states"></a>`states`
+##### <a name="-icinga2--object--user--states"></a>`states`
 
 Data type: `Optional[Array]`
 
 A set of state filters when this notification should be triggered.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--user--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--user--import"></a>`import`
 
 Data type: `Array`
 
@@ -5346,14 +4359,14 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--user--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--user--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -5361,7 +4374,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `75`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--user--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -5369,7 +4382,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectusergroup"></a>`icinga2::object::usergroup`
+### <a name="icinga2--object--usergroup"></a>`icinga2::object::usergroup`
 
 Manage Icinga 2 usergroup objects.
 
@@ -5377,19 +4390,19 @@ Manage Icinga 2 usergroup objects.
 
 The following parameters are available in the `icinga2::object::usergroup` defined type:
 
-* [`ensure`](#ensure)
-* [`usergroup_name`](#usergroup_name)
-* [`display_name`](#display_name)
-* [`groups`](#groups)
-* [`assign`](#assign)
-* [`ignore`](#ignore)
-* [`template`](#template)
-* [`import`](#import)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--usergroup--ensure)
+* [`usergroup_name`](#-icinga2--object--usergroup--usergroup_name)
+* [`display_name`](#-icinga2--object--usergroup--display_name)
+* [`groups`](#-icinga2--object--usergroup--groups)
+* [`assign`](#-icinga2--object--usergroup--assign)
+* [`ignore`](#-icinga2--object--usergroup--ignore)
+* [`template`](#-icinga2--object--usergroup--template)
+* [`import`](#-icinga2--object--usergroup--import)
+* [`target`](#-icinga2--object--usergroup--target)
+* [`order`](#-icinga2--object--usergroup--order)
+* [`export`](#-icinga2--object--usergroup--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--usergroup--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -5397,7 +4410,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="usergroup_name"></a>`usergroup_name`
+##### <a name="-icinga2--object--usergroup--usergroup_name"></a>`usergroup_name`
 
 Data type: `String`
 
@@ -5405,15 +4418,15 @@ Set the Icinga 2 name of the usergroup object.
 
 Default value: `$title`
 
-##### <a name="display_name"></a>`display_name`
+##### <a name="-icinga2--object--usergroup--display_name"></a>`display_name`
 
 Data type: `Optional[String]`
 
 A short description of the service group.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="groups"></a>`groups`
+##### <a name="-icinga2--object--usergroup--groups"></a>`groups`
 
 Data type: `Array`
 
@@ -5421,7 +4434,7 @@ An array of nested group names.
 
 Default value: `[]`
 
-##### <a name="assign"></a>`assign`
+##### <a name="-icinga2--object--usergroup--assign"></a>`assign`
 
 Data type: `Array`
 
@@ -5429,7 +4442,7 @@ Assign user group members using the group assign rules.
 
 Default value: `[]`
 
-##### <a name="ignore"></a>`ignore`
+##### <a name="-icinga2--object--usergroup--ignore"></a>`ignore`
 
 Data type: `Array`
 
@@ -5437,15 +4450,15 @@ Exclude users using the group ignore rules.
 
 Default value: `[]`
 
-##### <a name="template"></a>`template`
+##### <a name="-icinga2--object--usergroup--template"></a>`template`
 
 Data type: `Boolean`
 
 Set to true creates a template instead of an object.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="import"></a>`import`
+##### <a name="-icinga2--object--usergroup--import"></a>`import`
 
 Data type: `Array`
 
@@ -5453,14 +4466,14 @@ Sorted List of templates to include.
 
 Default value: `[]`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--usergroup--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Destination config file to store in this object. File will be declared the
 first time.
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--usergroup--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -5468,7 +4481,7 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `80`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--usergroup--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -5476,7 +4489,7 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
-### <a name="icinga2objectzone"></a>`icinga2::object::zone`
+### <a name="icinga2--object--zone"></a>`icinga2::object::zone`
 
 Manage Icinga 2 zone objects.
 
@@ -5484,16 +4497,16 @@ Manage Icinga 2 zone objects.
 
 The following parameters are available in the `icinga2::object::zone` defined type:
 
-* [`ensure`](#ensure)
-* [`zone_name`](#zone_name)
-* [`endpoints`](#endpoints)
-* [`parent`](#parent)
-* [`global`](#global)
-* [`target`](#target)
-* [`order`](#order)
-* [`export`](#export)
+* [`ensure`](#-icinga2--object--zone--ensure)
+* [`zone_name`](#-icinga2--object--zone--zone_name)
+* [`endpoints`](#-icinga2--object--zone--endpoints)
+* [`parent`](#-icinga2--object--zone--parent)
+* [`global`](#-icinga2--object--zone--global)
+* [`target`](#-icinga2--object--zone--target)
+* [`order`](#-icinga2--object--zone--order)
+* [`export`](#-icinga2--object--zone--export)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-icinga2--object--zone--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -5501,7 +4514,7 @@ Set to present enables the object, absent disables it.
 
 Default value: `present`
 
-##### <a name="zone_name"></a>`zone_name`
+##### <a name="-icinga2--object--zone--zone_name"></a>`zone_name`
 
 Data type: `String`
 
@@ -5509,7 +4522,7 @@ Set the Icinga 2 name of the zone object.
 
 Default value: `$title`
 
-##### <a name="endpoints"></a>`endpoints`
+##### <a name="-icinga2--object--zone--endpoints"></a>`endpoints`
 
 Data type: `Array`
 
@@ -5517,33 +4530,33 @@ List of endpoints belong to this zone.
 
 Default value: `[]`
 
-##### <a name="parent"></a>`parent`
+##### <a name="-icinga2--object--zone--parent"></a>`parent`
 
 Data type: `Optional[String]`
 
 Parent zone to this zone.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="global"></a>`global`
+##### <a name="-icinga2--object--zone--global"></a>`global`
 
 Data type: `Boolean`
 
 If set to true, a global zone is defined and the parameter endpoints
 and parent are ignored.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="target"></a>`target`
+##### <a name="-icinga2--object--zone--target"></a>`target`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Destination config file to store in this object. File will be declared at the
 first time.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="order"></a>`order`
+##### <a name="-icinga2--object--zone--order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -5551,7 +4564,7 @@ String or integer to control the position in the target file, sorted alpha numer
 
 Default value: `45`
 
-##### <a name="export"></a>`export`
+##### <a name="-icinga2--object--zone--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -5561,7 +4574,7 @@ Default value: `[]`
 
 ## Functions
 
-### <a name="icinga2cert"></a>`icinga2::cert`
+### <a name="icinga2--cert"></a>`icinga2::cert`
 
 Type: Puppet Language
 
@@ -5615,7 +4628,7 @@ Data type: `Optional[String]`
 
 
 
-### <a name="icinga2dbconnect"></a>`icinga2::db::connect`
+### <a name="icinga2--db--connect"></a>`icinga2::db::connect`
 
 Type: Puppet Language
 
@@ -5637,14 +4650,18 @@ Returns: `String` Connection string to connect database.
 
 ##### `db`
 
-Data type: `Struct[{
+Data type:
+
+```puppet
+Struct[{
       type     => Enum['pgsql','mysql','mariadb'],
       host     => Stdlib::Host,
       port     => Optional[Stdlib::Port],
       database => String,
       username => String,
       password => Optional[Variant[String, Sensitive[String]]],
-  }]`
+  }]
+```
 
 
 
@@ -5660,7 +4677,7 @@ Data type: `Optional[Boolean]`
 
 
 
-### <a name="icinga2icinga2_attributes"></a>`icinga2::icinga2_attributes`
+### <a name="icinga2--icinga2_attributes"></a>`icinga2::icinga2_attributes`
 
 Type: Ruby 4.x API
 
@@ -5697,7 +4714,7 @@ Data type: `Optional[Numeric]`
 
 Indent to use.
 
-### <a name="icinga2icinga2_ticket_id"></a>`icinga2::icinga2_ticket_id`
+### <a name="icinga2--icinga2_ticket_id"></a>`icinga2::icinga2_ticket_id`
 
 Type: Ruby 4.x API
 
@@ -5721,7 +4738,7 @@ Data type: `Variant[String, Sensitive[String]]`
 
 The ticket salt of the Icinga CA.
 
-### <a name="icinga2newline"></a>`icinga2::newline`
+### <a name="icinga2--newline"></a>`icinga2::newline`
 
 Type: Puppet Language
 
@@ -5739,7 +4756,7 @@ Data type: `Optional[String]`
 
 
 
-### <a name="icinga2parse"></a>`icinga2::parse`
+### <a name="icinga2--parse"></a>`icinga2::parse`
 
 Type: Puppet Language
 
@@ -5775,7 +4792,7 @@ Data type: `Hash[String, Any]`
 
 
 
-### <a name="icinga2unwrap"></a>`icinga2::unwrap`
+### <a name="icinga2--unwrap"></a>`icinga2::unwrap`
 
 Type: Puppet Language
 
@@ -5795,7 +4812,7 @@ Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 ## Data types
 
-### <a name="icinga2basicauth"></a>`Icinga2::BasicAuth`
+### <a name="Icinga2--BasicAuth"></a>`Icinga2::BasicAuth`
 
 A strict type for basic authentication
 
@@ -5808,29 +4825,21 @@ Struct[{
 }]
 ```
 
-### <a name="icinga2customattributes"></a>`Icinga2::CustomAttributes`
+### <a name="Icinga2--CustomAttributes"></a>`Icinga2::CustomAttributes`
 
 A type for the structure of custom attributes
 
-Alias of
+Alias of `Optional[Variant[String, Array[Variant[String, Hash]], Hash]]`
 
-```puppet
-Optional[Variant[String, Array[Variant[String, Hash]], Hash]]
-```
-
-### <a name="icinga2fingerprint"></a>`Icinga2::Fingerprint`
+### <a name="Icinga2--Fingerprint"></a>`Icinga2::Fingerprint`
 
 Type for certificate fingerprints
 SHA1: 160 bit (20 byte) digest
 SHA256: 256 bit (32 byte) digest
 
-Alias of
+Alias of `Pattern[/^([0-9a-fA-F]{2}\:){19}(([0-9a-fA-F]{2}\:){12})?[0-9a-fA-F]{2}$/]`
 
-```puppet
-Pattern[/^([0-9a-fA-F]{2}\:){19}(([0-9a-fA-F]{2}\:){12})?[0-9a-fA-F]{2}$/]
-```
-
-### <a name="icinga2idocleanup"></a>`Icinga2::IdoCleanup`
+### <a name="Icinga2--IdoCleanup"></a>`Icinga2::IdoCleanup`
 
 A type for the structure of settings to cleanup IDO databases
 
@@ -5856,17 +4865,13 @@ Hash[Enum[
   ], String]
 ```
 
-### <a name="icinga2interval"></a>`Icinga2::Interval`
+### <a name="Icinga2--Interval"></a>`Icinga2::Interval`
 
 A strict type for intervals
 
-Alias of
+Alias of `Variant[Integer, Pattern[/^\d+\.?\d*[d|h|m|s]?$/]]`
 
-```puppet
-Variant[Integer, Pattern[/^\d+\.?\d*[d|h|m|s]?$/]]
-```
-
-### <a name="icinga2logfacility"></a>`Icinga2::LogFacility`
+### <a name="Icinga2--LogFacility"></a>`Icinga2::LogFacility`
 
 A strict type of syslog facilities
 
@@ -5889,13 +4894,9 @@ Variant[Enum[
   ], Pattern[/^LOG_LOCAL[0-7]$/]]
 ```
 
-### <a name="icinga2logseverity"></a>`Icinga2::LogSeverity`
+### <a name="Icinga2--LogSeverity"></a>`Icinga2::LogSeverity`
 
 A strict type for log levels
 
-Alias of
-
-```puppet
-Enum['debug', 'information', 'notice', 'warning', 'critical']
-```
+Alias of `Enum['debug', 'information', 'notice', 'warning', 'critical']`
 

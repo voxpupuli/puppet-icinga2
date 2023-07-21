@@ -1,5 +1,19 @@
 # Change Log
 
+## [v3.7.0](https://github.com/icinga/puppet-icinga2/tree/v3.7.0) (2023-07-21)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.2...v3.7.0)
+
+**Implemented enhancements:**
+
+- Replace ERB Template for Objects with EPP [\#731](https://github.com/Icinga/puppet-icinga2/issues/731)
+- Add Debian Bookworm Support [\#729](https://github.com/Icinga/puppet-icinga2/issues/729)
+
+**Closed issues:**
+
+- Rename default branch to main [\#733](https://github.com/Icinga/puppet-icinga2/issues/733)
+- /var/lib/icinga2/certs/ticket is not created by this module [\#728](https://github.com/Icinga/puppet-icinga2/issues/728)
+- Using export and query\_objects leads to hostgroup objects being defined multiple times [\#727](https://github.com/Icinga/puppet-icinga2/issues/727)
+
 ## [v3.6.2](https://github.com/icinga/puppet-icinga2/tree/v3.6.2) (2023-04-14)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.1...v3.6.2)
 
