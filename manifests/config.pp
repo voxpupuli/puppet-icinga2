@@ -10,17 +10,20 @@ class icinga2::config {
   $conf_dir       = $icinga2::globals::conf_dir
   $user           = $icinga2::globals::user
   $group          = $icinga2::globals::group
-  $plugins        = $icinga2::plugins
-  $confd          = $icinga2::_confd
   $purge_features = $icinga2::purge_features
+  $_mainconfig    = epp('icinga2/icinga2.conf.epp',
+    { plugins => $icinga2::plugins,
+      confd   => $icinga2::_confd,
+    }
+  )
 
   if $facts['kernel'] != 'windows' {
     $template_constants  = icinga2::parse($constants)
-    $template_mainconfig = template('icinga2/icinga2.conf.erb')
+    $template_mainconfig = $_mainconfig
     $file_permissions    = '0640'
   } else {
     $template_constants  = regsubst(icinga2::parse($constants), '\n', "\r\n", 'EMG')
-    $template_mainconfig = regsubst(template('icinga2/icinga2.conf.erb'), '\n', "\r\n", 'EMG')
+    $template_mainconfig = regsubst($_mainconfig, '\n', "\r\n", 'EMG')
     $file_permissions    = undef
   }
 

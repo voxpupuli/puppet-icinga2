@@ -1,3 +1,6 @@
+<%- | Array            $plugins,
+      Optional[String] $confd = undef,
+| -%>
 // managed by puppet
 
 /**
@@ -26,9 +29,9 @@ include "zones.conf"
  * Common monitoring plugin command definitions are included separately.
  */
 include <itl>
-<% @plugins.sort.each do |p| -%>
-include <<%= p %>>
-<% end -%>
+<% $plugins.sort.each |$p| { -%>
+include <<%= $p %>>
+<% } -%>
 
 /**
  * The features-available directory contains a number of configuration
@@ -38,20 +41,12 @@ include <<%= p %>>
  * the features-enabled directory.
  */
 include "features-enabled/*.conf"
-<% if @repositoryd -%>
 
-/**
- * The repository.d directory contains all configuration objects
- * managed by the 'icinga2 repository' CLI commands.
- */
-include_recursive "repository.d"
-<% end -%>
-
-<% if @confd -%>
+<% if $confd { -%>
 /**
  * Although in theory you could define all your objects in this file
  * the preferred way is to create separate directories and files in the conf.d
  * directory. Each of these files must have the file extension ".conf".
  */
-include_recursive "<%= @confd %>"
-<% end -%>
+include_recursive "<%= $confd %>"
+<% } -%>

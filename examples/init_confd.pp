@@ -1,5 +1,5 @@
 class { 'icinga2':
-  confd       => '/etc/icinga2/local.d',
+  confd => '/etc/icinga2/local.d',
 }
 
 file { '/etc/icinga2/local.d':

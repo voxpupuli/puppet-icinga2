@@ -83,14 +83,24 @@ define icinga2::object (
     fail('The object type must be different from the apply target')
   }
 
-  $_attrs = merge($attrs, {
-      'assign where' => $assign,
-      'ignore where' => $ignore,
-  })
+  $_object = epp('icinga2/object.conf.epp',
+    { attrs        => $attrs,
+      attrs_list   => $attrs_list,
+      apply        => $apply,
+      apply_target => $apply_target,
+      prefix       => $prefix,
+      object_type  => $object_type,
+      object_name  => $object_name,
+      template     => $template,
+      import       => $import,
+      assign       => $assign,
+      ignore       => $ignore,
+    }
+  )
 
   $_content = $facts['os']['family'] ? {
-    'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
-    default   => template('icinga2/object.conf.erb'),
+    'windows' => regsubst($_object, '\n', "\r\n", 'EMG'),
+    default   => $_object,
   }
 
   if !defined(Concat[$target]) {
