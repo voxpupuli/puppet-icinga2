@@ -181,25 +181,27 @@ define icinga2::object::host (
 
   # create object
   $config = {
-    ensure      => $ensure,
     object_name => $host_name,
     object_type => 'Host',
     template    => $template,
     import      => $import,
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
-    target      => $target,
-    order       => $order,
   }
 
   unless empty($export) {
-    @@icinga2::object { "icinga2::object::Host::${title}":
-      tag => prefix(any2array($export), 'icinga2::instance::'),
-      *   => $config,
+    @@icinga2::config::fragment { "icinga2::object::Host::${title}":
+      tag     => prefix(any2array($export), 'icinga2::instance::'),
+      content => epp('icinga2/object.conf.epp', $config),
+      target  => $target,
+      order   => $order,
     }
   } else {
     icinga2::object { "icinga2::object::Host::${title}":
-      * => $config,
+      ensure => $ensure,
+      target => $target,
+      order  => $order,
+      *      => $config,
     }
   }
 }
