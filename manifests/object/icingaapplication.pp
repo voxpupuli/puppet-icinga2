@@ -82,23 +82,25 @@ define icinga2::object::icingaapplication (
 
   # create object
   $config = {
-    ensure      => $ensure,
     object_name => $app_name,
     object_type => 'IcingaApplication',
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
-    target      => $_target,
-    order       => $order,
   }
 
   unless empty($export) {
-    @@icinga2::object { "icinga2::object::IcingaApplication::${title}":
-      tag => prefix(any2array($export), 'icinga2::instance::'),
-      *   => $config,
+    @@icinga2::config::fragment { "icinga2::object::IcingaApplication::${title}":
+      tag     => prefix(any2array($export), 'icinga2::instance::'),
+      content => epp('icinga2/object.conf.epp', $config),
+      target  => $_target,
+      order   => $order,
     }
   } else {
     icinga2::object { "icinga2::object::IcingaApplication::${title}":
-      * => $config,
+      ensure => $ensure,
+      target => $_target,
+      order  => $order,
+      *      => $config,
     }
   }
 }

@@ -56,23 +56,25 @@ define icinga2::object::endpoint (
 
   # create object
   $config = {
-    ensure      => $ensure,
     object_name => $endpoint_name,
     object_type => 'Endpoint',
     attrs       => delete_undef_values($attrs),
     attrs_list  => keys($attrs),
-    target      => $_target,
-    order       => $order,
   }
 
   unless empty($export) {
-    @@icinga2::object { "icinga2::object::Endpoint::${title}":
-      tag => prefix(any2array($export), 'icinga2::instance::'),
-      *   => $config,
+    @@icinga2::config::fragment { "icinga2::object::Endpoint::${title}":
+      tag     => prefix(any2array($export), 'icinga2::instance::'),
+      content => epp('icinga2/object.conf.epp', $config),
+      target  => $_target,
+      order   => $order,
     }
   } else {
     icinga2::object { "icinga2::object::Endpoint::${title}":
-      * => $config,
+      ensure => $ensure,
+      target => $_target,
+      order  => $order,
+      *      => $config,
     }
   }
 }

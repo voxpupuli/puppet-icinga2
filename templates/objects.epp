@@ -1,5 +1,0 @@
-<%- | Array $objects | -%>
-
-<% $objects.each |$object| { -%>
-<%= epp('icinga2/object.conf.epp', delete($object['parameters'], ['order', 'target', 'ensure', 'tag'])) -%>
-<% } -%>

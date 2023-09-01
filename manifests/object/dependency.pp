@@ -109,7 +109,6 @@ define icinga2::object::dependency (
 
   # create object
   $config = {
-    ensure       => $ensure,
     object_name  => $dependency_name,
     object_type  => 'Dependency',
     import       => $import,
@@ -121,18 +120,21 @@ define icinga2::object::dependency (
     apply_target => $apply_target,
     assign       => $assign,
     ignore       => $ignore,
-    target       => $target,
-    order        => $order,
   }
 
   unless empty($export) {
-    @@icinga2::object { "icinga2::object::Dependency::${title}":
-      tag => prefix(any2array($export), 'icinga2::instance::'),
-      *   => $config,
+    @@icinga2::config::fragment { "icinga2::object::Dependency::${title}":
+      tag     => prefix(any2array($export), 'icinga2::instance::'),
+      content => epp('icinga2/object.conf.epp', $config),
+      target  => $target,
+      order   => $order,
     }
   } else {
     icinga2::object { "icinga2::object::Dependency::${title}":
-      * => $config,
+      ensure => $ensure,
+      target => $target,
+      order  => $order,
+      *      => $config,
     }
   }
 }

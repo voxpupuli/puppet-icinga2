@@ -28,18 +28,17 @@ class icinga2::query_objects (
     } # default
   }
 
-  $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Object' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
+  $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Config::Fragment' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname }")
 
   $file_list = $pql_query.map |$object| {
     $object['parameters']['target']
   }
 
   unique($file_list).each |$target| {
-    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] and $object['parameters']['ensure'] == 'present' }
+    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] }
 
-    $_content = $facts['os']['family'] ? {
-      'windows' => regsubst(epp('icinga2/objects.epp', { 'objects' => $objects }), '\n', "\r\n", 'EMG'),
-      default   => epp('icinga2/objects.epp', { 'objects' => $objects }),
+    $_content = $objects.reduce('') |String $memo, $object| {
+      "${memo}${object['parameters']['content']}"
     }
 
     if !defined(Concat[$target]) {

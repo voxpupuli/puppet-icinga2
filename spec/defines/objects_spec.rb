@@ -200,7 +200,7 @@ on_icinga_objects.each do |otype, rtype|
         }
       end
 
-      it { expect(exported_resources).to contain_icinga2__object("icinga2::object::#{otype}::foo").with_object_type(otype) }
+      it { expect(exported_resources).to contain_icinga2__config__fragment("icinga2::object::#{otype}::foo") }
     end
   end
 end
