@@ -178,7 +178,7 @@ class icinga2::feature::influxdb2 (
   icinga2::object { 'icinga2::object::Influxdb2Writer::influxdb2':
     object_name => 'influxdb2',
     object_type => 'Influxdb2Writer',
-    attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
+    attrs       => delete_undef_values(stdlib::merge($attrs, $attrs_ssl)),
     attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/influxdb2.conf",
     notify      => $_notify,

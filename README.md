@@ -91,7 +91,7 @@ And depends on:
 * [puppetlabs/concat] >= 2.1.0 < 8.0.0
 * [icinga/icinga] >= 1.0.0 < 3.0.0
     * needed if `manage_repos` is set to `true`
-* [puppetlabs/chocolatey]
+* [puppetlabs/chocolatey] >= 5.2.0 < 9.0.0
     * needed if agent os is windows and if either `manage_package` or `manage_packages` is set to `true`
 ### Limitations
 

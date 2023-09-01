@@ -11,7 +11,7 @@
       Array $ignore = [],
 | -%>
 
-<% $_attrs = merge($attrs, { 'assign where' => $assign, 'ignore where' => $ignore, }) -%>
+<% $_attrs = stdlib::merge($attrs, { 'assign where' => $assign, 'ignore where' => $ignore, }) -%>
 <% if $apply =~ String { %>apply <%= $object_type -%>
 <% if $prefix { -%>
 <% if $prefix =~ String { %> "<%= $prefix %>"<% } else { -%>

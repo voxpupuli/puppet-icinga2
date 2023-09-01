@@ -28,7 +28,7 @@ function icinga2::parse(
   icinga2::icinga2_attributes(
     $attrs,
     concat($icinga2::globals::reserved, $reserved),
-    merge($icinga2::_constants, $constants),
+    stdlib::merge($icinga2::_constants, $constants),
     $indent
   )
 }
