@@ -82,13 +82,12 @@ available in Icinga 2 can be enabled and configured with this module.
 
 This module supports:
 
-* [puppet] >= 4.10 < 8.0.0
+* [puppet] >= 7.0.0 < 8.0.0
 
 And depends on:
 
-* [puppetlabs/stdlib] >= 5.0.0 < 8.0.0
-    * If Puppet 6 is used a stdlib 5.1 or higher is required, see https://github.com/Icinga/puppet-icinga2/issues/505
-* [puppetlabs/concat] >= 2.1.0 < 8.0.0
+* [puppetlabs/stdlib] >= 6.6.0 < 8.0.0
+* [puppetlabs/concat] >= 6.4.0 < 8.0.0
 * [icinga/icinga] >= 1.0.0 < 3.0.0
     * needed if `manage_repos` is set to `true`
 * [puppetlabs/chocolatey]
@@ -99,7 +98,7 @@ The use of Icinga's own CA is recommended. If you still want to use the Puppet c
 
 This module has been tested on:
 
-* Debian 10, 11
+* Debian 10, 11, 12
 * Ubuntu 20.04, 22.04
 * CentOS/RHEL 7, 8, 9
 * AlmaLinux/Rocky 8, 9
