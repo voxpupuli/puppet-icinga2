@@ -92,7 +92,7 @@ And depends on:
 * [icinga/icinga] >= 1.0.0 < 3.0.0
     * needed if `manage_repos` is set to `true`
 * [puppetlabs/chocolatey]
-    * needed if agent os is windows and if either `manage_package` or `manage_packages` is set to `true`
+    * needed if agent os is windows and if `manage_packages` is set to `true`
 ### Limitations
 
 The use of Icinga's own CA is recommended. If you still want to use the Puppet certificates, please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).

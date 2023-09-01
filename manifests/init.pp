@@ -82,9 +82,6 @@
 #   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
 #   For more information, see http://github.com/icinga/puppet-icinga.
 #
-# @param manage_package
-#   Deprecated, use manage_packages.
-#
 # @param manage_packages
 #   If set to false packages aren't managed.
 #
@@ -120,7 +117,6 @@ class icinga2 (
   Stdlib::Ensure::Service    $ensure          = running,
   Boolean                    $enable          = true,
   Boolean                    $manage_repos    = false,
-  Boolean                    $manage_package  = false,
   Boolean                    $manage_packages = true,
   Boolean                    $manage_selinux  = false,
   Boolean                    $manage_service  = true,
@@ -147,9 +143,6 @@ class icinga2 (
   -> Concat <| tag == 'icinga2::config::file' |>
   ~> Class['icinga2::service']
 
-  if $manage_package {
-    deprecation('manage_package', 'manage_package is deprecated and will be replaced by manage_packages in the future.')
-  }
 
   if $manage_repos {
     require icinga::repos
