@@ -77,9 +77,6 @@
 # @param enable
 #   If set to true the Icinga 2 service will start on boot.
 #
-# @param manage_repo
-#   Deprecated, use manage_repos.
-#
 # @param manage_repos
 #   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
 #   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
@@ -122,7 +119,6 @@ class icinga2 (
   Array                      $plugins,
   Stdlib::Ensure::Service    $ensure          = running,
   Boolean                    $enable          = true,
-  Boolean                    $manage_repo     = false,
   Boolean                    $manage_repos    = false,
   Boolean                    $manage_package  = false,
   Boolean                    $manage_packages = true,
@@ -155,11 +151,8 @@ class icinga2 (
     deprecation('manage_package', 'manage_package is deprecated and will be replaced by manage_packages in the future.')
   }
 
-  if $manage_repos or $manage_repo {
+  if $manage_repos {
     require icinga::repos
-    if $manage_repo {
-      deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
-    }
   }
 
   anchor { 'icinga2::begin':
