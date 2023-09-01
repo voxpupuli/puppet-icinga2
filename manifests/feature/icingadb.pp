@@ -176,7 +176,7 @@ class icinga2::feature::icingadb (
   icinga2::object { 'icinga2::object::IcingaDB::icingadb':
     object_name => 'icingadb',
     object_type => 'IcingaDB',
-    attrs       => delete_undef_values(merge($attrs, $attrs_tls)),
+    attrs       => delete_undef_values(stdlib::merge($attrs, $attrs_tls)),
     attrs_list  => concat(keys($attrs), keys($attrs_tls)),
     target      => "${conf_dir}/features-available/icingadb.conf",
     order       => 10,

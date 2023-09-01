@@ -125,7 +125,7 @@ class icinga2::feature::gelf (
   icinga2::object { 'icinga2::object::GelfWriter::gelf':
     object_name => 'gelf',
     object_type => 'GelfWriter',
-    attrs       => delete_undef_values(merge($attrs, $attrs_ssl)),
+    attrs       => delete_undef_values(stdlib::merge($attrs, $attrs_ssl)),
     attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/gelf.conf",
     order       => 10,
