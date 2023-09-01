@@ -143,7 +143,6 @@ class icinga2 (
   -> Concat <| tag == 'icinga2::config::file' |>
   ~> Class['icinga2::service']
 
-
   if $manage_repos {
     require icinga::repos
   }
