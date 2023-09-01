@@ -115,7 +115,6 @@ class icinga2::feature::idopgsql (
   $ssl_dir                = $icinga2::globals::cert_dir
   $ido_pgsql_package_name = $icinga2::globals::ido_pgsql_package_name
   $ido_pgsql_schema       = $icinga2::globals::ido_pgsql_schema
-  $manage_package         = $icinga2::manage_package
   $manage_packages        = $icinga2::manage_packages
 
   $enable_ssl             = if $ssl_mode and $ssl_mode != 'disabled' {
@@ -182,7 +181,7 @@ class icinga2::feature::idopgsql (
   }
 
   # install additional package
-  if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
+  if $ido_pgsql_package_name and $manage_packages {
     if $facts['os']['family'] == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_pgsql_package_name}.conf":
@@ -203,7 +202,7 @@ class icinga2::feature::idopgsql (
 
   # import db schema
   if $import_schema {
-    if $ido_pgsql_package_name and ($manage_package or $manage_packages) {
+    if $ido_pgsql_package_name and $manage_packages {
       Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
 

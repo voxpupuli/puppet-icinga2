@@ -129,7 +129,6 @@ class icinga2::feature::idomysql (
   $ssl_dir                = $icinga2::globals::cert_dir
   $ido_mysql_package_name = $icinga2::globals::ido_mysql_package_name
   $ido_mysql_schema       = $icinga2::globals::ido_mysql_schema
-  $manage_package         = $icinga2::manage_package
   $manage_packages        = $icinga2::manage_packages
 
   $type                   = if $import_schema =~ Boolean {
@@ -201,7 +200,7 @@ class icinga2::feature::idomysql (
   }
 
   # install additional package
-  if $ido_mysql_package_name and ($manage_package or $manage_packages) {
+  if $ido_mysql_package_name and $manage_packages {
     if $facts['os']['family'] == 'debian' {
       ensure_resources('file', { '/etc/dbconfig-common' => { ensure => directory, owner => 'root', group => 'root' } })
       file { "/etc/dbconfig-common/${ido_mysql_package_name}.conf":
@@ -222,7 +221,7 @@ class icinga2::feature::idomysql (
 
   # import db schema
   if $import_schema {
-    if $ido_mysql_package_name and ($manage_package or $manage_packages) {
+    if $ido_mysql_package_name and $manage_packages {
       Package[$ido_mysql_package_name] -> Exec['idomysql-import-schema']
     }
 

@@ -8,7 +8,6 @@ class icinga2::install {
   assert_private()
 
   $package_name         = $icinga2::globals::package_name
-  $manage_package       = $icinga2::manage_package
   $manage_packages      = $icinga2::manage_packages
   $selinux_package_name = $icinga2::globals::selinux_package_name
   $manage_selinux       = $icinga2::manage_selinux
@@ -17,7 +16,7 @@ class icinga2::install {
   $user                 = $icinga2::globals::user
   $group                = $icinga2::globals::group
 
-  if $manage_package or $manage_packages {
+  if $manage_packages {
     if $facts['os']['family'] == 'windows' { Package { provider => chocolatey, } }
 
     package { $package_name:
