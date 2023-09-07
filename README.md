@@ -25,35 +25,15 @@
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
+### What's new in version 4.0.0
+
+New version 4.0.0 means we have a breaking change. However, this change only affects the `export` parameter in the individual object defined resources introduced in v3.6.0. We replaced the `icinga2::object` exported resources with the type of `icinga2::config::fragment` to do the config rendering thru runs on the single Icinga agent to get an static configuration on the destination, generally the Icinga config server.
+
+If you are using the `export` parameter in connection with the class `icinga2::query_objects`, it is recommended to suspend the puppet runs on the icinga servers and satellites (or everwhere you declare `icinga2::query_objects`) after updating this module until all agents have been processed by Puppet at least once.
+
 ### What's new in version 3.6.0
+
 Each Icinga object has been given the new parameter `export` that specifies one (ordinary objects for the config server) or more nodes (e.g. zones and endpoints for HA servers from workers aka satellites) as targets where the objects are then created using the class `query_objects`. This has been implemented to avoid collecting export resources in large environments.
-
-### What's new in version 3.5.0
-There are some new function for internal use. Function `icinga2::cert` handels files and/or content for TLS client auth for bot IDO features and for influxdb, infuxdb2, elasticsearch, gelf and icingadb. The function `icinga2::db::connect` provides the client connection string to mysql, mariadb or pgsql databses for both IDO features. 
-
-### What's new in version 3.4.0
-
-The internal used function `icinga_attributes` was moved to `icinga2::icinga2_attributes` with parameter changes. All direct calls of these functions are replaced with a new wrapper function `icinga2::parse`. This function has the same parameters like the old one `icinga2_attributes`.
-
-### What's new in version 3.2.0
-
-Important: Read the Known Issues section about [Environment Bleed](#environment-bleed) at the end of this document!
-
-Add Icinga 2.13.0 support includes the new influxdb2 feature.
-
-Some parameters for secrets like passwords or tokens in features or objects now allow the datatype 'Sensetive'.
-Strings set to constants or as custom variables can also use Sensitive. They are not parsed by the simple config
-parser. When you're using hashes or arrays in constants or custom variables the whole data structure can be
-secured by Sensitive.
-
-
-### What's new in version 3.0.0
-
-* The current version now uses the icinga :: repos class from the new `icinga` module for the configuration of
-repositories including EPEL on RedHat and Backports on Debian. (see https://github.com/icinga/puppet-icinga)
-* `manage_repos` will replace `manage_repo` in the future
-* `manage_packages` will replace `manage_package` in the future
-* Since Icinga v2.12.0 the fingerprint to validate certificates is a sha256 instead of a sha1. Both is supported now.
 
 ## Module Description
 
@@ -82,13 +62,13 @@ available in Icinga 2 can be enabled and configured with this module.
 
 This module supports:
 
-* [puppet] >= 7.0.0 < 8.0.0
+* [puppet] >= 7.0.0 < 9.0.0
 
 And depends on:
 
-* [puppetlabs/stdlib] >= 6.6.0 < 8.0.0
-* [puppetlabs/concat] >= 6.4.0 < 8.0.0
-* [icinga/icinga] >= 1.0.0 < 3.0.0
+* [puppetlabs/stdlib] >= 9.0.0 < 10.0.0
+* [puppetlabs/concat] >= 6.4.0 < 10.0.0
+* [icinga/icinga] >= 1.0.0 < 4.0.0
     * needed if `manage_repos` is set to `true`
 * [puppetlabs/chocolatey] >= 5.2.0 < 9.0.0
     * needed if agent os is windows and if `manage_packages` is set to `true`

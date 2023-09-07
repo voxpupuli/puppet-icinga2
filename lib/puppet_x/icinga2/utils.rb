@@ -161,10 +161,11 @@
 require 'puppet'
 
 module Puppet::Icinga2
-  # Module: Utils with methods to parse Icinga 2 DSL config
+  # Module with methods to parse Icinga 2 DSL config
   module Utils
     def self.value_types(value)
-      if value.match?(%r{^(-?\d+\.?\d*[dhms]?|true|false|null|\{{2}.*\}{2})$|^!?(host|service|user)\.}) || @constants.index { |x| @hash_attrs.include?(x) ? value =~ %r{^!?(#{x})(\..+$|$)} : value =~ %r{^!?#{x}$} }
+      if value.match?(%r{^(-?\d+\.?\d*[dhms]?|true|false|null|\{{2}.*\}{2})$|^!?(host|service|user)\.}) ||
+         @constants.index { |x| @hash_attrs.include?(x) ? value =~ %r{^!?(#{x})(\..+$|$)} : value =~ %r{^!?#{x}$} }
         value
       else
         value.dump
@@ -187,7 +188,7 @@ module Puppet::Icinga2
       if row =~ %r{^-:(.*)$}m
         return Regexp.last_match(1)
       end
- 
+
       case row
       when %r{^\{{2}(.+)\}{2}$}m
         # scan function
@@ -231,8 +232,8 @@ module Puppet::Icinga2
           result += "\n%{ind1}{\n%{expr}%{ind2}}, " % { ind1: ' ' * indent, expr: process_hash(value, indent + 2), ind2: ' ' * indent }
         elsif value.is_a?(Array)
           result += '[ %{lst}], ' % { lst: process_array(value, indent + 2) }
-        else
-          result += '%{expr}, ' % { expr: parse(value) } if value
+        elsif value
+          result += '%{expr}, ' % { expr: parse(value) }
         end
       end
       result
@@ -283,12 +284,14 @@ module Puppet::Icinga2
                     else
                       operator = '='
                     end
-                    if level == 3
-                      "%{pre}%{att} #{operator} %{val}\n" % { pre: prefix, att: attribute_types(attr), val: parse(value) } if value != :nil
-                    elsif level > 1
-                      "%{pre}[\"%{att}\"] #{operator} %{val}\n" % { pre: prefix, att: attr, val: parse(value) } if value != :nil
-                    else
-                      "%{pre}%{att} #{operator} %{val}\n" % { pre: prefix, att: attr, val: parse(value) } if value != :nil
+                    if value != :nil
+                      if level == 3
+                        "%{pre}%{att} #{operator} %{val}\n" % { pre: prefix, att: attribute_types(attr), val: parse(value) }
+                      elsif level > 1
+                        "%{pre}[\"%{att}\"] #{operator} %{val}\n" % { pre: prefix, att: attr, val: parse(value) }
+                      else
+                        "%{pre}%{att} #{operator} %{val}\n" % { pre: prefix, att: attr, val: parse(value) }
+                      end
                     end
                   end
       end

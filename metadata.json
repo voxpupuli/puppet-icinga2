@@ -1,6 +1,6 @@
 {
   "name": "icinga-icinga2",
-  "version": "3.7.0",
+  "version": "4.0.0",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
@@ -109,7 +109,7 @@
       "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
-  "pdk-version": "2.5.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#2.5.0",
-  "template-ref": "tags/2.5.0-0-g369d483"
+  "pdk-version": "3.0.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#3.0.0",
+  "template-ref": "tags/3.0.0-0-g5bfc1c0"
 }
