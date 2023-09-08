@@ -50,12 +50,16 @@ start on boot and will be restarted if stopped.
 * [`icinga2::object::apiuser`](#icinga2--object--apiuser): Manage Icinga 2 ApiUser objects.
 * [`icinga2::object::checkcommand`](#icinga2--object--checkcommand): Manage Icinga 2 Host objects.
 * [`icinga2::object::checkresultreader`](#icinga2--object--checkresultreader): Manage Icinga 2 CheckResultReader objects.
+* [`icinga2::object::dependency`](#icinga2--object--dependency): Manage Icinga 2 dependency objects.
 * [`icinga2::object::endpoint`](#icinga2--object--endpoint): Manage Icinga 2 endpoint objects.
 * [`icinga2::object::eventcommand`](#icinga2--object--eventcommand): Manage Icinga 2 EventCommand objects.
 * [`icinga2::object::host`](#icinga2--object--host): Manage Icinga 2 Host objects.
 * [`icinga2::object::hostgroup`](#icinga2--object--hostgroup): Manage Icinga 2 HostGroup objects.
 * [`icinga2::object::icingaapplication`](#icinga2--object--icingaapplication): Manage Icinga 2 IcingaApplication objects.
+* [`icinga2::object::notification`](#icinga2--object--notification): Manage Icinga 2 notification objects.
 * [`icinga2::object::notificationcommand`](#icinga2--object--notificationcommand): Manage Icinga 2 notificationcommand objects.
+* [`icinga2::object::scheduleddowntime`](#icinga2--object--scheduleddowntime): Manage Icinga 2 scheduleddowntime objects.
+* [`icinga2::object::service`](#icinga2--object--service): Manage Icinga 2 service objects.
 * [`icinga2::object::servicegroup`](#icinga2--object--servicegroup): Manage Icinga 2 servicegroup objects.
 * [`icinga2::object::timeperiod`](#icinga2--object--timeperiod): Manage Icinga 2 timeperiod objects.
 * [`icinga2::object::user`](#icinga2--object--user): Manage Icinga 2 user objects.
@@ -65,6 +69,7 @@ start on boot and will be restarted if stopped.
 #### Private Defined types
 
 * `icinga2::feature`: Private define resource to used by this module only.
+* `icinga2::object`: Define resource to used by this module only.
 * `icinga2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
@@ -200,9 +205,7 @@ The following parameters are available in the `icinga2` class:
 
 * [`ensure`](#-icinga2--ensure)
 * [`enable`](#-icinga2--enable)
-* [`manage_repo`](#-icinga2--manage_repo)
 * [`manage_repos`](#-icinga2--manage_repos)
-* [`manage_package`](#-icinga2--manage_package)
 * [`manage_packages`](#-icinga2--manage_packages)
 * [`manage_selinux`](#-icinga2--manage_selinux)
 * [`manage_service`](#-icinga2--manage_service)
@@ -228,14 +231,6 @@ If set to true the Icinga 2 service will start on boot.
 
 Default value: `true`
 
-##### <a name="-icinga2--manage_repo"></a>`manage_repo`
-
-Data type: `Boolean`
-
-Deprecated, use manage_repos.
-
-Default value: `false`
-
 ##### <a name="-icinga2--manage_repos"></a>`manage_repos`
 
 Data type: `Boolean`
@@ -243,14 +238,6 @@ Data type: `Boolean`
 When set to true this module will use the module icinga/puppet-icinga to manage repositories,
 e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
 For more information, see http://github.com/icinga/puppet-icinga.
-
-Default value: `false`
-
-##### <a name="-icinga2--manage_package"></a>`manage_package`
-
-Data type: `Boolean`
-
-Deprecated, use manage_packages.
 
 Default value: `false`
 
@@ -3128,6 +3115,209 @@ String or integer to set the position in the target file, sorted alpha numeric.
 
 Default value: `'05'`
 
+### <a name="icinga2--object--dependency"></a>`icinga2::object::dependency`
+
+Manage Icinga 2 dependency objects.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::dependency` defined type:
+
+* [`ensure`](#-icinga2--object--dependency--ensure)
+* [`dependency_name`](#-icinga2--object--dependency--dependency_name)
+* [`parent_host_name`](#-icinga2--object--dependency--parent_host_name)
+* [`parent_service_name`](#-icinga2--object--dependency--parent_service_name)
+* [`child_host_name`](#-icinga2--object--dependency--child_host_name)
+* [`child_service_name`](#-icinga2--object--dependency--child_service_name)
+* [`disable_checks`](#-icinga2--object--dependency--disable_checks)
+* [`disable_notifications`](#-icinga2--object--dependency--disable_notifications)
+* [`ignore_soft_states`](#-icinga2--object--dependency--ignore_soft_states)
+* [`period`](#-icinga2--object--dependency--period)
+* [`states`](#-icinga2--object--dependency--states)
+* [`apply`](#-icinga2--object--dependency--apply)
+* [`prefix`](#-icinga2--object--dependency--prefix)
+* [`apply_target`](#-icinga2--object--dependency--apply_target)
+* [`assign`](#-icinga2--object--dependency--assign)
+* [`ignore`](#-icinga2--object--dependency--ignore)
+* [`template`](#-icinga2--object--dependency--template)
+* [`import`](#-icinga2--object--dependency--import)
+* [`target`](#-icinga2--object--dependency--target)
+* [`order`](#-icinga2--object--dependency--order)
+* [`export`](#-icinga2--object--dependency--export)
+
+##### <a name="-icinga2--object--dependency--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--object--dependency--dependency_name"></a>`dependency_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the dependency object.
+
+Default value: `$title`
+
+##### <a name="-icinga2--object--dependency--parent_host_name"></a>`parent_host_name`
+
+Data type: `Optional[String]`
+
+The parent host.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--parent_service_name"></a>`parent_service_name`
+
+Data type: `Optional[String]`
+
+The parent service. If omitted, this dependency object is treated as host
+dependency.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--child_host_name"></a>`child_host_name`
+
+Data type: `Optional[String]`
+
+The child host.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--child_service_name"></a>`child_service_name`
+
+Data type: `Optional[String]`
+
+The child service. If omitted, this dependency object is treated as host
+dependency.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--disable_checks"></a>`disable_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether to disable checks when this dependency fails.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--disable_notifications"></a>`disable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether to disable notifications when this dependency fails.
+true.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--ignore_soft_states"></a>`ignore_soft_states`
+
+Data type: `Optional[Boolean]`
+
+Whether to ignore soft states for the reachability calculation.
+true.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--period"></a>`period`
+
+Data type: `Optional[String]`
+
+Time period during which this dependency is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--states"></a>`states`
+
+Data type: `Optional[Array]`
+
+A list of state filters when this dependency should be OK.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--apply"></a>`apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--dependency--prefix"></a>`prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set dependency_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--dependency--apply_target"></a>`apply_target`
+
+Data type: `Enum['Host', 'Service']`
+
+An object type on which to target the apply rule. Valid values are `Host`
+and `Service`.
+
+Default value: `'Host'`
+
+##### <a name="-icinga2--object--dependency--assign"></a>`assign`
+
+Data type: `Array`
+
+Assign user group members using the group assign rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--dependency--ignore"></a>`ignore`
+
+Data type: `Array`
+
+Exclude users using the group ignore rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--dependency--template"></a>`template`
+
+Data type: `Boolean`
+
+Set to true creates a template instead of an object.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--dependency--import"></a>`import`
+
+Data type: `Array`
+
+Sorted List of templates to include.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--dependency--target"></a>`target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### <a name="-icinga2--object--dependency--order"></a>`order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: `70`
+
+##### <a name="-icinga2--object--dependency--export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2--object--endpoint"></a>`icinga2::object::endpoint`
 
 Manage Icinga 2 endpoint objects.
@@ -3882,6 +4072,237 @@ Export object to destination, collected by class `icinga2::query_objects`.
 
 Default value: `[]`
 
+### <a name="icinga2--object--notification"></a>`icinga2::object::notification`
+
+Manage Icinga 2 notification objects.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::notification` defined type:
+
+* [`ensure`](#-icinga2--object--notification--ensure)
+* [`notification_name`](#-icinga2--object--notification--notification_name)
+* [`host_name`](#-icinga2--object--notification--host_name)
+* [`service_name`](#-icinga2--object--notification--service_name)
+* [`vars`](#-icinga2--object--notification--vars)
+* [`users`](#-icinga2--object--notification--users)
+* [`user_groups`](#-icinga2--object--notification--user_groups)
+* [`times`](#-icinga2--object--notification--times)
+* [`command`](#-icinga2--object--notification--command)
+* [`interval`](#-icinga2--object--notification--interval)
+* [`period`](#-icinga2--object--notification--period)
+* [`zone`](#-icinga2--object--notification--zone)
+* [`types`](#-icinga2--object--notification--types)
+* [`states`](#-icinga2--object--notification--states)
+* [`template`](#-icinga2--object--notification--template)
+* [`apply`](#-icinga2--object--notification--apply)
+* [`prefix`](#-icinga2--object--notification--prefix)
+* [`apply_target`](#-icinga2--object--notification--apply_target)
+* [`import`](#-icinga2--object--notification--import)
+* [`target`](#-icinga2--object--notification--target)
+* [`order`](#-icinga2--object--notification--order)
+* [`assign`](#-icinga2--object--notification--assign)
+* [`ignore`](#-icinga2--object--notification--ignore)
+* [`export`](#-icinga2--object--notification--export)
+
+##### <a name="-icinga2--object--notification--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--object--notification--notification_name"></a>`notification_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the notification object.
+
+Default value: `$title`
+
+##### <a name="-icinga2--object--notification--host_name"></a>`host_name`
+
+Data type: `Optional[String]`
+
+The name of the host this notification belongs to.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--service_name"></a>`service_name`
+
+Data type: `Optional[String]`
+
+The short name of the service this notification belongs to. If omitted, this
+notification object is treated as host notification.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--vars"></a>`vars`
+
+Data type: `Optional[Icinga2::CustomAttributes]`
+
+A dictionary containing custom attributes that are specific to this service,
+a string to do operations on this dictionary or an array for multiple use
+of custom attributes.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--users"></a>`users`
+
+Data type: `Optional[Variant[String, Array]]`
+
+A list of user names who should be notified.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--user_groups"></a>`user_groups`
+
+Data type: `Optional[Variant[String, Array]]`
+
+A list of user group names who should be notified.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--times"></a>`times`
+
+Data type: `Optional[Hash]`
+
+A dictionary containing begin and end attributes for the notification.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--command"></a>`command`
+
+Data type: `Optional[String]`
+
+The name of the notification command which should be executed when the
+notification is triggered.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--interval"></a>`interval`
+
+Data type: `Optional[Variant[Icinga2::Interval,Pattern[/(host|service)\./]]]`
+
+The notification interval (in seconds). This interval is used for active
+notifications.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--period"></a>`period`
+
+Data type: `Optional[String]`
+
+The name of a time period which determines when this notification should be
+triggered.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--zone"></a>`zone`
+
+Data type: `Optional[String]`
+
+The zone this object is a member of.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--types"></a>`types`
+
+Data type: `Optional[Variant[Array, String]]`
+
+A list of type filters when this notification should be triggered.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--states"></a>`states`
+
+Data type: `Optional[Variant[Array, String]]`
+
+A list of state filters when this notification should be triggered.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--notification--template"></a>`template`
+
+Data type: `Boolean`
+
+Set to true creates a template instead of an object.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--notification--apply"></a>`apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--notification--prefix"></a>`prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--notification--apply_target"></a>`apply_target`
+
+Data type: `Enum['Host', 'Service']`
+
+An object type on which to target the apply rule. Valid values are `Host` and `Service`.
+
+Default value: `'Host'`
+
+##### <a name="-icinga2--object--notification--import"></a>`import`
+
+Data type: `Array`
+
+Sorted List of templates to include.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--notification--target"></a>`target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### <a name="-icinga2--object--notification--order"></a>`order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: `85`
+
+##### <a name="-icinga2--object--notification--assign"></a>`assign`
+
+Data type: `Array`
+
+Assign notification using the assign rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--notification--ignore"></a>`ignore`
+
+Data type: `Array`
+
+Exclude notification using the ignore rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--notification--export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
 ### <a name="icinga2--object--notificationcommand"></a>`icinga2::object::notificationcommand`
 
 Manage Icinga 2 notificationcommand objects.
@@ -3996,6 +4417,558 @@ String or integer to set the position in the target file, sorted alpha numeric.
 Default value: `25`
 
 ##### <a name="-icinga2--object--notificationcommand--export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
+### <a name="icinga2--object--scheduleddowntime"></a>`icinga2::object::scheduleddowntime`
+
+Manage Icinga 2 scheduleddowntime objects.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::scheduleddowntime` defined type:
+
+* [`ensure`](#-icinga2--object--scheduleddowntime--ensure)
+* [`scheduleddowntime_name`](#-icinga2--object--scheduleddowntime--scheduleddowntime_name)
+* [`host_name`](#-icinga2--object--scheduleddowntime--host_name)
+* [`service_name`](#-icinga2--object--scheduleddowntime--service_name)
+* [`author`](#-icinga2--object--scheduleddowntime--author)
+* [`comment`](#-icinga2--object--scheduleddowntime--comment)
+* [`fixed`](#-icinga2--object--scheduleddowntime--fixed)
+* [`duration`](#-icinga2--object--scheduleddowntime--duration)
+* [`ranges`](#-icinga2--object--scheduleddowntime--ranges)
+* [`apply`](#-icinga2--object--scheduleddowntime--apply)
+* [`prefix`](#-icinga2--object--scheduleddowntime--prefix)
+* [`apply_target`](#-icinga2--object--scheduleddowntime--apply_target)
+* [`assign`](#-icinga2--object--scheduleddowntime--assign)
+* [`ignore`](#-icinga2--object--scheduleddowntime--ignore)
+* [`target`](#-icinga2--object--scheduleddowntime--target)
+* [`order`](#-icinga2--object--scheduleddowntime--order)
+* [`export`](#-icinga2--object--scheduleddowntime--export)
+
+##### <a name="-icinga2--object--scheduleddowntime--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--object--scheduleddowntime--scheduleddowntime_name"></a>`scheduleddowntime_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the scheduleddowntime object.
+
+Default value: `$title`
+
+##### <a name="-icinga2--object--scheduleddowntime--host_name"></a>`host_name`
+
+Data type: `Optional[String]`
+
+The name of the host this comment belongs to.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--service_name"></a>`service_name`
+
+Data type: `Optional[String]`
+
+The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--author"></a>`author`
+
+Data type: `Optional[String]`
+
+The author's name.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--comment"></a>`comment`
+
+Data type: `Optional[String]`
+
+The comment text.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--fixed"></a>`fixed`
+
+Data type: `Optional[Boolean]`
+
+Whether this is a fixed downtime.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--duration"></a>`duration`
+
+Data type: `Optional[Icinga2::Interval]`
+
+The duration as number.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--ranges"></a>`ranges`
+
+Data type: `Optional[Hash]`
+
+A dictionary containing information which days and durations apply to this timeperiod.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--apply"></a>`apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--scheduleddowntime--prefix"></a>`prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--scheduleddowntime--apply_target"></a>`apply_target`
+
+Data type: `Enum['Host', 'Service']`
+
+An object type on which to target the apply rule. Valid values are `Host` and `Service`.
+
+Default value: `'Host'`
+
+##### <a name="-icinga2--object--scheduleddowntime--assign"></a>`assign`
+
+Data type: `Array`
+
+Assign user group members using the group assign rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--scheduleddowntime--ignore"></a>`ignore`
+
+Data type: `Array`
+
+Exclude users using the group ignore rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--scheduleddowntime--target"></a>`target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### <a name="-icinga2--object--scheduleddowntime--order"></a>`order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: `90`
+
+##### <a name="-icinga2--object--scheduleddowntime--export"></a>`export`
+
+Data type: `Variant[Array[String], String]`
+
+Export object to destination, collected by class `icinga2::query_objects`.
+
+Default value: `[]`
+
+### <a name="icinga2--object--service"></a>`icinga2::object::service`
+
+Manage Icinga 2 service objects.
+
+#### Examples
+
+##### A service `ping` is applied to all hosts with a valid ipv4 address.
+
+```puppet
+::icinga2::object::service { 'ping4':
+  import        => ['generic-service'],
+  apply         => true,
+  check_command => 'ping',
+  assign        => ['host.address'],
+  target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+}
+```
+
+##### A `apply Service for (disk_name =>config in host.vars.disks)` rule is applied to all Linux hosts with an Icinga Agent. Note in this example it's required that the endpoint (see `command_endpoint`) and the host object has the same name!
+
+```puppet
+::icinga2::object::service { 'linux_disks':
+  import           => ['generic-service'],
+  apply            =>  'disk_name => config in host.vars.disks',
+  check_command    => 'disk',
+  command_endpoint => 'host.name',
+  vars             => '+ config',
+  assign           => ['host.vars.os == Linux'],
+  ignore           => ['host.vars.noagent'],
+  target           => '/etc/icinga2/zones.d/global-templates/services.conf',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icinga2::object::service` defined type:
+
+* [`ensure`](#-icinga2--object--service--ensure)
+* [`service_name`](#-icinga2--object--service--service_name)
+* [`display_name`](#-icinga2--object--service--display_name)
+* [`host_name`](#-icinga2--object--service--host_name)
+* [`groups`](#-icinga2--object--service--groups)
+* [`vars`](#-icinga2--object--service--vars)
+* [`check_command`](#-icinga2--object--service--check_command)
+* [`max_check_attempts`](#-icinga2--object--service--max_check_attempts)
+* [`check_period`](#-icinga2--object--service--check_period)
+* [`check_timeout`](#-icinga2--object--service--check_timeout)
+* [`check_interval`](#-icinga2--object--service--check_interval)
+* [`retry_interval`](#-icinga2--object--service--retry_interval)
+* [`enable_notifications`](#-icinga2--object--service--enable_notifications)
+* [`enable_active_checks`](#-icinga2--object--service--enable_active_checks)
+* [`enable_passive_checks`](#-icinga2--object--service--enable_passive_checks)
+* [`enable_event_handler`](#-icinga2--object--service--enable_event_handler)
+* [`enable_flapping`](#-icinga2--object--service--enable_flapping)
+* [`enable_perfdata`](#-icinga2--object--service--enable_perfdata)
+* [`event_command`](#-icinga2--object--service--event_command)
+* [`flapping_threshold_low`](#-icinga2--object--service--flapping_threshold_low)
+* [`flapping_threshold_high`](#-icinga2--object--service--flapping_threshold_high)
+* [`volatile`](#-icinga2--object--service--volatile)
+* [`zone`](#-icinga2--object--service--zone)
+* [`command_endpoint`](#-icinga2--object--service--command_endpoint)
+* [`notes`](#-icinga2--object--service--notes)
+* [`notes_url`](#-icinga2--object--service--notes_url)
+* [`action_url`](#-icinga2--object--service--action_url)
+* [`icon_image`](#-icinga2--object--service--icon_image)
+* [`icon_image_alt`](#-icinga2--object--service--icon_image_alt)
+* [`template`](#-icinga2--object--service--template)
+* [`apply`](#-icinga2--object--service--apply)
+* [`prefix`](#-icinga2--object--service--prefix)
+* [`assign`](#-icinga2--object--service--assign)
+* [`ignore`](#-icinga2--object--service--ignore)
+* [`import`](#-icinga2--object--service--import)
+* [`target`](#-icinga2--object--service--target)
+* [`order`](#-icinga2--object--service--order)
+* [`export`](#-icinga2--object--service--export)
+
+##### <a name="-icinga2--object--service--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the object, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--object--service--service_name"></a>`service_name`
+
+Data type: `String`
+
+Set the Icinga 2 name of the service object.
+
+Default value: `$title`
+
+##### <a name="-icinga2--object--service--display_name"></a>`display_name`
+
+Data type: `Optional[String]`
+
+A short description of the service.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--host_name"></a>`host_name`
+
+Data type: `Optional[String]`
+
+The host this service belongs to. There must be a Host object with
+that name.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--groups"></a>`groups`
+
+Data type: `Optional[Array]`
+
+The service groups this service belongs to.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--vars"></a>`vars`
+
+Data type: `Optional[Icinga2::CustomAttributes]`
+
+A dictionary containing custom attributes that are specific to this service,
+a string to do operations on this dictionary or an array for multiple use
+of custom attributes.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--check_command"></a>`check_command`
+
+Data type: `Optional[String]`
+
+The name of the check command.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--max_check_attempts"></a>`max_check_attempts`
+
+Data type: `Optional[Integer[1]]`
+
+The number of times a service is re-checked before changing into a hard
+state.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--check_period"></a>`check_period`
+
+Data type: `Optional[String]`
+
+The name of a time period which determines when this service should be
+checked.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--check_timeout"></a>`check_timeout`
+
+Data type: `Optional[Icinga2::Interval]`
+
+Check command timeout in seconds. Overrides the CheckCommand's timeout
+attribute.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--check_interval"></a>`check_interval`
+
+Data type: `Optional[Icinga2::Interval]`
+
+The check interval (in seconds). This interval is used for checks when the
+service is in a HARD state.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--retry_interval"></a>`retry_interval`
+
+Data type: `Optional[Icinga2::Interval]`
+
+The retry interval (in seconds). This interval is used for checks when the
+service is in a SOFT state.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--enable_notifications"></a>`enable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether notifications are enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--enable_active_checks"></a>`enable_active_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active checks are enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--enable_passive_checks"></a>`enable_passive_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether passive checks are enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--enable_event_handler"></a>`enable_event_handler`
+
+Data type: `Optional[Boolean]`
+
+Enables event handlers for this host.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--enable_flapping"></a>`enable_flapping`
+
+Data type: `Optional[Boolean]`
+
+Whether flap detection is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--enable_perfdata"></a>`enable_perfdata`
+
+Data type: `Optional[Boolean]`
+
+Whether performance data processing is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--event_command"></a>`event_command`
+
+Data type: `Optional[String]`
+
+The name of an event command that should be executed every time the
+service's state changes or the service is in a SOFT state.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--flapping_threshold_low"></a>`flapping_threshold_low`
+
+Data type: `Optional[Integer[1]]`
+
+Flapping lower bound in percent for a host to be considered not flapping.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--flapping_threshold_high"></a>`flapping_threshold_high`
+
+Data type: `Optional[Integer[1]]`
+
+Flapping upper bound in percent for a host to be considered flapping.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--volatile"></a>`volatile`
+
+Data type: `Optional[Boolean]`
+
+The volatile setting enables always HARD state types if NOT-OK state changes
+occur.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--zone"></a>`zone`
+
+Data type: `Optional[String]`
+
+The zone this object is a member of.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--command_endpoint"></a>`command_endpoint`
+
+Data type: `Optional[String]`
+
+The endpoint where commands are executed on.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--notes"></a>`notes`
+
+Data type: `Optional[String]`
+
+Notes for the service.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--notes_url"></a>`notes_url`
+
+Data type: `Optional[String]`
+
+Url for notes for the service (for example, in notification commands).
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--action_url"></a>`action_url`
+
+Data type: `Optional[String]`
+
+Url for actions for the service (for example, an external graphing tool).
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--icon_image"></a>`icon_image`
+
+Data type: `Optional[String]`
+
+Icon image for the service. Used by external interfaces only.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--icon_image_alt"></a>`icon_image_alt`
+
+Data type: `Optional[String]`
+
+Icon image description for the service. Used by external interface only.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--service--template"></a>`template`
+
+Data type: `Boolean`
+
+Set to true creates a template instead of an object.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--service--apply"></a>`apply`
+
+Data type: `Variant[Boolean, String]`
+
+Dispose an apply instead an object if set to 'true'. Value is taken as statement,
+i.e. 'vhost => config in host.vars.vhosts'.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--service--prefix"></a>`prefix`
+
+Data type: `Variant[Boolean, String]`
+
+Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
+
+Default value: `false`
+
+##### <a name="-icinga2--object--service--assign"></a>`assign`
+
+Data type: `Array`
+
+Assign service using the assign rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--service--ignore"></a>`ignore`
+
+Data type: `Array`
+
+Exclude service using the ignore rules.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--service--import"></a>`import`
+
+Data type: `Array`
+
+Sorted List of templates to include.
+
+Default value: `[]`
+
+##### <a name="-icinga2--object--service--target"></a>`target`
+
+Data type: `Stdlib::Absolutepath`
+
+Destination config file to store in this object. File will be declared the
+first time.
+
+##### <a name="-icinga2--object--service--order"></a>`order`
+
+Data type: `Variant[String, Integer]`
+
+String or integer to set the position in the target file, sorted alpha numeric.
+
+Default value: `60`
+
+##### <a name="-icinga2--object--service--export"></a>`export`
 
 Data type: `Variant[Array[String], String]`
 
@@ -4869,7 +5842,7 @@ Hash[Enum[
 
 A strict type for intervals
 
-Alias of `Variant[Integer, Pattern[/^\d+\.?\d*[d|h|m|s]?$/]]`
+Alias of `Variant[Integer, Pattern[/\A\d+\.?\d*[d|h|m|s]?\Z/, /\A\$.+\$\Z/, /\A(host|service)\..+/]]`
 
 ### <a name="Icinga2--LogFacility"></a>`Icinga2::LogFacility`
 

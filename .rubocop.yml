@@ -18,7 +18,7 @@ AllCops:
   - "**/Puppetfile"
   - "**/Vagrantfile"
   - "**/Guardfile"
-  - lib/puppet_x/icinga2/pbkdf2.rb
+  - lib/puppet_x/**/*.rb
 Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200
