@@ -52,14 +52,14 @@ class icinga2::feature::perfdata (
 
   # compose attributes
   $attrs = {
-    host_perfdata_path      => $host_perfdata_path,
-    service_perfdata_path   => $service_perfdata_path,
-    host_temp_path          => $host_temp_path,
-    service_temp_path       => $service_temp_path,
-    host_format_template    => $host_format_template,
-    service_format_template => $service_format_template,
-    rotation_interval       => $rotation_interval,
-    enable_ha               => $enable_ha,
+    'host_perfdata_path'      => $host_perfdata_path,
+    'service_perfdata_path'   => $service_perfdata_path,
+    'host_temp_path'          => $host_temp_path,
+    'service_temp_path'       => $service_temp_path,
+    'host_format_template'    => $host_format_template,
+    'service_format_template' => $service_format_template,
+    'rotation_interval'       => $rotation_interval,
+    'enable_ha'               => $enable_ha,
   }
 
   # create object

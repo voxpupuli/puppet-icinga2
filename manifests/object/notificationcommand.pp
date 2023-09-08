@@ -68,12 +68,12 @@ define icinga2::object::notificationcommand (
 
   # create object
   $config = {
-    object_name => $notificationcommand_name,
-    object_type => 'NotificationCommand',
-    template    => $template,
-    import      => $import,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $notificationcommand_name,
+    'object_type' => 'NotificationCommand',
+    'template'    => $template,
+    'import'      => $import,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

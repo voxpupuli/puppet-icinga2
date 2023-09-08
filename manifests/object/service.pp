@@ -221,16 +221,16 @@ define icinga2::object::service (
 
   # create object
   $config = {
-    object_name => $service_name,
-    object_type => 'Service',
-    import      => $import,
-    apply       => $apply,
-    prefix      => $prefix,
-    assign      => $assign,
-    ignore      => $ignore,
-    template    => $template,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $service_name,
+    'object_type' => 'Service',
+    'import'      => $import,
+    'apply'       => $apply,
+    'prefix'      => $prefix,
+    'assign'      => $assign,
+    'ignore'      => $ignore,
+    'template'    => $template,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

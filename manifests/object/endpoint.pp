@@ -49,17 +49,17 @@ define icinga2::object::endpoint (
 
   # compose the attributes
   $attrs = {
-    host         => $host,
-    port         => $port,
-    log_duration => $log_duration,
+    'host'         => $host,
+    'port'         => $port,
+    'log_duration' => $log_duration,
   }
 
   # create object
   $config = {
-    object_name => $endpoint_name,
-    object_type => 'Endpoint',
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $endpoint_name,
+    'object_type' => 'Endpoint',
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

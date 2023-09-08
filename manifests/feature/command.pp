@@ -23,7 +23,7 @@ class icinga2::feature::command (
 
   # compose attributes
   $attrs = {
-    command_path => $command_path,
+    'command_path' => $command_path,
   }
 
   # create object

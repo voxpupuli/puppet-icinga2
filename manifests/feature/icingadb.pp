@@ -135,14 +135,14 @@ class icinga2::feature::icingadb (
     )
 
     $attrs_tls = {
-      enable_tls        => true,
-      ca_path           => $cert['cacert_file'],
-      cert_path         => $cert['cert_file'],
-      key_path          => $cert['key_file'],
-      crl_path          => $tls_crl_file,
-      insecure_noverify => $tls_noverify,
-      cipher_list       => $tls_cipher,
-      tls_protocolmin   => $tls_protocolmin,
+      'enable_tls'        => true,
+      'ca_path'           => $cert['cacert_file'],
+      'cert_path'         => $cert['cert_file'],
+      'key_path'          => $cert['key_file'],
+      'crl_path'          => $tls_crl_file,
+      'insecure_noverify' => $tls_noverify,
+      'cipher_list'       => $tls_cipher,
+      'tls_protocolmin'   => $tls_protocolmin,
     }
 
     icinga2::tls::client { 'IcingaDB-icingadb':
@@ -152,24 +152,24 @@ class icinga2::feature::icingadb (
   } # enable_tls
   else {
     $attrs_tls = {
-      enable_tls        => undef,
-      ca_path           => undef,
-      cert_path         => undef,
-      key_path          => undef,
-      crl_path          => undef,
-      insecure_noverify => undef,
-      cipher_list       => undef,
-      tls_protocolmin   => undef,
+      'enable_tls'        => undef,
+      'ca_path'           => undef,
+      'cert_path'         => undef,
+      'key_path'          => undef,
+      'crl_path'          => undef,
+      'insecure_noverify' => undef,
+      'cipher_list'       => undef,
+      'tls_protocolmin'   => undef,
     }
     $cert      = {}
   }
 
   # compose attributes
   $attrs = {
-    host     => $host,
-    port     => $port,
-    path     => $socket_path,
-    password => $_password,
+    'host'     => $host,
+    'port'     => $port,
+    'path'     => $socket_path,
+    'password' => $_password,
   }
 
   # create object

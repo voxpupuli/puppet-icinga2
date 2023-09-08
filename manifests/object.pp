@@ -84,17 +84,17 @@ define icinga2::object (
   }
 
   $_object = epp('icinga2/object.conf.epp',
-    { attrs        => $attrs,
-      attrs_list   => $attrs_list,
-      apply        => $apply,
-      apply_target => $apply_target,
-      prefix       => $prefix,
-      object_type  => $object_type,
-      object_name  => $object_name,
-      template     => $template,
-      import       => $import,
-      assign       => $assign,
-      ignore       => $ignore,
+    { 'attrs'        => $attrs,
+      'attrs_list'   => $attrs_list,
+      'apply'        => $apply,
+      'apply_target' => $apply_target,
+      'prefix'       => $prefix,
+      'object_type'  => $object_type,
+      'object_name'  => $object_name,
+      'template'     => $template,
+      'import'       => $import,
+      'assign'       => $assign,
+      'ignore'       => $ignore,
     }
   )
 

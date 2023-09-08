@@ -120,11 +120,11 @@ class icinga2::feature::elasticsearch (
     )
 
     $attrs_ssl = {
-      enable_tls            => true,
-      ssl_insecure_noverify => $ssl_noverify,
-      ca_path               => $cert['cacert_file'],
-      cert_path             => $cert['cert_file'],
-      key_path              => $cert['key_file'],
+      'enable_tls'            => true,
+      'ssl_insecure_noverify' => $ssl_noverify,
+      'ca_path'               => $cert['cacert_file'],
+      'cert_path'             => $cert['cert_file'],
+      'key_path'              => $cert['key_file'],
     }
 
     icinga2::tls::client { 'ElasticsearchWriter_elasticsearch':
@@ -133,25 +133,25 @@ class icinga2::feature::elasticsearch (
     }
   } else {
     $attrs_ssl = {
-      enable_tls        => undef,
-      insecure_noverify => undef,
-      ca_path           => undef,
-      cert_path         => undef,
-      key_path          => undef,
+      'enable_tls'        => undef,
+      'insecure_noverify' => undef,
+      'ca_path'           => undef,
+      'cert_path'         => undef,
+      'key_path'          => undef,
     }
-    $cert      = {}
+    $cert = {}
   }
 
   $attrs = {
-    host                   => $host,
-    port                   => $port,
-    index                  => $index,
-    username               => $username,
-    password               => $_password,
-    enable_send_perfdata   => $enable_send_perfdata,
-    flush_interval         => $flush_interval,
-    flush_threshold        => $flush_threshold,
-    enable_ha              => $enable_ha,
+    'host'                   => $host,
+    'port'                   => $port,
+    'index'                  => $index,
+    'username'               => $username,
+    'password'               => $_password,
+    'enable_send_perfdata'   => $enable_send_perfdata,
+    'flush_interval'         => $flush_interval,
+    'flush_threshold'        => $flush_threshold,
+    'enable_ha'              => $enable_ha,
   }
 
   # create object

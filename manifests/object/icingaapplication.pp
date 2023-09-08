@@ -70,22 +70,22 @@ define icinga2::object::icingaapplication (
 
   # compose the attributes
   $attrs = {
-    enable_notifications  => $enable_notifications,
-    enable_event_handlers => $enable_event_handlers,
-    enable_flapping       => $enable_flapping,
-    enable_host_checks    => $enable_host_checks,
-    enable_service_checks => $enable_service_checks,
-    enable_perfdata       => $enable_perfdata,
-    vars                  => $vars,
-    environment           => $environment,
+    'enable_notifications'  => $enable_notifications,
+    'enable_event_handlers' => $enable_event_handlers,
+    'enable_flapping'       => $enable_flapping,
+    'enable_host_checks'    => $enable_host_checks,
+    'enable_service_checks' => $enable_service_checks,
+    'enable_perfdata'       => $enable_perfdata,
+    'vars'                  => $vars,
+    'environment'           => $environment,
   }
 
   # create object
   $config = {
-    object_name => $app_name,
-    object_type => 'IcingaApplication',
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $app_name,
+    'object_type' => 'IcingaApplication',
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

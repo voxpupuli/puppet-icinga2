@@ -63,12 +63,12 @@ define icinga2::object::timeperiod (
 
   # create object
   $config = {
-    object_name => $timeperiod_name,
-    object_type => 'TimePeriod',
-    template    => $template,
-    import      => $import,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $timeperiod_name,
+    'object_type' => 'TimePeriod',
+    'template'    => $template,
+    'import'      => $import,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

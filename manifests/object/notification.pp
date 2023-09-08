@@ -129,17 +129,17 @@ define icinga2::object::notification (
 
   # create object
   $config = {
-    object_name  => $notification_name,
-    object_type  => 'Notification',
-    import       => $import,
-    template     => $template,
-    attrs        => delete_undef_values($attrs),
-    attrs_list   => keys($attrs),
-    apply        => $apply,
-    prefix       => $prefix,
-    apply_target => $apply_target,
-    assign       => $assign,
-    ignore       => $ignore,
+    'object_name'  => $notification_name,
+    'object_type'  => 'Notification',
+    'import'       => $import,
+    'template'     => $template,
+    'attrs'        => delete_undef_values($attrs),
+    'attrs_list'   => keys($attrs),
+    'apply'        => $apply,
+    'prefix'       => $prefix,
+    'apply_target' => $apply_target,
+    'assign'       => $assign,
+    'ignore'       => $ignore,
   }
 
   unless empty($export) {

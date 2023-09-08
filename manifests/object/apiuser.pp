@@ -80,17 +80,17 @@ define icinga2::object::apiuser (
 
   # compose the attributes
   $attrs = {
-    password    => $_password,
-    client_cn   => $client_cn,
-    permissions => $permissions,
+    'password'    => $_password,
+    'client_cn'   => $client_cn,
+    'permissions' => $permissions,
   }
 
   # create object
   $config = {
-    object_name => $apiuser_name,
-    object_type => 'ApiUser',
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $apiuser_name,
+    'object_type' => 'ApiUser',
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

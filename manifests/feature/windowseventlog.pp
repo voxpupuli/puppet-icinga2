@@ -27,7 +27,7 @@ class icinga2::feature::windowseventlog (
 
   # compose attributes
   $attrs = {
-    severity => $severity,
+    'severity' => $severity,
   }
 
   # create object

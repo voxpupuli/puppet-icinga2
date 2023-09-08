@@ -12,8 +12,8 @@ class icinga2::config {
   $group          = $icinga2::globals::group
   $purge_features = $icinga2::purge_features
   $_mainconfig    = epp('icinga2/icinga2.conf.epp',
-    { plugins => $icinga2::plugins,
-      confd   => $icinga2::_confd,
+    { 'plugins' => $icinga2::plugins,
+      'confd'   => $icinga2::_confd,
     }
   )
 

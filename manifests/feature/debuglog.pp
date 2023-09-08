@@ -23,8 +23,8 @@ class icinga2::feature::debuglog (
 
   # compose attributes
   $attrs = {
-    severity => 'debug',
-    path     => $path,
+    'severity' => 'debug',
+    'path'     => $path,
   }
 
   # create object

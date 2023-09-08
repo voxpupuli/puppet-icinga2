@@ -145,10 +145,10 @@ class icinga2::feature::idopgsql (
     )
 
     $attrs_ssl = {
-      ssl_mode => $ssl_mode,
-      ssl_ca   => $cert['cacert_file'],
-      ssl_cert => $cert['cert_file'],
-      ssl_key  => $cert['key_file'],
+      'ssl_mode' => $ssl_mode,
+      'ssl_ca'   => $cert['cacert_file'],
+      'ssl_cert' => $cert['cert_file'],
+      'ssl_key'  => $cert['key_file'],
     }
 
     icinga2::tls::client { 'IdoPgsqlConnection_ido-pgsql':
@@ -157,27 +157,27 @@ class icinga2::feature::idopgsql (
     }
   } else {
     $attrs_ssl = {
-      ssl_mode => undef,
-      ssl_ca   => undef,
-      ssl_cert => undef,
-      ssl_key  => undef,
+      'ssl_mode' => undef,
+      'ssl_ca'   => undef,
+      'ssl_cert' => undef,
+      'ssl_key'  => undef,
     }
-    $cert      = {}
+    $cert = {}
   }
 
   $attrs = {
-    host                  => $host,
-    port                  => $port,
-    user                  => $user,
-    password              => Sensitive($password),
-    database              => $database,
-    table_prefix          => $table_prefix,
-    instance_name         => $instance_name,
-    instance_description  => $instance_description,
-    enable_ha             => $enable_ha,
-    failover_timeout      => $failover_timeout,
-    cleanup               => $cleanup,
-    categories            => $categories,
+    'host'                 => $host,
+    'port'                 => $port,
+    'user'                 => $user,
+    'password'             => Sensitive($password),
+    'database'             => $database,
+    'table_prefix'         => $table_prefix,
+    'instance_name'        => $instance_name,
+    'instance_description' => $instance_description,
+    'enable_ha'            => $enable_ha,
+    'failover_timeout'     => $failover_timeout,
+    'cleanup'              => $cleanup,
+    'categories'           => $categories,
   }
 
   # install additional package
@@ -207,11 +207,11 @@ class icinga2::feature::idopgsql (
     }
 
     $db_cli_options = icinga2::db::connect({
-        type     => 'pgsql',
-        host     => $host,
-        port     => $port,
-        database => $database,
-        username => $user,
+        'type'     => 'pgsql',
+        'host'     => $host,
+        'port'     => $port,
+        'database' => $database,
+        'username' => $user,
     }, $cert, $enable_ssl)
 
     exec { 'idopgsql-import-schema':

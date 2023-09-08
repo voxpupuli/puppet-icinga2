@@ -63,11 +63,11 @@ define icinga2::object::eventcommand (
 
   # create object
   $config = {
-    object_name => $eventcommand_name,
-    object_type => 'EventCommand',
-    import      => $import,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $eventcommand_name,
+    'object_type' => 'EventCommand',
+    'import'      => $import,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

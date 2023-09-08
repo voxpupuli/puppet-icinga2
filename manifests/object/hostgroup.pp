@@ -60,12 +60,12 @@ define icinga2::object::hostgroup (
 
   # create object
   $config = {
-    object_name => $hostgroup_name,
-    object_type => 'HostGroup',
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
-    assign      => $assign,
-    ignore      => $ignore,
+    'object_name' => $hostgroup_name,
+    'object_type' => 'HostGroup',
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
+    'assign'      => $assign,
+    'ignore'      => $ignore,
   }
 
   unless empty($export) {

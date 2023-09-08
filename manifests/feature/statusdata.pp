@@ -32,9 +32,9 @@ class icinga2::feature::statusdata (
 
   # compose attributes
   $attrs = {
-    status_path     => $status_path,
-    objects_path    => $objects_path,
-    update_interval => $update_interval,
+    'status_path'     => $status_path,
+    'objects_path'    => $objects_path,
+    'update_interval' => $update_interval,
   }
 
   # create object

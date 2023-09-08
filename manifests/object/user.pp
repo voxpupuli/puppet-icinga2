@@ -87,12 +87,12 @@ define icinga2::object::user (
 
   # create object
   $config = {
-    object_name => $user_name,
-    object_type => 'User',
-    template    => $template,
-    import      => $import,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $user_name,
+    'object_type' => 'User',
+    'template'    => $template,
+    'import'      => $import,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

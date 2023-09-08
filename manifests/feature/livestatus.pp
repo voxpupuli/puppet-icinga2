@@ -39,11 +39,11 @@ class icinga2::feature::livestatus (
 
   # compose attributes
   $attrs = {
-    socket_type     => $socket_type,
-    bind_host       => $bind_host,
-    bind_port       => $bind_port,
-    socket_path     => $socket_path,
-    compat_log_path => $compat_log_path,
+    'socket_type'     => $socket_type,
+    'bind_host'       => $bind_host,
+    'bind_port'       => $bind_port,
+    'socket_path'     => $socket_path,
+    'compat_log_path' => $compat_log_path,
   }
 
   # create object

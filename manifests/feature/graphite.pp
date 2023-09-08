@@ -53,13 +53,13 @@ class icinga2::feature::graphite (
 
   # compose attributes
   $attrs = {
-    host                   => $host,
-    port                   => $port,
-    host_name_template     => $host_name_template,
-    service_name_template  => $service_name_template,
-    enable_send_thresholds => $enable_send_thresholds,
-    enable_send_metadata   => $enable_send_metadata,
-    enable_ha              => $enable_ha,
+    'host'                   => $host,
+    'port'                   => $port,
+    'host_name_template'     => $host_name_template,
+    'service_name_template'  => $service_name_template,
+    'enable_send_thresholds' => $enable_send_thresholds,
+    'enable_send_metadata'   => $enable_send_metadata,
+    'enable_ha'              => $enable_ha,
   }
 
   # create object

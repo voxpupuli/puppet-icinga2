@@ -107,12 +107,12 @@ class icinga2::feature::influxdb2 (
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user          = $icinga2::globals::user
-  $group         = $icinga2::globals::group
-  $conf_dir      = $icinga2::globals::conf_dir
-  $ssl_dir       = $icinga2::globals::cert_dir
+  $user     = $icinga2::globals::user
+  $group    = $icinga2::globals::group
+  $conf_dir = $icinga2::globals::conf_dir
+  $ssl_dir  = $icinga2::globals::cert_dir
 
-  $_notify       = $ensure ? {
+  $_notify  = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
   }
@@ -122,7 +122,7 @@ class icinga2::feature::influxdb2 (
     group   => $group,
   }
 
-  $host_template = { measurement => $host_measurement, tags => $host_tags }
+  $host_template    = { measurement => $host_measurement, tags => $host_tags }
   $service_template = { measurement => $service_measurement, tags => $service_tags }
 
   if $enable_ssl {
@@ -137,11 +137,11 @@ class icinga2::feature::influxdb2 (
     )
 
     $attrs_ssl = {
-      ssl_enable            => true,
-      ssl_insecure_noverify => $ssl_noverify,
-      ssl_ca_cert           => $cert['cacert_file'],
-      ssl_cert              => $cert['cert_file'],
-      ssl_key               => $cert['key_file'],
+      'ssl_enable'            => true,
+      'ssl_insecure_noverify' => $ssl_noverify,
+      'ssl_ca_cert'           => $cert['cacert_file'],
+      'ssl_cert'              => $cert['cert_file'],
+      'ssl_key'               => $cert['key_file'],
     }
 
     icinga2::tls::client { 'Influxdb2Writer_influxdb2':
@@ -150,28 +150,28 @@ class icinga2::feature::influxdb2 (
     }
   } else {
     $attrs_ssl = {
-      ssl_enable            => undef,
-      ssl_insecure_noverify => undef,
-      ssl_ca_cert           => undef,
-      ssl_cert              => undef,
-      ssl_key               => undef,
+      'ssl_enable'            => undef,
+      'ssl_insecure_noverify' => undef,
+      'ssl_ca_cert'           => undef,
+      'ssl_cert'              => undef,
+      'ssl_key'               => undef,
     }
-    $cert      = {}
+    $cert = {}
   }
 
   $attrs = {
-    host                   => $host,
-    port                   => $port,
-    organization           => $organization,
-    bucket                 => $bucket,
-    auth_token             => Sensitive($auth_token),
-    host_template          => $host_template,
-    service_template       => $service_template,
-    enable_send_thresholds => $enable_send_thresholds,
-    enable_send_metadata   => $enable_send_metadata,
-    flush_interval         => $flush_interval,
-    flush_threshold        => $flush_threshold,
-    enable_ha              => $enable_ha,
+    'host'                   => $host,
+    'port'                   => $port,
+    'organization'           => $organization,
+    'bucket'                 => $bucket,
+    'auth_token'             => Sensitive($auth_token),
+    'host_template'          => $host_template,
+    'service_template'       => $service_template,
+    'enable_send_thresholds' => $enable_send_thresholds,
+    'enable_send_metadata'   => $enable_send_metadata,
+    'flush_interval'         => $flush_interval,
+    'flush_threshold'        => $flush_threshold,
+    'enable_ha'              => $enable_ha,
   }
 
   # create object

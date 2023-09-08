@@ -28,8 +28,8 @@ class icinga2::feature::syslog (
 
   # compose attributes
   $attrs = {
-    severity => $severity,
-    facility => $facility,
+    'severity' => $severity,
+    'facility' => $facility,
   }
 
   # create object

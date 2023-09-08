@@ -335,22 +335,22 @@ class icinga2::feature::api (
 
   # compose attributes
   $attrs = {
-    crl_path                         => $ssl_crl,
-    accept_commands                  => $accept_commands,
-    accept_config                    => $accept_config,
-    max_anonymous_clients            => $max_anonymous_clients,
-    ticket_salt                      => $_ticket_salt,
-    tls_protocolmin                  => $ssl_protocolmin,
-    tls_handshake_timeout            => $ssl_handshake_timeout,
-    connect_timeout                  => $connect_timeout,
-    cipher_list                      => $ssl_cipher_list,
-    bind_host                        => $bind_host,
-    bind_port                        => $bind_port,
-    access_control_allow_origin      => $access_control_allow_origin,
-    access_control_allow_credentials => $access_control_allow_credentials,
-    access_control_allow_headers     => $access_control_allow_headers,
-    access_control_allow_methods     => $access_control_allow_methods,
-    environment                      => $environment,
+    'crl_path'                         => $ssl_crl,
+    'accept_commands'                  => $accept_commands,
+    'accept_config'                    => $accept_config,
+    'max_anonymous_clients'            => $max_anonymous_clients,
+    'ticket_salt'                      => $_ticket_salt,
+    'tls_protocolmin'                  => $ssl_protocolmin,
+    'tls_handshake_timeout'            => $ssl_handshake_timeout,
+    'connect_timeout'                  => $connect_timeout,
+    'cipher_list'                      => $ssl_cipher_list,
+    'bind_host'                        => $bind_host,
+    'bind_port'                        => $bind_port,
+    'access_control_allow_origin'      => $access_control_allow_origin,
+    'access_control_allow_credentials' => $access_control_allow_credentials,
+    'access_control_allow_headers'     => $access_control_allow_headers,
+    'access_control_allow_methods'     => $access_control_allow_methods,
+    'environment'                      => $environment,
   }
 
   # create endpoints and zones

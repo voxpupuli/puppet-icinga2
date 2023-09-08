@@ -31,9 +31,9 @@ class icinga2::feature::opentsdb (
 
   # compose attributes
   $attrs = {
-    host      => $host,
-    port      => $port,
-    enable_ha => $enable_ha,
+    'host'      => $host,
+    'port'      => $port,
+    'enable_ha' => $enable_ha,
   }
 
   # create object

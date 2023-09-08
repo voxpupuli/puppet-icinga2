@@ -49,21 +49,21 @@ define icinga2::object::zone (
   # compose the attributes
   if $global {
     $attrs = {
-      global    => $global,
+      'global'    => $global,
     }
   } else {
     $attrs = {
-      endpoints => $endpoints,
-      parent    => $parent,
+      'endpoints' => $endpoints,
+      'parent'    => $parent,
     }
   }
 
   # create object
   $config = {
-    object_name => $zone_name,
-    object_type => 'Zone',
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $zone_name,
+    'object_type' => 'Zone',
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

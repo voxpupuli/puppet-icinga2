@@ -58,21 +58,21 @@ define icinga2::object::checkcommand (
 ) {
   # compose the attributes
   $attrs = {
-    command   => $command,
-    env       => $env,
-    timeout   => $timeout,
-    arguments => $arguments,
-    vars      => $vars,
+    'command'   => $command,
+    'env'       => $env,
+    'timeout'   => $timeout,
+    'arguments' => $arguments,
+    'vars'      => $vars,
   }
 
   # create object
   $config = {
-    object_name => $checkcommand_name,
-    object_type => 'CheckCommand',
-    template    => $template,
-    import      => $import,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
+    'object_name' => $checkcommand_name,
+    'object_type' => 'CheckCommand',
+    'template'    => $template,
+    'import'      => $import,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
   }
 
   unless empty($export) {

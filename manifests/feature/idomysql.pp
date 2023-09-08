@@ -159,12 +159,12 @@ class icinga2::feature::idomysql (
     )
 
     $attrs_ssl = {
-      enable_ssl => true,
-      ssl_ca     => $cert['cacert_file'],
-      ssl_cert   => $cert['cert_file'],
-      ssl_key    => Sensitive($cert['key_file']),
-      ssl_capath => $ssl_capath,
-      ssl_cipher => $ssl_cipher,
+      'enable_ssl' => true,
+      'ssl_ca'     => $cert['cacert_file'],
+      'ssl_cert'   => $cert['cert_file'],
+      'ssl_key'    => Sensitive($cert['key_file']),
+      'ssl_capath' => $ssl_capath,
+      'ssl_cipher' => $ssl_cipher,
     }
 
     icinga2::tls::client { 'IdoMysqlConnection_ido-mysql':
@@ -173,30 +173,30 @@ class icinga2::feature::idomysql (
     }
   } else {
     $attrs_ssl = {
-      enable_ssl => undef,
-      ssl_ca     => undef,
-      ssl_cert   => undef,
-      ssl_key    => undef,
-      ssl_capath => undef,
-      ssl_cipher => undef,
+      'enable_ssl' => undef,
+      'ssl_ca'     => undef,
+      'ssl_cert'   => undef,
+      'ssl_key'    => undef,
+      'ssl_capath' => undef,
+      'ssl_cipher' => undef,
     }
     $cert      = {}
   }
 
   $attrs = {
-    host                  => $host,
-    port                  => $port,
-    socket_path           => $socket_path,
-    user                  => $user,
-    password              => Sensitive($password),
-    database              => $database,
-    table_prefix          => $table_prefix,
-    instance_name         => $instance_name,
-    instance_description  => $instance_description,
-    enable_ha             => $enable_ha,
-    failover_timeout      => $failover_timeout,
-    cleanup               => $cleanup,
-    categories            => $categories,
+    'host'                  => $host,
+    'port'                  => $port,
+    'socket_path'           => $socket_path,
+    'user'                  => $user,
+    'password'              => Sensitive($password),
+    'database'              => $database,
+    'table_prefix'          => $table_prefix,
+    'instance_name'         => $instance_name,
+    'instance_description'  => $instance_description,
+    'enable_ha'             => $enable_ha,
+    'failover_timeout'      => $failover_timeout,
+    'cleanup'               => $cleanup,
+    'categories'            => $categories,
   }
 
   # install additional package
@@ -226,12 +226,12 @@ class icinga2::feature::idomysql (
     }
 
     $db_cli_options = icinga2::db::connect({
-        type     => $type,
-        host     => $host,
-        port     => $port,
-        database => $database,
-        username => $user,
-        password => $password,
+        'type'     => $type,
+        'host'     => $host,
+        'port'     => $port,
+        'database' => $database,
+        'username' => $user,
+        'password' => $password,
     }, $cert, $enable_ssl)
 
     exec { 'idomysql-import-schema':

@@ -27,8 +27,8 @@ class icinga2::feature::mainlog (
 
   # compose attributes
   $attrs = {
-    severity => $severity,
-    path     => $path,
+    'severity' => $severity,
+    'path'     => $path,
   }
 
   # create object

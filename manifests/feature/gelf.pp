@@ -90,11 +90,11 @@ class icinga2::feature::gelf (
     )
 
     $attrs_ssl = {
-      enable_tls        => true,
-      insecure_noverify => $ssl_noverify,
-      ca_path           => $cert['cacert_file'],
-      cert_path         => $cert['cert_file'],
-      key_path          => $cert['key_file'],
+      'enable_tls'        => true,
+      'insecure_noverify' => $ssl_noverify,
+      'ca_path'           => $cert['cacert_file'],
+      'cert_path'         => $cert['cert_file'],
+      'key_path'          => $cert['key_file'],
     }
 
     icinga2::tls::client { 'GelfWriter_gelf':
@@ -103,22 +103,22 @@ class icinga2::feature::gelf (
     }
   } else {
     $attrs_ssl = {
-      enable_tls        => undef,
-      insecure_noverify => undef,
-      ca_path           => undef,
-      cert_path         => undef,
-      key_path          => undef,
+      'enable_tls'        => undef,
+      'insecure_noverify' => undef,
+      'ca_path'           => undef,
+      'cert_path'         => undef,
+      'key_path'          => undef,
     }
-    $cert      = {}
+    $cert = {}
   }
 
   # compose attributes
   $attrs = {
-    host                 => $host,
-    port                 => $port,
-    source               => $source,
-    enable_send_perfdata => $enable_send_perfdata,
-    enable_ha            => $enable_ha,
+    'host'                 => $host,
+    'port'                 => $port,
+    'source'               => $source,
+    'enable_send_perfdata' => $enable_send_perfdata,
+    'enable_ha'            => $enable_ha,
   }
 
   # create object

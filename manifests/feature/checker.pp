@@ -26,7 +26,7 @@ class icinga2::feature::checker (
 
   # compose attributes
   $attrs = {
-    concurrent_checks => $concurrent_checks,
+    'concurrent_checks' => $concurrent_checks,
   }
 
   # create object

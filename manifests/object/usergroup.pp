@@ -60,14 +60,14 @@ define icinga2::object::usergroup (
 
   # create object
   $config = {
-    object_name => $usergroup_name,
-    object_type => 'UserGroup',
-    import      => $import,
-    template    => $template,
-    attrs       => delete_undef_values($attrs),
-    attrs_list  => keys($attrs),
-    assign      => $assign,
-    ignore      => $ignore,
+    'object_name' => $usergroup_name,
+    'object_type' => 'UserGroup',
+    'import'      => $import,
+    'template'    => $template,
+    'attrs'       => delete_undef_values($attrs),
+    'attrs_list'  => keys($attrs),
+    'assign'      => $assign,
+    'ignore'      => $ignore,
   }
 
   unless empty($export) {

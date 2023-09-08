@@ -109,17 +109,17 @@ define icinga2::object::dependency (
 
   # create object
   $config = {
-    object_name  => $dependency_name,
-    object_type  => 'Dependency',
-    import       => $import,
-    template     => $template,
-    attrs        => delete_undef_values($attrs),
-    attrs_list   => keys($attrs),
-    apply        => $apply,
-    prefix       => $prefix,
-    apply_target => $apply_target,
-    assign       => $assign,
-    ignore       => $ignore,
+    'object_name'  => $dependency_name,
+    'object_type'  => 'Dependency',
+    'import'       => $import,
+    'template'     => $template,
+    'attrs'        => delete_undef_values($attrs),
+    'attrs_list'   => keys($attrs),
+    'apply'        => $apply,
+    'prefix'       => $prefix,
+    'apply_target' => $apply_target,
+    'assign'       => $assign,
+    'ignore'       => $ignore,
   }
 
   unless empty($export) {

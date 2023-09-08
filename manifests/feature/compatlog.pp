@@ -27,8 +27,8 @@ class icinga2::feature::compatlog (
 
   # compose attributes
   $attrs = {
-    log_dir         => $log_dir,
-    rotation_method => $rotation_method,
+    'log_dir'         => $log_dir,
+    'rotation_method' => $rotation_method,
   }
 
   # create object

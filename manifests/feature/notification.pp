@@ -23,7 +23,7 @@ class icinga2::feature::notification (
 
   # compose attributes
   $attrs = {
-    enable_ha => $enable_ha,
+    'enable_ha' => $enable_ha,
   }
 
   # create object
