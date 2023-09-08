@@ -22,7 +22,7 @@ jobs:
       run: bundle exec rake validate
     - name: Run Ruby Linter
       run: bundle exec rake rubocop
-#    - name: Run Puppet Linter
-#      run: bundle exec rake lint
+    - name: Run Puppet Linter
+      run: bundle exec rake lint
     - name: Run unit tests
       run:  bundle exec rake parallel_spec
