@@ -162,17 +162,14 @@ class icinga2 (
     }
   }
 
-  anchor { 'icinga2::begin':
-    notify => Class['icinga2::service'],
-  }
-  -> class { 'icinga2::install': }
+  class { 'icinga2::install': }
   -> File <| ensure == 'directory' and tag == 'icinga2::config::file' |>
   -> class { 'icinga2::config': notify => Class['icinga2::service'] }
   -> File <| ensure != 'directory' and tag == 'icinga2::config::file' |>
   ~> class { 'icinga2::service': }
-  -> anchor { 'icinga2::end':
-    subscribe => Class['icinga2::config'],
-  }
+  contain icinga2::install
+  contain icinga2::config
+  contain icinga2::service
 
   include prefix($features, 'icinga2::feature::')
 }
