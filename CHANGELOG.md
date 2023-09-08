@@ -1,5 +1,18 @@
 # Change Log
 
+## [v4.0.0](https://github.com/icinga/puppet-icinga2/tree/v4.0.0) (2023-09-08)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.7.0...v4.0.0)
+
+**Implemented enhancements:**
+
+- drop library load from features [\#737](https://github.com/Icinga/puppet-icinga2/issues/737)
+- drop concurrent\_checks parameter from feature checker [\#736](https://github.com/Icinga/puppet-icinga2/issues/736)
+- Replace anchor by contain [\#735](https://github.com/Icinga/puppet-icinga2/issues/735)
+- Drop deprecated parameters manage\_repo and manage\_package [\#734](https://github.com/Icinga/puppet-icinga2/issues/734)
+- Drop Puppet 6 Support [\#732](https://github.com/Icinga/puppet-icinga2/issues/732)
+- Add Support for Puppet 8 [\#730](https://github.com/Icinga/puppet-icinga2/issues/730)
+- Check parameters of type Duration [\#657](https://github.com/Icinga/puppet-icinga2/issues/657)
+
 ## [v3.7.0](https://github.com/icinga/puppet-icinga2/tree/v3.7.0) (2023-07-21)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.2...v3.7.0)
 
@@ -10,9 +23,8 @@
 
 **Closed issues:**
 
-- Rename default branch to main [\#733](https://github.com/Icinga/puppet-icinga2/issues/733)
 - /var/lib/icinga2/certs/ticket is not created by this module [\#728](https://github.com/Icinga/puppet-icinga2/issues/728)
-- Using export and query\_objects leads to hostgroup objects being defined multiple times [\#727](https://github.com/Icinga/puppet-icinga2/issues/727)
+- Rename default branch to main [\#733](https://github.com/Icinga/puppet-icinga2/issues/733)
 
 ## [v3.6.2](https://github.com/icinga/puppet-icinga2/tree/v3.6.2) (2023-04-14)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.6.1...v3.6.2)
@@ -200,7 +212,7 @@
 
 **Implemented enhancements:**
 
-- Add manage\_packages to replace manage\_packages [\#661](https://github.com/Icinga/puppet-icinga2/issues/661)
+- Add manage\_packages to replace manage\_package [\#661](https://github.com/Icinga/puppet-icinga2/issues/661)
 - Change owner of config file to icinga [\#660](https://github.com/Icinga/puppet-icinga2/issues/660)
 - Add some words to reserve list  [\#659](https://github.com/Icinga/puppet-icinga2/issues/659)
 - Allow to send cert req without ticket [\#653](https://github.com/Icinga/puppet-icinga2/issues/653)
