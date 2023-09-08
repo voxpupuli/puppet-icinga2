@@ -31,6 +31,8 @@ New version 4.0.0 means we have a breaking change. However, this change only aff
 
 If you are using the `export` parameter in connection with the class `icinga2::query_objects`, it is recommended to suspend the puppet runs on the icinga servers and satellites (or everwhere you declare `icinga2::query_objects`) after updating this module until all agents have been processed by Puppet at least once.
 
+Also, the anchors have been replaced by contains, this may cause problems if you set dependency to the icinga2 class.
+
 ### What's new in version 3.6.0
 
 Each Icinga object has been given the new parameter `export` that specifies one (ordinary objects for the config server) or more nodes (e.g. zones and endpoints for HA servers from workers aka satellites) as targets where the objects are then created using the class `query_objects`. This has been implemented to avoid collecting export resources in large environments.
