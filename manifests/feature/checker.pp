@@ -26,13 +26,6 @@ class icinga2::feature::checker (
     notify      => $_notify,
   }
 
-  # import library 'checker'
-  concat::fragment { 'icinga2::feature::checker':
-    target  => "${conf_dir}/features-available/checker.conf",
-    content => "library \"checker\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'checker':
     ensure => $ensure,

@@ -73,13 +73,6 @@ class icinga2::feature::perfdata (
     notify      => $_notify,
   }
 
-  # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::perfdata':
-    target  => "${conf_dir}/features-available/perfdata.conf",
-    content => "library \"perfdata\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'perfdata':
     ensure => $ensure,

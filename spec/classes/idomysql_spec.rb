@@ -90,15 +90,6 @@ describe('icinga2::feature::idomysql', type: :class) do
             { 'target' => "#{icinga2_conf_dir}/features-available/ido-mysql.conf" },
           ).that_notifies('Class[icinga2::service]')
         }
-
-        it {
-          is_expected.to contain_concat__fragment('icinga2::feature::ido-mysql').with(
-            {
-              'target' => "#{icinga2_conf_dir}/features-available/ido-mysql.conf",
-              'order'  => '05',
-            },
-          ).with_content(%r{library \"db_ido_mysql\"$})
-        }
       end
 
       context 'with ensure => absent' do

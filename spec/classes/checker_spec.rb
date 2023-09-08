@@ -30,15 +30,6 @@ describe('icinga2::feature::checker', type: :class) do
             { 'target' => "#{icinga2_conf_dir}/features-available/checker.conf" },
           ).that_notifies('Class[icinga2::service]')
         }
-
-        it {
-          is_expected.to contain_concat__fragment('icinga2::feature::checker').with(
-            {
-              'target' => "#{icinga2_conf_dir}/features-available/checker.conf",
-              'order'  => '05',
-            },
-          ).with_content(%r{library \"checker\"$})
-        }
       end
 
       context 'with ensure => absent' do

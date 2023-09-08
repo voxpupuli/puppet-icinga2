@@ -30,15 +30,6 @@ describe('icinga2::feature::opentsdb', type: :class) do
             { 'target' => "#{icinga2_conf_dir}/features-available/opentsdb.conf" },
           ).that_notifies('Class[icinga2::service]')
         }
-
-        it {
-          is_expected.to contain_concat__fragment('icinga2::feature::opentsdb').with(
-            {
-              'target' => "#{icinga2_conf_dir}/features-available/opentsdb.conf",
-              'order'  => '05',
-            },
-          ).with_content(%r{library \"perfdata\"$})
-        }
       end
 
       context 'with ensure => absent' do

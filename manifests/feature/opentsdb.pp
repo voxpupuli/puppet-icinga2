@@ -47,13 +47,6 @@ class icinga2::feature::opentsdb (
     notify      => $_notify,
   }
 
-  # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::opentsdb':
-    target  => "${conf_dir}/features-available/opentsdb.conf",
-    content => "library \"perfdata\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'opentsdb':
     ensure => $ensure,

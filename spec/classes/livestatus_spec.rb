@@ -30,15 +30,6 @@ describe('icinga2::feature::livestatus', type: :class) do
             { 'target' => "#{icinga2_conf_dir}/features-available/livestatus.conf" },
           ).that_notifies('Class[icinga2::service]')
         }
-
-        it {
-          is_expected.to contain_concat__fragment('icinga2::feature::livestatus').with(
-            {
-              'target' => "#{icinga2_conf_dir}/features-available/livestatus.conf",
-              'order'  => '05',
-            },
-          ).with_content(%r{library \"livestatus\"$})
-        }
       end
 
       context 'with ensure => absent' do

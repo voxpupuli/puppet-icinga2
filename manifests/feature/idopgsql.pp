@@ -234,13 +234,6 @@ class icinga2::feature::idopgsql (
     notify      => $_notify,
   }
 
-  # import library
-  concat::fragment { 'icinga2::feature::ido-pgsql':
-    target  => "${conf_dir}/features-available/ido-pgsql.conf",
-    content => "library \"db_ido_pgsql\"\n\n",
-    order   => '05',
-  }
-
   icinga2::feature { 'ido-pgsql':
     ensure  => $ensure,
   }

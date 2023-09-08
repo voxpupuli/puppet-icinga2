@@ -165,13 +165,6 @@ class icinga2::feature::elasticsearch (
     order       => 10,
   }
 
-  # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::elasticsearch':
-    target  => "${conf_dir}/features-available/elasticsearch.conf",
-    content => "library \"perfdata\"\n\n",
-    order   => '05',
-  }
-
   icinga2::feature { 'elasticsearch':
     ensure => $ensure,
   }

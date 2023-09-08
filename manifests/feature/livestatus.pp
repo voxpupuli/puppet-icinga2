@@ -57,13 +57,6 @@ class icinga2::feature::livestatus (
     notify      => $_notify,
   }
 
-  # import library 'livestatus'
-  concat::fragment { 'icinga2::feature::livestatus':
-    target  => "${conf_dir}/features-available/livestatus.conf",
-    content => "library \"livestatus\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'livestatus':
     ensure => $ensure,

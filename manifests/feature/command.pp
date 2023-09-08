@@ -37,13 +37,6 @@ class icinga2::feature::command (
     notify      => $_notify,
   }
 
-  # import library 'compat'
-  concat::fragment { 'icinga2::feature::command':
-    target  => "${conf_dir}/features-available/command.conf",
-    content => "library \"compat\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'command':
     ensure => $ensure,

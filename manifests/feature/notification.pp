@@ -37,13 +37,6 @@ class icinga2::feature::notification (
     notify      => $_notify,
   }
 
-  # import library 'notification'
-  concat::fragment { 'icinga2::feature::notification':
-    target  => "${conf_dir}/features-available/notification.conf",
-    content => "library \"notification\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'notification':
     ensure => $ensure,

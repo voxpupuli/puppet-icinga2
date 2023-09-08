@@ -253,13 +253,6 @@ class icinga2::feature::idomysql (
     notify      => $_notify,
   }
 
-  # import library
-  concat::fragment { 'icinga2::feature::ido-mysql':
-    target  => "${conf_dir}/features-available/ido-mysql.conf",
-    content => "library \"db_ido_mysql\"\n\n",
-    order   => '05',
-  }
-
   icinga2::feature { 'ido-mysql':
     ensure  => $ensure,
   }

@@ -42,13 +42,6 @@ class icinga2::feature::compatlog (
     notify      => $_notify,
   }
 
-  # import library 'compat'
-  concat::fragment { 'icinga2::feature::compatlog':
-    target  => "${conf_dir}/features-available/compatlog.conf",
-    content => "library \"compat\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'compatlog':
     ensure => $ensure,

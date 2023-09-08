@@ -36,15 +36,6 @@ describe('icinga2::feature::command', type: :class) do
             { 'target' => "#{icinga2_conf_dir}/features-available/command.conf" },
           ).that_notifies('Class[icinga2::service]')
         }
-
-        it {
-          is_expected.to contain_concat__fragment('icinga2::feature::command').with(
-            {
-              'target' => "#{icinga2_conf_dir}/features-available/command.conf",
-              'order'  => '05',
-            },
-          ).with_content(%r{library \"compat\"$})
-        }
       end
 
       context 'with ensure => absent' do

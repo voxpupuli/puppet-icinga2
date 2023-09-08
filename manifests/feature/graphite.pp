@@ -73,13 +73,6 @@ class icinga2::feature::graphite (
     notify      => $_notify,
   }
 
-  # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::graphite':
-    target  => "${conf_dir}/features-available/graphite.conf",
-    content => "library \"perfdata\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'graphite':
     ensure => $ensure,

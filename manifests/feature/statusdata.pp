@@ -48,13 +48,6 @@ class icinga2::feature::statusdata (
     notify      => $_notify,
   }
 
-  # import library 'compat'
-  concat::fragment { 'icinga2::feature::statusdata':
-    target  => "${conf_dir}/features-available/statusdata.conf",
-    content => "library \"compat\"\n\n",
-    order   => '05',
-  }
-
   # manage feature
   icinga2::feature { 'statusdata':
     ensure => $ensure,

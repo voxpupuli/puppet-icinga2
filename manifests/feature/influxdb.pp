@@ -208,13 +208,6 @@ class icinga2::feature::influxdb (
     order       => 10,
   }
 
-  # import library 'perfdata'
-  concat::fragment { 'icinga2::feature::influxdb':
-    target  => "${conf_dir}/features-available/influxdb.conf",
-    content => "library \"perfdata\"\n\n",
-    order   => '05',
-  }
-
   icinga2::feature { 'influxdb':
     ensure => $ensure,
   }
