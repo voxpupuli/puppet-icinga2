@@ -646,15 +646,11 @@ Default value: `undef`
 
 Configures the Icinga 2 feature checker.
 
-* **Note** Deprecated in Icinga 2.11, replaced by global constant
-MaxConcurrentChecks which will be set if you still use concurrent_checks.
-
 #### Parameters
 
 The following parameters are available in the `icinga2::feature::checker` class:
 
 * [`ensure`](#-icinga2--feature--checker--ensure)
-* [`concurrent_checks`](#-icinga2--feature--checker--concurrent_checks)
 
 ##### <a name="-icinga2--feature--checker--ensure"></a>`ensure`
 
@@ -663,14 +659,6 @@ Data type: `Enum['absent', 'present']`
 Set to present enables the feature checker, absent disabled it.
 
 Default value: `present`
-
-##### <a name="-icinga2--feature--checker--concurrent_checks"></a>`concurrent_checks`
-
-Data type: `Optional[Integer[1]]`
-
-The maximum number of concurrent checks.
-
-Default value: `undef`
 
 ### <a name="icinga2--feature--command"></a>`icinga2::feature::command`
 
