@@ -20,21 +20,12 @@ class icinga2::service {
   }
 
   if $manage_service {
-    if $facts['os']['kernel'] == 'windows' and versioncmp($::facts['puppetversion'], '6.18.0') >= 0 {
-      service { $service_name:
-        ensure       => $ensure,
-        enable       => $enable,
-        hasrestart   => $hasrestart,
-        restart      => $reload,
-        logonaccount => $logon_account,
-      }
-    } else {
-      service { $service_name:
-        ensure     => $ensure,
-        enable     => $enable,
-        hasrestart => $hasrestart,
-        restart    => $reload,
-      }
+    service { $service_name:
+      ensure       => $ensure,
+      enable       => $enable,
+      hasrestart   => $hasrestart,
+      restart      => $reload,
+      logonaccount => $logon_account,
     }
   }
 }
