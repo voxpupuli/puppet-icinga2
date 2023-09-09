@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.0.1](https://github.com/icinga/puppet-icinga2/tree/v4.0.1) (2023-09-09)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v4.0.0...v4.0.1)
+
+**Fixed bugs:**
+
+- add title sort to query\_objects back again [\#740](https://github.com/Icinga/puppet-icinga2/issues/740)
+
 ## [v4.0.0](https://github.com/icinga/puppet-icinga2/tree/v4.0.0) (2023-09-08)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v3.7.0...v4.0.0)
 
