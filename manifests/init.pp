@@ -130,7 +130,7 @@ class icinga2 (
   $_reserved = $icinga2::globals::reserved
 
   # merge constants with defaults
-  $_constants = stdlib::merge($icinga2::globals::constants, $constants)
+  $_constants = $icinga2::globals::constants + $constants
 
   # validate confd, boolean or string
   if $confd =~ Boolean {
