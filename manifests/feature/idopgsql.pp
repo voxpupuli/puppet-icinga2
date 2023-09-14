@@ -227,7 +227,7 @@ class icinga2::feature::idopgsql (
   icinga2::object { 'icinga2::object::IdoPgsqlConnection::ido-pgsql':
     object_name => 'ido-pgsql',
     object_type => 'IdoPgsqlConnection',
-    attrs       => delete_undef_values(stdlib::merge($attrs, $attrs_ssl)),
+    attrs       => delete_undef_values($attrs + $attrs_ssl),
     attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/ido-pgsql.conf",
     order       => 10,

@@ -158,7 +158,7 @@ class icinga2::feature::elasticsearch (
   icinga2::object { 'icinga2::object::ElasticsearchWriter::elasticsearch':
     object_name => 'elasticsearch',
     object_type => 'ElasticsearchWriter',
-    attrs       => delete_undef_values(stdlib::merge($attrs, $attrs_ssl)),
+    attrs       => delete_undef_values($attrs + $attrs_ssl),
     attrs_list  => concat(keys($attrs), keys($attrs_ssl)),
     target      => "${conf_dir}/features-available/elasticsearch.conf",
     notify      => $_notify,
