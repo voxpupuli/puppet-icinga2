@@ -435,7 +435,7 @@ Default value: `'icinga2'`
 
 ##### <a name="-icinga2--feature--api--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
 The private key in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
@@ -444,7 +444,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
 The certificate in a base64 encoded string to store in cert directory This parameter
  requires pki to be set to 'none'.
@@ -453,7 +453,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
 The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
