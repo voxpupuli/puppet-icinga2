@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.1.1](https://github.com/icinga/puppet-icinga2/tree/v4.1.1) (2023-09-19)
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v4.1.0...v4.1.1)
+
+**Fixed bugs:**
+
+- fix test of empty array for environments parameter in query\_objects [\#742](https://github.com/Icinga/puppet-icinga2/pull/742) ([lbetz](https://github.com/lbetz))
+
 ## [v4.1.0](https://github.com/icinga/puppet-icinga2/tree/v4.1.0) (2023-09-14)
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v4.0.1...v4.1.0)
 
