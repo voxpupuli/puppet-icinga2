@@ -11,9 +11,10 @@ class icinga2::query_objects (
   String        $destination  = $facts['networking']['fqdn'],
   Array[String] $environments = [$environment],
 ) {
-  $_environments = ($environments.size == 0) ? {
-    true    => '',
-    default => sprintf("environment in ['%s'] and", join($environments, "','")),
+  $_environments = if empty($environments) {
+    ''
+  } else {
+    sprintf("environment in ['%s'] and", join($environments, "','"))
   }
 
   case $facts['os']['family'] {
