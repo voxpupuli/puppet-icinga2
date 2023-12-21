@@ -217,7 +217,7 @@ class icinga2::feature::idopgsql (
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $facts['path'],
-      environment => [sprintf('PGPASSWORD=%s', icinga2::unwrap($password))],
+      environment => [sprintf('PGPASSWORD=%s', unwrap($password))],
       command     => "psql '${db_cli_options}' -w -f '${ido_pgsql_schema}'",
       unless      => "psql '${db_cli_options}' -w -c 'select version from icinga_dbversion'",
     }
