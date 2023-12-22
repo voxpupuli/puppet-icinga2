@@ -206,7 +206,7 @@ class icinga2::feature::idopgsql (
       Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
 
-    $db_cli_options = icinga2::db::connect({
+    $db_cli_options = icinga::db::connect({
         'type'     => 'pgsql',
         'host'     => $host,
         'port'     => $port,
