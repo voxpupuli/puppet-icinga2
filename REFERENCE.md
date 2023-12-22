@@ -80,7 +80,6 @@ with or without TLS information.
 * [`icinga2::icinga2_attributes`](#icinga2--icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2--icinga2_ticket_id): Summarise what the function does here
-* [`icinga2::newline`](#icinga2--newline): Replace newlines for Windows systems.
 * [`icinga2::parse`](#icinga2--parse)
 * [`icinga2::unwrap`](#icinga2--unwrap): This function returns an unwrap string if necessary.
 
@@ -5698,24 +5697,6 @@ The common name of the Icinga host certificate.
 Data type: `Variant[String, Sensitive[String]]`
 
 The ticket salt of the Icinga CA.
-
-### <a name="icinga2--newline"></a>`icinga2::newline`
-
-Type: Puppet Language
-
-Replace newlines for Windows systems.
-
-#### `icinga2::newline(Optional[String] $text)`
-
-The icinga2::newline function.
-
-Returns: `String` Text with correct newlines.
-
-##### `text`
-
-Data type: `Optional[String]`
-
-
 
 ### <a name="icinga2--parse"></a>`icinga2::parse`
 

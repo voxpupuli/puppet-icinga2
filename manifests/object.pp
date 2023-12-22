@@ -98,11 +98,6 @@ define icinga2::object (
     }
   )
 
-  $_content = $facts['os']['family'] ? {
-    'windows' => regsubst($_object, '\n', "\r\n", 'EMG'),
-    default   => $_object,
-  }
-
   if !defined(Concat[$target]) {
     concat { $target:
       ensure => present,
@@ -114,7 +109,7 @@ define icinga2::object (
   if $ensure != 'absent' {
     concat::fragment { $title:
       target  => $target,
-      content => $_content,
+      content => icinga::newline($_object),
       order   => $order,
     }
   }

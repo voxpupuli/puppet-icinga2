@@ -52,7 +52,7 @@ define icinga2::config::fragment (
 ) {
   case $facts['os']['family'] {
     'windows': {
-      $_content = regsubst($content, '\n', "\r\n", 'EMG')
+      $_content = icinga::newline($content)
     } # windows
     default: {
       Concat {
