@@ -148,8 +148,9 @@ class icinga2::feature::idomysql (
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'IdoMysqlConnection_ido-mysql',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,

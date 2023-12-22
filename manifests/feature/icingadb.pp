@@ -124,8 +124,9 @@ class icinga2::feature::icingadb (
   }
 
   if $enable_tls {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'IcingaDB-icingadb',
+      $ssl_dir,
       $tls_key_file,
       $tls_cert_file,
       $tls_cacert_file,

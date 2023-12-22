@@ -79,8 +79,9 @@ class icinga2::feature::gelf (
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'GelfWriter_gelf',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,

@@ -134,8 +134,9 @@ class icinga2::feature::idopgsql (
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'IdoPgsqlConnection_ido-pgsql',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
