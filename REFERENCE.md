@@ -74,7 +74,6 @@ start on boot and will be restarted if stopped.
 
 ### Functions
 
-* [`icinga2::cert`](#icinga2--cert): Choose the path of tls key, cert and ca file.
 * [`icinga2::icinga2_attributes`](#icinga2--icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2--icinga2_ticket_id): Summarise what the function does here
@@ -5530,60 +5529,6 @@ Export object to destination, collected by class `icinga2::query_objects`.
 Default value: `[]`
 
 ## Functions
-
-### <a name="icinga2--cert"></a>`icinga2::cert`
-
-Type: Puppet Language
-
-Choose the path of tls key, cert and ca file.
-
-#### `icinga2::cert(String $name, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Variant[String, Sensitive[String]]] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
-
-The icinga2::cert function.
-
-Returns: `Hash` Returned hash includes all paths and the key, cert and cacert.
-
-##### `name`
-
-Data type: `String`
-
-
-
-##### `key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `cacert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `key`
-
-Data type: `Optional[Variant[String, Sensitive[String]]]`
-
-
-
-##### `cert`
-
-Data type: `Optional[String]`
-
-
-
-##### `cacert`
-
-Data type: `Optional[String]`
-
-
 
 ### <a name="icinga2--icinga2_attributes"></a>`icinga2::icinga2_attributes`
 

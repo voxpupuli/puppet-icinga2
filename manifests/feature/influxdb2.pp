@@ -126,8 +126,9 @@ class icinga2::feature::influxdb2 (
   $service_template = { measurement => $service_measurement, tags => $service_tags }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'Influxdb2Writer_influxdb2',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
