@@ -117,7 +117,7 @@ class icinga2::feature::icingadb (
     file { "${data_dir}/icingadb.env":
       ensure    => file,
       mode      => '0600',
-      content   => sprintf('"%s"', icinga2::unwrap($env_id)),
+      content   => sprintf('"%s"', unwrap($env_id)),
       show_diff => false,
       tag       => 'icinga2::config::file',
     }

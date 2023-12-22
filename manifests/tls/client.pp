@@ -26,7 +26,7 @@ define icinga2::tls::client (
     $key_mode = '0400'
   }
 
-  if icinga2::unwrap($args[key]) {
+  if unwrap($args[key]) {
     file { $args['key_file']:
       ensure    => file,
       content   => icinga::newline(icinga2::unwrap($args['key'])),

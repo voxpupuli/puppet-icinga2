@@ -81,7 +81,6 @@ with or without TLS information.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2--icinga2_ticket_id): Summarise what the function does here
 * [`icinga2::parse`](#icinga2--parse)
-* [`icinga2::unwrap`](#icinga2--unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
 
@@ -5731,24 +5730,6 @@ Data type: `Array[String]`
 ##### `constants`
 
 Data type: `Hash[String, Any]`
-
-
-
-### <a name="icinga2--unwrap"></a>`icinga2::unwrap`
-
-Type: Puppet Language
-
-This function returns an unwrap string if necessary.
-
-#### `icinga2::unwrap(Optional[Variant[String, Sensitive[String]]] $arg = undef)`
-
-The icinga2::unwrap function.
-
-Returns: `Any` The unwraped string.
-
-##### `arg`
-
-Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 
 
