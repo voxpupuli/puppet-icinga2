@@ -107,7 +107,7 @@ class icinga2::feature::influxdb2 (
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user     = $icinga2::globals::user
+  $owner    = $icinga2::globals::user
   $group    = $icinga2::globals::group
   $conf_dir = $icinga2::globals::conf_dir
   $ssl_dir  = $icinga2::globals::cert_dir
@@ -118,7 +118,7 @@ class icinga2::feature::influxdb2 (
   }
 
   File {
-    owner   => $user,
+    owner   => $owner,
     group   => $group,
   }
 
@@ -145,9 +145,21 @@ class icinga2::feature::influxdb2 (
       'ssl_key'               => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'Influxdb2Writer_influxdb2':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'Influxdb2Writer_influxdb2':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'Influxdb2Writer_influxdb2':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {

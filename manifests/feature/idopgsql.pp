@@ -152,9 +152,21 @@ class icinga2::feature::idopgsql (
       'ssl_key'  => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'IdoPgsqlConnection_ido-pgsql':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'IdoPgsqlConnection_ido-pgsql':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'IdoPgsqlConnection_ido-pgsql':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {
