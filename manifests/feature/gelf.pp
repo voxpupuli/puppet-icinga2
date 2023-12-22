@@ -44,20 +44,20 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::gelf (
-  Enum['absent', 'present']                    $ensure               = present,
-  Optional[Stdlib::Host]                       $host                 = undef,
-  Optional[Stdlib::Port::Unprivileged]         $port                 = undef,
-  Optional[String]                             $source               = undef,
-  Boolean                                      $enable_ssl           = false,
-  Optional[Stdlib::Absolutepath]               $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cacert_path      = undef,
-  Optional[Variant[String, Sensitive[String]]] $ssl_key              = undef,
-  Optional[String]                             $ssl_cert             = undef,
-  Optional[String]                             $ssl_cacert           = undef,
-  Optional[Boolean]                            $ssl_noverify         = undef,
-  Optional[Boolean]                            $enable_send_perfdata = undef,
-  Optional[Boolean]                            $enable_ha            = undef,
+  Enum['absent', 'present']      $ensure               = present,
+  Optional[Stdlib::Host]         $host                 = undef,
+  Optional[Stdlib::Port]         $port                 = undef,
+  Optional[String]               $source               = undef,
+  Boolean                        $enable_ssl           = false,
+  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
+  Optional[Icinga::Secret]       $ssl_key              = undef,
+  Optional[String]               $ssl_cert             = undef,
+  Optional[String]               $ssl_cacert           = undef,
+  Optional[Boolean]              $ssl_noverify         = undef,
+  Optional[Boolean]              $enable_send_perfdata = undef,
+  Optional[Boolean]              $enable_ha            = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')

@@ -20,12 +20,12 @@
 #   Required for historical table queries. Requires CompatLogger feature to be enabled.
 #
 class icinga2::feature::livestatus (
-  Enum['absent', 'present']                $ensure          = present,
-  Optional[Enum['tcp', 'unix']]            $socket_type     = undef,
-  Optional[Stdlib::Host]                   $bind_host       = undef,
-  Optional[Stdlib::Port::Unprivileged]     $bind_port       = undef,
-  Optional[Stdlib::Absolutepath]           $socket_path     = undef,
-  Optional[Stdlib::Absolutepath]           $compat_log_path = undef,
+  Enum['absent', 'present']      $ensure          = present,
+  Optional[Enum['tcp', 'unix']]  $socket_type     = undef,
+  Optional[Stdlib::Host]         $bind_host       = undef,
+  Optional[Stdlib::Port]         $bind_port       = undef,
+  Optional[Stdlib::Absolutepath] $socket_path     = undef,
+  Optional[Stdlib::Absolutepath] $compat_log_path = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')

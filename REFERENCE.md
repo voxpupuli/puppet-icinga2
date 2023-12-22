@@ -429,7 +429,7 @@ Default value: `'icinga2'`
 
 ##### <a name="-icinga2--feature--api--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
@@ -438,7 +438,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
 The certificate in a base64 encoded string to store in cert directory This parameter
  requires pki to be set to 'none'.
@@ -447,7 +447,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[Stdlib::Base64]`
+Data type: `Optional[String]`
 
 The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
@@ -496,7 +496,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ca_port"></a>`ca_port`
 
-Data type: `Stdlib::Port::Unprivileged`
+Data type: `Stdlib::Port`
 
 Port of the 'ca_host'.
 
@@ -514,7 +514,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ticket_salt"></a>`ticket_salt`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Icinga::Secret`
 
 Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
@@ -524,7 +524,7 @@ Default value: `'TicketSalt'`
 
 ##### <a name="-icinga2--feature--api--ticket_id"></a>`ticket_id`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 If a ticket_id is given it will be used instead of generating an ticket_id.
 The ticket_id will be used only when requesting a certificate from the ca_host
@@ -590,7 +590,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--bind_port"></a>`bind_port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 The port the api listener will be bound to.
 
@@ -800,7 +800,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 Elasticsearch HTTP port.
 
@@ -824,7 +824,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 Elasticsearch user password. The password parameter isn't parsed anymore.
 
@@ -872,7 +872,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -967,7 +967,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 GELF receiver port.
 
@@ -1015,7 +1015,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -1109,7 +1109,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--graphite--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 Graphite Carbon port.
 
@@ -1201,7 +1201,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 IcingaDB Redis port.
 
@@ -1225,7 +1225,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
 
@@ -1233,7 +1233,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--env_id"></a>`env_id`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The ID is used in all Icinga DB components to separate data from multiple
 different environments and is written to the file `/var/lib/icinga2/icingadb.env`
@@ -1284,7 +1284,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_key"></a>`tls_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key in a PEM formated string to store spicified in tls_key_file.
 Only valid if tls is enabled.
@@ -1415,7 +1415,7 @@ Default value: `'localhost'`
 
 ##### <a name="-icinga2--feature--idomysql--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 MySQL database port.
 
@@ -1439,9 +1439,11 @@ Default value: `'icinga'`
 
 ##### <a name="-icinga2--feature--idomysql--password"></a>`password`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Optional[Icinga::Secret]`
 
 MySQL database user's password. The password parameter isn't parsed anymore.
+
+Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--database"></a>`database`
 
@@ -1485,7 +1487,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM Format. Only valid if ssl is enabled.
 
@@ -1659,7 +1661,7 @@ Default value: `'localhost'`
 
 ##### <a name="-icinga2--feature--idopgsql--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 PostgreSQL database port.
 
@@ -1675,9 +1677,11 @@ Default value: `'icinga'`
 
 ##### <a name="-icinga2--feature--idopgsql--password"></a>`password`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Optional[Icinga::Secret]`
 
 PostgreSQL database user's password. The password parameter isn't parsed anymore.
+
+Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--database"></a>`database`
 
@@ -1726,7 +1730,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
@@ -1900,7 +1904,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 InfluxDB user password. The password parameter isn't parsed anymore.
 
@@ -1956,7 +1960,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -2133,7 +2137,7 @@ InfluxDB bucket name.
 
 ##### <a name="-icinga2--feature--influxdb2--auth_token"></a>`auth_token`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Icinga::Secret`
 
 InfluxDB authentication token.
 
@@ -2179,7 +2183,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb2--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -2314,7 +2318,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--livestatus--bind_port"></a>`bind_port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 Port to listen for connections. Only valid when socket_type is 'tcp'.
 
@@ -2430,7 +2434,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--opentsdb--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 OpenTSDB port.
 
@@ -2687,7 +2691,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--pki--ca--ca_key"></a>`ca_key`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icinga::Secret]`
 
 Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 
@@ -2878,7 +2882,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--apiuser--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 Password string. The password parameter isn't parsed anymore.
 
@@ -3343,7 +3347,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--endpoint--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 The service name/port of the remote Icinga 2 instance.
 
