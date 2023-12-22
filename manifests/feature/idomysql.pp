@@ -225,7 +225,7 @@ class icinga2::feature::idomysql (
       Package[$ido_mysql_package_name] -> Exec['idomysql-import-schema']
     }
 
-    $db_cli_options = icinga2::db::connect({
+    $db_cli_options = icinga::db::connect({
         'type'     => $type,
         'host'     => $host,
         'port'     => $port,

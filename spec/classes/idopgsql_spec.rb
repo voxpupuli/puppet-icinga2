@@ -99,7 +99,7 @@ describe('icinga2::feature::idopgsql', type: :class) do
             {
               'user'        => 'root',
               'environment' => ['PGPASSWORD=foo'],
-              'command'     => "psql 'host=localhost user=icinga dbname=icinga ' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'",
+              'command'     => "psql 'host=localhost user=icinga dbname=icinga' -w -f '#{ido_pgsql_schema_dir}/pgsql.sql'",
             },
           )
         }
