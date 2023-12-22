@@ -70,7 +70,6 @@ start on boot and will be restarted if stopped.
 
 * `icinga2::feature`: Private define resource to used by this module only.
 * `icinga2::object`: Define resource to used by this module only.
-* `icinga2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
 

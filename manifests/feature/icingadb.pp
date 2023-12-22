@@ -89,11 +89,11 @@ class icinga2::feature::icingadb (
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $owner         = $icinga2::globals::user
-  $group         = $icinga2::globals::group
-  $conf_dir      = $icinga2::globals::conf_dir
-  $data_dir      = $icinga2::globals::data_dir
-  $ssl_dir       = $icinga2::globals::cert_dir
+  $conf_dir = $icinga2::globals::conf_dir
+  $data_dir = $icinga2::globals::data_dir
+  $cert_dir = $icinga2::globals::cert_dir
+  $owner    = $icinga2::globals::user
+  $group    = $icinga2::globals::group
 
   $_password = if $password =~ Sensitive {
     $password
@@ -103,7 +103,7 @@ class icinga2::feature::icingadb (
     undef
   }
 
-  $_notify       = $ensure ? {
+  $_notify = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
   }
@@ -126,7 +126,7 @@ class icinga2::feature::icingadb (
   if $enable_tls {
     $cert = icinga::cert::files(
       'IcingaDB-icingadb',
-      $ssl_dir,
+      $cert_dir,
       $tls_key_file,
       $tls_cert_file,
       $tls_cacert_file,
@@ -146,9 +146,21 @@ class icinga2::feature::icingadb (
       'tls_protocolmin'   => $tls_protocolmin,
     }
 
-    icinga2::tls::client { 'IcingaDB-icingadb':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'IcingaDB-icingadb':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'IcingaDB-icingadb':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } # enable_tls
   else {

@@ -168,9 +168,21 @@ class icinga2::feature::idomysql (
       'ssl_cipher' => $ssl_cipher,
     }
 
-    icinga2::tls::client { 'IdoMysqlConnection_ido-mysql':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'IdoMysqlConnection_ido-mysql':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'IdoMysqlConnection_ido-mysql':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {
