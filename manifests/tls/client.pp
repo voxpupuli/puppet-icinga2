@@ -29,7 +29,7 @@ define icinga2::tls::client (
   if unwrap($args[key]) {
     file { $args['key_file']:
       ensure    => file,
-      content   => icinga2::newline(unwrap($args['key'])),
+      content   => icinga::newline(icinga2::unwrap($args['key'])),
       mode      => $key_mode,
       show_diff => false,
     }
@@ -38,14 +38,14 @@ define icinga2::tls::client (
   if $args['cert'] {
     file { $args['cert_file']:
       ensure  => file,
-      content => icinga2::newline($args['cert']),
+      content => icinga::newline($args['cert']),
     }
   }
 
   if $args['cacert'] {
     file { $args['cacert_file']:
       ensure  => file,
-      content => icinga2::newline($args['cacert']),
+      content => icinga::newline($args['cacert']),
     }
   }
 }
