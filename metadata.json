@@ -1,6 +1,6 @@
 {
   "name": "icinga-icinga2",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
@@ -21,7 +21,9 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
