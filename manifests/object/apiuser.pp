@@ -61,14 +61,14 @@
 #   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::apiuser (
-  Stdlib::Absolutepath                          $target,
-  Enum['absent', 'present']                     $ensure       = present,
-  String                                        $apiuser_name = $title,
-  Optional[Array]                               $permissions  = undef,
-  Optional[Variant[String, Sensitive[String]]]  $password     = undef,
-  Optional[String]                              $client_cn    = undef,
-  Variant[String, Integer]                      $order        = 30,
-  Variant[Array[String], String]                $export       = [],
+  Stdlib::Absolutepath           $target,
+  Enum['absent', 'present']      $ensure       = present,
+  String                         $apiuser_name = $title,
+  Optional[Array]                $permissions  = undef,
+  Optional[Icinga::Secret]       $password     = undef,
+  Optional[String]               $client_cn    = undef,
+  Variant[String, Integer]       $order        = 30,
+  Variant[Array[String], String] $export       = [],
 ) {
   $_password = if $password =~ String {
     Sensitive($password)

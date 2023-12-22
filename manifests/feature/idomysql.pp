@@ -94,18 +94,18 @@
 #   whereas with mysql its different options.
 #
 class icinga2::feature::idomysql (
-  Variant[String, Sensitive[String]]           $password,
   Enum['absent', 'present']                    $ensure                 = present,
   Stdlib::Host                                 $host                   = 'localhost',
-  Optional[Stdlib::Port::Unprivileged]         $port                   = undef,
+  Optional[Stdlib::Port]                       $port                   = undef,
   Optional[Stdlib::Absolutepath]               $socket_path            = undef,
   String                                       $user                   = 'icinga',
   String                                       $database               = 'icinga',
+  Optional[Icinga::Secret]                     $password               = undef,
   Boolean                                      $enable_ssl             = false,
   Optional[Stdlib::Absolutepath]               $ssl_key_path           = undef,
   Optional[Stdlib::Absolutepath]               $ssl_cert_path          = undef,
   Optional[Stdlib::Absolutepath]               $ssl_cacert_path        = undef,
-  Optional[Variant[String, Sensitive[String]]] $ssl_key                = undef,
+  Optional[Icinga::Secret]                     $ssl_key                = undef,
   Optional[String]                             $ssl_cert               = undef,
   Optional[String]                             $ssl_cacert             = undef,
   Optional[Stdlib::Absolutepath]               $ssl_capath             = undef,
