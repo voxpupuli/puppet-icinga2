@@ -86,7 +86,6 @@ For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`Icinga2::IdoCleanup`](#Icinga2--IdoCleanup): A type for the structure of settings to cleanup IDO databases
 * [`Icinga2::Interval`](#Icinga2--Interval): A strict type for intervals
 * [`Icinga2::LogFacility`](#Icinga2--LogFacility): A strict type of syslog facilities
-* [`Icinga2::LogSeverity`](#Icinga2--LogSeverity): A strict type for log levels
 
 ## Classes
 
@@ -2362,7 +2361,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--feature--mainlog--severity"></a>`severity`
 
-Data type: `Icinga2::LogSeverity`
+Data type: `Icinga::LogLevel`
 
 You can set the log severity to 'information', 'notice', 'warning' or 'debug'.
 
@@ -2607,7 +2606,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--feature--syslog--severity"></a>`severity`
 
-Data type: `Icinga2::LogSeverity`
+Data type: `Icinga::LogLevel`
 
 You can choose the log severity between information, notice, warning or debug.
 
@@ -2643,7 +2642,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--feature--windowseventlog--severity"></a>`severity`
 
-Data type: `Icinga2::LogSeverity`
+Data type: `Icinga::LogLevel`
 
 You can choose the log severity between information, notice, warning or debug.
 
@@ -5713,10 +5712,4 @@ Variant[Enum[
     'LOG_UUCP'
   ], Pattern[/^LOG_LOCAL[0-7]$/]]
 ```
-
-### <a name="Icinga2--LogSeverity"></a>`Icinga2::LogSeverity`
-
-A strict type for log levels
-
-Alias of `Enum['debug', 'information', 'notice', 'warning', 'critical']`
 
