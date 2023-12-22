@@ -18,12 +18,8 @@ class icinga2::config {
   )
 
   if $facts['kernel'] != 'windows' {
-    $template_constants  = icinga2::parse($constants)
-    $template_mainconfig = $_mainconfig
     $file_permissions    = '0640'
   } else {
-    $template_constants  = regsubst(icinga2::parse($constants), '\n', "\r\n", 'EMG')
-    $template_mainconfig = regsubst($_mainconfig, '\n', "\r\n", 'EMG')
     $file_permissions    = undef
   }
 
@@ -35,12 +31,12 @@ class icinga2::config {
 
   file { "${conf_dir}/constants.conf":
     ensure  => file,
-    content => $template_constants,
+    content => icinga::newline(icinga2::parse($constants)),
   }
 
   file { "${conf_dir}/icinga2.conf":
     ensure  => file,
-    content => $template_mainconfig,
+    content => icinga::newline($_mainconfig),
   }
 
   file { "${conf_dir}/features-enabled":

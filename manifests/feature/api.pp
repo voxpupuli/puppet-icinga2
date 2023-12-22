@@ -252,7 +252,7 @@ class icinga2::feature::api (
         file { $_ssl_key_path:
           ensure    => file,
           mode      => $_ssl_key_mode,
-          content   => icinga2::newline($ssl_key),
+          content   => icinga::newline($ssl_key),
           tag       => 'icinga2::config::file',
           show_diff => false,
           backup    => false,
@@ -262,7 +262,7 @@ class icinga2::feature::api (
       if $ssl_cert {
         file { $_ssl_cert_path:
           ensure  => file,
-          content => icinga2::newline($ssl_cert),
+          content => icinga::newline($ssl_cert),
           tag     => 'icinga2::config::file',
         }
       }
@@ -270,7 +270,7 @@ class icinga2::feature::api (
       if $ssl_cacert {
         file { $_ssl_cacert_path:
           ensure  => file,
-          content => icinga2::newline($ssl_cacert),
+          content => icinga::newline($ssl_cacert),
           tag     => 'icinga2::config::file',
         }
       }
