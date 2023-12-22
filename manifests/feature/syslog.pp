@@ -13,7 +13,7 @@
 #
 class icinga2::feature::syslog (
   Enum['absent', 'present']        $ensure   = present,
-  Icinga2::LogSeverity             $severity = 'warning',
+  Icinga::LogLevel                 $severity = 'warning',
   Optional[Icinga2::LogFacility]   $facility = undef,
 ) {
   if ! defined(Class['icinga2']) {

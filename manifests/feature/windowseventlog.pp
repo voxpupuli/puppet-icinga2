@@ -9,7 +9,7 @@
 #
 class icinga2::feature::windowseventlog (
   Enum['absent', 'present']        $ensure   = present,
-  Icinga2::LogSeverity             $severity = 'warning',
+  Icinga::LogLevel                 $severity = 'warning',
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
