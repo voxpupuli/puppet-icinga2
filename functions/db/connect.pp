@@ -5,6 +5,18 @@
 # @return
 #   Connection string to connect database.
 #
+# @param db
+#    Data hash with database information.
+#
+# @param tls
+#   Data hash with TLS connection information.
+#
+# @param use_tls
+#   Wether or not to use TLS encryption.
+#
+# @param ssl_mode
+#   Enable SSL connection mode.
+#
 function icinga2::db::connect(
   Struct[{
       type     => Enum['pgsql','mysql','mariadb'],
@@ -16,21 +28,14 @@ function icinga2::db::connect(
   }]                   $db,
   Hash[String, Any]    $tls,
   Optional[Boolean]    $use_tls = undef,
+  Optional[Enum['verify-full', 'verify-ca']] $ssl_mode = undef,
 ) >> String {
-  # @param db
-  #    Data hash with database information.
-  #
-  # @param tls
-  #   Data hash with TLS connection information.
-  #
-  # @param use_tls
-  #   Wether or not to use TLS encryption.
-  #
   if $use_tls {
     case $db['type'] {
       'pgsql': {
+        $real_ssl_mode = if $ssl_mode { $ssl_mode } else { 'verify-full' }
         $tls_options = regsubst(join(any2array(delete_undef_values({
-                  'sslmode='     => if $tls['noverify'] { 'require' } else { 'verify-full' },
+                  'sslmode='     => if $tls['noverify'] { 'require' } else { $real_ssl_mode },
                   'sslcert='     => $tls['cert_file'],
                   'sslkey='      => $tls['key_file'],
                   'sslrootcert=' => $tls['cacert_file'],
@@ -39,20 +44,20 @@ function icinga2::db::connect(
       'mariadb': {
         $tls_options = join(any2array(delete_undef_values({
                 '--ssl'        => '',
-                '--ssl-ca'     => $tls['cacert_file'],
+                '--ssl-ca'     => if $tls['noverify'] { undef } else { $tls['cacert_file'] },
                 '--ssl-cert'   => $tls['cert_file'],
                 '--ssl-key'    => $tls['key_file'],
-                '--ssl-capath' => $tls['capath'],
+                '--ssl-capath' => if $tls['noverify'] { undef } else { $tls['capath'] },
                 '--ssl-cipher' => $tls['cipher'],
         })), ' ')
       }
       'mysql': {
         $tls_options = join(any2array(delete_undef_values({
-                '--ssl-mode'   => 'required',
-                '--ssl-ca'     => $tls['cacert_file'],
+                '--ssl-mode'   => if $tls['noverify'] { 'REQUIRED' } else { 'VERIFY_CA' },
+                '--ssl-ca'     => if $tls['noverify'] { undef } else { $tls['cacert_file'] },
                 '--ssl-cert'   => $tls['cert_file'],
                 '--ssl-key'    => $tls['key_file'],
-                '--ssl-capath' => $tls['capath'],
+                '--ssl-capath' => if $tls['noverify'] { undef } else { $tls['capath'] },
                 '--ssl-cipher' => $tls['cipher'],
         })), ' ')
       }
@@ -80,10 +85,10 @@ function icinga2::db::connect(
             },
             '-P'               => $db['port'],
             '-u'               => $db['username'],
-            "-p'${_password}'" => '',
+            "-p'${_password}'" => if $db['password'] { '' } else { undef },
             '-D'               => $db['database'],
     })), ' ')
   }
 
-  "${options} ${tls_options}"
+  strip(regsubst("${options} ${tls_options}", '\s{2,}', ' '))
 }

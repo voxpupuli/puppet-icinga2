@@ -1695,12 +1695,7 @@ Default value: `'icinga'`
 
 ##### <a name="-icinga2--feature--idopgsql--ssl_mode"></a>`ssl_mode`
 
-Data type:
-
-```puppet
-Optional[Enum['disable', 'allow', 'prefer',
-  'verify-full', 'verify-ca', 'require']]
-```
+Data type: `Optional[Enum['verify-full', 'verify-ca']]`
 
 Enable SSL connection mode.
 
@@ -5603,7 +5598,7 @@ with or without TLS information.
       database => String,
       username => String,
       password => Optional[Variant[String, Sensitive[String]]],
-  }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef)`
+  }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef, Optional[Enum['verify-full', 'verify-ca']] $ssl_mode = undef)`
 
 The icinga2::db::connect function.
 
@@ -5624,19 +5619,25 @@ Struct[{
   }]
 ```
 
-
+Data hash with database information.
 
 ##### `tls`
 
 Data type: `Hash[String, Any]`
 
-
+Data hash with TLS connection information.
 
 ##### `use_tls`
 
 Data type: `Optional[Boolean]`
 
+Wether or not to use TLS encryption.
 
+##### `ssl_mode`
+
+Data type: `Optional[Enum['verify-full', 'verify-ca']]`
+
+Enable SSL connection mode.
 
 ### <a name="icinga2--icinga2_attributes"></a>`icinga2::icinga2_attributes`
 

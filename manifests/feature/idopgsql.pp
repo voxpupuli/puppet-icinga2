@@ -88,8 +88,7 @@ class icinga2::feature::idopgsql (
   Optional[Stdlib::Port::Unprivileged]         $port                 = undef,
   String                                       $user                 = 'icinga',
   String                                       $database             = 'icinga',
-  Optional[Enum['disable', 'allow', 'prefer',
-  'verify-full', 'verify-ca', 'require']]      $ssl_mode             = undef,
+  Optional[Enum['verify-full', 'verify-ca']]   $ssl_mode             = undef,
   Optional[Stdlib::Absolutepath]               $ssl_key_path         = undef,
   Optional[Stdlib::Absolutepath]               $ssl_cert_path        = undef,
   Optional[Stdlib::Absolutepath]               $ssl_cacert_path      = undef,
@@ -212,7 +211,7 @@ class icinga2::feature::idopgsql (
         'port'     => $port,
         'database' => $database,
         'username' => $user,
-    }, $cert, $enable_ssl)
+    }, $cert, $enable_ssl, $ssl_mode)
 
     exec { 'idopgsql-import-schema':
       user        => 'root',
