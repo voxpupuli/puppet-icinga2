@@ -1,4 +1,10 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/puppet-icinga2)
+[![Build Status](https://github.com/icinga/puppet-icinga2/workflows/Test/badge.svg)](https://github.com/Icinga/puppet-icinga2/actions/workflows/ci.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.png)](https://www.puppetmodule.info/m/puppet-icinga2)
+[![Apache-2.0 License](https://img.shields.io/github/license/icinga/puppet-icinga2.svg)](LICENSE)
 
 # Icinga 2 Puppet Module
 
