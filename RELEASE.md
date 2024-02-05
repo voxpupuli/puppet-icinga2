@@ -33,7 +33,7 @@ puppet strings generate --format markdown --out ./REFERENCE.md
 ```
 
 ## 4. Version
-Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
+Version numbers are incremented regarding the [SemVer 1.0.0] specification.
 Update the version number in `metadata.json`.
 
 ## 5. Changelog
