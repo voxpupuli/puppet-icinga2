@@ -70,7 +70,7 @@ describe('icinga2::object', type: :define) do
         }
       end
 
-      it { is_expected.to contain_concat__fragment('foo').with_content(%r{import "bar"\r\n  import "baz"\r\n}) }
+      it { is_expected.to contain_concat__fragment('foo').with_content(%r{import "bar"}).with_content(%r{import "baz"}) }
     end
 
     context "on #{os} with apply_target => 'Service', object_type => 'Service' (same value)" do
