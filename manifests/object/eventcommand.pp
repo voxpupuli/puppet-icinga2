@@ -52,6 +52,8 @@ define icinga2::object::eventcommand (
   Variant[String, Integer]            $order             = 20,
   Variant[Array[String], String]      $export            = [],
 ) {
+  require icinga2::globals
+
   # compose the attributes
   $attrs = {
     'command'   => $command,

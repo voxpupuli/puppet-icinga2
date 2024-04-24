@@ -94,6 +94,8 @@ define icinga2::object::dependency (
   Variant[String, Integer]       $order                 = 70,
   Variant[Array[String], String] $export                = [],
 ) {
+  require icinga2::globals
+
   # compose attributes
   $attrs = {
     'parent_host_name'      => $parent_host_name,

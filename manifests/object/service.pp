@@ -188,6 +188,8 @@ define icinga2::object::service (
   Variant[String, Integer]                   $order                   = 60,
   Variant[Array[String], String]             $export                  = [],
 ) {
+  require icinga2::globals
+
   # compose the attributes
   $attrs = {
     'display_name'            => $display_name,

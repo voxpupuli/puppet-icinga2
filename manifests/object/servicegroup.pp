@@ -48,6 +48,8 @@ define icinga2::object::servicegroup (
   Variant[String, Integer]       $order             = 65,
   Variant[Array[String], String] $export            = [],
 ) {
+  require icinga2::globals
+
   # compose attributes
   $attrs = {
     'display_name'  => $display_name,

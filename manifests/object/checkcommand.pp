@@ -56,6 +56,8 @@ define icinga2::object::checkcommand (
   Variant[String, Integer]            $order             = 15,
   Variant[Array[String], String]      $export            = [],
 ) {
+  require icinga2::globals
+
   # compose the attributes
   $attrs = {
     'command'   => $command,

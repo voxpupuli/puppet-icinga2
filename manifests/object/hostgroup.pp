@@ -48,6 +48,8 @@ define icinga2::object::hostgroup (
   Variant[String, Integer]       $order          = 55,
   Variant[Array[String], String] $export         = [],
 ) {
+  require icinga2::globals
+
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
   }
