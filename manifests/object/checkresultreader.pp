@@ -24,6 +24,8 @@ define icinga2::object::checkresultreader (
   Optional[Stdlib::Absolutepath]     $spool_dir              = undef,
   Variant[String, Integer]           $order                  = '05',
 ) {
+  require icinga2::globals
+
   # compose the attributes
   $attrs = {
     'spool_dir'   => $spool_dir,

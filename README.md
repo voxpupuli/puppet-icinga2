@@ -1,4 +1,10 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/puppet-icinga2)
+[![Build Status](https://github.com/icinga/puppet-icinga2/workflows/Test/badge.svg)](https://github.com/Icinga/puppet-icinga2/actions/workflows/ci.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
+[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.png)](https://www.puppetmodule.info/m/puppet-icinga2)
+[![Apache-2.0 License](https://img.shields.io/github/license/icinga/puppet-icinga2.svg)](LICENSE)
 
 # Icinga 2 Puppet Module
 
@@ -513,8 +519,8 @@ As a general rule, all fragments are quoted except for the following:
     * `host.name`, `service.check_command`, `user.groups`, ...
 
 Assignment with += and -=:
- 
-Now it's possible to build an Icinga DSL code snippet like 
+
+Now it's possible to build an Icinga DSL code snippet like
 ```
   vars += config
 ```
@@ -522,7 +528,7 @@ simply use a string with the prefix '+ ', e.g.
 ```
   vars => '+ config',
 ```
-The blank between + and the proper string 'config' is imported for the parser because numbers 
+The blank between + and the proper string 'config' is imported for the parser because numbers
 ```
   attr => '+ -14',
 ```
@@ -577,12 +583,12 @@ Now it's also possible to add multiple custom attributes:
   vars => [
     {
       'a' => '1',
-      'b' => '2', 
+      'b' => '2',
     },
     'config',
-    { 
-      'c' => { 
-        'd' => { 
+    {
+      'c' => {
+        'd' => {
           '+' => true,
           'e' => '5',
         },

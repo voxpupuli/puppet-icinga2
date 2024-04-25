@@ -39,6 +39,7 @@ define icinga2::object::endpoint (
   Variant[String, Integer]              $order         = 40,
   Variant[Array[String], String]        $export        = [],
 ) {
+  require icinga2::globals
   $conf_dir = $icinga2::globals::conf_dir
 
   if $target {

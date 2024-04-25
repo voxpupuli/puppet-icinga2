@@ -225,7 +225,7 @@ class icinga2::feature::idopgsql (
         'port'     => $port,
         'database' => $database,
         'username' => $user,
-    }, $cert, $enable_ssl)
+    }, $cert, $enable_ssl, $ssl_mode)
 
     exec { 'idopgsql-import-schema':
       user        => 'root',

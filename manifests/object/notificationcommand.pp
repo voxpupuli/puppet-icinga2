@@ -57,6 +57,8 @@ define icinga2::object::notificationcommand (
   Variant[String, Integer]             $order                    = 25,
   Variant[Array[String], String]       $export                   = [],
 ) {
+  require icinga2::globals
+
   # compose attributes
   $attrs = {
     'command'   => $command,

@@ -26,7 +26,7 @@
 #         permission => 'objects/query/Host',
 #         filter     => '{{ regex("^Linux", host.vars.os) }}'
 #       },
-#       { 
+#       {
 #         permission => 'objects/query/Service',
 #         filter     => '{{ regex("^Linux", host.vars.os) }}'
 #       },
@@ -70,6 +70,8 @@ define icinga2::object::apiuser (
   Variant[String, Integer]       $order        = 30,
   Variant[Array[String], String] $export       = [],
 ) {
+  require icinga2::globals
+
   $_password = if $password =~ String {
     Sensitive($password)
   } elsif $password =~ Sensitive {

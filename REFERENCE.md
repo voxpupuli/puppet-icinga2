@@ -73,6 +73,8 @@ start on boot and will be restarted if stopped.
 
 ### Functions
 
+* [`icinga2::db::connect`](#icinga2--db--connect): This function returns a string to connect databases
+with or without TLS information.
 * [`icinga2::icinga2_attributes`](#icinga2--icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2--icinga2_ticket_id): Summarise what the function does here
@@ -5531,6 +5533,61 @@ Export object to destination, collected by class `icinga2::query_objects`.
 Default value: `[]`
 
 ## Functions
+
+### <a name="icinga2--db--connect"></a>`icinga2::db::connect`
+
+Type: Puppet Language
+
+This function returns a string to connect databases
+with or without TLS information.
+
+#### `icinga2::db::connect(Struct[{
+      type     => Enum['pgsql','mysql','mariadb'],
+      host     => Stdlib::Host,
+      port     => Optional[Stdlib::Port],
+      database => String,
+      username => String,
+      password => Optional[Variant[String, Sensitive[String]]],
+  }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef, Optional[Enum['verify-full', 'verify-ca']] $ssl_mode = undef)`
+
+The icinga2::db::connect function.
+
+Returns: `String` Connection string to connect database.
+
+##### `db`
+
+Data type:
+
+```puppet
+Struct[{
+      type     => Enum['pgsql','mysql','mariadb'],
+      host     => Stdlib::Host,
+      port     => Optional[Stdlib::Port],
+      database => String,
+      username => String,
+      password => Optional[Variant[String, Sensitive[String]]],
+  }]
+```
+
+Data hash with database information.
+
+##### `tls`
+
+Data type: `Hash[String, Any]`
+
+Data hash with TLS connection information.
+
+##### `use_tls`
+
+Data type: `Optional[Boolean]`
+
+Wether or not to use TLS encryption.
+
+##### `ssl_mode`
+
+Data type: `Optional[Enum['verify-full', 'verify-ca']]`
+
+Enable SSL connection mode.
 
 ### <a name="icinga2--icinga2_attributes"></a>`icinga2::icinga2_attributes`
 

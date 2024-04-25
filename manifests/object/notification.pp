@@ -107,6 +107,8 @@ define icinga2::object::notification (
   Variant[String, Integer]                                            $order             = 85,
   Variant[Array[String], String]                                      $export            = [],
 ) {
+  require icinga2::globals
+
   if $ignore != [] and $assign == [] {
     fail('When attribute ignore is used, assign must be set.')
   }

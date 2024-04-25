@@ -52,6 +52,8 @@ define icinga2::object::timeperiod (
   Variant[String, Integer]       $order           = 35,
   Variant[Array[String], String] $export          = [],
 ) {
+  require icinga2::globals
+
   # compose attributes
   $attrs = {
     'display_name'    => $display_name,
