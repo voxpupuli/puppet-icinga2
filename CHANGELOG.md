@@ -1,5 +1,24 @@
 # Changelog
 
+## [v4.2.1](https://github.com/icinga/puppet-icinga2/tree/v4.2.1) (2024-04-25)
+
+[Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v4.2.0...v4.2.1)
+
+**Fixed bugs:**
+
+- Fix not working object export on not icinga agent or server [\#760](https://github.com/Icinga/puppet-icinga2/pull/760) ([cruelsmith](https://github.com/cruelsmith))
+
+**Closed issues:**
+
+- icinga2::object::\* do not require class icinga2::globals to proper compile EPP templates [\#759](https://github.com/Icinga/puppet-icinga2/issues/759)
+
+**Merged pull requests:**
+
+- Bump voxpupuli/gha-puppet from 1 to 2 [\#758](https://github.com/Icinga/puppet-icinga2/pull/758) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Apply initial modulesync 7.2.0 [\#757](https://github.com/Icinga/puppet-icinga2/pull/757) ([bastelfreak](https://github.com/bastelfreak))
+- README.md: Update badges [\#756](https://github.com/Icinga/puppet-icinga2/pull/756) ([bastelfreak](https://github.com/bastelfreak))
+- dependabot: check for github actions and bundler [\#755](https://github.com/Icinga/puppet-icinga2/pull/755) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.2.0](https://github.com/icinga/puppet-icinga2/tree/v4.2.0) (2024-02-05)
 
 [Full Changelog](https://github.com/icinga/puppet-icinga2/compare/v4.1.1...v4.2.0)
