@@ -147,6 +147,8 @@ define icinga2::object::host (
   Variant[String, Integer]            $order                   = 50,
   Variant[Array[String], String]      $export                  = [],
 ) {
+  require icinga2::globals
+
   # compose the attributes
   $attrs = {
     'address'                 => $address,

@@ -73,6 +73,8 @@ define icinga2::object::scheduleddowntime (
   Variant[String, Integer]        $order                  = 90,
   Variant[Array[String], String]  $export                 = [],
 ) {
+  require icinga2::globals
+
   # compose attributes
   $attrs = {
     'host_name'    => $host_name,

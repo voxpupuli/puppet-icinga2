@@ -59,6 +59,7 @@ define icinga2::object::icingaapplication (
   Variant[String, Integer]              $order                 = 5,
   Variant[Array[String], String]        $export                = [],
 ) {
+  require icinga2::globals
   $conf_dir = $icinga2::globals::conf_dir
 
   # set defaults

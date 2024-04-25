@@ -72,6 +72,8 @@ define icinga2::object::user (
   Variant[String, Integer]            $order                = 75,
   Variant[Array[String], String]      $export               = [],
 ) {
+  require icinga2::globals
+
   # compose attributes
   $attrs = {
     'display_name'         => $display_name,
