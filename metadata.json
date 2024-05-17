@@ -1,12 +1,12 @@
 {
   "name": "icinga-icinga2",
   "version": "5.0.0",
-  "author": "Icinga Development Team",
+  "author": "Vox Pupuli",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
-  "source": "git://github.com/icinga/puppet-icinga2",
-  "project_page": "https://github.com/icinga/puppet-icinga2",
-  "issues_url": "https://github.com/icinga/puppet-icinga2/issues",
+  "source": "git://github.com/voxpupuli/puppet-icinga2",
+  "project_page": "https://github.com/voxpupuli/puppet-icinga2",
+  "issues_url": "https://github.com/voxpupuli/puppet-icinga2/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -114,6 +114,11 @@
       "name": "puppet",
       "version_requirement": ">= 7.9.0 < 9.0.0"
     }
+  ],
+  "tags": [
+    "icinga",
+    "icinga2",
+    "monitoring"
   ],
   "pdk-version": "3.0.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates#3.0.0",
