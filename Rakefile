@@ -26,7 +26,7 @@ begin
 rescue LoadError
   # voxpupuli-release not present
 else
-  GCGConfig.user = 'icinga'
+  GCGConfig.user = 'voxpupuli'
   GCGConfig.project = 'puppet-icinga2'
 end
 
