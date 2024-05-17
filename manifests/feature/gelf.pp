@@ -44,20 +44,20 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::gelf (
-  Enum['absent', 'present']                    $ensure               = present,
-  Optional[Stdlib::Host]                       $host                 = undef,
-  Optional[Stdlib::Port::Unprivileged]         $port                 = undef,
-  Optional[String]                             $source               = undef,
-  Boolean                                      $enable_ssl           = false,
-  Optional[Stdlib::Absolutepath]               $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cacert_path      = undef,
-  Optional[Variant[String, Sensitive[String]]] $ssl_key              = undef,
-  Optional[String]                             $ssl_cert             = undef,
-  Optional[String]                             $ssl_cacert           = undef,
-  Optional[Boolean]                            $ssl_noverify         = undef,
-  Optional[Boolean]                            $enable_send_perfdata = undef,
-  Optional[Boolean]                            $enable_ha            = undef,
+  Enum['absent', 'present']      $ensure               = present,
+  Optional[Stdlib::Host]         $host                 = undef,
+  Optional[Stdlib::Port]         $port                 = undef,
+  Optional[String]               $source               = undef,
+  Boolean                        $enable_ssl           = false,
+  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
+  Optional[Icinga::Secret]       $ssl_key              = undef,
+  Optional[String]               $ssl_cert             = undef,
+  Optional[String]               $ssl_cacert           = undef,
+  Optional[Boolean]              $ssl_noverify         = undef,
+  Optional[Boolean]              $enable_send_perfdata = undef,
+  Optional[Boolean]              $enable_ha            = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -79,8 +79,9 @@ class icinga2::feature::gelf (
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'GelfWriter_gelf',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
@@ -97,9 +98,21 @@ class icinga2::feature::gelf (
       'key_path'          => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'GelfWriter_gelf':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'GelfWriter_gelf':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'GelfWriter_gelf':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {

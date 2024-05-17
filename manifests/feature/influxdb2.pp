@@ -79,35 +79,35 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::influxdb2 (
-  String                                       $organization,
-  String                                       $bucket,
-  Variant[String, Sensitive[String]]           $auth_token,
-  Enum['absent', 'present']                    $ensure                 = present,
-  Optional[Stdlib::Host]                       $host                   = undef,
-  Optional[Stdlib::Port]                       $port                   = undef,
-  Optional[Boolean]                            $enable_ssl             = undef,
-  Optional[Boolean]                            $ssl_noverify           = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_key_path           = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cert_path          = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cacert_path        = undef,
-  Optional[Variant[String, Sensitive[String]]] $ssl_key                = undef,
-  Optional[String]                             $ssl_cert               = undef,
-  Optional[String]                             $ssl_cacert             = undef,
-  String                                       $host_measurement       = '$host.check_command$',
-  Hash                                         $host_tags              = { hostname => '$host.name$' },
-  String                                       $service_measurement    = '$service.check_command$',
-  Hash                                         $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
-  Optional[Boolean]                            $enable_send_thresholds = undef,
-  Optional[Boolean]                            $enable_send_metadata   = undef,
-  Optional[Icinga2::Interval]                  $flush_interval         = undef,
-  Optional[Integer[1]]                         $flush_threshold        = undef,
-  Optional[Boolean]                            $enable_ha              = undef,
+  String                         $organization,
+  String                         $bucket,
+  Icinga::Secret                 $auth_token,
+  Enum['absent', 'present']      $ensure                 = present,
+  Optional[Stdlib::Host]         $host                   = undef,
+  Optional[Stdlib::Port]         $port                   = undef,
+  Optional[Boolean]              $enable_ssl             = undef,
+  Optional[Boolean]              $ssl_noverify           = undef,
+  Optional[Stdlib::Absolutepath] $ssl_key_path           = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path          = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path        = undef,
+  Optional[Icinga::Secret]       $ssl_key                = undef,
+  Optional[String]               $ssl_cert               = undef,
+  Optional[String]               $ssl_cacert             = undef,
+  String                         $host_measurement       = '$host.check_command$',
+  Hash                           $host_tags              = { hostname => '$host.name$' },
+  String                         $service_measurement    = '$service.check_command$',
+  Hash                           $service_tags           = { hostname => '$host.name$', service => '$service.name$' },
+  Optional[Boolean]              $enable_send_thresholds = undef,
+  Optional[Boolean]              $enable_send_metadata   = undef,
+  Optional[Icinga2::Interval]    $flush_interval         = undef,
+  Optional[Integer[1]]           $flush_threshold        = undef,
+  Optional[Boolean]              $enable_ha              = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user     = $icinga2::globals::user
+  $owner    = $icinga2::globals::user
   $group    = $icinga2::globals::group
   $conf_dir = $icinga2::globals::conf_dir
   $ssl_dir  = $icinga2::globals::cert_dir
@@ -118,7 +118,7 @@ class icinga2::feature::influxdb2 (
   }
 
   File {
-    owner   => $user,
+    owner   => $owner,
     group   => $group,
   }
 
@@ -126,8 +126,9 @@ class icinga2::feature::influxdb2 (
   $service_template = { measurement => $service_measurement, tags => $service_tags }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'Influxdb2Writer_influxdb2',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
@@ -144,9 +145,21 @@ class icinga2::feature::influxdb2 (
       'ssl_key'               => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'Influxdb2Writer_influxdb2':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'Influxdb2Writer_influxdb2':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'Influxdb2Writer_influxdb2':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {

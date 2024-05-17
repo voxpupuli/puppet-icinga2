@@ -32,14 +32,14 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::graphite (
-  Enum['absent', 'present']                $ensure                 = present,
-  Optional[Stdlib::Host]                   $host                   = undef,
-  Optional[Stdlib::Port::Unprivileged]     $port                   = undef,
-  Optional[String]                         $host_name_template     = undef,
-  Optional[String]                         $service_name_template  = undef,
-  Optional[Boolean]                        $enable_send_thresholds = undef,
-  Optional[Boolean]                        $enable_send_metadata   = undef,
-  Optional[Boolean]                        $enable_ha              = undef,
+  Enum['absent', 'present'] $ensure                 = present,
+  Optional[Stdlib::Host]    $host                   = undef,
+  Optional[Stdlib::Port]    $port                   = undef,
+  Optional[String]          $host_name_template     = undef,
+  Optional[String]          $service_name_template  = undef,
+  Optional[Boolean]         $enable_send_thresholds = undef,
+  Optional[Boolean]         $enable_send_metadata   = undef,
+  Optional[Boolean]         $enable_ha              = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')

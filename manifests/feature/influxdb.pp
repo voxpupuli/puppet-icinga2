@@ -87,14 +87,14 @@ class icinga2::feature::influxdb (
   Optional[Stdlib::Port]                        $port                   = undef,
   Optional[String]                              $database               = undef,
   Optional[String]                              $username               = undef,
-  Optional[Variant[String, Sensitive[String]]]  $password               = undef,
+  Optional[Icinga::Secret]                      $password               = undef,
   Optional[Icinga2::BasicAuth]                  $basic_auth             = undef,
   Optional[Boolean]                             $enable_ssl             = undef,
   Optional[Boolean]                             $ssl_noverify           = undef,
   Optional[Stdlib::Absolutepath]                $ssl_key_path           = undef,
   Optional[Stdlib::Absolutepath]                $ssl_cert_path          = undef,
   Optional[Stdlib::Absolutepath]                $ssl_cacert_path        = undef,
-  Optional[Variant[String, Sensitive[String]]]  $ssl_key                = undef,
+  Optional[Icinga::Secret]                      $ssl_key                = undef,
   Optional[String]                              $ssl_cert               = undef,
   Optional[String]                              $ssl_cacert             = undef,
   String                                        $host_measurement       = '$host.check_command$',
@@ -111,7 +111,7 @@ class icinga2::feature::influxdb (
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user     = $icinga2::globals::user
+  $owner    = $icinga2::globals::user
   $group    = $icinga2::globals::group
   $conf_dir = $icinga2::globals::conf_dir
   $ssl_dir  = $icinga2::globals::cert_dir
@@ -140,7 +140,7 @@ class icinga2::feature::influxdb (
   }
 
   File {
-    owner   => $user,
+    owner   => $owner,
     group   => $group,
   }
 
@@ -148,8 +148,9 @@ class icinga2::feature::influxdb (
   $service_template = { measurement => $service_measurement, tags => $service_tags }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'InfluxdbWriter_influxdb',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
@@ -166,9 +167,21 @@ class icinga2::feature::influxdb (
       'ssl_key'               => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'InfluxdbWriter_influxdb':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'InfluxdbWriter_influxdb':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'InfluxdbWriter_influxdb':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {

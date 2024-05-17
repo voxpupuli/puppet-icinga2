@@ -94,18 +94,18 @@
 #   whereas with mysql its different options.
 #
 class icinga2::feature::idomysql (
-  Variant[String, Sensitive[String]]           $password,
   Enum['absent', 'present']                    $ensure                 = present,
   Stdlib::Host                                 $host                   = 'localhost',
-  Optional[Stdlib::Port::Unprivileged]         $port                   = undef,
+  Optional[Stdlib::Port]                       $port                   = undef,
   Optional[Stdlib::Absolutepath]               $socket_path            = undef,
   String                                       $user                   = 'icinga',
   String                                       $database               = 'icinga',
+  Optional[Icinga::Secret]                     $password               = undef,
   Boolean                                      $enable_ssl             = false,
   Optional[Stdlib::Absolutepath]               $ssl_key_path           = undef,
   Optional[Stdlib::Absolutepath]               $ssl_cert_path          = undef,
   Optional[Stdlib::Absolutepath]               $ssl_cacert_path        = undef,
-  Optional[Variant[String, Sensitive[String]]] $ssl_key                = undef,
+  Optional[Icinga::Secret]                     $ssl_key                = undef,
   Optional[String]                             $ssl_cert               = undef,
   Optional[String]                             $ssl_cacert             = undef,
   Optional[Stdlib::Absolutepath]               $ssl_capath             = undef,
@@ -148,8 +148,9 @@ class icinga2::feature::idomysql (
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'IdoMysqlConnection_ido-mysql',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
@@ -167,9 +168,21 @@ class icinga2::feature::idomysql (
       'ssl_cipher' => $ssl_cipher,
     }
 
-    icinga2::tls::client { 'IdoMysqlConnection_ido-mysql':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'IdoMysqlConnection_ido-mysql':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'IdoMysqlConnection_ido-mysql':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {
@@ -225,7 +238,7 @@ class icinga2::feature::idomysql (
       Package[$ido_mysql_package_name] -> Exec['idomysql-import-schema']
     }
 
-    $db_cli_options = icinga2::db::connect({
+    $db_cli_options = icinga::db::connect({
         'type'     => $type,
         'host'     => $host,
         'port'     => $port,

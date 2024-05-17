@@ -50,18 +50,12 @@ define icinga2::config::fragment (
   String                       $code_name = $title,
   Variant[String, Integer]     $order     = '00',
 ) {
-  case $facts['os']['family'] {
-    'windows': {
-      $_content = regsubst($content, '\n', "\r\n", 'EMG')
-    } # windows
-    default: {
-      Concat {
-        owner => $icinga2::globals::user,
-        group => $icinga2::globals::group,
-        mode  => '0640',
-      }
-      $_content = $content
-    } # default
+  if $facts['os']['family'] != 'windows' {
+    Concat {
+      owner => $icinga2::globals::user,
+      group => $icinga2::globals::group,
+      mode  => '0640',
+    }
   }
 
   if !defined(Concat[$target]) {
@@ -74,7 +68,7 @@ define icinga2::config::fragment (
 
   concat::fragment { "icinga2::config::${code_name}":
     target  => $target,
-    content => $_content,
+    content => icinga::newline($content),
     order   => $order,
   }
 }

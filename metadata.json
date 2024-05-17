@@ -1,6 +1,6 @@
 {
   "name": "icinga-icinga2",
-  "version": "4.2.1",
+  "version": "5.0.0",
   "author": "Icinga Development Team",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
@@ -15,13 +15,19 @@
     {
       "name": "puppetlabs/concat",
       "version_requirement": ">= 6.4.0 < 10.0.0"
+    },
+    {
+      "name": "icinga/icinga",
+      "version_requirement": ">= 2.9.0 < 5.0.0"
     }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
@@ -106,7 +112,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 7.0.0 < 9.0.0"
+      "version_requirement": ">= 7.9.0 < 9.0.0"
     }
   ],
   "pdk-version": "3.0.0",

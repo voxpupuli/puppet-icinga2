@@ -62,30 +62,30 @@
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::elasticsearch (
-  Enum['absent', 'present']                     $ensure               = present,
-  Optional[Stdlib::Host]                        $host                 = undef,
-  Optional[Stdlib::Port::Unprivileged]          $port                 = undef,
-  Optional[String]                              $index                = undef,
-  Optional[String]                              $username             = undef,
-  Optional[Variant[String, Sensitive[String]]]  $password             = undef,
-  Optional[Boolean]                             $enable_ssl           = undef,
-  Optional[Boolean]                             $ssl_noverify         = undef,
-  Optional[Stdlib::Absolutepath]                $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath]                $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath]                $ssl_cacert_path      = undef,
-  Optional[Variant[String, Sensitive[String]]]  $ssl_key              = undef,
-  Optional[String]                              $ssl_cert             = undef,
-  Optional[String]                              $ssl_cacert           = undef,
-  Optional[Boolean]                             $enable_send_perfdata = undef,
-  Optional[Icinga2::Interval]                   $flush_interval       = undef,
-  Optional[Integer]                             $flush_threshold      = undef,
-  Optional[Boolean]                             $enable_ha            = undef,
+  Enum['absent', 'present']      $ensure               = present,
+  Optional[Stdlib::Host]         $host                 = undef,
+  Optional[Stdlib::Port]         $port                 = undef,
+  Optional[String]               $index                = undef,
+  Optional[String]               $username             = undef,
+  Optional[Icinga::Secret]       $password             = undef,
+  Optional[Boolean]              $enable_ssl           = undef,
+  Optional[Boolean]              $ssl_noverify         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
+  Optional[Icinga::Secret]       $ssl_key              = undef,
+  Optional[String]               $ssl_cert             = undef,
+  Optional[String]               $ssl_cacert           = undef,
+  Optional[Boolean]              $enable_send_perfdata = undef,
+  Optional[Icinga2::Interval]    $flush_interval       = undef,
+  Optional[Integer]              $flush_threshold      = undef,
+  Optional[Boolean]              $enable_ha            = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $user          = $icinga2::globals::user
+  $owner         = $icinga2::globals::user
   $group         = $icinga2::globals::group
   $conf_dir      = $icinga2::globals::conf_dir
   $ssl_dir       = $icinga2::globals::cert_dir
@@ -104,13 +104,14 @@ class icinga2::feature::elasticsearch (
   }
 
   File {
-    owner   => $user,
+    owner   => $owner,
     group   => $group,
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'ElasticsearchWriter_elasticsearch',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
@@ -127,9 +128,21 @@ class icinga2::feature::elasticsearch (
       'key_path'              => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'ElasticsearchWriter_elasticsearch':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'ElasticsearchWriter_elasticsearch':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'ElasticsearchWriter_elasticsearch':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {

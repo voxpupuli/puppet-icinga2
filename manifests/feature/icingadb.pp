@@ -65,35 +65,35 @@
 #    Whether not to verify the peer.
 #
 class icinga2::feature::icingadb (
-  Enum['absent', 'present']                     $ensure          = present,
-  Optional[Stdlib::Host]                        $host            = undef,
-  Optional[Stdlib::Port::Unprivileged]          $port            = undef,
-  Optional[Stdlib::Absolutepath]                $socket_path     = undef,
-  Optional[Icinga2::Interval]                   $connect_timeout = undef,
-  Optional[Variant[String, Sensitive[String]]]  $password        = undef,
-  Optional[Variant[String, Sensitive[String]]]  $env_id          = undef,
-  Boolean                                       $enable_tls      = false,
-  Optional[Stdlib::Absolutepath]                $tls_key_file    = undef,
-  Optional[Stdlib::Absolutepath]                $tls_cert_file   = undef,
-  Optional[Stdlib::Absolutepath]                $tls_cacert_file = undef,
-  Optional[Stdlib::Absolutepath]                $tls_crl_file    = undef,
-  Optional[Variant[String, Sensitive[String]]]  $tls_key         = undef,
-  Optional[String]                              $tls_cert        = undef,
-  Optional[String]                              $tls_cacert      = undef,
-  Optional[String]                              $tls_capath      = undef,
-  Optional[String]                              $tls_cipher      = undef,
-  Optional[String]                              $tls_protocolmin = undef,
-  Optional[Boolean]                             $tls_noverify    = undef,
+  Enum['absent', 'present']      $ensure          = present,
+  Optional[Stdlib::Host]         $host            = undef,
+  Optional[Stdlib::Port]         $port            = undef,
+  Optional[Stdlib::Absolutepath] $socket_path     = undef,
+  Optional[Icinga2::Interval]    $connect_timeout = undef,
+  Optional[Icinga::Secret]       $password        = undef,
+  Optional[Icinga::Secret]       $env_id          = undef,
+  Boolean                        $enable_tls      = false,
+  Optional[Stdlib::Absolutepath] $tls_key_file    = undef,
+  Optional[Stdlib::Absolutepath] $tls_cert_file   = undef,
+  Optional[Stdlib::Absolutepath] $tls_cacert_file = undef,
+  Optional[Stdlib::Absolutepath] $tls_crl_file    = undef,
+  Optional[Icinga::Secret]       $tls_key         = undef,
+  Optional[String]               $tls_cert        = undef,
+  Optional[String]               $tls_cacert      = undef,
+  Optional[String]               $tls_capath      = undef,
+  Optional[String]               $tls_cipher      = undef,
+  Optional[String]               $tls_protocolmin = undef,
+  Optional[Boolean]              $tls_noverify    = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
-  $owner         = $icinga2::globals::user
-  $group         = $icinga2::globals::group
-  $conf_dir      = $icinga2::globals::conf_dir
-  $data_dir      = $icinga2::globals::data_dir
-  $ssl_dir       = $icinga2::globals::cert_dir
+  $conf_dir = $icinga2::globals::conf_dir
+  $data_dir = $icinga2::globals::data_dir
+  $cert_dir = $icinga2::globals::cert_dir
+  $owner    = $icinga2::globals::user
+  $group    = $icinga2::globals::group
 
   $_password = if $password =~ Sensitive {
     $password
@@ -103,7 +103,7 @@ class icinga2::feature::icingadb (
     undef
   }
 
-  $_notify       = $ensure ? {
+  $_notify = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
   }
@@ -117,15 +117,16 @@ class icinga2::feature::icingadb (
     file { "${data_dir}/icingadb.env":
       ensure    => file,
       mode      => '0600',
-      content   => sprintf('"%s"', icinga2::unwrap($env_id)),
+      content   => sprintf('"%s"', unwrap($env_id)),
       show_diff => false,
       tag       => 'icinga2::config::file',
     }
   }
 
   if $enable_tls {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'IcingaDB-icingadb',
+      $cert_dir,
       $tls_key_file,
       $tls_cert_file,
       $tls_cacert_file,
@@ -145,9 +146,21 @@ class icinga2::feature::icingadb (
       'tls_protocolmin'   => $tls_protocolmin,
     }
 
-    icinga2::tls::client { 'IcingaDB-icingadb':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'IcingaDB-icingadb':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'IcingaDB-icingadb':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } # enable_tls
   else {

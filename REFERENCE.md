@@ -70,19 +70,15 @@ start on boot and will be restarted if stopped.
 
 * `icinga2::feature`: Private define resource to used by this module only.
 * `icinga2::object`: Define resource to used by this module only.
-* `icinga2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
 
-* [`icinga2::cert`](#icinga2--cert): Choose the path of tls key, cert and ca file.
 * [`icinga2::db::connect`](#icinga2--db--connect): This function returns a string to connect databases
 with or without TLS information.
 * [`icinga2::icinga2_attributes`](#icinga2--icinga2_attributes): Calls the simple parser  to decide what to quote.
 For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`icinga2::icinga2_ticket_id`](#icinga2--icinga2_ticket_id): Summarise what the function does here
-* [`icinga2::newline`](#icinga2--newline): Replace newlines for Windows systems.
 * [`icinga2::parse`](#icinga2--parse)
-* [`icinga2::unwrap`](#icinga2--unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
 
@@ -92,7 +88,6 @@ For more information, see lib/puppet_x/icinga2/utils.rb.
 * [`Icinga2::IdoCleanup`](#Icinga2--IdoCleanup): A type for the structure of settings to cleanup IDO databases
 * [`Icinga2::Interval`](#Icinga2--Interval): A strict type for intervals
 * [`Icinga2::LogFacility`](#Icinga2--LogFacility): A strict type of syslog facilities
-* [`Icinga2::LogSeverity`](#Icinga2--LogSeverity): A strict type for log levels
 
 ## Classes
 
@@ -435,7 +430,7 @@ Default value: `'icinga2'`
 
 ##### <a name="-icinga2--feature--api--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
@@ -502,7 +497,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ca_port"></a>`ca_port`
 
-Data type: `Stdlib::Port::Unprivileged`
+Data type: `Stdlib::Port`
 
 Port of the 'ca_host'.
 
@@ -520,7 +515,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ticket_salt"></a>`ticket_salt`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Icinga::Secret`
 
 Salt to use for ticket generation. The salt is stored to api.conf if none or ca is chosen for pki.
 Defaults to constant TicketSalt. Keep in mind this parameter is parsed so please use only alpha numric
@@ -530,7 +525,7 @@ Default value: `'TicketSalt'`
 
 ##### <a name="-icinga2--feature--api--ticket_id"></a>`ticket_id`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 If a ticket_id is given it will be used instead of generating an ticket_id.
 The ticket_id will be used only when requesting a certificate from the ca_host
@@ -596,7 +591,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--bind_port"></a>`bind_port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 The port the api listener will be bound to.
 
@@ -806,7 +801,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 Elasticsearch HTTP port.
 
@@ -830,7 +825,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 Elasticsearch user password. The password parameter isn't parsed anymore.
 
@@ -878,7 +873,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -973,7 +968,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 GELF receiver port.
 
@@ -1021,7 +1016,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -1115,7 +1110,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--graphite--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 Graphite Carbon port.
 
@@ -1207,7 +1202,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 IcingaDB Redis port.
 
@@ -1231,7 +1226,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
 
@@ -1239,7 +1234,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--env_id"></a>`env_id`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The ID is used in all Icinga DB components to separate data from multiple
 different environments and is written to the file `/var/lib/icinga2/icingadb.env`
@@ -1290,7 +1285,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_key"></a>`tls_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key in a PEM formated string to store spicified in tls_key_file.
 Only valid if tls is enabled.
@@ -1421,7 +1416,7 @@ Default value: `'localhost'`
 
 ##### <a name="-icinga2--feature--idomysql--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 MySQL database port.
 
@@ -1445,9 +1440,11 @@ Default value: `'icinga'`
 
 ##### <a name="-icinga2--feature--idomysql--password"></a>`password`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Optional[Icinga::Secret]`
 
 MySQL database user's password. The password parameter isn't parsed anymore.
+
+Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--database"></a>`database`
 
@@ -1491,7 +1488,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM Format. Only valid if ssl is enabled.
 
@@ -1665,7 +1662,7 @@ Default value: `'localhost'`
 
 ##### <a name="-icinga2--feature--idopgsql--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 PostgreSQL database port.
 
@@ -1681,9 +1678,11 @@ Default value: `'icinga'`
 
 ##### <a name="-icinga2--feature--idopgsql--password"></a>`password`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Optional[Icinga::Secret]`
 
 PostgreSQL database user's password. The password parameter isn't parsed anymore.
+
+Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--database"></a>`database`
 
@@ -1695,7 +1694,12 @@ Default value: `'icinga'`
 
 ##### <a name="-icinga2--feature--idopgsql--ssl_mode"></a>`ssl_mode`
 
-Data type: `Optional[Enum['verify-full', 'verify-ca']]`
+Data type:
+
+```puppet
+Optional[Enum['disable', 'allow', 'prefer',
+  'verify-full', 'verify-ca', 'require']]
+```
 
 Enable SSL connection mode.
 
@@ -1727,7 +1731,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
@@ -1901,7 +1905,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 InfluxDB user password. The password parameter isn't parsed anymore.
 
@@ -1957,7 +1961,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -2134,7 +2138,7 @@ InfluxDB bucket name.
 
 ##### <a name="-icinga2--feature--influxdb2--auth_token"></a>`auth_token`
 
-Data type: `Variant[String, Sensitive[String]]`
+Data type: `Icinga::Secret`
 
 InfluxDB authentication token.
 
@@ -2180,7 +2184,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb2--ssl_key"></a>`ssl_key`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if ssl is enabled.
 
@@ -2315,7 +2319,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--livestatus--bind_port"></a>`bind_port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 Port to listen for connections. Only valid when socket_type is 'tcp'.
 
@@ -2359,7 +2363,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--feature--mainlog--severity"></a>`severity`
 
-Data type: `Icinga2::LogSeverity`
+Data type: `Icinga::LogLevel`
 
 You can set the log severity to 'information', 'notice', 'warning' or 'debug'.
 
@@ -2431,7 +2435,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--opentsdb--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 OpenTSDB port.
 
@@ -2604,7 +2608,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--feature--syslog--severity"></a>`severity`
 
-Data type: `Icinga2::LogSeverity`
+Data type: `Icinga::LogLevel`
 
 You can choose the log severity between information, notice, warning or debug.
 
@@ -2640,7 +2644,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--feature--windowseventlog--severity"></a>`severity`
 
-Data type: `Icinga2::LogSeverity`
+Data type: `Icinga::LogLevel`
 
 You can choose the log severity between information, notice, warning or debug.
 
@@ -2688,7 +2692,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--pki--ca--ca_key"></a>`ca_key`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icinga::Secret]`
 
 Content of the CA key. If this is unset, a key will be generated with the Icinga 2 CLI.
 
@@ -2879,7 +2883,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--apiuser--password"></a>`password`
 
-Data type: `Optional[Variant[String, Sensitive[String]]]`
+Data type: `Optional[Icinga::Secret]`
 
 Password string. The password parameter isn't parsed anymore.
 
@@ -3344,7 +3348,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--endpoint--port"></a>`port`
 
-Data type: `Optional[Stdlib::Port::Unprivileged]`
+Data type: `Optional[Stdlib::Port]`
 
 The service name/port of the remote Icinga 2 instance.
 
@@ -5530,60 +5534,6 @@ Default value: `[]`
 
 ## Functions
 
-### <a name="icinga2--cert"></a>`icinga2::cert`
-
-Type: Puppet Language
-
-Choose the path of tls key, cert and ca file.
-
-#### `icinga2::cert(String $name, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Variant[String, Sensitive[String]]] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
-
-The icinga2::cert function.
-
-Returns: `Hash` Returned hash includes all paths and the key, cert and cacert.
-
-##### `name`
-
-Data type: `String`
-
-
-
-##### `key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `cacert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `key`
-
-Data type: `Optional[Variant[String, Sensitive[String]]]`
-
-
-
-##### `cert`
-
-Data type: `Optional[String]`
-
-
-
-##### `cacert`
-
-Data type: `Optional[String]`
-
-
-
 ### <a name="icinga2--db--connect"></a>`icinga2::db::connect`
 
 Type: Puppet Language
@@ -5700,24 +5650,6 @@ Data type: `Variant[String, Sensitive[String]]`
 
 The ticket salt of the Icinga CA.
 
-### <a name="icinga2--newline"></a>`icinga2::newline`
-
-Type: Puppet Language
-
-Replace newlines for Windows systems.
-
-#### `icinga2::newline(Optional[String] $text)`
-
-The icinga2::newline function.
-
-Returns: `String` Text with correct newlines.
-
-##### `text`
-
-Data type: `Optional[String]`
-
-
-
 ### <a name="icinga2--parse"></a>`icinga2::parse`
 
 Type: Puppet Language
@@ -5751,24 +5683,6 @@ Data type: `Array[String]`
 ##### `constants`
 
 Data type: `Hash[String, Any]`
-
-
-
-### <a name="icinga2--unwrap"></a>`icinga2::unwrap`
-
-Type: Puppet Language
-
-This function returns an unwrap string if necessary.
-
-#### `icinga2::unwrap(Optional[Variant[String, Sensitive[String]]] $arg = undef)`
-
-The icinga2::unwrap function.
-
-Returns: `Any` The unwraped string.
-
-##### `arg`
-
-Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 
 
@@ -5855,10 +5769,4 @@ Variant[Enum[
     'LOG_UUCP'
   ], Pattern[/^LOG_LOCAL[0-7]$/]]
 ```
-
-### <a name="Icinga2--LogSeverity"></a>`Icinga2::LogSeverity`
-
-A strict type for log levels
-
-Alias of `Enum['debug', 'information', 'notice', 'warning', 'critical']`
 

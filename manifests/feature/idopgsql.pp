@@ -82,27 +82,28 @@
 #   Whether to import the PostgreSQL schema or not.
 #
 class icinga2::feature::idopgsql (
-  Variant[String, Sensitive[String]]           $password,
-  Enum['absent', 'present']                    $ensure               = present,
-  Stdlib::Host                                 $host                 = 'localhost',
-  Optional[Stdlib::Port::Unprivileged]         $port                 = undef,
-  String                                       $user                 = 'icinga',
-  String                                       $database             = 'icinga',
-  Optional[Enum['verify-full', 'verify-ca']]   $ssl_mode             = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath]               $ssl_cacert_path      = undef,
-  Optional[Variant[String, Sensitive[String]]] $ssl_key              = undef,
-  Optional[String]                             $ssl_cert             = undef,
-  Optional[String]                             $ssl_cacert           = undef,
-  Optional[String]                             $table_prefix         = undef,
-  Optional[String]                             $instance_name        = undef,
-  Optional[String]                             $instance_description = undef,
-  Optional[Boolean]                            $enable_ha            = undef,
-  Optional[Icinga2::Interval]                  $failover_timeout     = undef,
-  Optional[Icinga2::IdoCleanup]                $cleanup              = undef,
-  Optional[Array]                              $categories           = undef,
-  Boolean                                      $import_schema        = false,
+  Enum['absent', 'present']                   $ensure               = present,
+  Stdlib::Host                                $host                 = 'localhost',
+  Optional[Stdlib::Port]                      $port                 = undef,
+  String                                      $user                 = 'icinga',
+  String                                      $database             = 'icinga',
+  Optional[Icinga::Secret]                    $password             = undef,
+  Optional[Enum['disable', 'allow', 'prefer',
+  'verify-full', 'verify-ca', 'require']]     $ssl_mode             = undef,
+  Optional[Stdlib::Absolutepath]              $ssl_key_path         = undef,
+  Optional[Stdlib::Absolutepath]              $ssl_cert_path        = undef,
+  Optional[Stdlib::Absolutepath]              $ssl_cacert_path      = undef,
+  Optional[Icinga::Secret]                    $ssl_key              = undef,
+  Optional[String]                            $ssl_cert             = undef,
+  Optional[String]                            $ssl_cacert           = undef,
+  Optional[String]                            $table_prefix         = undef,
+  Optional[String]                            $instance_name        = undef,
+  Optional[String]                            $instance_description = undef,
+  Optional[Boolean]                           $enable_ha            = undef,
+  Optional[Icinga2::Interval]                 $failover_timeout     = undef,
+  Optional[Icinga2::IdoCleanup]               $cleanup              = undef,
+  Optional[Array]                             $categories           = undef,
+  Boolean                                     $import_schema        = false,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -133,8 +134,9 @@ class icinga2::feature::idopgsql (
   }
 
   if $enable_ssl {
-    $cert = icinga2::cert(
+    $cert = icinga::cert::files(
       'IdoPgsqlConnection_ido-pgsql',
+      $ssl_dir,
       $ssl_key_path,
       $ssl_cert_path,
       $ssl_cacert_path,
@@ -150,9 +152,21 @@ class icinga2::feature::idopgsql (
       'ssl_key'  => $cert['key_file'],
     }
 
-    icinga2::tls::client { 'IdoPgsqlConnection_ido-pgsql':
-      args   => $cert,
-      notify => $_notify,
+    # Workaround, icinga::cert doesn't accept undef values for owner and group!
+    if $facts['os']['family'] != 'windows' {
+      icinga::cert { 'IdoPgsqlConnection_ido-pgsql':
+        args   => $cert,
+        owner  => $owner,
+        group  => $group,
+        notify => $_notify,
+      }
+    } else {
+      icinga::cert { 'IdoPgsqlConnection_ido-pgsql':
+        args   => $cert,
+        owner  => 'foo',
+        group  => 'bar',
+        notify => $_notify,
+      }
     }
   } else {
     $attrs_ssl = {
@@ -205,7 +219,7 @@ class icinga2::feature::idopgsql (
       Package[$ido_pgsql_package_name] -> Exec['idopgsql-import-schema']
     }
 
-    $db_cli_options = icinga2::db::connect({
+    $db_cli_options = icinga::db::connect({
         'type'     => 'pgsql',
         'host'     => $host,
         'port'     => $port,
@@ -216,7 +230,7 @@ class icinga2::feature::idopgsql (
     exec { 'idopgsql-import-schema':
       user        => 'root',
       path        => $facts['path'],
-      environment => [sprintf('PGPASSWORD=%s', icinga2::unwrap($password))],
+      environment => [sprintf('PGPASSWORD=%s', unwrap($password))],
       command     => "psql '${db_cli_options}' -w -f '${ido_pgsql_schema}'",
       unless      => "psql '${db_cli_options}' -w -c 'select version from icinga_dbversion'",
     }

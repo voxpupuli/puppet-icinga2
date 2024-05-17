@@ -157,12 +157,12 @@ class icinga2::feature::api (
   Optional[Boolean]                                        $accept_commands                  = undef,
   Optional[Integer[0]]                                     $max_anonymous_clients            = undef,
   Optional[Stdlib::Host]                                   $ca_host                          = undef,
-  Stdlib::Port::Unprivileged                               $ca_port                          = 5665,
-  Variant[String, Sensitive[String]]                       $ticket_salt                      = 'TicketSalt',
-  Optional[Variant[String, Sensitive[String]]]             $ticket_id                        = undef,
+  Stdlib::Port                                             $ca_port                          = 5665,
+  Icinga::Secret                                           $ticket_salt                      = 'TicketSalt',
+  Optional[Icinga::Secret]                                 $ticket_id                        = undef,
   Hash[String, Hash]                                       $endpoints                        = { 'NodeName' => {} },
   Hash[String, Hash]                                       $zones                            = { 'ZoneName' => { endpoints => ['NodeName'] } },
-  Optional[String]                                         $ssl_key                          = undef,
+  Optional[Icinga::Secret]                                 $ssl_key                          = undef,
   Optional[String]                                         $ssl_cert                         = undef,
   Optional[String]                                         $ssl_cacert                       = undef,
   Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3']] $ssl_protocolmin                  = undef,
@@ -170,7 +170,7 @@ class icinga2::feature::api (
   Optional[Icinga2::Interval]                              $connect_timeout                  = undef,
   Optional[String]                                         $ssl_cipher_list                  = undef,
   Optional[Stdlib::Host]                                   $bind_host                        = undef,
-  Optional[Stdlib::Port::Unprivileged]                     $bind_port                        = undef,
+  Optional[Stdlib::Port]                                   $bind_port                        = undef,
   Optional[Array[Enum['GET', 'POST', 'PUT', 'DELETE']]]    $access_control_allow_methods     = undef,
   Optional[Array[String]]                                  $access_control_allow_origin      = undef,
   Optional[Boolean]                                        $access_control_allow_credentials = undef,
@@ -252,7 +252,7 @@ class icinga2::feature::api (
         file { $_ssl_key_path:
           ensure    => file,
           mode      => $_ssl_key_mode,
-          content   => icinga2::newline($ssl_key),
+          content   => icinga::newline($ssl_key),
           tag       => 'icinga2::config::file',
           show_diff => false,
           backup    => false,
@@ -262,7 +262,7 @@ class icinga2::feature::api (
       if $ssl_cert {
         file { $_ssl_cert_path:
           ensure  => file,
-          content => icinga2::newline($ssl_cert),
+          content => icinga::newline($ssl_cert),
           tag     => 'icinga2::config::file',
         }
       }
@@ -270,7 +270,7 @@ class icinga2::feature::api (
       if $ssl_cacert {
         file { $_ssl_cacert_path:
           ensure  => file,
-          content => icinga2::newline($ssl_cacert),
+          content => icinga::newline($ssl_cacert),
           tag     => 'icinga2::config::file',
         }
       }
