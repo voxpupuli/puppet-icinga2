@@ -18,7 +18,7 @@
     },
     {
       "name": "icinga/icinga",
-      "version_requirement": ">= 2.9.0 < 5.0.0"
+      "version_requirement": ">= 2.9.0 < 6.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -119,8 +119,5 @@
     "icinga",
     "icinga2",
     "monitoring"
-  ],
-  "pdk-version": "3.0.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#3.0.0",
-  "template-ref": "tags/3.0.0-0-g5bfc1c0"
+  ]
 }

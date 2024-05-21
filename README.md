@@ -1,14 +1,14 @@
-[![Build Status](https://github.com/icinga/puppet-icinga2/workflows/Test/badge.svg)](https://github.com/Icinga/puppet-icinga2/actions/workflows/ci.yml)
-[![Puppet Forge](https://img.shields.io/puppetforge/v/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
-[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
-[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
-[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/icinga/icinga2.svg)](https://forge.puppetlabs.com/icinga/icinga2)
-[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.png)](https://www.puppetmodule.info/m/puppet-icinga2)
-[![Apache-2.0 License](https://img.shields.io/github/license/icinga/puppet-icinga2.svg)](LICENSE)
-
 # Icinga 2 Puppet Module
 
-![Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
+[![Build Status](https://github.com/voxpupuli/puppet-icinga2/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-icinga2/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-icinga2/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-icinga2/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/icinga2.svg)](https://forge.puppet.com/modules/puppet/icinga)
+[![puppet integration](http://www.puppetmodule.info/images/badge.png)](https://icinga.com/products/integrations/puppet)
+[![Apache-2.0 License](https://img.shields.io/github/license/voxpupuli/puppet-icinga2.svg)](LICENSE)
+[![Donated by Icinga](https://img.shields.io/badge/donated%20by-Icinga-fb7047.svg)](#transfer-notice)
+[![Sponsored by NETWAYS](https://img.shields.io/badge/Sponsored%20by-NETWAYS%20GmbH-blue.svg)](https://www.netways.de)
+
+[Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
 #### Table of Contents
 
@@ -74,9 +74,9 @@ This module supports:
 
 And depends on:
 
-* [puppetlabs/stdlib] >= 9.0.0 < 10.0.0
+* [puppetlabs/stdlib] >= 6.6.0 < 10.0.0
 * [puppetlabs/concat] >= 6.4.0 < 10.0.0
-* [icinga/icinga] >= 1.0.0 < 4.0.0
+* [icinga/icinga] >= 1.0.0 < 6.0.0
     * needed if `manage_repos` is set to `true`
 * [puppetlabs/chocolatey] >= 5.2.0 < 9.0.0
     * needed if agent os is windows and if `manage_packages` is set to `true`
@@ -110,7 +110,7 @@ Use the `manage_repos` parameter to configure repositories by default the offici
 repositories, or use the official testing or nightly snapshot stage, see https://github.com/icinga/puppet-icinga.
 
 ``` puppet
-class { '::icinga2':
+class { 'icinga2':
   manage_repos => true,
 }
 ```
@@ -128,7 +128,7 @@ package { 'icinga2':
   notify => Class['icinga2'],
 }
 
-class { '::icinga2':
+class { 'icinga2':
   manage_packages => false,
 }
 ```
@@ -159,7 +159,7 @@ This example creates the configuration for a master that has one satellite conne
 templates, and all features of a typical master are enabled.
 
 ``` puppet
-class { '::icinga2':
+class { 'icinga2':
   confd     => false,
   constants => {
     'ZoneName'   => 'master',
@@ -167,7 +167,7 @@ class { '::icinga2':
   },
 }
 
-class { '::icinga2::feature::api':
+class { 'icinga2::feature::api':
   pki             => 'none',
   accept_commands => true,
   # when having multiple masters, you have to enable:
@@ -190,7 +190,7 @@ class { '::icinga2::feature::api':
 }
 
 # to enable a CA on this instance you have to declare. Only one instance is allowed to be a CA:
-include ::icinga2::pki::ca
+include icinga2::pki::ca
 
 icinga2::object::zone { 'global-templates':
   global => true,
@@ -207,7 +207,7 @@ The satellite has fewer features enabled, but executes checks similar to a maste
 a satellite or client below in the hierarchy. As parent acts either the master zone, or another satellite zone.
 
 ``` puppet
-class { '::icinga2':
+class { 'icinga2':
   confd     => false,
   # setting dedicated feature list to disable notification
   features  => ['checker','mainlog'],
@@ -216,7 +216,7 @@ class { '::icinga2':
   },
 }
 
-class { '::icinga2::feature::api':
+class { 'icinga2::feature::api':
   accept_config   => true,
   accept_commands => true,
   ca_host         => '172.16.1.11',
@@ -253,12 +253,12 @@ zones and runs the checks that have to be executed locally.
 The client is connected to the satellite, which is the direct parent zone.
 
 ``` puppet
-class { '::icinga2':
+class { 'icinga2':
   confd     => false,
   features  => ['mainlog'],
 }
 
-class { '::icinga2::feature::api':
+class { 'icinga2::feature::api':
   accept_config   => true,
   accept_commands => true,
   ticket_salt     => '5a3d695b8aef8f18452fc494593056a4',
@@ -447,7 +447,7 @@ icinga2::object::service { 'HTTP':
 Sometimes it's necessary to cover very special configurations, that you cannot handle with this module. In this case you can use the `icinga2::config::file` tag on your file resource. The module collects all file resource types with this tag and triggers a reload of Icinga 2 on a file change.
 
 ```
-include ::icinga2
+include icinga2
 
 file { '/etc/icinga2/conf.d/for-loop.conf':
   ensure => file,
@@ -654,8 +654,8 @@ This may be fixed by doing the following steps in order:
 
 ## Release Notes
 
-When releasing new versions we refer to [SemVer 1.0.0] for version numbers. All steps required when creating a new
-release are described in [RELEASE.md](https://github.com/Icinga/puppet-icinga2/blob/master/RELEASE.md)
+When releasing new versions we refer to [SemVer 1.0.0] for version numbers.
+[SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 
 See also [CHANGELOG.md](https://github.com/Icinga/puppet-icinga2/blob/master/CHANGELOG.md)
 
@@ -667,13 +667,10 @@ See also [CHANGELOG.md](https://github.com/Icinga/puppet-icinga2/blob/master/CHA
 [puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
 [puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
-[puppet-icinga2]: https://github.com/icinga/puppet-icinga2
+[puppet-icinga2]: https://github.com/voxpupuli/puppet-icinga2
 [packages.icinga.com]: https://packages.icinga.com
 [Chocolatey]: https://chocolatey.org
-[SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 
-[CONTRIBUTING.md]: CONTRIBUTING.md
-[TESTING.md]: TESTING.md
 [RELEASE.md]: RELEASE.md
 [CHANGELOG.md]: CHANGELOG.md
 [AUTHORS]: AUTHORS
