@@ -1,5 +1,5 @@
 {
-  "name": "icinga-icinga2",
+  "name": "puppet-icinga2",
   "version": "5.0.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Icinga 2 Puppet Module",
