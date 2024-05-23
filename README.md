@@ -671,6 +671,10 @@ See also [CHANGELOG.md](https://github.com/Icinga/puppet-icinga2/blob/master/CHA
 [packages.icinga.com]: https://packages.icinga.com
 [Chocolatey]: https://chocolatey.org
 
-[RELEASE.md]: RELEASE.md
-[CHANGELOG.md]: CHANGELOG.md
-[AUTHORS]: AUTHORS
+## Transfer Notice
+
+This plugin was originally authored by [Icinga](http://www.icinga.com).
+The maintainer preferred that Vox Pupuli take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Icinga.
+
+Previously: https://github.com/icinga/puppet-icinga2
