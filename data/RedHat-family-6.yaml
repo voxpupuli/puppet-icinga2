@@ -1,3 +1,0 @@
----
-icinga2::globals::icinga2_bin: /usr/sbin/icinga2
-icinga2::manage_selinux: false
