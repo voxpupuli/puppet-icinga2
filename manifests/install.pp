@@ -23,7 +23,7 @@ class icinga2::install {
       before => File[$cert_dir, $conf_dir],
     }
 
-    if $facts['os']['selinux']['enabled'] and $selinux_package_name {
+    if fact('os.selinux.enabled') and $facts['os']['selinux']['enabled'] and $selinux_package_name {
       package { $selinux_package_name:
         ensure  => installed,
         require => Package[$package_name],
