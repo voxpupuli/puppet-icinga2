@@ -202,7 +202,6 @@ The following parameters are available in the `icinga2` class:
 * [`enable`](#-icinga2--enable)
 * [`manage_repos`](#-icinga2--manage_repos)
 * [`manage_packages`](#-icinga2--manage_packages)
-* [`manage_selinux`](#-icinga2--manage_selinux)
 * [`manage_service`](#-icinga2--manage_service)
 * [`features`](#-icinga2--features)
 * [`purge_features`](#-icinga2--purge_features)
@@ -243,15 +242,6 @@ Data type: `Boolean`
 If set to false packages aren't managed.
 
 Default value: `true`
-
-##### <a name="-icinga2--manage_selinux"></a>`manage_selinux`
-
-Data type: `Boolean`
-
-If set to true the icinga selinux package is installed. Requires a `selinux_package_name` (icinga2::globals)
-and `manage_packages` has to be set to true.
-
-Default value: `false`
 
 ##### <a name="-icinga2--manage_service"></a>`manage_service`
 
