@@ -43,12 +43,30 @@ describe('icinga2', type: :class) do
         it { is_expected.to contain_icinga2__feature('notification').with({ 'ensure' => 'present' }) }
       end
 
+      if facts[:os]['family'] == 'RedHat'
+        context 'with fact os.selinux.enabled => false' do
+          let(:facts) do
+            super().merge({ os: { family: 'RedHat', selinux: { enabled: false } } })
+          end
+
+          it { is_expected.not_to contain_package('icinga2-selinux') }
+        end
+
+        context 'with manage_selinux => false' do
+          let(:params) do
+            { manage_selinux: false }
+          end
+
+          it { is_expected.not_to contain_package('icinga2-selinux') }
+        end
+      end
+
       context 'with manage_packages => false' do
         let(:params) do
           { manage_packages: false }
         end
 
-        it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+        it { is_expected.not_to contain_package('icinga2') }
       end
 
       context 'with confd => false' do
