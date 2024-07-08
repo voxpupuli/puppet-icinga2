@@ -73,11 +73,6 @@ class icinga2::feature::gelf (
     default   => undef,
   }
 
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
-
   if $enable_ssl {
     $cert = icinga::cert::files(
       'GelfWriter_gelf',

@@ -9,7 +9,7 @@ class icinga2::install {
 
   $package_name         = $icinga2::globals::package_name
   $manage_packages      = $icinga2::manage_packages
-  $manage_selinux       = $icinga2::manage_selinux
+  $manage_selinux       = $icinga2::_selinux
   $selinux_package_name = $icinga2::globals::selinux_package_name
   $cert_dir             = $icinga2::globals::cert_dir
   $conf_dir             = $icinga2::globals::conf_dir
@@ -24,7 +24,7 @@ class icinga2::install {
       before => File[$cert_dir, $conf_dir],
     }
 
-    if $manage_selinux and fact('os.selinux.enabled') and $facts['os']['selinux']['enabled'] and $selinux_package_name {
+    if $manage_selinux {
       package { $selinux_package_name:
         ensure  => installed,
         require => Package[$package_name],
