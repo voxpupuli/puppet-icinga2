@@ -18,6 +18,7 @@ describe('icinga2', type: :class) do
 
       context 'with defaults' do
         it { is_expected.to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+        it { is_expected.not_to contain_package('icinga2-selinux') }
 
         it {
           is_expected.to contain_service('icinga2').with(
@@ -44,17 +45,25 @@ describe('icinga2', type: :class) do
       end
 
       if facts[:os]['family'] == 'RedHat'
-        context 'with fact os.selinux.enabled => false' do
+        context 'with manage_selinux => true, fact os.selinux.enabled => true' do
+          let(:facts) do
+            super().merge({ os: { family: 'RedHat', selinux: { enabled: true } } })
+          end
+
+          let(:params) do
+            { manage_selinux: true }
+          end
+
+          it { is_expected.to contain_package('icinga2-selinux') }
+        end
+
+        context 'with manage_selinux => true, fact os.selinux.enabled => false' do
           let(:facts) do
             super().merge({ os: { family: 'RedHat', selinux: { enabled: false } } })
           end
 
-          it { is_expected.not_to contain_package('icinga2-selinux') }
-        end
-
-        context 'with manage_selinux => false' do
           let(:params) do
-            { manage_selinux: false }
+            { manage_selinux: true }
           end
 
           it { is_expected.not_to contain_package('icinga2-selinux') }

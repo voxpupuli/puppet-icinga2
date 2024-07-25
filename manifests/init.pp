@@ -118,7 +118,7 @@ class icinga2 (
   Boolean                    $enable          = true,
   Boolean                    $manage_repos    = false,
   Boolean                    $manage_packages = true,
-  Boolean                    $manage_selinux  = true,
+  Boolean                    $manage_selinux  = false,
   Boolean                    $manage_service  = true,
   Boolean                    $purge_features  = true,
   Hash                       $constants       = {},
