@@ -108,15 +108,13 @@ class icinga2::feature::icingadb (
     default   => undef,
   }
 
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
-
   if $env_id {
     file { "${data_dir}/icingadb.env":
       ensure    => file,
+      owner     => $owner,
+      group     => $group,
       mode      => '0600',
+      seltype   => 'icinga2_etc_t',
       content   => sprintf('"%s"', unwrap($env_id)),
       show_diff => false,
       tag       => 'icinga2::config::file',

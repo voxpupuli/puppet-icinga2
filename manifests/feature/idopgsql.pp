@@ -128,11 +128,6 @@ class icinga2::feature::idopgsql (
     default   => undef,
   }
 
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
-
   if $enable_ssl {
     $cert = icinga::cert::files(
       'IdoPgsqlConnection_ido-pgsql',

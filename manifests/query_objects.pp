@@ -22,9 +22,10 @@ class icinga2::query_objects (
     } # windows
     default: {
       Concat {
-        owner => $icinga2::globals::user,
-        group => $icinga2::globals::group,
-        mode  => '0640',
+        owner   => $icinga2::globals::user,
+        group   => $icinga2::globals::group,
+        seltype => 'icinga2_etc_t',
+        mode    => '0640',
       }
     } # default
   }

@@ -24,9 +24,10 @@ class icinga2::config {
   }
 
   File {
-    owner => $user,
-    group => $group,
-    mode  => $file_permissions,
+    owner   => $user,
+    group   => $group,
+    mode    => $file_permissions,
+    seltype => 'icinga2_etc_t',
   }
 
   file { "${conf_dir}/constants.conf":

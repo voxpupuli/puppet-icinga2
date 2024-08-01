@@ -103,11 +103,6 @@ class icinga2::feature::elasticsearch (
     default   => undef,
   }
 
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
-
   if $enable_ssl {
     $cert = icinga::cert::files(
       'ElasticsearchWriter_elasticsearch',
