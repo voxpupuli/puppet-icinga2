@@ -139,11 +139,6 @@ class icinga2::feature::influxdb (
     undef
   }
 
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
-
   $host_template    = { measurement => $host_measurement, tags => $host_tags }
   $service_template = { measurement => $service_measurement, tags => $service_tags }
 

@@ -39,8 +39,9 @@ class icinga2::pki::ca (
   $_ssl_cacert_path = "${cert_dir}/ca.crt"
 
   File {
-    owner => $user,
-    group => $group,
+    owner   => $user,
+    group   => $group,
+    seltype => 'icinga2_var_lib_t',
   }
 
   if $::facts['os']['family'] != 'windows' {

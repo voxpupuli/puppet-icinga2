@@ -185,25 +185,27 @@ class icinga2::feature::api (
   # cert directory must exists and icinga binary is required for icinga2 pki
   require icinga2::install
 
-  $icinga2_bin   = $icinga2::globals::icinga2_bin
-  $conf_dir      = $icinga2::globals::conf_dir
-  $cert_dir      = $icinga2::globals::cert_dir
-  $ca_dir        = $icinga2::globals::ca_dir
-  $user          = $icinga2::globals::user
-  $group         = $icinga2::globals::group
-  $node_name     = $icinga2::_constants['NodeName']
-  $_ssl_key_mode = $facts['os']['family'] ? {
+  $icinga2_bin    = $icinga2::globals::icinga2_bin
+  $manage_selinux = $icinga2::_selinux
+  $conf_dir       = $icinga2::globals::conf_dir
+  $cert_dir       = $icinga2::globals::cert_dir
+  $ca_dir         = $icinga2::globals::ca_dir
+  $user           = $icinga2::globals::user
+  $group          = $icinga2::globals::group
+  $node_name      = $icinga2::_constants['NodeName']
+  $_ssl_key_mode  = $facts['os']['family'] ? {
     'windows' => undef,
     default   => '0600',
   }
-  $_notify       = $ensure ? {
+  $_notify        = $ensure ? {
     'present' => Class['icinga2::service'],
     default   => undef,
   }
 
   File {
-    owner => $user,
-    group => $group,
+    owner   => $user,
+    group   => $group,
+    seltype => 'icinga2_var_lib_t',
   }
 
   # Set defaults for certificate stuff
@@ -356,6 +358,22 @@ class icinga2::feature::api (
   # create endpoints and zones
   create_resources('icinga2::object::endpoint', $endpoints)
   create_resources('icinga2::object::zone', $zones)
+
+  if $manage_selinux and $bind_port {
+    # if port is free
+    exec { "Add port ${bind_port} for icinga2_port_t":
+      command => ['/usr/sbin/semanage', 'port', '-a', '-t', 'icinga2_port_t', '-p', 'tcp', $bind_port],
+      unless  => "/usr/sbin/semanage port -l | grep -qw '\\s${bind_port}'",
+      before  => Icinga2::Object['icinga2::object::ApiListener::api'],
+    }
+
+    # if port is also used by another app
+    exec { "Add available port ${bind_port} also for icinga2_port_t":
+      command => ['/usr/sbin/semanage', 'port', '-m', '-t', 'icinga2_port_t', '-p', 'tcp', $bind_port],
+      onlyif  => "/usr/sbin/semanage port -l | grep -wv '^icinga2_port_t' | grep -wq '\s${bind_port}'",
+      before  => Icinga2::Object['icinga2::object::ApiListener::api'],
+    }
+  }
 
   # create object
   icinga2::object { 'icinga2::object::ApiListener::api':
