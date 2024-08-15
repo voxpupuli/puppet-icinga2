@@ -20,9 +20,9 @@
 define icinga2::object::checkresultreader (
   Stdlib::Absolutepath               $target,
   Enum['absent', 'present']          $ensure                 = present,
-  String                             $checkresultreader_name = $title,
+  String[1]                          $checkresultreader_name = $title,
   Optional[Stdlib::Absolutepath]     $spool_dir              = undef,
-  Variant[String, Integer]           $order                  = '05',
+  Variant[String[1], Integer[0]]     $order                  = '05',
 ) {
   require icinga2::globals
 

@@ -17,4 +17,4 @@ type Icinga2::IdoCleanup = Hash[
     'servicechecks_age',
     'systemcommands_age',
   ],
-String]
+String[1]]

@@ -112,17 +112,17 @@
 #   with tag icinga2::config::file.
 #
 class icinga2 (
-  Array                      $features,
-  Array                      $plugins,
-  Stdlib::Ensure::Service    $ensure          = running,
-  Boolean                    $enable          = true,
-  Boolean                    $manage_repos    = false,
-  Boolean                    $manage_packages = true,
-  Boolean                    $manage_selinux  = false,
-  Boolean                    $manage_service  = true,
-  Boolean                    $purge_features  = true,
-  Hash                       $constants       = {},
-  Variant[Boolean, String]   $confd           = true,
+  Array[String[1]]            $features,
+  Array[String[1]]            $plugins,
+  Stdlib::Ensure::Service     $ensure          = running,
+  Boolean                     $enable          = true,
+  Boolean                     $manage_repos    = false,
+  Boolean                     $manage_packages = true,
+  Boolean                     $manage_selinux  = false,
+  Boolean                     $manage_service  = true,
+  Boolean                     $purge_features  = true,
+  Hash[String[1], Any]        $constants       = {},
+  Variant[Boolean, String[1]] $confd           = true,
 ) {
   require icinga2::globals
 

@@ -28,14 +28,14 @@
 #   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::zone (
-  Enum['absent', 'present']          $ensure    = present,
-  String                             $zone_name = $title,
-  Array                              $endpoints = [],
-  Optional[String]                   $parent    = undef,
-  Boolean                            $global    = false,
-  Optional[Stdlib::Absolutepath]     $target    = undef,
-  Variant[String, Integer]           $order     = 45,
-  Variant[Array[String], String]     $export    = [],
+  Enum['absent', 'present']            $ensure    = present,
+  String[1]                            $zone_name = $title,
+  Array[String[1]]                     $endpoints = [],
+  Optional[String[1]]                  $parent    = undef,
+  Boolean                              $global    = false,
+  Optional[Stdlib::Absolutepath]       $target    = undef,
+  Variant[String[1], Integer[0]]       $order     = 45,
+  Variant[Array[String[1]], String[1]] $export    = [],
 ) {
   require icinga2::globals
   $conf_dir = $icinga2::globals::conf_dir

@@ -38,15 +38,15 @@
 #   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::hostgroup (
-  Stdlib::Absolutepath           $target,
-  Enum['absent', 'present']      $ensure         = present,
-  String                         $hostgroup_name = $title,
-  Optional[String]               $display_name   = undef,
-  Optional[Array]                $groups         = undef,
-  Array                          $assign         = [],
-  Array                          $ignore         = [],
-  Variant[String, Integer]       $order          = 55,
-  Variant[Array[String], String] $export         = [],
+  Stdlib::Absolutepath                 $target,
+  Enum['absent', 'present']            $ensure         = present,
+  String[1]                            $hostgroup_name = $title,
+  Optional[String[1]]                  $display_name   = undef,
+  Optional[Array]                      $groups         = undef,
+  Array[String[1]]                     $assign         = [],
+  Array[String[1]]                     $ignore         = [],
+  Variant[String[1], Integer[0]]       $order          = 55,
+  Variant[Array[String[1]], String[1]] $export         = [],
 ) {
   require icinga2::globals
 

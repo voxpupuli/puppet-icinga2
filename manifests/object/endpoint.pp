@@ -31,13 +31,13 @@
 #
 define icinga2::object::endpoint (
   Enum['absent', 'present']             $ensure        = present,
-  String                                $endpoint_name = $title,
+  String[1]                             $endpoint_name = $title,
   Optional[Stdlib::Host]                $host          = undef,
   Optional[Stdlib::Port]                $port          = undef,
   Optional[Icinga2::Interval]           $log_duration  = undef,
   Optional[Stdlib::Absolutepath]        $target        = undef,
-  Variant[String, Integer]              $order         = 40,
-  Variant[Array[String], String]        $export        = [],
+  Variant[String[1], Integer[0]]        $order         = 40,
+  Variant[Array[String[1]], String[1]]  $export        = [],
 ) {
   require icinga2::globals
   $conf_dir = $icinga2::globals::conf_dir

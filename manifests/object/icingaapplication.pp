@@ -46,7 +46,7 @@
 #
 define icinga2::object::icingaapplication (
   Enum['absent', 'present']             $ensure                = present,
-  String                                $app_name              = $title,
+  String[1]                             $app_name              = $title,
   Optional[Boolean]                     $enable_notifications  = undef,
   Optional[Boolean]                     $enable_event_handlers = undef,
   Optional[Boolean]                     $enable_flapping       = undef,
@@ -54,10 +54,10 @@ define icinga2::object::icingaapplication (
   Optional[Boolean]                     $enable_service_checks = undef,
   Optional[Boolean]                     $enable_perfdata       = undef,
   Optional[Icinga2::CustomAttributes]   $vars                  = undef,
-  Optional[String]                      $environment           = undef,
+  Optional[String[1]]                   $environment           = undef,
   Optional[Stdlib::Absolutepath]        $target                = undef,
-  Variant[String, Integer]              $order                 = 5,
-  Variant[Array[String], String]        $export                = [],
+  Variant[String[1], Integer[0]]        $order                 = 5,
+  Variant[Array[String[1]], String[1]]  $export                = [],
 ) {
   require icinga2::globals
   $conf_dir = $icinga2::globals::conf_dir

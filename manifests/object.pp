@@ -50,20 +50,20 @@
 #   Array of all possible attributes for this object type.
 #
 define icinga2::object (
-  String                                                      $object_type,
+  String[1]                                                   $object_type,
   Stdlib::Absolutepath                                        $target,
-  Variant[String, Integer]                                    $order,
+  Variant[String[1], Integer[0]]                              $order,
   Enum['present', 'absent']                                   $ensure       = present,
-  String                                                      $object_name  = $title,
+  String[1]                                                   $object_name  = $title,
   Boolean                                                     $template     = false,
   Variant[Boolean, Pattern[/^.+\s+(=>\s+.+\s+)?in\s+.+$/]]    $apply        = false,
-  Array                                                       $attrs_list   = [],
+  Array[String[1]]                                            $attrs_list   = [],
   Optional[Enum['Host', 'Service']]                           $apply_target = undef,
-  Variant[Boolean, String]                                    $prefix       = false,
-  Array                                                       $import       = [],
-  Array                                                       $assign       = [],
-  Array                                                       $ignore       = [],
-  Hash                                                        $attrs        = {},
+  Variant[Boolean, String[1]]                                 $prefix       = false,
+  Array[String[1]]                                            $import       = [],
+  Array[String[1]]                                            $assign       = [],
+  Array[String[1]]                                            $ignore       = [],
+  Hash[String[1], Any]                                        $attrs        = {},
 ) {
   assert_private()
 

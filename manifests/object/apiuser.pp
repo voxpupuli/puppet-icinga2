@@ -54,21 +54,21 @@
 #   Destination config file to store in this object. File will be declared at the
 #   first time.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   String or integer to set the position in the target file, sorted alpha numeric.
 #
 # @param export
 #   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::apiuser (
-  Stdlib::Absolutepath           $target,
-  Enum['absent', 'present']      $ensure       = present,
-  String                         $apiuser_name = $title,
-  Optional[Array]                $permissions  = undef,
-  Optional[Icinga::Secret]       $password     = undef,
-  Optional[String]               $client_cn    = undef,
-  Variant[String, Integer]       $order        = 30,
-  Variant[Array[String], String] $export       = [],
+  Stdlib::Absolutepath                 $target,
+  Enum['absent', 'present']            $ensure       = present,
+  String[1]                            $apiuser_name = $title,
+  Optional[Array]                      $permissions  = undef,
+  Optional[Icinga::Secret]             $password     = undef,
+  Optional[String[1]]                  $client_cn    = undef,
+  Variant[String[1], Integer[0]]       $order        = 30,
+  Variant[Array[String[1]], String[1]] $export       = [],
 ) {
   require icinga2::globals
 
