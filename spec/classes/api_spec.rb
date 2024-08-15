@@ -72,6 +72,24 @@ describe('icinga2::feature::api', type: :class) do
         end
       end
 
+      if facts[:os]['family'] == 'RedHat'
+        context 'with icinga2::manage_selinux => true, bind_port => 1234' do
+          let(:pre_condition) do
+            [
+              "class { 'icinga2': manage_selinux => true, features => [], constants => {'NodeName' => 'host.example.org'} }",
+            ]
+          end
+
+          let(:params) do
+            {
+              bind_port: 1234,
+            }
+          end
+
+          it { is_expected.to contain_exec('Add port 1234 for icinga2_port_t') }
+        end
+      end
+
       context "with pki => 'puppet'" do
         let(:params) do
           {

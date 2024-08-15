@@ -23,6 +23,8 @@ define icinga2::feature (
       ensure  => $_ensure,
       owner   => $user,
       group   => $group,
+      seluser => 'unconfined_u',
+      seltype => 'icinga2_etc_t',
       target  => "../features-available/${feature}.conf",
       require => Concat["${conf_dir}/features-available/${feature}.conf"],
       notify  => Class['icinga2::service'],

@@ -142,11 +142,6 @@ class icinga2::feature::idomysql (
     default   => undef,
   }
 
-  File {
-    owner   => $owner,
-    group   => $group,
-  }
-
   if $enable_ssl {
     $cert = icinga::cert::files(
       'IdoMysqlConnection_ido-mysql',
