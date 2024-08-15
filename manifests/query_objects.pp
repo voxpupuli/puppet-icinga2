@@ -8,8 +8,8 @@
 #   limits the response to objects of these environments if set, all environments if list is empty
 #
 class icinga2::query_objects (
-  String        $destination  = $facts['networking']['fqdn'],
-  Array[String] $environments = [$environment],
+  String[1]        $destination  = $facts['networking']['fqdn'],
+  Array[String[1]] $environments = [$environment],
 ) {
   $_environments = if empty($environments) {
     ''

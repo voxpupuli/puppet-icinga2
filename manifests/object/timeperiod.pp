@@ -39,18 +39,18 @@
 #   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::timeperiod (
-  Stdlib::Absolutepath           $target,
-  Enum['absent', 'present']      $ensure          = present,
-  String                         $timeperiod_name = $title,
-  Optional[String]               $display_name    = undef,
-  Optional[Hash]                 $ranges          = undef,
-  Optional[Boolean]              $prefer_includes = undef,
-  Optional[Array]                $excludes        = undef,
-  Optional[Array]                $includes        = undef,
-  Boolean                        $template        = false,
-  Array                          $import          = ['legacy-timeperiod'],
-  Variant[String, Integer]       $order           = 35,
-  Variant[Array[String], String] $export          = [],
+  Stdlib::Absolutepath                 $target,
+  Enum['absent', 'present']            $ensure          = present,
+  String[1]                            $timeperiod_name = $title,
+  Optional[String[1]]                  $display_name    = undef,
+  Optional[Hash]                       $ranges          = undef,
+  Optional[Boolean]                    $prefer_includes = undef,
+  Optional[Array[String[1]]]           $excludes        = undef,
+  Optional[Array[String[1]]]           $includes        = undef,
+  Boolean                              $template        = false,
+  Array[String[1]]                     $import          = ['legacy-timeperiod'],
+  Variant[String[1], Integer[0]]       $order           = 35,
+  Variant[Array[String[1]], String[1]] $export          = [],
 ) {
   require icinga2::globals
 
