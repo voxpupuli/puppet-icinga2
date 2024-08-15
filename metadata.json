@@ -25,7 +25,6 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "8",
         "9"
       ]
     },
