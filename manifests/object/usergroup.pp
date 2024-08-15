@@ -36,17 +36,17 @@
 #   Export object to destination, collected by class `icinga2::query_objects`.
 #
 define icinga2::object::usergroup (
-  Stdlib::Absolutepath           $target,
-  Enum['absent', 'present']      $ensure         = present,
-  String                         $usergroup_name = $title,
-  Optional[String]               $display_name   = undef,
-  Array                          $groups         = [],
-  Array                          $assign         = [],
-  Array                          $ignore         = [],
-  Array                          $import         = [],
-  Boolean                        $template       = false,
-  Variant[String, Integer]       $order          = 80,
-  Variant[Array[String], String] $export         = [],
+  Stdlib::Absolutepath                 $target,
+  Enum['absent', 'present']            $ensure         = present,
+  String[1]                            $usergroup_name = $title,
+  Optional[String[1]]                  $display_name   = undef,
+  Array[String[1]]                     $groups         = [],
+  Array[String[1]]                     $assign         = [],
+  Array[String[1]]                     $ignore         = [],
+  Array[String[1]]                     $import         = [],
+  Boolean                              $template       = false,
+  Variant[String[1], Integer[0]]       $order          = 80,
+  Variant[Array[String[1]], String[1]] $export         = [],
 ) {
   require icinga2::globals
 

@@ -78,11 +78,11 @@ class icinga2::feature::icingadb (
   Optional[Stdlib::Absolutepath] $tls_cacert_file = undef,
   Optional[Stdlib::Absolutepath] $tls_crl_file    = undef,
   Optional[Icinga::Secret]       $tls_key         = undef,
-  Optional[String]               $tls_cert        = undef,
-  Optional[String]               $tls_cacert      = undef,
-  Optional[String]               $tls_capath      = undef,
-  Optional[String]               $tls_cipher      = undef,
-  Optional[String]               $tls_protocolmin = undef,
+  Optional[String[1]]            $tls_cert        = undef,
+  Optional[String[1]]            $tls_cacert      = undef,
+  Optional[String[1]]            $tls_capath      = undef,
+  Optional[String[1]]            $tls_cipher      = undef,
+  Optional[String[1]]            $tls_protocolmin = undef,
   Optional[Boolean]              $tls_noverify    = undef,
 ) {
   if ! defined(Class['icinga2']) {

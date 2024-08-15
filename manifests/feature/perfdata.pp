@@ -35,8 +35,8 @@ class icinga2::feature::perfdata (
   Optional[Stdlib::Absolutepath]      $service_perfdata_path   = undef,
   Optional[Stdlib::Absolutepath]      $host_temp_path          = undef,
   Optional[Stdlib::Absolutepath]      $service_temp_path       = undef,
-  Optional[String]                    $host_format_template    = undef,
-  Optional[String]                    $service_format_template = undef,
+  Optional[String[1]]                 $host_format_template    = undef,
+  Optional[String[1]]                 $service_format_template = undef,
   Optional[Icinga2::Interval]         $rotation_interval       = undef,
   Optional[Boolean]                   $enable_ha               = undef,
 ) {

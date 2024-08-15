@@ -264,7 +264,7 @@ Default value: `true`
 
 ##### <a name="-icinga2--features"></a>`features`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 List of features to activate. Defaults to [checker, mainlog, notification].
 
@@ -278,7 +278,7 @@ Default value: `true`
 
 ##### <a name="-icinga2--constants"></a>`constants`
 
-Data type: `Hash`
+Data type: `Hash[String[1], Any]`
 
 Hash of constants. Defaults are set in the params class. Your settings will be merged with the defaults.
 
@@ -286,13 +286,13 @@ Default value: `{}`
 
 ##### <a name="-icinga2--plugins"></a>`plugins`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
 
 ##### <a name="-icinga2--confd"></a>`confd`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 `conf.d` is the directory where Icinga 2 stores its object configuration by default. To disable it,
 set this parameter to `false`. By default this parameter is `true`. It's also possible to assign your
@@ -439,7 +439,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate in a base64 encoded string to store in cert directory This parameter
  requires pki to be set to 'none'.
@@ -448,7 +448,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none'.
@@ -535,7 +535,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--endpoints"></a>`endpoints`
 
-Data type: `Hash[String, Hash]`
+Data type: `Hash[String[1], Hash]`
 
 Hash to configure endpoint objects. `NodeName` is a icnga2 constant.
 
@@ -543,7 +543,7 @@ Default value: `{ 'NodeName' => {} }`
 
 ##### <a name="-icinga2--feature--api--zones"></a>`zones`
 
-Data type: `Hash[String, Hash]`
+Data type: `Hash[String[1], Hash]`
 
 Hash to configure zone objects. `ZoneName` and `NodeName` are icinga2 constants.
 
@@ -575,7 +575,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--ssl_cipher_list"></a>`ssl_cipher_list`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 List of allowed TLS ciphers, to finetune encryption.
 
@@ -599,7 +599,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--access_control_allow_origin"></a>`access_control_allow_origin`
 
-Data type: `Optional[Array[String]]`
+Data type: `Optional[Array[String[1]]]`
 
 Specifies an array of origin URLs that may access the API.
 
@@ -615,7 +615,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--access_control_allow_headers"></a>`access_control_allow_headers`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
 
@@ -631,7 +631,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--api--environment"></a>`environment`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 
@@ -809,7 +809,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--index"></a>`index`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Elasticsearch index name.
 
@@ -817,7 +817,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--username"></a>`username`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Elasticsearch user name.
 
@@ -881,7 +881,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
@@ -889,7 +889,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
@@ -913,7 +913,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--elasticsearch--flush_threshold"></a>`flush_threshold`
 
-Data type: `Optional[Integer]`
+Data type: `Optional[Integer[0]]`
 
 How many data points to buffer before forcing a transfer to Elasticsearch.
 
@@ -976,7 +976,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--source"></a>`source`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Source name for this instance.
 
@@ -1024,7 +1024,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
@@ -1032,7 +1032,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--gelf--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA certificate in PEM format. Only valid if ssl is enabled.
 
@@ -1118,7 +1118,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--graphite--host_name_template"></a>`host_name_template`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Template for metric path of hosts.
 
@@ -1126,7 +1126,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--graphite--service_name_template"></a>`service_name_template`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Template for metric path of services.
 
@@ -1294,7 +1294,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate in a PEM format string to store spicified in tls_cert_file.
 Only valid if tls is enabled.
@@ -1303,7 +1303,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in a PEM formated string to store spicified in tls_cacert_file.
 Only valid if tls is enabled.
@@ -1312,7 +1312,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_capath"></a>`tls_capath`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Path to all trusted CA certificates. Only valid if tls is enabled.
 
@@ -1320,7 +1320,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 List of allowed ciphers. Only valid if tls is enabled.
 
@@ -1328,7 +1328,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--icingadb--tls_protocolmin"></a>`tls_protocolmin`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Minimum TLS protocol version like `TLSv1.2`. Only valid if tls is enabled.
 
@@ -1432,7 +1432,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--user"></a>`user`
 
-Data type: `String`
+Data type: `String[1]`
 
 MySQL database user with read/write permission to the icinga database.
 
@@ -1448,7 +1448,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--database"></a>`database`
 
-Data type: `String`
+Data type: `String[1]`
 
 MySQL database name.
 
@@ -1496,7 +1496,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
@@ -1504,7 +1504,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
@@ -1520,7 +1520,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--ssl_cipher"></a>`ssl_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 MySQL SSL list of allowed ciphers. Only valid if ssl is enabled.
 
@@ -1528,7 +1528,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--table_prefix"></a>`table_prefix`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 MySQL database table prefix.
 
@@ -1536,7 +1536,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--instance_name"></a>`instance_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Unique identifier for the local Icinga 2 instance.
 
@@ -1544,7 +1544,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idomysql--instance_description"></a>`instance_description`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Description for the Icinga 2 instance.
 
@@ -1670,7 +1670,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--user"></a>`user`
 
-Data type: `String`
+Data type: `String[1]`
 
 PostgreSQL database user with read/write permission to the icinga database.
 
@@ -1686,7 +1686,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--database"></a>`database`
 
-Data type: `String`
+Data type: `String[1]`
 
 PostgreSQL database name.
 
@@ -1739,7 +1739,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The client certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
@@ -1747,7 +1747,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in PEM format. Only valid if ssl_mode is set unequal to `disabled`.
 
@@ -1755,7 +1755,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--table_prefix"></a>`table_prefix`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 PostgreSQL database table prefix.
 
@@ -1763,7 +1763,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--instance_name"></a>`instance_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Unique identifier for the local Icinga 2 instance.
 
@@ -1771,7 +1771,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--idopgsql--instance_description"></a>`instance_description`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Description of the Icinga 2 instance.
 
@@ -1889,7 +1889,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--database"></a>`database`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 InfluxDB database name.
 
@@ -1897,7 +1897,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--username"></a>`username`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 InfluxDB user name.
 
@@ -1969,7 +1969,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
@@ -1977,7 +1977,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
@@ -1985,7 +1985,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb--host_measurement"></a>`host_measurement`
 
-Data type: `String`
+Data type: `String[1]`
 
 The value of this is used for the measurement setting in host_template.
 
@@ -1993,7 +1993,7 @@ Default value: `'$host.check_command$'`
 
 ##### <a name="-icinga2--feature--influxdb--host_tags"></a>`host_tags`
 
-Data type: `Hash`
+Data type: `Hash[String[1], String[1]]`
 
 Tags defined in this hash will be set in the host_template.
 
@@ -2001,7 +2001,7 @@ Default value: `{ hostname => '$host.name$' }`
 
 ##### <a name="-icinga2--feature--influxdb--service_measurement"></a>`service_measurement`
 
-Data type: `String`
+Data type: `String[1]`
 
 The value of this is used for the measurement setting in host_template.
 
@@ -2009,7 +2009,7 @@ Default value: `'$service.check_command$'`
 
 ##### <a name="-icinga2--feature--influxdb--service_tags"></a>`service_tags`
 
-Data type: `Hash`
+Data type: `Hash[String[1], String[1]]`
 
 Tags defined in this hash will be set in the service_template.
 
@@ -2126,13 +2126,13 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb2--organization"></a>`organization`
 
-Data type: `String`
+Data type: `String[1]`
 
 InfluxDB organization name.
 
 ##### <a name="-icinga2--feature--influxdb2--bucket"></a>`bucket`
 
-Data type: `String`
+Data type: `String[1]`
 
 InfluxDB bucket name.
 
@@ -2192,7 +2192,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb2--ssl_cert"></a>`ssl_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The client certificate in PEM format. Only valid if ssl is enabled.
 
@@ -2200,7 +2200,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb2--ssl_cacert"></a>`ssl_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in PEM format. Only valid if ssl is enabled.
 
@@ -2208,7 +2208,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--influxdb2--host_measurement"></a>`host_measurement`
 
-Data type: `String`
+Data type: `String[1]`
 
 The value of this is used for the measurement setting in host_template.
 
@@ -2216,7 +2216,7 @@ Default value: `'$host.check_command$'`
 
 ##### <a name="-icinga2--feature--influxdb2--host_tags"></a>`host_tags`
 
-Data type: `Hash`
+Data type: `Hash[String[1], String[1]]`
 
 Tags defined in this hash will be set in the host_template.
 
@@ -2224,7 +2224,7 @@ Default value: `{ hostname => '$host.name$' }`
 
 ##### <a name="-icinga2--feature--influxdb2--service_measurement"></a>`service_measurement`
 
-Data type: `String`
+Data type: `String[1]`
 
 The value of this is used for the measurement setting in host_template.
 
@@ -2232,7 +2232,7 @@ Default value: `'$service.check_command$'`
 
 ##### <a name="-icinga2--feature--influxdb2--service_tags"></a>`service_tags`
 
-Data type: `Hash`
+Data type: `Hash[String[1], String[1]]`
 
 Tags defined in this hash will be set in the service_template.
 
@@ -2509,7 +2509,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--perfdata--host_format_template"></a>`host_format_template`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Host Format template for the performance data file.
 
@@ -2517,7 +2517,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--feature--perfdata--service_format_template"></a>`service_format_template`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Service Format template for the performance data file.
 
@@ -2711,7 +2711,7 @@ The following parameters are available in the `icinga2::query_objects` class:
 
 ##### <a name="-icinga2--query_objects--destination"></a>`destination`
 
-Data type: `String`
+Data type: `String[1]`
 
 Destination equal to what was set in parameter `export` for objects.
 
@@ -2719,7 +2719,7 @@ Default value: `$facts['networking']['fqdn']`
 
 ##### <a name="-icinga2--query_objects--environments"></a>`environments`
 
-Data type: `Array[String]`
+Data type: `Array[String[1]]`
 
 limits the response to objects of these environments if set, all environments if list is empty
 
@@ -2875,7 +2875,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--apiuser--apiuser_name"></a>`apiuser_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the name of the apiuser object.
 
@@ -2891,7 +2891,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--apiuser--client_cn"></a>`client_cn`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Optional. Client Common Name (CN).
 
@@ -2915,7 +2915,7 @@ first time.
 
 ##### <a name="-icinga2--object--apiuser--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -2923,7 +2923,7 @@ Default value: `30`
 
 ##### <a name="-icinga2--object--apiuser--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -2960,7 +2960,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--checkcommand--checkcommand_name"></a>`checkcommand_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Title of the CheckCommand object.
 
@@ -2968,7 +2968,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--checkcommand--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -2976,7 +2976,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--checkcommand--command"></a>`command`
 
-Data type: `Optional[Variant[Array, String]]`
+Data type: `Optional[Variant[Array, String[1]]]`
 
 The command. This can either be an array of individual command arguments.
 Alternatively a string can be specified in which case the shell interpreter (usually /bin/sh) takes care of parsing the command.
@@ -2986,7 +2986,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--checkcommand--env"></a>`env`
 
-Data type: `Optional[Hash]`
+Data type: `Optional[Hash[String[1], Any]]`
 
 A dictionary of macros which should be exported as environment variables prior to executing the command.
 
@@ -3035,7 +3035,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--checkcommand--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3043,7 +3043,7 @@ Default value: `15`
 
 ##### <a name="-icinga2--object--checkcommand--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -3073,7 +3073,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--checkresultreader--checkresultreader_name"></a>`checkresultreader_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the ceckresultreader object.
 
@@ -3096,7 +3096,7 @@ first time.
 
 ##### <a name="-icinga2--object--checkresultreader--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3142,7 +3142,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--dependency--dependency_name"></a>`dependency_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the dependency object.
 
@@ -3150,7 +3150,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--dependency--parent_host_name"></a>`parent_host_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The parent host.
 
@@ -3158,7 +3158,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--dependency--parent_service_name"></a>`parent_service_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The parent service. If omitted, this dependency object is treated as host
 dependency.
@@ -3167,7 +3167,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--dependency--child_host_name"></a>`child_host_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The child host.
 
@@ -3175,7 +3175,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--dependency--child_service_name"></a>`child_service_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The child service. If omitted, this dependency object is treated as host
 dependency.
@@ -3210,7 +3210,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--dependency--period"></a>`period`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Time period during which this dependency is enabled.
 
@@ -3226,7 +3226,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--dependency--apply"></a>`apply`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'.
@@ -3235,7 +3235,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--dependency--prefix"></a>`prefix`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Set dependency_name as prefix in front of 'apply for'. Only effects if apply is a string.
 
@@ -3252,7 +3252,7 @@ Default value: `'Host'`
 
 ##### <a name="-icinga2--object--dependency--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign user group members using the group assign rules.
 
@@ -3260,7 +3260,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--dependency--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Exclude users using the group ignore rules.
 
@@ -3276,7 +3276,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--dependency--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -3291,7 +3291,7 @@ first time.
 
 ##### <a name="-icinga2--object--dependency--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3299,7 +3299,7 @@ Default value: `70`
 
 ##### <a name="-icinga2--object--dependency--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -3332,7 +3332,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--endpoint--endpoint_name"></a>`endpoint_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the endpoint object.
 
@@ -3376,7 +3376,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--endpoint--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3384,7 +3384,7 @@ Default value: `40`
 
 ##### <a name="-icinga2--object--endpoint--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -3420,7 +3420,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--eventcommand--eventcommand_name"></a>`eventcommand_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the eventcommand object.
 
@@ -3464,7 +3464,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--eventcommand--arguments"></a>`arguments`
 
-Data type: `Optional[Hash]`
+Data type: `Optional[Variant[Hash, String]]`
 
 A dictionary of command arguments.
 
@@ -3479,7 +3479,7 @@ first time.
 
 ##### <a name="-icinga2--object--eventcommand--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -3487,7 +3487,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--eventcommand--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3495,7 +3495,7 @@ Default value: `20`
 
 ##### <a name="-icinga2--object--eventcommand--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -3555,7 +3555,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--host--host_name"></a>`host_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Hostname of the Host object.
 
@@ -3563,7 +3563,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--host--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -3571,7 +3571,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--host--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the host (e.g. displayed by external interfaces instead of the name if set).
 
@@ -3605,7 +3605,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--groups"></a>`groups`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 A list of host groups this host belongs to.
 
@@ -3613,7 +3613,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--check_command"></a>`check_command`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of the check command.
 
@@ -3629,7 +3629,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--check_period"></a>`check_period`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of a time period which determines when this host should be checked.
 
@@ -3709,7 +3709,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--event_command"></a>`event_command`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of an event command that should be executed every time the host's
 state changes or the host is in a SOFT state.
@@ -3742,7 +3742,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--zone"></a>`zone`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The zone this object is a member of.
 
@@ -3750,7 +3750,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--command_endpoint"></a>`command_endpoint`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The endpoint where commands are executed on.
 
@@ -3758,7 +3758,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--notes"></a>`notes`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Notes for the host.
 
@@ -3766,7 +3766,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--notes_url"></a>`notes_url`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Url for notes for the host (for example, in notification commands).
 
@@ -3774,7 +3774,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--action_url"></a>`action_url`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Url for actions for the host (for example, an external graphing tool).
 
@@ -3782,7 +3782,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--icon_image"></a>`icon_image`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Icon image for the host. Used by external interfaces only.
 
@@ -3790,7 +3790,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--host--icon_image_alt"></a>`icon_image_alt`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Icon image description for the host. Used by external interface only.
 
@@ -3813,7 +3813,7 @@ first time.
 
 ##### <a name="-icinga2--object--host--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3821,7 +3821,7 @@ Default value: `50`
 
 ##### <a name="-icinga2--object--host--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -3868,7 +3868,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--hostgroup--hostgroup_name"></a>`hostgroup_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Namevar of the hostgroup.
 
@@ -3876,7 +3876,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--hostgroup--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the host group.
 
@@ -3892,7 +3892,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--hostgroup--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign host group members using the group rules.
 
@@ -3900,7 +3900,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--hostgroup--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Ignore host group members using the group rules.
 
@@ -3915,7 +3915,7 @@ first time.
 
 ##### <a name="-icinga2--object--hostgroup--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -3923,7 +3923,7 @@ Default value: `55`
 
 ##### <a name="-icinga2--object--hostgroup--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -3961,7 +3961,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--icingaapplication--app_name"></a>`app_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the IcingaApplication object.
 
@@ -4027,7 +4027,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--icingaapplication--environment"></a>`environment`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Specify the Icinga environment. This overrides the Environment constant
 specified in the configuration or on the CLI with --define.
@@ -4045,7 +4045,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--icingaapplication--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to control the position in the target file, sorted alpha numeric.
 
@@ -4053,7 +4053,7 @@ Default value: `5`
 
 ##### <a name="-icinga2--object--icingaapplication--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -4102,7 +4102,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--notification--notification_name"></a>`notification_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the notification object.
 
@@ -4110,7 +4110,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--notification--host_name"></a>`host_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of the host this notification belongs to.
 
@@ -4118,7 +4118,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--service_name"></a>`service_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The short name of the service this notification belongs to. If omitted, this
 notification object is treated as host notification.
@@ -4137,7 +4137,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--users"></a>`users`
 
-Data type: `Optional[Variant[String, Array]]`
+Data type: `Optional[Variant[String[1], Array[String[1]]]]`
 
 A list of user names who should be notified.
 
@@ -4145,7 +4145,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--user_groups"></a>`user_groups`
 
-Data type: `Optional[Variant[String, Array]]`
+Data type: `Optional[Variant[String[1], Array[String[1]]]]`
 
 A list of user group names who should be notified.
 
@@ -4153,7 +4153,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--times"></a>`times`
 
-Data type: `Optional[Hash]`
+Data type: `Optional[Hash[String[1], Any]]`
 
 A dictionary containing begin and end attributes for the notification.
 
@@ -4161,7 +4161,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--command"></a>`command`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of the notification command which should be executed when the
 notification is triggered.
@@ -4179,7 +4179,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--period"></a>`period`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of a time period which determines when this notification should be
 triggered.
@@ -4188,7 +4188,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--zone"></a>`zone`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The zone this object is a member of.
 
@@ -4196,7 +4196,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--types"></a>`types`
 
-Data type: `Optional[Variant[Array, String]]`
+Data type: `Optional[Variant[Array, String[1]]]`
 
 A list of type filters when this notification should be triggered.
 
@@ -4204,7 +4204,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notification--states"></a>`states`
 
-Data type: `Optional[Variant[Array, String]]`
+Data type: `Optional[Variant[Array, String[1]]]`
 
 A list of state filters when this notification should be triggered.
 
@@ -4220,7 +4220,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--notification--apply"></a>`apply`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'.
@@ -4229,7 +4229,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--notification--prefix"></a>`prefix`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Set notification_name as prefix in front of 'apply for'. Only effects if apply is a string.
 
@@ -4245,7 +4245,7 @@ Default value: `'Host'`
 
 ##### <a name="-icinga2--object--notification--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -4260,7 +4260,7 @@ first time.
 
 ##### <a name="-icinga2--object--notification--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -4268,7 +4268,7 @@ Default value: `85`
 
 ##### <a name="-icinga2--object--notification--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign notification using the assign rules.
 
@@ -4276,7 +4276,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--notification--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Exclude notification using the ignore rules.
 
@@ -4284,7 +4284,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--notification--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -4321,7 +4321,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--notificationcommand--notificationcommand_name"></a>`notificationcommand_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the notificationcommand object.
 
@@ -4329,7 +4329,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--notificationcommand--command"></a>`command`
 
-Data type: `Optional[Variant[Array, String]]`
+Data type: `Optional[Variant[Array, String[1]]]`
 
 The command. This can either be an array of individual command arguments.
 Alternatively a string can be specified in which case the shell interpreter
@@ -4339,7 +4339,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notificationcommand--env"></a>`env`
 
-Data type: `Optional[Hash]`
+Data type: `Optional[Hash[String[1], Any]]`
 
 A dictionary of macros which should be exported as environment variables
 prior to executing the command.
@@ -4366,7 +4366,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--notificationcommand--arguments"></a>`arguments`
 
-Data type: `Optional[Hash]`
+Data type: `Optional[Variant[Hash, String]]`
 
 A dictionary of command arguments.
 
@@ -4382,7 +4382,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--notificationcommand--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -4397,7 +4397,7 @@ first time.
 
 ##### <a name="-icinga2--object--notificationcommand--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -4405,7 +4405,7 @@ Default value: `25`
 
 ##### <a name="-icinga2--object--notificationcommand--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -4447,7 +4447,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--scheduleddowntime--scheduleddowntime_name"></a>`scheduleddowntime_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the scheduleddowntime object.
 
@@ -4455,7 +4455,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--scheduleddowntime--host_name"></a>`host_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of the host this comment belongs to.
 
@@ -4463,7 +4463,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--scheduleddowntime--service_name"></a>`service_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The short name of the service this comment belongs to. If omitted, this comment object is treated as host comment.
 
@@ -4471,7 +4471,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--scheduleddowntime--author"></a>`author`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The author's name.
 
@@ -4479,7 +4479,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--scheduleddowntime--comment"></a>`comment`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The comment text.
 
@@ -4511,7 +4511,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--scheduleddowntime--apply"></a>`apply`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'.
@@ -4520,7 +4520,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--scheduleddowntime--prefix"></a>`prefix`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Set scheduleddowntime_name as prefix in front of 'apply for'. Only effects if apply is a string.
 
@@ -4536,7 +4536,7 @@ Default value: `'Host'`
 
 ##### <a name="-icinga2--object--scheduleddowntime--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign user group members using the group assign rules.
 
@@ -4544,7 +4544,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--scheduleddowntime--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Exclude users using the group ignore rules.
 
@@ -4559,7 +4559,7 @@ first time.
 
 ##### <a name="-icinga2--object--scheduleddowntime--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[1]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -4567,7 +4567,7 @@ Default value: `90`
 
 ##### <a name="-icinga2--object--scheduleddowntime--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -4659,7 +4659,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--service--service_name"></a>`service_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the service object.
 
@@ -4667,7 +4667,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--service--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the service.
 
@@ -4675,7 +4675,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--host_name"></a>`host_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The host this service belongs to. There must be a Host object with
 that name.
@@ -4684,7 +4684,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--groups"></a>`groups`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 The service groups this service belongs to.
 
@@ -4702,7 +4702,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--check_command"></a>`check_command`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of the check command.
 
@@ -4719,7 +4719,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--check_period"></a>`check_period`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of a time period which determines when this service should be
 checked.
@@ -4803,7 +4803,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--event_command"></a>`event_command`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of an event command that should be executed every time the
 service's state changes or the service is in a SOFT state.
@@ -4837,7 +4837,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--zone"></a>`zone`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The zone this object is a member of.
 
@@ -4845,7 +4845,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--command_endpoint"></a>`command_endpoint`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The endpoint where commands are executed on.
 
@@ -4853,7 +4853,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--notes"></a>`notes`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Notes for the service.
 
@@ -4861,7 +4861,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--notes_url"></a>`notes_url`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Url for notes for the service (for example, in notification commands).
 
@@ -4869,7 +4869,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--action_url"></a>`action_url`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Url for actions for the service (for example, an external graphing tool).
 
@@ -4877,7 +4877,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--icon_image"></a>`icon_image`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Icon image for the service. Used by external interfaces only.
 
@@ -4885,7 +4885,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--service--icon_image_alt"></a>`icon_image_alt`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Icon image description for the service. Used by external interface only.
 
@@ -4901,7 +4901,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--service--apply"></a>`apply`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 i.e. 'vhost => config in host.vars.vhosts'.
@@ -4910,7 +4910,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--service--prefix"></a>`prefix`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, String[1]]`
 
 Set service_name as prefix in front of 'apply for'. Only effects if apply is a string.
 
@@ -4918,7 +4918,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--service--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign service using the assign rules.
 
@@ -4926,7 +4926,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--service--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Exclude service using the ignore rules.
 
@@ -4934,7 +4934,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--service--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -4949,7 +4949,7 @@ first time.
 
 ##### <a name="-icinga2--object--service--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -4957,7 +4957,7 @@ Default value: `60`
 
 ##### <a name="-icinga2--object--service--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -4993,7 +4993,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--servicegroup--servicegroup_name"></a>`servicegroup_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the servicegroup object.
 
@@ -5001,7 +5001,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--servicegroup--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the service group.
 
@@ -5017,7 +5017,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--servicegroup--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign user group members using the group assign rules.
 
@@ -5025,7 +5025,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--servicegroup--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Exclude users using the group ignore rules.
 
@@ -5041,7 +5041,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--servicegroup--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -5056,7 +5056,7 @@ first time.
 
 ##### <a name="-icinga2--object--servicegroup--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -5064,7 +5064,7 @@ Default value: `65`
 
 ##### <a name="-icinga2--object--servicegroup--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -5101,7 +5101,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--timeperiod--timeperiod_name"></a>`timeperiod_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the timeperiod object.
 
@@ -5109,7 +5109,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--timeperiod--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the time period.
 
@@ -5117,7 +5117,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--timeperiod--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -5142,7 +5142,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--timeperiod--excludes"></a>`excludes`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 An array of timeperiods, which should exclude from your timerange.
 
@@ -5150,7 +5150,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--timeperiod--includes"></a>`includes`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 An array of timeperiods, which should include into your timerange
 
@@ -5172,7 +5172,7 @@ Destination config file to store this object in. File will be declared on the fi
 
 ##### <a name="-icinga2--object--timeperiod--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to control the position in the target file, sorted alpha numeric.
 
@@ -5180,7 +5180,7 @@ Default value: `35`
 
 ##### <a name="-icinga2--object--timeperiod--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -5221,7 +5221,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--user--user_name"></a>`user_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the user object.
 
@@ -5229,7 +5229,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--user--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the user.
 
@@ -5237,7 +5237,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--user--email"></a>`email`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 An email string for this user. Useful for notification commands.
 
@@ -5245,7 +5245,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--user--pager"></a>`pager`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A pager string for this user. Useful for notification commands.
 
@@ -5263,7 +5263,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--user--groups"></a>`groups`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 An array of group names.
 
@@ -5279,7 +5279,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--user--period"></a>`period`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The name of a time period which determines when a notification for this user
 should be triggered.
@@ -5288,7 +5288,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--user--types"></a>`types`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 A set of type filters when this notification should be triggered.
 everything is matched.
@@ -5297,7 +5297,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--user--states"></a>`states`
 
-Data type: `Optional[Array]`
+Data type: `Optional[Array[String[1]]]`
 
 A set of state filters when this notification should be triggered.
 
@@ -5313,7 +5313,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--user--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -5328,7 +5328,7 @@ first time.
 
 ##### <a name="-icinga2--object--user--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[1]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -5336,7 +5336,7 @@ Default value: `75`
 
 ##### <a name="-icinga2--object--user--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -5372,7 +5372,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--usergroup--usergroup_name"></a>`usergroup_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the usergroup object.
 
@@ -5380,7 +5380,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--usergroup--display_name"></a>`display_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A short description of the service group.
 
@@ -5388,7 +5388,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--usergroup--groups"></a>`groups`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 An array of nested group names.
 
@@ -5396,7 +5396,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--usergroup--assign"></a>`assign`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Assign user group members using the group assign rules.
 
@@ -5404,7 +5404,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--usergroup--ignore"></a>`ignore`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Exclude users using the group ignore rules.
 
@@ -5420,7 +5420,7 @@ Default value: `false`
 
 ##### <a name="-icinga2--object--usergroup--import"></a>`import`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 Sorted List of templates to include.
 
@@ -5435,7 +5435,7 @@ first time.
 
 ##### <a name="-icinga2--object--usergroup--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to set the position in the target file, sorted alpha numeric.
 
@@ -5443,7 +5443,7 @@ Default value: `80`
 
 ##### <a name="-icinga2--object--usergroup--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -5476,7 +5476,7 @@ Default value: `present`
 
 ##### <a name="-icinga2--object--zone--zone_name"></a>`zone_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Set the Icinga 2 name of the zone object.
 
@@ -5484,7 +5484,7 @@ Default value: `$title`
 
 ##### <a name="-icinga2--object--zone--endpoints"></a>`endpoints`
 
-Data type: `Array`
+Data type: `Array[String[1]]`
 
 List of endpoints belong to this zone.
 
@@ -5492,7 +5492,7 @@ Default value: `[]`
 
 ##### <a name="-icinga2--object--zone--parent"></a>`parent`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Parent zone to this zone.
 
@@ -5518,7 +5518,7 @@ Default value: `undef`
 
 ##### <a name="-icinga2--object--zone--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[0]]`
 
 String or integer to control the position in the target file, sorted alpha numeric.
 
@@ -5526,7 +5526,7 @@ Default value: `45`
 
 ##### <a name="-icinga2--object--zone--export"></a>`export`
 
-Data type: `Variant[Array[String], String]`
+Data type: `Variant[Array[String[1]], String[1]]`
 
 Export object to destination, collected by class `icinga2::query_objects`.
 
@@ -5696,8 +5696,8 @@ Alias of
 
 ```puppet
 Struct[{
-    'username' => String,
-    'password' => Variant[String, Sensitive[String]],
+    'username' => String[1],
+    'password' => Variant[String[1], Sensitive[String[1]]],
 }]
 ```
 
@@ -5738,14 +5738,14 @@ Hash[Enum[
     'statehistory_age',
     'servicechecks_age',
     'systemcommands_age',
-  ], String]
+  ], String[1]]
 ```
 
 ### <a name="Icinga2--Interval"></a>`Icinga2::Interval`
 
 A strict type for intervals
 
-Alias of `Variant[Integer, Pattern[/\A\d+\.?\d*[d|h|m|s]?\Z/, /\A\$.+\$\Z/, /\A(host|service)\..+/]]`
+Alias of `Variant[Integer[0], Pattern[/\A\d+\.?\d*[d|h|m|s]?\Z/, /\A\$.+\$\Z/, /\A(host|service)\..+/]]`
 
 ### <a name="Icinga2--LogFacility"></a>`Icinga2::LogFacility`
 

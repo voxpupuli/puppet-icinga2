@@ -74,10 +74,10 @@
 #   How to do a reload of the Icinga process.
 #
 class icinga2::globals (
-  String                 $package_name,
-  String                 $service_name,
-  String                 $ido_mysql_schema,
-  String                 $ido_pgsql_schema,
+  String[1]              $package_name,
+  String[1]              $service_name,
+  String[1]              $ido_mysql_schema,
+  String[1]              $ido_pgsql_schema,
   Stdlib::Absolutepath   $icinga2_bin,
   Stdlib::Absolutepath   $conf_dir,
   Stdlib::Absolutepath   $lib_dir,
@@ -88,14 +88,14 @@ class icinga2::globals (
   Stdlib::Absolutepath   $data_dir,
   Stdlib::Absolutepath   $cert_dir,
   Stdlib::Absolutepath   $ca_dir,
-  Array[String]          $reserved,
-  Optional[String]       $user                   = undef,
-  Optional[String]       $group                  = undef,
-  Optional[String]       $logon_account          = undef,
-  Optional[String]       $selinux_package_name   = undef,
-  Optional[String]       $ido_mysql_package_name = undef,
-  Optional[String]       $ido_pgsql_package_name = undef,
-  Optional[String]       $service_reload         = undef,
+  Array[String[1]]       $reserved,
+  Optional[String[1]]    $user                   = undef,
+  Optional[String[1]]    $group                  = undef,
+  Optional[String[1]]    $logon_account          = undef,
+  Optional[String[1]]    $selinux_package_name   = undef,
+  Optional[String[1]]    $ido_mysql_package_name = undef,
+  Optional[String[1]]    $ido_pgsql_package_name = undef,
+  Optional[String[1]]    $service_reload         = undef,
 ) {
   assert_private()
 

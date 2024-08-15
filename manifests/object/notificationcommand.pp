@@ -46,16 +46,16 @@
 define icinga2::object::notificationcommand (
   Stdlib::Absolutepath                 $target,
   Enum['absent', 'present']            $ensure                   = present,
-  String                               $notificationcommand_name = $title,
-  Optional[Variant[Array, String]]     $command                  = undef,
-  Optional[Hash]                       $env                      = undef,
+  String[1]                            $notificationcommand_name = $title,
+  Optional[Variant[Array, String[1]]]  $command                  = undef,
+  Optional[Hash[String[1], Any]]       $env                      = undef,
   Optional[Icinga2::CustomAttributes]  $vars                     = undef,
   Optional[Icinga2::Interval]          $timeout                  = undef,
-  Optional[Hash]                       $arguments                = undef,
+  Optional[Variant[Hash, String]]      $arguments                = undef,
   Boolean                              $template                 = false,
-  Array                                $import                   = [],
-  Variant[String, Integer]             $order                    = 25,
-  Variant[Array[String], String]       $export                   = [],
+  Array[String[1]]                     $import                   = [],
+  Variant[String[1], Integer[0]]       $order                    = 25,
+  Variant[Array[String[1]], String[1]] $export                   = [],
 ) {
   require icinga2::globals
 

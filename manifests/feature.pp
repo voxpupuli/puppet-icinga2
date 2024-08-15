@@ -5,7 +5,7 @@
 #
 define icinga2::feature (
   Enum['absent', 'present'] $ensure  = present,
-  String                    $feature = $title,
+  String[1]                 $feature = $title,
 ) {
   assert_private()
 
