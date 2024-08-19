@@ -1,6 +1,6 @@
 {
   "name": "puppet-icinga2",
-  "version": "6.0.0",
+  "version": "6.0.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
@@ -75,7 +75,7 @@
       "operatingsystem": "Fedora",
       "operatingsystemrelease": [
         "39",
-	      "40"
+        "40"
       ]
     },
     {
