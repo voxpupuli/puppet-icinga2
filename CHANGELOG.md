@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.0](https://github.com/voxpupuli/puppet-icinga2/tree/v6.0.0) (2024-08-03)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v5.0.1...v6.0.0)
+
+**Breaking changes:**
+
+- Remove EL7 support [\#774](https://github.com/voxpupuli/puppet-icinga2/pull/774) ([lbetz](https://github.com/lbetz))
+- Remove Debian Buster support [\#773](https://github.com/voxpupuli/puppet-icinga2/pull/773) ([lbetz](https://github.com/lbetz))
+
+**Implemented enhancements:**
+
+- Support puppet-icinga =\< 7.0.0 [\#783](https://github.com/voxpupuli/puppet-icinga2/pull/783) ([lbetz](https://github.com/lbetz))
+- Add Ubuntu noble \(24.04\) support [\#781](https://github.com/voxpupuli/puppet-icinga2/pull/781) ([lbetz](https://github.com/lbetz))
+- Add support for Fedora 40 [\#775](https://github.com/voxpupuli/puppet-icinga2/pull/775) ([lbetz](https://github.com/lbetz))
+- Fix SELinux and add feature::api::bind\_port support [\#772](https://github.com/voxpupuli/puppet-icinga2/pull/772) ([lbetz](https://github.com/lbetz))
+
+**Merged pull requests:**
+
+- Bump voxpupuli/gha-puppet from 2 to 3 [\#778](https://github.com/voxpupuli/puppet-icinga2/pull/778) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix file permissions for private keys in unit tests [\#777](https://github.com/voxpupuli/puppet-icinga2/pull/777) ([lbetz](https://github.com/lbetz))
+- Bump voxpupuli/gha-puppet from 2 to 3 [\#771](https://github.com/voxpupuli/puppet-icinga2/pull/771) ([dependabot[bot]](https://github.com/apps/dependabot))
+- fixtures.yml: Pull dependencies from git [\#770](https://github.com/voxpupuli/puppet-icinga2/pull/770) ([bastelfreak](https://github.com/bastelfreak))
+- Update voxpupuli-test requirement from ~\> 7.2 to ~\> 8.0 [\#769](https://github.com/voxpupuli/puppet-icinga2/pull/769) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v5.0.1](https://github.com/voxpupuli/puppet-icinga2/tree/v5.0.1) (2024-05-23)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v5.0.0...v5.0.1)

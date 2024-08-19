@@ -1,6 +1,6 @@
 {
   "name": "puppet-icinga2",
-  "version": "5.0.2-rc0",
+  "version": "6.0.0",
   "author": "Vox Pupuli",
   "summary": "Icinga 2 Puppet Module",
   "license": "Apache-2.0",
@@ -68,7 +68,7 @@
       "operatingsystemrelease": [
         "20.04",
         "22.04",
-	      "24.04"
+        "24.04"
       ]
     },
     {
