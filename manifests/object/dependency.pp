@@ -21,6 +21,9 @@
 #   The child service. If omitted, this dependency object is treated as host
 #   dependency.
 #
+# @param redundancy_group
+#   The redundancy group - puts the dependency into a group of mutually redundant ones.
+#
 # @param disable_checks
 #   Whether to disable checks when this dependency fails.
 #
@@ -79,6 +82,7 @@ define icinga2::object::dependency (
   Optional[String[1]]                  $parent_service_name   = undef,
   Optional[String[1]]                  $child_host_name       = undef,
   Optional[String[1]]                  $child_service_name    = undef,
+  Optional[String[1]]                  $redundancy_group      = undef,
   Optional[Boolean]                    $disable_checks        = undef,
   Optional[Boolean]                    $disable_notifications = undef,
   Optional[Boolean]                    $ignore_soft_states    = undef,
@@ -102,6 +106,7 @@ define icinga2::object::dependency (
     'parent_service_name'   => $parent_service_name,
     'child_host_name'       => $child_host_name,
     'child_service_name'    => $child_service_name,
+    'redundancy_group'      => $redundancy_group,
     'disable_checks'        => $disable_checks,
     'disable_notifications' => $disable_notifications,
     'ignore_soft_states'    => $ignore_soft_states,
