@@ -3116,6 +3116,7 @@ The following parameters are available in the `icinga2::object::dependency` defi
 * [`parent_service_name`](#-icinga2--object--dependency--parent_service_name)
 * [`child_host_name`](#-icinga2--object--dependency--child_host_name)
 * [`child_service_name`](#-icinga2--object--dependency--child_service_name)
+* [`redundancy_group`](#-icinga2--object--dependency--redundancy_group)
 * [`disable_checks`](#-icinga2--object--dependency--disable_checks)
 * [`disable_notifications`](#-icinga2--object--dependency--disable_notifications)
 * [`ignore_soft_states`](#-icinga2--object--dependency--ignore_soft_states)
@@ -3179,6 +3180,14 @@ Data type: `Optional[String[1]]`
 
 The child service. If omitted, this dependency object is treated as host
 dependency.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--dependency--redundancy_group"></a>`redundancy_group`
+
+Data type: `Optional[String[1]]`
+
+The redundancy group - puts the dependency into a group of mutually redundant ones.
 
 Default value: `undef`
 
