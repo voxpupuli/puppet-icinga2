@@ -16,6 +16,12 @@ class icinga2::install {
   $user                 = $icinga2::globals::user
   $group                = $icinga2::globals::group
 
+  if $facts['kernel'] != 'windows' {
+    $file_mode = '0750'
+  } else {
+    $file_mode = undef
+  }
+
   if $manage_packages {
     if $facts['os']['family'] == 'windows' { Package { provider => chocolatey, } }
 
@@ -37,7 +43,7 @@ class icinga2::install {
       ensure => directory,
       owner  => $user,
       group  => $group,
-      mode   => '0750',
+      mode   => $file_mode,
       ;
     $conf_dir:
       seltype => 'icinga2_etc_t',
