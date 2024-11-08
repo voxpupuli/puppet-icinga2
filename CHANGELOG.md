@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.2](https://github.com/voxpupuli/puppet-icinga2/tree/v6.0.2) (2024-11-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.0.1...v6.0.2)
+
+**Fixed bugs:**
+
+- Broken file permissions on Windows [\#797](https://github.com/voxpupuli/puppet-icinga2/pull/797) ([lbetz](https://github.com/lbetz))
+
 ## [v6.0.1](https://github.com/voxpupuli/puppet-icinga2/tree/v6.0.1) (2024-10-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.0.0...v6.0.1)
