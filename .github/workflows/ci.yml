@@ -4,6 +4,7 @@
 
 name: CI
 
+# yamllint disable-line rule:truthy
 on:
   pull_request: {}
   push:
