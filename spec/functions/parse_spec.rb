@@ -83,14 +83,14 @@ describe 'icinga2::parse' do
     ).and_return("foo = [ \"bar\", [ \"baz\", ], ]\n")
 
     # result = "some string" + {
-    #   foo = "baz"
     #   bar = "baz"
+    #   foo = "baz"
     # }
     is_expected.to run.with_params(
       {
         'result' => '{ foo => baz, bar => baz }',
       },
-    ).and_return("result = {\n  foo = \"baz\"\n  bar = \"baz\"\n}\n")
+    ).and_return("result = {\n  bar = \"baz\"\n  foo = \"baz\"\n}\n")
   end
 
   it 'assign a boolean' do
@@ -353,10 +353,10 @@ describe 'icinga2::parse' do
       },
     ).and_return("foo_s = 60s\nfoo_m = 5m\nfoo_h = 2.5h\nfoo_d = 2d\n")
 
-    # vars.foo_s = 60s
-    # vars.foo_m = 5m
-    # vars.foo_h = 2.5h
     # vars.foo_d = 2d
+    # vars.foo_h = 2.5h
+    # vars.foo_m = 5m
+    # vars.foo_s = 60s
     is_expected.to run.with_params(
       {
         'vars' => {
@@ -366,7 +366,7 @@ describe 'icinga2::parse' do
           'foo_d' => '2d',
         },
       },
-    ).and_return("vars.foo_s = 60s\nvars.foo_m = 5m\nvars.foo_h = 2.5h\nvars.foo_d = 2d\n")
+    ).and_return("vars.foo_d = 2d\nvars.foo_h = 2.5h\nvars.foo_m = 5m\nvars.foo_s = 60s\n")
   end
 
   it 'assign an array' do
@@ -437,11 +437,12 @@ describe 'icinga2::parse' do
     ).and_return("foo += {}\n")
 
     # foo = {
-    #   string = "some string, connected to another. Yeah!"
+    #   bool = true
     #   constant = NodeName
     #   numbers = [ 42, 3.141, -42, -3.141, ]
+    #   merge_array += [ 42, 3.141, -42, -3.141, ]
+    #   string = "some string, connected to another. Yeah!"
     #   time = 2.5d
-    #   bool = true
     # }
     is_expected.to run.with_params(
       {
@@ -455,16 +456,16 @@ describe 'icinga2::parse' do
         },
       },
     ).and_return(
-      "foo = {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n" \
-      "  numbers = [ 42, 3.141, -42, -3.141, ]\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n  bool = true\n}\n",
+      "foo = {\n  bool = true\n  constant = NodeName\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  numbers = [ 42, 3.141, -42, -3.141, ]\n" \
+      "  string = \"some string, connected to another. Yeah!\"\n  time = 2.5d\n}\n",
     )
 
     # foo += {
-    #   string = "some string, connected to another. Yeah!"
+    #   bool = true
     #   constant = NodeName
     #   numbers = [ 42, 3.141, -42, -3.141, ]
+    #   string = "some string, connected to another. Yeah!"
     #   time = 2.5d
-    #   bool = true
     # }
     is_expected.to run.with_params(
       {
@@ -479,16 +480,16 @@ describe 'icinga2::parse' do
         },
       },
     ).and_return(
-      "foo += {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  numbers = [ 42, 3.141, -42, -3.141, ]\n" \
-      "  merge_array += [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n  bool = true\n}\n",
+      "foo += {\n  bool = true\n  constant = NodeName\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  numbers = [ 42, 3.141, -42, -3.141, ]\n" \
+      "  string = \"some string, connected to another. Yeah!\"\n  time = 2.5d\n}\n",
     )
 
-    # vars.foo["string"] = "some string, connected to another. Yeah!"
-    # vars.foo["constant"] = NodeName
-    # vars.foo["numbers"] = [ 42, 3.141, -42, -3.141, ]
-    # vars.foo["merge_array"] += [ 42, 3.141, -42, -3.141, ]
-    # vars.foo["time"] = 2.5d
     # vars.foo["bool"] = true
+    # vars.foo["constant"] = NodeName
+    # vars.foo["merge_array"] += [ 42, 3.141, -42, -3.141, ]
+    # vars.foo["numbers"] = [ 42, 3.141, -42, -3.141, ]
+    # vars.foo["string"] = "some string, connected to another. Yeah!"
+    # vars.foo["time"] = 2.5d
     is_expected.to run.with_params(
       {
         'vars' => {
@@ -503,25 +504,25 @@ describe 'icinga2::parse' do
         },
       },
     ).and_return(
-      "vars.foo[\"string\"] = \"some string, connected to another. Yeah!\"\nvars.foo[\"constant\"] = NodeName\nvars.foo[\"numbers\"] = [ 42, 3.141, -42, -3.141, ]\n" \
-      "vars.foo[\"merge_array\"] += [ 42, 3.141, -42, -3.141, ]\nvars.foo[\"time\"] = 2.5d\nvars.foo[\"bool\"] = true\n",
+      "vars.foo[\"bool\"] = true\nvars.foo[\"constant\"] = NodeName\nvars.foo[\"merge_array\"] += [ 42, 3.141, -42, -3.141, ]\nvars.foo[\"numbers\"] = [ 42, 3.141, -42, -3.141, ]\n" \
+      "vars.foo[\"string\"] = \"some string, connected to another. Yeah!\"\nvars.foo[\"time\"] = 2.5d\n",
     )
   end
 
   it 'assign a nested hash' do
     # foobar = {
-    #   foo += {
-    #     string = "some string, connected to another. Yeah!"
-    #     constant = NodeName
-    #     bool = true
-    #   }
-    #   fooz += {}
     #   bar = {
-    #     numbers = [ 42, 3.141, -42, -3,141, ]
     #     merge_array += [ 42, 3.141, -42, -3,141, ]
+    #     numbers = [ 42, 3.141, -42, -3,141, ]
     #     time = 2.5d
     #   }
     #   baz = {}
+    #   foo += {
+    #     bool = true
+    #     constant = NodeName
+    #     string = "some string, connected to another. Yeah!"
+    #   }
+    #   fooz += {}
     # }
     is_expected.to run.with_params(
       {
@@ -543,21 +544,21 @@ describe 'icinga2::parse' do
           'baz' => {},
         },
       },
-    ).and_return("foobar = {\n  foo += {\n    string = \"some string, connected to another. Yeah!\"\n    constant = NodeName\n    bool = true\n  }\n" \
-      "  fooz += {}\n  bar = {\n    numbers = [ 42, 3.141, -42, -3.141, ]\n    merge_array += [ 42, 3.141, -42, -3.141, ]\n    time = 2.5d\n  }\n  baz = {}\n}\n")
+    ).and_return("foobar = {\n  bar = {\n    merge_array += [ 42, 3.141, -42, -3.141, ]\n    numbers = [ 42, 3.141, -42, -3.141, ]\n    time = 2.5d\n" \
+      "  }\n  baz = {}\n  foo += {\n    bool = true\n    constant = NodeName\n    string = \"some string, connected to another. Yeah!\"\n  }\n  fooz += {}\n}\n")
 
-    # vars.foobar["foo"] += {
-    #   string = "some string, connected to another. Yeah!"
-    #   constant = NodeName
-    #   bool = true
-    # }
-    # vars.foobar["fooz"] += {}
     # vars.foobar["bar"] = {
-    #   numbers = [ 42, 3.141, -42, -3,141, ]
     #   merge_array += [ 42, 3.141, -42, -3,141, ]
+    #   numbers = [ 42, 3.141, -42, -3,141, ]
     #   time = 2.5d
     # }
     # vars.foobar["baz"] = {}
+    # vars.foobar["foo"] += {
+    #   bool = true
+    #   constant = NodeName
+    #   string = "some string, connected to another. Yeah!"
+    # }
+    # vars.foobar["fooz"] += {}
     is_expected.to run.with_params(
       {
         'vars' => {
@@ -581,8 +582,8 @@ describe 'icinga2::parse' do
         },
       },
     ).and_return(
-      "vars.foobar[\"foo\"] += {\n  string = \"some string, connected to another. Yeah!\"\n  constant = NodeName\n  bool = true\n}\n" \
-      "vars.foobar[\"fooz\"] += {}\nvars.foobar[\"bar\"] = {\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n}\nvars.foobar[\"baz\"] = {}\n",
+      "vars.foobar[\"bar\"] = {\n  merge_array += [ 42, 3.141, -42, -3.141, ]\n  numbers = [ 42, 3.141, -42, -3.141, ]\n  time = 2.5d\n}\nvars.foobar[\"baz\"] = {}\n" \
+      "vars.foobar[\"foo\"] += {\n  bool = true\n  constant = NodeName\n  string = \"some string, connected to another. Yeah!\"\n}\nvars.foobar[\"fooz\"] += {}\n",
     )
   end
 
@@ -607,10 +608,10 @@ describe 'icinga2::parse' do
 
     # vars += config1
     # vars += {}
-    # vars.foo = "some string"
     # vars.bar += [ 42, 3.141, -42, -3.141, ]
-    # vars.baz["number"] -= 42
     # vars.baz["floating"] += 3.141
+    # vars.baz["number"] -= 42
+    # vars.foo = "some string"
     # vars += config2
     is_expected.to run.with_params(
       {
@@ -629,7 +630,7 @@ describe 'icinga2::parse' do
           '+ config2',
         ],
       },
-    ).and_return("vars += config1\nvars += {}\nvars.foo = \"some string\"\nvars.bar += [ 42, 3.141, -42, -3.141, ]\nvars.baz[\"number\"] -= 42\nvars.baz[\"floating\"] += 3.141\nvars += config2\n")
+    ).and_return("vars += config1\nvars += {}\nvars.bar += [ 42, 3.141, -42, -3.141, ]\nvars.baz[\"floating\"] += 3.141\nvars.baz[\"number\"] -= 42\nvars.foo = \"some string\"\nvars += config2\n")
   end
 
   it 'arithmetic and logical expressions' do

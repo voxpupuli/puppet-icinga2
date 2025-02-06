@@ -241,7 +241,7 @@ module Puppet::Icinga2
 
     def self.process_hash(attrs, indent = 2, level = 3, prefix = ' ' * indent)
       result = ''
-      attrs.each do |attr, value_frozen|
+      attrs.sort.each do |attr, value_frozen|
         value = value_frozen.dup
         if value.is_a?(Puppet::Pops::Types::PSensitiveType::Sensitive)
           value = value.unwrap
