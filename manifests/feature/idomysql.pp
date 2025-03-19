@@ -262,6 +262,6 @@ class icinga2::feature::idomysql (
   }
 
   icinga2::feature { 'ido-mysql':
-    ensure  => $ensure,
+    ensure => $ensure,
   }
 }
