@@ -388,6 +388,6 @@ class icinga2::feature::api (
 
   # manage feature
   icinga2::feature { 'api':
-    ensure      => $ensure,
+    ensure => $ensure,
   }
 }
