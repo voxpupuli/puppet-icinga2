@@ -139,7 +139,7 @@ class icinga2 (
   $_reserved = $icinga2::globals::reserved
 
   # merge constants with defaults
-  $_constants = $icinga2::globals::constants + $constants
+  $_constants = delete_undef_values($icinga2::globals::constants + $constants)
 
   # validate confd, boolean or string
   if $confd =~ Boolean {
