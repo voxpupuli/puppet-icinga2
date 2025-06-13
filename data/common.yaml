@@ -59,6 +59,8 @@ icinga2::globals::reserved:
   - LogInformation
   - LogNotice
   - LogWarning
+  - MatchAll
+  - MatchAny
   - Math
   - MaxConcurrentChecks
   - ModAttrPath
