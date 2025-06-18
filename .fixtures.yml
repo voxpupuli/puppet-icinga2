@@ -1,10 +1,10 @@
 ---
 fixtures:
   repositories:
-    icinga: https://github.com/voxpupuli/puppet-icinga
-    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib
-    concat: https://github.com/puppetlabs/puppetlabs-concat
     apt: https://github.com/puppetlabs/puppetlabs-apt
     chocolatey: https://github.com/puppetlabs/puppetlabs-chocolatey
-    zypprepo: https://github.com/voxpupuli/puppet-zypprepo
+    concat: https://github.com/puppetlabs/puppetlabs-concat
+    icinga: https://github.com/voxpupuli/puppet-icinga
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib
     yumrepo_core: https://github.com/puppetlabs/puppetlabs-yumrepo_core
+    zypprepo: https://github.com/voxpupuli/puppet-zypprepo
