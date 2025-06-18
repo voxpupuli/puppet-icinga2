@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.1.0](https://github.com/voxpupuli/puppet-icinga2/tree/v6.1.0) (2025-04-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.0.2...v6.1.0)
+
+**Implemented enhancements:**
+
+- Move lookup for `icinga2::globals::constants` to Hiera [\#805](https://github.com/voxpupuli/puppet-icinga2/pull/805) ([trauta](https://github.com/trauta))
+- Add feature to remove preset constants via setting them to undef [\#804](https://github.com/voxpupuli/puppet-icinga2/pull/804) ([lbetz](https://github.com/lbetz))
+- metadata.json: Add OpenVox [\#800](https://github.com/voxpupuli/puppet-icinga2/pull/800) ([jstraw](https://github.com/jstraw))
+
 ## [v6.0.2](https://github.com/voxpupuli/puppet-icinga2/tree/v6.0.2) (2024-11-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.0.1...v6.0.2)

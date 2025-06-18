@@ -73,6 +73,8 @@
 # @param service_reload
 #   How to do a reload of the Icinga process.
 #
+# @param $constants
+#   Define Icinga constants
 class icinga2::globals (
   String[1]              $package_name,
   String[1]              $service_name,
@@ -96,8 +98,7 @@ class icinga2::globals (
   Optional[String[1]]    $ido_mysql_package_name = undef,
   Optional[String[1]]    $ido_pgsql_package_name = undef,
   Optional[String[1]]    $service_reload         = undef,
+  Hash[String, Any]      $constants              = {},
 ) {
   assert_private()
-
-  $constants =  lookup('icinga2::globals::constants', Hash, 'deep', {})
 }

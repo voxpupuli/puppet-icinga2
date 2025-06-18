@@ -1,4 +1,7 @@
 ---
+lookup_options:
+  icinga2::globals::constants:
+    merge: deep
 icinga2::plugins:
   - plugins
   - plugins-contrib
@@ -56,6 +59,8 @@ icinga2::globals::reserved:
   - LogInformation
   - LogNotice
   - LogWarning
+  - MatchAll
+  - MatchAny
   - Math
   - MaxConcurrentChecks
   - ModAttrPath
