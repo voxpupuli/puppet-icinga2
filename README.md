@@ -76,7 +76,7 @@ And depends on:
 
 * [puppetlabs/stdlib] >= 6.6.0 < 10.0.0
 * [puppetlabs/concat] >= 6.4.0 < 10.0.0
-* [icinga/icinga] >= 1.0.0 < 6.0.0
+* [icinga/icinga] >= 1.0.0 < 8.0.0
     * needed if `manage_repos` is set to `true`
 * [puppetlabs/chocolatey] >= 5.2.0 < 9.0.0
     * needed if agent os is windows and if `manage_packages` is set to `true`
