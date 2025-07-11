@@ -15,10 +15,6 @@ These should not affect the functionality of the module.
 - Add EL 10 support [\#813](https://github.com/voxpupuli/puppet-icinga2/pull/813) ([lbetz](https://github.com/lbetz))
 - Add MatchAny and MatchAll to the list of reserved word [\#810](https://github.com/voxpupuli/puppet-icinga2/pull/810) ([lbetz](https://github.com/lbetz))
 
-**Closed issues:**
-
-- Add MatchAny and MatchAll to the list of reserved word [\#809](https://github.com/voxpupuli/puppet-icinga2/issues/809)
-
 ## [v6.1.0](https://github.com/voxpupuli/puppet-icinga2/tree/v6.1.0) (2025-04-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.0.2...v6.1.0)
