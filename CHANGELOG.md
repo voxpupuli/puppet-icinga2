@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.2.0](https://github.com/voxpupuli/puppet-icinga2/tree/v6.2.0) (2025-07-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.1.0...v6.2.0)
+
+**Implemented enhancements:**
+
+- metadata.json: allow puppet/icinga 7.x [\#817](https://github.com/voxpupuli/puppet-icinga2/pull/817) ([lbetz](https://github.com/lbetz))
+- Add FreeBSD 14 support [\#815](https://github.com/voxpupuli/puppet-icinga2/pull/815) ([lbetz](https://github.com/lbetz))
+- Add EL 10 support [\#813](https://github.com/voxpupuli/puppet-icinga2/pull/813) ([lbetz](https://github.com/lbetz))
+- Add MatchAny and MatchAll to the list of reserved word [\#810](https://github.com/voxpupuli/puppet-icinga2/pull/810) ([lbetz](https://github.com/lbetz))
+
+**Closed issues:**
+
+- Add MatchAny and MatchAll to the list of reserved word [\#809](https://github.com/voxpupuli/puppet-icinga2/issues/809)
+
 ## [v6.1.0](https://github.com/voxpupuli/puppet-icinga2/tree/v6.1.0) (2025-04-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.0.2...v6.1.0)
