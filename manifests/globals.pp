@@ -73,8 +73,9 @@
 # @param service_reload
 #   How to do a reload of the Icinga process.
 #
-# @param $constants
+# @param constants
 #   Define Icinga constants
+#
 class icinga2::globals (
   String[1]              $package_name,
   String[1]              $service_name,
