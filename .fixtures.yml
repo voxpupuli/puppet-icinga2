@@ -1,9 +1,7 @@
 ---
 fixtures:
   repositories:
-    apt:
-      repo: https://github.com/puppetlabs/puppetlabs-apt
-      tag: v10.0.1
+    apt: https://github.com/puppetlabs/puppetlabs-apt
     chocolatey: https://github.com/puppetlabs/puppetlabs-chocolatey
     concat: https://github.com/puppetlabs/puppetlabs-concat
     icinga: https://github.com/voxpupuli/puppet-icinga
