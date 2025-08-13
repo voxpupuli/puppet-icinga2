@@ -4,10 +4,14 @@
 
 name: Release
 
+# yamllint disable-line rule:truthy
 on:
   push:
     tags:
       - '*'
+
+permissions:
+  contents: write
 
 jobs:
   release:
