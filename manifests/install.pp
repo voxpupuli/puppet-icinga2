@@ -44,12 +44,12 @@ class icinga2::install {
       owner  => $user,
       group  => $group,
       mode   => $file_mode,
-      ;
+    ;
     $conf_dir:
       seltype => 'icinga2_etc_t',
-      ;
+    ;
     $cert_dir:
       seltype => 'icinga2_var_lib_t',
-      ;
+    ;
   }
 }

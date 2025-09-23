@@ -215,11 +215,11 @@ class icinga2::feature::idopgsql (
     }
 
     $db_cli_options = icinga::db::connect({
-        'type'     => 'pgsql',
-        'host'     => $host,
-        'port'     => $port,
-        'database' => $database,
-        'username' => $user,
+      'type'     => 'pgsql',
+      'host'     => $host,
+      'port'     => $port,
+      'database' => $database,
+      'username' => $user,
     }, $cert, $enable_ssl, $ssl_mode)
 
     exec { 'idopgsql-import-schema':
