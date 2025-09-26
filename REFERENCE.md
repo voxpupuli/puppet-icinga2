@@ -5551,12 +5551,12 @@ This function returns a string to connect databases
 with or without TLS information.
 
 #### `icinga2::db::connect(Struct[{
-      type     => Enum['pgsql','mysql','mariadb'],
-      host     => Stdlib::Host,
-      port     => Optional[Stdlib::Port],
-      database => String,
-      username => String,
-      password => Optional[Variant[String, Sensitive[String]]],
+    type     => Enum['pgsql','mysql','mariadb'],
+    host     => Stdlib::Host,
+    port     => Optional[Stdlib::Port],
+    database => String,
+    username => String,
+    password => Optional[Variant[String, Sensitive[String]]],
   }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef, Optional[Enum['verify-full', 'verify-ca']] $ssl_mode = undef)`
 
 The icinga2::db::connect function.
@@ -5569,12 +5569,12 @@ Data type:
 
 ```puppet
 Struct[{
-      type     => Enum['pgsql','mysql','mariadb'],
-      host     => Stdlib::Host,
-      port     => Optional[Stdlib::Port],
-      database => String,
-      username => String,
-      password => Optional[Variant[String, Sensitive[String]]],
+    type     => Enum['pgsql','mysql','mariadb'],
+    host     => Stdlib::Host,
+    port     => Optional[Stdlib::Port],
+    database => String,
+    username => String,
+    password => Optional[Variant[String, Sensitive[String]]],
   }]
 ```
 
@@ -5705,8 +5705,8 @@ Alias of
 
 ```puppet
 Struct[{
-    'username' => String[1],
-    'password' => Variant[String[1], Sensitive[String[1]]],
+  'username' => String[1],
+  'password' => Variant[String[1], Sensitive[String[1]]],
 }]
 ```
 

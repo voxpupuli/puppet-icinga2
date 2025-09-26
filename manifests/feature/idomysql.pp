@@ -234,12 +234,12 @@ class icinga2::feature::idomysql (
     }
 
     $db_cli_options = icinga::db::connect({
-        'type'     => $type,
-        'host'     => $host,
-        'port'     => $port,
-        'database' => $database,
-        'username' => $user,
-        'password' => $password,
+      'type'     => $type,
+      'host'     => $host,
+      'port'     => $port,
+      'database' => $database,
+      'username' => $user,
+      'password' => $password,
     }, $cert, $enable_ssl)
 
     exec { 'idomysql-import-schema':
