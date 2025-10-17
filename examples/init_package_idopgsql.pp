@@ -1,7 +1,7 @@
 include icinga2::repo
 
 package { ['icinga2', 'icinga2-ido-pgsql']:
-  ensure => latest,
+  ensure => '2.15.1',
   notify => Class['icinga2'],
 }
 
