@@ -34,9 +34,9 @@ class icinga2::query_objects (
 
   $file_list = $pql_query.map |$object| {
     $object['parameters']['target']
-  }
+  }.unique
 
-  unique($file_list).each |$target| {
+  $file_list.each |$target| {
     $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] }
 
     $_content = $objects.reduce('') |String $memo, $object| {
