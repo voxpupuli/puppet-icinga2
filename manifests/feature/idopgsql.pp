@@ -105,6 +105,8 @@ class icinga2::feature::idopgsql (
   Optional[Array]                             $categories           = undef,
   Boolean                                     $import_schema        = false,
 ) {
+  deprecation('idopgsql', 'The IDO feature will be removed in the next major reloase of this module!')
+
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
