@@ -119,6 +119,8 @@ class icinga2::feature::idomysql (
   Optional[Array]                              $categories             = undef,
   Variant[Boolean, Enum['mariadb', 'mysql']]   $import_schema          = false,
 ) {
+  deprecation('idomysql', 'The IDO feature will be removed in the next major reloase of this module!')
+
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
