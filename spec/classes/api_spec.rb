@@ -230,12 +230,12 @@ describe('icinga2::feature::api', type: :class) do
         }
 
         it {
-          is_expected.to contain_exec('icinga2 pki request').with(
+          is_expected.to contain_exec("icinga2 pki enroll (Check pending requests on CA host with: 'icinga2 ca list')").with(
             {
               'command' => "\"#{icinga2_bin}\" pki request --host foo --port 1234 --ca #{icinga2_pki_dir}/ca.crt" \
                 " --key #{icinga2_pki_dir}/host.example.org.key --cert #{icinga2_pki_dir}/host.example.org.crt --trustedcert #{icinga2_pki_dir}/trusted-cert.crt" \
                 ' --ticket ac5cb0d8c98f3f50ceff399b3cfedbb03782c117',
-              'creates' => "#{icinga2_pki_dir}/ca.crt",
+              'unless' => "\"#{icinga2_bin}\" pki verify --ca #{icinga2_pki_dir}/ca.crt --cert #{icinga2_pki_dir}/host.example.org.crt",
             },
           ).that_notifies('Class[icinga2::service]')
         }
