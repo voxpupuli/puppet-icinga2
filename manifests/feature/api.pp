@@ -328,9 +328,9 @@ class icinga2::feature::api (
         creates => $trusted_cert,
       }
 
-      -> exec { 'icinga2 pki request':
+      -> exec { "icinga2 pki enroll (Check pending requests on CA host with: 'icinga2 ca list')":
         command => "\"${icinga2_bin}\" pki request --host ${ca_host} --port ${ca_port} --ca ${_ssl_cacert_path} --key ${_ssl_key_path} --cert ${_ssl_cert_path} --trustedcert ${trusted_cert} ${_ticket}", # lint:ignore:140chars
-        creates => $_ssl_cacert_path,
+        unless  => "\"${icinga2_bin}\" pki verify --ca ${_ssl_cacert_path} --cert ${_ssl_cert_path}",
       }
     } # icinga2
   } # case pki

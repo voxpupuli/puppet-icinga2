@@ -18,6 +18,7 @@
 4. [Usage - Configuration options and additional functionality](#usage)
     * [Installing Icinga](#installing-icinga)
     * [Clustering Icinga](#clustering-icinga)
+    * [Icinga CA](#icinga-ca)
     * [Config Objects](#config-objects)
     * [Reading objects from hiera](#Reading-objects-from-hiera)
     * [Apply Rules](#apply-rules)
@@ -289,6 +290,38 @@ icinga2::object::zone { 'global-templates':
 The parameter `fingerprint` is optional and new since v2.1.0. It's used to validate the certificate of the CA host.
 You can get the fingerprint via `openssl x509 -noout -fingerprint -sha256 -inform pem -in master.crt` on the master host. (Icinga2 versions before 2.12.0 require '-sha1' as digest algorithm.)
 
+### Icinga CA
+
+To use internal Icinga CA, one node should be configured as CA, see [CA Configuration](#ca-configuration).
+On install, nodes will generate a temporary self-signed cert to be signed by the CA.
+Each cert request must be signed manually on CA host, see [Node Enrollment](#node-enrollment).
+
+#### CA Configuration
+``` puppet
+# Include this class on one node that will act as CA
+include icinga2::pki::ca
+
+# Set it as ca_host in api class
+class { 'icinga2::feature::api':
+...
+  ca_host         => '172.16.1.11',
+}
+```
+
+#### Node Enrollment
+
+1. Run puppet on the node to be enrolled, this will create a temporary self-signed cert and trigger a sign request on CA host.
+2. Sign the pending cert request on ca_host.
+``` puppet
+# icinga2 ca list
+Fingerprint                                                      | Timestamp                | Signed | Subject
+-----------------------------------------------------------------|--------------------------|--------|--------
+045152ef845f91626d0ac7df1182cd29aaa82a1a4cc3141a0f28e184e8e07cec | Jan 26 14:26:59 2026 GMT |        | CN = foobar.domain.com
+
+# icinga2 ca sign 045152ef845f91626d0ac7df1182cd29aaa82a1a4cc3141a0f28e184e8e07cec
+information/cli: Signed certificate for 'CN = foobar.domain.com'.
+```
+3. Run puppet again on node to be enrolled, self-signed cert will be overwritten with CA signed cert.
 
 ### Config Objects
 
