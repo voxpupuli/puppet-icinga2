@@ -147,7 +147,7 @@ describe('icinga2::pki::ca', type: :class) do
         let(:params) do
           {
             ca_cert: 'foo',
-            ca_key: 'bar'
+            ca_key: 'bar',
           }
         end
 

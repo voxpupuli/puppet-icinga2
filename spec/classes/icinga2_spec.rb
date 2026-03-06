@@ -157,7 +157,7 @@ describe('icinga2', type: :class) do
       context "with constants => { foo => 'bar' }" do
         let(:params) do
           {
-            constants: { foo: 'bar' }
+            constants: { foo: 'bar' },
           }
         end
 
@@ -167,7 +167,7 @@ describe('icinga2', type: :class) do
       context "with plugins => [ 'foo', 'bar' ]" do
         let(:params) do
           {
-            plugins: ['foo', 'bar']
+            plugins: ['foo', 'bar'],
           }
         end
 
