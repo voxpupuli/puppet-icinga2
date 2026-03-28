@@ -1,4 +1,8 @@
 ---
+Gemfile:
+  optional:
+    ':test':
+      - gem: 'rexml'
 .puppet-lint.rc:
   enabled_lint_checks:
     - parameter_documentation
