@@ -268,6 +268,8 @@ Data type: `Array[String[1]]`
 
 List of features to activate. Defaults to [checker, mainlog, notification].
 
+Default value: `['checker', 'mainlog', 'notification']`
+
 ##### <a name="-icinga2--purge_features"></a>`purge_features`
 
 Data type: `Boolean`
@@ -289,6 +291,8 @@ Default value: `{}`
 Data type: `Array[String[1]]`
 
 A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
+
+Default value: `['plugins', 'plugins-contrib', 'windows-plugins', 'nscp']`
 
 ##### <a name="-icinga2--confd"></a>`confd`
 

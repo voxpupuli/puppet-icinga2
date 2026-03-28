@@ -196,7 +196,7 @@ on_icinga_objects.each do |otype, rtype|
       let(:params) do
         {
           target: '/bar/baz',
-          export: 'foobar'
+          export: 'foobar',
         }
       end
 

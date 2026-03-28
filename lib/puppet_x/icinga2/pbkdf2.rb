@@ -143,7 +143,7 @@ class PBKDF2
       # calculate u_n
       u = prf(u)
       # xor it with the previous results
-      ret = ret ^ u
+      ret ^= u
     end
     ret
   end

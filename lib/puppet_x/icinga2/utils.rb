@@ -269,7 +269,7 @@ module Puppet::Icinga2
                       end
                     end
                   elsif value.is_a?(Array)
-                    op = value.delete_at(0) if value[0] == '+' || value[0] == '-'
+                    op = value.delete_at(0) if ['+', '-'].include?(value[0])
                     case level
                     when 2 then
                       "%{pre}[\"%{att}\"] #{op}= [ %{lst}]\n" % { pre: prefix, att: attribute_types(attr), lst: process_array(value) }
@@ -351,7 +351,7 @@ module Puppet::Icinga2
                         "%{ind}%{att} #{op}= {}\n" % { ind: ' ' * indent, att: attr }
                       end
                     elsif value.is_a?(Array)
-                      op = value.delete_at(0) if value[0] == '+' || value[0] == '-'
+                      op = value.delete_at(0) if ['+', '-'].include?(value[0])
                       "%{ind}%{att} #{op}= [ %{lst}]\n" % { ind: ' ' * indent, att: attr, lst: process_array(value) }
                     elsif value.to_s =~ %r{^([\+,-])\s+}
                       # String: attr = '+ config' -> attr += config
