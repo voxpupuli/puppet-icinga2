@@ -268,8 +268,6 @@ Data type: `Array[String[1]]`
 
 List of features to activate. Defaults to [checker, mainlog, notification].
 
-Default value: `['checker', 'mainlog', 'notification']`
-
 ##### <a name="-icinga2--purge_features"></a>`purge_features`
 
 Data type: `Boolean`
@@ -291,8 +289,6 @@ Default value: `{}`
 Data type: `Array[String[1]]`
 
 A list of the ITL plugins to load. Defaults to [ 'plugins', 'plugins-contrib', 'windows-plugins', 'nscp' ].
-
-Default value: `['plugins', 'plugins-contrib', 'windows-plugins', 'nscp']`
 
 ##### <a name="-icinga2--confd"></a>`confd`
 
@@ -2775,6 +2771,7 @@ icinga2::config::fragment { 'load-function':
 The following parameters are available in the `icinga2::config::fragment` defined type:
 
 * [`content`](#-icinga2--config--fragment--content)
+* [`ensure`](#-icinga2--config--fragment--ensure)
 * [`target`](#-icinga2--config--fragment--target)
 * [`code_name`](#-icinga2--config--fragment--code_name)
 * [`order`](#-icinga2--config--fragment--order)
@@ -2784,6 +2781,14 @@ The following parameters are available in the `icinga2::config::fragment` define
 Data type: `String`
 
 Content to insert in file specified in target.
+
+##### <a name="-icinga2--config--fragment--ensure"></a>`ensure`
+
+Data type: `Enum['present', 'absent']`
+
+Set to present enables the fragment, absent disables it.
+
+Default value: `present`
 
 ##### <a name="-icinga2--config--fragment--target"></a>`target`
 
