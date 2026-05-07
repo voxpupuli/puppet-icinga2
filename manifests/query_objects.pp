@@ -34,10 +34,12 @@ class icinga2::query_objects (
 
   $file_list = $pql_query.map |$object| {
     $object['parameters']['target']
-  }.unique
+  }
 
-  $file_list.each |$target| {
-    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] }
+  unique($file_list).each |$target| {
+    $objects = $pql_query.filter |$object| {
+      ($target == $object['parameters']['target']) and ($object['parameters']['ensure'] != 'absent')
+    }
 
     $_content = $objects.reduce('') |String $memo, $object| {
       "${memo}${object['parameters']['content']}"

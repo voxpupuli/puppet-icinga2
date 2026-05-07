@@ -75,6 +75,7 @@ define icinga2::object::timeperiod (
 
   unless empty($export) {
     @@icinga2::config::fragment { "icinga2::object::TimePeriod::${title}":
+      ensure  => $ensure,
       tag     => prefix(any2array($export), 'icinga2::instance::'),
       content => epp('icinga2/object.conf.epp', $config),
       target  => $target,

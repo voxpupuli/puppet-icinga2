@@ -101,6 +101,7 @@ define icinga2::object::scheduleddowntime (
 
   unless empty($export) {
     @@icinga2::config::fragment { "icinga2::object::ScheduledDowntime::${title}":
+      ensure  => $ensure,
       tag     => prefix(any2array($export), 'icinga2::instance::'),
       content => epp('icinga2/object.conf.epp', $config),
       target  => $target,
