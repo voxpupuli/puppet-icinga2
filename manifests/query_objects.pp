@@ -21,7 +21,7 @@ class icinga2::query_objects (
     'windows': {
     } # windows
     default: {
-      Concat {
+      File {
         owner   => $icinga2::globals::user,
         group   => $icinga2::globals::group,
         seltype => 'icinga2_etc_t',
@@ -32,29 +32,26 @@ class icinga2::query_objects (
 
   $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Config::Fragment' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
 
-  $file_list = $pql_query.map |$object| {
-    $object['parameters']['target']
-  }.unique
-
-  $file_list.each |$target| {
-    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] }
-
-    $_content = $objects.reduce('') |String $memo, $object| {
-      "${memo}${object['parameters']['content']}"
+  $_files = $pql_query.reduce({}) |Hash $memo, Hash $object| {
+    $_parameters       = $object['parameters']
+    $_target           = $_parameters['target']
+    $_existing_content = $memo[$_target] ? {
+      undef   => '',
+      default => $memo[$_target]['content'],
+    }
+    $_content = $_parameters['ensure'] ? {
+      'absent' => $_existing_content,
+      default  => "${_existing_content}${_parameters['content']}",
     }
 
-    if !defined(Concat[$target]) {
-      concat { $target:
-        ensure => present,
-        tag    => 'icinga2::config::file',
-        warn   => true,
-      }
-    }
-
-    concat::fragment { "custom-${target}":
-      target  => $target,
-      content => $_content,
-      order   => 99,
+    $memo + {
+      $_target => {
+        'ensure'  => file,
+        'tag'     => 'icinga2::config::file',
+        'content' => $_content,
+      },
     }
   }
+
+  create_resources('file', $_files)
 }
