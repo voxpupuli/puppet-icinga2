@@ -11,11 +11,12 @@
       Array $ignore = [],
 | -%>
 
+<% $_constants = pick(getvar('icinga2::_constants'), $icinga2::globals::constants) -%>
 <% $_attrs = $attrs + { 'assign where' => $assign, 'ignore where' => $ignore, } -%>
 <% if $apply =~ String { %>apply <%= $object_type -%>
 <% if $prefix { -%>
 <% if $prefix =~ String { %> "<%= $prefix %>"<% } else { -%>
-<% if $object_name in $icinga2::_constants { -%>
+<% if $object_name in $_constants { -%>
  <%= $object_name -%>
 <% } else { -%>
  "<%= $object_name -%>"<% } -%>
@@ -26,7 +27,7 @@
 <% if $apply { %>apply<% } else { -%>
 <% if $template { %>template<% } else { %>object<% } -%>
 <% } %> <%= $object_type -%>
-<% if $object_name in $icinga2::_constants { -%>
+<% if $object_name in $_constants { -%>
  <%= $object_name -%>
 <% } else { -%>
  "<%= $object_name %>"<% } -%>
