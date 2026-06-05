@@ -11,6 +11,8 @@ class icinga2::query_objects (
   String[1]        $destination  = $facts['networking']['fqdn'],
   Array[String[1]] $environments = [$environment],
 ) {
+  $icinga_user   = $icinga2::globals::user
+  $icinga_group  = $icinga2::globals::group
   $_environments = if empty($environments) {
     ''
   } else {
@@ -22,8 +24,8 @@ class icinga2::query_objects (
     } # windows
     default: {
       File {
-        owner   => $icinga2::globals::user,
-        group   => $icinga2::globals::group,
+        owner   => $icinga_user,
+        group   => $icinga_group,
         seltype => 'icinga2_etc_t',
         mode    => '0640',
       }
@@ -32,7 +34,7 @@ class icinga2::query_objects (
 
   $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Config::Fragment' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
 
-  $_files = $pql_query.reduce({}) |Hash $memo, Hash $object| {
+  $files = $pql_query.reduce({}) |Hash $memo, Hash $object| {
     $_parameters       = $object['parameters']
     $_target           = $_parameters['target']
     $_existing_content = $memo[$_target] ? {
@@ -46,12 +48,16 @@ class icinga2::query_objects (
 
     $memo + {
       $_target => {
-        'ensure'  => file,
-        'tag'     => 'icinga2::config::file',
         'content' => $_content,
       },
     }
   }
 
-  create_resources('file', $_files)
+  $files.each |$file, $attrs| {
+    file { $file:
+      ensure => file,
+      tag    => 'icinga2::config::file',
+      *      => $attrs,
+    }
+  }
 }
