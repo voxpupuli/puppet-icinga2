@@ -69,6 +69,7 @@ define icinga2::object::zone (
 
   unless empty($export) {
     @@icinga2::config::fragment { "icinga2::object::Zone::${title}":
+      ensure  => $ensure,
       tag     => prefix(any2array($export), 'icinga2::instance::'),
       content => epp('icinga2/object.conf.epp', $config),
       target  => $_target,

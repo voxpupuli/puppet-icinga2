@@ -33,7 +33,6 @@ class icinga2::query_objects (
   }
 
   $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Config::Fragment' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
-
   $files = $pql_query.reduce({}) |Hash $memo, Hash $object| {
     $_parameters       = $object['parameters']
     $_target           = $_parameters['target']

@@ -34,6 +34,9 @@
 # @param content
 #   Content to insert in file specified in target.
 #
+# @param ensure
+#   Set to present enables the fragment, absent disables it.
+#
 # @param target
 #   Destination config file to store in this fragment. File will be declared the
 #   first time.
@@ -47,6 +50,7 @@
 define icinga2::config::fragment (
   String                       $content,
   Stdlib::Absolutepath         $target,
+  Enum['present', 'absent']    $ensure    = present,
   String                       $code_name = $title,
   Variant[String, Integer]     $order     = '00',
 ) {
@@ -67,9 +71,11 @@ define icinga2::config::fragment (
     }
   }
 
-  concat::fragment { "icinga2::config::${code_name}":
-    target  => $target,
-    content => icinga::newline($content),
-    order   => $order,
+  if $ensure != 'absent' {
+    concat::fragment { "icinga2::config::${code_name}":
+      target  => $target,
+      content => icinga::newline($content),
+      order   => $order,
+    }
   }
 }
