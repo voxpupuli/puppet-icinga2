@@ -11,6 +11,8 @@ class icinga2::query_objects (
   String[1]        $destination  = $facts['networking']['fqdn'],
   Array[String[1]] $environments = [$environment],
 ) {
+  $icinga_user   = $icinga2::globals::user
+  $icinga_group  = $icinga2::globals::group
   $_environments = if empty($environments) {
     ''
   } else {
@@ -21,9 +23,9 @@ class icinga2::query_objects (
     'windows': {
     } # windows
     default: {
-      Concat {
-        owner   => $icinga2::globals::user,
-        group   => $icinga2::globals::group,
+      File {
+        owner   => $icinga_user,
+        group   => $icinga_group,
         seltype => 'icinga2_etc_t',
         mode    => '0640',
       }
@@ -32,29 +34,30 @@ class icinga2::query_objects (
 
   $pql_query =  puppetdb_query("resources[parameters] { ${_environments} type = 'Icinga2::Config::Fragment' and exported = true and tag = 'icinga2::instance::${destination}' and nodes { deactivated is null and expired is null } order by certname, title }")
 
-  $file_list = $pql_query.map |$object| {
-    $object['parameters']['target']
-  }.unique
-
-  $file_list.each |$target| {
-    $objects = $pql_query.filter |$object| { $target == $object['parameters']['target'] }
-
-    $_content = $objects.reduce('') |String $memo, $object| {
-      "${memo}${object['parameters']['content']}"
+  $files = $pql_query.reduce({}) |Hash $memo, Hash $object| {
+    $_parameters       = $object['parameters']
+    $_target           = $_parameters['target']
+    $_existing_content = $memo[$_target] ? {
+      undef   => '',
+      default => $memo[$_target]['content'],
+    }
+    $_content = $_parameters['ensure'] ? {
+      'absent' => $_existing_content,
+      default  => "${_existing_content}${_parameters['content']}",
     }
 
-    if !defined(Concat[$target]) {
-      concat { $target:
-        ensure => present,
-        tag    => 'icinga2::config::file',
-        warn   => true,
-      }
+    $memo + {
+      $_target => {
+        'content' => $_content,
+      },
     }
+  }
 
-    concat::fragment { "custom-${target}":
-      target  => $target,
-      content => $_content,
-      order   => 99,
+  $files.each |$file, $attrs| {
+    file { $file:
+      ensure => file,
+      tag    => 'icinga2::config::file',
+      *      => $attrs,
     }
   }
 }
