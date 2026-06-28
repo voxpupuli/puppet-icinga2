@@ -17,6 +17,10 @@ Facter.add('icinga2_version') do
              'C:/Program Files/ICINGA2/sbin/icinga2.exe'
            end
     cmd  = "#{file.split(':').first}:\"#{file.split(':').last.tr('/', '\\')}\" -V 2>&1"
-    Facter::Core::Execution.execute("cmd /C #{cmd}").lines.grep(%r{version: (r|v)?\d+\.\d+\d+}).first.split(':').last.delete('vr)').strip if File.executable?(file)
+    if File.executable?(file)
+      raw_output = Facter::Core::Execution.execute("cmd /C #{cmd}")
+      version_line = raw_output.lines.grep(%r{version:\s+\(?[rv]?\d+\.\d+\.\d+}).first
+      version_line&.split(':')&.last&.delete('vr)(')&.strip
+    end
   end
 end

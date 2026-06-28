@@ -281,6 +281,42 @@ describe('icinga2::feature::api', type: :class) do
           ).that_notifies('Class[icinga2::service]')
         }
       end
+
+      context "with pki => 'icinga2' and no ca_host" do
+        let(:params) do
+          {
+            pki: 'icinga2',
+          }
+        end
+
+        it { is_expected.to compile.and_raise_error(Puppet::Error, %r{parameter ca_host is required}) }
+      end
+
+      context "with pki => 'icinga2', ca_host => 'foo', ca_port => 1234, fingerprint => 'AA:BB'" do
+        let(:params) do
+          {
+            pki: 'icinga2',
+            ca_host: 'foo',
+            ca_port: 1234,
+            fingerprint: 'AA:BB',
+          }
+        end
+
+        case facts[:kernel]
+        when 'windows'
+          it {
+            is_expected.to contain_exec('icinga2 pki get trusted-cert').with_command(
+              %r{\|findstr /R /C:"AA BB"},
+            )
+          }
+        else
+          it {
+            is_expected.to contain_exec('icinga2 pki get trusted-cert').with_command(
+              %r{\|grep 'AA BB\\s\*\$'},
+            )
+          }
+        end
+      end
     end
   end
 end

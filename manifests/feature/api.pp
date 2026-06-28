@@ -182,6 +182,10 @@ class icinga2::feature::api (
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
   }
 
+  if $pki == 'icinga2' and $ensure != 'absent' and !$ca_host {
+    fail('The parameter ca_host is required when pki is set to icinga2 and ensure is present.')
+  }
+
   # cert directory must exists and icinga binary is required for icinga2 pki
   require icinga2::install
 
@@ -298,7 +302,7 @@ class icinga2::feature::api (
       }
       if $fingerprint {
         $_fingerprint = upcase(regsubst($fingerprint, ':', ' ', 'G'))
-        if $facts['os']['family'] != 'Windows' {
+        if $facts['kernel'] != 'windows' {
           $_cmd_pki_get_cert = "${cmd_pki_get_cert} |grep '${_fingerprint}\s*$'"
         } else {
           $_cmd_pki_get_cert = "cmd.exe /c \"${cmd_pki_get_cert} |findstr /R /C:\"${_fingerprint}\"\""
