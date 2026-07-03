@@ -25,7 +25,7 @@
 #     manage_packages => false,
 #   }
 #
-# @note Setting manage_packages to false means that all package aren't handeld by the module included the IDO packages.
+# @note Setting manage_packages to false means that all package aren't handeld by the module.
 #
 # @example To set constants in etc/icinga2/constants.conf use the constants parameter and as value a hash, every key will be set as constant and assigned by it's value. Defaults can be overwritten.
 #   class { 'icinga2':
