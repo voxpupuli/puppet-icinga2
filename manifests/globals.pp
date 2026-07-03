@@ -28,18 +28,6 @@
 # @param selinux_package_name
 #   The name of the icinga selinux package.
 #
-# @param ido_mysql_package_name
-#   The name of the icinga package that's needed for MySQL.
-#
-# @param ido_mysql_schema
-#   Path to the MySQL schema to import.
-#
-# @param ido_pgsql_package_name
-#   The name of the icinga package that's needed for Postrgesql.
-#
-# @param ido_pgsql_schema
-#   Path to the Postgresql schema to import.
-#
 # @param icinga2_bin
 #   Path to the icinga2 binary.
 #
@@ -79,8 +67,6 @@
 class icinga2::globals (
   String[1]              $package_name,
   String[1]              $service_name,
-  String[1]              $ido_mysql_schema,
-  String[1]              $ido_pgsql_schema,
   Stdlib::Absolutepath   $icinga2_bin,
   Stdlib::Absolutepath   $conf_dir,
   Stdlib::Absolutepath   $lib_dir,
@@ -96,8 +82,6 @@ class icinga2::globals (
   Optional[String[1]]    $group                  = undef,
   Optional[String[1]]    $logon_account          = undef,
   Optional[String[1]]    $selinux_package_name   = undef,
-  Optional[String[1]]    $ido_mysql_package_name = undef,
-  Optional[String[1]]    $ido_pgsql_package_name = undef,
   Optional[String[1]]    $service_reload         = undef,
   Hash[String, Any]      $constants              = {},
 ) {

@@ -134,7 +134,7 @@ class { 'icinga2':
 ```
 
 Note: Be careful with this option: Setting `manage_packages` to false means that this module will not install any package at
-all, including IDO packages!
+all.
 
 
 ### Clustering Icinga
@@ -150,7 +150,7 @@ how these roles can be configured using this Puppet module.
 
 #### Master
 
-A Master zone has no parent and is usually also the place where you enable the IDO and notification features. A master
+A Master zone has no parent and is usually also the place where you enable the IcingaDB and notification features. A master
 sends configurations over the Icinga 2 protocol to satellites and/or clients.
 
 More detailed examples can be found in the [examples] directory.
@@ -632,8 +632,6 @@ This may affect configuration files which are influenced by the following puppet
 - icinga2::feature::api::ticket\_id
 - icinga2::feature::elasticsearch::password
 - icinga2::feature::icingadb::password
-- icinga2::feature::idomysql::password
-- icinga2::feature::idopgsql::password
 - icinga2::feature::influxdb::password
 - icinga2::feature::influxdb::basic\_auth['password']
 - icinga2::feature::influxdb2::auth\_token
