@@ -379,6 +379,7 @@ The following parameters are available in the `icinga2::feature::api` class:
 * [`ssl_key`](#-icinga2--feature--api--ssl_key)
 * [`ssl_cert`](#-icinga2--feature--api--ssl_cert)
 * [`ssl_cacert`](#-icinga2--feature--api--ssl_cacert)
+* [`ssl_puppet_cacert`](#-icinga2--feature--api--ssl_puppet_cacert)
 * [`ssl_crl`](#-icinga2--feature--api--ssl_crl)
 * [`accept_config`](#-icinga2--feature--api--accept_config)
 * [`accept_commands`](#-icinga2--feature--api--accept_commands)
@@ -456,6 +457,15 @@ Data type: `Optional[String[1]]`
 
 The CA root certificate in a base64 encoded string to store in cert directory. This parameter
 requires pki to be set to 'none', or 'puppet' (to add multiple puppet CA's)
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--api--ssl_puppet_cacert"></a>`ssl_puppet_cacert`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+if set, this overwrites the source of the puppet ca to take. This parameter
+requires pki to be set to 'puppet'.
 
 Default value: `undef`
 
