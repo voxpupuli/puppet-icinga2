@@ -57,6 +57,8 @@
 #             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
 #             Please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle
 #             its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
+#             If $ssl_cacert is set, it overwrites the configured puppet CA which is usefull if you
+#             have eg. multiple different puppet CA which should authorize on one icinga server.
 #   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
 #              Certificate from 'ca_host' using the icinga2 ticket mechanism.
 #              In case the 'ticket_salt' has been configured the ticket_id will be generated
@@ -75,7 +77,7 @@
 #
 # @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
-#   requires pki to be set to 'none'.
+#   requires pki to be set to 'none', or 'puppet' (to add multiple puppet CA's)
 #
 # @param ssl_crl
 #   Optional location of the certificate revocation list.
@@ -238,10 +240,18 @@ class icinga2::feature::api (
         tag    => 'icinga2::config::file',
       }
 
-      file { $_ssl_cacert_path:
-        ensure => file,
-        source => $facts['icinga2_puppet_localcacert'],
-        tag    => 'icinga2::config::file',
+      if $ssl_cacert {
+        file { $_ssl_cacert_path:
+          ensure  => file,
+          content => icinga::newline($ssl_cacert),
+          tag     => 'icinga2::config::file',
+        }
+      } else {
+        file { $_ssl_cacert_path:
+          ensure => file,
+          source => $facts['icinga2_puppet_localcacert'],
+          tag    => 'icinga2::config::file',
+        }
       }
     } # puppet
 
