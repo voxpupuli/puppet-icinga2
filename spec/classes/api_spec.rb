@@ -86,7 +86,12 @@ describe('icinga2::feature::api', type: :class) do
             }
           end
 
-          it { is_expected.to contain_exec('Add port 1234 for icinga2_port_t') }
+          it { is_expected.to contain_selinux__port('icinga2-api-tcp-1234').with(
+            'ensure' => 'present',
+            'seltype' => 'icinga2_port_t',
+            'protocol' => 'tcp',
+            'port' => 1234,
+          ) }
         end
       end
 
