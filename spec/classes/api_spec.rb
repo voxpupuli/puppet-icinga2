@@ -74,6 +74,10 @@ describe('icinga2::feature::api', type: :class) do
 
       if facts[:os]['family'] == 'RedHat'
         context 'with icinga2::manage_selinux => true, bind_port => 1234' do
+          let(:facts) do
+            super().merge({ os: { family: 'RedHat', selinux: { enabled: true } } })
+          end
+
           let(:pre_condition) do
             [
               "class { 'icinga2': manage_selinux => true, features => [], constants => {'NodeName' => 'host.example.org'} }",
@@ -86,7 +90,14 @@ describe('icinga2::feature::api', type: :class) do
             }
           end
 
-          it { is_expected.to contain_exec('Add port 1234 for icinga2_port_t') }
+          it {
+            is_expected.to contain_selinux__port('icinga2-api-tcp-1234').with(
+              'ensure' => 'present',
+              'seltype' => 'icinga2_port_t',
+              'protocol' => 'tcp',
+              'port' => 1234,
+            )
+          }
         end
       end
 

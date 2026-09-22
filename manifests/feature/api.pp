@@ -365,18 +365,12 @@ class icinga2::feature::api (
   create_resources('icinga2::object::zone', $zones)
 
   if $manage_selinux and $bind_port {
-    # if port is free
-    exec { "Add port ${bind_port} for icinga2_port_t":
-      command => ['/usr/sbin/semanage', 'port', '-a', '-t', 'icinga2_port_t', '-p', 'tcp', $bind_port],
-      unless  => "/usr/sbin/semanage port -l | grep -qw '\\s${bind_port}'",
-      before  => Icinga2::Object['icinga2::object::ApiListener::api'],
-    }
-
-    # if port is also used by another app
-    exec { "Add available port ${bind_port} also for icinga2_port_t":
-      command => ['/usr/sbin/semanage', 'port', '-m', '-t', 'icinga2_port_t', '-p', 'tcp', $bind_port],
-      onlyif  => "/usr/sbin/semanage port -l | grep -wv '^icinga2_port_t' | grep -wq '\s${bind_port}'",
-      before  => Icinga2::Object['icinga2::object::ApiListener::api'],
+    selinux::port { "icinga2-api-tcp-${bind_port}":
+      ensure   => 'present',
+      seltype  => 'icinga2_port_t',
+      protocol => 'tcp',
+      port     => $bind_port,
+      before   => Icinga2::Object['icinga2::object::ApiListener::api'],
     }
   }
 
