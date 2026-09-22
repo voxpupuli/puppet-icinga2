@@ -12,36 +12,41 @@
 
 #### Table of Contents
 
-1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with icinga2](#setup)
-4. [Usage - Configuration options and additional functionality](#usage)
-    * [Installing Icinga](#installing-icinga)
-    * [Clustering Icinga](#clustering-icinga)
-    * [Config Objects](#config-objects)
-    * [Reading objects from hiera](#Reading-objects-from-hiera)
-    * [Apply Rules](#apply-rules)
-    * [Custom configuration](#custom-configuration)
-5. [How Configuration is parsed](#how-configuration-is-parsed)
-6. [Reference](#reference)
-7. [Release Notes](#release-notes)
+- [Icinga 2 Puppet Module](#icinga-2-puppet-module)
+      - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Module Description](#module-description)
+  - [Setup](#setup)
+    - [What the Icinga 2 Puppet module supports](#what-the-icinga-2-puppet-module-supports)
+    - [Dependencies](#dependencies)
+    - [Limitations](#limitations)
+  - [Usage](#usage)
+    - [Installing Icinga](#installing-icinga)
+    - [Clustering Icinga](#clustering-icinga)
+      - [Master](#master)
+      - [Satellite](#satellite)
+      - [Agent](#agent)
+    - [Config Objects](#config-objects)
+      - [Host](#host)
+      - [Service](#service)
+      - [Hostgroup](#hostgroup)
+    - [Reading objects from hiera](#reading-objects-from-hiera)
+    - [Apply Rules](#apply-rules)
+    - [Custom Configuration](#custom-configuration)
+  - [How Configuration is parsed](#how-configuration-is-parsed)
+        - [What isn't supported?](#what-isnt-supported)
+  - [Reference](#reference)
+  - [Known Issues](#known-issues)
+    - [Environment Bleed](#environment-bleed)
+  - [Release Notes](#release-notes)
+  - [Transfer Notice](#transfer-notice)
 
 ## Overview
 
 Icinga 2 is a widely used open source monitoring software. This Puppet module helps with installing and managing
 configuration of Icinga 2 on multiple operating systems.
 
-### What's new in version 4.0.0
-
-New version 4.0.0 means we have a breaking change. However, this change only affects the `export` parameter in the individual object defined resources introduced in v3.6.0. We replaced the `icinga2::object` exported resources with the type of `icinga2::config::fragment` to do the config rendering thru runs on the single Icinga agent to get an static configuration on the destination, generally the Icinga config server.
-
-If you are using the `export` parameter in connection with the class `icinga2::query_objects`, it is recommended to suspend the puppet runs on the icinga servers and satellites (or everwhere you declare `icinga2::query_objects`) after updating this module until all agents have been processed by Puppet at least once.
-
-Also, the anchors have been replaced by contains, this may cause problems if you set dependency to the icinga2 class.
-
-### What's new in version 3.6.0
-
-Each Icinga object has been given the new parameter `export` that specifies one (ordinary objects for the config server) or more nodes (e.g. zones and endpoints for HA servers from workers aka satellites) as targets where the objects are then created using the class `query_objects`. This has been implemented to avoid collecting export resources in large environments.
+To get a full running Icinga Stack including Icinga2, [IcingaWeb2](https://github.com/voxpupuli/puppet-icingaweb2) and [IcingaDB](https://github.com/voxpupuli/puppet-icingadb) have a look at the [Icinga](https://github.com/voxpupuli/puppet-icinga) module.
 
 ## Module Description
 
@@ -66,35 +71,9 @@ available in Icinga 2 can be enabled and configured with this module.
 * Repository Management
 * Certification Authority
 
-### Dependencies
-
-This module supports:
-
-* [puppet] >= 7.0.0 < 9.0.0
-
-And depends on:
-
-* [puppetlabs/stdlib] >= 6.6.0 < 10.0.0
-* [puppetlabs/concat] >= 6.4.0 < 10.0.0
-* [icinga/icinga] >= 1.0.0 < 8.0.0
-    * needed if `manage_repos` is set to `true`
-* [puppetlabs/chocolatey] >= 5.2.0 < 9.0.0
-    * needed if agent os is windows and if `manage_packages` is set to `true`
-
 ### Limitations
 
 The use of Icinga's own CA is recommended. If you still want to use the Puppet certificates, please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
-
-This module has been tested on:
-
-* Debian 10, 11, 12
-* Ubuntu 20.04, 22.04
-* CentOS/RHEL 7, 8, 9
-* AlmaLinux/Rocky 8, 9
-* Fedora 32
-* Windows Server 2019
-
-Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
