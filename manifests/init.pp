@@ -129,7 +129,7 @@ class icinga2 (
   $selinux_package_name = $icinga2::globals::selinux_package_name
 
   # check selinux
-  $_selinux = if fact('os.selinux.enabled') and $facts['os']['selinux']['enabled'] and $selinux_package_name {
+  $_selinux = if fact('os.selinux.enabled') and $selinux_package_name {
     $manage_selinux
   } else {
     false

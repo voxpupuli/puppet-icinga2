@@ -379,6 +379,7 @@ The following parameters are available in the `icinga2::feature::api` class:
 * [`ssl_key`](#-icinga2--feature--api--ssl_key)
 * [`ssl_cert`](#-icinga2--feature--api--ssl_cert)
 * [`ssl_cacert`](#-icinga2--feature--api--ssl_cacert)
+* [`ssl_puppet_cacert`](#-icinga2--feature--api--ssl_puppet_cacert)
 * [`ssl_crl`](#-icinga2--feature--api--ssl_crl)
 * [`accept_config`](#-icinga2--feature--api--accept_config)
 * [`accept_commands`](#-icinga2--feature--api--accept_commands)
@@ -420,6 +421,8 @@ Provides multiple sources for the certificate, key and ca.
           /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
           Please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle
           its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
+          If $ssl_cacert is set, it overwrites the configured puppet CA which is usefull if you
+          have eg. multiple different puppet CA which should authorize on one icinga server.
 - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
            Certificate from 'ca_host' using the icinga2 ticket mechanism.
            In case the 'ticket_salt' has been configured the ticket_id will be generated
@@ -453,7 +456,16 @@ Default value: `undef`
 Data type: `Optional[String[1]]`
 
 The CA root certificate in a base64 encoded string to store in cert directory. This parameter
-requires pki to be set to 'none'.
+requires pki to be set to 'none', or 'puppet' (to add multiple puppet CA's)
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--api--ssl_puppet_cacert"></a>`ssl_puppet_cacert`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+if set, this overwrites the source of the puppet ca to take. This parameter
+requires pki to be set to 'puppet'.
 
 Default value: `undef`
 
