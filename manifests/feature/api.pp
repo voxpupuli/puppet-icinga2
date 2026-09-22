@@ -57,6 +57,8 @@
 #             /var/lib/icinga2/certs on Linux and C:/ProgramData/icinga2/var/lib/icinga2/certs on Windows.
 #             Please note that Puppet 7 uses an intermediate CA by default and Icinga cannot handle
 #             its CA certificate, see [Icinga Issue](https://github.com/Icinga/icinga2/pull/8859).
+#             If $ssl_cacert is set, it overwrites the configured puppet CA which is usefull if you
+#             have eg. multiple different puppet CA which should authorize on one icinga server.
 #   - icinga2: Uses the icinga2 CLI to generate a Certificate Request and Key to obtain a signed
 #              Certificate from 'ca_host' using the icinga2 ticket mechanism.
 #              In case the 'ticket_salt' has been configured the ticket_id will be generated
@@ -75,7 +77,11 @@
 #
 # @param ssl_cacert
 #   The CA root certificate in a base64 encoded string to store in cert directory. This parameter
-#   requires pki to be set to 'none'.
+#   requires pki to be set to 'none', or 'puppet' (to add multiple puppet CA's)
+#
+# @param ssl_puppet_cacert
+#   if set, this overwrites the source of the puppet ca to take. This parameter
+#   requires pki to be set to 'puppet'.
 #
 # @param ssl_crl
 #   Optional location of the certificate revocation list.
@@ -168,6 +174,7 @@ class icinga2::feature::api (
   Optional[Icinga::Secret]                                 $ssl_key                              = undef,
   Optional[String[1]]                                      $ssl_cert                             = undef,
   Optional[String[1]]                                      $ssl_cacert                           = undef,
+  Optional[Stdlib::Absolutepath]                           $ssl_puppet_cacert                    = undef,
   Optional[Enum['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3']] $ssl_protocolmin                      = undef,
   Optional[Icinga2::Interval]                              $ssl_handshake_timeout                = undef,
   Optional[Icinga2::Interval]                              $connect_timeout                      = undef,
@@ -238,10 +245,18 @@ class icinga2::feature::api (
         tag    => 'icinga2::config::file',
       }
 
-      file { $_ssl_cacert_path:
-        ensure => file,
-        source => $facts['icinga2_puppet_localcacert'],
-        tag    => 'icinga2::config::file',
+      if $ssl_cacert {
+        file { $_ssl_cacert_path:
+          ensure  => file,
+          content => icinga::newline($ssl_cacert),
+          tag     => 'icinga2::config::file',
+        }
+      } else {
+        file { $_ssl_cacert_path:
+          ensure => file,
+          source => pick($ssl_puppet_cacert, $facts['icinga2_puppet_localcacert']),
+          tag    => 'icinga2::config::file',
+        }
       }
     } # puppet
 

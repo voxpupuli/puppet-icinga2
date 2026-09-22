@@ -155,6 +155,27 @@ describe('icinga2::feature::api', type: :class) do
         it { is_expected.to contain_icinga2__object__zone('ZoneName').with({ 'endpoints' => [ 'NodeName' ] }) }
       end
 
+      context "with pki => 'puppet', ssl_cacert => 'cacerts'" do
+        let(:params) do
+          {
+            ensure: 'present',
+            pki: 'puppet',
+            ssl_cacert: 'cacerts',
+          }
+        end
+
+        it {
+          is_expected.to contain_file("#{icinga2_pki_dir}/ca.crt").with(
+            {
+              'ensure'  => 'file',
+              'owner'   => icinga2_user,
+              'group'   => icinga2_group,
+              'content' => 'cacerts',
+            },
+          )
+        }
+      end
+
       context "with ensure => absent, pki => 'puppet'" do
         let(:params) do
           {
