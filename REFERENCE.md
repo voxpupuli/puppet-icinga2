@@ -3280,6 +3280,7 @@ The following parameters are available in the `icinga2::object::host` defined ty
 * [`enable_event_handler`](#-icinga2--object--host--enable_event_handler)
 * [`enable_flapping`](#-icinga2--object--host--enable_flapping)
 * [`enable_perfdata`](#-icinga2--object--host--enable_perfdata)
+* [`flapping_ignore_states`](#-icinga2--object--host--flapping_ignore_states)
 * [`event_command`](#-icinga2--object--host--event_command)
 * [`flapping_threshold_low`](#-icinga2--object--host--flapping_threshold_low)
 * [`flapping_threshold_high`](#-icinga2--object--host--flapping_threshold_high)
@@ -3455,6 +3456,14 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Whether performance data processing is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--host--flapping_ignore_states"></a>`flapping_ignore_states`
+
+Data type: `Optional[Array[String[1]]]`
+
+A list of states that should be ignored during flapping calculation.
 
 Default value: `undef`
 
