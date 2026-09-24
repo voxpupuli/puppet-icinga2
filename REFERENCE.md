@@ -10,6 +10,7 @@
 
 * [`icinga2`](#icinga2): This module installs and configures Icinga 2.
 * [`icinga2::feature::api`](#icinga2--feature--api): Configures the Icinga 2 feature api.
+* [`icinga2::feature::app`](#icinga2--feature--app): Configures the Icinga 2 feature app.
 * [`icinga2::feature::checker`](#icinga2--feature--checker): Configures the Icinga 2 feature checker.
 * [`icinga2::feature::command`](#icinga2--feature--command): Configures the Icinga 2 feature command.
 * [`icinga2::feature::compatlog`](#icinga2--feature--compatlog): Configures the Icinga 2 feature compatlog.
@@ -20,6 +21,7 @@
 * [`icinga2::feature::icingadb`](#icinga2--feature--icingadb): Configures the Icinga 2 feature icingadb.
 * [`icinga2::feature::influxdb`](#icinga2--feature--influxdb): Configures the Icinga 2 feature influxdb.
 * [`icinga2::feature::influxdb2`](#icinga2--feature--influxdb2): Configures the Icinga 2 feature influxdb2.
+* [`icinga2::feature::journald`](#icinga2--feature--journald): Configures the Icinga 2 feature journald.
 * [`icinga2::feature::livestatus`](#icinga2--feature--livestatus): Configures the Icinga 2 feature livestatus.
 * [`icinga2::feature::mainlog`](#icinga2--feature--mainlog): Configures the Icinga 2 feature mainlog.
 * [`icinga2::feature::notification`](#icinga2--feature--notification): Configures the Icinga 2 feature notification.
@@ -659,6 +661,97 @@ Enforce the filter-expression permission.
 
 Default value: `undef`
 
+### <a name="icinga2--feature--app"></a>`icinga2::feature::app`
+
+Configures the Icinga 2 feature app.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::app` class:
+
+* [`ensure`](#-icinga2--feature--app--ensure)
+* [`enable_notifications`](#-icinga2--feature--app--enable_notifications)
+* [`enable_event_handlers`](#-icinga2--feature--app--enable_event_handlers)
+* [`enable_flapping`](#-icinga2--feature--app--enable_flapping)
+* [`enable_host_checks`](#-icinga2--feature--app--enable_host_checks)
+* [`enable_service_checks`](#-icinga2--feature--app--enable_service_checks)
+* [`enable_perfdata`](#-icinga2--feature--app--enable_perfdata)
+* [`vars`](#-icinga2--feature--app--vars)
+* [`environment`](#-icinga2--feature--app--environment)
+
+##### <a name="-icinga2--feature--app--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature syslog, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--feature--app--enable_notifications"></a>`enable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether notifications are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_event_handlers"></a>`enable_event_handlers`
+
+Data type: `Optional[Boolean]`
+
+Whether event handlers are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_flapping"></a>`enable_flapping`
+
+Data type: `Optional[Boolean]`
+
+Whether flap detection is globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_host_checks"></a>`enable_host_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active host checks are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_service_checks"></a>`enable_service_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active service checks are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_perfdata"></a>`enable_perfdata`
+
+Data type: `Optional[Boolean]`
+
+Whether performance data processing is globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--vars"></a>`vars`
+
+Data type: `Optional[Hash]`
+
+A dictionary containing custom variables that are available globally.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--environment"></a>`environment`
+
+Data type: `Optional[String[1]]`
+
+Specify the Icinga environment. This overrides the Environment constant specified
+in the configuration or on the CLI with `--define`.
+
+Default value: `undef`
+
 ### <a name="icinga2--feature--checker"></a>`icinga2::feature::checker`
 
 Configures the Icinga 2 feature checker.
@@ -1191,7 +1284,9 @@ The following parameters are available in the `icinga2::feature::icingadb` class
 * [`port`](#-icinga2--feature--icingadb--port)
 * [`socket_path`](#-icinga2--feature--icingadb--socket_path)
 * [`connect_timeout`](#-icinga2--feature--icingadb--connect_timeout)
+* [`username`](#-icinga2--feature--icingadb--username)
 * [`password`](#-icinga2--feature--icingadb--password)
+* [`db_index`](#-icinga2--feature--icingadb--db_index)
 * [`env_id`](#-icinga2--feature--icingadb--env_id)
 * [`enable_tls`](#-icinga2--feature--icingadb--enable_tls)
 * [`tls_key_file`](#-icinga2--feature--icingadb--tls_key_file)
@@ -1246,11 +1341,28 @@ Timeout for establishing new connections.
 
 Default value: `undef`
 
+##### <a name="-icinga2--feature--icingadb--username"></a>`username`
+
+Data type: `Optional[String[1]]`
+
+Redis auth username. Only possible if Redis ACLs are used.
+Requires password to be set as well.
+
+Default value: `undef`
+
 ##### <a name="-icinga2--feature--icingadb--password"></a>`password`
 
 Data type: `Optional[Icinga::Secret]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--icingadb--db_index"></a>`db_index`
+
+Data type: `Optional[Integer]`
+
+Redis logical database by its number.
 
 Default value: `undef`
 
@@ -1825,6 +1937,52 @@ Enable the high availability functionality. Only valid in a cluster setup.
 
 Default value: `undef`
 
+### <a name="icinga2--feature--journald"></a>`icinga2::feature::journald`
+
+Configures the Icinga 2 feature journald.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::journald` class:
+
+* [`ensure`](#-icinga2--feature--journald--ensure)
+* [`severity`](#-icinga2--feature--journald--severity)
+* [`facility`](#-icinga2--feature--journald--facility)
+* [`identifier`](#-icinga2--feature--journald--identifier)
+
+##### <a name="-icinga2--feature--journald--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature journald, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--feature--journald--severity"></a>`severity`
+
+Data type: `Icinga::LogLevel`
+
+You can choose the log severity between information, notice, warning or debug.
+
+Default value: `'warning'`
+
+##### <a name="-icinga2--feature--journald--facility"></a>`facility`
+
+Data type: `Optional[Icinga2::LogFacility]`
+
+Defines the facility to use for journald entries. This can be a facility constant
+like FacilityDaemon.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--journald--identifier"></a>`identifier`
+
+Data type: `Optional[String[1]]`
+
+Defines the syslog compatible identifier to use for journal entries.
+
+Default value: `undef`
+
 ### <a name="icinga2--feature--livestatus"></a>`icinga2::feature::livestatus`
 
 Configures the Icinga 2 feature livestatus.
@@ -1963,6 +2121,9 @@ The following parameters are available in the `icinga2::feature::opentsdb` class
 * [`host`](#-icinga2--feature--opentsdb--host)
 * [`port`](#-icinga2--feature--opentsdb--port)
 * [`enable_ha`](#-icinga2--feature--opentsdb--enable_ha)
+* [`enable_generic_metrics`](#-icinga2--feature--opentsdb--enable_generic_metrics)
+* [`host_template`](#-icinga2--feature--opentsdb--host_template)
+* [`service_template`](#-icinga2--feature--opentsdb--service_template)
 
 ##### <a name="-icinga2--feature--opentsdb--ensure"></a>`ensure`
 
@@ -1993,6 +2154,31 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--opentsdb--enable_generic_metrics"></a>`enable_generic_metrics`
+
+Data type: `Optional[Boolean]`
+
+Re-use metric names to store different perfdata values for a particular check.
+Use tags to distinguish perfdata instead of metric name.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--opentsdb--host_template"></a>`host_template`
+
+Data type: `Optional[Hash]`
+
+Specify additional tags to be included with host metrics.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--opentsdb--service_template"></a>`service_template`
+
+Data type: `Optional[Hash]`
+
+Specify additional tags to be included with service metrics.
 
 Default value: `undef`
 
