@@ -1191,7 +1191,9 @@ The following parameters are available in the `icinga2::feature::icingadb` class
 * [`port`](#-icinga2--feature--icingadb--port)
 * [`socket_path`](#-icinga2--feature--icingadb--socket_path)
 * [`connect_timeout`](#-icinga2--feature--icingadb--connect_timeout)
+* [`username`](#-icinga2--feature--icingadb--username)
 * [`password`](#-icinga2--feature--icingadb--password)
+* [`db_index`](#-icinga2--feature--icingadb--db_index)
 * [`env_id`](#-icinga2--feature--icingadb--env_id)
 * [`enable_tls`](#-icinga2--feature--icingadb--enable_tls)
 * [`tls_key_file`](#-icinga2--feature--icingadb--tls_key_file)
@@ -1246,11 +1248,28 @@ Timeout for establishing new connections.
 
 Default value: `undef`
 
+##### <a name="-icinga2--feature--icingadb--username"></a>`username`
+
+Data type: `Optional[String[1]]`
+
+Redis auth username. Only possible if Redis ACLs are used.
+Requires password to be set as well.
+
+Default value: `undef`
+
 ##### <a name="-icinga2--feature--icingadb--password"></a>`password`
 
 Data type: `Optional[Icinga::Secret]`
 
 IcingaDB Redis password. The password parameter isn't parsed anymore.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--icingadb--db_index"></a>`db_index`
+
+Data type: `Optional[Integer]`
+
+Redis logical database by its number.
 
 Default value: `undef`
 
