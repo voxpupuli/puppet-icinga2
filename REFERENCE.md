@@ -10,6 +10,7 @@
 
 * [`icinga2`](#icinga2): This module installs and configures Icinga 2.
 * [`icinga2::feature::api`](#icinga2--feature--api): Configures the Icinga 2 feature api.
+* [`icinga2::feature::app`](#icinga2--feature--app): Configures the Icinga 2 feature app.
 * [`icinga2::feature::checker`](#icinga2--feature--checker): Configures the Icinga 2 feature checker.
 * [`icinga2::feature::command`](#icinga2--feature--command): Configures the Icinga 2 feature command.
 * [`icinga2::feature::compatlog`](#icinga2--feature--compatlog): Configures the Icinga 2 feature compatlog.
@@ -656,6 +657,97 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Enforce the filter-expression permission.
+
+Default value: `undef`
+
+### <a name="icinga2--feature--app"></a>`icinga2::feature::app`
+
+Configures the Icinga 2 feature app.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::app` class:
+
+* [`ensure`](#-icinga2--feature--app--ensure)
+* [`enable_notifications`](#-icinga2--feature--app--enable_notifications)
+* [`enable_event_handlers`](#-icinga2--feature--app--enable_event_handlers)
+* [`enable_flapping`](#-icinga2--feature--app--enable_flapping)
+* [`enable_host_checks`](#-icinga2--feature--app--enable_host_checks)
+* [`enable_service_checks`](#-icinga2--feature--app--enable_service_checks)
+* [`enable_perfdata`](#-icinga2--feature--app--enable_perfdata)
+* [`vars`](#-icinga2--feature--app--vars)
+* [`environment`](#-icinga2--feature--app--environment)
+
+##### <a name="-icinga2--feature--app--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature syslog, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--feature--app--enable_notifications"></a>`enable_notifications`
+
+Data type: `Optional[Boolean]`
+
+Whether notifications are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_event_handlers"></a>`enable_event_handlers`
+
+Data type: `Optional[Boolean]`
+
+Whether event handlers are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_flapping"></a>`enable_flapping`
+
+Data type: `Optional[Boolean]`
+
+Whether flap detection is globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_host_checks"></a>`enable_host_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active host checks are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_service_checks"></a>`enable_service_checks`
+
+Data type: `Optional[Boolean]`
+
+Whether active service checks are globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--enable_perfdata"></a>`enable_perfdata`
+
+Data type: `Optional[Boolean]`
+
+Whether performance data processing is globally enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--vars"></a>`vars`
+
+Data type: `Optional[Hash]`
+
+A dictionary containing custom variables that are available globally.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--app--environment"></a>`environment`
+
+Data type: `Optional[String[1]]`
+
+Specify the Icinga environment. This overrides the Environment constant specified
+in the configuration or on the CLI with `--define`.
 
 Default value: `undef`
 
