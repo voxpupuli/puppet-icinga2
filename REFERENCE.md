@@ -402,6 +402,7 @@ The following parameters are available in the `icinga2::feature::api` class:
 * [`access_control_allow_headers`](#-icinga2--feature--api--access_control_allow_headers)
 * [`access_control_allow_methods`](#-icinga2--feature--api--access_control_allow_methods)
 * [`environment`](#-icinga2--feature--api--environment)
+* [`http_response_headers`](#-icinga2--feature--api--http_response_headers)
 * [`enforce_filter_expression_permission`](#-icinga2--feature--api--enforce_filter_expression_permission)
 
 ##### <a name="-icinga2--feature--api--ensure"></a>`ensure`
@@ -648,6 +649,14 @@ Default value: `undef`
 Data type: `Optional[String[1]]`
 
 Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--api--http_response_headers"></a>`http_response_headers`
+
+Data type: `Optional[Hash]`
+
+Additional headers to add to HTTP responses.
 
 Default value: `undef`
 
