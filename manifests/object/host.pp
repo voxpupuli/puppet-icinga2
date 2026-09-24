@@ -63,6 +63,9 @@
 # @param enable_perfdata
 #   Whether performance data processing is enabled.
 #
+# @param flapping_ignore_states
+#    A list of states that should be ignored during flapping calculation.
+#
 # @param event_command
 #   The name of an event command that should be executed every time the host's
 #   state changes or the host is in a SOFT state.
@@ -135,6 +138,7 @@ define icinga2::object::host (
   Optional[String[1]]                  $event_command           = undef,
   Optional[Integer[1]]                 $flapping_threshold_low  = undef,
   Optional[Integer[1]]                 $flapping_threshold_high = undef,
+  Optional[Array[String[1]]]           $flapping_ignore_states  = undef,
   Optional[Boolean]                    $volatile                = undef,
   Optional[String[1]]                  $zone                    = undef,
   Optional[String[1]]                  $command_endpoint        = undef,
@@ -170,6 +174,7 @@ define icinga2::object::host (
     'event_command'           => $event_command,
     'flapping_threshold_low'  => $flapping_threshold_low,
     'flapping_threshold_high' => $flapping_threshold_high,
+    'flapping_ignore_states'  => $flapping_ignore_states,
     'volatile'                => $volatile,
     'zone'                    => $zone,
     'command_endpoint'        => $command_endpoint,
