@@ -58,28 +58,36 @@
 # @param flush_threshold
 #   How many data points to buffer before forcing a transfer to Elasticsearch.
 #
+# @param host_tags_template
+#   Allows to apply additional tags to the Elasticsearch host entries.
+#
+# @param service_tags_template
+#   Allows to apply additional tags to the Elasticsearch service entries.
+#
 # @param enable_ha
 #   Enable the high availability functionality. Only valid in a cluster setup.
 #
 class icinga2::feature::elasticsearch (
-  Enum['absent', 'present']      $ensure               = present,
-  Optional[Stdlib::Host]         $host                 = undef,
-  Optional[Stdlib::Port]         $port                 = undef,
-  Optional[String[1]]            $index                = undef,
-  Optional[String[1]]            $username             = undef,
-  Optional[Icinga::Secret]       $password             = undef,
-  Optional[Boolean]              $enable_ssl           = undef,
-  Optional[Boolean]              $ssl_noverify         = undef,
-  Optional[Stdlib::Absolutepath] $ssl_key_path         = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cert_path        = undef,
-  Optional[Stdlib::Absolutepath] $ssl_cacert_path      = undef,
-  Optional[Icinga::Secret]       $ssl_key              = undef,
-  Optional[String[1]]            $ssl_cert             = undef,
-  Optional[String[1]]            $ssl_cacert           = undef,
-  Optional[Boolean]              $enable_send_perfdata = undef,
-  Optional[Icinga2::Interval]    $flush_interval       = undef,
-  Optional[Integer[0]]           $flush_threshold      = undef,
-  Optional[Boolean]              $enable_ha            = undef,
+  Enum['absent', 'present']      $ensure                = present,
+  Optional[Stdlib::Host]         $host                  = undef,
+  Optional[Stdlib::Port]         $port                  = undef,
+  Optional[String[1]]            $index                 = undef,
+  Optional[String[1]]            $username              = undef,
+  Optional[Icinga::Secret]       $password              = undef,
+  Optional[Boolean]              $enable_ssl            = undef,
+  Optional[Boolean]              $ssl_noverify          = undef,
+  Optional[Stdlib::Absolutepath] $ssl_key_path          = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cert_path         = undef,
+  Optional[Stdlib::Absolutepath] $ssl_cacert_path       = undef,
+  Optional[Icinga::Secret]       $ssl_key               = undef,
+  Optional[String[1]]            $ssl_cert              = undef,
+  Optional[String[1]]            $ssl_cacert            = undef,
+  Optional[Boolean]              $enable_send_perfdata  = undef,
+  Optional[Icinga2::Interval]    $flush_interval        = undef,
+  Optional[Integer[0]]           $flush_threshold       = undef,
+  Optional[Hash]                 $host_tags_template    = undef,
+  Optional[Hash]                 $service_tags_template = undef,
+  Optional[Boolean]              $enable_ha             = undef,
 ) {
   if ! defined(Class['icinga2']) {
     fail('You must include the icinga2 base class before using any icinga2 feature class!')
@@ -116,11 +124,11 @@ class icinga2::feature::elasticsearch (
     )
 
     $attrs_ssl = {
-      'enable_tls'            => true,
-      'ssl_insecure_noverify' => $ssl_noverify,
-      'ca_path'               => $cert['cacert_file'],
-      'cert_path'             => $cert['cert_file'],
-      'key_path'              => $cert['key_file'],
+      'enable_tls'        => true,
+      'insecure_noverify' => $ssl_noverify,
+      'ca_path'           => $cert['cacert_file'],
+      'cert_path'         => $cert['cert_file'],
+      'key_path'          => $cert['key_file'],
     }
 
     # Workaround, icinga::cert doesn't accept undef values for owner and group!
@@ -159,6 +167,8 @@ class icinga2::feature::elasticsearch (
     'enable_send_perfdata'   => $enable_send_perfdata,
     'flush_interval'         => $flush_interval,
     'flush_threshold'        => $flush_threshold,
+    'host_tags_template'     => $host_tags_template,
+    'service_tags_template'  => $service_tags_template,
     'enable_ha'              => $enable_ha,
   }
 
