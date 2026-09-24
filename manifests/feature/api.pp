@@ -155,6 +155,9 @@
 # @param environment
 #  Used as suffix in TLS SNI extension name; default from constant ApiEnvironment, which is empty.
 #
+# @param http_response_headers
+#  Additional headers to add to HTTP responses.
+#
 # @param enforce_filter_expression_permission
 #  Enforce the filter-expression permission.
 #
@@ -187,6 +190,7 @@ class icinga2::feature::api (
   Optional[String[1]]                                      $access_control_allow_headers         = undef,
   Optional[Icinga2::Fingerprint]                           $fingerprint                          = undef,
   Optional[String[1]]                                      $environment                          = undef,
+  Optional[Hash]                                           $http_response_headers                = undef,
   Optional[Boolean]                                        $enforce_filter_expression_permission = undef,
 ) {
   if ! defined(Class['icinga2']) {
@@ -372,6 +376,7 @@ class icinga2::feature::api (
     'access_control_allow_headers'         => $access_control_allow_headers,
     'access_control_allow_methods'         => $access_control_allow_methods,
     'environment'                          => $environment,
+    'http_response_headers'                => $http_response_headers,
     'enforce_filter_expression_permission' => $enforce_filter_expression_permission,
   }
 
