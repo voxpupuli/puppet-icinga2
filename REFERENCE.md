@@ -2102,6 +2102,9 @@ The following parameters are available in the `icinga2::feature::opentsdb` class
 * [`host`](#-icinga2--feature--opentsdb--host)
 * [`port`](#-icinga2--feature--opentsdb--port)
 * [`enable_ha`](#-icinga2--feature--opentsdb--enable_ha)
+* [`enable_generic_metrics`](#-icinga2--feature--opentsdb--enable_generic_metrics)
+* [`host_template`](#-icinga2--feature--opentsdb--host_template)
+* [`service_template`](#-icinga2--feature--opentsdb--service_template)
 
 ##### <a name="-icinga2--feature--opentsdb--ensure"></a>`ensure`
 
@@ -2132,6 +2135,31 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--opentsdb--enable_generic_metrics"></a>`enable_generic_metrics`
+
+Data type: `Optional[Boolean]`
+
+Re-use metric names to store different perfdata values for a particular check.
+Use tags to distinguish perfdata instead of metric name.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--opentsdb--host_template"></a>`host_template`
+
+Data type: `Optional[Hash]`
+
+Specify additional tags to be included with host metrics.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--opentsdb--service_template"></a>`service_template`
+
+Data type: `Optional[Hash]`
+
+Specify additional tags to be included with service metrics.
 
 Default value: `undef`
 
