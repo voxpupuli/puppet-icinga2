@@ -905,6 +905,8 @@ The following parameters are available in the `icinga2::feature::elasticsearch` 
 * [`enable_send_perfdata`](#-icinga2--feature--elasticsearch--enable_send_perfdata)
 * [`flush_interval`](#-icinga2--feature--elasticsearch--flush_interval)
 * [`flush_threshold`](#-icinga2--feature--elasticsearch--flush_threshold)
+* [`host_tags_template`](#-icinga2--feature--elasticsearch--host_tags_template)
+* [`service_tags_template`](#-icinga2--feature--elasticsearch--service_tags_template)
 * [`enable_ha`](#-icinga2--feature--elasticsearch--enable_ha)
 
 ##### <a name="-icinga2--feature--elasticsearch--ensure"></a>`ensure`
@@ -1040,6 +1042,22 @@ Default value: `undef`
 Data type: `Optional[Integer[0]]`
 
 How many data points to buffer before forcing a transfer to Elasticsearch.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--elasticsearch--host_tags_template"></a>`host_tags_template`
+
+Data type: `Optional[Hash]`
+
+Allows to apply additional tags to the Elasticsearch host entries.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--elasticsearch--service_tags_template"></a>`service_tags_template`
+
+Data type: `Optional[Hash]`
+
+Allows to apply additional tags to the Elasticsearch service entries.
 
 Default value: `undef`
 
