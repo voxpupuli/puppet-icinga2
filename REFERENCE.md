@@ -26,6 +26,7 @@
 * [`icinga2::feature::mainlog`](#icinga2--feature--mainlog): Configures the Icinga 2 feature mainlog.
 * [`icinga2::feature::notification`](#icinga2--feature--notification): Configures the Icinga 2 feature notification.
 * [`icinga2::feature::opentsdb`](#icinga2--feature--opentsdb): Configures the Icinga 2 feature opentsdb.
+* [`icinga2::feature::otlpmetrics`](#icinga2--feature--otlpmetrics): Configures the Icinga 2 feature otlp-metrics.
 * [`icinga2::feature::perfdata`](#icinga2--feature--perfdata): Configures the Icinga 2 feature perfdata.
 * [`icinga2::feature::statusdata`](#icinga2--feature--statusdata): Configures the Icinga 2 feature statusdata.
 * [`icinga2::feature::syslog`](#icinga2--feature--syslog): Configures the Icinga 2 feature syslog.
@@ -2206,6 +2207,205 @@ Default value: `undef`
 Data type: `Optional[Hash]`
 
 Specify additional tags to be included with service metrics.
+
+Default value: `undef`
+
+### <a name="icinga2--feature--otlpmetrics"></a>`icinga2::feature::otlpmetrics`
+
+Configures the Icinga 2 feature otlp-metrics.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::otlpmetrics` class:
+
+* [`ensure`](#-icinga2--feature--otlpmetrics--ensure)
+* [`host`](#-icinga2--feature--otlpmetrics--host)
+* [`port`](#-icinga2--feature--otlpmetrics--port)
+* [`metrics_endpoint`](#-icinga2--feature--otlpmetrics--metrics_endpoint)
+* [`service_namespace`](#-icinga2--feature--otlpmetrics--service_namespace)
+* [`basic_auth`](#-icinga2--feature--otlpmetrics--basic_auth)
+* [`host_resource_attributes`](#-icinga2--feature--otlpmetrics--host_resource_attributes)
+* [`service_resource_attributes`](#-icinga2--feature--otlpmetrics--service_resource_attributes)
+* [`flush_interval`](#-icinga2--feature--otlpmetrics--flush_interval)
+* [`flush_threshold`](#-icinga2--feature--otlpmetrics--flush_threshold)
+* [`enable_ha`](#-icinga2--feature--otlpmetrics--enable_ha)
+* [`enable_send_thresholds`](#-icinga2--feature--otlpmetrics--enable_send_thresholds)
+* [`disconnect_timeout`](#-icinga2--feature--otlpmetrics--disconnect_timeout)
+* [`enable_ssl`](#-icinga2--feature--otlpmetrics--enable_ssl)
+* [`ssl_noverify`](#-icinga2--feature--otlpmetrics--ssl_noverify)
+* [`ssl_key_path`](#-icinga2--feature--otlpmetrics--ssl_key_path)
+* [`ssl_cert_path`](#-icinga2--feature--otlpmetrics--ssl_cert_path)
+* [`ssl_cacert_path`](#-icinga2--feature--otlpmetrics--ssl_cacert_path)
+* [`ssl_key`](#-icinga2--feature--otlpmetrics--ssl_key)
+* [`ssl_cert`](#-icinga2--feature--otlpmetrics--ssl_cert)
+* [`ssl_cacert`](#-icinga2--feature--otlpmetrics--ssl_cacert)
+
+##### <a name="-icinga2--feature--otlpmetrics--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature perfdata, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--feature--otlpmetrics--host"></a>`host`
+
+Data type: `Optional[Stdlib::Host]`
+
+OTLP backend host address.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--port"></a>`port`
+
+Data type: `Optional[Stdlib::Port]`
+
+OTLP backend HTTP port.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--metrics_endpoint"></a>`metrics_endpoint`
+
+Data type: `Optional[String[1]]`
+
+OTLP metrics endpoint path.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--service_namespace"></a>`service_namespace`
+
+Data type: `Optional[String[1]]`
+
+The namespace to associate with emitted metrics used
+in the `service.namespace` OTel resource attribute.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--basic_auth"></a>`basic_auth`
+
+Data type: `Optional[Icinga2::BasicAuth]`
+
+Username and password for HTTP basic authentication.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--host_resource_attributes"></a>`host_resource_attributes`
+
+Data type: `Optional[Hash]`
+
+Additional resource attributes to be included with host metrics.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--service_resource_attributes"></a>`service_resource_attributes`
+
+Data type: `Optional[Hash]`
+
+Additional resource attributes to be included with service metrics.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--flush_interval"></a>`flush_interval`
+
+Data type: `Optional[Icinga2::Interval]`
+
+How long to buffer data points before transferring to the OTLP backend.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--flush_threshold"></a>`flush_threshold`
+
+Data type: `Optional[Integer[1]]`
+
+How many bytes to buffer before forcing a transfer to the OTLP backend.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--enable_ha"></a>`enable_ha`
+
+Data type: `Optional[Boolean]`
+
+Enable the high availability functionality. Only valid in a cluster setup.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--enable_send_thresholds"></a>`enable_send_thresholds`
+
+Data type: `Optional[Boolean]`
+
+Whether to stream warning, critical, minimum & maximum as separate metrics to the OTLP backend.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--disconnect_timeout"></a>`disconnect_timeout`
+
+Data type: `Optional[Icinga2::Interval]`
+
+Timeout to wait for any outstanding data to be flushed to the OTLP backend before disconnecting.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--enable_ssl"></a>`enable_ssl`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable SSL. Other SSL parameters are only affected if this is set to 'true'.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_noverify"></a>`ssl_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable TLS peer verification. Only valid if ssl is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_key_path"></a>`ssl_key_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the client private key. Only valid if ssl is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_cert_path"></a>`ssl_cert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the client certificate. Only valid if ssl is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_cacert_path"></a>`ssl_cacert_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA certificate. Only valid if ssl is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_key"></a>`ssl_key`
+
+Data type: `Optional[Icinga::Secret]`
+
+The client private key in PEM format. Only valid if ssl is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_cert"></a>`ssl_cert`
+
+Data type: `Optional[String[1]]`
+
+The client certificate in PEM format. Only valid if ssl is enabled.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--otlpmetrics--ssl_cacert"></a>`ssl_cacert`
+
+Data type: `Optional[String[1]]`
+
+The CA root certificate in PEM format. Only valid if ssl is enabled.
 
 Default value: `undef`
 
