@@ -16,8 +16,15 @@
 # @param connect_timeout
 #   Timeout for establishing new connections.
 #
+# @param username
+#   Redis auth username. Only possible if Redis ACLs are used.
+#   Requires password to be set as well.
+#
 # @param password
 #   IcingaDB Redis password. The password parameter isn't parsed anymore.
+#
+# @param db_index
+#   Redis logical database by its number.
 #
 # @param env_id
 #   The ID is used in all Icinga DB components to separate data from multiple
@@ -70,7 +77,9 @@ class icinga2::feature::icingadb (
   Optional[Stdlib::Port]         $port            = undef,
   Optional[Stdlib::Absolutepath] $socket_path     = undef,
   Optional[Icinga2::Interval]    $connect_timeout = undef,
+  Optional[String[1]]            $username        = undef,
   Optional[Icinga::Secret]       $password        = undef,
+  Optional[Integer]              $db_index        = undef,
   Optional[Icinga::Secret]       $env_id          = undef,
   Boolean                        $enable_tls      = false,
   Optional[Stdlib::Absolutepath] $tls_key_file    = undef,
@@ -177,10 +186,13 @@ class icinga2::feature::icingadb (
 
   # compose attributes
   $attrs = {
-    'host'     => $host,
-    'port'     => $port,
-    'path'     => $socket_path,
-    'password' => $_password,
+    'host'            => $host,
+    'port'            => $port,
+    'path'            => $socket_path,
+    'username'        => $username,
+    'password'        => $_password,
+    'db_index'        => $db_index,
+    'connect_timeout' => $connect_timeout,
   }
 
   # create object
