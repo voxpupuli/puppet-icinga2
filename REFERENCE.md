@@ -21,6 +21,7 @@
 * [`icinga2::feature::icingadb`](#icinga2--feature--icingadb): Configures the Icinga 2 feature icingadb.
 * [`icinga2::feature::influxdb`](#icinga2--feature--influxdb): Configures the Icinga 2 feature influxdb.
 * [`icinga2::feature::influxdb2`](#icinga2--feature--influxdb2): Configures the Icinga 2 feature influxdb2.
+* [`icinga2::feature::journald`](#icinga2--feature--journald): Configures the Icinga 2 feature journald.
 * [`icinga2::feature::livestatus`](#icinga2--feature--livestatus): Configures the Icinga 2 feature livestatus.
 * [`icinga2::feature::mainlog`](#icinga2--feature--mainlog): Configures the Icinga 2 feature mainlog.
 * [`icinga2::feature::notification`](#icinga2--feature--notification): Configures the Icinga 2 feature notification.
@@ -1914,6 +1915,52 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Enable the high availability functionality. Only valid in a cluster setup.
+
+Default value: `undef`
+
+### <a name="icinga2--feature--journald"></a>`icinga2::feature::journald`
+
+Configures the Icinga 2 feature journald.
+
+#### Parameters
+
+The following parameters are available in the `icinga2::feature::journald` class:
+
+* [`ensure`](#-icinga2--feature--journald--ensure)
+* [`severity`](#-icinga2--feature--journald--severity)
+* [`facility`](#-icinga2--feature--journald--facility)
+* [`identifier`](#-icinga2--feature--journald--identifier)
+
+##### <a name="-icinga2--feature--journald--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Set to present enables the feature journald, absent disables it.
+
+Default value: `present`
+
+##### <a name="-icinga2--feature--journald--severity"></a>`severity`
+
+Data type: `Icinga::LogLevel`
+
+You can choose the log severity between information, notice, warning or debug.
+
+Default value: `'warning'`
+
+##### <a name="-icinga2--feature--journald--facility"></a>`facility`
+
+Data type: `Optional[Icinga2::LogFacility]`
+
+Defines the facility to use for journald entries. This can be a facility constant
+like FacilityDaemon.
+
+Default value: `undef`
+
+##### <a name="-icinga2--feature--journald--identifier"></a>`identifier`
+
+Data type: `Optional[String[1]]`
+
+Defines the syslog compatible identifier to use for journal entries.
 
 Default value: `undef`
 
