@@ -2208,6 +2208,8 @@ Data type: `Optional[Hash]`
 
 Specify additional tags to be included with service metrics.
 
+Default value: `undef`
+
 ### <a name="icinga2--feature--otlpmetrics"></a>`icinga2::feature::otlpmetrics`
 
 Configures the Icinga 2 feature otlp-metrics.
