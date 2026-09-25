@@ -28,6 +28,9 @@
 # @param ranges
 #   A dictionary containing information which days and durations apply to this timeperiod.
 #
+# @param child_options
+#   Schedule child downtimes.
+#
 # @param apply
 #   Dispose an apply instead an object if set to 'true'. Value is taken as statement,
 #   i.e. 'vhost => config in host.vars.vhosts'.
@@ -65,6 +68,11 @@ define icinga2::object::scheduleddowntime (
   Optional[Boolean]                     $fixed                  = undef,
   Optional[Icinga2::Interval]           $duration               = undef,
   Optional[Hash]                        $ranges                 = undef,
+  Optional[Enum[
+    'DowntimeNoChildren',
+    'DowntimeTriggeredChildren',
+    'DowntimeNonTriggeredChildren'
+  ]]                                    $child_options          = undef,
   Variant[Boolean, String[1]]           $apply                  = false,
   Variant[Boolean, String[1]]           $prefix                 = false,
   Enum['Host', 'Service']               $apply_target           = 'Host',

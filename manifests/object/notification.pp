@@ -90,7 +90,7 @@ define icinga2::object::notification (
   Optional[Icinga2::CustomAttributes]                                 $vars              = undef,
   Optional[Variant[String[1], Array[String[1]]]]                      $users             = undef,
   Optional[Variant[String[1], Array[String[1]]]]                      $user_groups       = undef,
-  Optional[Hash[String[1], Any]]                                       $times             = undef,
+  Optional[Hash[String[1], Any]]                                      $times             = undef,
   Optional[String[1]]                                                 $command           = undef,
   Optional[Variant[Icinga2::Interval,Pattern[/(host|service)\./]]]    $interval          = undef,
   Optional[String[1]]                                                 $period            = undef,

@@ -4415,6 +4415,7 @@ The following parameters are available in the `icinga2::object::scheduleddowntim
 * [`fixed`](#-icinga2--object--scheduleddowntime--fixed)
 * [`duration`](#-icinga2--object--scheduleddowntime--duration)
 * [`ranges`](#-icinga2--object--scheduleddowntime--ranges)
+* [`child_options`](#-icinga2--object--scheduleddowntime--child_options)
 * [`apply`](#-icinga2--object--scheduleddowntime--apply)
 * [`prefix`](#-icinga2--object--scheduleddowntime--prefix)
 * [`apply_target`](#-icinga2--object--scheduleddowntime--apply_target)
@@ -4493,6 +4494,22 @@ Default value: `undef`
 Data type: `Optional[Hash]`
 
 A dictionary containing information which days and durations apply to this timeperiod.
+
+Default value: `undef`
+
+##### <a name="-icinga2--object--scheduleddowntime--child_options"></a>`child_options`
+
+Data type:
+
+```puppet
+Optional[Enum[
+    'DowntimeNoChildren',
+    'DowntimeTriggeredChildren',
+    'DowntimeNonTriggeredChildren'
+  ]]
+```
+
+Schedule child downtimes.
 
 Default value: `undef`
 
