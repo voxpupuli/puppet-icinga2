@@ -93,21 +93,12 @@ class icinga2::feature::gelf (
       'key_path'          => $cert['key_file'],
     }
 
-    # Workaround, icinga::cert doesn't accept undef values for owner and group!
-    if $facts['os']['family'] != 'windows' {
-      icinga::cert { 'GelfWriter_gelf':
-        args   => $cert,
-        owner  => $owner,
-        group  => $group,
-        notify => $_notify,
-      }
-    } else {
-      icinga::cert { 'GelfWriter_gelf':
-        args   => $cert,
-        owner  => 'foo',
-        group  => 'bar',
-        notify => $_notify,
-      }
+    icinga::cert { 'GelfWriter_gelf':
+      args    => $cert,
+      owner   => $owner,
+      group   => $group,
+      seltype => 'icinga2_var_lib_t',
+      notify  => $_notify,
     }
   } else {
     $attrs_ssl = {
