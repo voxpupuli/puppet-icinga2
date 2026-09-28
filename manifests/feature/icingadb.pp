@@ -153,21 +153,12 @@ class icinga2::feature::icingadb (
       'tls_protocolmin'   => $tls_protocolmin,
     }
 
-    # Workaround, icinga::cert doesn't accept undef values for owner and group!
-    if $facts['os']['family'] != 'windows' {
-      icinga::cert { 'IcingaDB-icingadb':
-        args   => $cert,
-        owner  => $owner,
-        group  => $group,
-        notify => $_notify,
-      }
-    } else {
-      icinga::cert { 'IcingaDB-icingadb':
-        args   => $cert,
-        owner  => 'foo',
-        group  => 'bar',
-        notify => $_notify,
-      }
+    icinga::cert { 'IcingaDB-icingadb':
+      args    => $cert,
+      owner   => $owner,
+      group   => $group,
+      seltype => 'icinga2_var_lib_t',
+      notify  => $_notify,
     }
   } # enable_tls
   else {
