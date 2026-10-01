@@ -4,6 +4,48 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v7.0.0](https://github.com/voxpupuli/puppet-icinga2/tree/v7.0.0) (2026-10-01)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.2.0...v7.0.0)
+
+**Breaking changes:**
+
+- Set SELinux type on feature certificates [\#868](https://github.com/voxpupuli/puppet-icinga2/pull/868) ([lbetz](https://github.com/lbetz))
+- Drop EOL Debian 11 support [\#867](https://github.com/voxpupuli/puppet-icinga2/pull/867) ([lbetz](https://github.com/lbetz))
+- Drop EOL Fedora 42 support [\#864](https://github.com/voxpupuli/puppet-icinga2/pull/864) ([lbetz](https://github.com/lbetz))
+- Manage api port via selinux::port [\#853](https://github.com/voxpupuli/puppet-icinga2/pull/853) ([lbetz](https://github.com/lbetz))
+- Remove IDO support [\#850](https://github.com/voxpupuli/puppet-icinga2/pull/850) ([lbetz](https://github.com/lbetz))
+- Drop EOL Fedora 39 and 40 support [\#836](https://github.com/voxpupuli/puppet-icinga2/pull/836) ([lbetz](https://github.com/lbetz))
+- Drop puppet, update openvox minimum version to 8.19 [\#820](https://github.com/voxpupuli/puppet-icinga2/pull/820) ([TheMeier](https://github.com/TheMeier))
+- Drop EOL FreeBSD 12 support [\#816](https://github.com/voxpupuli/puppet-icinga2/pull/816) ([lbetz](https://github.com/lbetz))
+- Drop EOL Ubuntu 20.04 support [\#814](https://github.com/voxpupuli/puppet-icinga2/pull/814) ([lbetz](https://github.com/lbetz))
+- Drop EOL SLES 12 [\#812](https://github.com/voxpupuli/puppet-icinga2/pull/812) ([thomas-merz](https://github.com/thomas-merz))
+
+**Implemented enhancements:**
+
+- Add support for Ubuntu 26.04 [\#866](https://github.com/voxpupuli/puppet-icinga2/pull/866) ([lbetz](https://github.com/lbetz))
+- Add support for Fedora 44 [\#865](https://github.com/voxpupuli/puppet-icinga2/pull/865) ([lbetz](https://github.com/lbetz))
+- Add feature otlpmetrics [\#863](https://github.com/voxpupuli/puppet-icinga2/pull/863) ([lbetz](https://github.com/lbetz))
+- Add feature app [\#862](https://github.com/voxpupuli/puppet-icinga2/pull/862) ([lbetz](https://github.com/lbetz))
+- Add feature journald [\#861](https://github.com/voxpupuli/puppet-icinga2/pull/861) ([lbetz](https://github.com/lbetz))
+- Add param enable\_generic\_metrics and template to opentsdbfeature [\#860](https://github.com/voxpupuli/puppet-icinga2/pull/860) ([lbetz](https://github.com/lbetz))
+- Add param username and db\_index to icingadb feature [\#859](https://github.com/voxpupuli/puppet-icinga2/pull/859) ([lbetz](https://github.com/lbetz))
+- Add param host- and service\_tags\_template to elasticsearch feature [\#858](https://github.com/voxpupuli/puppet-icinga2/pull/858) ([lbetz](https://github.com/lbetz))
+- Add param http\_response\_headers to api feature [\#857](https://github.com/voxpupuli/puppet-icinga2/pull/857) ([lbetz](https://github.com/lbetz))
+- Add param child\_options to feature scheduleddowntime [\#856](https://github.com/voxpupuli/puppet-icinga2/pull/856) ([lbetz](https://github.com/lbetz))
+- Add param flapping\_ignore\_states to object type host [\#855](https://github.com/voxpupuli/puppet-icinga2/pull/855) ([lbetz](https://github.com/lbetz))
+- Add param ssl\_puppet\_cacert to overwrite puppet ca to feature api [\#852](https://github.com/voxpupuli/puppet-icinga2/pull/852) ([trefzer](https://github.com/trefzer))
+- Add param enforce\_filter\_expression\_permission to feature api [\#849](https://github.com/voxpupuli/puppet-icinga2/pull/849) ([psys-om](https://github.com/psys-om))
+- Replace concat with file to improve exported config collection performance [\#847](https://github.com/voxpupuli/puppet-icinga2/pull/847) ([lbetz](https://github.com/lbetz))
+- Add support for FreeBSD 15 [\#841](https://github.com/voxpupuli/puppet-icinga2/pull/841) ([smortex](https://github.com/smortex))
+- Add support for Fedora 43 [\#834](https://github.com/voxpupuli/puppet-icinga2/pull/834) ([lbetz](https://github.com/lbetz))
+- Suppot puppet 8 [\#833](https://github.com/voxpupuli/puppet-icinga2/pull/833) ([lbetz](https://github.com/lbetz))
+- Add support for Debian 13 [\#823](https://github.com/voxpupuli/puppet-icinga2/pull/823) ([lbetz](https://github.com/lbetz))
+
+**Fixed bugs:**
+
+- Parsing fallback for exported object rendering without class icinga2 [\#846](https://github.com/voxpupuli/puppet-icinga2/pull/846) ([lcharreau](https://github.com/lcharreau))
+
 ## [v6.2.0](https://github.com/voxpupuli/puppet-icinga2/tree/v6.2.0) (2025-07-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icinga2/compare/v6.1.0...v6.2.0)
@@ -69,8 +111,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Bump voxpupuli/gha-puppet from 2 to 3 [\#778](https://github.com/voxpupuli/puppet-icinga2/pull/778) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump voxpupuli/gha-puppet from 2 to 3 [\#771](https://github.com/voxpupuli/puppet-icinga2/pull/771) ([dependabot[bot]](https://github.com/apps/dependabot))
 - fixtures.yml: Pull dependencies from git [\#770](https://github.com/voxpupuli/puppet-icinga2/pull/770) ([bastelfreak](https://github.com/bastelfreak))
 - Update voxpupuli-test requirement from ~\> 7.2 to ~\> 8.0 [\#769](https://github.com/voxpupuli/puppet-icinga2/pull/769) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Fix file permissions for private keys in unit tests [\#777](https://github.com/voxpupuli/puppet-icinga2/pull/777) ([lbetz](https://github.com/lbetz))
@@ -103,7 +143,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Release/v5.0.0 [\#762](https://github.com/voxpupuli/puppet-icinga2/pull/762) ([lbetz](https://github.com/lbetz))
 - Update puppet\_metadata requirement from ~\> 3.5 to ~\> 4.0 [\#761](https://github.com/voxpupuli/puppet-icinga2/pull/761) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v4.2.1](https://github.com/voxpupuli/puppet-icinga2/tree/v4.2.1) (2024-04-25)
