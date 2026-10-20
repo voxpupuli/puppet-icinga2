@@ -876,7 +876,7 @@ Configures the Icinga 2 feature elasticsearch.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icinga2::feature::elasticsearch':
@@ -1211,7 +1211,7 @@ Configures the Icinga 2 feature graphite.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icinga2::feature::graphite':
@@ -1510,7 +1510,7 @@ Configures the Icinga 2 feature influxdb.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icinga2::feature::influxdb':
@@ -1748,7 +1748,7 @@ Configures the Icinga 2 feature influxdb2.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icinga2::feature::influxdb2':
@@ -3820,7 +3820,7 @@ Manage Icinga 2 HostGroup objects.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 icinga2::object::hostgroup { 'monitoring-hosts':
@@ -5747,4 +5747,3 @@ Variant[Enum[
     'LOG_UUCP'
   ], Pattern[/^LOG_LOCAL[0-7]$/]]
 ```
-
