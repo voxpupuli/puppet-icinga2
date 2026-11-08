@@ -7,3 +7,5 @@ Gemfile:
   enabled_lint_checks:
     - parameter_documentation
     - parameter_types
+spec/spec_helper_acceptance.rb:
+  unmanaged: false
